@@ -1,87 +1,87 @@
-# Project Title
+# 프로젝트 제목
 
-One Paragraph of project description goes here
+프로젝트 설명의 한 단락이 여기에 표시됩니다.
 
-## Getting Started
+## 시작하기
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+이 지침은 개발 및 테스트 목적으로 로컬 컴퓨터에서 프로젝트 사본을 시작하고 실행하는 데 도움이 됩니다. 라이브 시스템에 프로젝트를 배포하는 방법에 대한 참고 사항은 배포를 참조하세요.
 
-### Prerequisites
+### 전제조건
 
-What things you need to install the software and how to install them
+소프트웨어를 설치하는 데 필요한 것 혹은 설치 방법
 
-```
-Give examples
-```
+````
+예시
+````
 
-### Installing
+### 설치 중
 
-A step by step series of examples that tell you how to get a development env running
+개발 환경을 실행하는 방법을 알려주는 단계별 예제 시리즈
 
-Say what the step will be
+어떤 단계를 밟을지 말해 보세요.
 
-```
-Give the example
-```
+````
+예시
+````
 
-And repeat
+계속
 
-```
-until finished
-```
+````
+여기까지
+````
 
-End with an example of getting some data out of the system or using it for a little demo
+시스템에서 일부 데이터를 가져오거나 이를 약간의 데모에 사용하는 예제로 마무리합니다.
 
-## Running the tests
+## 테스트 실행
 
-Explain how to run the automated tests for this system
+이 시스템에 대한 자동화된 테스트를 실행하는 방법을 설명합니다.
 
-### Break down into end to end tests
+### 엔드투엔드 테스트로 분류
 
-Explain what these tests test and why
+이 테스트가 테스트하는 내용과 그 이유를 설명하세요.
 
-```
-Give an example
-```
+````
+예시
+````
 
-### And coding style tests
+### 그리고 코딩 스타일 테스트
 
-Explain what these tests test and why
+이 테스트가 테스트하는 내용과 그 이유를 설명하세요.
 
-```
-Give an example
-```
+````
+예시
+````
 
-## Deployment
+## 배포
 
-Add additional notes about how to deploy this on a live system
+이를 라이브 시스템에 배포하는 방법에 대한 추가 참고 사항을 추가하세요.
 
-## Built With
+## 내장
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - 사용된 웹 프레임워크
+* [Maven](https://maven.apache.org/) - 종속성 관리
+* [ROME](https://rometools.github.io/rome/) - RSS 피드를 생성하는 데 사용됩니다.
 
-## Contributing
+## 기여
 
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
+우리의 행동 강령과 끌어오기 요청을 제출하는 프로세스에 대한 자세한 내용은 [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426)를 읽어보세요.
 
-## Versioning
+## 버전 관리
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+버전 관리에는 [SemVer](http://semver.org/)를 사용합니다. 사용 가능한 버전은 [이 저장소의 태그](https://github.com/your/project/tags)를 참조하세요.
 
-## Authors
+## 작성자
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+* **박성민** - *초기 작업* - [PurpleBooth](https://github.com/PurpleBooth)
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+이 프로젝트에 참여한 [기여자](https://github.com/your/project/contributors) 목록도 참조하세요.
 
-## License
+## 라이센스
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+이 프로젝트는 MIT 라이선스에 따라 라이선스가 부여됩니다. 자세한 내용은 [LICENSE.md](LICENSE.md) 파일을 참조하세요.
 
-## Acknowledgments
+## 감사의 말씀
 
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+* 블라블라
+* 영감
+* 할머니 등
