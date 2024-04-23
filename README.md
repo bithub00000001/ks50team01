@@ -72,7 +72,7 @@
 
 ## 작성자
 
-* **박성민** - *초기 작업* - [PurpleBooth](https://github.com/daredelain)
+* **박성민** - *초기 작업* - [daredelain](https://github.com/daredelain)
 
 이 프로젝트에 참여한 [기여자](https://github.com/your/project/contributors) 목록도 참조하세요.
 
