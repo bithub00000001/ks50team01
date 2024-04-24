@@ -1,8 +1,8 @@
+<!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{/user/layout/default}">
-<head>
-  <title>여행 계획</title>
+<th:block layout:fragment="customHead">
   <style>
     .nav-tabs .nav-link.active {
       background-color: #f8f9fa;
@@ -13,9 +13,11 @@
     }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
-</head>
-<body>
-<div layout:fragment="customContent">
+</th:block>
+
+<th:block layout:fragment="customContent">
+
+  <br>
   <h1>여행 계획</h1>
 
   <!-- 지역 선택 -->
@@ -85,11 +87,11 @@
   <div id="map"></div>
   <div>총 거리: <span id="totalDistance"></span></div>
   <div>총 금액: <span id="totalCost"></span></div>
-</div>
+  <br><br><br><br>
+</th:block>
 
   <th:block layout:fragment="customJs">
 
     <script th:src="@{/user/js/tripPlanner.js}"></script>
   </th:block>
-</body>
 </html>
