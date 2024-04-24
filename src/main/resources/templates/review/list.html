@@ -6,7 +6,20 @@
 </head>
 <body>
 <h1 th:text="${title}"></h1>
-
+<table border="1" style="text-align: center;">
+	<thead>
+		<tr>
+			<td>리뷰 아이디</td>
+			<td>리뷰 코멘트</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td th:text="${reviewList[0].reviewId}"></td>
+			<td th:text="${reviewList[0].comment}"></td>
+		</tr>
+	</tbody>
+</table>
 
 </body>
 </html>
