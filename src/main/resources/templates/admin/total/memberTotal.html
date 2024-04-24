@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+                layout:decorate="~{admin/layout/default}">
+
+<th:block layout:fragment="customContent">
+	<h2 th:text="${title}"></h2>
+	업로드용샘플
+	<h1 th:text="${'가입 회원수'+ newMemTotal}"></h1>
+	<h1 th:text="${'탈퇴 회원수'+ drawnMemTotal}"></h1>
+</th:block>
+</html>
