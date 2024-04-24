@@ -21,7 +21,7 @@ public class ReviewController {
 		
 	}
 	
-	@GetMapping("/review")
+	@GetMapping("/list")
 	public String getReivewList(Model model) {
 		
 		List<Review> reviewList = reviewService.getReivewList();
