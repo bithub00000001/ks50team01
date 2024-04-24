@@ -1,0 +1,95 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/user/layout/default}">
+<head>
+  <title>여행 계획</title>
+  <style>
+    .nav-tabs .nav-link.active {
+      background-color: #f8f9fa;
+      border-color: #dee2e6 #dee2e6 #fff;
+    }
+    .sortable-ghost {
+      opacity: 0.5;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+</head>
+<body>
+<div layout:fragment="customContent">
+  <h1>여행 계획</h1>
+
+  <!-- 지역 선택 -->
+  <div class="form-group">
+    <label for="region">지역 선택:</label>
+    <select class="select-option" id="region" ><!--/*th:with="regions=${@regionService.getRegions()}"*/-->
+      <option value="">지역 선택</option>
+      <option >옵션1</option> <!--/*th:each="region : ${regions}" th:value="${region}" th:text="${region}"*/-->
+    </select>
+  </div>
+
+  <!-- 카테고리 탭 -->
+  <div class="row">
+    <div class="col-lg-12 mb-12 mb-lg-0">
+      <div id="destination">
+        <div class="mb-0">
+          <ul class="nav nav-tabs destination-tabs" id="destinationTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="overView-tab" data-bs-toggle="tab" href="#overView" role="tab"
+                 aria-controls="overView" aria-selected="true">숙소</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" id="tourGuide-tab" data-bs-toggle="tab" href="#tourGuide" role="tab" aria-controls="tourGuide"
+                 aria-selected="false">음식점</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" id="locationMap-tab" data-bs-toggle="tab" href="#locationMap" role="tab"
+                 aria-controls="locationMap" aria-selected="false">관광지</a>
+            </li>
+
+            <li class="nav-item d-none"></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 세부 옵션 -->
+  <div class="tab-content" id="optionsContent">
+    <div class="tab-pane fade show active" id="accommodation" role="tabpanel" aria-labelledby="accommodation-tab">
+      <ul id="accommodationOptions"></ul>
+    </div>
+    <div class="tab-pane fade" id="restaurant" role="tabpanel" aria-labelledby="restaurant-tab">
+      <ul id="restaurantOptions"></ul>
+    </div>
+    <div class="tab-pane fade" id="attraction" role="tabpanel" aria-labelledby="attraction-tab">
+      <ul id="attractionOptions"></ul>
+    </div>
+  </div>
+
+  <!-- 여행 계획 -->
+  <div>
+    <h3>여행 계획</h3>
+    <ul id="plan" class="sortable">
+      <li class="sortable-item">경복궁</li>
+      <li class="sortable-item">N서울타워</li>
+      <li class="sortable-item">동대문디자인플라자</li>
+    </ul>
+  </div>
+
+  <!-- 거리 정보 -->
+  <div id="distanceInfo"></div>
+
+  <!-- 지도 및 거리/금액 정보 -->
+  <div id="map"></div>
+  <div>총 거리: <span id="totalDistance"></span></div>
+  <div>총 금액: <span id="totalCost"></span></div>
+</div>
+
+  <th:block layout:fragment="customJs">
+
+    <script th:src="@{/user/js/tripPlanner.js}"></script>
+  </th:block>
+</body>
+</html>

@@ -5,7 +5,7 @@
         <div class="navbar nav_title" style="border: 0;">
             <a class="site_title" th:href="@{/admin}">
                 <i class="fa fa-paw"></i>
-                <span>Gentelella Alela!</span>
+                <span>시금치</span>
             </a>
         </div>
 
@@ -17,8 +17,8 @@
                 <img alt="..." class="img-circle profile_img" th:src="@{/admin/images/img.jpg}">
             </div>
             <div class="profile_info">
-                <span>Welcome,</span>
-                <h2>John Doe</h2>
+                <span>어서오세요</span>
+                <h2>관리자님</h2>
             </div>
         </div>
         <!-- /menu profile quick info -->
@@ -28,102 +28,92 @@
         <!-- sidebar menu -->
         <div class="main_menu_side hidden-print main_menu" id="sidebar-menu">
             <div class="menu_section">
-                <h3>General</h3>
                 <ul class="nav side-menu">
                     <li>
                         <a>
                         <i class="fa fa-home"></i>
-                            Home
+                            1.회원 관리-효민
                             <span class="fa fa-chevron-down"></span>
                         </a>
                         <ul class="nav child_menu">
-                            <li><a th:href="@{/admin}">Dashboard</a></li>
-                            <li><a href="#">Dashboard2</a></li>
-                            <li><a href="#">Dashboard3</a></li>
+                            <li><a th:href="@{/admin}">?회원 정보관리</a></li>
+                            <li><a href="#">?회원 등급관리</a></li>
+                            <li><a href="#">?회원 등록</a></li>
+                            <li><a href="#">?회원 일괄 등록</a></li>
+                            <li><a href="#">?회워 일괄 메일발송</a></li>
                         </ul>
                     </li>
                     <li>
                         <a>
                             <i class="fa fa-edit"></i>
-                            Forms
+                            2.여행지 관리-가영
                             <span class="fa fa-chevron-down"></span>
                         </a>
                         <ul class="nav child_menu">
-                            <li><a href="#">General Form</a></li>
-                            <li><a href="#">Advanced Components</a></li>
-                            <li><a href="#">Form Validation</a></li>
-                            <li><a href="#">Form Wizard</a></li>
-                            <li><a href="#">Form Upload</a></li>
-                            <li><a href="#">Form Buttons</a></li>
+                            <li><a href="#">?카테고리 관리</a></li>
+                            <li><a href="#">?관광지 관리</a></li>
+                            <li><a href="#">?숙소 관리</a></li>
+                            <li><a href="#">?음식점 관리</a></li>
+                            <li><a href="#">?여행지 일괄 등록</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                    	<a>
+                    		<i class="fa fa-table"></i>
+                    		?3.여행계획 관리-한빛
+                    		<span class="fa fa-chevron-down"></span>
+                   		</a>
+                        <ul class="nav child_menu">
+                            <li><a href="#">?무엇이</a></li>
+                            <li><a href="#">?필요한가</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                    	<a>
+                    		<i class="fa fa-bar-chart-o"></i>
+                    		?4.결재내역 관리-무열
+                    		<span class="fa fa-chevron-down"></span>
+                   		</a>
+                        <ul class="nav child_menu">
+                            <li><a href="#">?무엇을</a></li>
+                            <li><a href="#">?넣어드릴까?</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a>
+                            <i class="fa fa-bug"></i>
+                            5.후기 관리-유희
+                            <span class="fa fa-chevron-down"></span>
+                        </a>
+                        <ul class="nav child_menu">
+                            <li><a href="#">카테고리 관리</a></li>
+                            <li><a href="#">여행상품 리뷰 관리</a></li>
+                            <li><a href="#">여행계획 리뷰 관리</a></li>
+                            <li><a href="#">리뷰 신고내역 관리</a></li>
                         </ul>
                     </li>
                     <li>
                         <a>
                             <i class="fa fa-desktop"></i>
-                            UI Elements
+                            6.플랫폼 운영-윤
                             <span class="fa fa-chevron-down"></span>
                         </a>
                         <ul class="nav child_menu">
-                            <li><a href="#">General Elements</a></li>
-                            <li><a href="#">Media Gallery</a></li>
-                            <li><a href="#">Typography</a></li>
-                            <li><a href="#">Icons</a></li>
-                            <li><a href="#">Glyphicons</a></li>
-                            <li><a href="#">Widgets</a></li>
-                            <li><a href="#">Invoice</a></li>
-                            <li><a href="#">Inbox</a></li>
-                            <li><a href="#">Calendar</a></li>
+                            <li><a th:href="@{/admin/manage/managecate}">#카테고리 관리</a></li>
+                            <li><a th:href="@{/admin/manage/notice}">#공지사항 관리</a></li>
+                            <li><a th:href="@{/admin/manage/faq}">#자주찾는 질문 관리</a></li>
+                            <li><a th:href="@{/admin/manage/qna}">#1:1문의 관리</a></li>
+                            <li><a th:href="@{/admin/manage/community}">#게시판 관리</a></li>
+                            <li><a th:href="@{/admin/manage/communityRpt}">#게시판 신고내역 관리</a></li>
                         </ul>
                     </li>
-                    <li><a><i class="fa fa-table"></i> Tables <span class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
-                            <li><a href="#">Tables</a></li>
-                            <li><a href="#">Table Dynamic</a></li>
-                        </ul>
-                    </li>
-                    <li><a><i class="fa fa-bar-chart-o"></i> Data Presentation <span class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
-                            <li><a href="#">Chart JS</a></li>
-                            <li><a href="#">Chart JS2</a></li>
-                            <li><a href="#">Moris JS</a></li>
-                            <li><a href="#">ECharts</a></li>
-                            <li><a href="#">Other Charts</a></li>
-                        </ul>
-                    </li>
-                    <li><a><i class="fa fa-clone"></i>Layouts <span class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
-                            <li>
-                                <a href="#">
-                                    Fixed Sidebar
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    Fixed Footer
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-            <div class="menu_section">
-                <h3>Live On</h3>
-                <ul class="nav side-menu">
                     <li>
-                        <a>
-                            <i class="fa fa-bug"></i>
-                            Additional Pages
-                            <span class="fa fa-chevron-down"></span>
-                        </a>
-                        <ul class="nav child_menu">
-                            <li><a href="#">E-commerce</a></li>
-                            <li><a href="#">Projects</a></li>
-                            <li><a href="#">Project Detail</a></li>
-                            <li><a href="#">Contacts</a></li>
-                            <li><a href="#">Profile</a></li>
-                        </ul>
-                    </li>
-                    <li><a><i class="fa fa-windows"></i> Extras <span class="fa fa-chevron-down"></span></a>
+                    	<a>
+                    		<i class="fa fa-windows"></i>
+                    		7.추천 관리-창우
+                    		<span class="fa fa-chevron-down"></span>
+                   		</a>
                         <ul class="nav child_menu">
                             <li><a href="#">403 Error</a></li>
                             <li><a href="#">404 Error</a></li>
@@ -133,36 +123,25 @@
                             <li><a href="#">Pricing Tables</a></li>
                         </ul>
                     </li>
-                    <li><a><i class="fa fa-sitemap"></i> Multilevel Menu <span class="fa fa-chevron-down"></span></a>
+					<li>
+                    	<a>
+                    		<i class="fa fa-windows"></i>
+                    		8.통계 분석-성민
+                    		<span class="fa fa-chevron-down"></span>
+                   		</a>
                         <ul class="nav child_menu">
-                            <li>
-                                <a href="#level1_1">Level One</a>
-                            <li>
-                            <a>
-                                Level One
-                                <span class="fa fa-chevron-down"></span>
-                            </a>
-
-                                <ul class="nav child_menu">
-                                    <li class="sub_menu">
-                                        <a href="#">Level Two</a>
-                                    </li>
-                                    <li>
-                                        <a href="#level2_1">Level Two</a>
-                                    </li>
-                                    <li>
-                                        <a href="#level2_2">Level Two</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#level1_2">Level One</a>
-                            </li>
+                            <li><a href="#">회원 가입,탈퇴 분석</a></li>
+                            <li><a href="#">지역별 관광지 현황</a></li>
+                            <li><a href="#">로그인 로그 분석</a></li>
+                            <li><a href="#">플랫폼 운영 분석</a></li>
+                            <li><a href="#">플랫폼 활성도 분석</a></li>
                         </ul>
                     </li>
+
                     <li>
-                        <a href="javascript:void(0)"><i class="fa fa-laptop"></i>
-                            Landing Page
+                        <a href="javascript:void(0)">
+                        	<i class="fa fa-laptop"></i>
+                            추가준비중
                             <span class="label label-success pull-right">Coming Soon</span>
                         </a>
                     </li>
