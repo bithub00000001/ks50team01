@@ -826,8 +826,8 @@
       }
     });
   }
-
-  /*======== 12. MAP ========*/
+/*
+  /!*======== 12. MAP ========*!/
   function initialize() {
     var myLatLng = { lat: 40.697488, lng: -73.979681 };
 
@@ -847,7 +847,7 @@
   var mapId = $('#map');
   if (mapId.length) {
     google.maps.event.addDomListener(window, 'load', initialize);
-  }
+  }*/
 
 })(jQuery);
 
