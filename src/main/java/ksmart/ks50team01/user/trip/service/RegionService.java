@@ -1,4 +1,4 @@
-package ksmart.ks50team01.trip.service;
+package ksmart.ks50team01.user.trip.service;
 
 import java.util.List;
 

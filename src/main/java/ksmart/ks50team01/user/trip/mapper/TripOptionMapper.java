@@ -1,4 +1,4 @@
-package ksmart.ks50team01.trip.mapper;
+package ksmart.ks50team01.user.trip.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

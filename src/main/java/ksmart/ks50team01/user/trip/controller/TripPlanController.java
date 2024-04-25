@@ -1,4 +1,4 @@
-package ksmart.ks50team01.trip.controller;
+package ksmart.ks50team01.user.trip.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

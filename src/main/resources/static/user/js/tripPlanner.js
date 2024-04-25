@@ -82,16 +82,24 @@ function updatePlan(selectedOptions) {
 }*/
 
 $(document).ready(function() {
+    function assignNumbers() {
+        const items = document.querySelectorAll('#plan .sortable-item');
+        for (let i = 0; i < items.length; ++i) {
+            const numberSpan = items[i].querySelector('.number');
+            numberSpan.textContent = i + 1;
+        }
+    }
     // Sortable 초기화
-    var sortableList = new Sortable(document.getElementById('plan'), {
+    const sortableList = new Sortable(document.getElementById('plan'), {
         animation: 150,
         ghostClass: 'sortable-ghost',
         // removeOnSpill: true,
         removeOnSpill: false, // 밖으로 빠져나가지 않도록 변경
         forceFallback: true,  // 추가된 줄
-        onUpdate: function(evt) {
+        onUpdate: function (evt) {
             updatePlan();
-            // updateDistanceInfo(selectedOptions);
+            assignNumbers();
+                // updateDistanceInfo(selectedOptions);
         },
         onSpill: function (evt) {
             evt.item.parentElement.appendChild(evt.item);
@@ -99,21 +107,23 @@ $(document).ready(function() {
     });
 
     // 방지 코드 삽입
-    var planItems = document.querySelectorAll('.sortable-item');
+    const planItems = document.querySelectorAll('.sortable-item');
     planItems.forEach(function(item) {
         item.addEventListener('dragstart', function(e) {
             e.preventDefault();
+
         });
     });
 
     function updatePlan() {
-        var planList = document.getElementById('plan');
-        var selectedOptions = Array.from(planList.getElementsByTagName('li')).map(option => option.innerText);
+        const planList = document.getElementById('plan');
+        const selectedOptions = Array.from(planList.getElementsByTagName('li')).map(option => option.innerText);
         // selectedOptions 변수를 업데이트하고 이 변수를 사용하여 updateDistanceInfo 함수를 호출합니다.
         //updateDistanceInfo(selectedOptions);
     }
     // 처음 한 번은 수동으로 실행
     updatePlan();
+    assignNumbers();
 });
 
 /*

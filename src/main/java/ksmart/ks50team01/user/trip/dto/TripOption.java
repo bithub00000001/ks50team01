@@ -1,4 +1,4 @@
-package ksmart.ks50team01.trip.dto;
+package ksmart.ks50team01.user.trip.dto;
 
 import lombok.Data;
 

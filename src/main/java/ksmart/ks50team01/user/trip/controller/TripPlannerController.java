@@ -1,8 +1,7 @@
-package ksmart.ks50team01.trip.controller;
+package ksmart.ks50team01.user.trip.controller;
 
-import ksmart.ks50team01.trip.service.RegionService;
+import ksmart.ks50team01.user.trip.service.RegionService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController

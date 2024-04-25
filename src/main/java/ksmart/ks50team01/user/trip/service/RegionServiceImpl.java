@@ -1,6 +1,6 @@
-package ksmart.ks50team01.trip.service;
+package ksmart.ks50team01.user.trip.service;
 
-import ksmart.ks50team01.trip.mapper.TripOptionMapper;
+import ksmart.ks50team01.user.trip.mapper.TripOptionMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
