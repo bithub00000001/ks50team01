@@ -42,14 +42,11 @@
       <!-- Elements Breadcrumb -->
         <br>
         <br>
-        <br>
-        <br>
-        <br>
         <div class="container">
           <div class="row">
             <div class="col-md-4">
               <div class="mb-5">
-                <h3 class="element-title">Default</h3>
+                <h3 class="element-title" th:text="${title}">Default</h3>
                 <nav aria-label="breadcrumb">
                   <ol class="breadcrumb">
                     <li aria-current="page" class="breadcrumb-item active">Home</li>
@@ -98,7 +95,6 @@
 
 
     <script th:src="@{/user/plugins/smoothscroll/SmoothScroll.js}"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDU79W1lu5f6PIiuMqNfT1C6M0e_lq1ECY"></script>
     <script th:src="@{/user/js/star.js}"></script>
 
     <th:block layout:fragment="customJs"></th:block>
