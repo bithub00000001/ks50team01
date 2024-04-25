@@ -12,7 +12,7 @@
       opacity: 0.5;
     }
   </style>
-  <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+  <script th:src="@{https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js}"></script>
 </th:block>
 
 <th:block layout:fragment="customContent">
@@ -59,13 +59,13 @@
 
   <!-- 세부 옵션 -->
   <div class="tab-content" id="optionsContent">
-    <div class="tab-pane fade show active" id="accommodation" role="tabpanel" aria-labelledby="accommodation-tab">
+    <div class="tab-pane fade show active" id="overView" role="tabpanel" aria-labelledby="overView-tab">
       <ul id="accommodationOptions"></ul>
     </div>
-    <div class="tab-pane fade" id="restaurant" role="tabpanel" aria-labelledby="restaurant-tab">
+    <div class="tab-pane fade" id="tourGuide" role="tabpanel" aria-labelledby="tourGuide-tab">
       <ul id="restaurantOptions"></ul>
     </div>
-    <div class="tab-pane fade" id="attraction" role="tabpanel" aria-labelledby="attraction-tab">
+    <div class="tab-pane fade" id="locationMap" role="tabpanel" aria-labelledby="locationMap-tab">
       <ul id="attractionOptions"></ul>
     </div>
   </div>
