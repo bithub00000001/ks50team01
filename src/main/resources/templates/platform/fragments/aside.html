@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<div class="col-md-3 left_col" th:fragment="asideFragment">
+    <div class="left_col scroll-view">
+        <div class="navbar nav_title" style="border: 0;">
+            <a class="site_title" th:href="@{/platform/main}">
+                <i class="fa fa-paw"></i>
+                <span>시 금 치</span>
+            </a>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <!-- menu profile quick info -->
+        <div class="profile clearfix">
+            <div class="profile_pic">
+                <img alt="..." class="img-circle profile_img" th:src="@{/platform/images/img.jpg}">
+            </div>
+            <div class="profile_info">
+                <span>어서오세요</span>
+                <h2>관리자님</h2>
+            </div>
+        </div>
+        <!-- /menu profile quick info -->
+
+        <br/>
+
+        <!-- sidebar menu -->
+        <div class="main_menu_side hidden-print main_menu" id="sidebar-menu">
+            <div class="menu_section">
+                <ul class="nav side-menu">
+                    <li>
+                        <a>
+                        <i class="fa fa-home"></i>
+                            1.회원 관리-효민
+                            <span class="fa fa-chevron-down"></span>
+                        </a>
+                        <ul class="nav child_menu">
+                            <li><a href="#">?회원 정보관리</a></li>
+                            <li><a href="#">?회원 등급관리</a></li>
+                            <li><a href="#">?회원 등록</a></li>
+                            <li><a href="#">?회원 일괄 등록</a></li>
+                            <li><a href="#">?회워 일괄 메일발송</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a>
+                            <i class="fa fa-edit"></i>
+                            2.여행지 관리-가영
+                            <span class="fa fa-chevron-down"></span>
+                        </a>
+                        <ul class="nav child_menu">
+                            <li><a href="#">?카테고리 관리</a></li>
+                            <li><a href="#">?관광지 관리</a></li>
+                            <li><a href="#">?숙소 관리</a></li>
+                            <li><a href="#">?음식점 관리</a></li>
+                            <li><a href="#">?여행지 일괄 등록</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                    	<a>
+                    		<i class="fa fa-table"></i>
+                    		?3.여행계획 관리-한빛
+                    		<span class="fa fa-chevron-down"></span>
+                   		</a>
+                        <ul class="nav child_menu">
+                            <li><a href="#">?무엇이</a></li>
+                            <li><a href="#">?필요한가</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                    	<a>
+                    		<i class="fa fa-bar-chart-o"></i>
+                    		?4.결재내역 관리-무열
+                    		<span class="fa fa-chevron-down"></span>
+                   		</a>
+                        <ul class="nav child_menu">
+                            <li><a href="#">?무엇을</a></li>
+                            <li><a href="#">?넣어드릴까?</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a>
+                            <i class="fa fa-bug"></i>
+                            ?5.후기 관리-유희
+                            <span class="fa fa-chevron-down"></span>
+                        </a>
+                        <ul class="nav child_menu">
+                            <li><a href="#">카테고리 관리</a></li>
+                            <li><a href="#">여행상품 리뷰 관리</a></li>
+                            <li><a href="#">여행계획 리뷰 관리</a></li>
+                            <li><a href="#">리뷰 신고내역 관리</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a>
+                            <i class="fa fa-desktop"></i>
+                            ?6.플랫폼 운영-윤
+                            <span class="fa fa-chevron-down"></span>
+                        </a>
+                        <ul class="nav child_menu">
+                            <li><a href="#">?카테고리 관리</a></li>
+                            <li><a href="#">?공지사항 관리</a></li>
+                            <li><a href="#">?자주찾는 질문 관리</a></li>
+                            <li><a href="#">?1:1문의 관리</a></li>
+                            <li><a href="#">?게시판 관리</a></li>
+                            <li><a href="#">?게시판 신고내역 관리</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                    	<a>
+                    		<i class="fa fa-windows"></i>
+                    		?7.추천 관리-창우
+                    		<span class="fa fa-chevron-down"></span>
+                   		</a>
+                        <ul class="nav child_menu">
+                            <li><a href="#">Pricing Tables</a></li>
+                        </ul>
+                    </li>
+					<li>
+                    	<a>
+                    		<i class="fa fa-windows"></i>
+                    		8.통계 분석-성민
+                    		<span class="fa fa-chevron-down"></span>
+                   		</a>
+                        <ul class="nav child_menu">
+                            <li><a th:href="@{/platform/statistic/member}">회원 가입,탈퇴 분석</a></li>
+                            <li><a href="#">지역별 관광지 현황</a></li>
+                            <li><a href="#">로그인 로그 분석</a></li>
+                            <li><a href="#">플랫폼 운영 분석</a></li>
+                            <li><a href="#">플랫폼 활성도 분석</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="javascript:void(0)">
+                        	<i class="fa fa-laptop"></i>
+                            추가준비중
+                            <span class="label label-success pull-right">Coming Soon</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+        <!-- /sidebar menu -->
+
+        <!-- /menu footer buttons -->
+        <div class="sidebar-footer hidden-small">
+            <a data-placement="top" data-toggle="tooltip" title="Settings">
+                <span aria-hidden="true" class="glyphicon glyphicon-cog"></span>
+            </a>
+            <a data-placement="top" data-toggle="tooltip" title="FullScreen">
+                <span aria-hidden="true" class="glyphicon glyphicon-fullscreen"></span>
+            </a>
+            <a data-placement="top" data-toggle="tooltip" title="Lock">
+                <span aria-hidden="true" class="glyphicon glyphicon-eye-close"></span>
+            </a>
+            <a data-placement="top" data-toggle="tooltip" href="#" title="Logout">
+                <span aria-hidden="true" class="glyphicon glyphicon-off"></span>
+            </a>
+        </div>
+        <!-- /menu footer buttons -->
+    </div>
+</div>
+</html>
