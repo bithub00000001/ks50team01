@@ -1,0 +1,20 @@
+@charset "UTF-8";
+
+tbody>thead>tr>th {
+    text-align: center;
+}
+/* list-style */
+tbody>tr>td>a {
+    color: black;
+}
+tbody>tr>td>a:hover,tbody>tr>td>a:focus {
+    color: #337ab7;
+    text-decoration: none;
+}
+i.fa-comment {
+    padding-left: 10px;
+    padding-right: 5px;
+}
+.noticeCenter {
+    text-align: center;
+}

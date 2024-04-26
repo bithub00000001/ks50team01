@@ -14,4 +14,9 @@ public class TripPlanController {
     public String tripPlanPage(){
         return "user/trip/tripPlanner";
     }
+
+    @GetMapping("/board")
+    public String boardPage(){
+        return "user/trip/boardTest";
+    }
 }
