@@ -9,22 +9,13 @@
 }
 
 /* 별점 등록 글씨 두께*/
-.star-group_box label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 30px;
-}
-
 /* 구매 후기 작성 글씨 두께*/
+.star-group_box label,
 .form-group_box label {
     display: block;
     font-weight: bold;
-}
-
-/* 구매 후기 작성 글씨 두께*/
-.rating-text label {
-    display: block;
-    font-weight: bold;
+    font-size: 1px;
+    margin-bottom: 10px;
 }
 
 /* 리뷰 텍스트 입력 박스 */
@@ -56,6 +47,23 @@
     justify-content: center;
     align-items: center;
     flex-direction: row; /* 왼쪽에서 오른쪽으로 정렬 */
+    position: relative; /* 부모 요소 설정 */
+}
+
+.star {
+    cursor: pointer;
+
+}
+
+.star + .star {
+    margin-left: 5px; /* 별 사이의 간격 조정 */
+}
+
+/* 별점 문구 텍스트 */
+.evaluation {
+    text-align: center;
+    font-size: 15px;
+    margin-top: 10px;
 }
 
 .star-rating input {
@@ -83,23 +91,24 @@ textarea {
     text-align: left; /* 가운데 정렬을 위해 추가 */
 }
 
+.star-group_box {
+    margin-block-end: 20px;
+   /* 별점 등록 부분의 상단 간격 조정 */
+}
 .star-group_box label[for="rating"] {
     display: block;
     text-align: center;
-    font-size: 1.6em; /* 필요한 경우 글씨 크기 조정 */
+    font-size: 20px; /* 별점 글씨 크기 조정 */
     margin-bottom: 2px; /* 필요한 경우 마진 조정 */
 }
 
 .form-group_box label[for="review"] {
     display: block;
     text-align: center;
-    font-size: 1.5em; /* 필요한 경우 글씨 크기 조정 */
+    font-size: 20px; /* 구매후기작성 글씨 크기 조정 */
     margin-bottom: 0px; /* 구매후기 텍스트와 실제 텍스트 박스 사이의 아래 마진 조정 */
 }
 
-.star-group_box {
-    margin-top: 60px; /* 별점 등록 부분의 상단 간격 조정 */
-}
 .separator {
     margin-top: 50px; /* 별 모양과 직선 사이의 위 마진 설정 */
     margin-bottom: 50px; /* 별 모양과 직선 사이의 아래 마진 설정 */
@@ -124,8 +133,22 @@ textarea {
 
 /* 추가된 스타일: 별점 평가 문구 */
 .rating-text {
+    display: none; /* 페이지 로드 시 평가 텍스트 숨기기 */
     text-align: center;
     font-size: 1.2em;
     margin-top: 20px;
     font-weight: bold;
+    position: absolute; /* 절대 위치로 설정 */
+    bottom: 0; /* 페이지의 하단에 위치 */
+    left: 50%; /* 가운데 정렬을 위해 왼쪽 기준으로 50% 설정 */
+    transform: translateX(-50%); /* 수평 가운데 정렬 */
+}
+
+.form-group {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.form-group label {
+    display: inline-block; /* 인라인 블록 요소로 변경 */
+    margin-right: 50px; /* 오른쪽 마진 추가하여 간격 조정 */
 }

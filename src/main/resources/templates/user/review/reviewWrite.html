@@ -3,41 +3,33 @@
                 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
                 layout:decorate="~{user/layout/default}">
 
-	<head>
-		<link href="/user/css/reviewWrite.css" rel="stylesheet">
-	
-	</head>     
+<head>
+    <link href="/user/css/reviewWrite.css" rel="stylesheet">
+</head>
+
 <th:block layout:fragment="customContent">
-
-
     <body id="body" class="up-scroll">
-    <!-- ====================================
-    ——— HEADER
-    ===================================== -->
-    
-    <div class="main-wrapper destination-single-city">
 
-
-    <!-- ====================================
-    ———	PAGE TITLE
-    ===================================== -->
-    <section class="page-title">
-    <div class="page-title-img bg-img bg-overlay-darken" style="background-image: url(assets/img/pages/page-title-bg3.jpg);">
-        <div class="container">
-        <div class="row align-items-center justify-content-center" style="height: 200px;">
-            <div class="col-lg-6">
-            <div class="page-title-content">
-                <div class="title-border">
-                <h2 class="text-uppercase text-white font-weight-bold">후기작성</h2>
+        <div class="main-wrapper destination-single-city">
+            <!-- ====================================
+            ———	PAGE TITLE
+            ===================================== -->
+            <section class="page-title">
+                <div class="page-title-img bg-img bg-overlay-darken" style="background-image: url(#);">
+                    <div class="container">
+                        <div class="row align-items-center justify-content-center" style="height: 200px;">
+                            <div class="col-lg-6">
+                                <div class="page-title-content">
+                                    <div class="title-border">
+                                        <h2 class="text-uppercase text-white font-weight-bold">후기작성</h2>
+                                    </div>
+                                    <p class="text-white mb-0"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <p class="text-white mb-0"></p>
-            </div>
-            </div>
-        </div>
-        </div>
-    </div>
-    </section>
-
+            </section>
 
 <!-- ====================================
 ———    CITY SECTION
@@ -45,8 +37,8 @@
 <section class="py-10">
     <div class="container">
         <form id="reviewForm" action="#" method="POST">
+            <div class="separator1"></div> <!-- 굵은 직선 추가 -->
             <div class="star-group_box">
-                <div class="separator1"></div> <!-- 굵은 직선 추가 -->
                 <label for="rating">별점</label>
                 <div class="separator2"></div> <!-- 굵은 직선 추가 -->
                 <div class="star-rating">
@@ -57,7 +49,7 @@
                     <input type="radio" id="rating1" name="rating" value="1"><label for="rating1">★</label>
                 </div>
                 <!-- 추가된 부분 -->
-                <div class="evaluation"></div>
+                <div class="evaluation">별점을 선택해주세요</div>
             </div>
             <div class="separator1"></div> <!-- 굵은 직선 추가 -->
             <div class="form-group_box">
@@ -72,14 +64,16 @@
             <div class="separator1"></div> <!-- 굵은 직선 추가 -->
             <div class="form-group">
                 <label for="photo">사진 첨부</label>
-                <div class="separator2"></div> <!-- 굵은 직선 추가 -->
-                <input type="file" id="photo" name="photo">
+                <input type="file" id="photo" name="photo" multiple> <!-- multiple 속성을 추가하여 여러 파일 선택 가능 -->
             </div>
+            <div class="separator2"></div> <!-- 굵은 직선 추가 -->
+            <div id="attachedFiles"></div> <!-- 첨부 파일 목록이 표시될 영역 -->
             <div class="separator1"></div> <!-- 굵은 직선 추가 -->
-            <div class="form-group">
-                <button type="submit" class="btn">취소</button>
-                <button type="submit" class="btn">등록</button>
-            </div>
+			<div class="form-group">
+			    <!-- Thymeleaf를 사용하여 링크의 대상 URL 설정 -->
+			    <a th:href="@{#}"><button type="button" class="btn">취소</button></a>
+			    <a th:href="@{#}"><button type="button" class="btn">등록</button></a>
+			</div>
 
             <!-- 추가된 요소: 별점 평가 문구 -->
             <div class="rating-text" id="ratingText"></div>
@@ -92,38 +86,39 @@
     let previousRating = 0;
 
     stars.forEach((star, index) => {
-        star.addEventListener('click', () => {
-            if (index + 1 === previousRating) {
-                // 클릭한 별점이 이전에 선택한 별점과 같은 경우 취소
-                resetStars();
-                previousRating = 0;
-                document.querySelector('.evaluation').textContent = ''; // 평가 문구 제거
-            } else {
-                resetStars();
-                for (let i = 0; i <= index; i++) {
-                    stars[i].checked = true;
-                    stars[i].nextElementSibling.style.color = '#ffcc00';
-                }
-                previousRating = index + 1;
-                // 별점에 따른 평가 문구 출력
-                switch (previousRating) {
-                    case 5:
-                        document.querySelector('.evaluation').textContent = '최고에요';
-                        break;
-                    case 4:
-                        document.querySelector('.evaluation').textContent = '만족해요';
-                        break;
-                    case 3:
-                        document.querySelector('.evaluation').textContent = '보통이에요';
-                        break;
-                    case 2:
-                        document.querySelector('.evaluation').textContent = '별로에요';
-                        break;
-                    case 1:
-                        document.querySelector('.evaluation').textContent = '최악이에요';
-                        break;
-                    default:
-                        break;
+    star.addEventListener('click', () => {
+        if (index + 1 === previousRating) {
+            // 클릭한 별점이 이전에 선택한 별점과 같은 경우 취소
+            resetStars();
+            previousRating = 0;
+            document.querySelector('.evaluation').textContent = '별점을 선택해주세요'; // 평가 문구 초기화
+        } else {
+            resetStars();
+            for (let i = 0; i <= index; i++) {
+                stars[i].checked = true;
+                stars[i].nextElementSibling.style.color = '#ffcc00';
+            }
+            previousRating = index + 1;
+            // 별점에 따른 평가 문구 출력
+            switch (previousRating) {
+                case 5:
+                    document.querySelector('.evaluation').textContent = '최고에요';
+                    break;
+                case 4:
+                    document.querySelector('.evaluation').textContent = '만족해요';
+                    break;
+                case 3:
+                    document.querySelector('.evaluation').textContent = '보통이에요';
+                    break;
+                case 2:
+                    document.querySelector('.evaluation').textContent = '별로에요';
+                    break;
+                case 1:
+                    document.querySelector('.evaluation').textContent = '최악이에요';
+                    break;
+                default:
+                    document.querySelector('.evaluation').textContent = '별점을 선택해주세요';
+                    break;
                 }
             }
         });
@@ -172,9 +167,71 @@
         const textLength = this.value.length;
         charCount.textContent = textLength + '/1000';
     });
+    
+    const fileInput = document.getElementById('photo');
+    const attachedFilesContainer = document.getElementById('attachedFiles');
+    let uploadedFiles = []; // 기존에 업로드된 파일 목록을 저장하는 배열
+
+    fileInput.addEventListener('change', function() {
+        const files = this.files;
+
+        // 새로 추가된 파일을 기존 파일 목록에 추가
+        for (let i = 0; i < files.length; i++) {
+            uploadedFiles.push(files[i]);
+        }
+
+        // 기존 파일 목록과 새로 추가된 파일을 모두 표시
+        displayAttachedFiles();
+    });
+
+    // 기존 파일 목록과 새로 추가된 파일을 모두 표시하는 함수
+    function displayAttachedFiles() {
+        attachedFilesContainer.innerHTML = ''; // 기존 첨부 파일 목록 초기화
+
+        // 파일을 순회하며 각 파일에 대한 정보를 표시
+        for (let i = 0; i < uploadedFiles.length; i++) {
+            const file = uploadedFiles[i];
+            const fileItem = document.createElement('div');
+            fileItem.classList.add('attached-file');
+
+            // 썸네일 이미지 생성 (여기서는 간단하게 파일 아이콘으로 대체)
+            const thumbnail = document.createElement('img');
+            thumbnail.src = 'file-icon.png'; // 썸네일 이미지 경로 설정
+            thumbnail.alt = 'File Icon';
+            thumbnail.classList.add('thumbnail');
+            fileItem.appendChild(thumbnail);
+
+            // 파일 이름 표시
+            const fileName = document.createElement('span');
+            fileName.textContent = file.name;
+            fileItem.appendChild(fileName);
+
+            // 파일 삭제 버튼 생성
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'X';
+            deleteButton.classList.add('delete-button');
+            deleteButton.addEventListener('click', function() {
+                // 클릭한 버튼의 부모 요소인 첨부 파일 아이템을 삭제
+                uploadedFiles.splice(i, 1); // 배열에서 해당 인덱스의 파일을 제거
+                displayAttachedFiles(); // 변경된 파일 목록을 다시 표시
+            });
+            fileItem.appendChild(deleteButton);
+
+            // 생성된 첨부 파일 아이템을 목록에 추가
+            attachedFilesContainer.appendChild(fileItem);
+        }
+    }
+
+    const photoLabel = document.querySelector('label[for="photo"]');
+    photoLabel.addEventListener('click', function(event) {
+        event.preventDefault(); // 기본 동작(파일 열기)을 막음
+    });
+
+
+
 
 </script>
-     </div><!-- element wrapper ends -->
-     </body>
-     </th:block>
+        </div>
+    </body>
+</th:block>
 </html>
