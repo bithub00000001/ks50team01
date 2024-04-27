@@ -1,15 +1,13 @@
-package ksmart.ks50team01.user.common.controller;
+package ksmart.ks50team01.common.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
-@Controller
-@RequestMapping(value="/user")
+@Controller("userCommonController")
 public class CommonController {
 
-    @GetMapping(value = {"main", "/main"})
+    @GetMapping(value = {"", "/"})
     public String userMain(Model model) {
         model.addAttribute("title", "미정 플래너");
         return "user/main";
