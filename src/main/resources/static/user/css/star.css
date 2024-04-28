@@ -22444,3 +22444,6 @@ img.lazyestload {
 .footer-2 h6, .footer-2 .h6 {
   font-weight: 400;
 }
+.select-option{
+  visibility: hidden;
+}
