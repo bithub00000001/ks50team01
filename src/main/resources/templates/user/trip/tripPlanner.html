@@ -2,25 +2,18 @@
 <html lang="ko" layout:decorate="~{/user/layout/default}"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:th="http://www.thymeleaf.org">
-<th:block layout:fragment="customHead">
+<th:block layout:fragment="customCss">
     <style>
-        .nav-tabs .nav-link.active {
-            background-color: #f8f9fa;
-            border-color: #dee2e6 #dee2e6 #fff;
-        }
-
         .sortable-ghost {
             opacity: 0.5;
         }
     </style>
-    <script th:src="@{'https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js'}"></script>
 </th:block>
 
 <th:block layout:fragment="customContent">
-
     <br>
 
-    <h1>여행 계획</h1>
+    <h1>여행 계획 작성</h1>
 
     <div class="row justify-content-between">
         <!-- 지역 선택 -->
@@ -30,11 +23,132 @@
                 <option value="">지역 선택</option>
                 <option>옵션1</option> <!--/*th:each="region : ${regions}" th:value="${region}" th:text="${region}"*/-->
             </select>
+            <br>
+
+            <!-- 카테고리 탭 -->
+
+            <div id="destination">
+                <div class="mb-0">
+                    <ul class="nav nav-tabs destination-tabs" id="destinationTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <a aria-controls="accommodation" aria-selected="false" class="nav-link active"
+                               data-bs-toggle="tab"
+                               href="#accommodation"
+                               id="accommodation-tab" role="tab">숙소
+                            </a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a aria-controls="restaurant" aria-selected="false" class="nav-link" data-bs-toggle="tab"
+                               href="#restaurant"
+                               id="restaurant-tab"
+                               role="tab">음식점
+                            </a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a aria-controls="tour" aria-selected="false" class="nav-link" data-bs-toggle="tab"
+                               href="#tour"
+                               id="tour-tab" role="tab">관광지
+                            </a>
+                        </li>
+
+                        <li class="nav-item d-none"></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 세부 옵션 -->
+            <div class="tab-content" id="optionsContent">
+                <div aria-labelledby="accommodation-tab" class="tab-pane fade show active" id="accommodation" role="tabpanel">
+                    <ul class="list-group" id="accommodationOptions">
+                        <li class="list-group-item" data-id="accommodation1">
+                            <h5>호텔 A</h5>
+                            <p>간단한 설명...</p>
+                            <p>세부 스케줄: <input type="text" value="호텔 A 세부 스케줄"></p>
+                            <p>추가 사항: <input type="text" value="호텔 A 추가 사항"></p>
+                            <button class="btn btn-primary btn-sm">담기</button>
+                        </li>
+                        <li class="list-group-item" data-id="accommodation2">
+                            <h5>펜션 B</h5>
+                            <p>간단한 설명...</p>
+                            <p>세부 스케줄: <input type="text" value="펜션 B 세부 스케줄"></p>
+                            <p>추가 사항: <input type="text" value="펜션 B 추가 사항"></p>
+                            <button class="btn btn-primary btn-sm">담기</button>
+                        </li>
+                        <li class="list-group-item" data-id="accommodation1">
+                            <h5>호텔 B</h5>
+                            <p>간단한 설명...</p>
+                            <p>세부 스케줄: <input type="text" value="호텔 A 세부 스케줄"></p>
+                            <p>추가 사항: <input type="text" value="호텔 A 추가 사항"></p>
+                            <button class="btn btn-primary btn-sm">담기</button>
+                        </li>
+                        <li class="list-group-item" data-id="accommodation1">
+                            <h5>호텔 C</h5>
+                            <p>간단한 설명...</p>
+                            <p>세부 스케줄: <input type="text" value="호텔 A 세부 스케줄"></p>
+                            <p>추가 사항: <input type="text" value="호텔 A 추가 사항"></p>
+                            <button class="btn btn-primary btn-sm">담기</button>
+                        </li>
+                        <li class="list-group-item" data-id="accommodation1">
+                            <h5>호텔 D</h5>
+                            <p>간단한 설명...</p>
+                            <p>세부 스케줄: <input type="text" value="호텔 A 세부 스케줄"></p>
+                            <p>추가 사항: <input type="text" value="호텔 A 추가 사항"></p>
+                            <button class="btn btn-primary btn-sm">담기</button>
+                        </li>
+                        <li class="list-group-item" data-id="accommodation1">
+                            <h5>호텔 E</h5>
+                            <p>간단한 설명...</p>
+                            <p>세부 스케줄: <input type="text" value="호텔 A 세부 스케줄"></p>
+                            <p>추가 사항: <input type="text" value="호텔 A 추가 사항"></p>
+                            <button class="btn btn-primary btn-sm">담기</button>
+                        </li>
+                    </ul>
+                </div>
+                <div aria-labelledby="restaurant-tab" class="tab-pane fade" id="restaurant" role="tabpanel">
+                    <ul class="list-group" id="restaurantOptions">
+                        <li class="list-group-item" data-id="restaurant1">
+                            <h5>레스토랑 C</h5>
+                            <p>간단한 설명...</p>
+                            <p>세부 스케줄: <input type="text" value="레스토랑 C 세부 스케줄"></p>
+                            <p>추가 사항: <input type="text" value="레스토랑 C 추가 사항"></p>
+                            <button class="btn btn-primary btn-sm">담기</button>
+                        </li>
+                        <li class="list-group-item" data-id="restaurant2">
+                            <h5>카페 D</h5>
+                            <p>간단한 설명...</p>
+                            <p>세부 스케줄: <input type="text" value="카페 D 세부 스케줄"></p>
+                            <p>추가 사항: <input type="text" value="카페 D 추가 사항"></p>
+                            <button class="btn btn btn-primary btn-sm">담기</button>
+                        </li>
+                    </ul>
+                </div>
+                <div aria-labelledby="tour-tab" class="tab-pane fade" id="tour" role="tabpanel">
+                    <ul class="list-group" id="tourOptions">
+                        <li class="list-group-item" data-id="tour1">
+                            <h5>박물관 E</h5>
+                            <p>간단한 설명...</p>
+                            <p>세부 스케줄: <input type="text" value="박물관 E 세부 스케줄"></p>
+                            <p>추가 사항: <input type="text" value="박물관 E 추가 사항"></p>
+                            <button class="btn btn btn-primary btn-sm">담기</button>
+                        </li>
+                        <li class="list-group-item" data-id="tour2">
+                            <h5>명소 F</h5>
+                            <p>간단한 설명...</p>
+                            <p>세부 스케줄: <input type="text" value="명소 F 세부 스케줄"></p>
+                            <p>추가 사항: <input type="text" value="명소 F 추가 사항"></p>
+                            <button class="btn btn-primary btn-sm">담기</button>
+                        </li>
+                    </ul>
+                </div>
+                <br>
+            </div>
+            <br><br>
         </div>
 
         <!-- 여행 계획 -->
         <div class="list-group col-lg-6 mb-6 mb-lg-0">
-            <h3>여행 계획</h3>
+            <h3>여행 스케줄 조정</h3>
+            <br>
             <ul class="sortable" id="plan">
                 <li class="sortable-item list-group-item list-group-item-action">
                     <div class="d-flex w-100 justify-content-between">
@@ -47,7 +161,7 @@
                 </li>
                 <li class="sortable-item list-group-item list-group-item-action">
                     <div class="d-flex w-100 justify-content-between">
-                        <span class="number">1</span>
+                        <span class="number">2</span>
                         <h4 class="col-9">전주 한옥마을</h4>
                         <small>여기에 시간 입력</small>
                     </div>
@@ -56,7 +170,7 @@
                 </li>
                 <li class="sortable-item list-group-item list-group-item-action">
                     <div class="d-flex w-100 justify-content-between">
-                        <span class="number">1</span>
+                        <span class="number">3</span>
                         <h4 class="col-9">전주 한국스마트정보원</h4>
                         <small>여기에 시간 입력</small>
                     </div>
@@ -64,73 +178,32 @@
                     <small>여기에 추가 사항 입력</small>
                 </li>
             </ul>
-
-            <!-- 거리 정보 -->
-            <div id="distanceInfo"></div>
-
-
-            <div class="col-lg-4 mb-6 mb-lg-0">
-                <!-- 지도 및 거리/금액 정보 -->
-                <div id="map"></div>
-                <div>총 거리: <span id="totalDistance"></span></div>
-                <div>총 금액: <span id="totalCost"></span></div>
-                <br><br><br><br>
-            </div>
-        </div>
+            <div>
+                <!-- 거리 정보 -->
+                <br>
+                <div id="distanceInfo"></div>
 
 
-        <!-- 카테고리 탭 -->
-
-        <div class="col-lg-6 mb-1 mb-lg-0">
-            <div id="destination">
-                <div class="mb-0">
-                    <ul class="nav nav-tabs destination-tabs" id="destinationTab" role="tablist">
-                        <li class="nav-item">
-                            <a aria-controls="overView" aria-selected="true" class="nav-link active"
-                               data-bs-toggle="tab"
-                               href="#overView"
-                               id="overView-tab" role="tab">숙소</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a aria-controls="tourGuide" aria-selected="false" class="nav-link" data-bs-toggle="tab"
-                               href="#tourGuide"
-                               id="tourGuide-tab"
-                               role="tab">음식점</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a aria-controls="locationMap" aria-selected="false" class="nav-link" data-bs-toggle="tab"
-                               href="#locationMap"
-                               id="locationMap-tab" role="tab">관광지</a>
-                        </li>
-
-                        <li class="nav-item d-none"></li>
-                    </ul>
+                <div class="col-lg-4 mb-6 mb-lg-0">
+                    <!-- 지도 및 거리/금액 정보 -->
+                    <div id="map"></div>
+                    <div>총 거리: <span id="totalDistance"></span></div>
+                    <div>총 금액: <span id="totalCost"></span></div>
+                    <br><br><br><br>
                 </div>
             </div>
         </div>
 
 
-        <!-- 세부 옵션 -->
-        <div class="tab-content" id="optionsContent">
-            <div aria-labelledby="overView-tab" class="tab-pane fade show active" id="overView" role="tabpanel">
-                <ul id="accommodationOptions"></ul>
-            </div>
-            <div aria-labelledby="tourGuide-tab" class="tab-pane fade" id="tourGuide" role="tabpanel">
-                <ul id="restaurantOptions"></ul>
-            </div>
-            <div aria-labelledby="locationMap-tab" class="tab-pane fade" id="locationMap" role="tabpanel">
-                <ul id="attractionOptions"></ul>
-            </div>
-        </div>
 
 
     </div>
 </th:block>
 
 <th:block layout:fragment="customJs">
-
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+</th:block>
+<th:block layout:fragment="customJsFIle">
     <script th:src="@{/user/js/tripPlanner.js}"></script>
 </th:block>
 </html>

@@ -7,24 +7,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>여행 계획</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">-->
     <!-- Plugins css Style -->
-    <link href="/user/plugins/fontawesome-5.15.2/css/all.min.css" rel='stylesheet'>
-    <link href="/user/plugins/fontawesome-5.15.2/css/fontawesome.min.css" rel='stylesheet'>
-    <link href="/user/plugins/animate/animate.css" rel="stylesheet">
-    <link href="/user/plugins/menuzord/css/menuzord.css" rel="stylesheet">
-    <link href="/user/plugins/menuzord/css/menuzord-animations.css" rel="stylesheet">
-
-
-    <link href="/user/plugins/fancybox/jquery.fancybox.min.css" rel='stylesheet'>
-    <link href="/user/plugins/selectric/selectric.css" rel='stylesheet'>
-
-    <!-- CUSTOM CSS -->
-    <link href="/user/css/star.css" id="option_style" rel="stylesheet">
+    <link th:href="@{/user/plugins/fontawesome-5.15.2/css/all.min.css}" rel='stylesheet'>
+    <link th:href="@{/user/plugins/fontawesome-5.15.2/css/fontawesome.min.css}" rel='stylesheet'>
+    <link th:href="@{/user/plugins/animate/animate.css}" rel="stylesheet">
+    <link th:href="@{/user/plugins/menuzord/css/menuzord.css}" rel="stylesheet">
+    <link th:href="@{/user/plugins/menuzord/css/menuzord-animations.css}" rel="stylesheet">
+    <link th:href="@{/user/plugins/fancybox/jquery.fancybox.min.css}" rel='stylesheet'>
+    <link th:href="@{/user/plugins/selectric/selectric.css}" rel='stylesheet'>
 
     <!-- Custom Theme css -->
     <th:block layout:fragment="customCss"></th:block>
     <th:block layout:fragment="customHead"></th:block>
+    <!-- CUSTOM CSS -->
+    <link th:href="@{/user/css/star.css}" id="option_style" rel="stylesheet">
 
     <!-- FAVICON -->
     <link rel="shortcut icon" type="image/png" href="/user/img/favicon.png"/>
@@ -67,36 +64,22 @@
     <div th:replace="~{/user/fragments/footer :: footerFragment}"></div>
     <!-- footer content end -->
 
-
+    <!-- Javascript -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-    <!-- Javascript -->
+
     <script th:src="@{/user/plugins/jquery/jquery-3.4.1.min.js}"></script>
     <script th:src="@{/user/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
     <script th:src="@{/user/plugins/menuzord/js/menuzord.js}"></script>
-
-
-
     <script th:src="@{/user/plugins/fancybox/jquery.fancybox.min.js}"></script>
-
     <script th:src="@{/user/plugins/selectric/jquery.selectric.min.js}"></script>
-
-
-
     <script th:src="@{/user/plugins/lazyestload/lazyestload.js}"></script>
-
-
     <script th:src="@{/user/plugins/velocity/velocity.min.js}"></script>
-
-
-
-
-
     <script th:src="@{/user/plugins/smoothscroll/SmoothScroll.js}"></script>
     <script th:src="@{/user/js/star.js}"></script>
-
     <th:block layout:fragment="customJs"></th:block>
+    <th:block layout:fragment="customJsFIle"></th:block>
   </body>
 </html>
