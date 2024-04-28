@@ -80,132 +80,104 @@ function updatePlan(selectedOptions) {
     });
     updateDistanceInfo(options);
 }*/
-
-
-// 여행 계획 탭 작성, 드래그드랍 구현
 $(document).ready(function() {
-    function assignNumbers() {
-        const items = document.querySelectorAll('#plan .sortable-item');
-        for (let i = 0; i < items.length; ++i) {
-            const numberSpan = items[i].querySelector('.number');
-            numberSpan.textContent = i + 1;
-        }
-    }
-    // Sortable 초기화
-    const sortableList = new Sortable(document.getElementById('plan'), {
-        animation: 150,
-        ghostClass: 'sortable-ghost',
-        // removeOnSpill: true,
-        removeOnSpill: false, // 밖으로 빠져나가지 않도록 변경
-        forceFallback: true,  // 추가된 줄
-        onUpdate: function (evt) {
-            updatePlan();
-            assignNumbers();
-                // updateDistanceInfo(selectedOptions);
-        },
-        onSpill: function (evt) {
-            evt.item.parentElement.appendChild(evt.item);
-        }
+    // 페이지 로딩시 모든 sortable 항목에 대해 드래그 기능 초기화
+    $('.sortable').each(function (i, el) {
+        initializeSortable(el.id);
     });
+    $(document).on('click', '.btn-addPlan', function() {
+        const element = $(this).closest('li');
+        const name = element.find('h5').text();
+        const schedule = element.find('.schedule-input').val();
+        const additional = element.find('.additional-input').val();
+        const id = element.data('id');
+        const category = getAccommodationType($(this).closest('.tab-pane').attr('id'));
 
-    // 방지 코드 삽입
-    const planItems = document.querySelectorAll('.sortable-item');
-    planItems.forEach(function(item) {
-        item.addEventListener('dragstart', function(e) {
-            e.preventDefault();
-
-        });
+        addToPlan(name, category, schedule, additional, id);
     });
-
-    function updatePlan() {
-        const planList = document.getElementById('plan');
-        const selectedOptions = Array.from(planList.getElementsByTagName('li')).map(option => option.innerText);
-        // selectedOptions 변수를 업데이트하고 이 변수를 사용하여 updateDistanceInfo 함수를 호출합니다.
-        //updateDistanceInfo(selectedOptions);
-    }
-    // 처음 한 번은 수동으로 실행
-    updatePlan();
-    assignNumbers();
 });
 
+function getAccommodationType(selector) {
+    return selector.includes('accommodation') ? '숙박' : (selector.includes('restaurant') ? '식당' : '관광지');
+}
 
-// 담기 버튼 함수
-$(document).ready(function() {
-    // 예시 데이터 가져오기
-    const accommodationData = getDataFromHTML('#accommodationOptions');
-    const restaurantData = getDataFromHTML('#restaurantOptions');
-    const tourData = getDataFromHTML('#tourOptions');
+function addToPlan(name, category, schedule, additional, id) {
+    const activeTabLink = $('#myDayTab .nav-link.active');
+    const activeTabContentId = activeTabLink.attr('href');
+    const activeTabContent = $(activeTabContentId);
+    const planDayX = activeTabContent.find('ul.sortable').attr('id');
 
-
-    // 예시 데이터 렌더링
-    renderOptions('#accommodationOptions', accommodationData);
-    renderOptions('#restaurantOptions', restaurantData);
-    renderOptions('#tourOptions', tourData);
-
-
-    // HTML에서 데이터 가져오기 함수
-    function getDataFromHTML(selector) {
-        const data = [];
-        $(selector + ' .list-group-item').each(function() {
-            const name = $(this).find('h5').text();
-            const description = $(this).find('p:first').text();
-            const schedule = $(this).find('input[type="text"]:first').val();
-            const additional = $(this).find('input[type="text"]:last').val();
-            const id = $(this).attr('data-id');
-            data.push({ name, description, schedule, additional, id });
-        });
-        return data;
-    }
-
-
-    // 옵션 렌더링 함수
-    function renderOptions(selector, data) {
-        let options = '';
-        $.each(data, function (index, item) {
-            const accommodationType = getAccommodationType(selector);
-            options += `<li class="list-group-item" data-id="${item._id}">
-            <h5>${item.name}</h5>
-            <p>${item.description}</p>
-            <p>세부 스케줄: <input type="text" value="${item.schedule}" class="schedule-input"></p>
-            <p>추가 사항: <input type="text" value="${item.additional}" class="additional-input"></p>
-            <button class="btn btn-primary btn-addPlan btn-sm">담기</button>
-          </li>`;
-        });
-        $(selector).html(options);
-        // Add click event to button "btn-add" to add to the plan
-        $(selector).on("click", ".btn-addPlan", function() {
-            const element = $(this).closest('li');
-            const name = element.find("h5").text();
-            const schedule = element.find(".schedule-input").val();
-            const additional = element.find(".additional-input").val();
-            const id = element.data('id');
-            const category = getAccommodationType(selector);
-            addToPlan(name, category, schedule, additional, id);
-            $(this).blur() // 담기 버튼 클릭 후 포커스 제거
-        });
-    }
-
-    // 여행지 분류
-    function getAccommodationType(selector) {
-        return selector.includes('accommodation') ? '숙박' : (selector.includes('restaurant') ? '식당' : '관광지');
-    }
-
-
-    // 여행 계획 추가 함수
-    function addToPlan(name, category, schedule, additional, id) {
-        const newItem = `
-        <li class="sortable-item list-group-item list-group-item-action" data-id="${id}">
-            <div class="d-flex w-100 justify-content-between">
-                <span class="number">${$('#plan .sortable-item').length + 1}</span>
-                <h4 class="col-9">${name}</h4>
-                <small>여기에 시간 입력</small>
+    const newItem = `
+    <li class="sortable-item list-group-item list-group-item-action" data-id="${id}">
+        <div class="d-flex w-100 justify-content-between">
+            <span class="number">${$(`#${planDayX} .sortable-item`).length + 1}</span>
+            <h4 class="col-9">${name}</h4>
+            <small>여기에 시간 입력</small>
+        </div>
+        <button type="button" class="btn btn-outline-danger btn-delete btn-xs float-end">제거</button>
+        <p class="text-black mb-1">${schedule}</p>
+                <small>${category}</small>
+                <small>${additional}</small>
             </div>
-            <p class="text-black mb-1">${schedule}</p>
-            <small>${category}</small>
-            <small>${additional}</small>
-         </li>`;
-        $('#plan').append(newItem);
-    }
+        </div>
+    </li>`;
+
+    $(`#${planDayX}`).append(newItem);
+    initializeSortable(planDayX);
+}
+
+function initializeSortable(id) {
+    const el = document.getElementById(id);
+    const sortable = Sortable.create(el, {
+        animation: 150,
+        ghostClass: 'sortable-ghost',
+        chosenClass: 'sortable-chosen',
+        dragClass: 'sortable-drag',
+        onUpdate: function (evt) {
+            $(`#${id} .sortable-item`).each(function (index, item) {
+                $(item).find('.number').text(index + 1);
+            });
+        }
+    });
+}
+
+
+
+// 현재 일차 계산
+$('.add-day').click(function () {
+    let dayCount = $("#myDayTab .nav-item:not(.add-day)").length + 1;
+    let newTabId = "day" + dayCount + "-tab";
+
+    // 새로운 탭 메뉴 항목 생성
+    let newTab = $('<li/>', {
+        'class': 'nav-item',
+        'role': 'presentation',
+        'html': $('<a/>', {
+            'id': newTabId,
+            'class': 'nav-link',
+            'data-bs-toggle': 'tab',
+            'href': `#day${dayCount}`,
+            'role': 'tab',
+            'aria-controls': `day${dayCount}`,
+            'aria-selected': false,
+            'text': `${dayCount}일차`
+        })
+    }).insertBefore('.add-day');
+
+    // 새로운 탭 내용 생성
+    $('<div/>', {
+        'class': 'tab-pane fade show active', // 여기서 fade 클래스 추가
+        'id': `day${dayCount}`,
+        'role': 'tabpanel',
+        'aria-labelledby': newTabId,
+        'html': $('<ul/>', {
+            'class': 'sortable',
+            'id': `planDay${dayCount}`,
+        })
+    }).appendTo('#myDayTabContent');
+
+    // 새로 생성한 탭 활성화
+    newTab.find('.nav-link').tab('show');
 });
 
 /*
