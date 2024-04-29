@@ -10,7 +10,7 @@ public class CommonController {
     @GetMapping(value = {"", "/"})
     public String userMain(Model model) {
         model.addAttribute("title", "미정 플래너");
-        return "user/main";
+        return "index";
     }
 
 }
