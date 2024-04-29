@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  	  layout:decorate="~{user/layout/default}">
+
+	<th:block layout:fragment="customContent">
+		<!-- ====================================
+		———	SEARCH SECTION
+		===================================== -->
+		<section class="py-10">
+		  <div class="container">
+		    <div class="bg-dark-light rounded p-6 mb-7">
+		      <div class="row align-items-center">
+		        <div class="col-xl-3">
+		          <div class="section-title-bg mb-1 mb-lg-3 mb-xl-0">
+		            <h1 class="text-white text-uppercase mb-0">인기순위 기간</h1>
+		            <h2 class="text-white text-uppercase font-weight-bold mb-0">your <span class="text-primary">여행</span></h2>
+		          </div>
+		        </div>
+		  
+		        <div class="col-xl-9">
+		          <form method="GET" action="index.html">
+		            <div class="row">
+		              <div class="col-lg-10">
+		                <div class="row">
+		                  <div class="col-md-6 col-lg-3">
+		                    <div class="select-dropdown">
+		                      <div class="form-group mb-lg-0">
+		                        <div class="select-default select-search-box">
+		                          <select class="select-option">
+		                            <option>관리자 추천</option>
+		                            <option>회원 추천</option>
+		                            <option>다른회원의 계획추천</option>
+		                          </select>
+		                        </div>
+		                      </div>
+		                    </div>
+		                  </div>
+		  
+		                  <div class="col-md-6 col-lg-3">
+		                    <div class="form-group form-group-icon mb-lg-0">
+		                      <i class="far fa-calendar-alt" aria-hidden="true"></i>
+		                      <input type="text" class="form-control daterange-picker" autocomplete="off" name="dateRange" value=""
+		                        placeholder="MM/DD/YYYY" />
+		                    </div>
+		                  </div>
+		  
+		                  <div class="col-md-6 col-lg-3">
+		                    <div class="form-group form-group-icon mb-lg-0">
+		                      <i class="far fa-calendar-alt" aria-hidden="true"></i>
+		                      <input type="text" class="form-control daterange-picker" autocomplete="off" name="dateRange" value=""
+		                        placeholder="MM/DD/YYYY" />
+		                    </div>
+		                  </div>
+		  
+		                  <div class="col-md-6 col-lg-3">
+		                    <div class="select-dropdown">
+		                      <div class="form-group mb-lg-0">
+		                        <div class="select-default select-search-box">
+		                          <select class="select-option">
+		                            <option>최근 1개월</option>
+		                            <option>저번달</option>
+		                          </select>
+		                        </div>
+		                      </div>
+		                    </div>
+		                  </div>
+		                </div>
+		              </div>
+		  
+		              <div class="col-lg-2">
+		                <button class="btn btn-primary text-uppercase" type="button"
+		                  onclick="location.href='javascript:void(0)';">
+		                  찾기
+		                </button>
+		              </div>
+		            </div>
+		          </form>
+		        </div>
+		      </div>
+		    </div>
+		
+		    <div class="mb-6 mb-lg-7">
+		      <div class="row">
+		        <div class="col-md-6">
+		          <div class="media media-list-view-sm flex-column mb-5 mb-md-0">
+		            <div class="media-img position-relative mb-5">
+		              <img class="w-100 rounded lazyestload" data-src="/user/img/cities/cities-big-01.jpg" src="/user/img/cities/cities-big-01.jpg" alt="Generic placeholder image">
+		              <a class="media-img-overlay rounded badge-hover d-flex flex-column" href="destination-single-city.html">
+		                <div class="badge badge-black-Offset badge-rounded position-relative">
+		                  <span class="d-block text-uppercase font-size-15">
+		                    플랫폼관리자 추천
+		                  </span>
+		                </div>
+		              </a>
+		            </div>
+		
+		            <div class="media-body">
+		              <div class="row">
+		                <div class="col-lg-6 mb-5 mb-lg-0">
+		                  <div class="media media-list-sm align-items-center bg-smoke">
+		                    <div class="media-img">
+		                      <img class="w-100 lazyestload" data-src="/user/img/cities/cities-sm-01.jpg" src="/user/img/cities/cities-sm-01.jpg" alt="Generic placeholder image">
+		                      <a href="destination-single-city.html" class="media-img-overlay"></a>
+		                    </div>
+		
+		                    <div class="media-body ps-4">
+		                      <a href="destination-single-city.html" class="text-uppercase h4 text-dark hover-text-primary mb-3">관광지 top5</a>
+		                      <h4 class="text-primary mb-0">관광지</h4>
+		                    </div>
+		                  </div>
+		                </div>
+		              
+		                <div class="col-lg-6 mb-5 mb-lg-0">
+		                  <div class="media media-list-sm align-items-center bg-smoke">
+		                    <div class="media-img">
+		                      <img class="w-100 lazyestload" data-src="/user/img/cities/cities-sm-02.jpg" src="/user/img/cities/cities-sm-02.jpg" alt="Generic placeholder image">
+		                      <a href="destination-single-city.html" class="media-img-overlay"></a>
+		                    </div>
+		                  
+		                    <div class="media-body ps-4">
+		                      <a href="destination-single-city.html" class="text-uppercase h4 text-dark hover-text-primary mb-3">숙소 top5</a>
+		                      <h4 class="text-primary mb-0">숙소</h4>
+		                    </div>
+		                  </div>
+		                </div>
+		                
+		                <div class="col-lg-6 mb-5 mb-lg-0">
+		                  <div class="media media-list-sm align-items-center bg-smoke">
+		                    <div class="media-img">
+		                      <img class="w-100 lazyestload" data-src="/user/img/cities/cities-sm-02.jpg" src="/user/img/cities/cities-sm-02.jpg" alt="Generic placeholder image">
+		                      <a href="destination-single-city.html" class="media-img-overlay"></a>
+		                    </div>
+		                  
+		                    <div class="media-body ps-4">
+		                      <a href="destination-single-city.html" class="text-uppercase h4 text-dark hover-text-primary mb-3">음식점 top5</a>
+		                      <h4 class="text-primary mb-0">음식점</h4>
+		                    </div>
+		                  </div>
+		                </div>
+		                
+		              </div>
+		            </div>
+		          </div>
+		        </div>
+		      
+		        <div class="col-md-6">
+		          <div class="media media-list-view-sm flex-column">
+		            <div class="media-img position-relative mb-5">
+		              <img class="w-100 rounded lazyestload" data-src="/user/img/cities/cities-big-02.jpg" src="/user/img/cities/cities-big-02.jpg" alt="Generic placeholder image">
+		              <a class="media-img-overlay rounded badge-hover d-flex flex-column" href="destination-single-city.html">
+		                <div class="badge badge-black-Offset badge-rounded position-relative">
+		                  <span class="d-block text-uppercase font-size-15">
+		                    회원추천 인기순위
+		                  </span>
+		                </div>
+		              </a>
+		            </div>
+		        
+		            <div class="media-body">
+		              <div class="row">
+		                <div class="col-lg-6">
+		                  <div class="media media-list-sm align-items-center bg-smoke mb-5 mb-lg-0">
+		                    <div class="media-img">
+		                      <img class="w-100 lazyestload" data-src="/user/img/cities/cities-sm-03.jpg" src="/user/img/cities/cities-sm-03.jpg" alt="Generic placeholder image">
+		                      <a href="destination-single-city.html" class="media-img-overlay"></a>
+		                    </div>
+		        
+		                    <div class="media-body ps-4">
+		                      <a href="destination-single-city.html" class="text-uppercase h4 text-dark hover-text-primary mb-3">관광지 top5</a>
+		                      <h4 class="text-primary mb-0">관광지</h4>
+		                    </div>
+		                  </div>
+		                </div>
+		        
+		                <div class="col-lg-6">
+		                  <div class="media media-list-sm align-items-center bg-smoke mb-5 mb-lg-0">
+		                    <div class="media-img">
+		                      <img class="w-100 lazyestload" data-src="/user/img/cities/cities-sm-04.jpg" src="/user/img/cities/cities-sm-04.jpg" alt="Generic placeholder image">
+		                      <a href="destination-single-city.html" class="media-img-overlay"></a>
+		                    </div>
+		        
+		                    <div class="media-body ps-4">
+		                      <a href="destination-single-city.html" class="text-uppercase h4 text-dark hover-text-primary mb-3">숙소 top5</a>
+		                      <h4 class="text-primary mb-0">숙소</h4>
+		                    </div>
+		                  </div>
+		                </div>
+		                
+		                 <div class="col-lg-6">
+		                  <div class="media media-list-sm align-items-center bg-smoke mb-5 mb-lg-0">
+		                    <div class="media-img">
+		                      <img class="w-100 lazyestload" data-src="/user/img/cities/cities-sm-04.jpg" src="/user/img/cities/cities-sm-04.jpg" alt="Generic placeholder image">
+		                      <a href="destination-single-city.html" class="media-img-overlay"></a>
+		                    </div>
+		        
+		                    <div class="media-body ps-4">
+		                      <a href="destination-single-city.html" class="text-uppercase h4 text-dark hover-text-primary mb-3">음식점 top5</a>
+		                      <h4 class="text-primary mb-0">음식점</h4>
+		                    </div>
+		                  </div>
+		                </div>
+		              </div>
+		            </div>
+		          </div>
+		        </div>
+		      </div>
+		    </div>
+		
+		    <div class="mb-9">
+		      <div class="row">
+		        <div class="col-md-6">
+		          <div class="media media-list-view-sm flex-column mb-5 mb-md-0">
+		            <div class="media-img position-relative mb-5">
+		              <img class="w-100 rounded lazyestload" data-src="/user/img/cities/cities-big-03.jpg" src="/user/img/cities/cities-big-03.jpg" alt="Generic placeholder image">
+		              <a class="media-img-overlay rounded badge-hover d-flex flex-column" href="destination-single-city.html">
+		                <div class="badge badge-black-Offset badge-rounded position-relative">
+		                  <span class="d-block text-uppercase font-size-15">
+		                    다른회원의 여행계획 추천
+		                  </span>
+		                </div>
+		              </a>
+		            </div>
+		    
+		            <div class="media-body">
+		              <div class="row">
+		                <div class="col-lg-6 mb-5 mb-lg-0">
+		                  <div class="media media-list-sm align-items-center bg-smoke">
+		                    <div class="media-img">
+		                      <img class="w-100 lazyestload" data-src="/user/img/cities/cities-sm-05.jpg" src="/user/img/cities/cities-sm-05.jpg" alt="Generic placeholder image">
+		                      <a href="destination-single-city.html" class="media-img-overlay"></a>
+		                    </div>
+		    
+		                    <div class="media-body ps-4">
+		                      <a href="destination-single-city.html" class="text-uppercase h4 text-dark hover-text-primary mb-3">여행계획 top10</a>
+		                      <h4 class="text-primary mb-0"></h4>
+		                    </div>
+		                  </div>
+		                </div>
+		    
+		              
+		                
+		                
+		              </div>
+		            </div>
+		          </div>
+		        </div>
+		    
+		        <div class="col-md-6">
+		          <div class="media media-list-view-sm flex-column">
+		            <div class="media-img position-relative mb-5">
+		              <img class="w-100 rounded lazyestload" data-src="/user/img/cities/cities-big-04.jpg" src="/user/img/cities/cities-big-04.jpg" alt="Generic placeholder image">
+		              <a class="media-img-overlay rounded badge-hover d-flex flex-column" href="destination-single-city.html">
+		                <div class="badge badge-black-Offset badge-rounded position-relative">
+		                  <span class="d-block text-uppercase font-size-15">
+		                    Africa
+		                  </span>
+		                </div>
+		              </a>
+		            </div>
+		    
+		            <div class="media-body">
+		              <div class="row">
+		                <div class="col-lg-6">
+		                  <div class="media media-list-sm align-items-center bg-smoke mb-5 mb-lg-0">
+		                    <div class="media-img">
+		                      <img class="w-100 lazyestload" data-src="/user/img/cities/cities-sm-07.jpg" src="/user/img/cities/cities-sm-07.jpg" alt="Generic placeholder image">
+		                      <a href="destination-single-city.html" class="media-img-overlay"></a>
+		                    </div>
+		    
+		                    <div class="media-body ps-4">
+		                      <a href="destination-single-city.html" class="text-uppercase h4 text-dark hover-text-primary mb-3">UK</a>
+		                      <h4 class="text-primary mb-0">$6,500</h4>
+		                    </div>
+		                  </div>
+		                </div>
+		    
+		                <div class="col-lg-6">
+		                  <div class="media media-list-sm align-items-center bg-smoke">
+		                    <div class="media-img">
+		                      <img class="w-100 lazyestload" data-src="/user/img/cities/cities-sm-08.jpg" src="/user/img/cities/cities-sm-08.jpg" alt="Generic placeholder image">
+		                      <a href="destination-single-city.html" class="media-img-overlay"></a>
+		                    </div>
+		    
+		                    <div class="media-body ps-4">
+		                      <a href="destination-single-city.html" class="text-uppercase h4 text-dark hover-text-primary">Vutan</a>
+		                      <h4 class="text-primary mb-0">$7,000</h4>
+		                    </div>
+		                  </div>
+		                </div>
+		              </div>
+		            </div>
+		          </div>
+		        </div>
+		      </div>
+		    </div>
+		
+		    <ul class="list-unstyled d-flex flex-column flex-md-row text-center justify-content-center mb-0">
+		      <li class="mb-5 mb-md-0 me-md-3">
+		        <a href="" class="btn btn-sm btn-outline-secondary text-uppercase py-2">All Destination</a>
+		      </li>
+		
+		      <li>
+		        <a href="packages-list-left-sidebar.html" class="btn btn-sm btn-outline-secondary text-uppercase py-2">All Tours</a>
+		      </li>
+		    </ul>
+		  </div>
+		</section>
+	</th:block>
+
+</html>
