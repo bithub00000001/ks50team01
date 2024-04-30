@@ -12,6 +12,32 @@
 <th:block layout:fragment="customContent">
     <!-- list-style -->
     
+    
+    
+    <!-- ====================================
+———	PAGE TITLE
+===================================== -->
+<section class="page-title">
+  <div class="page-title-img bg-img bg-overlay-darken" style="background-image: url(assets/img/pages/page-title-bg4.jpg);">
+    <div class="container">
+      <div class="row align-items-center justify-content-center" style="height: 200px; margin-bottom: 50px;">
+        <div class="col-lg-6">
+          <div class="page-title-content">
+            <div class="title-border">
+              <h2 class="text-uppercase text-white font-weight-bold">공지사항</h2>
+            </div>
+            <p class="text-white mb-0"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>    
+    
+    
+    
+    
+    
 <div class="d-flex align-items-start">
   <div class="dropdown mt-3">
     <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
@@ -30,7 +56,7 @@
     
     
   	<div class="flex-grow-1 d-flex justify-content-center">
-      <div id="board-search" style="margin-top: 50px; margin-bottom: 50px; width: 500px;">
+      <div id="board-search" style="margin-top: 100px; margin-bottom: 50px; width: 500px;">
         <form class="mb-6" action="index.html" method="post">
           <div class="input-group input-group-sm">
             <input type="text" class="form-control form-control-sm rounded-0" required="" placeholder="검색어를 입력해주세요." aria-label="Search....">
@@ -59,7 +85,7 @@
             </li>
 
               
-            <li class="nav-item d-none"></li>+
+            <li class="nav-item d-none"></li>
           </ul>
 
         </div>
@@ -127,8 +153,8 @@
     </div>
 
     <!-- 페이징 -->
-	<section class="pt-5 pt-md-7">
-	  <div class="container">
+	<section class="pt-5 pt-md-7" >
+	  <div class="container" style="margin-bottom: 50px">
 	    <nav aria-label="Page navigation">
 	      <ul class="pagination justify-content-center align-items-center">
 	        <li class="page-item">
