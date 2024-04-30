@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  	  layout:decorate="~{user/layout/default}">
+
+<th:block layout:fragment="customCss">
+	<link th:href="@{/user/plugins/owl-carousel/owl.carousel.min.css}" rel='stylesheet' media='screen'>
+	<link th:href="@{/user/plugins/owl-carousel/owl.theme.default.min.css}" rel='stylesheet' media='screen'>
+    <!-- GOOGLE FONT -->
+    <link href='https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700' rel='stylesheet'>
+</th:block>
+
+
+
+<th:block layout:fragment="customContent">
+<!-- ====================================
+	———	PAGE TITLE
+	===================================== -->
+<section class="page-title">
+  <div class="page-title-img bg-img bg-overlay-darken" style="background-image: url(/user/img/pages/page-title-bg6.jpg);">
+    <div class="container">
+      <div class="row align-items-center justify-content-center" style="height: 200px;">
+        <div class="col-lg-6">
+          <div class="page-title-content">
+            <div class="title-border">
+              <h2 class="text-uppercase text-white font-weight-bold">관광지 세부사항</h2>
+            </div>
+            <p class="text-white mb-0"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ====================================
+———	CITY SECTION
+===================================== -->
+<section class="py-10">
+  <div class="container">
+    <div class="mb-6">
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="mb-6 mb-lg-0">
+            <div id="package-slider" class="owl-carousel owl-theme package-slider package-single">
+              <div class="item">
+                <img class="lazyestload" th:data-src="@{/user/img/packages/package-slider-001.jpg}" th:src="@{/user/img/packages/package-slider-001.jpg}" alt="image">
+              </div>
+            
+              <div class="item">
+                <img class="lazyestload" th:data-src="@{/user/img/packages/package-slider-002.jpg}" th:src="@{/user/img/packages/package-slider-002.jpg}" alt="image">
+              </div>
+            
+              <div class="item">
+                <img class="lazyestload" th:data-src="@{/user/img/packages/package-slider-003.jpg}" th:src="@{/user/img/packages/package-slider-003.jpg}" alt="image">
+              </div>
+            </div>
+          </div>
+        </div>
+    
+        <div class="col-lg-4">
+          <div class="card card-bg-img">
+            <div class="position-relative">
+              <img class="card-img-top rounded lazyestload" th:data-src="@{/user/img/cities/weather-bg.jpg}" th:src="@{/user/img/cities/weather-bg.jpg}" alt="Card image cap">
+          
+              <div class="card-img-overlay rounded-0 d-flex flex-column">
+                <div class="row">
+                  <div class="col-6">
+                    <p class="text-white mb-0">April 20, <span id="copy-year"></span></p>
+                  </div>
+
+                  <div class="col-6">
+                    <div class="text-right">
+                      <p class="text-white mb-0">Tuesday</p>
+                    </div>
+                  </div>
+
+                  <script>
+                    var d = new Date();
+                    var year = d.getFullYear();
+                    document.getElementById("copy-year").innerHTML = year;
+                  </script>
+                </div>
+
+                <div class="mt-auto text-center">
+                  <div class="mb-2">
+                    <img class="img-fluid" th:src="@{/user/img/icons/cloud.png}">
+                  </div>
+                  
+                  <h2 class="text-white font-weight-bold display-4 mb-4">28<sup>0</sup></h2>
+                  <h3 class="text-white font-weight-bold mb-0">France, Paris</h3>
+                </div>
+
+                <div class="mt-auto px-4 px-lg-0 px-xl-4">
+                  <div class="row">
+                    <div class="col-4">
+                      <ul class="list-unstyled mb-0 text-center">
+                        <li class="mb-1">
+                          <p class="text-white mb-0">Tue</p>
+                        </li>
+
+                        <li class="mb-1">
+                          <img th:src="@{/user/img/icons/cloud-rain.png}" alt="image">
+                        </li>
+
+                        <li>
+                          <p class="text-white mb-0">18<sup>0</sup></p>
+                        </li>
+                      </ul>
+                    </div>
+                  
+                    <div class="col-4">
+                      <ul class="list-unstyled mb-0 text-center">
+                        <li class="mb-1">
+                          <p class="text-white mb-0">Wed</p>
+                        </li>
+                    
+                        <li class="mb-1">
+                          <img th:src="@{/user/img/icons/sun.png}" alt="image">
+                        </li>
+                    
+                        <li>
+                          <p class="text-white mb-0">25<sup>0</sup></p>
+                        </li>
+                      </ul>
+                    </div>
+
+                    <div class="col-4">
+                      <ul class="list-unstyled mb-0 text-center">
+                        <li class="mb-1">
+                          <p class="text-white mb-0">Thu</p>
+                        </li>
+                    
+                        <li class="mb-1">
+                          <img th:src="@{/user/img/icons/cloud-sm.png}" alt="image">
+                        </li>
+                    
+                        <li>
+                          <p class="text-white mb-0">22<sup>0</sup></p>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-7">
+      <div id="destination">
+        <div class="mb-0">
+          <ul class="nav nav-tabs destination-tabs" id="destinationTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="overView-tab" data-bs-toggle="tab" href="#overView" role="tab"
+                aria-controls="overView" aria-selected="true">Over view</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" id="tourGuide-tab" data-bs-toggle="tab" href="#tourGuide" role="tab"
+                aria-controls="tourGuide" aria-selected="false">Tour guide</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" id="locationMap-tab" data-bs-toggle="tab" href="#locationMap" role="tab"
+                aria-controls="locationMap" aria-selected="false">Location map</a>
+            </li>
+
+            <li class="nav-item ms-md-auto">
+              <ul class="list-unstyled d-flex justify-content-center mb-0">
+                <li class="me-3">
+                  <a href="javascript:void(0)" class="text-gray-color hover-text-primary">
+                    <i class="fab fa-facebook-f" aria-hidden="true"></i>
+                  </a>
+                </li>
+
+                <li class="me-3">
+                  <a href="javascript:void(0)" class="text-gray-color hover-text-primary">
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                  </a>
+                </li>
+
+                <li class="me-3">
+                  <a href="javascript:void(0)" class="text-gray-color hover-text-primary">
+                    <i class="fab fa-google-plus-g" aria-hidden="true"></i>
+                  </a>
+                </li>
+
+                <li class="me-3">
+                  <a href="javascript:void(0)" class="text-gray-color hover-text-primary">
+                    <i class="fab fa-pinterest-p" aria-hidden="true"></i>
+                  </a>
+                </li>
+
+                <li>
+                  <a href="javascript:void(0)" class="text-gray-color hover-text-primary">
+                    <i class="fab fa-vimeo-v" aria-hidden="true"></i>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+          
+          <div class="tab-content destinationTab-content" id="destinationTabContent">
+            <div class="tab-pane show active" id="overView" role="tabpanel" aria-labelledby="overView-tab">
+              <div class="row">
+                <div class="col-md-7 col-lg-8">
+                  <h3 class="text-uppercase mb-5">Some title should be here</h3>
+                  
+                  <p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.</p>
+
+                  <div class="mb-6 mb-md-0">
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <ul class="list-unstyled mb-0">
+                          <li class="media media-list-content">
+                            <div class="">
+                              <i class="fa fa-square" aria-hidden="true"></i>
+                            </div>
+                    
+                            <div class="media-body">
+                              <p class="mb-0">Some point should be here</p>
+                            </div>
+                          </li>
+                    
+                          <li class="media media-list-content">
+                            <div class="">
+                              <i class="fa fa-square" aria-hidden="true"></i>
+                            </div>
+                    
+                            <div class="media-body">
+                              <p class="mb-0">Curabitur viverra orci ac faucibus</p>
+                            </div>
+                          </li>
+                    
+                          <li class="media media-list-content">
+                            <div class="">
+                              <i class="fa fa-square" aria-hidden="true"></i>
+                            </div>
+                    
+                            <div class="media-body">
+                              <p class="mb-0">Donec rhoncus aliquet mi mattis</p>
+                            </div>
+                          </li>
+                    
+                          <li class="media media-list-content">
+                            <div class="">
+                              <i class="fa fa-square" aria-hidden="true"></i>
+                            </div>
+                    
+                            <div class="media-body">
+                              <p class="mb-0">Morbi euismod molestie massa</p>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    
+                      <div class="col-lg-6">
+                        <ul class="list-unstyled mb-0">
+                          <li class="media media-list-content">
+                            <div class="">
+                              <i class="fa fa-square" aria-hidden="true"></i>
+                            </div>
+                    
+                            <div class="media-body">
+                              <p class="mb-0">Pellentesque at lacus nec arcu</p>
+                            </div>
+                          </li>
+                    
+                          <li class="media media-list-content">
+                            <div class="">
+                              <i class="fa fa-square" aria-hidden="true"></i>
+                            </div>
+                    
+                            <div class="media-body">
+                              <p class="mb-0">Mattis suspendisse at ligula</p>
+                            </div>
+                          </li>
+                    
+                          <li class="media media-list-content mb-0">
+                            <div class="">
+                              <i class="fa fa-square" aria-hidden="true"></i>
+                            </div>
+                    
+                            <div class="media-body">
+                              <p class="mb-0">Volutpat quis eu augue</p>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-5 col-lg-4">
+                  <div class="border border-light-gray bg-smoke rounded p-6">
+                    <h4 class="text-uppercase mb-5">Benefits</h4>
+
+                    <ul class="list-unstyled mb-6">
+                      <li class="media mb-3">
+                        <div class="me-3">
+                          <i class="fa fa-check-square" aria-hidden="true"></i>
+                        </div>
+
+                        <div class="media-body">
+                          <p class="text-dark text-capitalize mb-0">Some benefit</p>
+                        </div>
+                      </li>
+
+                      <li class="media mb-3">
+                        <div class="me-3">
+                          <i class="fa fa-check-square" aria-hidden="true"></i>
+                        </div>
+                      
+                        <div class="media-body">
+                          <p class="text-dark text-capitalize mb-0">Curabitur viveraj</p>
+                        </div>
+                      </li>
+
+                      <li class="media mb-3">
+                        <div class="me-3">
+                          <i class="fa fa-check-square" aria-hidden="true"></i>
+                        </div>
+                      
+                        <div class="media-body">
+                          <p class="text-dark text-capitalize mb-0">Donec null rhonus</p>
+                        </div>
+                      </li>
+
+                      <li class="media">
+                        <div class="me-3">
+                          <i class="fa fa-check-square" aria-hidden="true"></i>
+                        </div>
+                      
+                        <div class="media-body">
+                          <p class="text-dark text-capitalize mb-0">Morbi up sum eismod</p>
+                        </div>
+                      </li>
+                    </ul>
+
+                    <div class="">
+                      <button class="btn btn-primary text-uppercase" type="button" onclick="location.href='booking-step-1.html';">
+                        Book Now
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+    
+            <div class="tab-pane" id="tourGuide" role="tabpanel" aria-labelledby="tourGuide-tab">
+              <div class="row">
+                <div class="col-md-7 col-lg-8">
+                  <h3 class="text-uppercase mb-5">Lorem ipsum dolor sit</h3>
+              
+                  <p class="mb-5">Donec rhoncus aliquet mi mattis consectetur. Curabitur viverra orci ac faucibus rutrum. Vivamus sit amet magna risus. Integer volutpat sapien at libero iaculis, et vulputate quam euismod. Nunc at neque lacinia nibh efficitur euismod.
+                  Integer molestie mauris vel dolor rhoncus posuere porta in diam. Praesent eget velit lorem. Sed suscipit orci dolor, ac
+                  tristique neque volutpat eu.</p>
+
+                  <div class="mb-6 mb-md-0">
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <ul class="list-unstyled mb-0">
+                          <li class="media media-list-content">
+                            <div class="">
+                              <i class="fa fa-square" aria-hidden="true"></i>
+                            </div>
+                    
+                            <div class="media-body">
+                              <p class="mb-0">Pellentesque at lacus nec arcu</p>
+                            </div>
+                          </li>
+                    
+                          <li class="media media-list-content">
+                            <div class="">
+                              <i class="fa fa-square" aria-hidden="true"></i>
+                            </div>
+                    
+                            <div class="media-body">
+                              <p class="mb-0">Mattis suspendisse at ligula</p>
+                            </div>
+                          </li>
+                    
+                          <li class="media media-list-content">
+                            <div class="">
+                              <i class="fa fa-square" aria-hidden="true"></i>
+                            </div>
+                    
+                            <div class="media-body">
+                              <p class="mb-0">Volutpat quis eu augue</p>
+                            </div>
+                          </li>
+                    
+                          <li class="media media-list-content">
+                            <div class="">
+                              <i class="fa fa-square" aria-hidden="true"></i>
+                            </div>
+                    
+                            <div class="media-body">
+                              <p class="mb-0">Some point should be here</p>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    
+                      <div class="col-lg-6">
+                        <ul class="list-unstyled mb-0">
+                          <li class="media media-list-content">
+                            <div class="">
+                              <i class="fa fa-square" aria-hidden="true"></i>
+                            </div>
+                    
+                            <div class="media-body">
+                              <p class="mb-0">Curabitur viverra orci ac faucibus</p>
+                            </div>
+                          </li>
+                    
+                          <li class="media media-list-content">
+                            <div class="">
+                              <i class="fa fa-square" aria-hidden="true"></i>
+                            </div>
+                    
+                            <div class="media-body">
+                              <p class="mb-0">Donec rhoncus aliquet mi mattis</p>
+                            </div>
+                          </li>
+                    
+                          <li class="media media-list-content mb-0">
+                            <div class="">
+                              <i class="fa fa-square" aria-hidden="true"></i>
+                            </div>
+                    
+                            <div class="media-body">
+                              <p class="mb-0">Morbi euismod molestie massa</p>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              
+                <div class="col-md-5 col-lg-4">
+                  <div class="border border-light-gray bg-smoke rounded p-6">
+                    <h4 class="text-uppercase mb-5">Benefits</h4>
+                
+                    <ul class="list-unstyled mb-6">
+                      <li class="media mb-3">
+                        <div class="me-3">
+                          <i class="fa fa-check-square" aria-hidden="true"></i>
+                        </div>
+                
+                        <div class="media-body">
+                          <p class="text-dark text-capitalize mb-0">Some benefit</p>
+                        </div>
+                      </li>
+                
+                      <li class="media mb-3">
+                        <div class="me-3">
+                          <i class="fa fa-check-square" aria-hidden="true"></i>
+                        </div>
+                
+                        <div class="media-body">
+                          <p class="text-dark text-capitalize mb-0">Curabitur viveraj</p>
+                        </div>
+                      </li>
+                
+                      <li class="media mb-3">
+                        <div class="me-3">
+                          <i class="fa fa-check-square" aria-hidden="true"></i>
+                        </div>
+                
+                        <div class="media-body">
+                          <p class="text-dark text-capitalize mb-0">Donec null rhonus</p>
+                        </div>
+                      </li>
+                
+                      <li class="media">
+                        <div class="me-3">
+                          <i class="fa fa-check-square" aria-hidden="true"></i>
+                        </div>
+                
+                        <div class="media-body">
+                          <p class="text-dark text-capitalize mb-0">Morbi up sum eismod</p>
+                        </div>
+                      </li>
+                    </ul>
+                
+                    <div class="">
+                      <button class="btn btn-primary text-uppercase" type="button" onclick="location.href='booking-step-1.html';">
+                        Book Now
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+    
+            <div class="tab-pane" id="locationMap" role="tabpanel" aria-labelledby="locationMap-tab">
+              <div class="" id="map" style="width:100%; height:400px;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-0">
+      <h3 class="text-uppercase mb-5">Tour's form Maldives</h3>
+      
+      <div class="row">
+        <div class="col-md-6 col-lg-4">
+          <div class="media media-hoverable justify-content-center mb-5 mb-lg-0">
+            <div class="media-content">
+              <img class="media-img lazyestload" th:data-src="@{/user/img/packages/package-related-01.jpg}" th:src="@{/user/img/packages/package-related-01.jpg}" alt="Generic placeholder image">
+      
+              <a href="single-package-left-sidebar.html" class="media-img-overlay">
+                <div class="overlay-content">
+                  <h3 class="text-uppercase font-weight-bold mb-3">Maldives Tour</h3>
+                  <p class="text-white text-capitalize mb-4">Lorem ipsum</p>
+      
+                  <button type="button" onclick="location.href='jascript:void(0)';"
+                    class="btn btn-xs btn-sale btn-outline-primary text-uppercase">
+                    View more
+                  </button>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      
+        <div class="col-md-6 col-lg-4">
+          <div class="media media-hoverable justify-content-center mb-5 mb-lg-0">
+            <div class="media-content">
+              <img class="media-img lazyestload" th:data-src="@{/user/img/packages/package-related-02.jpg}" th:src="@{/user/img/packages/package-related-02.jpg}" alt="Generic placeholder image">
+      
+              <a href="single-package-left-sidebar.html" class="media-img-overlay">
+                <div class="overlay-content">
+                  <h3 class="text-uppercase font-weight-bold mb-3">Blandit Tour</h3>
+                  <p class="text-white text-capitalize mb-4">Lorem ipsum</p>
+      
+                  <button type="button" onclick="location.href='jascript:void(0)';"
+                    class="btn btn-xs btn-sale btn-outline-primary text-uppercase">
+                    View more
+                  </button>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      
+        <div class="col-md-6 col-lg-4">
+          <div class="media media-hoverable justify-content-center">
+            <div class="media-content">
+              <img class="media-img lazyestload" th:data-src="@{/user/img/packages/package-related-03.jpg}" th:src="@{/user/img/packages/package-related-03.jpg}" alt="Generic placeholder image">
+      
+              <a href="single-package-left-sidebar.html" class="media-img-overlay">
+                <div class="overlay-content">
+                  <h3 class="text-uppercase font-weight-bold mb-3">Supendis Tour</h3>
+                  <p class="text-white text-capitalize mb-4">Lorem ipsum</p>
+      
+                  <button type="button" onclick="location.href='jascript:void(0)';"
+                    class="btn btn-xs btn-sale btn-outline-primary text-uppercase">
+                    View more
+                  </button>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+ <!-- ====================================
+    ——— MODAL SECTION
+    ===================================== -->
+    <!-- Signup Modal -->
+    <div class="modal fade" id="signup" tabindex="-1" role="dialog" aria-label="signupModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header rounded">
+            <h3 class="modal-title text-uppercase font-weight-bold">Create your account</h3>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+          <div class="modal-body">
+            <form class="" action="index.html" method="post">
+              <div class="mb-3">
+                <input type="text" class="form-control bg-smoke" required="" placeholder="Full Name">
+              </div>
+
+              <div class="mb-3">
+                <input type="email" class="form-control bg-smoke" required="" placeholder="Email">
+              </div>
+    
+              <div class="mb-3">
+                <input type="password" class="form-control bg-smoke" required="" placeholder="Password">
+              </div>
+    
+              <div class="mb-3 form-check mb-0">
+                <input type="checkbox" class="form-check-input" id="exampleCheck4">
+                <label class="form-check-label text-gray-color mb-3" for="exampleCheck4">
+                  I agree to the terms of use and privacy.
+                </label>
+              </div>
+
+              <div class="d-grid">
+                <button type="submit" class="btn btn-primary btn-block text-uppercase">Login</button>
+              </div>
+
+              <div class="text-uppercase text-center py-3">Or</div>
+
+              <div class="d-grid">
+                <button type="submit" class="btn btn-facebook btn-block text-uppercase text-white">Login with facebook</button>
+              </div>
+            </form>
+          </div>
+    
+          <div class="modal-footer justify-content-center">
+            <p class="mb-1">Don’t have an Account? <a href="javascript:void(0)">Sign up</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-label="loginModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header rounded">
+            <h3 class="modal-title text-uppercase font-weight-bold">Log in to your account</h3>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+          <div class="modal-body">
+            <form class="" action="index.html" method="post">
+              <div class="mb-3">
+                <input type="email" class="form-control bg-smoke" required="" placeholder="Email">
+              </div>
+
+              <div class="mb-3">
+                <input type="password" class="form-control bg-smoke" required="" placeholder="Password">
+              </div>
+
+              <div class="mb-3 form-check mb-0">
+                <input type="checkbox" class="form-check-input" id="exampleCheck5">
+                <label class="form-check-label text-gray-color mb-3" for="exampleCheck5">
+                  Remember me
+                </label>
+                <a class="pull-right" href="javascript:void(0)">Fogot Password?</a>
+             </div>
+
+             <div class="d-grid">
+              <button type="submit" class="btn btn-primary text-uppercase">Login</button>
+             </div>
+
+              <div class="text-uppercase text-center py-3">Or</div>
+
+              <div class="d-grid">
+                <button type="submit" class="btn btn-facebook text-uppercase text-white">Login with facebook</button>
+               </div>
+            </form>
+          </div>
+
+          <div class="modal-footer justify-content-center">
+            <p class="mb-1">Don’t have an Account? <a href="javascript:void(0)">Sign up</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- INQUIRY IN MODAL -->
+    <div class="modal fade" id="inquiry" tabindex="-1" role="dialog" aria-label="inquiryModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header rounded">
+            <h3 class="modal-title text-uppercase font-weight-bold">Inquiry about tour</h3>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+          <div class="modal-body pb-3">
+            <form class="" action="index.html" method="post">
+              <div class="mb-3">
+                <input type="text" class="form-control bg-smoke" required="" placeholder="Your Name">
+              </div>
+
+              <div class="mb-3">
+                <input type="email" class="form-control bg-smoke" required="" placeholder="Your Email">
+              </div>
+    
+              <div class="mb-3">
+                <input type="number" class="form-control bg-smoke" required="" placeholder="Phone Number">
+              </div>
+
+              <div class="mb-3">
+                <textarea class="form-control bg-smoke" rows="6" placeholder="Message"></textarea>
+              </div>
+    
+              <button type="submit" class="btn btn-primary text-uppercase">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>	
+</th:block>
+
+<th:block layout:fragment="customJsFIle">
+	<script th:src="@{/user/plugins/owl-carousel/owl.carousel.min.js}"></script>
+	<script src='https://maps.googleapis.com/maps/api/js?key=AIzaSyDU79W1lu5f6PIiuMqNfT1C6M0e_lq1ECY'></script>
+</th:block>
+</html>
