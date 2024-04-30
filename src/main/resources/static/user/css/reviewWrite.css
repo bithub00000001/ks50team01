@@ -1,6 +1,6 @@
 @charset "UTF-8";
 .separator1 {
-    border-top: 3px solid orange; /* 굵은 직선 스타일 설정 */
+    border-top: 3px solid #ff9b40; /* 굵은 직선 스타일 설정 */
     margin: 10px 0; /* 위아래 여백 설정 */
 }
 .separator2 {
@@ -25,7 +25,7 @@
 /* 취소와 등록 버튼 */
 .form-group .btn {
     padding: 10px 20px;
-    background-color: orange;
+    background-color: #ff9b40;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -94,7 +94,7 @@ display: none;
     bottom: 10px; /* 아래 여백 조정 */
     right: 10px; /* 오른쪽 여백 조정 */
     font-size: 15px;
-    color: orange;
+    color: #ff9b40;
 }
 
 /* 글자수 (0/1000) 텍스트 박스 안으로 이동 -> 텍스트를 많이 사용하면 텍스트와 겹침*/
@@ -146,18 +146,20 @@ display: none;
 /* 첨부하기 버튼 스타일 */
 .file-upload-btn {
     padding: 10px 20px;
-    background-color: orange;
+    background-color: #ff9b40;
     color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     margin-right: 10px; /* 버튼과 텍스트 사이 여백 조정 */
+    margin-top: 10px;
 }
 
 /* (0/10) 색과 위치 지정 */
 #fileCount {
-    color: orange; /* 파일 갯수 텍스트만 주황색으로 설정 */
+    color: #ff9b40; /* 파일 갯수 텍스트만 주황색으로 설정 */
     margin-right: 15px; /* 텍스트를 오른쪽으로 이동하여 버튼의 오른쪽에 정렬 */
+    margin-top: 5px;
 }
 
 /* 첨부하기 버튼과 (0/10) 오른쪽 정렬 */
@@ -179,7 +181,7 @@ display: none;
 
 /* 등록된 이미지 미리보기 크기 */
 .attached-file img {
-    max-width: 100px; /* 썸네일 이미지의 최대 너비 */
+  max-width: 100px; /* 썸네일 이미지의 최대 너비 */
   max-height: 100px; /* 썸네일 이미지의 최대 높이 */
   margin-right: 10px; /* 이미지와 파일명 사이 간격 */
 }
@@ -194,7 +196,7 @@ display: none;
 
 /* 첨부파일 x 버튼 스타일 */
 .delete-button {
-    background-color: orange;
+    background-color: #ff9b40;
     color: white;
     border: none;
     border-radius: 50%;
@@ -204,3 +206,59 @@ display: none;
     cursor: pointer;
     margin-left: 10px;
 }
+
+/* 검색 전체 컨테이너 스타일 */
+.store-search {
+    display: flex; /* 컨테이너 내의 요소들을 수평으로 배치하기 위해 Flexbox 사용 */
+    justify-content: center; /* 오른쪽 정렬 */
+    align-items: center; /* 수직 가운데 정렬 */
+    margin-bottom: 100px; /* 아래쪽 여백 추가 */
+}
+
+/* 검색 입력란 스타일 */
+.store-search input[type="text"] {
+    height: 40px; /* 입력란과 버튼의 높이를 동일하게 설정 */
+    width: 300px; /* 너비 설정 */
+    border: 2px solid #ff9b40; /* 주황색 테두리 */
+    border-radius: 5px;
+    padding: 0 10px; /* 좌우 여백 설정 */
+}
+
+/* 검색 버튼 스타일 */
+.store-search button {
+    padding: 10px 20px; /* 버튼 내부 여백 조정 */
+    background-color: #ff9b40; /* 배경색 설정 */
+    color: #fff; /* 글자색 설정 */
+    border: 2px solid #ff9b40; /* 테두리 설정 */
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px; /* 왼쪽 여백 설정 */
+}
+
+.store-search input[type="text"] {
+    width: calc(500px - 110px); /* 버튼을 제외한 나머지 공간을 입력란으로 설정 */
+    border: 2px solid #ff9b40;
+}
+
+.store-search button {
+    width: 80px; /* 버튼의 너비 설정 */
+    border: 2px solid #ff9b40;
+    background-color: ff9b40; /* 주황색 배경색 설정 */
+    color: white; /* 글자색 설정 */
+}
+
+
+/* 텍스트 입력란 placeholder 스타일 */
+input[type="text"]::placeholder {
+    position: absolute; /* 절대 위치 지정 */
+    top: 50%; /* 상단 여백을 50%로 설정 */
+    left: 50%; /* 왼쪽 여백을 50%로 설정 */
+    transform: translate(-50%, -50%); /* 가운데 정렬을 위한 변형(transform) 적용 */
+}
+
+/* 타이틀과 검색 부분 간의 거리 조정 */
+.page-title {
+    margin-bottom: -80px; /* 원하는 만큼의 간격으로 조정 */
+}
+
+
