@@ -20,4 +20,18 @@
 			MEMBER_MANAGE;
 	</select>
 	
+	<select id="getMemberInfoById" resultType="Member">
+		/* 검색 회원 등급 조회 */
+		SELECT 
+			m.MBR_ID			AS memberId,
+			m.MBR_GRD_NO		AS memberGrdNum,
+			m.MBR_NM			AS memberName,
+			m.MBR_NICKNAME		AS memberNickname,
+			m.MBR_TELNO			AS memberTelNum
+		FROM 
+			MEMBER_MANAGE AS m
+		WHERE
+			m.MBR_ID = #{memberId};
+	</select>
+	
 </mapper>
