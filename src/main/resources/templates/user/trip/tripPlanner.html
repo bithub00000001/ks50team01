@@ -21,7 +21,7 @@
             <label for="region">지역 선택:</label>
             <select class="select-option" id="region"><!--/*th:with="regions=${@regionService.getRegions()}"*/-->
                 <option value="">지역 선택</option>
-                <option>옵션1</option> <!--/*th:each="region : ${regions}" th:value="${region}" th:text="${region}"*/-->
+                <option value="">옵션1</option> <!--/*th:each="region : ${regions}" th:value="${region}" th:text="${region}"*/-->
             </select>
             <br>
 
@@ -164,10 +164,18 @@
                         <!-- sortable 리스트의 내용 -->
                         <ul class="sortable" id="planDay1">
                             <li class="sortable-item list-group-item list-group-item-action">
-                                <div class="d-flex w-100 justify-content-between">
-                                    <span class="number">1</span>
-                                    <h4 class="col-9">전주 박물관</h4>
-                                    <small>여기에 시간 입력</small>
+                                <div class="row align-items-center">
+                                    <div class="col-1">
+                                        <div class="border border-dark bg-facebook text-white rounded-circle d-flex justify-content-center align-items-center mt-1" style="height:22px;width:22px;">
+                                            <span class="number">1</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-7 mt-2">
+                                        <h4>전주 박물관</h4>
+                                    </div>
+                                    <div class="col-4 text-end">
+                                        <small>여기에 시간 입력</small>
+                                    </div>
                                 </div>
                                 <button type="button" class="btn btn-outline-danger btn-delete  btn-xs float-end">제거</button>
                                 <p class="text-black mb-1">여기에 세부 스케줄 입력</p>
