@@ -2,7 +2,21 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
                 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
                 layout:decorate="~{platform/layout/default}">
-
+	<head>
+		<style type="text/css">
+			.control-label{
+				text-align: center !important;
+				background-color: #f8f8f8 !important;
+				padding-bottom: 8px !important;	
+			}
+			.radio label{
+				margin-left: 10px !important;
+			}
+			.reservation{
+				padding-left: 10px !important;
+			}
+		</style>
+	</head>
 	<th:block layout:fragment="customContent">
 		<div class="col-md-12col-sm-6 col-xs-12">
 			<div class="x_panel">
@@ -11,36 +25,46 @@
 					<div class="clearfix"></div>
 				</div>
 				<div class="x_content">
-					<p>
-					텍스트 라는게 ㅇ굳이 필요한가<br> 한칸만 띄는거 필요한거같군
-					</p>
-					<div class="well" style="overflow: auto">
-						<div class="col-md-12">
-							<form class="form-horizontal">
-								<fieldset>
-									<div class="control-group">
-										<div class="controls">
-											<div class="input-prepend input-group">
-												<span class="add-on input-group-addon">
-													<i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
-												</span>
-												<input type="text" style="width: 200px" name="reservation"
-													   id="reservation" class="form-control" value="01/01/2024 - 01/25/2024" />
-											</div>
-										</div>
-									</div>
-								</fieldset>
-							</form>
+					<form class="form-horizontal">
+					
+						<div class="form-group">
+							<label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">검색대상<span class="required">*</span></label>
+							<div class="col-md-9 col-sm-9 col-xs-12 form-element">
+								<div class="radio">
+									<label>
+										<input type="radio" value="option1" id="optionsRadios1" name="optionsRadios" checked="checked"> 전체
+									</label>
+									<label>
+										<input type="radio" value="option2" id="optionsRadios2" name="optionsRadios"> 가입회원
+									</label>
+									<label>
+										<input type="radio" value="option2" id="optionsRadios2" name="optionsRadios"> 탈퇴회원
+									</label>
+								</div>
+							</div>
 						</div>
-						</p>
-						<br><br>
-						텍스트<br>
-						</p>
-					</div>
-					<div class="clearfix"></div>
+						
+						<div class="form-group">
+							<label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">기간선택<span class="required">*</span></label>
+							<div class="input-prepend input-group col-md-8 col-sm-8 col-xs-12 reservation">
+								<span class="add-on input-group-addon">
+									<i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+								</span>
+								<input type="text" style="width: 200px" name="reservation"
+									   id="reservation" class="form-control" value="01/01/2024 - 01/25/2024" />
+							</div>
+						</div>
+						<div class="ln_solid"></div>
+						<div class="form-group">
+							<div class="col-md-12 col-sm-12 col-xs-12 text-center">
+								<button class="btn btn-success btn-lg" type="button">검색</button>
+								<button type="reset" class="btn btn-dark btn-lg">초기화</button>
+							</div>
+						</div>
+					</form>
+					<div id="echart_line" class="col-md-auto" style="height: 700px;"></div>
 				</div>
 				<!-- 표 -->
-				<div id="echart_line" lass="col-md-12" style="height: 700px;"></div>
 			</div>
 		</div>
 	</th:block>
@@ -59,7 +83,6 @@
 		<script th:src="@{/platform/vendors/bootstrap-daterangepicker/daterangepicker.js}"></script>
 	</th:block>
 
-	
 	<th:block layout:fragment="customJs">
 		<script>
 		/*
@@ -283,38 +306,19 @@
 		var echartLine = echarts.init(document.getElementById('echart_line'), theme);
 
 		  echartLine.setOption({
-			title: {
-			  text: 'Line Graph',
-			  subtext: 'Subtitle'
-			},
-			tooltip: {
-			  trigger: 'axis'
-			},
-			legend: {
-			  x: 220,
-			  y: 40,
-			  data: ['Intent', 'Pre-order', 'Deal']
-			},
+			title: {text: 'Line Graph', subtext: 'Subtitle'},
+			tooltip: {trigger: 'axis'},
+			legend: {x: 220, y: 40, data: ['Intent', 'Pre-order', 'Deal']},
 			toolbox: {
 			  show: true,
 			  feature: {
 				magicType: {
 				  show: true,
-				  title: {
-					line: 'Line',
-					bar: 'Bar',
-					stack: 'Stack',
-					tiled: 'Tiled'
-				  },
+				  title: {line: 'Line', bar: 'Bar', stack: 'Stack', tiled: 'Tiled'},
 				  type: ['line', 'bar', 'stack', 'tiled']
 				},
-				restore: {
-				  show: true,
-				  title: "Restore"
-				},
-				saveAsImage: {
-				  show: true,
-				  title: "Save Image"
+				restore: {show: true, title: "Restore"},
+				saveAsImage: {show: true, title: "Save Image"
 				}
 			  }
 			},
