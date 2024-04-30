@@ -2,44 +2,49 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
   <head>
-    <!-- SITE TITTLE -->
+    <!-- SITE TITTLE START -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>여행 계획</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- Plugins css Style -->
-    <link href="/user/plugins/fontawesome-5.15.2/css/all.min.css" rel='stylesheet'>
-    <link href="/user/plugins/fontawesome-5.15.2/css/fontawesome.min.css" rel='stylesheet'>
-    <link href="/user/plugins/animate/animate.css" rel="stylesheet">
-    <link href="/user/plugins/menuzord/css/menuzord.css" rel="stylesheet">
-    <link href="/user/plugins/menuzord/css/menuzord-animations.css" rel="stylesheet">
+    <!-- SITE TITTLE END -->
 
+    <!-- PLUGINS CSS STYLE START -->
+    <link th:href="@{/user/plugins/fontawesome-5.15.2/css/all.min.css}" rel='stylesheet'>
+    <link th:href="@{/user/plugins/fontawesome-5.15.2/css/fontawesome.min.css}" rel='stylesheet'>
+    <link th:href="@{/user/plugins/animate/animate.css}" rel="stylesheet">
+    <link th:href="@{/user/plugins/menuzord/css/menuzord.css}" rel="stylesheet">
+    <link th:href="@{/user/plugins/menuzord/css/menuzord-animations.css}" rel="stylesheet">
+    <link th:href="@{/user/plugins/fancybox/jquery.fancybox.min.css}" rel='stylesheet'>
+    <link th:href="@{/user/plugins/selectric/selectric.css}" rel='stylesheet'>
+    <!-- PLUGINS CSS STYLE END -->
 
-    <link href="/user/plugins/fancybox/jquery.fancybox.min.css" rel='stylesheet'>
-    <link href="/user/plugins/selectric/selectric.css" rel='stylesheet'>
-
-    <!-- CUSTOM CSS -->
-    <link href="/user/css/star.css" id="option_style" rel="stylesheet">
-
-    <!-- Custom Theme css -->
+    <!-- CUSTOM THEME CSS START -->
     <th:block layout:fragment="customCss"></th:block>
     <th:block layout:fragment="customHead"></th:block>
+    <!-- CUSTOM THEME CSS END -->
 
-    <!-- FAVICON -->
+    <!-- CUSTOM CSS START -->
+    <link th:href="@{/user/css/star.css}" id="option_style" rel="stylesheet">
+    <!-- CUSTOM CSS END -->
+
+    <!-- FAVICON START -->
     <link rel="shortcut icon" type="image/png" href="/user/img/favicon.png"/>
+    <!-- FAVICON END -->
   </head>
   <body id="body" class="up-scroll" data-bs-spy="scroll" data-bs-target=".element-right-sidebar" data-bs-offset="100">
 
-    <!-- top navigation start -->
+    <!-- TOP NAVIGATION START -->
     <div th:replace="~{/user/fragments/header :: headerFragment}"></div>
-    <!-- top navigation end -->
+    <!-- TOP NAVIGATION END -->
+
+    <!-- CONTAINER START -->
     <div class="container body">
       <div class="main_container">
-      <!-- ====================================
-  ———	BREADCRUMB
-  ===================================== -->
-      <!-- Elements Breadcrumb -->
+        <!-- ====================================
+        ———	BREADCRUMB
+        ===================================== -->
+        <!-- ELEMENTS BREADCRUMB START -->
         <br>
         <br>
         <div class="container">
@@ -56,47 +61,40 @@
             </div>
           </div>
         </div>
+        <!-- ELEMENTS BREADCRUMB END -->
+
+        <!-- CUSTOM CONTENT START -->
       <th:block layout:fragment="customContent">
         <!-- 여기에 메인 컨텐츠가 삽입됩니다. -->
       </th:block>
-
+        <!-- CUSTOM CONTENT END -->
 
       </div>
     </div>
-    <!-- footer content start -->
+    <!-- CONTAINER START -->
+
+    <!-- FOOTER CONTENT START -->
     <div th:replace="~{/user/fragments/footer :: footerFragment}"></div>
-    <!-- footer content end -->
+    <!-- FOOTER CONTENT END -->
 
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-    <!-- Javascript -->
+    <!-- JAVASCRIPT START -->
     <script th:src="@{/user/plugins/jquery/jquery-3.4.1.min.js}"></script>
     <script th:src="@{/user/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
     <script th:src="@{/user/plugins/menuzord/js/menuzord.js}"></script>
-
-
-
     <script th:src="@{/user/plugins/fancybox/jquery.fancybox.min.js}"></script>
-
     <script th:src="@{/user/plugins/selectric/jquery.selectric.min.js}"></script>
-
-
-
     <script th:src="@{/user/plugins/lazyestload/lazyestload.js}"></script>
-
-
     <script th:src="@{/user/plugins/velocity/velocity.min.js}"></script>
-
-
-
-
-
     <script th:src="@{/user/plugins/smoothscroll/SmoothScroll.js}"></script>
     <script th:src="@{/user/js/star.js}"></script>
+    <!-- JAVASCRIPT END -->
 
+    <!-- CUSTOM JAVASCRIPT START -->
     <th:block layout:fragment="customJs"></th:block>
+    <!-- CUSTOM JAVASCRIPT END -->
+
+    <!-- CUSTOM JAVASCRIPT FILE START -->
+    <th:block layout:fragment="customJsFIle"></th:block>
+    <!-- CUSTOM JAVASCRIPT FILE END -->
   </body>
 </html>

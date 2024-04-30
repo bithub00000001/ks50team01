@@ -80,50 +80,104 @@ function updatePlan(selectedOptions) {
     });
     updateDistanceInfo(options);
 }*/
-
 $(document).ready(function() {
-    function assignNumbers() {
-        const items = document.querySelectorAll('#plan .sortable-item');
-        for (let i = 0; i < items.length; ++i) {
-            const numberSpan = items[i].querySelector('.number');
-            numberSpan.textContent = i + 1;
-        }
-    }
-    // Sortable 초기화
-    const sortableList = new Sortable(document.getElementById('plan'), {
+    // 페이지 로딩시 모든 sortable 항목에 대해 드래그 기능 초기화
+    $('.sortable').each(function (i, el) {
+        initializeSortable(el.id);
+    });
+    $(document).on('click', '.btn-addPlan', function() {
+        const element = $(this).closest('li');
+        const name = element.find('h5').text();
+        const schedule = element.find('.schedule-input').val();
+        const additional = element.find('.additional-input').val();
+        const id = element.data('id');
+        const category = getAccommodationType($(this).closest('.tab-pane').attr('id'));
+
+        addToPlan(name, category, schedule, additional, id);
+    });
+});
+
+function getAccommodationType(selector) {
+    return selector.includes('accommodation') ? '숙박' : (selector.includes('restaurant') ? '식당' : '관광지');
+}
+
+function addToPlan(name, category, schedule, additional, id) {
+    const activeTabLink = $('#myDayTab .nav-link.active');
+    const activeTabContentId = activeTabLink.attr('href');
+    const activeTabContent = $(activeTabContentId);
+    const planDayX = activeTabContent.find('ul.sortable').attr('id');
+
+    const newItem = `
+    <li class="sortable-item list-group-item list-group-item-action" data-id="${id}">
+        <div class="d-flex w-100 justify-content-between">
+            <span class="number">${$(`#${planDayX} .sortable-item`).length + 1}</span>
+            <h4 class="col-9">${name}</h4>
+            <small>여기에 시간 입력</small>
+        </div>
+        <button type="button" class="btn btn-outline-danger btn-delete btn-xs float-end">제거</button>
+        <p class="text-black mb-1">${schedule}</p>
+                <small>${category}</small>
+                <small>${additional}</small>
+            </div>
+        </div>
+    </li>`;
+
+    $(`#${planDayX}`).append(newItem);
+    initializeSortable(planDayX);
+}
+
+function initializeSortable(id) {
+    const el = document.getElementById(id);
+    const sortable = Sortable.create(el, {
         animation: 150,
         ghostClass: 'sortable-ghost',
-        // removeOnSpill: true,
-        removeOnSpill: false, // 밖으로 빠져나가지 않도록 변경
-        forceFallback: true,  // 추가된 줄
+        chosenClass: 'sortable-chosen',
+        dragClass: 'sortable-drag',
         onUpdate: function (evt) {
-            updatePlan();
-            assignNumbers();
-                // updateDistanceInfo(selectedOptions);
-        },
-        onSpill: function (evt) {
-            evt.item.parentElement.appendChild(evt.item);
+            $(`#${id} .sortable-item`).each(function (index, item) {
+                $(item).find('.number').text(index + 1);
+            });
         }
     });
+}
 
-    // 방지 코드 삽입
-    const planItems = document.querySelectorAll('.sortable-item');
-    planItems.forEach(function(item) {
-        item.addEventListener('dragstart', function(e) {
-            e.preventDefault();
 
-        });
-    });
 
-    function updatePlan() {
-        const planList = document.getElementById('plan');
-        const selectedOptions = Array.from(planList.getElementsByTagName('li')).map(option => option.innerText);
-        // selectedOptions 변수를 업데이트하고 이 변수를 사용하여 updateDistanceInfo 함수를 호출합니다.
-        //updateDistanceInfo(selectedOptions);
-    }
-    // 처음 한 번은 수동으로 실행
-    updatePlan();
-    assignNumbers();
+// 현재 일차 계산
+$('.add-day').click(function () {
+    let dayCount = $("#myDayTab .nav-item:not(.add-day)").length + 1;
+    let newTabId = "day" + dayCount + "-tab";
+
+    // 새로운 탭 메뉴 항목 생성
+    let newTab = $('<li/>', {
+        'class': 'nav-item',
+        'role': 'presentation',
+        'html': $('<a/>', {
+            'id': newTabId,
+            'class': 'nav-link',
+            'data-bs-toggle': 'tab',
+            'href': `#day${dayCount}`,
+            'role': 'tab',
+            'aria-controls': `day${dayCount}`,
+            'aria-selected': false,
+            'text': `${dayCount}일차`
+        })
+    }).insertBefore('.add-day');
+
+    // 새로운 탭 내용 생성
+    $('<div/>', {
+        'class': 'tab-pane fade show active', // 여기서 fade 클래스 추가
+        'id': `day${dayCount}`,
+        'role': 'tabpanel',
+        'aria-labelledby': newTabId,
+        'html': $('<ul/>', {
+            'class': 'sortable',
+            'id': `planDay${dayCount}`,
+        })
+    }).appendTo('#myDayTabContent');
+
+    // 새로 생성한 탭 활성화
+    newTab.find('.nav-link').tab('show');
 });
 
 /*
