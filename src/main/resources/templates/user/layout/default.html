@@ -85,16 +85,16 @@
     <script th:src="@{/user/plugins/selectric/jquery.selectric.min.js}"></script>
     <script th:src="@{/user/plugins/lazyestload/lazyestload.js}"></script>
     <script th:src="@{/user/plugins/velocity/velocity.min.js}"></script>
-    <script th:src="@{/user/plugins/smoothscroll/SmoothScroll.js}"></script>
-    <script th:src="@{/user/js/star.js}"></script>
+    <script th:src="@{/user/plugins/smoothscroll/SmoothScroll.js}"></script>    
     <!-- JAVASCRIPT END -->
+    <!-- CUSTOM JAVASCRIPT FILE START -->
+    <th:block layout:fragment="customJsFIle"></th:block>
+    <!-- CUSTOM JAVASCRIPT FILE END -->
+    <script th:src="@{/user/js/star.js}"></script>
 
     <!-- CUSTOM JAVASCRIPT START -->
     <th:block layout:fragment="customJs"></th:block>
     <!-- CUSTOM JAVASCRIPT END -->
 
-    <!-- CUSTOM JAVASCRIPT FILE START -->
-    <th:block layout:fragment="customJsFIle"></th:block>
-    <!-- CUSTOM JAVASCRIPT FILE END -->
   </body>
 </html>
