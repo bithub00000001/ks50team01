@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  	  layout:decorate="~{user/layout/default}">
+  <th:block layout:fragment="customContent">	  
+	<!-- ====================================
+	———	PAGE TITLE
+	===================================== -->
+	<section class="page-title">
+	  <div class="page-title-img bg-img bg-overlay-darken" style="background-image: url(/user/img/pages/page-title-bg6.jpg);">
+	    <div class="container">
+	      <div class="row align-items-center justify-content-center" style="height: 200px;">
+	        <div class="col-lg-6">
+	          <div class="page-title-content">
+	            <div class="title-border">
+	              <h2 class="text-uppercase text-white font-weight-bold">회원 추천 인기순위</h2>
+	            </div>
+	            <p class="text-white mb-0"></p>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	</section>
+	
+	
+	<!-- ====================================
+	———	TOUR PACKAGES SECTION
+	===================================== -->
+	<section class="bg-smoke py-10">
+	  <div class="container">
+	    <div class="media media-list-view media-list-fullwidth flex-column flex-md-row mb-5">
+	      <div class="media-img position-relative">
+	        <img class="img-fluid position-relative lazyestload" data-src="/user/img/packages/package-list-01.jpg" src="/user/img/packages/package-list-01.jpg" alt="gallery-img">
+	        <a class="media-img-overlay" data-fancybox="gallery" href="/user/img/packages/package-list-01.jpg"></a>
+	      </div>
+	
+	      <div class="media-body">
+	        <div class="row align-items-md-center align-items-lg-stretch">
+	          <div class="col-md-7 col-lg-8 position-relative">
+	            <h4>
+	              <a class="media-title" href="single-package-right-sidebar.html">전라북도 전주</a>
+	            </h4>
+	            <div class="rating-view">
+	              <span class="content-view text-uppercase">한국스마트정보교육원</span>
+	              <span class="star add-rating-default"></span>
+	            </div>
+	    
+	            <p class="mb-lg-0">Integer purus ex, dictum nec elementum eu, tristique vel lectus. Donec rutrum lectus et
+	              pharetra egestas. Proin
+	              convallis magna vel libero accumsan sollicitudin. Quisque dapibus vitae turpis eu magna sagittis.</p>
+	    
+	            <div class="date-view mb-5 mb-md-0">
+	              <span><i class="far fa-calendar-alt" aria-hidden="true"></i> 27 JAN, 2021</span>
+	              <span><i class="far fa-clock" aria-hidden="true"></i> 5 days</span>
+	            </div>
+	          </div>
+	    
+	          <div class="col-md-5 col-lg-4">
+	            <div class="bg-primary text-center p-5 view-details">
+	              <h2 class="text-white font-weight-bold h1">1위!</h2>
+	              <p class="text-white text-capitalize">관광지</p>
+	              <div>
+	                <a href="single-package-fullwidth.html"
+	                  class="btn btn-xs btn-outline-white btn-booking text-uppercase mb-2">상세정보</a>
+	              </div>
+	             
+	            </div>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+	
+	    <div class="media media-list-view media-list-fullwidth flex-column flex-md-row mb-5">
+	      <div class="media-img position-relative">
+	        <img class="img-fluid position-relative lazyestload" data-src="/user/img/packages/package-list-02.jpg" src="/user/img/packages/package-list-02.jpg" alt="gallery-img">
+	        <a class="media-img-overlay" data-fancybox="gallery" href="/user/img/packages/package-list-02.jpg"></a>
+	      </div>
+	
+	      <div class="media-body">
+	        <div class="row align-items-md-center align-items-lg-stretch">
+	          <div class="col-md-7 col-lg-8 position-relative">
+	            <h4>
+	              <a class="media-title" href="single-package-right-sidebar.html">Maldives Tour</a>
+	            </h4>
+	            <div class="rating-view">
+	              <span class="content-view text-uppercase">Asia</span>
+	              <span class="star add-rating-default"></span>
+	            </div>
+	    
+	            <p class="mb-lg-0">Proin convallis magna vel libero accumsan sollicitudin. Quisque dapibus vitae turpis eu magna sagittis. Vivamus eu
+	            mattis nibh. Quisque eget ipsum at odio fringilla consequat vel id erat. Suspendisse non feugiat mi.</p>
+	    
+	            <div class="date-view mb-5 mb-md-0">
+	              <span><i class="far fa-calendar-alt" aria-hidden="true"></i> 27 JAN, 2021</span>
+	              <span><i class="far fa-clock" aria-hidden="true"></i> 5 days</span>
+	            </div>
+	          </div>
+	    
+	          <div class="col-md-5 col-lg-4">
+	            <div class="bg-primary text-center p-5 view-details">
+	              <h2 class="text-white font-weight-bold h1">2위!</h2>
+	              <p class="text-white text-capitalize">관광지</p>
+	              <div>
+	                <a href="single-package-fullwidth.html"
+	                  class="btn btn-xs btn-outline-white btn-booking text-uppercase mb-2">상세정보</a>
+	              </div>
+	           
+	            </div>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+	
+	    <div class="media media-list-view media-list-fullwidth flex-column flex-md-row mb-5">
+	      <div class="media-img position-relative">
+	        <img class="img-fluid position-relative lazyestload" data-src="/user/img/packages/package-list-03.jpg" src="/user/img/packages/package-list-03.jpg" alt="gallery-img">
+	        <a class="media-img-overlay" data-fancybox="gallery" href="/user/img/packages/package-list-03.jpg"></a>
+	      </div>
+	
+	      <div class="media-body">
+	        <div class="row align-items-md-center align-items-lg-stretch">
+	          <div class="col-md-7 col-lg-8 position-relative">
+	            <h4>
+	              <a class="media-title" href="single-package-right-sidebar.html">Maldives Tour</a>
+	            </h4>
+	            <div class="rating-view">
+	              <span class="content-view text-uppercase">Asia</span>
+	              <span class="star add-rating-default"></span>
+	            </div>
+	    
+	            <p class="mb-lg-0">Vivamus eu mattis nibh. Quisque eget ipsum at odio fringilla consequat vel id erat. Suspendisse non feugiat mi. Sagittis
+	            proin convallis magna vel libero accumsan sollicitudin. Quisque dapibus turpis magna.</p>
+	    
+	            <div class="date-view mb-5 mb-md-0">
+	              <span><i class="far fa-calendar-alt" aria-hidden="true"></i> 27 JAN, 2021</span>
+	              <span><i class="far fa-clock" aria-hidden="true"></i> 5 days</span>
+	            </div>
+	          </div>
+	    
+	          <div class="col-md-5 col-lg-4">
+	            <div class="bg-primary text-center p-5 view-details">
+	              <h2 class="text-white font-weight-bold h1">3위!</h2>
+	              <p class="text-white text-capitalize">관광지</p>
+	              <div>
+	                <a href="single-package-fullwidth.html"
+	                  class="btn btn-xs btn-outline-white btn-booking text-uppercase mb-2">상세정보</a>
+	              </div>
+	         
+	            </div>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+	
+	    <div class="media media-list-view media-list-fullwidth flex-column flex-md-row mb-5">
+	      <div class="media-img position-relative">
+	        <img class="img-fluid position-relative lazyestload" data-src="/user/img/packages/package-list-04.jpg" src="/user/img/packages/package-list-04.jpg" alt="gallery-img">
+	        <a class="media-img-overlay" data-fancybox="gallery" href="/user/img/packages/package-list-04.jpg"></a>
+	      </div>
+	
+	      <div class="media-body">
+	        <div class="row align-items-md-center align-items-lg-stretch">
+	          <div class="col-md-7 col-lg-8 position-relative">
+	            <h4>
+	              <a class="media-title" href="single-package-right-sidebar.html">Maldives Tour</a>
+	            </h4>
+	            <div class="rating-view">
+	              <span class="content-view text-uppercase">Asia</span>
+	              <span class="star add-rating-default"></span>
+	            </div>
+	    
+	            <p class="mb-lg-0">Sagittis proin convallis magna vel libero accumsan sollicitudin. Quisque dapibus vitae turpis eu magna. Suspendisse non
+	            feugiat mi. Vivamus eu mattis nibh. Quisque eget ipsum at odio fringilla consequat vel id erat.</p>
+	    
+	            <div class="date-view mb-5 mb-md-0">
+	              <span><i class="far fa-calendar-alt" aria-hidden="true"></i> 27 JAN, 2021</span>
+	              <span><i class="far fa-clock" aria-hidden="true"></i> 5 days</span>
+	            </div>
+	          </div>
+	    
+	          <div class="col-md-5 col-lg-4">
+	            <div class="bg-primary text-center p-5 view-details">
+	              <h2 class="text-white font-weight-bold h1">4위!</h2>
+	              <p class="text-white text-capitalize">관광지</p>
+	              <div>
+	                <a href="single-package-fullwidth.html"
+	                  class="btn btn-xs btn-outline-white btn-booking text-uppercase mb-2">상세정보</a>
+	              </div>
+	             
+	            </div>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+	
+	    <div class="media media-list-view media-list-fullwidth flex-column flex-md-row mb-5">
+	      <div class="media-img position-relative">
+	        <img class="img-fluid position-relative lazyestload" data-src="/user/img/packages/package-list-05.jpg" src="/user/img/packages/package-list-05.jpg" alt="gallery-img">
+	        <a class="media-img-overlay" data-fancybox="gallery" href="/user/img/packages/package-list-05.jpg"></a>
+	      </div>
+	
+	      <div class="media-body">
+	        <div class="row align-items-md-center align-items-lg-stretch">
+	          <div class="col-md-7 col-lg-8 position-relative">
+	            <h4>
+	              <a class="media-title" href="single-package-right-sidebar.html">Maldives Tour</a>
+	            </h4>
+	            <div class="rating-view">
+	              <span class="content-view text-uppercase">Asia</span>
+	              <span class="star add-rating-default"></span>
+	            </div>
+	    
+	            <p class="mb-lg-0">Sagittis proin convallis magna vel libero accumsan sollicitudin. Quisque dapibus vitae turpis eu magna. Suspendisse non
+	            feugiat mi. Vivamus eu mattis nibh. Quisque eget ipsum at odio fringilla consequat vel id erat.</p>
+	    
+	            <div class="date-view mb-5 mb-md-0">
+	              <span><i class="far fa-calendar-alt" aria-hidden="true"></i> 27 JAN, 2021</span>
+	              <span><i class="far fa-clock" aria-hidden="true"></i> 5 days</span>
+	            </div>
+	          </div>
+	    
+	          <div class="col-md-5 col-lg-4">
+	            <div class="bg-primary text-center p-5 view-details">
+	              <h2 class="text-white font-weight-bold h1">5위!</h2>
+	              <p class="text-white text-capitalize">관광지</p>
+	              <div>
+	                <a href="single-package-fullwidth.html"
+	                  class="btn btn-xs btn-outline-white btn-booking text-uppercase mb-2">상세정보</a>
+	              </div>
+	           
+	            </div>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+	
+	    <div class="media media-list-view media-list-fullwidth flex-column flex-md-row mb-5">
+	      <div class="media-img position-relative">
+	        <img class="img-fluid position-relative lazyestload" data-src="/user/img/packages/package-list-06.jpg" src="/user/img/packages/package-list-06.jpg" alt="gallery-img">
+	        <a class="media-img-overlay" data-fancybox="gallery" href="/user/img/packages/package-list-06.jpg"></a>
+	      </div>
+	
+	      <div class="media-body">
+	        <div class="row align-items-md-center align-items-lg-stretch">
+	          <div class="col-md-7 col-lg-8 position-relative">
+	            <h4>
+	              <a class="media-title" href="single-package-right-sidebar.html">Maldives Tour</a>
+	            </h4>
+	            <div class="rating-view">
+	              <span class="content-view text-uppercase">Asia</span>
+	              <span class="star add-rating-default"></span>
+	            </div>
+	    
+	            <p class="mb-lg-0">Donec rutrum lectus et pharetra egestas. Integer purus, dictum nec elementum, tristique vel lectus. Lorem ipsum
+	            dolor sit amet, consectetur adipisicing elit, eiusmod tempor incididunt labore dolore magna aliqua.</p>
+	    
+	            <div class="date-view mb-5 mb-md-0">
+	              <span><i class="far fa-calendar-alt" aria-hidden="true"></i> 27 JAN, 2021</span>
+	              <span><i class="far fa-clock" aria-hidden="true"></i> 5 days</span>
+	            </div>
+	          </div>
+	    
+	          <div class="col-md-5 col-lg-4">
+	            <div class="bg-primary text-center p-5 view-details">
+	              <h2 class="text-white font-weight-bold h1">$1199</h2>
+	              <p class="text-white text-capitalize">Per person</p>
+	              <div>
+	                <a href="single-package-fullwidth.html"
+	                  class="btn btn-xs btn-outline-white btn-booking text-uppercase mb-2">Details</a>
+	              </div>
+	              <div>
+	                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#inquiry"
+	                  class="btn btn-xs btn-outline-white btn-booking text-uppercase mb-2">Inquiry</a>
+	              </div>
+	            </div>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+	
+	    <div class="media media-list-view media-list-fullwidth flex-column flex-md-row mb-5">
+	      <div class="media-img position-relative">
+	        <img class="img-fluid position-relative lazyestload" data-src="/user/img/packages/package-list-07.jpg" src="/user/img/packages/package-list-07.jpg" alt="gallery-img">
+	        <a class="media-img-overlay" data-fancybox="gallery" href="/user/img/packages/package-list-07.jpg"></a>
+	      </div>
+	
+	      <div class="media-body">
+	        <div class="row align-items-md-center align-items-lg-stretch">
+	          <div class="col-md-7 col-lg-8 position-relative">
+	            <h4>
+	              <a class="media-title" href="single-package-right-sidebar.html">Maldives Tour</a>
+	            </h4>
+	            <div class="rating-view">
+	              <span class="content-view text-uppercase">Asia</span>
+	              <span class="star add-rating-default"></span>
+	            </div>
+	    
+	            <p class="mb-lg-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod et dolore magna
+	            aliqua. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed tempor incididunt ut labore et dolore
+	            magna aliqua.</p>
+	    
+	            <div class="date-view mb-5 mb-md-0">
+	              <span><i class="far fa-calendar-alt" aria-hidden="true"></i> 27 JAN, 2021</span>
+	              <span><i class="far fa-clock" aria-hidden="true"></i> 5 days</span>
+	            </div>
+	          </div>
+	    
+	          <div class="col-md-5 col-lg-4">
+	            <div class="bg-primary text-center p-5 view-details">
+	              <h2 class="text-white font-weight-bold h1">$299</h2>
+	              <p class="text-white text-capitalize">Per person</p>
+	              <div>
+	                <a href="single-package-fullwidth.html"
+	                  class="btn btn-xs btn-outline-white btn-booking text-uppercase mb-2">Details</a>
+	              </div>
+	              <div>
+	                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#inquiry"
+	                  class="btn btn-xs btn-outline-white btn-booking text-uppercase mb-2">Inquiry</a>
+	              </div>
+	            </div>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+	
+	    <div class="media media-list-view media-list-fullwidth flex-column flex-md-row mb-5">
+	      <div class="media-img position-relative">
+	        <img class="img-fluid position-relative lazyestload" data-src="/user/img/packages/package-list-08.jpg" src="/user/img/packages/package-list-08.jpg" alt="gallery-img">
+	        <a class="media-img-overlay" data-fancybox="gallery" href="/user/img/packages/package-list-08.jpg"></a>
+	      </div>
+	
+	      <div class="media-body">
+	        <div class="row align-items-md-center align-items-lg-stretch">
+	          <div class="col-md-7 col-lg-8 position-relative">
+	            <h4>
+	              <a class="media-title" href="single-package-right-sidebar.html">Maldives Tour</a>
+	            </h4>
+	            <div class="rating-view">
+	              <span class="content-view text-uppercase">Asia</span>
+	              <span class="star add-rating-default"></span>
+	            </div>
+	    
+	            <p class="mb-lg-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod et dolore magna
+	              aliqua. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed tempor incididunt ut labore et dolore
+	              magna aliqua.</p>
+	    
+	            <div class="date-view mb-5 mb-md-0">
+	              <span><i class="far fa-calendar-alt" aria-hidden="true"></i> 27 JAN, 2021</span>
+	              <span><i class="far fa-clock" aria-hidden="true"></i> 5 days</span>
+	            </div>
+	          </div>
+	    
+	          <div class="col-md-5 col-lg-4">
+	            <div class="bg-primary text-center p-5 view-details">
+	              <h2 class="text-white font-weight-bold h1">$349</h2>
+	              <p class="text-white text-capitalize">Per person</p>
+	              <div>
+	                <a href="single-package-fullwidth.html"
+	                  class="btn btn-xs btn-outline-white btn-booking text-uppercase mb-2">Details</a>
+	              </div>
+	              <div>
+	                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#inquiry"
+	                  class="btn btn-xs btn-outline-white btn-booking text-uppercase mb-2">Inquiry</a>
+	              </div>
+	            </div>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+	
+	    <div class="media media-list-view media-list-fullwidth flex-column flex-md-row mb-5">
+	      <div class="media-img position-relative">
+	        <img class="img-fluid position-relative lazyestload" data-src="/user/img/packages/package-list-09.jpg" src="/user/img/packages/package-list-09.jpg" alt="gallery-img">
+	        <a class="media-img-overlay" data-fancybox="gallery" href="/user/img/packages/package-list-09.jpg"></a>
+	      </div>
+	
+	      <div class="media-body">
+	        <div class="row align-items-md-center align-items-lg-stretch">
+	          <div class="col-md-7 col-lg-8 position-relative">
+	            <h4>
+	              <a class="media-title" href="single-package-right-sidebar.html">Maldives Tour</a>
+	            </h4>
+	            <div class="rating-view">
+	              <span class="content-view text-uppercase">Asia</span>
+	              <span class="star add-rating-default"></span>
+	            </div>
+	    
+	            <p class="mb-lg-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod et dolore magna
+	              aliqua. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed tempor incididunt ut labore et dolore
+	              magna aliqua.</p>
+	    
+	            <div class="date-view mb-5 mb-md-0">
+	              <span><i class="far fa-calendar-alt" aria-hidden="true"></i> 27 JAN, 2021</span>
+	              <span><i class="far fa-clock" aria-hidden="true"></i> 5 days</span>
+	            </div>
+	          </div>
+	    
+	          <div class="col-md-5 col-lg-4">
+	            <div class="bg-primary text-center p-5 view-details">
+	              <h2 class="text-white font-weight-bold h1">$699</h2>
+	              <p class="text-white text-capitalize">Per person</p>
+	              <div>
+	                <a href="single-package-fullwidth.html"
+	                  class="btn btn-xs btn-outline-white btn-booking text-uppercase mb-2">Details</a>
+	              </div>
+	              <div>
+	                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#inquiry"
+	                  class="btn btn-xs btn-outline-white btn-booking text-uppercase mb-2">Inquiry</a>
+	              </div>
+	            </div>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	
+	  <!-- ====================================
+	———	PAGINATION
+	===================================== -->
+	<section class="pt-5 pt-md-7">
+	  <div class="container">
+	    <nav aria-label="Page navigation">
+	      <ul class="pagination justify-content-center align-items-center">
+	        <li class="page-item">
+	          <a class="page-link" href="javascript:void(0)" tabindex="-1">
+	            <i class="fas fa-long-arrow-alt-left d-none d-md-inline-block me-md-1" aria-hidden="true"></i> Previous
+	          </a>
+	        </li>
+	    
+	        <li class="page-item">
+	          <a class="page-link active" href="javascript:void(0)">1</a>
+	        </li>
+	    
+	        <li class="page-item">
+	          <a class="page-link" href="javascript:void(0)">2</a>
+	        </li>
+	    
+	        <li class="page-item">
+	          <a class="page-link" href="javascript:void(0)">3</a>
+	        </li>
+	    
+	        <li class="page-item">
+	          <a class="page-link" href="javascript:void(0)">...</a>
+	        </li>
+	    
+	        <li class="page-item">
+	          <a class="page-link" href="javascript:void(0)">9</a>
+	        </li>
+	    
+	        <li class="page-item">
+	          <a class="page-link" href="javascript:void(0)">Next
+	            <i class="fas fa-long-arrow-alt-right d-none d-md-inline-block ms-md-1" aria-hidden="true"></i>
+	          </a>
+	        </li>
+	      </ul>
+	    </nav>
+	  </div>
+	</section>
+	
+	</section>
+	
+	
+	
+	  </div><!-- element wrapper ends -->  	  
