@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(value="/user")
 public class PartnerShipRangkingController {
 
-	@GetMapping("/partnershipranking/partnershipranking")
+	@GetMapping("/platformranking/platformranking")
 	public String Partnershipranking(Model model) {
 		
-		model.addAttribute("title", "플랫폼추천");
-		return "/user/partnershipranking/partnershipranking";
+		model.addAttribute("title", "추천페이지");
+		return "/user/platformranking/platformranking";
 	}
 }
