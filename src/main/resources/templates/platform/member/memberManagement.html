@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+                layout:decorate="~{platform/layout/default}">
+
+	<th:block layout:fragment="customContent">
+		<div class="col-md-12col-sm-6 col-xs-12">
+			<div class="x_panel">
+				<div class="x_title">
+					<h3>전체회원정보관리</h3>
+					<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+					<div class="clearfix"></div>
+				</div>
+
+				<div class="row">
+					<div class="col-xs-12 table">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>회원아이디</th>
+									<th>회원등급번호</th>
+									<th>회원비밀번호</th>
+									<th>회원이름</th>
+									<th>회원닉네임</th>
+									<th>회원이메일</th>
+									<th>회원연락처</th>
+									<th>회원등록일자</th>
+									<th>회원수정일자</th>
+									<th>수정</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:unless="${memberList != null}">
+									<td align="center" colspan="10">등록된 회원의 정보가 없습니다.</td>
+								</tr>
+								<tr th:if="${memberList != null}" th:each="l : ${memberList}">
+									<td th:text="${l.memberId}"></td>
+									<td th:text="${l.memberLevelName}"></td>
+									<td th:text="${l.memberPw}"></td>
+									<td th:text="${l.memberName}"></td>
+									<td th:text="${l.memberNickname}"></td>
+									<td th:text="${l.memberEmail}"></td>
+									<td th:text="${l.memberTelNum}"></td>
+									<td th:text="${l.memberRegDate}"></td>
+									<td th:text="${l.memberFormDate}"></td>
+									<td>
+										<!-- /* /member/modifyMember?memberId=id001 */ -->
+										<a>수정</a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+</html>
