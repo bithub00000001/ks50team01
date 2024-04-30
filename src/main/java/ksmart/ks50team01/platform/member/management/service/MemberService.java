@@ -34,4 +34,10 @@ public class MemberService {
 		
 		return memberList;
 	}
+
+	public Member getMemberInfoById(String memberId) {
+		Member memberInfo = memberMapper.getMemberInfoById(memberId);
+		
+		return memberInfo;
+	}
 }
