@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko" layout:decorate="~{/platform/layout/default}"
+     			xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    			xmlns:th="http://www.thymeleaf.org">
+	    <th:block layout:fragment="customCss">
+	    <link th:href="@{/platform/css/noticewWrite.css}" rel="stylesheet">    
+	    </th:block>
+ 	        
+ 	<th:block layout:fragment="customContent">
+	    <!-- Elements Forms -->
+	    <div class="pt-5 mb-5" id="forms">
+	      <div class="">
+	        <h1 class="element-title">Forms</h1>
+	        <p class="mb-6 line-height-28 h4">Examples and usage guidelines for form control styles, layout options, and custom components for creating a wide variety of forms. <a target="_blank" href="https://getbootstrap.com/docs/5.0/forms/overview/">View details. </a></p>
+	      </div>
+	    </div>
+	    
+	      <div class="row">
+	        <div class="col-12">
+	          <h3 class="element-title">공지사항</h3>
+	          <div class="mb-6">
+	          
+	            <form>
+	              <div class="form-group">
+	                <label for="exampleInputText">공지사항 유형</label>
+	                <div class="select-default">
+	                  <select class="select-option">
+	                    <option>일반 공지</option>
+	                    <option>긴급 공지</option>
+	                    <option>예정 공지</option>
+	                    <option>이벤트 공지</option>
+	                    <option>시스템 공지</option>
+	                  </select>
+	                </div>
+	              </div>
+	              
+	              <div class="form-group">
+	                <label for="inputPassword" class="col-sm-2 col-form-label">공지사항 제목</label>
+	                  <input type="" class="form-control" id="inputPassword" placeholder="제목">
+	              </div>
+	
+	              <div class="form-group">
+	                <label for="exampleFormControlTextarea1">공지사항 내용</label>
+	                <textarea class="form-control" rows="6"></textarea>
+	              </div>
+	           	</form>  
+	       	 </div>   
+			</div>
+		</div>
+		
+		
+		<!-- Elements Modal -->
+        <div class="pt-5 mb-5" id="modal">
+          <div class="row">
+            <div class="col-md-6 col-lg-4">
+              <h3 class="element-title mb-5">첨부 파일</h3>
+              <!-- Button trigger modal -->
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                + 파일 첨부하기 (0/10)
+              </button>
+
+              <!-- Modal -->
+              <div class="modal fade mb-8" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">파일 첨부하기</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <p>jpg, jpeg, gif, png, pdf만 첨부 가능하며 20MB까지 등록 가능합니다.</p>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                      <button type="button" class="btn btn-primary">파일 첨부하기</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+       
+		
+		
+		
+		
+	</th:block>
+
+
