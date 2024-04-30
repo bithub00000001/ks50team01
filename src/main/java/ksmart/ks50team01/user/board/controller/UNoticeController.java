@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class UNoticeController {
 	
 	@GetMapping("/notice")
-	
 	public String notice(Model model) {
 		
 		model.addAttribute("title", "공지사항페이지");
