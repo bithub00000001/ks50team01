@@ -10,7 +10,7 @@
 </th:block>
 </head>
 
-<th:block layout:fragment="customContent">
+<th:block layout:fragment="customPageSection">
 	<!-- 여기에 메인 컨텐츠가 삽입됩니다. -->
 	<div class="main-wrapper pages">
 		<section class="page-title">
@@ -107,9 +107,8 @@
 				<div class="row">
 					<div class="col-12"
 						style="text-align: right; margin-top: 100px; margin-bottom: 10px;">
-						<!-- th:onclick 속성을 사용하여 클릭 이벤트를 처리하고 JavaScript 함수를 호출합니다. -->
-						<button type="button" class="btn btn-outline-primary btn-sm"
-							th:onclick="'javascript:redirectToQnaWrite();'">글쓰기</button>
+						<!-- 글쓰기 버튼. 클릭하면 /user/board/qnaWrite 페이지로 이동 -->
+						<a th:href="@{/user/board/qnaWrite}"><button type="button" class="btn btn-outline-primary btn-sm">글쓰기</button></a>
 					</div>
 				</div>
 			</div>
@@ -152,15 +151,6 @@
 </th:block>
 
 <th:block layout:fragment="customJs">
-
-
-<!-- JavaScript 함수 정의 -->
-<script th:inline="javascript">
-    function redirectToQnaWrite() {
-        // window.location.href를 사용하여 특정 URL로 이동합니다.
-        window.location.href = /*[[@{/user/board/qnaWrite}]]*/ '';
-    }
-</script>
 
 </th:block>
 </html>
