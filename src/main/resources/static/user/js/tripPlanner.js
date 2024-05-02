@@ -95,6 +95,8 @@ $(document).ready(function() {
 
         addToPlan(name, category, schedule, additional, id);
     });
+    // "1일차" 탭을 활성화합니다.
+    $('#day1-tab').addClass('active');
 });
 
 function getAccommodationType(selector) {
@@ -109,10 +111,18 @@ function addToPlan(name, category, schedule, additional, id) {
 
     const newItem = `
     <li class="sortable-item list-group-item list-group-item-action" data-id="${id}">
-        <div class="d-flex w-100 justify-content-between">
-            <span class="number">${$(`#${planDayX} .sortable-item`).length + 1}</span>
-            <h4 class="col-9">${name}</h4>
-            <small>여기에 시간 입력</small>
+        <div class="row align-items-center">
+            <div class="col-1">
+                <div class="border border-dark bg-facebook text-white rounded-circle d-flex justify-content-center align-items-center mt-1" style="height:22px;width:22px;">
+                    <span class="number">${$(`#${planDayX} .sortable-item`).length + 1}</span>
+                </div>
+            </div>
+            <div class="col-7 mt-2">
+                <h4 class="col-9">${name}</h4>
+            </div>
+            <div class="col-4 text-end">
+                <small>여기에 시간 입력</small>
+            </div>
         </div>
         <button type="button" class="btn btn-outline-danger btn-delete btn-xs float-end">제거</button>
         <p class="text-black mb-1">${schedule}</p>
