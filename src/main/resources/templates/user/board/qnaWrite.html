@@ -1,42 +1,43 @@
 <!DOCTYPE html>
-<html lang="ko" layout:decorate="~{/platform/layout/default}"
-				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-				xmlns:th="http://www.thymeleaf.org">
-	
-	
+<html lang="ko" layout:decorate="~{/user/layout/default}"
+     			xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    			xmlns:th="http://www.thymeleaf.org">
+   
+<head>
+<title>1:1문의 작성</title>    			
 <th:block layout:fragment="customCss">
 	<link th:href="@{/platform/css/noticewWrite.css}" rel="stylesheet">
 </th:block>
+</head>
 
 <th:block layout:fragment="customContent">
 	<!-- Elements Forms -->
 	<div class="row">
 		<div class="col-12">
-			<h3 class="element-title">공지사항</h3>
+			<h3 class="element-title">1:1 문의</h3>
 			<div class="mb-6">
 
 				<form>
 					<div class="form-group">
-						<label for="exampleInputText">공지사항 유형</label>
+						<label for="exampleInputText">1:1 문의 유형</label>
 						<div class="select-default">
 							<select class="select-option">
-								<option>일반 공지</option>
-								<option>긴급 공지</option>
-								<option>예정 공지</option>
-								<option>이벤트 공지</option>
-								<option>시스템 공지</option>
+								<option>계정 관리</option>
+								<option>이용 문의</option>
+								<option>건의 및 제안</option>
+								<option>결제 및 환불</option>
 							</select>
 						</div>
 					</div>
 
 					<div class="form-group">
-						<label for="inputPassword" class="col-sm-2 col-form-label">공지사항
+						<label for="inputPassword" class="col-sm-2 col-form-label">문의
 							제목</label> <input type="" class="form-control" id="inputPassword"
 							placeholder="제목">
 					</div>
 
 					<div class="form-group">
-						<label for="exampleFormControlTextarea1">공지사항 내용</label>
+						<label for="exampleFormControlTextarea1">문의 내용</label>
 						<textarea class="form-control" rows="6"></textarea>
 					</div>
 				</form>
@@ -80,5 +81,22 @@
 		</div>
 	</div>
 
+	<div class="d-flex justify-content-end" style="margin-bottom: 50px">
+		<!-- 등록 버튼 -->
+		<button type="button" class="btn btn-primary mr-2"
+			onclick="submitForm()">등록</button>
+		<!-- 취소 버튼 -->
+		<button type="button" class="btn btn-secondary"
+			data-bs-dismiss="modal">취소</button>
+	</div>
 
 </th:block>
+
+
+<script>
+	// 폼 제출 함수
+	function submitForm() {
+		// 폼을 제출하는 코드 작성
+		console.log("폼 제출");
+	}
+</script>

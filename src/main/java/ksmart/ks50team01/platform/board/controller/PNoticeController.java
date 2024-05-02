@@ -16,5 +16,18 @@ public class PNoticeController {
 		return "platform/board/noticeWrite";
 		
 	}
+	
+	@GetMapping("/noticeList")
+	public String noticeList(Model model) {
+		
+		model.addAttribute("title", "플랫폼공지사항페이지");
+		return "platform/board/noticeList";
+		
+	}
+	
+	
 
 }
+
+
+

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ko" layout:decorate="~{/user/layout/default}"
+     			xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    			xmlns:th="http://www.thymeleaf.org">
+    			
+<head>
+<title>커뮤니티</title>      			
+<th:block layout:fragment="customHead">
+    <link rel="stylesheet" th:href="@{/user/css/list-style.css}">
+</th:block>
+</head>
+
+<th:block layout:fragment="customContent">
+	<!-- list-style -->
+
+
+	<!-- 여기에 메인 컨텐츠가 삽입됩니다. -->
+	<div class="main-wrapper pages">
+		<section class="page-title">
+			<div class="page-title-img bg-img bg-overlay-darken"
+				style="background-image: url(/user/img/pages/page-title-bg12.jpg);">
+				<div class="container">
+					<div class="row align-items-center justify-content-center">
+						<div class="col-lg-9 col-xl-8">
+							<div class="page-title-content py-7 py-md-8">
+								<div class="">
+									<h2 class="text-uppercase text-white font-weight-bold">커뮤니티</h2>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+
+		<div class="d-flex align-items-start">
+			<div class="dropdown mt-3">
+				<button class="btn btn-primary dropdown-toggle" type="button"
+					id="dropdownMenuButton" data-bs-toggle="dropdown">커뮤니티</button>
+				<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+					<li><a class="dropdown-item" href="javascript:void(0)">여행 정보</a></li>
+					<li><a class="dropdown-item" href="javascript:void(0)">여행 후기</a></li>
+					<li><a class="dropdown-item" href="javascript:void(0)">여행 친구 찾기</a></li>
+					<li><a class="dropdown-item" href="javascript:void(0)">자유게시판</a></li>
+					<li><a class="dropdown-item" href="javascript:void(0)">질문게시판</a></li>
+				</ul>
+			</div>
+		</div>
+
+
+		<div class="row mt-5">
+			<div
+				class="col-xl-12 alert alert-light alert-dismissible d-flex justify-content-center"
+				style="margin-top: 150px;">
+				<form class="mb-0 col-sm-6 col-xl-6" action="#" method="post">
+					<div class="input-group input-group-sm">
+						<div class="select-default">
+							<select class="select-option">
+								<option>작성자</option>
+								<option>제목</option>
+								<option>내용</option>
+							</select>
+						</div>
+						<input type="text" class="form-control form-control-sm rounded-0"
+							placeholder="검색어를 입력해주세요." aria-label="Search....">
+						<button class="btn bg-primary border-0 rounded-0" type="button">
+							<span class="text-white text-uppercase font-weight-bold">검색</span>
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+
+
+		<!-- body -->
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="table-responsive" style="margin-top: 50px; overflow-x: hidden;">
+
+					<table class="table table-hover table-bordered">
+						<colgroup>
+							<col class="col-sm-1" />
+							<col class="col-sm-7" />
+							<col class="col-sm-1" />
+							<col class="col-sm-2" />
+							<col class="col-sm-1" />
+						</colgroup>
+						<thead>
+							<tr class="active" style="text-align: center">
+								<th>번호</th>
+								<th>제목</th>
+								<th>작성자</th>
+								<th>등록일</th>
+								<th>조회</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td class="noticeNum noticeCenter">1</td>
+								<td><i class="badge rounded-pill bg-primary">여행 친구 찾기</i><a
+									href="">이번 주말 같이 남해여행 가실분</a></td>
+								<td class="noticeCenter">member001</td>
+								<td class="noticeCenter">2024-04-29</td>
+								<td class="noticeCenter">100</td>
+							</tr>
+							<tr>
+								<td class="noticeNum noticeCenter">2</td>
+								<td><i class="badge rounded-pill bg-primary">자유게시판</i><a
+									href="">(사진) 강남역에서 칼부림 일어남</a></td>
+								<td class="noticeCenter">member001</td>
+								<td class="noticeCenter">2024-04-29</td>
+								<td class="noticeCenter">100</td>
+							</tr>
+							<tr>
+								<td class="noticeNum noticeCenter">3</td>
+								<td><i class="badge rounded-pill bg-primary">여행 정보</i><a
+									href="">양평 여행 가시는 분</a></td>
+								<td class="noticeCenter">member001</td>
+								<td class="noticeCenter">2024-04-29</td>
+								<td class="noticeCenter">100</td>
+							</tr>
+							<tr>
+								<td class="noticeNum noticeCenter">4</td>
+								<td><i class="badge rounded-pill bg-primary">여행 정보</i><a
+									href="">양평 여행 가시는 분</a></td>
+								<td class="noticeCenter">member001</td>
+								<td class="noticeCenter">2024-04-29</td>
+								<td class="noticeCenter">100</td>
+							</tr>
+							<tr>
+								<td class="noticeNum noticeCenter">5</td>
+								<td><i class="badge rounded-pill bg-primary">여행 정보</i><a
+									href="">양평 여행 가시는 분</a></td>
+								<td class="noticeCenter">member001</td>
+								<td class="noticeCenter">2024-04-29</td>
+								<td class="noticeCenter">100</td>
+							</tr>
+							<tr>
+								<td class="noticeNum noticeCenter">6</td>
+								<td><i class="badge rounded-pill bg-primary">여행 정보</i><a
+									href="">양평 여행 가시는 분</a></td>
+								<td class="noticeCenter">member001</td>
+								<td class="noticeCenter">2024-04-29</td>
+								<td class="noticeCenter">100</td>
+							</tr>
+							<tr>
+								<td class="noticeNum noticeCenter">7</td>
+								<td><i class="badge rounded-pill bg-primary">질문게시판</i><a
+									href="">전주 사시는분 있나요?</a></td>
+								<td class="noticeCenter">member001</td>
+								<td class="noticeCenter">2024-04-29</td>
+								<td class="noticeCenter">100</td>
+							</tr>
+							<tr>
+								<td class="noticeNum noticeCenter">8</td>
+								<td><i class="badge rounded-pill bg-primary">자유게시판</i><a
+									href="">내일부터 날씨 풀리네요</a></td>
+								<td class="noticeCenter">member001</td>
+								<td class="noticeCenter">2024-04-29</td>
+								<td class="noticeCenter">100</td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="row">
+						<div class="col-12"
+							style="text-align: right; margin-top: 50px; margin-bottom: 10px;">
+							<button type="button" class="btn btn-outline-primary btn-sm">글쓰기</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 페이징 -->
+		<div class="row mb-5">
+			<div class="col-12 d-flex justify-content-center">
+				<nav aria-label="Page navigation">
+					<ul class="pagination align-items-center">
+						<li class="page-item"><a class="page-link"
+							href="javascript:void(0)" tabindex="-1"> <i
+								aria-hidden="true"></i> ◀ 이전
+						</a></li>
+
+						<li class="page-item"><a class="page-link active"
+							href="javascript:void(0)">1</a></li>
+						<li class="page-item"><a class="page-link"
+							href="javascript:void(0)">2</a></li>
+						<li class="page-item"><a class="page-link"
+							href="javascript:void(0)">3</a></li>
+						<li class="page-item"><a class="page-link"
+							href="javascript:void(0)">4</a></li>
+						<li class="page-item"><a class="page-link"
+							href="javascript:void(0)">5</a></li>
+						<li class="page-item"><a class="page-link"
+							href="javascript:void(0)">6</a></li>
+						<li class="page-item"><a class="page-link"
+							href="javascript:void(0)">7</a></li>
+						<li class="page-item"><a class="page-link"
+							href="javascript:void(0)">8</a></li>
+						<li class="page-item"><a class="page-link"
+							href="javascript:void(0)">9</a></li>
+						<li class="page-item"><a class="page-link"
+							href="javascript:void(0)">10</a></li>
+						<li class="page-item"><a class="page-link"
+							href="javascript:void(0)"> 다음 ▶ <i aria-hidden="true"></i>
+						</a></li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+
+		<!-- 페이징 
+		<section class="pt-5 pt-md-7">
+			<div class="container" style="margin-bottom: 50px">
+				<nav aria-label="Page navigation">
+					<ul class="pagination justify-content-center align-items-center">
+						<li class="page-item"><a class="page-link"
+							href="javascript:void(0)" tabindex="-1"> <i
+								aria-hidden="true"></i> ◀ 이전
+						</a></li>
+
+						<li class="page-item"><a class="page-link active"
+							href="javascript:void(0)">1</a></li>
+
+						<li class="page-item"><a class="page-link"
+							href="javascript:void(0)">2</a></li>
+
+						<li class="page-item"><a class="page-link"
+							href="javascript:void(0)">3</a></li>
+
+						<li class="page-item"><a class="page-link"
+							href="javascript:void(0)">4</a></li>
+
+						<li class="page-item"><a class="page-link"
+							href="javascript:void(0)">5</a></li>
+
+						<li class="page-item"><a class="page-link"
+							href="javascript:void(0)">다음 ▶ <i aria-hidden="true"></i>
+						</a></li>
+					</ul>
+				</nav>
+			</div>
+		</section> -->
+		
+	</div>
+</th:block>
+
+<th:block layout:fragment="customJs">
+
+</th:block>
+</html>
