@@ -5,6 +5,26 @@
 
 	<th:block layout:fragment="customContent">
 		<!-- ====================================
+		———	PAGE TITLE
+		===================================== -->
+		<section class="page-title">
+		  <div class="page-title-img bg-img bg-overlay-darken" style="background-image: url(/user/img/pages/page-title-bg3.jpg);">
+		    <div class="container">
+		      <div class="row align-items-center justify-content-center" style="height: 200px;">
+		        <div class="col-lg-6">
+		          <div class="page-title-content">
+		            <div class="title-border">
+		              <h2 class="text-uppercase text-white font-weight-bold">플랫폼 여행추천</h2>
+		            </div>
+		            <p class="text-white mb-0"></p>
+		          </div>
+		        </div>
+		      </div>
+		    </div>
+		  </div>
+		</section>
+	
+		<!-- ====================================
 		———	SEARCH SECTION
 		===================================== -->
 		<section class="py-10">
@@ -86,7 +106,7 @@
 		          <div class="media media-list-view-sm flex-column mb-5 mb-md-0">
 		            <div class="media-img position-relative mb-5">
 		              <img class="w-100 rounded lazyestload" data-src="/user/img/cities/cities-big-01.jpg" src="/user/img/cities/cities-big-01.jpg" alt="Generic placeholder image">
-		              <a class="media-img-overlay rounded badge-hover d-flex flex-column" href="destination-single-city.html">
+		              <a class="media-img-overlay rounded badge-hover d-flex flex-column" href="/user/platformranking/platformRankingList">
 		                <div class="badge badge-black-Offset badge-rounded position-relative">
 		                  <span class="d-block text-uppercase font-size-20">
 		                    플랫폼 추천
@@ -101,11 +121,11 @@
 		                  <div class="media media-list-sm align-items-center bg-smoke">
 		                    <div class="media-img">
 		                      <img class="w-100 lazyestload" data-src="/user/img/cities/cities-sm-01.jpg" src="/user/img/cities/cities-sm-01.jpg" alt="Generic placeholder image">
-		                      <a href="destination-single-city.html" class="media-img-overlay"></a>
+		                      <a href="/user/platformranking/platformRankingList" class="media-img-overlay"></a>
 		                    </div>
 		
 		                    <div class="media-body ps-3">
-		                      <a href="destination-single-city.html" class="text-uppercase h6 text-dark hover-text-primary mb-3">관광지 top5</a>
+		                      <a href="/user/platformranking/platformRankingList" class="text-uppercase h6 text-dark hover-text-primary mb-3">관광지 top5</a>
 		                      <h6 class="text-primary mb-0">관광지</h6>
 		                    </div>
 		                  </div>
@@ -115,11 +135,11 @@
 		                  <div class="media media-list-sm align-items-center bg-smoke">
 		                    <div class="media-img">
 		                      <img class="w-100 lazyestload" data-src="/user/img/cities/cities-sm-02.jpg" src="/user/img/cities/cities-sm-02.jpg" alt="Generic placeholder image">
-		                      <a href="destination-single-city.html" class="media-img-overlay"></a>
+		                      <a href="/user/platformranking/platformRankingList" class="media-img-overlay"></a>
 		                    </div>
 		                  
 		                    <div class="media-body ps-3">
-		                      <a href="destination-single-city.html" class="text-uppercase h6 text-dark hover-text-primary mb-3">숙소 top5</a>
+		                      <a href="/user/platformranking/platformRankingList" class="text-uppercase h6 text-dark hover-text-primary mb-3">숙소 top5</a>
 		                      <h6 class="text-primary mb-0">숙소</h6>
 		                    </div>
 		                  </div>
@@ -129,11 +149,11 @@
 		                  <div class="media media-list-sm align-items-center bg-smoke">
 		                    <div class="media-img">
 		                      <img class="w-100 lazyestload" data-src="/user/img/cities/cities-sm-02.jpg" src="/user/img/cities/cities-sm-02.jpg" alt="Generic placeholder image">
-		                      <a href="destination-single-city.html" class="media-img-overlay"></a>
+		                      <a href="/user/platformranking/platformRankingList" class="media-img-overlay"></a>
 		                    </div>
 		                  
 		                    <div class="media-body ps-3">
-		                      <a href="destination-single-city.html" class="text-uppercase h6 text-dark hover-text-primary mb-3">음식점 top5</a>
+		                      <a href="/user/platformranking/platformRankingList" class="text-uppercase h6 text-dark hover-text-primary mb-3">음식점 top5</a>
 		                      <h6 class="text-primary mb-0">음식점</h6>
 		                    </div>
 		                  </div>
@@ -148,7 +168,7 @@
 		          <div class="media media-list-view-sm flex-column">
 		            <div class="media-img position-relative mb-5">
 		              <img class="w-100 rounded lazyestload" data-src="/user/img/cities/cities-big-02.jpg" src="/user/img/cities/cities-big-02.jpg" alt="Generic placeholder image">
-		              <a class="media-img-overlay rounded badge-hover d-flex flex-column" href="destination-single-city.html">
+		              <a class="media-img-overlay rounded badge-hover d-flex flex-column" href="/user/platformranking/userRankingList">
 		                <div class="badge badge-black-Offset badge-rounded position-relative">
 		                  <span class="d-block text-uppercase font-size-20">
 		                    회원추천
@@ -163,11 +183,11 @@
 		                  <div class="media media-list-sm align-items-center bg-smoke mb-5 mb-lg-0">
 		                    <div class="media-img">
 		                      <img class="w-100 lazyestload" data-src="/user/img/cities/cities-sm-03.jpg" src="/user/img/cities/cities-sm-03.jpg" alt="Generic placeholder image">
-		                      <a href="destination-single-city.html" class="media-img-overlay"></a>
+		                      <a href="/user/platformranking/userRankingList" class="media-img-overlay"></a>
 		                    </div>
 		        
 		                    <div class="media-body ps-3">
-		                      <a href="destination-single-city.html" class="text-uppercase h6 text-dark hover-text-primary mb-3">관광지 top5</a>
+		                      <a href="/user/platformranking/userRankingList" class="text-uppercase h6 text-dark hover-text-primary mb-3">관광지 top5</a>
 		                      <h6 class="text-primary mb-0">관광지</h6>
 		                    </div>
 		                  </div>
@@ -177,11 +197,11 @@
 		                  <div class="media media-list-sm align-items-center bg-smoke mb-5 mb-lg-0">
 		                    <div class="media-img">
 		                      <img class="w-100 lazyestload" data-src="/user/img/cities/cities-sm-04.jpg" src="/user/img/cities/cities-sm-04.jpg" alt="Generic placeholder image">
-		                      <a href="destination-single-city.html" class="media-img-overlay"></a>
+		                      <a href="/user/platformranking/userRankingList" class="media-img-overlay"></a>
 		                    </div>
 		        
 		                    <div class="media-body ps-3">
-		                      <a href="destination-single-city.html" class="text-uppercase h6 text-dark hover-text-primary mb-3">숙소 top5</a>
+		                      <a href="/user/platformranking/userRankingList" class="text-uppercase h6 text-dark hover-text-primary mb-3">숙소 top5</a>
 		                      <h6 class="text-primary mb-0">숙소</h6>
 		                    </div>
 		                  </div>
@@ -191,11 +211,11 @@
 		                  <div class="media media-list-sm align-items-center bg-smoke mb-5 mb-lg-0">
 		                    <div class="media-img">
 		                      <img class="w-100 lazyestload" data-src="/user/img/cities/cities-sm-04.jpg" src="/user/img/cities/cities-sm-04.jpg" alt="Generic placeholder image">
-		                      <a href="destination-single-city.html" class="media-img-overlay"></a>
+		                      <a href="/user/platformranking/userRankingList" class="media-img-overlay"></a>
 		                    </div>
 		        
 		                    <div class="media-body ps-3">
-		                      <a href="destination-single-city.html" class="text-uppercase h6 text-dark hover-text-primary mb-3">음식점 top5</a>
+		                      <a href="/user/platformranking/userRankingList" class="text-uppercase h6 text-dark hover-text-primary mb-3">음식점 top5</a>
 		                      <h6 class="text-primary mb-0">음식점</h6>
 		                    </div>
 		                  </div>
@@ -213,7 +233,7 @@
 		          <div class="media media-list-view-sm flex-column mb-5 mb-md-0">
 		            <div class="media-img position-relative mb-5">
 		              <img class="w-100 rounded lazyestload" data-src="/user/img/cities/cities-big-03.jpg" src="/user/img/cities/cities-big-03.jpg" alt="Generic placeholder image">
-		              <a class="media-img-overlay rounded badge-hover d-flex flex-column" href="destination-single-city.html">
+		              <a class="media-img-overlay rounded badge-hover d-flex flex-column" href="/user/platformranking/planRankingList">
 		                <div class="badge badge-black-Offset badge-rounded position-relative">
 		                  <span class="d-block text-uppercase font-size-20">
 		                    다른회원의 여행계획 추천
@@ -229,11 +249,11 @@
 		                  <div class="media media-list-sm align-items-center bg-smoke">
 		                    <div class="media-img">
 		                      <img class="w-100 lazyestload" data-src="/user/img/cities/cities-sm-05.jpg" src="/user/img/cities/cities-sm-05.jpg" alt="Generic placeholder image">
-		                      <a href="destination-single-city.html" class="media-img-overlay"></a>
+		                      <a href="/user/platformranking/planRankingList" class="media-img-overlay"></a>
 		                    </div>
 		    
 		                    <div class="media-body ps-4">
-		                      <a href="destination-single-city.html" class="text-uppercase h4 text-dark hover-text-primary mb-3">여행계획 top10</a>
+		                      <a href="/user/platformranking/planRankingList" class="text-uppercase h4 text-dark hover-text-primary mb-3">여행계획 top10</a>
 		                      <h4 class="text-primary mb-0">여행계획</h4>	                  
 		                    </div>
 		                  </div>
@@ -253,16 +273,16 @@
 											role="tablist">
 											<li class="nav-item"><a class="nav-link active"
 												id="recent-tab" data-bs-toggle="tab" href="#recent"
-												role="tab" aria-controls="recent" aria-selected="true">Recent</a>
+												role="tab" aria-controls="recent" aria-selected="true">플랫폼 추천순위</a>
 											</li>
 
 											<li class="nav-item"><a class="nav-link"
 												id="popular-tab" data-bs-toggle="tab" href="#popular"
-												role="tab" aria-controls="popular" aria-selected="false">Popular</a>
+												role="tab" aria-controls="popular" aria-selected="false">회원추천 인기순위</a>
 											</li>
 											<li class="nav-item"><a class="nav-link" id="new-tab"
 												data-bs-toggle="tab" href="#new" role="tab"
-												aria-controls="new" aria-selected="false">New</a></li>
+												aria-controls="new" aria-selected="false">여행계획 추천순위</a></li>
 										</ul>
 
 										<div
@@ -281,9 +301,9 @@
 													</div>
 
 													<div class="media-body">
-														<a href="javascript:void(0)"
+														<a href="/user/userranking/userRankingList"
 															class="text-dark hover-text-primary text-capitalize mb-1">
-															Totam rem apriam eaque. </a>
+															관광지 1위 </a>
 
 														<ul class="list-unstyled d-flex flex-wrap mb-0">
 															<li class="meta-tag text-gray-color me-4 mb-1"><i
@@ -306,7 +326,7 @@
 													<div class="media-body">
 														<a href="javascript:void(0)"
 															class="text-dark hover-text-primary text-capitalize mb-1">
-															Pitter soan smeeit herick. </a>
+															관광지 2위 </a>
 
 														<ul class="list-unstyled d-flex flex-wrap mb-0">
 															<li class="meta-tag text-gray-color me-4 mb-1"><i
@@ -329,7 +349,7 @@
 													<div class="media-body">
 														<a href="javascript:void(0)"
 															class="text-dark hover-text-primary text-capitalize mb-1">
-															Amanda disuja carl parkar. </a>
+															관광지 3위 </a>
 
 														<ul class="list-unstyled d-flex flex-wrap mb-0">
 															<li class="meta-tag text-gray-color me-4 mb-1"><i
@@ -351,7 +371,7 @@
 													<div class="media-body">
 														<a href="javascript:void(0)"
 															class="text-dark hover-text-primary text-capitalize mb-1">
-															Rodney samp deo artich. </a>
+															관광지 4위 </a>
 
 														<ul class="list-unstyled d-flex flex-wrap mb-0">
 															<li class="meta-tag text-gray-color me-4 mb-1"><i
@@ -377,7 +397,7 @@
 													<div class="media-body">
 														<a href="javascript:void(0)"
 															class="text-dark hover-text-primary text-capitalize mb-1">
-															Rodney samp deo artich. </a>
+															관광지 1위 </a>
 
 														<ul class="list-unstyled d-flex flex-wrap mb-0">
 															<li class="meta-tag text-gray-color me-4 mb-1"><i
@@ -400,7 +420,7 @@
 													<div class="media-body">
 														<a href="javascript:void(0)"
 															class="text-dark hover-text-primary text-capitalize mb-1">
-															Amanda disuja carl parkar. </a>
+															관광지 2위 </a>
 
 														<ul class="list-unstyled d-flex flex-wrap mb-0">
 															<li class="meta-tag text-gray-color me-4 mb-1"><i
@@ -423,7 +443,7 @@
 													<div class="media-body">
 														<a href="javascript:void(0)"
 															class="text-dark hover-text-primary text-capitalize mb-1">
-															Pitter soan smeeit herick. </a>
+															관광지 3위 </a>
 
 														<ul class="list-unstyled d-flex flex-wrap mb-0">
 															<li class="meta-tag text-gray-color me-4 mb-1"><i
@@ -445,7 +465,7 @@
 													<div class="media-body">
 														<a href="javascript:void(0)"
 															class="text-dark hover-text-primary text-capitalize mb-1">
-															Totam rem apriam eaque. </a>
+															관광지 4위 </a>
 
 														<ul class="list-unstyled d-flex flex-wrap mb-0">
 															<li class="meta-tag text-gray-color me-4 mb-1"><i
@@ -471,7 +491,7 @@
 													<div class="media-body">
 														<a href="javascript:void(0)"
 															class="text-dark hover-text-primary text-capitalize mb-1">
-															Pitter soan smeeit herick. </a>
+															관광지 1위 </a>
 
 														<ul class="list-unstyled d-flex flex-wrap mb-0">
 															<li class="meta-tag text-gray-color me-4 mb-1"><i
@@ -494,7 +514,7 @@
 													<div class="media-body">
 														<a href="javascript:void(0)"
 															class="text-dark hover-text-primary text-capitalize mb-1">
-															Rodney samp deo artich. </a>
+															관광지 2위 </a>
 
 														<ul class="list-unstyled d-flex flex-wrap mb-0">
 															<li class="meta-tag text-gray-color me-4 mb-1"><i
@@ -517,7 +537,7 @@
 													<div class="media-body">
 														<a href="javascript:void(0)"
 															class="text-dark hover-text-primary text-capitalize mb-1">
-															Totam rem apriam eaque. </a>
+															관광지 3위 </a>
 
 														<ul class="list-unstyled d-flex flex-wrap mb-0">
 															<li class="meta-tag text-gray-color me-4 mb-1"><i
@@ -539,7 +559,7 @@
 													<div class="media-body">
 														<a href="javascript:void(0)"
 															class="text-dark hover-text-primary text-capitalize mb-1">
-															Amanda disuja carl parkar. </a>
+															관광지 4위 </a>
 
 														<ul class="list-unstyled d-flex flex-wrap mb-0">
 															<li class="meta-tag text-gray-color me-4 mb-1"><i
