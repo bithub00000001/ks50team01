@@ -12,9 +12,9 @@
 	<section class="py-10">
 		<div class="container">
 		<!-- Button trigger modal -->
-		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+<!-- 		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
 		  신고하기
-		</button>
+		</button> -->
 		
 		<!-- Modal -->
 		<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -57,42 +57,33 @@
 
 <th:block layout:fragment="customJs">
 	<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var dropdownItems = document.querySelectorAll(".dropdown-item");
-        var dropdownButton = document.querySelector(".dropdown-toggle");
+	document.addEventListener("DOMContentLoaded", function() {
+	    var dropdownItems = document.querySelectorAll(".dropdown-item");
+	    var dropdownButton = document.querySelector(".dropdown-toggle");
+	    var selectedType = ""; // 선택한 유형을 저장할 변수
 
-        dropdownItems.forEach(function(item) {
-            item.addEventListener("click", function() {
-                var selectedText = this.textContent;
-                dropdownButton.textContent = selectedText; // 선택한 항목의 값을 버튼에 표시
-            });
-        });
-    });
-    document.addEventListener("DOMContentLoaded", function() {
-        var dropdownItems = document.querySelectorAll(".dropdown-item");
-        var dropdownButton = document.querySelector(".dropdown-toggle");
-        var selectedType = ""; // 선택한 유형을 저장할 변수
+	    dropdownItems.forEach(function(item) {
+	        item.addEventListener("click", function() {
+	            var newSelectedType = this.textContent; // 새로 선택한 항목을 변수에 저장
+	            if (newSelectedType !== selectedType) { // 새로 선택한 항목과 기존에 선택한 항목이 다를 때만 처리
+	                selectedType = newSelectedType; // 선택한 항목을 업데이트
+	                dropdownButton.textContent = selectedType; // 선택한 항목의 값을 버튼에 표시
+	            } else { // 같은 항목을 다시 선택한 경우
+	                selectedType = ""; // 선택 초기화
+	                dropdownButton.textContent = "신고유형선택"; // 드롭다운 버튼의 텍스트 초기화
+	            }
+	        });
+	    });
 
-        dropdownItems.forEach(function(item) {
-            item.addEventListener("click", function() {
-                var newSelectedType = this.textContent; // 새로 선택한 항목을 변수에 저장
-                if (newSelectedType !== selectedType) { // 새로 선택한 항목과 기존에 선택한 항목이 다를 때만 처리
-                    selectedType = newSelectedType; // 선택한 항목을 업데이트
-                    dropdownButton.textContent = selectedType; // 선택한 항목의 값을 버튼에 표시
-                } else { // 같은 항목을 다시 선택한 경우
-                    selectedType = ""; // 선택 초기화
-                    dropdownButton.textContent = "신고유형선택"; // 드롭다운 버튼의 텍스트 초기화
-                }
-            });
-        });
-    });
-    const textarea = document.getElementById('message-text');
-    const charCount = document.getElementById('char-count');
-
-    textarea.addEventListener('input', function() {
-        const count = textarea.value.length;
-        charCount.textContent = count + '/100';
-    });   
+	    // 모달 창 자동 열기
+	    var modal = new bootstrap.Modal(document.getElementById('staticBackdrop'), {
+	        backdrop: 'static'
+	    });
+	    modal.show();
+	});
+    
+    
+    
 	</script>
 </th:block>
 </html>

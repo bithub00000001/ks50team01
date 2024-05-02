@@ -6,16 +6,17 @@
     padding-left: 20px; /* 왼쪽 여백을 설정 */
     padding-right: 20px; /* 오른쪽 여백을 설정 */
     padding-top: 20px;
-    border-bottom: 3px solid #ff9b40;
+    border-bottom: 3px solid #ffd0a5;
 }
 
 .review-content img {
-	margin-bottom: 20px; /* 이미지 하단에 여백 추가 */
+	margin-bottom: 200px; /* 이미지 하단에 여백 추가 */
 }
 
 .rating {
 	color: #ff9b40; /* 별점의 색을 노란색으로 설정 */
 	font-size: 24px; /* 별의 크기를 조정합니다. */
+	margin-bottom: 5px;
 }
 /* 이미지 크기 조절 */
 .review-content img {
@@ -30,6 +31,7 @@
     flex-wrap: wrap; /* 이미지가 공간을 벗어나면 줄바꿈되도록 합니다. */
     justify-content: flex-start; /* 왼쪽 정렬 */
     gap: 10px; /* 이미지 사이 간격 조절 */
+    margin-bottom: 30px;
 }
 
 .review-content .image-container img {
@@ -39,16 +41,30 @@
 }
 
 /* 좋아요 버튼 스타일 */
-.like-btn,
-.dislike-btn {
+.like-btn {
     padding: 10px 20px;
-    background-color: #ff9b40; /* 주황색 배경색 */
-    color: #fff; /* 흰색 글자색 */
-    border: 2px solid #ff9b40; /* 주황색 테두리 */
+    background-color: white; /* 주황색 배경색 */
+    color: #696969; /* 흰색 글자색 */
+    border: 2px solid #ffd0a5; /* 주황색 테두리 */
     border-radius: 5px;
     cursor: pointer;
-    margin-left: 10px;
     transition: background-color 0.3s, border-color 0.3s; /* 호버 효과를 위한 transition 속성 추가 */
+    width: 150px; /* 버튼의 너비를 고정 */
+    height: 40px; /* 버튼의 높이를 고정 */
+    overflow: hidden; /* 텍스트가 버튼을 벗어나지 않도록 설정 */
+}
+
+.dislike-btn {
+    padding: 10px 20px;
+    background-color: white; /* 주황색 배경색 */
+    color: #696969; /* 흰색 글자색 */
+    border: 2px solid #ffd0a5; /* 주황색 테두리 */
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s; /* 호버 효과를 위한 transition 속성 추가 */
+    width: 150px; /* 버튼의 너비를 고정 */
+    height: 40px; /* 버튼의 높이를 고정 */
+    overflow: hidden; /* 텍스트가 버튼을 벗어나지 않도록 설정 */
 }
 
 /* 좋아요, 싫어요 버튼 호버 효과 */
@@ -56,7 +72,9 @@
 .dislike-btn:hover {
     background-color: #ff7c00; /* 더 진한 주황색 배경색 */
     border-color: #ff7c00; /* 더 진한 주황색 테두리 */
+    color: white;
 }
+
 
 /* 신고하기 버튼 스타일 */
 .report-btn {
@@ -74,5 +92,78 @@
 .report-btn:hover {
     background-color: #ff7c00; /* 더 진한 주황색 배경색 */
     border-color: #ff7c00; /* 더 진한 주황색 테두리 */
+}
+
+.separator1{
+    border-top: 3px solid #ff9b40; /* 굵은 직선 스타일 설정 */
+    margin: 7px 0; /* 위아래 여백 설정 */
+}
+
+.separator2 {
+    border-top: 1px solid #ffd0a5; /* 굵은 직선 스타일 설정 */
+    margin-bottom: 10px;
+}
+
+.user-id {
+	margin-left: 2px;
+    font-size: 1.2em; /* 원하는 크기로 조절하세요 */
+    font-weight: bold; /* 글씨를 굵게 설정합니다 */
+    margin-bottom: 5px;
+}
+
+.date,
+.modified-date{
+	margin-left: 2px;
+    font-size: 1.2em; /* 원하는 크기로 조절하세요 */
+    /*font-weight: bold;  글씨를 굵게 설정합니다 */
+}
+
+.review-content p {
+    font-size: 18px; /* 원하는 크기로 조절하세요 */
+    color: #696969; /* 원하는 색상으로 조절하세요 */
+    line-height: 1.5; /* 줄간격 설정, 기본값은 1 */
+}
+
+.like-dislike-report {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.report-btn-container {
+    margin-left: auto;
+}
+
+.dropdown-1 .btn-secondary {
+    background-color: orange; /* 주황색 배경색 */
+    border-color: orange; /* 주황색 테두리색 */
+    color: white; /* 버튼 텍스트 색상 */
+    font-size: 12px; /* 버튼 안에 있는 텍스트의 크기를 조정합니다. */
+    width: 100px; /* 버튼의 너비를 고정합니다. */
+    text-align: center; /* 텍스트를 가운데 정렬합니다. */
+    margin-right: 20px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.dropdown-1 {
+    display: flex;
+    justify-content: flex-end; /* 오른쪽 배치 */
+}
+
+.dropdown-menu {
+    min-width: 100px; /* 드롭다운 메뉴의 최소 너비를 설정합니다. */
+}
+
+.review-stats {
+    text-align: center;
+}
+
+.review-stats p {
+    font-size: 1.2em; /* 원하는 크기로 조절 */
+    font-weight: bold;
+    margin-bottom: 10px; /* 텍스트 간격 조절 */
+    color: black;
+    margin-bottom: 20px;
 }
 

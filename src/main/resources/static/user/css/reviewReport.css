@@ -2,9 +2,9 @@
 /* 신고 유형 선택 버튼 스타일 */
 .dropdown-toggle.btn-danger {
     width: 100px !important; /* 버튼의 너비 조정 */
-    background-color: ff9b40; /* 주황색 배경색 설정 */
+    background-color: #ff9b40; /* 주황색 배경색 설정 */
     color: white; /* 텍스트 색상을 흰색으로 설정 */
-    border-color: ff9b40; /* 테두리 색상을 주황색으로 설정 */
+    border-color: #ff9b40; /* 테두리 색상을 주황색으로 설정 */
 }
 
 .modal-title{
@@ -51,32 +51,6 @@
     color: gray; /* 텍스트 색상 설정 */
     margin-right: 20px;
 }
-
-/* .modal-content{
-    text-align: center;
-    margin: 0 auto;
-} */
-/* .modal-header{
-    text-align: center;
-    margin: 0 auto;
-}
-.modal-body{
-    text-align: center;
-    margin: 0 auto;
-}
-.modal-footer{
-    text-align: center;
-    margin: 0 auto;
-}
-.btn{
-    text-align: center;
-    margin: 0 auto;
-}
-.btn-group {
-    text-align: center;
-    margin: 0 auto;
-} */
-
 
 
 
