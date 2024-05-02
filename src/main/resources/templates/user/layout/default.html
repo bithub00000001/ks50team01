@@ -2,14 +2,20 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
   <head>
-    <!-- SITE TITTLE START -->
+    <!-- ===========================================
+		  ———	CITE META INFO START
+		  ========================================== -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>여행 계획</title>
-    <!-- SITE TITTLE END -->
+    <!-- ===========================================
+		  ———	CITE META INFO END
+		  ========================================== -->
 
-    <!-- PLUGINS CSS STYLE START -->
+    <!-- ===========================================
+		  ———	COMMON PLUGINS CSS STYLE START
+		  ========================================== -->
     <link th:href="@{/user/plugins/fontawesome-5.15.2/css/all.min.css}" rel='stylesheet'>
     <link th:href="@{/user/plugins/fontawesome-5.15.2/css/fontawesome.min.css}" rel='stylesheet'>
     <link th:href="@{/user/plugins/animate/animate.css}" rel="stylesheet">
@@ -17,81 +23,110 @@
     <link th:href="@{/user/plugins/menuzord/css/menuzord-animations.css}" rel="stylesheet">
     <link th:href="@{/user/plugins/fancybox/jquery.fancybox.min.css}" rel='stylesheet'>
     <link th:href="@{/user/plugins/selectric/selectric.css}" rel='stylesheet'>
-    <!-- PLUGINS CSS STYLE END -->
+    <!-- ===========================================
+		  ———	COMMON PLUGINS CSS STYLE END
+		  ========================================== -->
 
-    <!-- CUSTOM THEME CSS START -->
+	<!-- ===========================================
+		  ———	CUSTOM PLUGINS CSS STYLE START
+		  ========================================== -->
     <th:block layout:fragment="customCss"></th:block>
-    <th:block layout:fragment="customHead"></th:block>
-    <!-- CUSTOM THEME CSS END -->
+    <!-- ===========================================
+		  ———	CUSTOM PLUGINS CSS STYLE END
+		  ========================================== -->
 
-    <!-- CUSTOM CSS START -->
+    <!-- ===========================================
+		  ———	TEMPLATE CSS STYLE START
+		  ========================================== -->
     <link th:href="@{/user/css/star.css}" id="option_style" rel="stylesheet">
-    <!-- CUSTOM CSS END -->
+    <!-- ===========================================
+		  ———	TEMPLATE CSS STYLE END
+		  ========================================== -->
 
-    <!-- FAVICON START -->
+    <!-- ===========================================
+		  ———	CITE FAVICON START
+		  ========================================== -->
     <link rel="shortcut icon" type="image/png" href="/user/img/favicon.png"/>
-    <!-- FAVICON END -->
+    <!-- ===========================================
+		  ———	CITE FAVICON END
+		  ========================================== -->
   </head>
   <body id="body" class="up-scroll" data-bs-spy="scroll" data-bs-target=".element-right-sidebar" data-bs-offset="100">
 
-    <!-- TOP NAVIGATION START -->
-    <div th:replace="~{/user/fragments/header :: headerFragment}"></div>
-    </div>
-    <!-- TOP NAVIGATION END -->
+    <!-- ===========================================
+		  ———	HEADER NAVIGATION START
+		  ========================================== -->
+    <header th:replace="~{user/fragments/header :: headerFragment}"></header>
+    <!-- ===========================================
+		  ———	HEADER NAVIGATION END
+		  ========================================== -->
+    
+    <div class="main-wrapper">
+    	<!-- ====================================
+			  ———	PAGE TITLE START
+			  ===================================== -->
+		<th:block layout:fragment="customPageTitle"></th:block>
+		<!-- ====================================
+			  ———	PAGE TITLE END
+			  ===================================== -->
+		<section>
+			<div class="container">
+				<!-- Elements Breadcrumb -->
+				<div class="pt-5 mb-5" id="breadcrumb">
+					<div class="row">
+						<div class="col-md-4">
+							<div class="mb-5">
+								<!-- ====================================
+								  ———	Breadcrumb START
+								  ===================================== -->
+								<nav aria-label="breadcrumb">
+									<ol class="breadcrumb">
+										<li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+										<li class="breadcrumb-item"><a href="javascript:void(0)">Pages</a></li>
+										<li class="breadcrumb-item active" aria-current="page">Destination
+											Single City</li>
+									</ol>
+								</nav>
+								<!-- ====================================
+								  ———	Breadcrumb END
+								  ===================================== -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		
+		<!-- ====================================
+		  ———	PAGE SECTION START
+		  ===================================== -->
+		<th:block layout:fragment="customPageSection"></th:block>
+		<section class="pb-10">
+			<div class="container">
+				<div class="mb-6">
+					<div class="row">
+						
+					
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- ====================================
+		  ———	PAGE SECTION END
+		  ===================================== -->
+	</div>
 
-    <!-- CONTAINER START -->
-    <div class="container body">
-      <div class="main_container">
-        <!-- ====================================
-        ———	BREADCRUMB
-        ===================================== -->
-        <!-- ELEMENTS BREADCRUMB START -->
-        <br>
-        <br>
-        <nav style="--bs-breadcrumb-divider: url(&quot;data:image/svg+xml,%3Csvg xmlns='<http://www.w3.org/2000/svg>' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&quot;);" aria-label="breadcrumb">
-          <ol class="breadcrumb">
-            <li th:each="item, iterStat : ${breadcrumb}" th:classappend="${iterStat.last}? 'breadcrumb-item active' : 'breadcrumb-item'">
-              <a href="javascript:void(0)" th:text="${item}">Item</a>
-            </li>
-          </ol>
-        </nav>
-        <nav style="--bs-breadcrumb-divider: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&quot;);" aria-label="breadcrumb">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Library</li>
-          </ol>
-        </nav>
+    <!-- ====================================
+		  ———	FOOTER CONTENT START
+		  ===================================== -->
+    <div th:replace="~{user/fragments/footer :: footerFragment}"></div>
+    <!-- ====================================
+		  ———	FOOTER CONTENT END
+		  ===================================== -->
 
-
-        <div class="row">
-          <div class="col-md-4">
-            <div class="mb-5">
-              <h3 class="element-title" th:text="${title}">Default</h3>
-              <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                  <li aria-current="page" class="breadcrumb-item active">Home</li>
-                </ol>
-              </nav>
-            </div>
-          </div>
-        </div>
-        <!-- ELEMENTS BREADCRUMB END -->
-
-        <!-- CUSTOM CONTENT START -->
-      <th:block layout:fragment="customContent">
-        <!-- 여기에 메인 컨텐츠가 삽입됩니다. -->
-      </th:block>
-        <!-- CUSTOM CONTENT END -->
-
-      </div>
-    </div>
-    <!-- CONTAINER START -->
-
-    <!-- FOOTER CONTENT START -->
-    <div th:replace="~{/user/fragments/footer :: footerFragment}"></div>
-    <!-- FOOTER CONTENT END -->
-
-    <!-- JAVASCRIPT START -->
+    <!-- ===========================================
+		  ———	COMMON JAVASCRIPT RESOUCES START
+		  ========================================== -->
     <script th:src="@{/user/plugins/jquery/jquery-3.4.1.min.js}"></script>
     <script th:src="@{/user/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
     <script th:src="@{/user/plugins/menuzord/js/menuzord.js}"></script>
@@ -100,15 +135,26 @@
     <script th:src="@{/user/plugins/lazyestload/lazyestload.js}"></script>
     <script th:src="@{/user/plugins/velocity/velocity.min.js}"></script>
     <script th:src="@{/user/plugins/smoothscroll/SmoothScroll.js}"></script>
-    <script th:src="@{/user/js/star.js}"></script>
-    <!-- JAVASCRIPT END -->
-
-    <!-- CUSTOM JAVASCRIPT START -->
-    <th:block layout:fragment="customJs"></th:block>
-    <!-- CUSTOM JAVASCRIPT END -->
-
-    <!-- CUSTOM JAVASCRIPT FILE START -->
+    <!-- ===========================================
+		  ———	COMMON JAVASCRIPT RESOUCES END
+		  ========================================== -->
+    
+    <!-- ===========================================
+		  ———	CUSTOM JAVASCRIPT RESOUCES START
+		  ========================================== -->
     <th:block layout:fragment="customJsFIle"></th:block>
-    <!-- CUSTOM JAVASCRIPT FILE END -->
+    <!-- ===========================================
+		  ———	CUSTOM JAVASCRIPT RESOUCES END
+		  ========================================== -->
+    
+    <script th:src="@{/user/js/star.js}"></script>
+
+    <!-- ===========================================
+		  ———	CUSTOM JAVASCRIPT SCRIPT START
+		  ========================================== -->
+    <th:block layout:fragment="customJs"></th:block>
+    <!-- ===========================================
+		  ———	CUSTOM JAVASCRIPT SCRIPT END
+		  ========================================== -->
   </body>
 </html>

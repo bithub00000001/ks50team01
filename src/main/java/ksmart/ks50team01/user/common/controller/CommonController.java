@@ -14,5 +14,10 @@ public class CommonController {
         model.addAttribute("title", "미정 플래너");
         return "user/main";
     }
+    @GetMapping(value = {"/refer"})
+    public String main(Model model) {
+    	model.addAttribute("title", "미정 플래너");
+    	return "user/userRefGuide";
+    }
 
 }
