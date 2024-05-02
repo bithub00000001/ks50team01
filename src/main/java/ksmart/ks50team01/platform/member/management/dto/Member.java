@@ -12,14 +12,14 @@ public class Member {
 	private String memberRegDate;
 	private String memberFormDate;
 	private String memberLevelName;
-	private int memberCount;
+
 	
 	@Override
 	public String toString() {
 		return "Member [memberId=" + memberId + ", memberGrdNum=" + memberGrdNum + ", memberPw=" + memberPw
 				+ ", memberName=" + memberName + ", memberNickname=" + memberNickname + ", memberEmail=" + memberEmail
 				+ ", memberTelNum=" + memberTelNum + ", memberRegDate=" + memberRegDate + ", memberFormDate="
-				+ memberFormDate + ", memberLevelName=" + memberLevelName + ", memberCount=" + memberCount + "]";
+				+ memberFormDate + ", memberLevelName=" + memberLevelName + "]";
 	}
 	public String getMemberLevelName() {
 		return memberLevelName;
@@ -81,13 +81,7 @@ public class Member {
 	public void setMemberFormDate(String memberFormDate) {
 		this.memberFormDate = memberFormDate;
 	}
-	public int getMemberCount() {
-		return memberCount;
-	}
-	public void setMemberCount(int memberCount) {
-		this.memberCount = memberCount;
-	}
-	
+
 	
 	
 }

@@ -16,6 +16,13 @@ public class MemberService {
 
 	private final MemberMapper memberMapper;
 	
+	
+	public Member updateMemberGrade(String memberId, String gradeNum) {
+		Member updateMemberGrade = memberMapper.updateMemberGrade(memberId, gradeNum);
+		
+		return updateMemberGrade;
+	}
+	
 	public List<Member> getMemberList(){
 		List<Member> memberList = memberMapper.getMemberList();
 		
@@ -41,9 +48,9 @@ public class MemberService {
 		return memberInfo;
 	}
 	
-	public Member memberCount() {
-		Member memberCount = memberMapper.memberCount();
+	public List<Member> getMemberGrade() {
+		List<Member> memberGrade = memberMapper.getMemberGrade();
 		
-		return memberCount;
+		return memberGrade;
 	}
 }
