@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ko" layout:decorate="~{/user/layout/default}"
+     			xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    			xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>1:1문의</title>
+<th:block layout:fragment="customHead">
+	<link rel="stylesheet" th:href="@{/user/css/list-style.css}">
+</th:block>
+</head>
+
+<th:block layout:fragment="customContent">
+	<!-- 여기에 메인 컨텐츠가 삽입됩니다. -->
+	<div class="main-wrapper pages">
+		<section class="page-title">
+			<div class="page-title-img bg-img bg-overlay-darken"
+				style="background-image: url(/user/img/pages/page-title-bg12.jpg);">
+				<div class="container">
+					<div class="row align-items-center justify-content-center">
+						<div class="col-lg-9 col-xl-8">
+							<div class="page-title-content py-7 py-md-8">
+								<div class="">
+									<h2 class="text-uppercase text-white font-weight-bold">1:1문의</h2>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+
+	<div class="d-flex align-items-start">
+		<div class="dropdown mt-3">
+			<button class="btn btn-primary dropdown-toggle" type="button"
+				id="dropdownMenuButton" data-bs-toggle="dropdown">1:1문의</button>
+			<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+				<li><a class="dropdown-item" href="javascript:void(0)">계정 관리</a></li>
+				<li><a class="dropdown-item" href="javascript:void(0)">이용 문의</a></li>
+				<li><a class="dropdown-item" href="javascript:void(0)">건의 및
+						제안</a></li>
+				<li><a class="dropdown-item" href="javascript:void(0)">결제 및
+						환불</a></li>
+			</ul>
+		</div>
+	</div>
+
+
+	<!-- body -->
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="table-responsive" style="margin-top: 180px; overflow-x: hidden;">
+
+				<table class="table table-hover table-bordered">
+					<colgroup>
+						<col class="col-sm-1" />
+						<col class="col-sm-1" />
+						<col class="col-sm-6" />
+						<col class="col-sm-2" />
+						<col class="col-sm-2" />
+					</colgroup>
+					<thead>
+						<tr class="active" style="text-align: center">
+							<th>문의 번호</th>
+							<th>문의 유형</th>
+							<th>문의 제목</th>
+							<th>문의 날짜</th>
+							<th>진행 상황</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td class="noticeNum noticeCenter" style="text-align: center">1</td>
+							<td><i class="badge rounded-pill bg-primary noticeCenter"
+								style="text-align: center">계정 관리</i></td>
+							<td><a href="">회원탈퇴는 어떻게 하나요?</a></td>
+							<td class="noticeCenter" style="text-align: center">2024-04-29</td>
+							<td class="noticeCenter" style="text-align: center">접수</td>
+						</tr>
+						<tr>
+							<td class="noticeNum noticeCenter" style="text-align: center">2</td>
+							<td><i class="badge rounded-pill bg-primary noticeCenter"
+								style="text-align: center">계정 관리</i></td>
+							<td><a href="">아이디, 비밀번호를 분실했어요!</a></td>
+							<td class="noticeCenter" style="text-align: center">2024-04-29</td>
+							<td class="noticeCenter" style="text-align: center">답변완료</td>
+						</tr>
+						<tr>
+							<td class="noticeNum noticeCenter" style="text-align: center">3</td>
+							<td><i class="badge rounded-pill bg-primary noticeCenter"
+								style="text-align: center">이용 문의</i></td>
+							<td><a href="">문의하는 방법을 알려주세요</a></td>
+							<td class="noticeCenter" style="text-align: center">2024-04-29</td>
+							<td class="noticeCenter" style="text-align: center">답변완료</td>
+						</tr>
+						<tr>
+							<td class="noticeNum noticeCenter" style="text-align: center">4</td>
+							<td><i class="badge rounded-pill bg-primary noticeCenter"
+								style="text-align: center">결제 / 환불</i></td>
+							<td><a href="">구매를 취소하고 싶어요</a></td>
+							<td class="noticeCenter" style="text-align: center">2024-04-29</td>
+							<td class="noticeCenter" style="text-align: center">검토중</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="row">
+					<div class="col-12"
+						style="text-align: right; margin-top: 100px; margin-bottom: 10px;">
+						<!-- th:onclick 속성을 사용하여 클릭 이벤트를 처리하고 JavaScript 함수를 호출합니다. -->
+						<button type="button" class="btn btn-outline-primary btn-sm"
+							th:onclick="'javascript:redirectToQnaWrite();'">글쓰기</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 페이징 -->
+	<section class="pt-5 pt-md-7">
+		<div class="container" style="margin-bottom: 50px">
+			<nav aria-label="Page navigation">
+				<ul class="pagination justify-content-center align-items-center">
+					<li class="page-item"><a class="page-link"
+						href="javascript:void(0)" tabindex="-1"> <i aria-hidden="true"></i>
+							◀ 이전
+					</a></li>
+
+					<li class="page-item"><a class="page-link active"
+						href="javascript:void(0)">1</a></li>
+
+					<li class="page-item"><a class="page-link"
+						href="javascript:void(0)">2</a></li>
+
+					<li class="page-item"><a class="page-link"
+						href="javascript:void(0)">3</a></li>
+
+					<li class="page-item"><a class="page-link"
+						href="javascript:void(0)">4</a></li>
+
+					<li class="page-item"><a class="page-link"
+						href="javascript:void(0)">5</a></li>
+
+					<li class="page-item"><a class="page-link"
+						href="javascript:void(0)">다음 ▶ <i aria-hidden="true"></i>
+					</a></li>
+				</ul>
+			</nav>
+		</div>
+	</section>
+
+</th:block>
+
+<th:block layout:fragment="customJs">
+
+
+<!-- JavaScript 함수 정의 -->
+<script th:inline="javascript">
+    function redirectToQnaWrite() {
+        // window.location.href를 사용하여 특정 URL로 이동합니다.
+        window.location.href = /*[[@{/user/board/qnaWrite}]]*/ '';
+    }
+</script>
+
+</th:block>
+</html>

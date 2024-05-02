@@ -12,6 +12,7 @@ public class Member {
 	private String memberRegDate;
 	private String memberFormDate;
 	private String memberLevelName;
+
 	
 	@Override
 	public String toString() {
@@ -80,7 +81,7 @@ public class Member {
 	public void setMemberFormDate(String memberFormDate) {
 		this.memberFormDate = memberFormDate;
 	}
-	
+
 	
 	
 }

@@ -36,8 +36,8 @@
                             <span class="fa fa-chevron-down"></span>
                         </a>
                         <ul class="nav child_menu">
-                            <li><a href="/platform/member/memberManagement">?회원 정보관리</a></li>
-                            <li><a href="#">?회원 등급관리</a></li>
+                            <li><a href="/platform/member/memberManagement">회원 정보관리</a></li>
+                            <li><a href="/platform/member/memberGrade">회원 등급관리</a></li>
                             <li><a href="#">?회원 등록</a></li>
                             <li><a href="#">?회원 일괄 등록</a></li>
                             <li><a href="#">?회원 일괄 메일발송</a></li>
@@ -101,8 +101,8 @@
                         </a>
                         <ul class="nav child_menu">
                             <li><a href="#">?카테고리 관리</a></li>
-                            <li><a href="#">?공지사항 관리</a></li>
-                            <li><a href="#">?자주찾는 질문 관리</a></li>
+                            <li><a th:href="@{/platform/board/noticeList}">공지사항 관리</a></li>
+                            <li><a th:href="@{/platform/board/faqList}">자주찾는 질문 관리</a></li>
                             <li><a href="#">?1:1문의 관리</a></li>
                             <li><a href="#">?게시판 관리</a></li>
                             <li><a href="#">?게시판 신고내역 관리</a></li>
@@ -126,10 +126,10 @@
                    		</a>
                         <ul class="nav child_menu">
                             <li><a th:href="@{/platform/statistic/member}">회원 가입,탈퇴 분석</a></li>
-                            <li><a href="#">지역별 관광지 현황</a></li>
-                            <li><a href="#">로그인 로그 분석</a></li>
-                            <li><a href="#">플랫폼 운영 분석</a></li>
-                            <li><a href="#">플랫폼 활성도 분석</a></li>
+                            <li><a th:href="@{/platform/statistic/map}">#지역별 관광지 현황</a></li>
+                            <li><a th:href="@{/platform/statistic/login}">#로그인 로그 통계</a></li>
+                            <li><a th:href="@{/platform/statistic/manage}">#플랫폼 운영 분석</a></li>
+                            <li><a th:href="@{/platform/statistic/search}">#검색어 통계</a></li>
                         </ul>
                     </li>
 

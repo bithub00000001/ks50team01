@@ -7,20 +7,35 @@
 		<div class="col-md-12col-sm-6 col-xs-12">
 			<div class="x_panel">
 				<div class="x_title">
-					<h3>전체회원정보관리</h3>
+					<!-- 
+					 <h3 th:text="${'총 회원의 수  :   '+memberCount+'명'}"></h3>					
+					 -->
+					<h3 th:text="${'총 회원의 수  :   '+memberList.size+'명'}"></h3>
 					<div class="clearfix"></div>
+				</div>
+				<div>
+				<form id="modifyForm" th:action="@{/platform/member/memberManagement}" method="post">
+					선택 멤버를 &nbsp;&nbsp;
+					<select>
+						<option value="">====회원등급을 선택해주세요====</option>
+						<option th:each="grade : ${memberGrade}" th:value="${grade.memberGrdNum}" th:text="${grade.memberLevelName}"></option>
+					</select>
+					(으)로 &nbsp;&nbsp;
+					<button type="submit" id="changeGrade" >변경</button>
+					<button type="button" id="test" class="test">강제탈퇴</button>
+				</form>
 				</div>
 				<div class="x_content">
 					<div class="clearfix"></div>
 				</div>
-
 				<div class="row">
 					<div class="col-xs-12 table">
 						<table class="table table-striped">
 							<thead>
 								<tr>
+									<th><input type="checkbox" id="checkAll" name="checkAll"></th>
 									<th>회원아이디</th>
-									<th>회원등급번호</th>
+									<th>회원등급</th>
 									<th>회원비밀번호</th>
 									<th>회원이름</th>
 									<th>회원닉네임</th>
@@ -28,14 +43,14 @@
 									<th>회원연락처</th>
 									<th>회원등록일자</th>
 									<th>회원수정일자</th>
-									<th>수정</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr th:unless="${memberList != null}">
 									<td align="center" colspan="10">등록된 회원의 정보가 없습니다.</td>
 								</tr>
-								<tr th:if="${memberList != null}" th:each="l : ${memberList}">
+								<tr th:if="${memberList != null}" th:each="l, iterStat : ${memberList}">
+									<td><input type="checkbox" th:id="'memberCheck' + ${iterStat.index+1}" th:name="'memberCheck' + ${iterStat.index+1}"></td>
 									<td th:text="${l.memberId}"></td>
 									<td th:text="${l.memberLevelName}"></td>
 									<td th:text="${l.memberPw}"></td>
@@ -45,10 +60,6 @@
 									<td th:text="${l.memberTelNum}"></td>
 									<td th:text="${l.memberRegDate}"></td>
 									<td th:text="${l.memberFormDate}"></td>
-									<td>
-										<!-- /* /member/modifyMember?memberId=id001 */ -->
-										<a>수정</a>
-									</td>
 								</tr>
 							</tbody>
 						</table>
@@ -56,4 +67,11 @@
 				</div>
 			</div>
 		</div>
+		</th:block>
+		
+		<!-- custom js file start -->
+        <th:block layout:fragment="customJs">
+        <script type="text/javascript" th:src="@{/platform/js/checkbox/checkbox.js}"></script>
+        </th:block>
+        <!-- custom js file end -->
 </html>
