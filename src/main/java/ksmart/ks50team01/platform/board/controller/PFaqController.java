@@ -11,11 +11,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class PFaqController {
 	
 	@GetMapping("/faqList")
+	public String faqList(Model model) {
+		
+		model.addAttribute("title", "자주찾는질문");
+		return "platform/board/faqList";
+	}
+	
+	@GetMapping("/faqWrite")
 	public String faqWrite(Model model) {
 		
 		model.addAttribute("title", "자주찾는질문작성페이지");
-		return "platform/board/faqList";
+		return "platform/board/faqWrite";
 	}
+	
 	
 
 }
