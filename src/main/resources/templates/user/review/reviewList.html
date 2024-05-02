@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{user/layout/default}">
+<head>
+<title>리뷰 목록</title>
+<th:block layout:fragment="customCss">
+	<link th:href="@{/user/css/reviewList.css}" rel="stylesheet">
+	<link th:href="@{/user/plugins/owl-carousel/owl.carousel.min.css}"
+		rel='stylesheet' media='screen'>
+	<link th:href="@{/user/plugins/owl-carousel/owl.theme.default.min.css}"
+		rel='stylesheet' media='screen'>
+	<!-- GOOGLE FONT -->
+	<link
+		href='https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700'
+		rel='stylesheet'>
+</th:block>
+</head>
+<th:block layout:fragment="customPageSection">
+	<!-- ====================================
+    ——— PAGE TITLE
+    ===================================== -->
+	<section class="page-title">
+		<div class="page-title-img bg-img bg-overlay-darken"
+			style="background-image: url(/user/img/pages/page-title-bg11.jpg);">
+			<div class="container">
+				<div class="row align-items-center justify-content-center"
+					style="height: 200px;">
+					<div class="col-lg-6">
+						<div class="page-title-content">
+							<div class="title-border">
+								<h2 class="text-uppercase text-white font-weight-bold">리뷰목록</h2>
+							</div>
+							<p class="text-white mb-0"></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- ====================================
+    ——— CITY SECTION
+    ===================================== -->
+	<section class="py-10">
+		<div class="container">
+			<div class="mb-7">
+				<div id="destination">
+					<div class="mb-0">
+						
+						<!-- 탭 목록 start -->
+						<ul class="nav nav-tabs destination-tabs" id="destinationTab" role="tablist">
+							<li class="nav-item">
+								<a class="nav-link active" id="overView-tab" data-bs-toggle="tab" href="#overView" role="tab" aria-controls="overView" aria-selected="true">Overview</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" id="locationMap-tab" data-bs-toggle="tab" href="#locationMap" role="tab" aria-controls="locationMap" aria-selected="false">Location map</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" id="tourGuide-tab" data-bs-toggle="tab" href="#tourGuide" role="tab" aria-controls="tourGuide" aria-selected="false">후기</a>
+							</li>
+
+							<li class="nav-item ms-md-auto">
+								<ul class="list-unstyled d-flex justify-content-center mb-0">
+									<li class="me-3">
+										<a href="javascript:void(0)" class="text-gray-color hover-text-primary">
+											<i class="fab fa-facebook-f" aria-hidden="true"></i>
+										</a>
+									</li>
+
+									<li class="me-3">
+										<a href="javascript:void(0)" class="text-gray-color hover-text-primary"> 
+											<i class="fab fa-twitter" aria-hidden="true"></i>
+										</a>
+									</li>
+									<li class="me-3">
+										<a href="javascript:void(0)" class="text-gray-color hover-text-primary"> 
+											<i class="fab fa-google-plus-g" aria-hidden="true"></i>
+										</a>
+									</li>
+
+									<li class="me-3">
+										<a href="javascript:void(0)" class="text-gray-color hover-text-primary">
+											<i class="fab fa-pinterest-p" aria-hidden="true"></i>
+										</a>
+									</li>
+									<li>
+										<a href="javascript:void(0)" class="text-gray-color hover-text-primary">
+											<i class="fab fa-vimeo-v" aria-hidden="true"></i>
+										</a>
+									</li>
+								</ul>
+							</li>
+						</ul>
+						<!-- 탭 목록 end -->
+						
+						<!--본문 start -->
+						<div class="tab-content destinationTab-content" id="destinationTabContent">
+							<!-- Overview 본문 start -->
+							<div class="tab-pane show active" id="overView" role="tabpanel" aria-labelledby="overView-tab">
+								<div class="row">
+									<div class="col-md-7 col-lg-8">
+										<h3 class="text-uppercase mb-5">Some title should be here</h3>
+
+										<p class="mb-5">Lorem ipsum dolor sit amet, consectetur
+											adipisicing elit, sed do eiusmod tempor incididunt ut labore
+											et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+											exercitation ullamco laboris nisi ut aliquip ex ea commodo
+											consequat. Duis aute irure dolor in reprehenderit in
+											voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+											Excepteur sint occaecat cupidatat non proident.</p>
+
+										<div class="mb-6 mb-md-0">
+											<div class="row">
+												<div class="col-lg-6">
+													<ul class="list-unstyled mb-0">
+														<li class="media media-list-content">
+															<div class="">
+																<i class="fa fa-square" aria-hidden="true"></i>
+															</div>
+
+															<div class="media-body">
+																<p class="mb-0">Some point should be here</p>
+															</div>
+														</li>
+
+														<li class="media media-list-content">
+															<div class="">
+																<i class="fa fa-square" aria-hidden="true"></i>
+															</div>
+
+															<div class="media-body">
+																<p class="mb-0">Curabitur viverra orci ac faucibus</p>
+															</div>
+														</li>
+
+														<li class="media media-list-content">
+															<div class="">
+																<i class="fa fa-square" aria-hidden="true"></i>
+															</div>
+
+															<div class="media-body">
+																<p class="mb-0">Donec rhoncus aliquet mi mattis</p>
+															</div>
+														</li>
+
+														<li class="media media-list-content">
+															<div class="">
+																<i class="fa fa-square" aria-hidden="true"></i>
+															</div>
+
+															<div class="media-body">
+																<p class="mb-0">Morbi euismod molestie massa</p>
+															</div>
+														</li>
+													</ul>
+												</div>
+
+												<div class="col-lg-6">
+													<ul class="list-unstyled mb-0">
+														<li class="media media-list-content">
+															<div class="">
+																<i class="fa fa-square" aria-hidden="true"></i>
+															</div>
+
+															<div class="media-body">
+																<p class="mb-0">Pellentesque at lacus nec arcu</p>
+															</div>
+														</li>
+
+														<li class="media media-list-content">
+															<div class="">
+																<i class="fa fa-square" aria-hidden="true"></i>
+															</div>
+
+															<div class="media-body">
+																<p class="mb-0">Mattis suspendisse at ligula</p>
+															</div>
+														</li>
+
+														<li class="media media-list-content mb-0">
+															<div class="">
+																<i class="fa fa-square" aria-hidden="true"></i>
+															</div>
+
+															<div class="media-body">
+																<p class="mb-0">Volutpat quis eu augue</p>
+															</div>
+														</li>
+													</ul>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="col-md-5 col-lg-4">
+										<div class="border border-light-gray bg-smoke rounded p-6">
+											<h4 class="text-uppercase mb-5">Benefits</h4>
+
+											<ul class="list-unstyled mb-6">
+												<li class="media mb-3">
+													<div class="me-3">
+														<i class="fa fa-check-square" aria-hidden="true"></i>
+													</div>
+
+													<div class="media-body">
+														<p class="text-dark text-capitalize mb-0">Some benefit</p>
+													</div>
+												</li>
+
+												<li class="media mb-3">
+													<div class="me-3">
+														<i class="fa fa-check-square" aria-hidden="true"></i>
+													</div>
+
+													<div class="media-body">
+														<p class="text-dark text-capitalize mb-0">Curabitur viveraj</p>
+													</div>
+												</li>
+
+												<li class="media mb-3">
+													<div class="me-3">
+														<i class="fa fa-check-square" aria-hidden="true"></i>
+													</div>
+
+													<div class="media-body">
+														<p class="text-dark text-capitalize mb-0">Donec null rhonus</p>
+													</div>
+												</li>
+
+												<li class="media">
+													<div class="me-3">
+														<i class="fa fa-check-square" aria-hidden="true"></i>
+													</div>
+
+													<div class="media-body">
+														<p class="text-dark text-capitalize mb-0">Morbi up sum eismod</p>
+													</div>
+												</li>
+											</ul>
+
+											<div class="">
+												<button class="btn btn-primary text-uppercase" type="button"
+													onclick="location.href='booking-step-1.html';">
+													Book Now</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- Overview 본문 end -->
+
+							<!-- 리뷰 리스트 start -->
+							<div class="tab-pane" id="tourGuide" role="tabpanel" aria-labelledby="tourGuide-tab">
+								<div class="row">
+									<div class="review-container">
+									    <!-- 리뷰 총 개수 및 평균 평점 -->
+									    <div class="review-stats">
+									        <p>평점: <span id="average-rating"></span> <span class="rating-stars"></span></p>
+									        <p>리뷰 개수: <span id="total-reviews"></span></p>
+									    </div>	
+										<div class="separator1"></div> <!-- 굵은 직선 추가 -->
+										<div class="separator2"></div> <!-- 굵은 직선 추가 -->
+										<div class="dropdown-1">
+											<button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">추천순</button>
+											<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+												<li><a class="dropdown-item" href="#">최신순</a></li>
+												<li><a class="dropdown-item" href="#">좋아요순</a></li>
+												<li><a class="dropdown-item" href="#">오래된순</a></li>
+											</ul>
+										</div>
+										<div class="review-box" id="review-box">
+											<!-- 리뷰 내용이 여기에 동적으로 추가 -->
+										</div>
+										<!-- 버튼 영역을 리뷰 영역에 포함시킴 -->
+										<div class="review-box" id="button-container">
+											<!-- 버튼 영역이 여기에 동적으로 추가 -->
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- 리뷰 리스트 end -->
+							
+							<!-- Map start -->
+							<div class="tab-pane" id="locationMap" role="tabpanel"
+								aria-labelledby="locationMap-tab">
+								<div class="" id="map" style="width: 100%; height: 400px;"></div>
+							</div>
+							<!-- Map end -->
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</th:block>
+
+<th:block layout:fragment="customJsFIle">
+	<script>
+ 	//더미 리뷰 데이터
+    const reviews = [
+        {
+            id: 1,
+            userId: "user123",
+            rating: 4,
+            date: "2024-04-25",
+            modifiedDate: "2024-04-28",
+            content: "이 상품 정말 좋아요!",
+            image: ["/user/img/blog/blog-03.jpg", "/user/img/blog/blog-04.jpg"]
+        },
+        {
+            id: 2,
+            userId: "user456",
+            rating: 5,
+            date: "2024-04-20",
+            content: "완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!",
+            image: ["/user/img/blog/blog-03.jpg"]
+        },
+        {
+            id: 3,
+            userId: "user123",
+            rating: 2,
+            date: "2024-04-25",
+            modifiedDate: "2024-04-28",
+            content: "이 상품 정말 좋아요!",
+            image: []
+        },
+        {
+            id: 4,
+            userId: "user456",
+            rating: 1,
+            date: "2024-04-20",
+            content: "완전 강추합니다!",
+            image:["/user/img/blog/blog-03.jpg", "/user/img/blog/blog-04.jpg", "/user/img/blog/blog-03.jpg", "/user/img/blog/blog-04.jpg"]
+        },
+        {
+            id: 5,
+            userId: "user456",
+            rating: 5,
+            date: "2024-04-20",
+            content: "완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!",
+            image: ["/user/img/blog/blog-03.jpg", "/user/img/blog/blog-04.jpg"]
+        },
+    ];
+
+    // 좋아요, 싫어요 카운트
+    let likeCounts = {};
+    let dislikeCounts = {};
+
+    // 별점을 표시하는 함수
+    function displayRating(rating) {
+        let stars = '';
+        for (let i = 0; i < 5; i++) {
+            if (i < rating) {
+                stars += '<span class="rating">★</span>';
+            } else {
+                stars += '<span class="rating">☆</span>'; // Use ☆ (empty star) for ratings less than current index
+            }
+        }
+        return stars;
+    }
+
+
+    <!-- 리뷰를 화면에 출력하는 함수 수정 -->
+    function displayReviews() {
+        const reviewBox = document.getElementById('review-box');
+        reviewBox.innerHTML = '';
+        if (reviews.length === 0) {
+            const noReviewHTML = '<div class="no-review">작성된 리뷰가 없습니다.</div>';
+            reviewBox.innerHTML = noReviewHTML;
+        } else {
+            reviews.forEach(review => {
+                // 좋아요, 싫어요 카운트 초기화
+                likeCounts[review.id] = 0;
+                dislikeCounts[review.id] = 0;
+
+                let modifiedDateHTML = review.modifiedDate ? ` (수정됨 ${review.modifiedDate})` : '';
+
+                let imageHTML = ''; // 이미지 HTML을 저장할 변수 초기화
+
+                // 이미지가 배열 형태인지 확인
+                if (Array.isArray(review.image)) {
+                    // 이미지가 배열인 경우, 모든 이미지를 표시
+                    imageHTML += `<div class="image-container" id="review-${review.id}">`; // 이미지를 감싸는 컨테이너 열기
+                    review.image.forEach((image, index) => {
+                        imageHTML += `<img src="${image}" alt="Review Image ${index + 1}">`;
+                    });
+                    imageHTML += `</div>`; // 이미지를 감싸는 컨테이너 닫기
+                } else {
+                    // 이미지가 배열이 아닌 경우, 단일 이미지 표시
+                    imageHTML = `<img src="${review.image}" alt="Review Image">`;
+                }
+
+                let reviewHTML = `
+                    <div class="review">
+                        <div class="review-content">
+                            <div class="user-id">${review.userId}</div>
+                            <div class="date">${review.date}${modifiedDateHTML}</div>
+                            <div class="rating">${displayRating(review.rating)}</div>
+                            <p>${review.content}</p>
+                            ${imageHTML} <!-- 이미지 HTML 삽입 -->
+                        </div>
+                        
+                        
+                        <div class="button-container d-flex justify-content-between align-items-center">
+                        <div class="like-dislike-container d-flex flex-column">
+                            <button class="like-btn mb-2" onclick="increaseLike(${review.id})">❤️ 좋아요 (<span id="like-count-${review.id}">${likeCounts[review.id]}</span>)</button>
+                            <button class="dislike-btn" onclick="increaseDislike(${review.id})">❌ 싫어요 (<span id="dislike-count-${review.id}">${dislikeCounts[review.id]}</span>)</button>
+                        </div>
+                        <div class="report-btn-container">
+                            <a id="reportButton" href="/user/review/report">
+                                <button class="report-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">신고하기</button>
+                            </a>
+                        </div>
+                    </div>
+
+                    `;
+   
+	                reviewBox.innerHTML += reviewHTML;
+	            });
+	
+	            // 이미지 슬라이더 초기화
+	            initImageSlider();
+	        }
+	    
+	    };
+	    
+	
+	    // 좋아요 클릭 시
+	    function increaseLike(reviewId) {
+	        likeCounts[reviewId]++;
+	        document.getElementById(`like-count-${reviewId}`).textContent = likeCounts[reviewId];
+	    }
+	
+	    // 싫어요 클릭 시
+	    function increaseDislike(reviewId) {
+	        dislikeCounts[reviewId]++;
+	        document.getElementById(`dislike-count-${reviewId}`).textContent = dislikeCounts[reviewId];
+	    }
+	    
+	 // 평균 평점을 별로 표시하는 함수
+	    function displayRatingWithColor(rating) {
+	        let stars = '';
+	        for (let i = 0; i < 5; i++) {
+	            if (i < rating) {
+	                stars += '<span class="rating orange-star">★</span>'; // 주황색 별 모양
+	            } else {
+	                stars += '<span class="rating">★</span>'; // 빈 별 모양
+	            }
+	        }
+	        return stars;
+	    }
+	    
+	 // 리뷰 총 개수 및 평균 평점 계산 함수
+	    function calculateReviewStats() {
+	        let totalReviews = reviews.length;
+	        let totalRating = 0;
+
+	        reviews.forEach(review => {
+	            totalRating += review.rating;
+	        });
+
+	        let averageRating = totalRating / totalReviews;
+
+	        // 평균 평점을 소수점 첫째자리까지 반올림하여 표시
+	        document.getElementById('total-reviews').textContent = totalReviews;
+	        document.getElementById('average-rating').textContent = averageRating.toFixed(1);
+	    }
+
+	    // 문서가 로드된 후 실행되는 코드
+	    window.onload = function() {
+	        calculateReviewStats(); // 리뷰 통계 계산
+	        displayReviews(); // 리뷰 표시 함수 호출
+	        initImageSlider(); // 이미지 슬라이더 초기화
+	    };
+    
+    
+    
+    </script>
+
+
+
+	<script>
+	$(document).ready(function() {
+	    var defaultText = "추천순";
+	    var previousSelection = defaultText; // 이전 선택 추적을 위한 변수
+	
+	    $(".dropdown-1 .dropdown-menu .dropdown-item").click(function() {
+	        var selectedText = $(this).text();
+	        var dropdownButton = $(".dropdown-1 .btn-secondary");
+	        
+	        if (selectedText === previousSelection) {
+	            dropdownButton.text(defaultText);
+	        } else {
+	            dropdownButton.text(selectedText);
+	        }
+	        
+	        previousSelection = selectedText === defaultText ? defaultText : selectedText; // 이전 선택 갱신
+	    });
+	});
+	</script>
+	
+	
+
+</th:block>
+</html>
