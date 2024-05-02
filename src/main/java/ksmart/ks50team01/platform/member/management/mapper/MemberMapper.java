@@ -15,5 +15,10 @@ public interface MemberMapper {
 	// 회원정보조회
 	Member getMemberInfoById(String memberId);
 	
+	// 회원등급조회
+	List<Member> getMemberGrade();
+	
+	// 회원등급업데이트
+	Member updateMemberGrade(String memberId, String gradeNum);
 	
 }

@@ -1,33 +1,33 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-</div><!-- element wrapper ends -->
+
 <!-- ====================================
       ——— FOOTER SECTION
       ===================================== -->
 <footer class="footer" th:fragment="footerFragment">
-    <div class="footer-bg-color py-9">
+    <div class="footer-bg-color py-6">
         <div class="container">
             <div class="row">
                 <div class="col-md-6 col-lg-3 mb-7 mb-lg-0">
-                    <a class="d-inline-block" href="index.html">
-                        <img alt="img" class="w-100 mb-6 lazyestload"
-                             data-src="/user/img/logo-color-sm.png" src="/user/img/logo-color-sm.png">
+                    <a class="d-inline-block" th:href="@{/user}">
+                        <img alt="img" class="w-100 mb-6 lazyestload" data-src="/user/img/logo-color-sm.png" src="/user/img/logo-color-sm.png">
                     </a>
                 </div>
-
-                <div class="col-md-6 col-lg-3 mt-md-4 mb-7 mb-lg-0">
+             </div>
+            <div class="row">
+                <div class="col-md-3 col-lg-3 mt-md-4 mb-5 mb-lg-0">
                     <div class="title-tag">
-                        <h6>Contact us</h6>
+                        <h4 class="text-white">강한빛</h4>
                     </div>
 
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit sed do eiusmod.</p>
+                    <p>간단한 자기소개 Lorem ipsum dolor sit amet, consectetur adipisicing elit sed do eiusmod.</p>
                     <ul class="list-unstyled mb-0">
                         <li class="media mb-2">
                             <div class="me-3">
-                                <i aria-hidden="true" class="fa fa-home"></i>
+                                <i aria-hidden="true" class="fa fa-table"></i>
                             </div>
                             <div class="media-body">
-                                <a href="contact.html">61 Park Street, Fifth Avenue, NY</a>
+                               <label class="text-white-50">담당: 팀장</label>
                             </div>
                         </li>
 
@@ -36,7 +36,219 @@
                                 <i aria-hidden="true" class="fas fa-phone-alt"></i>
                             </div>
                             <div class="media-body">
-                                <a href="tel:88657524332">[88] 657 524 332</a>
+                                <a href="tel:821011112222">[82] 010 1111 2222</a>
+                            </div>
+                        </li>
+
+                        <li class="media">
+                            <div class="me-3">
+                                <i aria-hidden="true" class="far fa-envelope"></i>
+                            </div>
+                            <div class="media-body">
+                                <a href="mailTo:info@star-travel.com">info@star-travel.com</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-3 col-lg-3 mt-md-4 mb-5 mb-lg-0">
+                    <div class="title-tag">
+                        <h4 class="text-white">박성민</h4>
+                    </div>
+
+                    <p>간단한 자기소개 Lorem ipsum dolor sit amet, consectetur adipisicing elit sed do eiusmod.</p>
+                    <ul class="list-unstyled mb-0">
+                        <li class="media mb-2">
+                            <div class="me-3">
+                                <i aria-hidden="true" class="fa fa-table"></i>
+                            </div>
+                            <div class="media-body">
+                               <label class="text-white-50">담당: 팀원</label>
+                            </div>
+                        </li>
+
+                        <li class="media mb-2">
+                            <div class="me-3">
+                                <i aria-hidden="true" class="fas fa-phone-alt"></i>
+                            </div>
+                            <div class="media-body">
+                                <a href="tel:821011112222">[82] 010 1111 2222</a>
+                            </div>
+                        </li>
+
+                        <li class="media">
+                            <div class="me-3">
+                                <i aria-hidden="true" class="far fa-envelope"></i>
+                            </div>
+                            <div class="media-body">
+                                <a href="mailTo:info@star-travel.com">info@star-travel.com</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-3 col-lg-3 mt-md-4 mb-5 mb-lg-0">
+                    <div class="title-tag">
+                        <h4 class="text-white">서창우</h4>
+                    </div>
+
+                    <p>간단한 자기소개 Lorem ipsum dolor sit amet, consectetur adipisicing elit sed do eiusmod.</p>
+                    <ul class="list-unstyled mb-0">
+                        <li class="media mb-2">
+                            <div class="me-3">
+                                <i aria-hidden="true" class="fa fa-table"></i>
+                            </div>
+                            <div class="media-body">
+                               <label class="text-white-50">담당: 팀원</label>
+                            </div>
+                        </li>
+
+                        <li class="media mb-2">
+                            <div class="me-3">
+                                <i aria-hidden="true" class="fas fa-phone-alt"></i>
+                            </div>
+                            <div class="media-body">
+                                <a href="tel:821011112222">[82] 010 1111 2222</a>
+                            </div>
+                        </li>
+
+                        <li class="media">
+                            <div class="me-3">
+                                <i aria-hidden="true" class="far fa-envelope"></i>
+                            </div>
+                            <div class="media-body">
+                                <a href="mailTo:info@star-travel.com">info@star-travel.com</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-3 col-lg-3 mt-md-4 mb-5 mb-lg-0">
+                    <div class="title-tag">
+                        <h4 class="text-white">오가영</h4>
+                    </div>
+
+                    <p>간단한 자기소개 Lorem ipsum dolor sit amet, consectetur adipisicing elit sed do eiusmod.</p>
+                    <ul class="list-unstyled mb-0">
+                        <li class="media mb-2">
+                            <div class="me-3">
+                                <i aria-hidden="true" class="fa fa-table"></i>
+                            </div>
+                            <div class="media-body">
+                               <label class="text-white-50">담당: 팀원</label>
+                            </div>
+                        </li>
+
+                        <li class="media mb-2">
+                            <div class="me-3">
+                                <i aria-hidden="true" class="fas fa-phone-alt"></i>
+                            </div>
+                            <div class="media-body">
+                                <a href="tel:821011112222">[82] 010 1111 2222</a>
+                            </div>
+                        </li>
+
+                        <li class="media">
+                            <div class="me-3">
+                                <i aria-hidden="true" class="far fa-envelope"></i>
+                            </div>
+                            <div class="media-body">
+                                <a href="mailTo:info@star-travel.com">info@star-travel.com</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row py-5">
+                <div class="col-md-3 col-lg-3 mt-md-4 mb-5 mb-lg-0">
+                    <div class="title-tag">
+                        <h4 class="text-white">이윤</h4>
+                    </div>
+
+                    <p>간단한 자기소개 Lorem ipsum dolor sit amet, consectetur adipisicing elit sed do eiusmod.</p>
+                    <ul class="list-unstyled mb-0">
+                        <li class="media mb-2">
+                            <div class="me-3">
+                                <i aria-hidden="true" class="fa fa-table"></i>
+                            </div>
+                            <div class="media-body">
+                               <label class="text-white-50">담당: 팀원</label>
+                            </div>
+                        </li>
+
+                        <li class="media mb-2">
+                            <div class="me-3">
+                                <i aria-hidden="true" class="fas fa-phone-alt"></i>
+                            </div>
+                            <div class="media-body">
+                                <a href="tel:821011112222">[82] 010 1111 2222</a>
+                            </div>
+                        </li>
+
+                        <li class="media">
+                            <div class="me-3">
+                                <i aria-hidden="true" class="far fa-envelope"></i>
+                            </div>
+                            <div class="media-body">
+                                <a href="mailTo:info@star-travel.com">info@star-travel.com</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-3 col-lg-3 mt-md-4 mb-5 mb-lg-0">
+                    <div class="title-tag">
+                        <h4 class="text-white">곽효민</h4>
+                    </div>
+
+                    <p>간단한 자기소개 Lorem ipsum dolor sit amet, consectetur adipisicing elit sed do eiusmod.</p>
+                    <ul class="list-unstyled mb-0">
+                        <li class="media mb-2">
+                            <div class="me-3">
+                                <i aria-hidden="true" class="fa fa-table"></i>
+                            </div>
+                            <div class="media-body">
+                               <label class="text-white-50">담당: 팀원</label>
+                            </div>
+                        </li>
+
+                        <li class="media mb-2">
+                            <div class="me-3">
+                                <i aria-hidden="true" class="fas fa-phone-alt"></i>
+                            </div>
+                            <div class="media-body">
+                                <a href="tel:821011112222">[82] 010 1111 2222</a>
+                            </div>
+                        </li>
+
+                        <li class="media">
+                            <div class="me-3">
+                                <i aria-hidden="true" class="far fa-envelope"></i>
+                            </div>
+                            <div class="media-body">
+                                <a href="mailTo:info@star-travel.com">info@star-travel.com</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-3 col-lg-3 mt-md-4 mb-5 mb-lg-0">
+                    <div class="title-tag">
+                        <h4 class="text-white">장유희</h4>
+                    </div>
+
+                    <p>간단한 자기소개 Lorem ipsum dolor sit amet, consectetur adipisicing elit sed do eiusmod.</p>
+                    <ul class="list-unstyled mb-0">
+                        <li class="media mb-2">
+                            <div class="me-3">
+                                <i aria-hidden="true" class="fa fa-table"></i>
+                            </div>
+                            <div class="media-body">
+                               <label class="text-white-50">담당: 팀원</label>
+                            </div>
+                        </li>
+
+                        <li class="media mb-2">
+                            <div class="me-3">
+                                <i aria-hidden="true" class="fas fa-phone-alt"></i>
+                            </div>
+                            <div class="media-body">
+                                <a href="tel:821011112222">[82] 010 1111 2222</a>
                             </div>
                         </li>
 
@@ -55,33 +267,13 @@
     </div>
     <div class="copyright py-6">
         <div class="container">
-            <div class="row align-items-center">
-                <div class="col-md-6 order-1 order-md-0">
-                    <p class="mb-0 mb-md-0 text-md-start">Copyright &copy;
+            <div class="row align-items-center justify-content-end">
+                <div class="col-md-12 order-1 order-md-0">
+                    <p class="mb-0 mb-md-0 text-md-end">Copyright &copy;
                         <span id="copy-year"></span>
                         All Rights Reserved by
-                        <a href="http://www.iamabdus.com/" target="_blank">Abdus</a>
+                        <a href="#" target="_self">ksmart50</a>
                     </p>
-                </div>
-
-                <div class="col-md-6">
-                    <ul class="list-inline text-capitalize d-flex align-items-center justify-content-md-end justify-content-center mb-md-0">
-                        <li class="me-3">
-                            <a href="setting.html">Privacy policy</a>
-                        </li>
-
-                        <li class="me-3">
-                            <a href="about-us.html">About us</a>
-                        </li>
-
-                        <li class="me-3">
-                            <a href="contact.html">Support</a>
-                        </li>
-
-                        <li class="">
-                            <a href="blog-single-right-sidebar.html">Blog</a>
-                        </li>
-                    </ul>
                 </div>
             </div>
         </div>

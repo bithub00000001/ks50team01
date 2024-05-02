@@ -48,10 +48,20 @@ public class MemberController {
 	public String getMemberManagement(Model model) {
 		
 		List<Member> memberList = memberService.getMemberList();
+		List<Member> memberGrade = memberService.getMemberGrade();
 		
+		model.addAttribute("memberGrade", memberGrade);
 		model.addAttribute("memberList", memberList);
 		model.addAttribute("title", "회원관리");
 	
 		return "platform/member/memberManagement";
 	}
+	
+	@PostMapping("/memberManagement")
+    public String updateMemberGrade(@RequestParam("memberId") String memberId, @RequestParam("gradeNum") String gradeNum) {
+        memberService.updateMemberGrade(memberId, gradeNum);
+        return "redirect:/platform/member/memberManagement"; 
+    }
+	
+	
 }
