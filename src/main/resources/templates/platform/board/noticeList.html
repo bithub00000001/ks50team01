@@ -2,7 +2,7 @@
 <html lang="ko" layout:decorate="~{/user/layout/default}"
      			xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
     			xmlns:th="http://www.thymeleaf.org">
-    			
+
 <head>
 <title>공지사항</title>
 <th:block layout:fragment="customHead">
@@ -101,7 +101,7 @@
 		<!-- body -->
 		<div class="row">
 			<div class="col-sm-12">
-				<div class="table-responsive">
+				<div class="table-responsive" style="overflow-x: hidden;">
 
 					<table class="table table-hover table-bordered">
 						<colgroup>
@@ -155,13 +155,22 @@
 							</tr>
 							<tr>
 								<td class="noticeNum noticeCenter">5</td>
-								<td><i class="badge rounded-pill bg-info text-dark">이벤트공지</i><a href="">이벤트공지</a></td>
+								<td><i class="badge rounded-pill bg-info text-dark">이벤트공지</i><a
+									href="">이벤트 공지</a></td>
 								<td class="noticeCenter">관리자</td>
 								<td class="noticeCenter">2024-04-29</td>
 								<td class="noticeCenter">100</td>
 							</tr>
 						</tbody>
 					</table>
+
+					<div class="row">
+						<div class="col-12" style="text-align: right; margin-top: 100px; margin-bottom: 10px;">
+							<!-- th:onclick 속성을 사용하여 클릭 이벤트를 처리하고 JavaScript 함수를 호출합니다. -->
+							<button type="button" class="btn btn-outline-primary btn-sm"
+								th:onclick="'javascript:redirectToNoticeWrite();'">글쓰기</button>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -202,6 +211,16 @@
 </th:block>
 
 <th:block layout:fragment="customJs">
+
+
+<!-- JavaScript 함수 정의 -->
+<script th:inline="javascript">
+    function redirectToNoticeWrite() {
+        // window.location.href를 사용하여 특정 URL로 이동합니다.
+        window.location.href = /*[[@{/platform/board/noticeWrite}]]*/ '';
+    }
+</script>
+
 
 </th:block>
 </html>
