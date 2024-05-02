@@ -10,15 +10,21 @@
 					<h3>전체회원정보관리</h3>
 					<div class="clearfix"></div>
 				</div>
+				<div>
+					선택 멤버를 &nbsp;&nbsp;
+					<select>
+						<option value="">====회원등급을 선택해주세요====</option>
+					</select>
+				</div>
 				<div class="x_content">
 					<div class="clearfix"></div>
 				</div>
-
 				<div class="row">
 					<div class="col-xs-12 table">
 						<table class="table table-striped">
 							<thead>
 								<tr>
+									<th><input type="checkbox" id="scales" name="scales"></th>
 									<th>회원아이디</th>
 									<th>회원등급</th>
 									<th>회원비밀번호</th>
@@ -35,6 +41,7 @@
 									<td align="center" colspan="10">등록된 회원의 정보가 없습니다.</td>
 								</tr>
 								<tr th:if="${memberList != null}" th:each="l : ${memberList}">
+									<td><input type="checkbox" id="scales" name="scales"></td>
 									<td th:text="${l.memberId}"></td>
 									<td th:text="${l.memberLevelName}"></td>
 									<td th:text="${l.memberPw}"></td>

@@ -15,5 +15,7 @@ public interface MemberMapper {
 	// 회원정보조회
 	Member getMemberInfoById(String memberId);
 	
+	// 회원카운트조회
+	Member memberCount();
 	
 }

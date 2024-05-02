@@ -48,9 +48,11 @@ public class MemberController {
 	public String getMemberManagement(Model model) {
 		
 		List<Member> memberList = memberService.getMemberList();
+		Member memberCount = memberService.memberCount();
 		
 		model.addAttribute("memberList", memberList);
 		model.addAttribute("title", "회원관리");
+		model.addAttribute("memberCount", memberCount);
 	
 		return "platform/member/memberManagement";
 	}

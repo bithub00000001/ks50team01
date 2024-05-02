@@ -40,4 +40,10 @@ public class MemberService {
 		
 		return memberInfo;
 	}
+	
+	public Member memberCount() {
+		Member memberCount = memberMapper.memberCount();
+		
+		return memberCount;
+	}
 }
