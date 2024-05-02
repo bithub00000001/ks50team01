@@ -95,8 +95,7 @@ $(document).ready(function() {
 
         addToPlan(name, category, schedule, additional, id);
     });
-    // "1일차" 탭을 활성화합니다.
-    $('#day1-tab').addClass('active');
+
 });
 
 function getAccommodationType(selector) {
