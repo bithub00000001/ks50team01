@@ -1,433 +1,488 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<meta charset="UTF-8">
-	<title>project information</title>
-	<link rel="stylesheet" th:href="@{/common/css/intro-css.css}">
-	<link rel="stylesheet" th:href="@{/common/css/common-css.css}">
-	<link rel="stylesheet" th:href="@{/common/css/font/font.css}">
-	<style>
-		#wrap {
-			margin: 50px 0;
+    <meta charset="UTF-8">
+    <title>project information</title>
+    <link rel="stylesheet" th:href="@{/common/css/intro-css.css}">
+    <link rel="stylesheet" th:href="@{/common/css/common-css.css}">
+    <link rel="stylesheet" th:href="@{/common/css/font/font.css}">
+    <style>
+        #wrap {
+            margin: 50px 0;
 
-		}
-		* {
-			text-align: center;
-			margin: 0;
-			padding: 0;
-		}
-		.info-title-area h3 {
-			color: var(--maincolor);
-		}
-		table, tr, td {
-			border: 1px solid var(--borderColor);
-			border-collapse : collapse;
-			font-size: 13px;
-		}
-		td {
-			padding: 20px;
-		}
-		li {
-			margin: 5px 0;
-		}
-		ul, li,
-		ul p, ul h5 {
-			text-align : left;
+        }
 
-		}
-		ul p {
-			color: #858585;
-		}
-		.sub-list {
-			padding-left: 30px;
-		}
-		.sub-list li {
-			color: #adadad;
-			font-weight: 300;
-		}
-		ul h5 {
-			font-size: 14px;
-			margin: 5px 0;
-		}
-		.info-table {
-			width: 600px;
-			margin: 0 auto;
-		}
-		.table-th {
-			background: #f5f6fa;
-			width: 20%;
-			font-weight: 700;
-		}
-		#title {
-			font-size: 42px;
-			line-height: 1.2;
-			margin: 15px 0 35px;
-			color: #191919;
-			font-weight: 800;
-		}
-		.menu-title {
-			font-size: 16px;
-			margin: 10px 0 10px;
-			display: block;
-			text-align: left;
-			font-weight: 700;
-		}
-		.title-li {
-			margin-bottom: 20px;
-		}
-	</style>
+        * {
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .info-title-area h3 {
+            color: var(--maincolor);
+        }
+
+        table, tr, td {
+            border: 1px solid var(--borderColor);
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        td {
+            padding: 20px;
+        }
+
+        li {
+            margin: 5px 0;
+        }
+
+        ul, li,
+        ul p, ul h5 {
+            text-align: left;
+
+        }
+
+        ul p {
+            color: #858585;
+        }
+
+        .sub-list {
+            padding-left: 30px;
+        }
+
+        .sub-list li {
+            color: #adadad;
+            font-weight: 300;
+        }
+
+        ul h5 {
+            font-size: 14px;
+            margin: 5px 0;
+        }
+
+        .info-table {
+            width: 600px;
+            margin: 0 auto;
+        }
+
+        .table-th {
+            background: #f5f6fa;
+            width: 20%;
+            font-weight: 700;
+        }
+
+        #title {
+            font-size: 42px;
+            line-height: 1.2;
+            margin: 15px 0 35px;
+            color: #191919;
+            font-weight: 800;
+        }
+
+        .menu-title {
+            font-size: 16px;
+            margin: 10px 0 10px;
+            display: block;
+            text-align: left;
+            font-weight: 700;
+        }
+
+        .title-li {
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
-	<div id="wrap">
-		<div class="info-title-area">
-			<h3 >한국스마트정보교육원 50기 1팀</h3>
-			<h1 id="title">
-				여행를 위한
-				<br>
-				멀티 플랫폼 프로젝트
-			</h1>
-		</div>
-		<table class="info-table"  style="margin-top: 15px;">
-			<tbody>
-				<tr>
-					<td class="table-th">
-						<a th:href="@{/platform}">관리자 계정</a>
-					</td>
-					<td class="table-th">
-						사업주 계정
-					</td>
-					<td class="table-th">
-						사용자 계정
-					</td>
-				</tr>
-				<tr>
-					<td style="color: #858585;">
-						아이디 : id001<br>
-						비밀번호 : pw001<br>
-					</td>
-					<td style="color: #858585;">
-						아이디 : id002<br>
-						비밀번호 : pw002<br>
-					</td>
-					<td style="color: #858585;">
-						아이디 : id003<br>
-						비밀번호 : pw003<br>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-		<table class="info-table" style="margin-top: 30px;">
-			<tbody>
-				<tr>
-					<td class="table-th">
-						강한빛 (팀장)
-					</td>
-					<td colspan="2">
-						<ul style="padding-left:15px;">
-							<li class="title-li"><a class="menu-title" href="/trip/" target="_blank ">메인화면 (index)</a></li>
-							<li class="title-li">
-								<a class="menu-title" href="/platform" target="_blank">관리자 어드민 메인화면</a>
-								<h5>1. 여행 관리</h5>
-								<p>OOO 사이트 여행 관리 페이지</p>
-								<ul class="sub-list">
-									<li>
-										<a href="/trip/plan" target="_blank">! 여행 계획 작성</a>
-									</li>
-									<li>
-										<a href="#" target="_blank">! 관리자 ??? 기능</a>
-									</li>
-									<li>
-										<a href="#" target="_blank">! 관리자 ??? 기능</a>
-									</li>
-								</ul>
-								<br>
-								<h5>2. 여행 계획 관리</h5>
-								<p>사용자들이 신청한 여행 계획 관리 화면</p>
-								<ul class="sub-list">
-									<li>여행 계획 현황</li>
-								</ul>
-							</li>
-							<li class="title-li">
-								<a class="menu-title" href="#" target="_blank">사업주 어드민 메인화면</a>
-								<h5>1. 사업주 관리</h5>
-								<p>OOO 사이트 사업주 정보 관리 페이지</p>
-								<ul class="sub-list">
-									<li>사업주 정보 관리1</li>
-									<li>사업주 정보 관리2</li>
-									<li>사업주 정보 관리3</li>
-									<li>사업주 정보 관리4</li>
-								</ul>
-								<br>
-							</li>
-						</ul>
-					</td>
-				</tr>
-				<tr>
-					<td class="table-th">
-						박성민
-					</td>
-					<td colspan="2">
-						<ul style="padding-left:15px;">
-							<li class="title-li"><a class="menu-title" href="#" target="_blank ">메인화면 (index)</a></li>
-							<li class="title-li">
-								<a class="menu-title" href="#" target="_blank">관리자 어드민 메인화면</a>
-								<h5>1. 여행 관리</h5>
-								<p>OOO 사이트 여행 관리 페이지</p>
-								<ul class="sub-list">
-									<li>
-										<a href="#" target="_blank">! 관리자 ??? 기능</a>
-									</li>
-									<li>
-										<a href="#" target="_blank">! 관리자 ??? 기능</a>
-									</li>
-									<li>
-										<a href="#" target="_blank">! 관리자 ??? 기능</a>
-									</li>
-								</ul>
-								<br>
-								<h5>2. 여행 계획 관리</h5>
-								<p>사용자들이 신청한 여행 계획 관리 화면</p>
-								<ul class="sub-list">
-									<li>여행 계획 현황</li>
-								</ul>
-							</li>
-							<li class="title-li">
-								<a class="menu-title" href="#" target="_blank">사업주 어드민 메인화면</a>
-								<h5>1. 사업주 관리</h5>
-								<p>OOO 사이트 사업주 정보 관리 페이지</p>
-								<ul class="sub-list">
-									<li>사업주 정보 관리1</li>
-									<li>사업주 정보 관리2</li>
-									<li>사업주 정보 관리3</li>
-									<li>사업주 정보 관리4</li>
-								</ul>
-								<br>
-							</li>
-						</ul>
-					</td>
-				</tr>
-				<tr>
-					<td class="table-th">
-						서창우
-					</td>
-					<td colspan="2">
-						<ul style="padding-left:15px;">
-							<li class="title-li"><a class="menu-title" href="#" target="_blank ">메인화면 (index)</a></li>
-							<li class="title-li">
-								<a class="menu-title" href="#" target="_blank">관리자 어드민 메인화면</a>
-								<h5>1. 여행 관리</h5>
-								<p>OOO 사이트 여행 관리 페이지</p>
-								<ul class="sub-list">
-									<li>
-										<a href="#" target="_blank">! 관리자 ??? 기능</a>
-									</li>
-									<li>
-										<a href="#" target="_blank">! 관리자 ??? 기능</a>
-									</li>
-									<li>
-										<a href="#" target="_blank">! 관리자 ??? 기능</a>
-									</li>
-								</ul>
-								<br>
-								<h5>2. 여행 계획 관리</h5>
-								<p>사용자들이 신청한 여행 계획 관리 화면</p>
-								<ul class="sub-list">
-									<li>여행 계획 현황</li>
-								</ul>
-							</li>
-							<li class="title-li">
-								<a class="menu-title" href="#" target="_blank">사업주 어드민 메인화면</a>
-								<h5>1. 사업주 관리</h5>
-								<p>OOO 사이트 사업주 정보 관리 페이지</p>
-								<ul class="sub-list">
-									<li>사업주 정보 관리1</li>
-									<li>사업주 정보 관리2</li>
-									<li>사업주 정보 관리3</li>
-									<li>사업주 정보 관리4</li>
-								</ul>
-								<br>
-							</li>
-						</ul>
-					</td>
-				</tr>
-				<tr>
-					<td class="table-th">
-						오가영
-					</td>
-					<td colspan="2">
-						<ul style="padding-left:15px;">
-							<li class="title-li"><a class="menu-title" href="#" target="_blank ">메인화면 (index)</a></li>
-							<li class="title-li">
-								<a class="menu-title" href="#" target="_blank">관리자 어드민 메인화면</a>
-								<h5>1. 여행 관리</h5>
-								<p>OOO 사이트 여행 관리 페이지</p>
-								<ul class="sub-list">
-									<li>
-										<a href="#" target="_blank">! 관리자 ??? 기능</a>
-									</li>
-									<li>
-										<a href="#" target="_blank">! 관리자 ??? 기능</a>
-									</li>
-									<li>
-										<a href="#" target="_blank">! 관리자 ??? 기능</a>
-									</li>
-								</ul>
-								<br>
-								<h5>2. 여행 계획 관리</h5>
-								<p>사용자들이 신청한 여행 계획 관리 화면</p>
-								<ul class="sub-list">
-									<li>여행 계획 현황</li>
-								</ul>
-							</li>
-							<li class="title-li">
-								<a class="menu-title" href="#" target="_blank">사업주 어드민 메인화면</a>
-								<h5>1. 사업주 관리</h5>
-								<p>OOO 사이트 사업주 정보 관리 페이지</p>
-								<ul class="sub-list">
-									<li>사업주 정보 관리1</li>
-									<li>사업주 정보 관리2</li>
-									<li>사업주 정보 관리3</li>
-									<li>사업주 정보 관리4</li>
-								</ul>
-								<br>
-							</li>
-						</ul>
-					</td>
-				</tr>
-				<tr>
-					<td class="table-th">
-						이윤
-					</td>
-					<td colspan="2">
-						<ul style="padding-left:15px;">
-							<li class="title-li"><a class="menu-title" href="#" target="_blank ">메인화면 (index)</a></li>
-							<li class="title-li">
-								<a class="menu-title" href="#" target="_blank">관리자 어드민 메인화면</a>
-								<h5>1. 여행 관리</h5>
-								<p>OOO 사이트 여행 관리 페이지</p>
-								<ul class="sub-list">
-									<li>
-										<a href="#" target="_blank">! 관리자 ??? 기능</a>
-									</li>
-									<li>
-										<a href="#" target="_blank">! 관리자 ??? 기능</a>
-									</li>
-									<li>
-										<a href="#" target="_blank">! 관리자 ??? 기능</a>
-									</li>
-								</ul>
-								<br>
-								<h5>2. 여행 계획 관리</h5>
-								<p>사용자들이 신청한 여행 계획 관리 화면</p>
-								<ul class="sub-list">
-									<li>여행 계획 현황</li>
-								</ul>
-							</li>
-							<li class="title-li">
-								<a class="menu-title" href="#" target="_blank">사업주 어드민 메인화면</a>
-								<h5>1. 사업주 관리</h5>
-								<p>OOO 사이트 사업주 정보 관리 페이지</p>
-								<ul class="sub-list">
-									<li>사업주 정보 관리1</li>
-									<li>사업주 정보 관리2</li>
-									<li>사업주 정보 관리3</li>
-									<li>사업주 정보 관리4</li>
-								</ul>
-								<br>
-							</li>
-						</ul>
-					</td>
-				</tr>
-				<tr>
-					<td class="table-th">
-						곽효민
-					</td>
-					<td colspan="2">
-						<ul style="padding-left:15px;">
-							<li class="title-li"><a class="menu-title" href="#" target="_blank ">메인화면 (index)</a></li>
-							<li class="title-li">
-								<a class="menu-title" href="#" target="_blank">관리자 어드민 메인화면</a>
-								<h5>1. 여행 관리</h5>
-								<p>OOO 사이트 여행 관리 페이지</p>
-								<ul class="sub-list">
-									<li>
-										<a href="#" target="_blank">! 관리자 ??? 기능</a>
-									</li>
-									<li>
-										<a href="#" target="_blank">! 관리자 ??? 기능</a>
-									</li>
-									<li>
-										<a href="#" target="_blank">! 관리자 ??? 기능</a>
-									</li>
-								</ul>
-								<br>
-								<h5>2. 여행 계획 관리</h5>
-								<p>사용자들이 신청한 여행 계획 관리 화면</p>
-								<ul class="sub-list">
-									<li>여행 계획 현황</li>
-								</ul>
-							</li>
-							<li class="title-li">
-								<a class="menu-title" href="#" target="_blank">사업주 어드민 메인화면</a>
-								<h5>1. 사업주 관리</h5>
-								<p>OOO 사이트 사업주 정보 관리 페이지</p>
-								<ul class="sub-list">
-									<li>사업주 정보 관리1</li>
-									<li>사업주 정보 관리2</li>
-									<li>사업주 정보 관리3</li>
-									<li>사업주 정보 관리4</li>
-								</ul>
-								<br>
-							</li>
-						</ul>
-					</td>
-				</tr>
-				<tr>
-					<td class="table-th">
-						장유희
-					</td>
-					<td colspan="2">
-						<ul style="padding-left:15px;">
-							<li class="title-li"><a class="menu-title" href="#" target="_blank ">메인화면 (index)</a></li>
-							<li class="title-li">
-								<a class="menu-title" href="#" target="_blank">관리자 어드민 메인화면</a>
-								<h5>1. 여행 관리</h5>
-								<p>OOO 사이트 여행 관리 페이지</p>
-								<ul class="sub-list">
-									<li>
-										<a href="#" target="_blank">! 관리자 ??? 기능</a>
-									</li>
-									<li>
-										<a href="#" target="_blank">! 관리자 ??? 기능</a>
-									</li>
-									<li>
-										<a href="#" target="_blank">! 관리자 ??? 기능</a>
-									</li>
-								</ul>
-								<br>
-								<h5>2. 여행 계획 관리</h5>
-								<p>사용자들이 신청한 여행 계획 관리 화면</p>
-								<ul class="sub-list">
-									<li>여행 계획 현황</li>
-								</ul>
-							</li>
-							<li class="title-li">
-								<a class="menu-title" href="#" target="_blank">사업주 어드민 메인화면</a>
-								<h5>1. 사업주 관리</h5>
-								<p>OOO 사이트 사업주 정보 관리 페이지</p>
-								<ul class="sub-list">
-									<li>사업주 정보 관리1</li>
-									<li>사업주 정보 관리2</li>
-									<li>사업주 정보 관리3</li>
-									<li>사업주 정보 관리4</li>
-								</ul>
-								<br>
-							</li>
-						</ul>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
+<div id="wrap">
+    <div class="info-title-area">
+        <h3>한국스마트정보교육원 50기 1팀</h3>
+        <h1 id="title">
+            여행를 위한
+            <br>
+            멀티 플랫폼 프로젝트
+        </h1>
+    </div>
+    <table class="info-table" style="margin-top: 15px;">
+        <tbody>
+        <tr>
+            <td class="table-th">
+                관리자 계정
+            </td>
+            <td class="table-th">
+                사업주 계정
+            </td>
+            <td class="table-th">
+                사용자 계정
+            </td>
+        </tr>
+        <tr>
+            <td style="color: #858585;">
+                아이디 : id001<br>
+                비밀번호 : pw001<br>
+            </td>
+            <td style="color: #858585;">
+                아이디 : id002<br>
+                비밀번호 : pw002<br>
+            </td>
+            <td style="color: #858585;">
+                아이디 : id003<br>
+                비밀번호 : pw003<br>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <table class="info-table" style="margin-top: 30px;">
+        <tbody>
+        <tr>
+            <td class="table-th">
+                강한빛 <br>(팀장)
+            </td>
+            <td colspan="2">
+                <ul style="padding-left:15px;">
+                    <li class="title-li"><a class="menu-title" href="/" target="_blank ">메인화면 (index)</a></li>
+                    <li class="title-li">
+                        <a class="menu-title" href="/platform" target="_blank">관리자 메인화면</a>
+                        <h5>1. 여행 관리</h5>
+                        <p>OOO 사이트 여행 관리 페이지</p>
+                        <ul class="sub-list">
+                            <li>
+                                <a href="#" target="_blank">! 관리자 ??? 기능</a>
+                            </li>
+                            <li>
+                                <a href="#" target="_blank">! 관리자 ??? 기능</a>
+                            </li>
+                            <li>
+                                <a href="#" target="_blank">! 관리자 ??? 기능</a>
+                            </li>
+                        </ul>
+                        <br>
+                        <h5>2. 여행 계획 관리</h5>
+                        <p>사용자들이 신청한 여행 계획 관리 화면</p>
+                        <ul class="sub-list">
+                            <li>
+                                <a href="#" target="_blank">! 여행 계획 현황</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="title-li">
+                        <a class="menu-title" href="#" target="_blank">사업주 메인화면</a>
+                        <h5>1. 사업주 관리</h5>
+                        <p>OOO 사이트 사업주 정보 관리 페이지</p>
+                        <ul class="sub-list">
+                            <li>
+                                <a href="#" target="_blank">! 사업주 정보 관리1</a>
+                            </li>
+                            <li>
+                                <a href="#" target="_blank">! 사업주 정보 관리2</a>
+                            </li>
+                            <li>
+                                <a href="#" target="_blank">! 사업주 정보 관리3</a>
+                            </li>
+                            <li>
+                                <a href="#" target="_blank">! 사업주 정보 관리4</a>
+                            </li>
+                        </ul>
+                        <br>
+                    </li>
+                    <li class="title-li">
+                        <a class="menu-title" href="/platform" target="_blank">사용자 메인화면</a>
+                        <h5>1. 여행 관리</h5>
+                        <p>OOO 사이트 여행 관리 페이지</p>
+                        <ul class="sub-list">
+                            <li>
+                                <a href="/trip/plan" target="_blank">? 여행 계획 작성</a>
+                            </li>
+                            <li>
+                                <a href="#" target="_blank">! 사용자 ??? 기능</a>
+                            </li>
+                            <li>
+                                <a href="#" target="_blank">! 사용자 ??? 기능</a>
+                            </li>
+                        </ul>
+                        <br>
+                        <h5>2. 여행 계획 관리</h5>
+                        <p>사용자들이 신청한 여행 계획 관리 화면</p>
+                        <ul class="sub-list">
+                            <li>
+                                <a href="#" target="_blank">! 사용자 ??? 여행 계획 현황 1</a>
+                            </li>
+                            <li>
+                                <a href="#" target="_blank">! 사용자 ??? 여행 계획 현황 2</a>
+                            </li>
+                            <li>
+                                <a href="#" target="_blank">! 사용자 ??? 여행 계획 현황 3</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td class="table-th">
+                박성민
+            </td>
+            <td colspan="2">
+                <ul style="padding-left:15px;">
+                    <li class="title-li"><a class="menu-title" href="#" target="_blank ">메인화면 (index)</a></li>
+                    <li class="title-li">
+                        <a class="menu-title" href="#" target="_blank">관리자 어드민 메인화면</a>
+                        <h5>1. 여행 관리</h5>
+                        <p>OOO 사이트 여행 관리 페이지</p>
+                        <ul class="sub-list">
+                            <li>
+                                <a href="#" target="_blank">! 관리자 ??? 기능</a>
+                            </li>
+                            <li>
+                                <a href="#" target="_blank">! 관리자 ??? 기능</a>
+                            </li>
+                            <li>
+                                <a href="#" target="_blank">! 관리자 ??? 기능</a>
+                            </li>
+                        </ul>
+                        <br>
+                        <h5>2. 여행 계획 관리</h5>
+                        <p>사용자들이 신청한 여행 계획 관리 화면</p>
+                        <ul class="sub-list">
+                            <li>여행 계획 현황</li>
+                        </ul>
+                    </li>
+                    <li class="title-li">
+                        <a class="menu-title" href="#" target="_blank">사업주 어드민 메인화면</a>
+                        <h5>1. 사업주 관리</h5>
+                        <p>OOO 사이트 사업주 정보 관리 페이지</p>
+                        <ul class="sub-list">
+                            <li>사업주 정보 관리1</li>
+                            <li>사업주 정보 관리2</li>
+                            <li>사업주 정보 관리3</li>
+                            <li>사업주 정보 관리4</li>
+                        </ul>
+                        <br>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td class="table-th">
+                서창우
+            </td>
+            <td colspan="2">
+                <ul style="padding-left:15px;">
+                    <li class="title-li"><a class="menu-title" href="#" target="_blank ">메인화면 (index)</a></li>
+                    <li class="title-li">
+                        <a class="menu-title" href="#" target="_blank">관리자 어드민 메인화면</a>
+                        <h5>1. 여행 관리</h5>
+                        <p>OOO 사이트 여행 관리 페이지</p>
+                        <ul class="sub-list">
+                            <li>
+                                <a href="#" target="_blank">! 관리자 ??? 기능</a>
+                            </li>
+                            <li>
+                                <a href="#" target="_blank">! 관리자 ??? 기능</a>
+                            </li>
+                            <li>
+                                <a href="#" target="_blank">! 관리자 ??? 기능</a>
+                            </li>
+                        </ul>
+                        <br>
+                        <h5>2. 여행 계획 관리</h5>
+                        <p>사용자들이 신청한 여행 계획 관리 화면</p>
+                        <ul class="sub-list">
+                            <li>여행 계획 현황</li>
+                        </ul>
+                    </li>
+                    <li class="title-li">
+                        <a class="menu-title" href="#" target="_blank">사업주 어드민 메인화면</a>
+                        <h5>1. 사업주 관리</h5>
+                        <p>OOO 사이트 사업주 정보 관리 페이지</p>
+                        <ul class="sub-list">
+                            <li>사업주 정보 관리1</li>
+                            <li>사업주 정보 관리2</li>
+                            <li>사업주 정보 관리3</li>
+                            <li>사업주 정보 관리4</li>
+                        </ul>
+                        <br>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td class="table-th">
+                오가영
+            </td>
+            <td colspan="2">
+                <ul style="padding-left:15px;">
+                    <li class="title-li"><a class="menu-title" href="#" target="_blank ">메인화면 (index)</a></li>
+                    <li class="title-li">
+                        <a class="menu-title" href="#" target="_blank">관리자 어드민 메인화면</a>
+                        <h5>1. 여행 관리</h5>
+                        <p>OOO 사이트 여행 관리 페이지</p>
+                        <ul class="sub-list">
+                            <li>
+                                <a href="#" target="_blank">! 관리자 ??? 기능</a>
+                            </li>
+                            <li>
+                                <a href="#" target="_blank">! 관리자 ??? 기능</a>
+                            </li>
+                            <li>
+                                <a href="#" target="_blank">! 관리자 ??? 기능</a>
+                            </li>
+                        </ul>
+                        <br>
+                        <h5>2. 여행 계획 관리</h5>
+                        <p>사용자들이 신청한 여행 계획 관리 화면</p>
+                        <ul class="sub-list">
+                            <li>여행 계획 현황</li>
+                        </ul>
+                    </li>
+                    <li class="title-li">
+                        <a class="menu-title" href="#" target="_blank">사업주 어드민 메인화면</a>
+                        <h5>1. 사업주 관리</h5>
+                        <p>OOO 사이트 사업주 정보 관리 페이지</p>
+                        <ul class="sub-list">
+                            <li>사업주 정보 관리1</li>
+                            <li>사업주 정보 관리2</li>
+                            <li>사업주 정보 관리3</li>
+                            <li>사업주 정보 관리4</li>
+                        </ul>
+                        <br>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td class="table-th">
+                이윤
+            </td>
+            <td colspan="2">
+                <ul style="padding-left:15px;">
+                    <li class="title-li"><a class="menu-title" href="#" target="_blank ">메인화면 (index)</a></li>
+                    <li class="title-li">
+                        <a class="menu-title" href="#" target="_blank">관리자 어드민 메인화면</a>
+                        <h5>1. 여행 관리</h5>
+                        <p>OOO 사이트 여행 관리 페이지</p>
+                        <ul class="sub-list">
+                            <li>
+                                <a href="#" target="_blank">! 관리자 ??? 기능</a>
+                            </li>
+                            <li>
+                                <a href="#" target="_blank">! 관리자 ??? 기능</a>
+                            </li>
+                            <li>
+                                <a href="#" target="_blank">! 관리자 ??? 기능</a>
+                            </li>
+                        </ul>
+                        <br>
+                        <h5>2. 여행 계획 관리</h5>
+                        <p>사용자들이 신청한 여행 계획 관리 화면</p>
+                        <ul class="sub-list">
+                            <li>여행 계획 현황</li>
+                        </ul>
+                    </li>
+                    <li class="title-li">
+                        <a class="menu-title" href="#" target="_blank">사업주 어드민 메인화면</a>
+                        <h5>1. 사업주 관리</h5>
+                        <p>OOO 사이트 사업주 정보 관리 페이지</p>
+                        <ul class="sub-list">
+                            <li>사업주 정보 관리1</li>
+                            <li>사업주 정보 관리2</li>
+                            <li>사업주 정보 관리3</li>
+                            <li>사업주 정보 관리4</li>
+                        </ul>
+                        <br>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td class="table-th">
+                곽효민
+            </td>
+            <td colspan="2">
+                <ul style="padding-left:15px;">
+                    <li class="title-li"><a class="menu-title" href="#" target="_blank ">메인화면 (index)</a></li>
+                    <li class="title-li">
+                        <a class="menu-title" href="#" target="_blank">관리자 어드민 메인화면</a>
+                        <h5>1. 여행 관리</h5>
+                        <p>OOO 사이트 여행 관리 페이지</p>
+                        <ul class="sub-list">
+                            <li>
+                                <a href="#" target="_blank">! 관리자 ??? 기능</a>
+                            </li>
+                            <li>
+                                <a href="#" target="_blank">! 관리자 ??? 기능</a>
+                            </li>
+                            <li>
+                                <a href="#" target="_blank">! 관리자 ??? 기능</a>
+                            </li>
+                        </ul>
+                        <br>
+                        <h5>2. 여행 계획 관리</h5>
+                        <p>사용자들이 신청한 여행 계획 관리 화면</p>
+                        <ul class="sub-list">
+                            <li>여행 계획 현황</li>
+                        </ul>
+                    </li>
+                    <li class="title-li">
+                        <a class="menu-title" href="#" target="_blank">사업주 어드민 메인화면</a>
+                        <h5>1. 사업주 관리</h5>
+                        <p>OOO 사이트 사업주 정보 관리 페이지</p>
+                        <ul class="sub-list">
+                            <li>사업주 정보 관리1</li>
+                            <li>사업주 정보 관리2</li>
+                            <li>사업주 정보 관리3</li>
+                            <li>사업주 정보 관리4</li>
+                        </ul>
+                        <br>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td class="table-th">
+                장유희
+            </td>
+            <td colspan="2">
+                <ul style="padding-left:15px;">
+                    <li class="title-li"><a class="menu-title" href="#" target="_blank ">메인화면 (index)</a></li>
+                    <li class="title-li">
+                        <a class="menu-title" href="#" target="_blank">관리자 어드민 메인화면</a>
+                        <h5>1. 여행 관리</h5>
+                        <p>OOO 사이트 여행 관리 페이지</p>
+                        <ul class="sub-list">
+                            <li>
+                                <a href="#" target="_blank">! 관리자 ??? 기능</a>
+                            </li>
+                            <li>
+                                <a href="#" target="_blank">! 관리자 ??? 기능</a>
+                            </li>
+                            <li>
+                                <a href="#" target="_blank">! 관리자 ??? 기능</a>
+                            </li>
+                        </ul>
+                        <br>
+                        <h5>2. 여행 계획 관리</h5>
+                        <p>사용자들이 신청한 여행 계획 관리 화면</p>
+                        <ul class="sub-list">
+                            <li>여행 계획 현황</li>
+                        </ul>
+                    </li>
+                    <li class="title-li">
+                        <a class="menu-title" href="#" target="_blank">사업주 어드민 메인화면</a>
+                        <h5>1. 사업주 관리</h5>
+                        <p>OOO 사이트 사업주 정보 관리 페이지</p>
+                        <ul class="sub-list">
+                            <li>사업주 정보 관리1</li>
+                            <li>사업주 정보 관리2</li>
+                            <li>사업주 정보 관리3</li>
+                            <li>사업주 정보 관리4</li>
+                        </ul>
+                        <br>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>
