@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping(value="/user/review")
-public class UReportController {
+public class URReportController {
 	
 	@GetMapping("/report")
 	public String reviewWrite() {
