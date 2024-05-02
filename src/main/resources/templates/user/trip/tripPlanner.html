@@ -11,8 +11,6 @@
 </th:block>
 
 <th:block layout:fragment="customPageSection">
-                    <h1>여행 계획 작성</h1>
-
                     <div class="row justify-content-between">
                         <!-- 지역 선택 -->
                         <div class="form-group col-lg-6 mb-md-6 mb-lg-0">
@@ -288,5 +286,11 @@
 </th:block>
 
 <th:block layout:fragment="customJs">
+    <script type="javascript">
+        // "1일차" 탭을 활성화합니다.
+        setTimeout(function (){
+            document.getElementById('day1-tab').classList.add('active');
+        }, 200);
+    </script>
 </th:block>
 </html>
