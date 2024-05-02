@@ -1,18 +1,18 @@
 package ksmart.ks50team01.user.review.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Controller
 @RequestMapping(value="/user/review")
-public class UContentController {
+public class UReportController {
 	
-	@GetMapping("/write")
+	@GetMapping("/report")
 	public String reviewWrite() {
-		return "user/review/reviewWrite";
+		return "user/review/reviewReport";
 	}
 	
+
 }

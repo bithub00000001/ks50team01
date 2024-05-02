@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+                layout:decorate="~{user/layout/default}">
+<head>
+<title>신고 작성하기</title>
+<th:block layout:fragment="customCss">
+    <link th:href="@{/user/css/reviewReport.css}" rel="stylesheet">
+</th:block>
+</head>
+<th:block layout:fragment="customContent">
+	<section class="py-10">
+		<div class="container">
+		<!-- Button trigger modal -->
+<!-- 		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+		  신고하기
+		</button> -->
+		
+		<!-- Modal -->
+		<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="staticBackdropLabel">신고하기</h5>
+		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		      </div>
+		      <!-- Example single danger button -->
+				<div class="btn-group">
+				  <button type="button" class="btn btn-danger dropdown-toggle px-3" data-bs-toggle="dropdown" aria-expanded="false">
+				    신고 유형 선택
+				  </button>
+				
+				  <ul class="dropdown-menu">
+				    <li><a class="dropdown-item">카테고리1</a></li>
+				    <li><a class="dropdown-item">카테고리2</a></li>
+				    <li><a class="dropdown-item">카데고리3</a></li>
+				  </ul>
+				</div>
+
+		      <div class="modal-body">
+		          <div class="mb-3">
+		            <label for="message-text" class="col-form-label">신고내용:</label>
+		            <textarea class="form-control" id="message-text" maxlength="100"></textarea>
+		            <div id="char-count">0/100</div>
+		          </div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+		        <button type="button" class="btn btn-primary">신고</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		</div>
+	</section>
+</th:block>	
+
+<th:block layout:fragment="customJs">
+	<script>
+	document.addEventListener("DOMContentLoaded", function() {
+	    var dropdownItems = document.querySelectorAll(".dropdown-item");
+	    var dropdownButton = document.querySelector(".dropdown-toggle");
+	    var selectedType = ""; // 선택한 유형을 저장할 변수
+
+	    dropdownItems.forEach(function(item) {
+	        item.addEventListener("click", function() {
+	            var newSelectedType = this.textContent; // 새로 선택한 항목을 변수에 저장
+	            if (newSelectedType !== selectedType) { // 새로 선택한 항목과 기존에 선택한 항목이 다를 때만 처리
+	                selectedType = newSelectedType; // 선택한 항목을 업데이트
+	                dropdownButton.textContent = selectedType; // 선택한 항목의 값을 버튼에 표시
+	            } else { // 같은 항목을 다시 선택한 경우
+	                selectedType = ""; // 선택 초기화
+	                dropdownButton.textContent = "신고유형선택"; // 드롭다운 버튼의 텍스트 초기화
+	            }
+	        });
+	    });
+
+	    // 모달 창 자동 열기
+	    var modal = new bootstrap.Modal(document.getElementById('staticBackdrop'), {
+	        backdrop: 'static'
+	    });
+	    modal.show();
+	});
+    
+    
+    
+	</script>
+</th:block>
+</html>
+
