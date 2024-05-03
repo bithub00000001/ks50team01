@@ -7,7 +7,19 @@ document.getElementById('checkAll').addEventListener('change', function() {
 						    
 						 
 
-	$("#test").click(function(){
-    const chk = $('input[type="checkbox"]:checked').closest('tr').find('td:eq(1)').text();
-    console.log(chk);
-	}); 
+$(document).ready(function() {
+    $("#changeGrade, #withdrawal").click(function() {
+        const action = $(this).data("action");
+        $("#modifyForm").append('<input type="hidden" name="action" value="' + action + '">');
+        $("#modifyForm").submit();
+    });
+    
+});
+
+
+
+			    $("#searchButton").click(function() {
+			        const aa = $("#searchId").val();
+			       console.log(aa)
+			    });
+

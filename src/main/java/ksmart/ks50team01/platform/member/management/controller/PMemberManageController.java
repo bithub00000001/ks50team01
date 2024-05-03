@@ -9,14 +9,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import ksmart.ks50team01.platform.member.management.dto.Member;
+import ksmart.ks50team01.platform.member.management.dto.PMember;
 import ksmart.ks50team01.platform.member.management.service.MemberService;
 import lombok.RequiredArgsConstructor;
+
 
 @Controller
 @RequestMapping(value="/platform/member")
 @RequiredArgsConstructor
-public class MemberController {
+public class PMemberManageController {
 
 	public final MemberService memberService;
 	
@@ -31,8 +32,8 @@ public class MemberController {
 	public String modifyMember(@RequestParam(value="memberId") String memberId
 							  ,Model model) {
 
-		Member memberInfo = memberService.getMemberInfoById(memberId);
-		List<Member> memberList = memberService.getMemberList();
+		PMember memberInfo = memberService.getMemberInfoById(memberId);
+		List<PMember> memberList = memberService.getMemberList();
 		
 		model.addAttribute("title", "회원수정");
 		model.addAttribute("memberInfo", memberInfo);
@@ -47,8 +48,8 @@ public class MemberController {
 	@GetMapping("/memberManagement")
 	public String getMemberManagement(Model model) {
 		
-		List<Member> memberList = memberService.getMemberList();
-		List<Member> memberGrade = memberService.getMemberGrade();
+		List<PMember> memberList = memberService.getMemberList();
+		List<PMember> memberGrade = memberService.getMemberGrade();
 		
 		model.addAttribute("memberGrade", memberGrade);
 		model.addAttribute("memberList", memberList);
@@ -58,10 +59,17 @@ public class MemberController {
 	}
 	
 	@PostMapping("/memberManagement")
-    public String updateMemberGrade(@RequestParam("memberId") String memberId, @RequestParam("gradeNum") String gradeNum) {
-        memberService.updateMemberGrade(memberId, gradeNum);
-        return "redirect:/platform/member/memberManagement"; 
-    }
+	public String handleMemberAction(@RequestParam("memberId") String memberId,
+	                                 @RequestParam("memberGrdNum") String memberGrdNum,
+	                                 @RequestParam("action") String action) {
+	    if ("update".equals(action)) {
+	        memberService.updateMemberGrade(memberId, memberGrdNum);
+	    } else if ("delete".equals(action)) {
+	        memberService.delMember(memberId);
+	    }
+	    
+	    return "redirect:/platform/member/memberManagement"; 
+	}
 	
-	
+
 }

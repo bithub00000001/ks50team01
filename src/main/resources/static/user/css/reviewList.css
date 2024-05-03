@@ -146,14 +146,14 @@
     margin-bottom: 20px;
 }
 
-.dropdown-1 {
+/* .dropdown-1 {
     display: flex;
-    justify-content: flex-end; /* 오른쪽 배치 */
-}
+    justify-content: flex-end; 오른쪽 배치
+} */
 
-.dropdown-menu {
-    min-width: 100px; /* 드롭다운 메뉴의 최소 너비를 설정합니다. */
-}
+/* .dropdown-menu {
+    min-width: 100px; 드롭다운 메뉴의 최소 너비를 설정합니다.
+} */
 
 .review-stats {
     text-align: center;
@@ -166,4 +166,70 @@
     color: black;
     margin-bottom: 20px;
 }
+
+.rating-stars {
+    font-size: 24px; /* 별 모양의 크기 조정 */
+}
+
+.rating-stars-avg {
+	font-size: 40px; /* 별 모양의 크기 조정 */
+	margin-bottom: 10px;
+}
+
+.review-stats_avg {
+    text-align: center; /* 요소를 가운데 정렬합니다. */
+}
+
+.average-rating-text,
+#average-rating {
+    font-size: 20px; /* 평점의 크기를 15px로 설정합니다. */
+    font-weight: bold; /* 평점을 두껍게 만듭니다. */
+    color: black;
+}
+
+.total-reviews-text,
+#total-reviews {
+    font-size: 20px; /* 리뷰 개수의 크기를 12px로 설정합니다. */
+    font-weight: bold; /* 리뷰 개수를 두껍게 만듭니다. */
+    color: black;
+}
+
+
+
+
+
+
+
+/* 리뷰와 답글을 구분하기 위한 CSS */
+.review {
+    /* 리뷰 스타일 */
+    background-color: #f9f9f9; /* 리뷰 배경색 */
+    padding: 20px; /* 리뷰 여백 */
+    margin-bottom: 20px; /* 리뷰 아래 여백 */
+    border-radius: 5px; /* 리뷰 모서리 둥글게 */
+
+    /* 그림자 효과 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0); /* 그림자 효과 */
+}
+.reply-form {
+    /* 답글 폼 스타일 */
+    background-color: white; /* 답글 폼 배경색 */
+    padding: 10px; /* 답글 폼 여백 */
+    margin: 10px auto; /* 상단 및 하단 여백은 10px이고, 좌우 여백은 자동으로 설정하여 가운데 정렬 */
+    border-radius: 5px; /* 답글 폼 모서리 둥글게 */
+    width: 100%; /* 폼의 너비를 조절하세요 */
+}
+
+.reply-form textarea {
+    width: 100%;
+    height: 150px;
+    padding: 1%;
+/*     border: 4px solid #ff9b40; */
+    border-radius: 5px;
+    box-sizing: border-box;
+    /* 수정된 부분: 최대 글자 수 제한 */
+    resize: none;
+    overflow-y: auto; /* 텍스트 내용이 넘칠 경우 스크롤바 표시 */
+}
+
 
