@@ -11,6 +11,6 @@ public class IndexController {
     public String index(Model model) {
         model.addAttribute("title", "인덱스");
 
-        return "user/trip/index";
+        return "user/index";
     }
 }
