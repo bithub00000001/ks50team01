@@ -39,7 +39,7 @@ public class TripPlanController {
     }
 
     @PostMapping("/create")
-    public String processTripDetails(@ModelAttribute("tripOption") TripOption tripOption, Model model) {
+    public String processTripDetails(@ModelAttribute(name = "tripOption") TripOption tripOption, Model model) {
         String dateRange = tripOption.getDateRange();
         if (dateRange != null && !dateRange.isEmpty()) {
             String[] dates = dateRange.split(" - ");
