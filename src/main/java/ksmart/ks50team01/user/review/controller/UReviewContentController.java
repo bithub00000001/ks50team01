@@ -15,9 +15,4 @@ public class UReviewContentController {
 		return "user/review/reviewWrite";
 	}
 	
-	@GetMapping("/comment")
-	public String reviewComment() {
-		return "user/review/commentWrite";
-	}
-	
 }
