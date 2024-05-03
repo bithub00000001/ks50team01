@@ -1,6 +1,6 @@
 package ksmart.ks50team01.platform.member.management.dto;
 
-public class Member {
+public class PMember {
 
 	private String memberId;
 	private String memberGrdNum;
