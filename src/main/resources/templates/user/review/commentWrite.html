@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<!-- 댓글 -->
+<div class="comment">
+    <div class="comment-content">
+        <p>댓글 내용</p>
+        <!-- 답글 작성 폼 표시/숨김을 위한 버튼 -->
+        <button class="reply-button">답글 작성</button>
+        <!-- 답글 작성 폼 -->
+        <div class="reply-form" style="display: none;">
+            <textarea placeholder="답글을 작성하세요"></textarea>
+            <button class="submit-reply">전송</button>
+        </div>
+    </div>
+</div>
+
+<!-- 댓글 -->
+<div class="comment">
+    <div class="comment-content">
+        <p>댓글 내용</p>
+        <!-- 답글 작성 폼 표시/숨김을 위한 버튼 -->
+        <button class="reply-button">답글 작성</button>
+        <!-- 답글 작성 폼 -->
+        <div class="reply-form" style="display: none;">
+            <textarea placeholder="답글을 작성하세요"></textarea>
+            <button class="submit-reply">전송</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // 답글 버튼 클릭 시 답글 작성 폼 표시/숨김 토글
+    const replyButtons = document.querySelectorAll('.reply-button');
+    replyButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const replyForm = button.nextElementSibling;
+            if (replyForm.style.display === 'none' || replyForm.style.display === '') {
+                replyForm.style.display = 'block'; // 답글 작성 폼 표시
+            } else {
+                replyForm.style.display = 'none'; // 답글 작성 폼 숨김
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
