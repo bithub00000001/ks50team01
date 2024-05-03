@@ -21,6 +21,7 @@ public class Breadcrumb {
 		pageNames.put("contact", "Contact Us");
 		pageNames.put("trip", "여행 계획");
 		pageNames.put("plan", "여행 계획 작성");
+		pageNames.put("board", "여행 계획 공유");
 		// 필요한 만큼 추가
 		return pageNames;
 	}
