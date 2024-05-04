@@ -10,7 +10,7 @@
 
 <th:block layout:fragment="customPageSection">
     <div>
-        <form th:action="@{/trip/details}" method="post" th:object="${tripOption}">
+        <form th:action="@{/trip/details}" method="post" th:object="${uTripOption}">
             <div class="mb-3">
                 <label for="tripTitle" class="form-label">여행 제목:</label>
                 <input type="text" class="form-control" id="tripTitle" th:field="*{tripTitle}" required>
@@ -101,7 +101,7 @@
 <th:block layout:fragment="customJs">
     <script th:inline="javascript">
         /*<![CDATA[*/
-        const dateRange = /*[[${tripOption.dateRange}]]*/ '';
+        const dateRange = /*[[${uTripOption.dateRange}]]*/ '';
         console.log(dateRange)
 
         $(document).ready(function() {

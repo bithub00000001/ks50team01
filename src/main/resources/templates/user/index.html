@@ -40,6 +40,7 @@
                                             <input type="text" name="daterange" id="dateRange" class="form-control">
                                             <input type="hidden" name="startDate" id="startDate">
                                             <input type="hidden" name="endDate" id="endDate">
+                                            <div th:if="${errorMessage}" th:text="${errorMessage}"></div>
                                         </div>
                                         <div class="col-sm-12 col-md-6 mb-3 mb-lg-0 col-lg-3">
                                             <input type="number" class="form-control" name="numPeople" id="numPeople" placeholder="인원 수를 입력하세요">
