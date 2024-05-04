@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-public class TripPlannerController {
+public class UTripPlannerController {
 
     private final RegionService regionService;
 }
