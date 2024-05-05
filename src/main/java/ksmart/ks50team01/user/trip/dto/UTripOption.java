@@ -20,7 +20,8 @@ public class UTripOption {
     private LocalDate endDate;
     private Integer numPeople = 1;
     private String memberType;
-    private String dateRange;
 
     private Integer numDate;
+
+    private String tripDuration;
 }
