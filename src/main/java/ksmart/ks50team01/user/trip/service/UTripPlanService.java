@@ -8,4 +8,7 @@ public interface UTripPlanService {
 
 	// 데이트 레인지가 존재하면 출발 날짜와 도착 날짜 사이의 일수를 계산
 	UTripOption calculateNumDate(UTripOption uTripOption);
+
+	// 출발 날짜와 도착 날짜를 입력 받아 몇박 몇일 혹은 미정을 반환
+	UTripOption calculateTripDuration(UTripOption uTripOption);
 }

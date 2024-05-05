@@ -36,9 +36,14 @@ public class UTripPlanController {
         return "user/trip/sharePlan";
     }
 
-    @GetMapping("/create")
+    @GetMapping("/detail")
     public String tripCreatePage(@ModelAttribute("uTripOption") Optional<UTripOption> uTripOption,Model model){
         model.addAttribute("title", "여행 계획 작성");
+        // ifPresentOrElse 메서드 : Optional 객체가 값을 포함하고 있는 경우와 그렇지 않은 경우에 대해 각각 다른 동작을 정의
+        // 무조건 첫 번째 인자로 Consumer 람다, 두번째 인수로 Runnable 람다를 갖는다
+        // Consumer : 입력 값을 받아서 실행되고 결과를 리턴하지 않음
+        // Runnable : 인자도 받지 않고 결과도 리턴하지 않음
+        // UTripOption 이 null이 아닌 경우 해당 값을 model의 속성으로 추가하고, null 인 경우 새로운 객체를 생성한다
         uTripOption.ifPresentOrElse(
             option -> model.addAttribute("uTripOption", option),
             () -> model.addAttribute("uTripOption", new UTripOption())
@@ -46,7 +51,7 @@ public class UTripPlanController {
         return "user/trip/tripPlan";
     }
 
-    @PostMapping("/create")
+    @PostMapping("/detail")
     public String processTripDetails(@ModelAttribute(name = "tripOption") UTripOption uTripOption,
         RedirectAttributes redirectAttributes) {
         try {
@@ -58,6 +63,13 @@ public class UTripPlanController {
         }
         log.info("uTripOption: {}", uTripOption);
         redirectAttributes.addFlashAttribute("uTripOption", uTripOption);
-        return "redirect:/trip/create";
+        return "redirect:/trip/detail";
+    }
+
+    @GetMapping("/list")
+    public String PlanListPage(Model model){
+
+        model.addAttribute("title", "내 여행 계획 목록");
+        return "user/trip/planList";
     }
 }
