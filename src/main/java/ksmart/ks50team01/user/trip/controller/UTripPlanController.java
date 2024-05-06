@@ -67,7 +67,7 @@ public class UTripPlanController {
     }
 
     @GetMapping("/list")
-    public String PlanListPage(Model model){
+    public String planListPage(Model model){
 
         model.addAttribute("title", "내 여행 계획 목록");
         return "user/trip/planList";
