@@ -13,4 +13,15 @@ public class CommonController {
         return "index";
     }
 
+    @GetMapping("/platform/refer")
+    public String platformRefer(Model model) {
+        model.addAttribute("title", "플랫폼 페이지 레퍼런스");
+        return "platform/referPage1";
+    }
+
+    @GetMapping("/user/refer")
+    public String userRefer(Model model) {
+        model.addAttribute("title", "유저 페이지 레퍼런스");
+        return "user/referPage2";
+    }
 }
