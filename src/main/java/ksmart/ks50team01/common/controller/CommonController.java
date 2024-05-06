@@ -18,10 +18,4 @@ public class CommonController {
         model.addAttribute("title", "플랫폼 페이지 레퍼런스");
         return "platform/referPage1";
     }
-
-    @GetMapping("/user/reference")
-    public String userRefer(Model model) {
-        model.addAttribute("title", "유저 페이지 레퍼런스");
-        return "user/referPage2";
-    }
 }
