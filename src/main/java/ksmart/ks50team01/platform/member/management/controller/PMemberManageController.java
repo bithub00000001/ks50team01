@@ -1,5 +1,6 @@
 package ksmart.ks50team01.platform.member.management.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -47,15 +48,36 @@ public class PMemberManageController {
 	
 	@GetMapping("/memberManagement")
 	public String getMemberManagement(Model model) {
-		
-		List<PMember> memberList = memberService.getMemberList();
-		List<PMember> memberGrade = memberService.getMemberGrade();
-		
-		model.addAttribute("memberGrade", memberGrade);
-		model.addAttribute("memberList", memberList);
-		model.addAttribute("title", "회원관리");
-	
-		return "platform/member/memberManagement";
+	    List<PMember> memberList = memberService.getMemberList();
+	    List<PMember> memberGrade = memberService.getMemberGrade();
+
+	    model.addAttribute("memberGrade", memberGrade);
+	    model.addAttribute("memberList", memberList);
+	    model.addAttribute("title", "회원관리");
+
+	    return "platform/member/memberManagement";
+	}
+	 
+	@PostMapping("/memberSearch")
+	public String searchMember(@RequestParam("searchId") String searchId, Model model) {
+	    if (searchId.trim().isEmpty()) {
+	        return "redirect:/platform/member/memberManagement";
+	    }
+	    
+	    PMember memberInfo = memberService.getMemberInfoById(searchId);
+	    List<PMember> memberGrade = memberService.getMemberGrade();
+
+	    List<PMember> memberList = new ArrayList<>();
+	    if (memberInfo != null) {
+	        memberList.add(memberInfo);
+	    }
+
+	    model.addAttribute("memberInfo", memberInfo);
+	    model.addAttribute("memberList", memberList);
+	    model.addAttribute("memberGrade", memberGrade);
+	    model.addAttribute("title", "회원관리");
+
+	    return "platform/member/memberManagement";
 	}
 	
 	@PostMapping("/memberManagement")
