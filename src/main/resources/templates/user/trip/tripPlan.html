@@ -19,24 +19,28 @@
                     <form th:action="@{/trip/details}" method="post" th:object="${uTripOption}">
                         <div class="mb-3">
                             <label for="tripTitle" class="form-label">여행 제목:</label>
-                            <input type="text" class="form-control" name="tripTitle" id="tripTitle" th:field="*{tripTitle}" required>
+                            <input type="text" class="form-control" name="tripTitle" id="tripTitle"
+                                   th:field="*{tripTitle}" required>
                         </div>
                         <div class="mb-3">
                             <label for="startDate" class="form-label">시작 날짜:</label>
-                            <input type="date" class="form-control" name="startDate" id="startDate" th:field="*{startDate}" required>
+                            <input type="date" class="form-control" name="startDate" id="startDate"
+                                   th:field="*{startDate}" required>
                         </div>
                         <div class="mb-3">
                             <label for="endDate" class="form-label">종료 날짜:</label>
-                            <input type="date" class="form-control" name="endDate" id="endDate" th:field="*{endDate}" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="numDate" class="form-label">일차:</label>
-                            <input type="number" class="form-control" name="numDate" id="numDate" th:field="*{numDate}" min="1"
+                            <input type="date" class="form-control" name="endDate" id="endDate" th:field="*{endDate}"
                                    required>
                         </div>
                         <div class="mb-3">
+                            <label for="numDate" class="form-label">일차:</label>
+                            <input type="number" class="form-control" name="numDate" id="numDate" th:field="*{numDate}"
+                                   min="1" required readonly="readonly">
+                        </div>
+                        <div class="mb-3">
                             <label for="numPeople" class="form-label">인원 수:</label>
-                            <input type="number" class="form-control" name="numPeople" id="numPeople" th:field="*{numPeople}" min="1"
+                            <input type="number" class="form-control" name="numPeople" id="numPeople"
+                                   th:field="*{numPeople}" min="1"
                                    required>
                         </div>
                         <div class="d-flex justify-content-end">
@@ -53,33 +57,38 @@
                                     <label class="form-check-label" for="realMember">실제 회원</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" name="memberType" id="virtualMember">
+                                    <input class="form-check-input" type="checkbox" name="memberType"
+                                           id="virtualMember">
                                     <label class="form-check-label" for="virtualMember">가상 회원</label>
                                 </div>
                             </div>
                             <div id="realMemberSearch" class="mb-3" style="display: none;">
-                                <button id="searchMemberBtn" class="btn btn-outline-primary btn-xs" type="button" data-bs-toggle="modal" data-bs-target="#searchMemberModal">회원 검색</button>
+                                <button id="searchMemberBtn" class="btn btn-outline-primary btn-xs" type="button"
+                                        data-bs-toggle="modal" data-bs-target="#searchMemberModal">회원 검색
+                                </button>
                             </div>
                             <div id="virtualMemberAdjust" class="mb-3" style="display: none;">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" id="virtualMemberNickname" placeholder="별칭 입력 (쉼표로 구분)">
-                                    <button class="btn btn-outline-secondary btn-sm" type="button" id="addMember">추가</button>
+                                    <input type="text" class="form-control" id="virtualMemberNickname"
+                                           placeholder="별칭 입력 (쉼표로 구분)">
+                                    <button class="btn btn-outline-secondary btn-sm" type="button" id="addMember">추가
+                                    </button>
                                 </div>
                                 <ul id="virtualMembersList" class="list-group mt-2">
-                                    <!-- 가상 회원 목록이 여기에 추가됩니다 -->
+                                    <!-- 가상 회원 목록이 여기에 추가됨 -->
                                 </ul>
                             </div>
                             <div id="memberList">
                                 <h5>초대된 회원 목록</h5>
                                 <ul id="invitedMembersList" class="list-group">
-                                    <!-- 초대된 실제 회원 목록이 여기에 추가됩니다 -->
+                                    <!-- 초대된 실제 회원 목록이 여기에 추가됨 -->
                                 </ul>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="card">
                                 <div class="card-body">
-                                    <h5 class="card-title">총 인원 수</h5>
+                                    <h5 class="card-title">추가한 총 인원 수</h5>
                                     <p class="card-text"><span id="totalMemberCount">0</span>명</p>
                                 </div>
                             </div>
@@ -103,7 +112,8 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-primary btn-xs" id="inviteMembers">검색</button>
-                                    <button type="button" class="btn btn-secondary btn-xs" data-bs-dismiss="modal">취소</button>
+                                    <button type="button" class="btn btn-secondary btn-xs" data-bs-dismiss="modal">취소
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -446,12 +456,21 @@
 
 <th:block layout:fragment="customJs">
     <script th:inline="javascript">
+
         // 실제 회원 데이터 (예시)
         const realMembers = [
-            { id: 1, name: '실제 회원 1' },
-            { id: 2, name: '실제 회원 2' },
-            { id: 3, name: '실제 회원 3' },
+            {id: 1, name: '실제 회원 예시 1'},
+            {id: 2, name: '실제 회원 예시 2'},
+            {id: 3, name: '실제 회원 예시 3'},
         ];
+
+        // 인원 수 입력 필드에 이벤트 리스너 추가
+        const numPeopleInput = $('#numPeople');
+        let maxPeople = 1; // 최대 인원 수를 저장할 변수
+
+        numPeopleInput.on('input', () => {
+            maxPeople = parseInt(numPeopleInput.val(), 10) || 1; // 입력된 값을 정수로 변환해 maxPeople 에 저장
+        });
 
         // 초대된 회원 목록
         const invitedMembers = [];
@@ -460,159 +479,201 @@
         const virtualMembers = [];
 
         // 회원 유형 체크박스 이벤트 리스너 설정
-        const realMemberCheckbox = document.getElementById('realMember');
-        const virtualMemberCheckbox = document.getElementById('virtualMember');
-        const realMemberSearch = document.getElementById('realMemberSearch');
-        const virtualMemberAdjust = document.getElementById('virtualMemberAdjust');
+        const realMemberCheckbox = $('#realMember');
+        const virtualMemberCheckbox = $('#virtualMember');
+        const realMemberSearch = $('#realMemberSearch');
+        const virtualMemberAdjust = $('#virtualMemberAdjust');
 
         // 실제 회원 검색창 표시 여부 설정
-        realMemberCheckbox.addEventListener('change', () => {
-            realMemberSearch.style.display = realMemberCheckbox.checked ? 'block' : 'none';
+        realMemberCheckbox.change(() => {
+            realMemberSearch.css('display', realMemberCheckbox.is(':checked') ? 'block' : 'none'); //.style.display = realMemberCheckbox.checked ? 'block' : 'none';
         });
 
         // 가상 회원 조정창 표시 여부 설정
-        virtualMemberCheckbox.addEventListener('change', () => {
-            virtualMemberAdjust.style.display = virtualMemberCheckbox.checked ? 'block' : 'none';
+        virtualMemberCheckbox.change(() => {
+            virtualMemberAdjust.css('display', virtualMemberCheckbox.is(':checked') ? 'block' : 'none'); //.style.display = virtualMemberCheckbox.checked ? 'block' : 'none';
         });
 
         // 회원 검색 모달 열기 이벤트 설정
-        const searchMemberBtn = document.getElementById('searchMemberBtn');
-        const searchMemberModal = new bootstrap.Modal(document.getElementById('searchMemberModal'), {});
+        const searchMemberBtn = $('#searchMemberBtn');
+        const searchMemberModal = $(new bootstrap.Modal($('#searchMemberModal'), {}));
 
-        searchMemberBtn.addEventListener('click', () => {
+        searchMemberBtn.click(() => {
             searchMemberModal.show();
         });
 
         // 회원 검색 및 초대 기능
-        const inviteMembersBtn = document.getElementById('inviteMembers');
-        const searchMemberInput = document.getElementById('searchMemberInput');
-        const searchResultContainer = document.getElementById('searchResultContainer');
-        const invitedMembersList = document.getElementById('invitedMembersList');
+        const inviteMembersBtn = $('#inviteMembers');
+        const searchMemberInput = $('#searchMemberInput');
+        const searchResultContainer = $('#searchResultContainer');
+        const invitedMembersList = $('#invitedMembersList');
 
-        inviteMembersBtn.addEventListener('click', () => {
-            const searchQuery = searchMemberInput.value.trim().toLowerCase();
+        inviteMembersBtn.click(() => {
+            const searchQuery = searchMemberInput.val().trim().toLowerCase();
             const searchResults = realMembers.filter(
                 (member) => member.name.toLowerCase().includes(searchQuery)
             );
 
-            // 검색 결과 리스트 표시
-            searchResultContainer.textContent = '';
-            searchResults.forEach((member) => {
-                const li = document.createElement('li');
-                li.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center', 'mb-1');
-                li.textContent = member.name;
+            const currentMemberCount = invitedMembers.length + virtualMembers.length;
 
-                const inviteBtn = document.createElement('button');
-                inviteBtn.classList.add('btn', 'btn-primary', 'btn-xs');
-                inviteBtn.textContent = '초대';
+            // 검색 결과 리스트 표시
+            searchResultContainer.empty();
+            searchResults.forEach((member) => {
+                const li = $('<li></li>', {
+                    class: 'list-group-item d-flex justify-content-between align-items-center mb-1',
+                    text: member.name
+                });
+
+                // 최대 인원 수를 초과하지 않는 경우에만 초대 버튼 활성화
+                const inviteBtn = $('<button></button>', {
+                    class: 'btn btn-primary btn-xs',
+                    text: '초대'
+                });
+                if (currentMemberCount < maxPeople || maxPeople === 0) {
+                    inviteBtn.prop('disabled', invitedMembers.some(invited => invited.id === member.id));
+                } else {
+                    inviteBtn.prop('disabled', true);
+                }
+
                 // 이미 초대된 회원은 초대 버튼 비활성화
-                inviteBtn.disabled = invitedMembers.some(invited => invited.id === member.id);
+                inviteBtn.prop('disabled', invitedMembers.some(invited => invited.id === member.id));
 
                 // 초대 버튼 클릭 시 초대된 회원 목록에 추가
-                inviteBtn.addEventListener('click', () => {
+                inviteBtn.click(() => {
                     if (!invitedMembers.some(invited => invited.id === member.id)) {
+                        const updatedCurrentMemberCount = invitedMembers.length + virtualMembers.length;
+                        if (updatedCurrentMemberCount + 1 > maxPeople && maxPeople > 0) {
+                            alert(`최대 인원 수(${maxPeople}명)를 초과할 수 없습니다.`);
+                            return;
+                        }
                         invitedMembers.push(member);
                         renderInvitedMembers();
-                        inviteBtn.disabled = true;
+                        inviteBtn.prop('disabled', true);
                         // 총 인원 수 재계산 및 렌더링
                         renderTotalMemberCount();
                     }
                 });
 
-                li.appendChild(inviteBtn);
-                searchResultContainer.appendChild(li);
+                li.append(inviteBtn);
+                searchResultContainer.append(li);
             });
         });
 
         // 초대된 회원 목록 렌더링 함수
         function renderInvitedMembers() {
-            invitedMembersList.textContent = '';
+            invitedMembersList.empty();
             invitedMembers.forEach((member, index) => {
-                const li = document.createElement('li');
-                li.className = 'list-group-item d-flex justify-content-between align-items-center';
-                li.textContent = member.name;
+                const li = $('<li></li>', {
+                    class: 'list-group-item d-flex justify-content-between align-items-center',
+                    text: member.name
+                });
 
                 // 제거 버튼 생성
-                const removeBtn = document.createElement('button');
+                const removeBtn = $('<button>', {
+                    class: 'btn btn-danger btn-xs float-end',
+                    text: '제거'
+                });
+                /*const removeBtn = document.createElement('button');
                 removeBtn.classList.add('btn', 'btn-danger', 'btn-xs', 'float-end');
-                removeBtn.textContent = '제거';
+                removeBtn.textContent = '제거';*/
 
                 // 제거 버튼 이벤트 리스너
-                removeBtn.addEventListener('click', () => {
+                removeBtn.click(() => {
                     invitedMembers.splice(index, 1); // 초대된 회원 목록에서 해당 멤버 제거
                     renderInvitedMembers(); // 변경된 목록 다시 렌더링
                 });
 
-                li.appendChild(removeBtn);
-
-                invitedMembersList.appendChild(li);
+                li.append(removeBtn);
+                invitedMembersList.append(li);
             });
         }
 
-        document.getElementById('addMember').addEventListener('click', function() {
-            const virtualMemberInput = document.getElementById('virtualMemberNickname');
-            const virtualMembersList = document.getElementById('virtualMembersList');
-            const invitedMembersList = document.getElementById('invitedMembersList');
+        $('#addMember').on('click', function () {
+            addVirtualMembers();
+        });
+
+        $('#virtualMemberNickname').on('keydown', function (event) {
+            if (event.key === 'Enter') {
+                addVirtualMembers();
+                event.preventDefault(); // 기본 동작 (엔터에 의한 페이지 새로고침) 방지
+            }
+        });
+
+        function addVirtualMembers() {
+            const virtualMemberInput = $('#virtualMemberNickname');
+            const virtualMembersList = $('#virtualMembersList');
+            const invitedMembersList = $('#invitedMembersList');
 
             // 가상 회원 추가
-            const virtualNicknames = virtualMemberInput.value.split(',').map(name => name.trim());
+            const virtualNicknames = virtualMemberInput.val().split(',').map(name => name.trim());
+            const currentMemberCount = invitedMembers.length + virtualMembers.length;
+
+            if (currentMemberCount + virtualNicknames.length > maxPeople && maxPeople > 0) {
+                // 최대 인원 수를 초과하면 경우 경고 메시지 표시
+                alert(`최대 인원 수(${maxPeople}명)를 초과할 수 없습니다.`);
+                return;
+            }
+
             virtualNicknames.forEach(nickname => {
                 if (nickname && !virtualMembers.includes(nickname)) {
                     virtualMembers.push(nickname); // 배열에 추가
-                    const listItem = document.createElement('li');
-                    listItem.className = 'list-group-item d-flex justify-content-between align-items-center';
-                    listItem.textContent = nickname;
+                    const listItem = $('<li></li>', {
+                        class: 'list-group-item d-flex justify-content-between align-items-center',
+                        text: nickname
+                    });
 
-                    const removeButton = document.createElement('button');
-                    removeButton.className = 'btn btn-outline-danger btn-xs float-end';
-                    removeButton.textContent = '제거';
+                    const removeButton = $('<button></button>', {
+                        class: 'btn btn-outline-danger btn-xs float-end',
+                        text: '제거'
+                    });
+
                     // 가상 회원 제거 기능 수정
-                    removeButton.onclick = function() {
-                        virtualMembersList.removeChild(listItem);
-                        // 가상 회원 배열에서 해당 멤버 제거
+                    removeButton.click(function () {
+                        $(this).parent().remove();
                         const index = virtualMembers.indexOf(nickname);
                         if (index > -1) {
                             virtualMembers.splice(index, 1);
                         }
                         // 총 인원 수 재계산 및 렌더링
                         renderTotalMemberCount();
-                    };
+                    });
 
-                    listItem.appendChild(removeButton);
-                    virtualMembersList.appendChild(listItem);
+                    listItem.append(removeButton);
+                    virtualMembersList.append(listItem);
                 }
             });
-            // 실제 회원 추가 예시 (동적 구현 필요)
-            /*
-            const actualMember = '실제 회원 이름'; // 예시
-            const listItem = document.createElement('li');
-            listItem.className = 'list-group-item';
-            listItem.textContent = actualMember;
+                // 실제 회원 추가 예시 (동적 구현 필요)
+                /*
+                const actualMember = '실제 회원 이름'; // 예시
+                const listItem = document.createElement('li');
+                listItem.className = 'list-group-item';
+                listItem.textContent = actualMember;
 
-            const removeButton = document.createElement('button');
-            removeButton.className = 'btn btn-outline-danger btn-sm';
-            removeButton.textContent = '제거';
-            removeButton.onclick = function() {
-              invitedMembersList.removeChild(listItem);
-            };
+                const removeButton = document.createElement('button');
+                removeButton.className = 'btn btn-outline-danger btn-sm';
+                removeButton.textContent = '제거';
+                removeButton.onclick = function() {
+                  invitedMembersList.removeChild(listItem);
+                };
 
-            listItem.appendChild(removeButton);
-            invitedMembersList.appendChild(listItem);
-            */
+                listItem.appendChild(removeButton);
+                invitedMembersList.appendChild(listItem);
+                */
 
-            // 입력 필드 초기화
-            virtualMemberInput.value = '';
-            renderTotalMemberCount(); // 총 회원 수 재계산 및 렌더링
-        });
-        // 총 회원 수 렌더링 함수
-        function renderTotalMemberCount() {
-            // 'totalMemberCount' ID를 가진 HTML 요소를 찾아서 변수에 저장합니다.
-            const totalMemberCount = document.getElementById('totalMemberCount');
-            // 초대된 멤버(invitedMembers)와 가상 멤버(virtualMembers)의 길이(개수)를 더한 값을 문자열로 변환하여
-            // 'totalMemberCount' 요소의 텍스트 내용으로 설정합니다.
-            // 이를 통해 전체 멤버 수를 화면에 표시합니다.
-            totalMemberCount.textContent = (invitedMembers.length + virtualMembers.length).toString();
-        }
+                // 입력 필드 초기화
+                virtualMemberInput.val('');
+                renderTotalMemberCount(); // 총 회원 수 재계산 및 렌더링
+            }
+
+            // 총 회원 수 렌더링 함수
+            function renderTotalMemberCount() {
+                // 'totalMemberCount' ID를 가진 HTML 요소를 찾아서 변수에 저장합니다.
+                const totalMemberCount = $('#totalMemberCount');
+                // 초대된 멤버(invitedMembers)와 가상 멤버(virtualMembers)의 길이(개수)를 더한 값을 문자열로 변환하여
+                // 'totalMemberCount' 요소의 텍스트 내용으로 설정합니다.
+                // 이를 통해 전체 멤버 수를 화면에 표시합니다.
+                totalMemberCount.text((invitedMembers.length + virtualMembers.length).toString());
+            }
     </script>
 
     <script th:inline="javascript">
@@ -625,7 +686,7 @@
             }, 50);
         });*/
         // Accordion 버튼에 대한 클릭 이벤트 설정
-        $('.accordion-button').on('click', function() {
+        $('.accordion-button').on('click', function () {
             // 특정 탭에 'active' 클래스 추가
             $('#day1-tab').addClass('active');
         });
