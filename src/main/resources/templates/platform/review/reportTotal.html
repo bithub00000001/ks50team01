@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+                layout:decorate="~{platform/layout/default}">
+
+<th:block layout:fragment="customCss">
+<style>
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 5px solid black;
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+            .form-group {
+        display: flex; /* 드롭다운 박스와 검색창을 가로로 정렬합니다 */
+        align-items: center; /* 수직 가운데 정렬 */
+    }
+        
+            /* 드롭다운 박스의 너비를 조정합니다 */
+    #searchColumn {
+        width: 150px; /* 원하는 너비로 설정하세요 */
+        display: inline-block;
+        margin-right: 10px; /* 검색창과의 간격을 조절합니다 */
+    }
+    
+    .center-text {
+        text-align: center;
+    }
+    
+        /* 각 칸의 너비를 조정합니다 */
+    #datatable-responsive th {
+        width: 10%; /* 각 칸의 너비를 조정합니다. 필요에 따라 값을 조절하세요. */
+    }
+</style>
+
+</th:block>
+<th:block layout:fragment="customContent">
+    <h1>신고 누적 관리</h1>
+	<div class="col-md-12 col-sm-12 col-xs-12">
+		<div class="x_panel">
+			<div class="x_title">
+				<h2>
+					리뷰 신고 관리<small>Users</small>
+				</h2>
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content">
+				<p class="text-muted font-13 m-b-30">신고 누적 리스트입니다</p>
+				<!-- 드롭다운을 포함할 위치 -->
+				<div class="col-md-12 col-sm-12 col-xs-12">
+<div class="form-group">
+    <select id="searchColumn" class="form-control">
+        <option value="신고번호">리뷰 번호</option>
+        <option value="신고자아이디">작성자 아이디</option>
+        <option value="신고카테고리">신고 카테고리</option>
+    </select>
+    <input type="text" id="searchInput" class="form-control" placeholder="검색어를 입력하세요...">
+</div>
+
+
+
+				</div>
+
+				<table id="datatable-responsive"
+					class="table table-striped table-bordered dt-responsive nowrap"
+					cellspacing="0" width="100%">
+					<thead>
+						<tr>
+							<th>리뷰 번호</th>
+							<th>작성자 아이디</th>
+							<th>리뷰 상품</th>
+							<th>신고 카테고리</th>
+							<th>횟수</th>
+							<th>총합 횟수</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:unless="${memberList != null}">
+							<td colspan="6"  class="center-text">신고된 리뷰가 없습니다.</td>
+						</tr>
+						<tr th:if="${memberList != null}" th:each="l : ${memberList}">
+							<td th:text="${}"></td>
+							<td th:text="${}"></td>
+							<td th:text="${}"></td>
+							<td th:text="${}"></td>
+							<td th:text="${}"></td>
+							<td th:text="${}"></td>
+
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</th:block>
+
+<th:block layout:fragment="customJsFile">
+<script>
+    // 검색 이벤트를 처리하는 함수
+    function searchTable() {
+        var input, filter, table, tr, td, i, j, txtValue;
+        input = document.getElementById("searchInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("datatable-responsive");
+        tr = table.getElementsByTagName("tr");
+
+        // 선택한 열에 따라 검색
+        var columnIndex = document.getElementById("searchColumn").selectedIndex;
+
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[columnIndex];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+    // 검색어 입력 시 이벤트를 처리
+    document.getElementById("searchInput").addEventListener("input", searchTable);
+</script>
+
+
+</th:block>
+</html>
+
