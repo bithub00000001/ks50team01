@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(value = "user/board")
 public class UQnaController {
 	
-	@GetMapping("/qnaList")
+	@GetMapping("/qna")
 	public String qna(Model model) {
 		
-		model.addAttribute("title", "1:1문의내역페이지");
+		model.addAttribute("title", "1:1문의");
 		return "user/board/qnaList";
 		
 	}

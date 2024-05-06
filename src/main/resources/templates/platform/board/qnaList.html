@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ko" layout:decorate="~{/platform/layout/default}"
+     			xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    			xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>1:1문의</title>
+<th:block layout:fragment="customHead">
+	<link rel="stylesheet" th:href="@{/user/css/list-style.css}">
+</th:block>
+</head>
+
+<th:block layout:fragment="customContent">
+	<!-- list-style -->
+
+
+		<div class="row mt-5">
+			<div
+				class="col-xl-12 alert alert-light alert-dismissible d-flex justify-content-center"
+				style="margin-top: 10px;">
+				<form class="mb-0 col-sm-6 col-xl-6" action="#" method="post">
+					<div class="input-group input-group-sm">
+						<div class="select-default">
+							<select class="select-option">
+								<option>작성자</option>
+								<option>문의유형</option>
+								<option>문의제목</option>
+							</select>
+						</div>
+						<input type="text" class="form-control form-control-sm rounded-0"
+							placeholder="검색어를 입력해주세요." aria-label="Search....">
+						<button class="btn bg-primary border-0 rounded-0" type="button">
+							<span class="text-white text-uppercase font-weight-bold">검색</span>
+						</button>
+						<button class="btn bg-primary border-0 rounded-0" type="button">
+							<span class="text-white text-uppercase font-weight-bold">초기화</span>
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+
+
+
+<!-- body -->
+<div class="row">
+    <div class="col-sm-12">
+        <div class="table-responsive" style="overflow-x: hidden;">
+
+            <table class="table table-hover table-bordered">
+                <colgroup>
+                    <col class="col-sm-1" />
+                    <col class="col-sm-7" />
+                    <col class="col-sm-1" />
+                    <col class="col-sm-1" />
+                    <col class="col-sm-1" />
+                    <col class="col-sm-1" />
+                </colgroup>
+                <thead>
+                    <tr class="active" style="text-align: center">
+                        <th>선택</th>
+                        <th>번호</th>
+                        <th>제목</th>
+                        <th>작성자</th>
+                        <th>등록일</th>
+                        <th>조회</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <!-- 여기서 데이터가 없을 때 출력되는 메시지 -->
+                    <tr th:if="${empty notices}">
+                        <td colspan="6" style="text-align: center;">자료가 없습니다.</td>
+                    </tr>
+                    <!-- 여기서부터는 데이터가 있을 때 출력되는 부분 -->
+                    <tr th:each="notice : ${notices}">
+                        <td><input type="checkbox"></td> <!-- 체크박스 추가 -->
+                        <td class="noticeNum noticeCenter" th:text="${notice.number}">1</td>
+                        <td><i class="badge rounded-pill bg-danger" th:text="${notice.badge}"></i><a
+                                th:href="${notice.link}" th:text="${notice.title}">웹사이트 서버 점검 공지</a></td>
+                        <td class="noticeCenter" th:text="${notice.author}">관리자</td>
+                        <td class="noticeCenter" th:text="${notice.date}">2024-04-29</td>
+                        <td class="noticeCenter" th:text="${notice.views}">100</td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+            <!-- 선택삭제 버튼 -->
+            <div class="row">
+                <div class="col-12" style="text-align: right; margin-top: 10px; margin-bottom: 10px;">
+                    <button type="button" class="btn btn-outline-primary btn-sm">선택삭제</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+					
+					
+
+					<div class="row">
+						<div class="col-12" style="text-align: right; margin-top: 100px; margin-bottom: 10px;">
+							<!-- 글쓰기 버튼 클릭하면 /platform/board/noticeWrite 페이지로 이동 -->
+							<a th:href="@{/platform/board/noticeWrite}"><button type="button" class="btn btn-outline-primary btn-sm">글쓰기</button></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 페이징 -->
+		<section class="pt-5 pt-md-7">
+			<div class="container" style="margin-bottom: 50px">
+				<nav aria-label="Page navigation">
+					<ul class="pagination justify-content-center align-items-center">
+						<li class="page-item"><a class="page-link"
+							href="javascript:void(0)" tabindex="-1"> <i
+								aria-hidden="true"></i> ◀ 이전
+						</a></li>
+
+						<li class="page-item"><a class="page-link active"
+							href="javascript:void(0)">1</a></li>
+
+						<li class="page-item"><a class="page-link"
+							href="javascript:void(0)">2</a></li>
+
+						<li class="page-item"><a class="page-link"
+							href="javascript:void(0)">3</a></li>
+
+						<li class="page-item"><a class="page-link"
+							href="javascript:void(0)">4</a></li>
+
+						<li class="page-item"><a class="page-link"
+							href="javascript:void(0)">5</a></li>
+
+						<li class="page-item"><a class="page-link"
+							href="javascript:void(0)">다음 ▶ <i aria-hidden="true"></i>
+						</a></li>
+					</ul>
+				</nav>
+			</div>
+		</section>
+</th:block>
+
+<th:block layout:fragment="customJs">
+
+</th:block>
+</html>
