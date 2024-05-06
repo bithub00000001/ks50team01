@@ -24,4 +24,5 @@ public interface MemberMapper {
 	// 회원등급업데이트
 	int updateMemberGrade(String memberId, String memberGrdNum);
 	
+	
 }
