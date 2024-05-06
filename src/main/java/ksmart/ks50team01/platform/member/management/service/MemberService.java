@@ -49,9 +49,20 @@ public class MemberService {
 	}
 
 	public PMember getMemberInfoById(String memberId) {
-		PMember memberInfo = memberMapper.getMemberInfoById(memberId);
-		
-		return memberInfo;
+	    PMember memberInfo = memberMapper.getMemberInfoById(memberId);
+	    
+	    if (memberInfo != null) {
+	        String memberGrdNum = memberInfo.getMemberGrdNum();
+	        String memberLevelName = null;
+	        switch (memberGrdNum) {
+	            case "uln_001" -> memberLevelName = "플랫폼 운영 담당자";
+	            case "uln_101" -> memberLevelName = "개인사업자";
+	            case "uln_301" -> memberLevelName = "회원";
+	        }
+	        memberInfo.setMemberLevelName(memberLevelName);
+	    }
+	    
+	    return memberInfo;
 	}
 	
 	public List<PMember> getMemberGrade() {

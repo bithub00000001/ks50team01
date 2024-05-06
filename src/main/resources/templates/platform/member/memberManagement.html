@@ -17,20 +17,20 @@
 				
 				<div class="row">
 
-					<form id="searchIdform" th:action="@{/platform/member/memberManagement}" method="post">	
-						<table class="table table-striped" style="table-layout: fixed" th:object="${memberInfo}">
-							<tbody>
-								<tr>
-									<th style="width: 20%">회원아이디를 입력해주세요</th>
-									<th>
-										<input type="text" id="searchId" value="" style="width: 100%"/>
-									</th>
-									<th>
-										<button type="button" id="searchButton" >검색</button>
-									</th>
-								</tr>
-							</tbody>
-						</table>
+					<form id="searchIdform" th:action="@{/platform/member/memberSearch}" method="post">
+					    <table class="table table-striped" style="table-layout: fixed">
+					        <tbody>
+					            <tr>
+					                <th style="width: 20%">회원아이디를 입력해주세요</th>
+					                <th>
+					                    <input type="text" id="searchId" name="searchId" value="" style="width: 100%"/>
+					                </th>
+					                <th>
+					                    <button type="submit" id="searchButton">검색</button>
+					                </th>
+					            </tr>
+					        </tbody>
+					    </table>
 					</form>	
 
 				</div>
@@ -40,9 +40,9 @@
 				
 				    선택 멤버를 &nbsp;&nbsp;
 				    <select name="memberGrdNum">
-				        <option value="">====회원등급을 선택해주세요====</option>
-				        <option th:each="grade : ${memberGrade}" th:value="${grade.memberGrdNum}" th:text="${grade.memberLevelName}"></option>
-				    </select>
+					    <option value="">====회원등급을 선택해주세요====</option>
+					    <option th:each="grade : ${memberGrade}" th:value="${grade.memberGrdNum}" th:text="${grade.memberLevelName}" th:selected="${memberInfo != null && memberInfo.memberGrdNum == grade.memberGrdNum}"></option>
+					</select>
 				    (으)로 &nbsp;&nbsp;
 				    <button type="button" id="changeGrade" name="memberId" data-action="update">변경</button>
 					<button type="button" id="withdrawal" data-action="delete">강제탈퇴</button>
@@ -69,21 +69,21 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:unless="${memberList != null}">
-									<td align="center" colspan="10">등록된 회원의 정보가 없습니다.</td>
-								</tr>
-								<tr th:if="${memberList != null}" th:each="l, iterStat : ${memberList}">
-									<td><input type="checkbox" th:id="'memberCheck' + ${iterStat.count}" th:name="'memberId'" th:value="${l.memberId}"></td>
-									<td th:text="${l.memberId}"></td>
-									<td th:text="${l.memberLevelName}"></td>
-									<td th:text="${l.memberPw}"></td>
-									<td th:text="${l.memberName}"></td>
-									<td th:text="${l.memberNickname}"></td>
-									<td th:text="${l.memberEmail}"></td>
-									<td th:text="${l.memberTelNum}"></td>
-									<td th:text="${l.memberRegDate}"></td>
-									<td th:text="${l.memberFormDate}"></td>
-								</tr>
+								<tr th:if="${memberList != null and memberList.size() > 0}" th:each="l, iterStat : ${memberList}">
+						            <td><input type="checkbox" th:id="'memberCheck' + ${iterStat.count}" th:name="'memberId'" th:value="${l.memberId}"></td>
+						            <td th:text="${l.memberId}"></td>
+						            <td th:text="${l.memberLevelName}"></td>
+						            <td th:text="${l.memberPw}"></td>
+						            <td th:text="${l.memberName}"></td>
+						            <td th:text="${l.memberNickname}"></td>
+						            <td th:text="${l.memberEmail}"></td>
+						            <td th:text="${l.memberTelNum}"></td>
+						            <td th:text="${l.memberRegDate}"></td>
+						            <td th:text="${l.memberFormDate}"></td>
+						        </tr>
+						        <tr th:if="${memberList == null or memberList.size() == 0}">
+						            <td align="center" colspan="10">검색 결과가 없습니다.</td>
+						        </tr>
 							</tbody>
 						</table>
 					</div>
