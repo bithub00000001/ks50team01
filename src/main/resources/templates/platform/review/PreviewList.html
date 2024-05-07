@@ -33,9 +33,25 @@
     .center-text {
         text-align: center;
     }
-            /* 각 칸의 너비를 조정합니다 */
+
+    
+        /* 각 칸의 너비를 조정 */
     #datatable-responsive th {
-        width: 10%; /* 각 칸의 너비를 조정합니다. 필요에 따라 값을 조절하세요. */
+        width: auto; /* 기본 너비 */
+    }
+
+    /* 리뷰 내용 넓게 */
+    #datatable-responsive th:nth-child(5), 
+    #datatable-responsive td:nth-child(5) {
+        width: 30%; /* 내용 칸 너비 조정 */
+    }
+
+    /* 좋아요와 싫어요 칸 좁게 */
+    #datatable-responsive th:nth-last-child(3),
+    #datatable-responsive td:nth-last-child(3),
+    #datatable-responsive th:last-child,
+    #datatable-responsive td:last-child {
+        width: 5%; /* 좋아요와 싫어요 칸 너비 조정 */
     }
 </style>
 
@@ -45,8 +61,8 @@
 	<div class="col-md-12 col-sm-12 col-xs-12">
 		<div class="x_panel">
 			<div class="x_title">
-				<h2>
-					상품 리뷰 리스트<small>Users</small>
+				<h2 th:text="${title}">
+					<small>Users</small>
 				</h2>
 				<div class="clearfix"></div>
 			</div>
@@ -54,15 +70,15 @@
 				<p class="text-muted font-13 m-b-30">상품 리뷰 리스트입니다</p>
 				<!-- 드롭다운을 포함할 위치 -->
 				<div class="col-md-12 col-sm-12 col-xs-12">
-<div class="form-group">
-    <select id="searchColumn" class="form-control">
-        <option value="신고번호">리뷰 번호</option>
-        <option value="신고자아이디">작성자 아이디</option>
-        <option value="신고카테고리">리뷰 상품</option>
-        <option value="신고리뷰코드">공개 여부</option>
-    </select>
-    <input type="text" id="searchInput" class="form-control" placeholder="검색어를 입력하세요...">
-</div>
+				<div class="form-group">
+				    <select id="searchColumn" class="form-control">
+				        <option value="신고번호">리뷰 번호</option>
+				        <option value="신고자아이디">작성자 아이디</option>
+				        <option value="신고카테고리">리뷰 상품</option>
+				        <option value="신고리뷰코드">공개 여부</option>
+				    </select>
+				    <input type="text" id="searchInput" class="form-control" placeholder="검색어를 입력하세요...">
+				</div>
 
 
 
@@ -82,24 +98,26 @@
 							<th>좋아요수</th>
 							<th>싫어요수</th>
 							<th>공개여부</th>
+							<th>승인하기</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:unless="${memberList != null}">
-							<td colspan="9"  class="center-text">작성된 리뷰가 없습니다.</td>
+						<tr th:unless="${pReviewList != null}">
+							<td colspan="10"  class="center-text">작성된 리뷰가 없습니다.</td>
 						</tr>
-						<tr th:if="${memberList != null}" th:each="l : ${memberList}">
-							<td th:text="${}"></td>
-							<td th:text="${}"></td>
-							<td th:text="${}"></td>
-							<td th:text="${}"></td>
-							<td th:text="${}"></td>
-							<td th:text="${}"></td>
-							<td th:text="${}"></td>
-							<td th:text="${}"></td>
+						<tr th:if="${pReviewList != null}" th:each="l : ${pReviewList}">
+							<td th:text="${l.reviewCode}"></td>
+							<td th:text="${l.reviewId}"></td>
+							<td th:text="${l.reviewGoods}"></td>
+							<td th:text="${l.reviewStar}"></td>
+							<td th:text="${l.reviewContent}"></td>
+							<td th:text="${l.reviewDate}"></td>
+							<td th:text="${l.reviewLike}"></td>
+							<td th:text="${l.reviewDislike}"></td>
+							<td th:text="${l.reviewApprove}"></td>
 							<td>
-								<!-- /* /member/modifyMember?memberId=id001 */ --> <a
-								th:href="@{/member/modifyMember(memberId=${l.memberId})}">수정</a>
+								<!-- /* /member/modifyMember?memberId=id001 */ --> 
+								<a th:href="@{/platform/review/report/approve}">작성</a>
 							</td>
 						</tr>
 					</tbody>
