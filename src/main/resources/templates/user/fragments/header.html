@@ -1,9 +1,70 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <header class="header" id="pageTop" style="height: auto" th:fragment="headerFragment">
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    const loginError = /*[[${loginError}]]*/ false;
+    if (loginError) {
+        alert("아이디 혹은 비밀번호가 틀렸습니다.");
+        $(document).ready(function() {
+            $('#login').modal('show');
+        });
+    }
+    /*]]>*/
+</script>
     <!-- ====================================
     ——— HEADER
     ===================================== -->
+    
+	<!-- ====================================
+	    ——— MODAL SECTION
+	    ===================================== -->
+	    <!-- Login Modal -->
+	    <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-label="loginModalLabel" aria-hidden="true">
+	      <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+	        <div class="modal-content">
+	          <div class="modal-header rounded">
+	            <h3 class="modal-title text-uppercase font-weight-bold">Log in to your account</h3>
+	            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	          </div>
+	
+	          <div class="modal-body">
+				<div th:if="${message}" th:text="${message}" class="alert alert-info" role="alert"></div>
+			    <form th:action="@{/login/login}" method="post">
+			        <div class="mb-3">
+			            <input type="id" class="form-control bg-smoke" required="" placeholder="id" name="id">
+			        </div>
+			
+			        <div class="mb-3">
+			            <input type="password" class="form-control bg-smoke" required="" placeholder="Password" name="password">
+			        </div>
+			
+			        <div class="mb-3 form-check mb-0">
+			            <input type="checkbox" class="form-check-input" id="exampleCheck5">
+			            <label class="form-check-label text-gray-color mb-3" for="exampleCheck5">
+			                Remember me
+			            </label>
+			            <a class="pull-right" href="javascript:void(0)">Forgot Password?</a>
+			        </div>
+			
+			        <div class="d-grid">
+			            <button type="submit" class="btn btn-primary text-uppercase">Login</button>
+			        </div>
+			
+			        <div class="text-uppercase text-center py-3">Or</div>
+			
+			        <div class="d-grid">
+			            <button type="submit" class="btn btn-facebook text-uppercase text-white">Login with facebook</button>
+			        </div>
+			    </form>
+			</div>
+	
+	          <div class="modal-footer justify-content-center">
+	            <p class="mb-1">Don’t have an Account? <a href="javascript:void(0)">Sign up</a></p>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
     <!-- Menu Zord -->
     <nav class="nav-menuzord">
         <div class="container clearfix">
@@ -303,18 +364,27 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="py-6">
-                        <div class=" nav-item nav-item-left me-0">
-                            <a data-bs-target="#login" data-bs-toggle="modal"
-                               href="#"><button type="button" class="btn btn-xs btn-outline-primary d-none d-lg-inline-block"><span class="font-weight-bold">로그인</span></button></a>
-                        </div>
-                    </li>
-                    <li class="py-6">
-                        <div class="nav-item nav-item-left me-0">
-                            <a data-bs-target="#login" data-bs-toggle="modal"
-                               href="#"><button type="button" class="btn btn-xs btn-outline-primary d-none d-lg-inline-block"><span class="font-weight-bold">로그아웃</span></button></a>
-                        </div>
-                    </li>
+                    <li class="py-6" th:if="${session.loginId == null}">
+					    <div class="nav-item nav-item-left me-0">
+					        <a data-bs-target="#login" data-bs-toggle="modal" href="#">
+					            <button type="button" class="btn btn-xs btn-outline-primary d-none d-lg-inline-block">
+					                <span class="font-weight-bold">로그인</span>
+					            </button>
+					        </a>
+					    </div>
+					</li>
+                    <li class="py-6" th:if="${session.loginId != null}">
+					    <div class="nav-item nav-item-left me-0">
+					        <a th:href="@{/login/logout}">
+					            <button type="button" class="btn btn-xs btn-outline-primary d-none d-lg-inline-block">
+					                <span class="font-weight-bold">로그아웃</span>
+					            </button>
+					        </a>
+					        <div th:if="${session.loginId != null}">
+							    <div th:text="${session.loginName} + ' 님 환영합니다!'" class="text-primary font-weight-bold"></div>
+							</div>
+					    </div>
+					</li>
                     <li class="py-4">
                         <form action="index.html" class="d-lg-none" method="post">
                             <div class="input-group input-group-sm">
@@ -332,3 +402,5 @@
         </div>
     </nav>
 </header>
+</html>
+
