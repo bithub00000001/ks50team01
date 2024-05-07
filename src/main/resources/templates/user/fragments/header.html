@@ -4,6 +4,55 @@
     <!-- ====================================
     ——— HEADER
     ===================================== -->
+    
+	<!-- ====================================
+	    ——— MODAL SECTION
+	    ===================================== -->
+	    <!-- Login Modal -->
+	    <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-label="loginModalLabel" aria-hidden="true">
+	      <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+	        <div class="modal-content">
+	          <div class="modal-header rounded">
+	            <h3 class="modal-title text-uppercase font-weight-bold">Log in to your account</h3>
+	            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	          </div>
+	
+	          <div class="modal-body">
+			    <form class="" th:action="@{/login}" method="post">
+			        <div class="mb-3">
+			            <input type="id" class="form-control bg-smoke" required="" placeholder="id" name="id">
+			        </div>
+			
+			        <div class="mb-3">
+			            <input type="password" class="form-control bg-smoke" required="" placeholder="Password" name="password">
+			        </div>
+			
+			        <div class="mb-3 form-check mb-0">
+			            <input type="checkbox" class="form-check-input" id="exampleCheck5">
+			            <label class="form-check-label text-gray-color mb-3" for="exampleCheck5">
+			                Remember me
+			            </label>
+			            <a class="pull-right" href="javascript:void(0)">Forgot Password?</a>
+			        </div>
+			
+			        <div class="d-grid">
+			            <button type="submit" class="btn btn-primary text-uppercase">Login</button>
+			        </div>
+			
+			        <div class="text-uppercase text-center py-3">Or</div>
+			
+			        <div class="d-grid">
+			            <button type="submit" class="btn btn-facebook text-uppercase text-white">Login with facebook</button>
+			        </div>
+			    </form>
+			</div>
+	
+	          <div class="modal-footer justify-content-center">
+	            <p class="mb-1">Don’t have an Account? <a href="javascript:void(0)">Sign up</a></p>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
     <!-- Menu Zord -->
     <nav class="nav-menuzord">
         <div class="container clearfix">
