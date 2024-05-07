@@ -1,0 +1,709 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/user/layout/default}">
+<th:block layout:fragment="customCss"></th:block>
+
+<th:block layout:fragment="customPageSection">
+    <div class="accordion" id="tripPlannerAccordion">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                        aria-expanded="true" aria-controls="collapseOne">
+                    여행 계획 세부 정보
+                </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                 data-bs-parent="#tripPlannerAccordion">
+                <div class="accordion-body">
+                    <!-- 첫 번째 페이지 내용 -->
+                    <form th:action="@{/trip/details}" method="post" th:object="${uTripOption}">
+                        <div class="d-flex justify-content-end">
+                            <button class="btn btn-primary btn-sm me-2" type="button">임시 저장</button>
+                            <button class="btn btn-secondary btn-sm" type="button">목록으로</button>
+                        </div>
+                        <div class="mb-3">
+                            <label for="tripTitle" class="form-label">여행 제목:</label>
+                            <input type="text" class="form-control" name="tripTitle" id="tripTitle"
+                                   th:field="*{tripTitle}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="startDate" class="form-label">시작 날짜:</label>
+                            <input type="date" class="form-control" name="startDate" id="startDate"
+                                   th:field="*{startDate}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="endDate" class="form-label">종료 날짜:</label>
+                            <input type="date" class="form-control" name="endDate" id="endDate" th:field="*{endDate}"
+                                   required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="numDate" class="form-label">일차:</label>
+                            <input type="number" class="form-control" name="numDate" id="numDate" th:field="*{numDate}"
+                                   min="1" required readonly="readonly">
+                        </div>
+                        <div class="mb-3">
+                            <label for="numPeople" class="form-label">인원 수:</label>
+                            <input type="number" class="form-control" name="numPeople" id="numPeople"
+                                   th:field="*{numPeople}" min="1"
+                                   required>
+                        </div>
+                    </form>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">회원 유형:</label>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="memberType" id="realMember">
+                                    <label class="form-check-label" for="realMember">실제 회원</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="memberType"
+                                           id="virtualMember">
+                                    <label class="form-check-label" for="virtualMember">가상 회원</label>
+                                </div>
+                            </div>
+                            <div id="realMemberSearch" class="mb-3" style="display: none;">
+                                <button id="searchMemberBtn" class="btn btn-outline-primary btn-xs" type="button"
+                                        data-bs-toggle="modal" data-bs-target="#searchMemberModal">회원 검색
+                                </button>
+                            </div>
+                            <div id="virtualMemberAdjust" class="mb-3" style="display: none;">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="virtualMemberNickname"
+                                           placeholder="별칭 입력 (쉼표로 구분)">
+                                    <button class="btn btn-outline-secondary btn-sm" type="button" id="addMember">추가
+                                    </button>
+                                </div>
+                                <ul id="virtualMembersList" class="list-group mt-2">
+                                    <!-- 가상 회원 목록이 여기에 추가됨 -->
+                                </ul>
+                            </div>
+                            <div id="memberList">
+                                <h5>초대된 회원 목록</h5>
+                                <ul id="invitedMembersList" class="list-group">
+                                    <!-- 초대된 실제 회원 목록이 여기에 추가됨 -->
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">추가한 총 인원 수</h5>
+                                    <p class="card-text"><span id="totalMemberCount">0</span>명</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 회원 검색 모달 -->
+                    <div class="modal fade" id="searchMemberModal" tabindex="-1"
+                         aria-labelledby="searchMemberModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="searchMemberModalLabel">회원 검색</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <input type="text" class="form-control" id="searchMemberInput"
+                                           placeholder="회원 이름 또는 ID 입력">
+                                    <div id="searchResultContainer" class="mt-3"></div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary btn-xs" id="inviteMembers">검색</button>
+                                    <button type="button" class="btn btn-secondary btn-xs" data-bs-dismiss="modal">취소
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    여행 계획 조정
+                </button>
+            </h2>
+            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                 data-bs-parent="#tripPlannerAccordion">
+                <div class="accordion-body">
+                    <!-- 두 번째 페이지 내용 -->
+                    <div class="row justify-content-between">
+                        <div class="d-flex justify-content-end">
+                            <button class="btn btn-secondary btn-sm" type="button">이전으로</button>
+                        </div>
+                        <!-- 지역 선택 -->
+                        <div class="form-group col-lg-6 mb-md-6 mb-lg-0">
+                            <label for="region">지역 선택:</label>
+                            <select class="select-option" id="region">
+                                <!--/*th:with="regions=${@regionService.getRegions()}"*/-->
+                                <option value="">지역 선택</option>
+                                <option value="">옵션1</option>
+                                <!--/*th:each="region : ${regions}" th:value="${region}" th:text="${region}"*/-->
+                            </select>
+                            <br>
+
+                            <!-- 카테고리 탭 -->
+                            <div id="destination">
+                                <div class="mb-0">
+                                    <ul class="nav nav-tabs destination-tabs" id="destinationTab"
+                                        role="tablist">
+                                        <li class="nav-item" role="presentation">
+                                            <a aria-controls="accommodation" aria-selected="false"
+                                               class="nav-link"
+                                               data-bs-toggle="tab"
+                                               href="#accommodation"
+                                               id="accommodation-tab" role="tab">숙소
+                                            </a>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <a aria-controls="restaurant" aria-selected="false" class="nav-link"
+                                               data-bs-toggle="tab"
+                                               href="#restaurant"
+                                               id="restaurant-tab"
+                                               role="tab">음식점
+                                            </a>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <a aria-controls="tour" aria-selected="false" class="nav-link"
+                                               data-bs-toggle="tab"
+                                               href="#tour"
+                                               id="tour-tab" role="tab">관광지
+                                            </a>
+                                        </li>
+
+                                        <li class="nav-item d-none"></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- 세부 옵션 -->
+                            <div class="tab-content" id="optionsContent">
+                                <div aria-labelledby="accommodation-tab" class="tab-pane fade"
+                                     id="accommodation"
+                                     role="tabpanel">
+                                    <ul class="list-group" id="accommodationOptions">
+                                        <li class="list-group-item" data-id="accommodation1">
+                                            <h5>호텔 A</h5>
+                                            <p>간단한 설명...</p>
+                                            <p>세부 스케줄: <input type="text" class="schedule-input"
+                                                              value="호텔 A 세부 스케줄">
+                                            </p>
+                                            <p>추가 사항: <input type="text" class="additional-input"
+                                                             value="호텔 A 추가 사항">
+                                            </p>
+                                            <button class="btn btn-outline-primary btn-addPlan btn-sm">담기
+                                            </button>
+                                        </li>
+                                        <li class="list-group-item" data-id="accommodation2">
+                                            <h5>펜션 B</h5>
+                                            <p>간단한 설명...</p>
+                                            <p>세부 스케줄: <input type="text" class="schedule-input"
+                                                              value="펜션 B 세부 스케줄">
+                                            </p>
+                                            <p>추가 사항: <input type="text" class="additional-input"
+                                                             value="펜션 B 추가 사항">
+                                            </p>
+                                            <button class="btn btn-outline-primary btn-addPlan btn-sm">담기
+                                            </button>
+                                        </li>
+                                        <li class="list-group-item" data-id="accommodation3">
+                                            <h5>호텔 B</h5>
+                                            <p>간단한 설명...</p>
+                                            <p>세부 스케줄: <input type="text" class="schedule-input"
+                                                              value="호텔 A 세부 스케줄">
+                                            </p>
+                                            <p>추가 사항: <input type="text" class="additional-input"
+                                                             value="호텔 A 추가 사항">
+                                            </p>
+                                            <button class="btn btn-outline-primary btn-addPlan btn-sm">담기
+                                            </button>
+                                        </li>
+                                        <li class="list-group-item" data-id="accommodation4">
+                                            <h5>호텔 C</h5>
+                                            <p>간단한 설명...</p>
+                                            <p>세부 스케줄: <input type="text" class="schedule-input"
+                                                              value="호텔 A 세부 스케줄">
+                                            </p>
+                                            <p>추가 사항: <input type="text" class="additional-input"
+                                                             value="호텔 A 추가 사항">
+                                            </p>
+                                            <button class="btn btn-outline-primary btn-addPlan btn-sm">담기
+                                            </button>
+                                        </li>
+                                        <li class="list-group-item" data-id="accommodation5">
+                                            <h5>호텔 D</h5>
+                                            <p>간단한 설명...</p>
+                                            <p>세부 스케줄: <input type="text" class="schedule-input"
+                                                              value="호텔 A 세부 스케줄">
+                                            </p>
+                                            <p>추가 사항: <input type="text" class="additional-input"
+                                                             value="호텔 A 추가 사항">
+                                            </p>
+                                            <button class="btn btn-outline-primary btn-addPlan btn-sm">담기
+                                            </button>
+                                        </li>
+                                        <li class="list-group-item" data-id="accommodation6">
+                                            <h5>호텔 E</h5>
+                                            <p>간단한 설명...</p>
+                                            <p>세부 스케줄: <input type="text" class="schedule-input"
+                                                              value="호텔 A 세부 스케줄">
+                                            </p>
+                                            <p>추가 사항: <input type="text" class="additional-input"
+                                                             value="호텔 A 추가 사항">
+                                            </p>
+                                            <button class="btn btn-outline-primary btn-addPlan btn-sm">담기
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div aria-labelledby="restaurant-tab" class="tab-pane fade" id="restaurant"
+                                     role="tabpanel">
+                                    <ul class="list-group" id="restaurantOptions">
+                                        <li class="list-group-item" data-id="restaurant1">
+                                            <h5>레스토랑 C</h5>
+                                            <p>간단한 설명...</p>
+                                            <p>세부 스케줄: <input type="text" class="schedule-input"
+                                                              value="레스토랑 C 세부 스케줄">
+                                            </p>
+                                            <p>추가 사항: <input type="text" class="additional-input"
+                                                             value="레스토랑 C 추가 사항">
+                                            </p>
+                                            <button class="btn btn-outline-primary btn-addPlan btn-sm">담기
+                                            </button>
+                                        </li>
+                                        <li class="list-group-item" data-id="restaurant2">
+                                            <h5>카페 D</h5>
+                                            <p>간단한 설명...</p>
+                                            <p>세부 스케줄: <input type="text" class="schedule-input"
+                                                              value="카페 D 세부 스케줄">
+                                            </p>
+                                            <p>추가 사항: <input type="text" class="additional-input"
+                                                             value="카페 D 추가 사항">
+                                            </p>
+                                            <button class="btn btn btn-outline-primary btn-addPlan btn-sm">담기
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div aria-labelledby="tour-tab" class="tab-pane fade" id="tour" role="tabpanel">
+                                    <ul class="list-group" id="tourOptions">
+                                        <li class="list-group-item" data-id="tour1">
+                                            <h5>박물관 E</h5>
+                                            <p>간단한 설명...</p>
+                                            <p>세부 스케줄: <input type="text" class="schedule-input"
+                                                              value="박물관 E 세부 스케줄">
+                                            </p>
+                                            <p>추가 사항: <input type="text" class="additional-input"
+                                                             value="박물관 E 추가 사항">
+                                            </p>
+                                            <button class="btn btn btn-outline-primary btn-addPlan btn-sm">담기
+                                            </button>
+                                        </li>
+                                        <li class="list-group-item" data-id="tour2">
+                                            <h5>명소 F</h5>
+                                            <p>간단한 설명...</p>
+                                            <p>세부 스케줄: <input type="text" class="schedule-input"
+                                                              value="명소 F 세부 스케줄">
+                                            </p>
+                                            <p>추가 사항: <input type="text" class="additional-input"
+                                                             value="명소 F 추가 사항">
+                                            </p>
+                                            <button class="btn btn-outline-primary btn-addPlan btn-sm">담기
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <br>
+                            </div>
+                            <br><br>
+                        </div>
+
+                        <!-- 여행 계획 -->
+                        <div class="list-group col-lg-6 mb-6 mb-lg-0">
+                            <h3>여행 스케줄 조정</h3>
+                            <div class="mb-3">
+                                <!-- 탭 메뉴 -->
+                                <ul class="nav nav-tabs nav-justified blog-tabs" id="myDayTab" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                        <a aria-controls="day1" aria-selected="true" class="nav-link active"
+                                           data-bs-toggle="tab" href="#day1" id="day1-tab" role="tab">1일차</a>
+                                    </li>
+                                    <li class="nav-item add-day" role="presentation">
+                                        <button class="nav-link">+</button>
+                                    </li>
+                                </ul>
+                                <div class="tab-content bg-smoke border border-light-gray border-top-0 rounded-bottom px-3 py-5"
+                                     id="myDayTabContent">
+                                    <div aria-labelledby="day1-tab" class="tab-pane fade show active" id="day1"
+                                         role="tabpanel">
+                                        <!-- sortable 리스트의 내용 -->
+                                        <ul class="sortable" id="planDay1" style="padding-left: 0;">
+                                            <li class="sortable-item list-group-item list-group-item-action">
+                                                <div class="row align-items-center">
+                                                    <div class="col-1">
+                                                        <div class="border border-dark badge bg-success text-white d-flex justify-content-center align-items-center mt-1"
+                                                             style="height:22px;width:22px;">
+                                                            <span class="number">1</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-7 mt-2">
+                                                        <h4>전주 박물관</h4>
+                                                    </div>
+                                                    <div class="col-4 text-end">
+                                                        <small>여기에 시간 입력</small>
+                                                    </div>
+                                                </div>
+                                                <button type="button"
+                                                        class="btn btn-outline-danger btn-delete  btn-xs float-end">
+                                                    제거
+                                                </button>
+                                                <p class="text-black mb-1">여기에 세부 스케줄 입력</p>
+                                                <small>여기에 추가 사항 입력</small>
+                                            </li>
+                                            <li class="sortable-item list-group-item list-group-item-action">
+                                                <div class="row align-items-center">
+                                                    <div class="col-1">
+                                                        <div class="border border-dark badge bg-success text-white d-flex justify-content-center align-items-center mt-1"
+                                                             style="height:22px;width:22px;">
+                                                            <span class="number">2</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-7 mt-2">
+                                                        <h4>전주 한옥마을</h4>
+                                                    </div>
+                                                    <div class="col-4 text-end">
+                                                        <small>여기에 시간 입력</small>
+                                                    </div>
+                                                </div>
+                                                <button type="button"
+                                                        class="btn btn-outline-danger btn-delete  btn-xs float-end">
+                                                    제거
+                                                </button>
+                                                <p class="text-black mb-1">여기에 세부 스케줄 입력</p>
+                                                <small>여기에 추가 사항 입력</small>
+                                            </li>
+                                            <li class="sortable-item list-group-item list-group-item-action">
+                                                <div class="row align-items-center">
+                                                    <div class="col-1">
+                                                        <div class="border border-dark badge bg-success text-white d-flex justify-content-center align-items-center mt-1"
+                                                             style="height:22px;width:22px;">
+                                                            <span class="number">3</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-7 mt-2">
+                                                        <h4>전주 한국스마트정보원</h4>
+                                                    </div>
+                                                    <div class="col-4 text-end">
+                                                        <small>여기에 시간 입력</small>
+                                                    </div>
+                                                </div>
+                                                <button type="button"
+                                                        class="btn btn-outline-danger btn-delete  btn-xs float-end">
+                                                    제거
+                                                </button>
+                                                <p class="text-black mb-1">여기에 세부 스케줄 입력</p>
+                                                <small>여기에 추가 사항 입력</small>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <!-- 거리 정보 -->
+                                <br>
+                                <div class="d-flex w-100 justify-content-between">
+                                    <div id="distanceInfo"></div>
+
+
+                                    <div class="col-lg-4 mb-6 mb-lg-0">
+                                        <!-- 지도 및 거리/금액 정보 -->
+                                        <div id="map"></div>
+                                        <div>총 거리: <span id="totalDistance"> 10cm</span></div>
+                                        <div>총 금액: <span id="totalCost"> 10원</span></div>
+
+                                    </div>
+                                    <div class="col-lg-4 mb-6 mb-lg-0">
+                                        <button class="btn btn-primary btn-mb2">확정</button>
+                                        <button class="btn btn-secondary btn-mb2">취소</button>
+                                    </div>
+                                </div>
+                                <br><br><br><br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+<th:block layout:fragment="customJsFIle">
+    <script th:src="@{/user/js/owl.carousel.min.js}"></script>
+    <script th:src="@{/user/js/aos.js}"></script>
+    <script th:src="@{/user/js/jquery.waypoints.min.js}"></script>
+    <script th:src="@{/user/js/typed.js}"></script>
+    <script th:src="@{/user/js/moment.min.js}"></script>
+    <script th:src="@{/user/js/daterangepicker.js}"></script>
+
+    <script th:src="@{/user/js/custom.js}"></script>
+
+    <script th:src="@{/user/plugins/sortable/Sortable.js}"></script>
+    <script th:src="@{/user/js/tripPlanner.js}"></script>
+</th:block>
+
+<th:block layout:fragment="customJs">
+    <script th:inline="javascript">
+
+        // 페이지 로드 시 maxPeople 값을 업데이트
+        $(document).ready(function() {
+            updateMaxPeople();
+        });
+
+        // 실제 회원 데이터 (예시)
+        const realMembers = [
+            {id: 1, name: '실제 회원 예시 1'},
+            {id: 2, name: '실제 회원 예시 2'},
+            {id: 3, name: '실제 회원 예시 3'},
+        ];
+
+        // 인원 수 입력 필드에 이벤트 리스너 추가
+        const numPeopleInput = $('#numPeople');
+        let maxPeople = 1; // 초기 최대 인원 수
+
+        // maxPeople 값을 업데이트하는 함수 정의
+        function updateMaxPeople() {
+            // 입력된 값을 정수로 변환하여 maxPeople에 저장하고, 변환할 수 없는 값이라면 1을 사용
+            maxPeople = parseInt(numPeopleInput.val(), 10) || 1;
+        }
+
+        // numPeople input 필드에 입력이 있을 때마다 maxPeople 값을 업데이트
+        numPeopleInput.on('input', updateMaxPeople);
+
+        // 초대된 회원 목록
+        const invitedMembers = [];
+
+        // 가상 회원 목록
+        const virtualMembers = [];
+
+        // 회원 유형 체크박스 이벤트 리스너 설정
+        const realMemberCheckbox = $('#realMember');
+        const virtualMemberCheckbox = $('#virtualMember');
+        const realMemberSearch = $('#realMemberSearch');
+        const virtualMemberAdjust = $('#virtualMemberAdjust');
+
+        // 실제 회원 검색창 표시 여부 설정
+        realMemberCheckbox.change(() => {
+            realMemberSearch.css('display', realMemberCheckbox.is(':checked') ? 'block' : 'none'); //.style.display = realMemberCheckbox.checked ? 'block' : 'none';
+        });
+
+        // 가상 회원 조정창 표시 여부 설정
+        virtualMemberCheckbox.change(() => {
+            virtualMemberAdjust.css('display', virtualMemberCheckbox.is(':checked') ? 'block' : 'none'); //.style.display = virtualMemberCheckbox.checked ? 'block' : 'none';
+        });
+
+        // 회원 검색 모달 열기 이벤트 설정
+        const searchMemberBtn = $('#searchMemberBtn');
+        const searchMemberModal = $(new bootstrap.Modal($('#searchMemberModal'), {}));
+
+        searchMemberBtn.click(() => {
+            searchMemberModal.show();
+        });
+
+        // 회원 검색 및 초대 기능
+        const inviteMembersBtn = $('#inviteMembers');
+        const searchMemberInput = $('#searchMemberInput');
+        const searchResultContainer = $('#searchResultContainer');
+        const invitedMembersList = $('#invitedMembersList');
+
+        inviteMembersBtn.click(() => {
+            const searchQuery = searchMemberInput.val().trim().toLowerCase();
+            const searchResults = realMembers.filter(
+                (member) => member.name.toLowerCase().includes(searchQuery)
+            );
+
+            const currentMemberCount = invitedMembers.length + virtualMembers.length;
+
+            // 검색 결과 리스트 표시
+            searchResultContainer.empty();
+            searchResults.forEach((member) => {
+                const li = $('<li></li>', {
+                    class: 'list-group-item d-flex justify-content-between align-items-center mb-1',
+                    text: member.name
+                });
+
+                // 최대 인원 수를 초과하지 않는 경우에만 초대 버튼 활성화
+                const inviteBtn = $('<button></button>', {
+                    class: 'btn btn-primary btn-xs',
+                    text: '초대'
+                });
+                if (currentMemberCount < maxPeople || maxPeople === 0) {
+                    inviteBtn.prop('disabled', invitedMembers.some(invited => invited.id === member.id));
+                } else {
+                    inviteBtn.prop('disabled', true);
+                }
+
+                // 이미 초대된 회원은 초대 버튼 비활성화
+                inviteBtn.prop('disabled', invitedMembers.some(invited => invited.id === member.id));
+
+                // 초대 버튼 클릭 시 초대된 회원 목록에 추가
+                inviteBtn.click(() => {
+                    if (!invitedMembers.some(invited => invited.id === member.id)) {
+                        const updatedCurrentMemberCount = invitedMembers.length + virtualMembers.length;
+                        if (updatedCurrentMemberCount + 1 > maxPeople && maxPeople > 0) {
+                            alert(`최대 인원 수(${maxPeople}명)를 초과할 수 없습니다.`);
+                            return;
+                        }
+                        invitedMembers.push(member);
+                        renderInvitedMembers();
+                        inviteBtn.prop('disabled', true);
+                        // 총 인원 수 재계산 및 렌더링
+                        renderTotalMemberCount();
+                    }
+                });
+
+                li.append(inviteBtn);
+                searchResultContainer.append(li);
+            });
+        });
+
+        // 초대된 회원 목록 렌더링 함수
+        function renderInvitedMembers() {
+            invitedMembersList.empty();
+            invitedMembers.forEach((member, index) => {
+                const li = $('<li></li>', {
+                    class: 'list-group-item d-flex justify-content-between align-items-center',
+                    text: member.name
+                });
+
+                // 제거 버튼 생성
+                const removeBtn = $('<button>', {
+                    class: 'btn btn-danger btn-xs float-end',
+                    text: '제거'
+                });
+                // 위 와 같이 작성해도 된다
+                /*const removeBtn = document.createElement('button');
+                removeBtn.classList.add('btn', 'btn-danger', 'btn-xs', 'float-end');
+                removeBtn.textContent = '제거';*/
+
+                // 제거 버튼 이벤트 리스너
+                removeBtn.click(() => {
+                    invitedMembers.splice(index, 1); // 초대된 회원 목록에서 해당 멤버 제거
+                    renderInvitedMembers(); // 변경된 목록 다시 렌더링
+                });
+
+                li.append(removeBtn);
+                invitedMembersList.append(li);
+            });
+        }
+
+        $('#addMember').on('click', function () {
+            addVirtualMembers();
+        });
+
+        $('#virtualMemberNickname').on('keydown', function (event) {
+            if (event.key === 'Enter') {
+                addVirtualMembers();
+                event.preventDefault(); // 기본 동작 (엔터에 의한 페이지 새로고침) 방지
+            }
+        });
+
+        function addVirtualMembers() {
+            const virtualMemberInput = $('#virtualMemberNickname');
+            const virtualMembersList = $('#virtualMembersList');
+            const invitedMembersList = $('#invitedMembersList');
+
+            // 가상 회원 추가
+            const virtualNicknames = virtualMemberInput.val().split(',').map(name => name.trim());
+            const currentMemberCount = invitedMembers.length + virtualMembers.length;
+
+            if (currentMemberCount + virtualNicknames.length > maxPeople && maxPeople > 0) {
+                // 최대 인원 수를 초과하면 경우 경고 메시지 표시
+                alert(`최대 인원 수(${maxPeople}명)를 초과할 수 없습니다.`);
+                return;
+            }
+
+            virtualNicknames.forEach(nickname => {
+                if (nickname && !virtualMembers.includes(nickname)) {
+                    virtualMembers.push(nickname); // 배열에 추가
+                    const listItem = $('<li></li>', {
+                        class: 'list-group-item d-flex justify-content-between align-items-center',
+                        text: nickname
+                    });
+
+                    const removeButton = $('<button></button>', {
+                        class: 'btn btn-outline-danger btn-xs float-end',
+                        text: '제거'
+                    });
+
+                    // 가상 회원 제거 기능 수정
+                    removeButton.click(function () {
+                        $(this).parent().remove();
+                        const index = virtualMembers.indexOf(nickname);
+                        if (index > -1) {
+                            virtualMembers.splice(index, 1);
+                        }
+                        // 총 인원 수 재계산 및 렌더링
+                        renderTotalMemberCount();
+                    });
+
+                    listItem.append(removeButton);
+                    virtualMembersList.append(listItem);
+                }
+            });
+                // 실제 회원 추가 예시 (동적 구현 필요)
+                /*
+                const actualMember = '실제 회원 이름'; // 예시
+                const listItem = document.createElement('li');
+                listItem.className = 'list-group-item';
+                listItem.textContent = actualMember;
+
+                const removeButton = document.createElement('button');
+                removeButton.className = 'btn btn-outline-danger btn-sm';
+                removeButton.textContent = '제거';
+                removeButton.onclick = function() {
+                  invitedMembersList.removeChild(listItem);
+                };
+
+                listItem.appendChild(removeButton);
+                invitedMembersList.appendChild(listItem);
+                */
+
+                // 입력 필드 초기화
+                virtualMemberInput.val('');
+                renderTotalMemberCount(); // 총 회원 수 재계산 및 렌더링
+            }
+
+            // 총 회원 수 렌더링 함수
+            function renderTotalMemberCount() {
+                // 'totalMemberCount' ID를 가진 HTML 요소를 찾아서 변수에 저장합니다.
+                const totalMemberCount = $('#totalMemberCount');
+                // 초대된 멤버(invitedMembers)와 가상 멤버(virtualMembers)의 길이(개수)를 더한 값을 문자열로 변환하여
+                // 'totalMemberCount' 요소의 텍스트 내용으로 설정합니다.
+                // 이를 통해 전체 멤버 수를 화면에 표시합니다.
+                totalMemberCount.text((invitedMembers.length + virtualMembers.length).toString());
+            }
+    </script>
+
+    <script th:inline="javascript">
+        /*$(function () {
+            setTimeout(function () {
+                // 숙소 탭 활성화
+                //$('#accommodation-tab').addClass('active');
+                // 1일차 탭도 활성화
+                $('#day1-tab').addClass('active');
+            }, 50);
+        });*/
+        // Accordion 버튼에 대한 클릭 이벤트 설정
+        $('.accordion-button').on('click', function () {
+            // 특정 탭에 'active' 클래스 추가
+            $('#day1-tab').addClass('active');
+        });
+    </script>
+</th:block>
+</html>

@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+                layout:decorate="~{user/layout/default}">
+<head>
+<title>리뷰 작성하기</title>
+<th:block layout:fragment="customCss">
+    <link th:href="@{/user/css/reviewWrite.css}" rel="stylesheet">
+	
+	<link th:href="@{/user/plugins/owl-carousel/owl.carousel.min.css}" rel='stylesheet' media='screen'>
+	<link th:href="@{/user/plugins/owl-carousel/owl.theme.default.min.css}" rel='stylesheet' media='screen'>
+        
+	<!-- GOOGLE FONT -->
+	<link href='https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700' rel='stylesheet'>
+</th:block>
+</head>
+<th:block layout:fragment="customPageSection">
+	<!-- ====================================
+	———	PAGE TITLE
+	===================================== -->
+	<section class="page-title">
+	    <div class="page-title-img bg-img bg-overlay-darken" style="background-image: url(/user/img/pages/page-title-bg11.jpg);">
+	        <div class="container">
+	            <div class="row align-items-center justify-content-center" style="height: 200px;">
+	                <div class="col-lg-6">
+	                    <div class="page-title-content">
+	                        <div class="title-border">
+	                            <h2 class="text-uppercase text-white font-weight-bold">후기작성</h2>
+	                        </div>
+	                        <p class="text-white mb-0"></p>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	</section>
+		
+	<!-- ====================================
+	———    CITY SECTION
+	===================================== -->
+	<section class="py-10">
+		<div class="container">
+			<form id="reviewForm" action="#" method="POST">
+			    <div class="separator1"></div> <!-- 굵은 직선 추가 -->
+			    <div class="star-group_box">
+			        <label for="rating">별점</label>
+			        <div class="separator2"></div> <!-- 굵은 직선 추가 -->
+			        <div class="star-rating">
+			            <input type="radio" id="rating5" name="rating" value="5"><label for="rating5">★</label>
+			            <input type="radio" id="rating4" name="rating" value="4"><label for="rating4">★</label>
+			            <input type="radio" id="rating3" name="rating" value="3"><label for="rating3">★</label>
+			            <input type="radio" id="rating2" name="rating" value="2"><label for="rating2">★</label>
+			            <input type="radio" id="rating1" name="rating" value="1"><label for="rating1">★</label>
+			        </div>
+			        <!-- 추가된 부분 -->
+			        <div class="evaluation">별점을 선택해주세요</div>
+			    </div>
+			    <div class="separator1"></div> <!-- 굵은 직선 추가 -->
+			    <div class="form-group_box">
+			        <label for="review">구매후기 작성</label>
+			        <div class="separator2"></div> <!-- 굵은 직선 추가 -->
+			        <textarea id="review" name="review" rows="5" maxlength="1000"
+			            placeholder="솔직한 후기를 작성해주세요.&#13;&#10;최소 10자 이상을 입력해주세요"></textarea>
+			    
+			        <div class="char-count" id="charCount">0/1000</div> <!-- 글자 수 표시 -->
+			    </div>
+			
+			    <div class="separator1"></div> <!-- 굵은 직선 추가 -->
+			    
+			    <div class="photo-upload-section">
+				      <span class="attachment-text">사진첨부</span>
+				      <input type="file" id="photo" name="photo" accept="image/*,video/*" multiple style="display: none;">
+				      <span id="fileCount">(0/10)</span>
+				      <label for="photo" class="file-upload-btn">첨부하기</label>
+			  	</div>
+			
+			  
+			    <div class="separator2"></div> <!-- 굵은 직선 추가 -->
+			    <div id="attachedFiles" style="display: flex; flex-wrap: wrap;"></div> <!-- 첨부 파일 목록이 표시될 영역 -->
+			    <div class="separator1"></div> <!-- 굵은 직선 추가 -->
+			    <div class="form-group">
+			        <!-- Thymeleaf를 사용하여 링크의 대상 URL 설정 -->
+			        <a th:href="@{/user/review/list}"><button type="button" class="btn cancel-button">취소</button></a>
+			        <a th:href="@{/user/review/list}"><button type="button" class="btn register-button">등록</button></a>
+			    </div>
+			
+			    <!-- 추가된 요소: 별점 평가 문구 -->
+			    <div class="rating-text" id="ratingText"></div>
+			
+			    <!-- 사진을 미리 볼 영역을 추가합니다. -->
+			    <div id="photoPreview"></div>
+			
+			</form>
+		</div>
+		
+	</section>
+</th:block>	
+
+<th:block layout:fragment="customJsFIle">
+	<script>
+	const stars = document.querySelectorAll('.star-rating input');
+	let previousRating = 0;
+	
+	stars.forEach((star, index) => {
+	star.addEventListener('click', () => {
+	    if (index + 1 === previousRating) {
+	        // 클릭한 별점이 이전에 선택한 별점과 같은 경우 취소
+	        resetStars();
+	        previousRating = 0;
+	        document.querySelector('.evaluation').textContent = '별점을 선택해주세요'; // 평가 문구 초기화
+	    } else {
+	        resetStars();
+	        for (let i = 0; i <= index; i++) {
+	            stars[i].checked = true;
+	            stars[i].nextElementSibling.style.color = '#ffcc00';
+	        }
+	        previousRating = index + 1;
+	        // 별점에 따른 평가 문구 출력
+	        switch (previousRating) {
+	            case 5:
+	                document.querySelector('.evaluation').textContent = '최고에요';
+	                break;
+	            case 4:
+	                document.querySelector('.evaluation').textContent = '만족해요';
+	                break;
+	            case 3:
+	                document.querySelector('.evaluation').textContent = '보통이에요';
+	                break;
+	            case 2:
+	                document.querySelector('.evaluation').textContent = '별로에요';
+	                break;
+	            case 1:
+	                document.querySelector('.evaluation').textContent = '최악이에요';
+	                break;
+	            default:
+	                document.querySelector('.evaluation').textContent = '별점을 선택해주세요';
+	                break;
+	            }
+	        }
+	    });
+	
+	    star.addEventListener('mouseenter', () => {
+	        // 이전 별까지만 호버 효과 적용
+	        for (let i = 0; i <= index; i++) {
+	            stars[i].nextElementSibling.style.color = '#ffcc00';
+	        }
+	    });
+	
+	    star.addEventListener('mouseleave', () => {
+	        // 별점이 선택되지 않았을 때만 초기화
+	        if ((index + 1) !== previousRating) {
+	            resetStars();
+	            document.querySelector('.evaluation').textContent = ''; // 평가 문구 제거
+	        }
+	    });
+	});
+	
+	function resetStars() {
+	    stars.forEach(star => {
+	        star.checked = false;
+	        star.nextElementSibling.style.color = '#f5f5f5';
+	    });
+	}
+	
+	// 플레이스홀더 텍스트를 관리하는 함수
+	function managePlaceholderText() {
+	    var textarea = document.getElementById('review');
+	    if (textarea.value.trim() === '') { // 텍스트 영역이 비어있을 경우에만 플레이스홀더 텍스트를 표시
+	        textarea.classList.add('placeholder-text');
+	    } else {
+	        textarea.classList.remove('placeholder-text');
+	    }
+	}
+	
+	// 텍스트 영역의 입력 이벤트를 감지하여 플레이스홀더 텍스트 관리
+	document.getElementById('review').addEventListener('input', managePlaceholderText);
+	
+	// 텍스트 입력 시 글자 수 표시
+	const reviewTextarea = document.getElementById('review');
+	const charCount = document.getElementById('charCount');
+	
+	reviewTextarea.addEventListener('input', function() {
+	    const textLength = this.value.length;
+	    charCount.textContent = textLength + '/1000';
+	});
+	
+	// 첨부된 파일 목록을 관리할 배열
+	let attachedFiles = [];
+	
+	// 파일 선택 시 이미지 미리 보기 기능 추가
+	const fileInput = document.getElementById('photo');
+	const attachedFilesContainer = document.getElementById('attachedFiles');
+	const maxFileCount = 10; // 최대 파일 갯수
+	
+	fileInput.addEventListener('change', function() {
+	    const files = this.files;
+	    // 파일 갯수 제한 확인
+	    if (attachedFiles.length + files.length > maxFileCount) {
+	        alert('최대 ' + maxFileCount + '개의 파일을 첨부할 수 있습니다.');
+	        return;
+	    }
+	    // 중복 제거 후 파일 추가
+	    const uniqueFiles = removeDuplicates(attachedFiles.concat(Array.from(files)));
+	    attachedFiles = uniqueFiles;
+	    // 파일들을 표시
+	    displayAttachedFiles();
+	    // 파일 갯수 표시 업데이트
+	    updateAttachedFileCount();
+	});
+	
+	// 비디오 파일의 썸네일을 생성하여 동영상으로 출력하는 함수
+	function generateVideoThumbnail(videoFile, callback) {
+	    const video = document.createElement('video');
+	    video.src = URL.createObjectURL(videoFile);
+	    video.onloadeddata = function() {
+	        // 비디오 파일이 로드되면 비디오 엘리먼트를 생성하여 출력
+	        const thumbnailVideo = document.createElement('video');
+	        thumbnailVideo.src = URL.createObjectURL(videoFile);
+	        thumbnailVideo.width = 100; // 작은 썸네일 크기 지정
+	        thumbnailVideo.height = 100;
+	        thumbnailVideo.controls = false; // 비디오 컨트롤러 비활성화
+	        thumbnailVideo.autoplay = false; // 자동 재생 비활성화
+	        thumbnailVideo.loop = false; // 반복 재생 비활성화
+	        thumbnailVideo.classList.add('thumbnail-video');
+	        callback(thumbnailVideo);
+	    };
+	}
+	
+	// 중복된 파일을 제거하는 함수
+	function removeDuplicates(files) {
+	    const uniqueFiles = [];
+	    const fileNames = [];
+	    // 파일 이름을 기준으로 중복 체크
+	    for (let i = 0; i < files.length; i++) {
+	        if (!fileNames.includes(files[i].name)) {
+	            uniqueFiles.push(files[i]);
+	            fileNames.push(files[i].name);
+	        }
+	    }
+	    return uniqueFiles;
+	}
+	
+	// 첨부된 파일 목록을 표시하는 함수
+	function displayAttachedFiles() {
+	    attachedFilesContainer.innerHTML = ''; // 기존 첨부 파일 목록 초기화
+	
+	    // 파일을 순회하며 각 파일에 대한 정보를 표시
+	    for (let i = 0; i < attachedFiles.length; i++) {
+	        const file = attachedFiles[i];
+	        const fileItem = document.createElement('div');
+	        fileItem.classList.add('attached-file');
+	
+	
+	        // 이미지 파일인 경우 또는 동영상 파일인 경우 썸네일 표시
+	        if (file.type.startsWith('image/')) {
+	            // 이미지 파일의 경우 썸네일 이미지 표시
+	            const thumbnail = document.createElement('img');
+	            thumbnail.src = URL.createObjectURL(file);
+	            thumbnail.alt = file.name;
+	            thumbnail.classList.add('thumbnail');
+	            fileItem.appendChild(thumbnail);
+	        } else if (file.type.startsWith('video/')) {
+	            // 동영상 파일의 경우 작은 동영상 썸네일 표시
+	            generateVideoThumbnail(file, function(thumbnailVideo) {
+	                fileItem.appendChild(thumbnailVideo);
+	            });
+	        }
+	
+	        // 파일 이름 표시
+	        const fileName = document.createElement('span');
+	        fileName.textContent = file.name;
+	        fileItem.appendChild(fileName);
+	
+	        // 삭제 버튼 추가
+	        const deleteButton = document.createElement('button');
+	        deleteButton.textContent = 'x';
+	        deleteButton.classList.add('delete-button');
+	        // 삭제 버튼에 클릭 이벤트 추가
+	        deleteButton.addEventListener('click', function() {
+	            attachedFiles.splice(i, 1); // 배열에서 해당 파일 제거
+	            displayAttachedFiles(); // 변경된 파일 목록을 다시 표시
+	            // 파일 갯수 표시 업데이트
+	            updateAttachedFileCount();
+	        });
+	        fileItem.appendChild(deleteButton);
+	
+	        // 생성된 첨부 파일 아이템을 목록에 추가
+	        attachedFilesContainer.appendChild(fileItem);
+	    }
+	}
+	
+	// 첨부된 파일 갯수를 표시하는 함수
+	function updateAttachedFileCount() {
+	    const fileCountElement = document.getElementById('fileCount');
+	    fileCountElement.textContent = '(' + attachedFiles.length + '/' + maxFileCount + ')';
+	}
+	</script>
+</th:block>
+</html>

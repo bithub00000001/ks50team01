@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+                layout:decorate="~{platform/layout/default}">
+	<head>
+		<style type="text/css">
+			.control-label{
+				text-align: center !important;
+				background-color: #f8f8f8 !important;
+				padding-bottom: 8px !important;	
+			}
+			.radio label{
+				margin-left: 10px !important;
+			}
+			.reservation{
+				padding-left: 10px !important;
+			}
+		</style>
+	</head>
+	<th:block layout:fragment="customContent">
+		<div class="col-md-12col-sm-6 col-xs-12">
+			<div class="x_panel">
+				<div class="x_title">
+					<h2 th:text="${title}"></h2>
+					<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+					<form class="form-horizontal">
+					
+						<div class="form-group">
+							<label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">검색대상</label>
+							<div class="col-md-9 col-sm-9 col-xs-12 form-element">
+								<div class="radio">
+									<label>
+										<input type="radio" value="option1" id="optionsRadios1" name="cateRadios" checked="checked"> 전체
+									</label>
+									<label>
+										<input type="radio" value="option2" id="optionsRadios2" name="cateRadios"> 가입회원
+									</label>
+									<label>
+										<input type="radio" value="option3" id="optionsRadios3" name="cateRadios"> 탈퇴회원
+									</label>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">기간단위</label>
+							<div class="col-md-9 col-sm-9 col-xs-12 form-element">
+								<div class="radio">
+									<label>
+										<input type="radio" value="option1" id="radiosDate1" name="dateRadios" checked="checked"> 일
+									</label>
+									<label>
+										<input type="radio" value="option2" id="radiosDate2" name="dateRadios"> 주
+									</label>
+									<label>
+										<input type="radio" value="option2" id="radiosDate3" name="dateRadios"> 월
+									</label>
+								</div>
+							</div>
+						</div>										
+						<div class="form-group">
+							<label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">기간선택</label>
+							<div class="input-prepend input-group col-md-8 col-sm-8 col-xs-12 reservation">
+								<span class="add-on input-group-addon">
+									<i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+								</span>
+								<input type="text" style="width: 200px" name="reservation"
+									   id="reservation" class="form-control" value="01/01/2024 - 01/25/2024" />
+							</div>
+						</div>
+						<div class="ln_solid"></div>
+						<div class="form-group">
+							<div class="col-md-12 col-sm-12 col-xs-12 text-center">
+								<button class="btn btn-success btn-lg" type="button">검색</button>
+								<button type="reset" class="btn btn-dark btn-lg">초기화</button>
+							</div>
+						</div>
+					</form>
+					<!-- 표 -->
+					<div id="echart_line" class="col-md-auto" style="height: 700px;"></div>
+				</div>
+			</div>
+		</div>
+	</th:block>
+	
+	<th:block layout:fragment="customCss">
+		<!-- bootstrap-daterangepicker -->
+	    <link th:href="@{/platform/vendors/bootstrap-daterangepicker/daterangepicker.css}" rel="stylesheet">
+	</th:block>
+	
+	<th:block layout:fragment="customJsFile">
+	    <!-- ECharts -->
+		<script th:src="@{/platform/vendors/echarts/dist/echarts.min.js}"></script>
+		<!-- <script th:src="@{/platform/vendors/echarts/map/js/world.js}"></script> -->
+		<!-- bootstrap-daterangepicker -->
+		<!-- <script th:src="@{/platform/vendors/moment/min/moment.min.js}"></script> -->
+		<!-- <script th:src="@{/platform/vendors/bootstrap-daterangepicker/daterangepicker.js}"></script> -->
+	</th:block>
+
+	<th:block layout:fragment="customJs">
+		<script>
+		/*
+		const lineStyleColorArr = [];
+		lineStyleColorArr.push([0.2, '#86b379']);
+		lineStyleColorArr.push([0.8, '#68a54a']);
+		lineStyleColorArr.push([1, '#408829']);
+		new Array([0.2, '#86b379'],[0.8, '#68a54a'],[1, '#408829']);
+		*/
+		var theme = {
+				  color: [
+					  '#26B99A', '#34495E', '#BDC3C7', '#3498DB',
+					  '#9B59B6', '#8abb6f', '#759c6a', '#bfd3b7'
+				  ],
+
+				  title: {
+					  itemGap: 8,
+					  textStyle: {
+						  fontWeight: 'normal',
+						  color: '#408829'
+					  }
+				  },
+
+				  dataRange: {
+					  color: ['#1f610a', '#97b58d']
+				  },
+
+				  toolbox: {
+					  color: ['#408829', '#408829', '#408829', '#408829']
+				  },
+
+				  tooltip: {
+					  backgroundColor: 'rgba(0,0,0,0.5)',
+					  axisPointer: {
+						  type: 'line',
+						  lineStyle: {
+							  color: '#408829',
+							  type: 'dashed'
+						  },
+						  crossStyle: {
+							  color: '#408829'
+						  },
+						  shadowStyle: {
+							  color: 'rgba(200,200,200,0.3)'
+						  }
+					  }
+				  },
+
+				  dataZoom: {
+					  dataBackgroundColor: '#eee',
+					  fillerColor: 'rgba(64,136,41,0.2)',
+					  handleColor: '#408829'
+				  },
+				  grid: {
+					  borderWidth: 0
+				  },
+
+				  categoryAxis: {
+					  axisLine: {
+						  lineStyle: {
+							  color: '#408829'
+						  }
+					  },
+					  splitLine: {
+						  lineStyle: {
+							  color: ['#eee']
+						  }
+					  }
+				  },
+
+				  valueAxis: {
+					  axisLine: {
+						  lineStyle: {
+							  color: '#408829'
+						  }
+					  },
+					  splitArea: {
+						  show: true,
+						  areaStyle: {
+							  color: ['rgba(250,250,250,0.1)', 'rgba(200,200,200,0.1)']
+						  }
+					  },
+					  splitLine: {
+						  lineStyle: {
+							  color: ['#eee']
+						  }
+					  }
+				  },
+				  timeline: {
+					  lineStyle: {
+						  color: '#408829'
+					  },
+					  controlStyle: {
+						  normal: {color: '#408829'},
+						  emphasis: {color: '#408829'}
+					  }
+				  },
+
+				  k: {
+					  itemStyle: {
+						  normal: {
+							  color: '#68a54a',
+							  color0: '#a9cba2',
+							  lineStyle: {
+								  width: 1,
+								  color: '#408829',
+								  color0: '#86b379'
+							  }
+						  }
+					  }
+				  },
+				  map: {
+					  itemStyle: {
+						  normal: {
+							  areaStyle: {
+								  color: '#ddd'
+							  },
+							  label: {
+								  textStyle: {
+									  color: '#c12e34'
+								  }
+							  }
+						  },
+						  emphasis: {
+							  areaStyle: {
+								  color: '#99d2dd'
+							  },
+							  label: {
+								  textStyle: {
+									  color: '#c12e34'
+								  }
+							  }
+						  }
+					  }
+				  },
+				  force: {
+					  itemStyle: {
+						  normal: {
+							  linkStyle: {
+								  strokeColor: '#408829'
+							  }
+						  }
+					  }
+				  },
+				  chord: {
+					  padding: 4,
+					  itemStyle: {
+						  normal: {
+							  lineStyle: {
+								  width: 1,
+								  color: 'rgba(128, 128, 128, 0.5)'
+							  },
+							  chordStyle: {
+								  lineStyle: {
+									  width: 1,
+									  color: 'rgba(128, 128, 128, 0.5)'
+								  }
+							  }
+						  },
+						  emphasis: {
+							  lineStyle: {
+								  width: 1,
+								  color: 'rgba(128, 128, 128, 0.5)'
+							  },
+							  chordStyle: {
+								  lineStyle: {
+									  width: 1,
+									  color: 'rgba(128, 128, 128, 0.5)'
+								  }
+							  }
+						  }
+					  }
+				  },
+				  gauge: {
+					  startAngle: 225,
+					  endAngle: -45,
+					  axisLine: {
+						  show: true,
+						  lineStyle: {
+							  color: new Array([0.2, '#86b379'],[0.8, '#68a54a'],[1, '#408829']),
+							  width: 8
+						  }
+					  },
+					  axisTick: {
+						  splitNumber: 10,
+						  length: 12,
+						  lineStyle: {
+							  color: 'auto'
+						  }
+					  },
+					  axisLabel: {
+						  textStyle: {
+							  color: 'auto'
+						  }
+					  },
+					  splitLine: {
+						  length: 18,
+						  lineStyle: {
+							  color: 'auto'
+						  }
+					  },
+					  pointer: {
+						  length: '90%',
+						  color: 'auto'
+					  },
+					  title: {
+						  textStyle: {
+							  color: '#333'
+						  }
+					  },
+					  detail: {
+						  textStyle: {
+							  color: 'auto'
+						  }
+					  }
+				  },
+				  textStyle: {
+					  fontFamily: 'Arial, Verdana, sans-serif'
+				  }
+			  };
+		var echartLine = echarts.init(document.getElementById('echart_line'), theme);
+
+		  echartLine.setOption({
+			title: {text: '회원 가입탈퇴', subtext: 'Subtitle'},
+			tooltip: {trigger: 'axis'},
+			legend: {x: 220, y: 40, data: ['회원가입자 수', '탈퇴', '누적']},
+			toolbox: {
+			  show: true,
+			  feature: {
+				magicType: {
+				  show: true,
+				  title: {line: 'Line', bar: 'Bar', stack: 'Stack', tiled: 'Tiled'},
+				  type: ['line', 'bar', 'stack', 'tiled']
+				},
+				restore: {show: true, title: "Restore"},
+				saveAsImage: {show: true, title: "Save Image"
+				}
+			  }
+			},
+			calculable: true,
+			xAxis: [{
+			  type: 'category',
+			  boundaryGap: false,
+			  data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+			}],
+			yAxis: [{
+			  type: 'value'
+			}],
+			series: [{
+			  name: 'Deal',
+			  type: 'line',
+			  smooth: true,
+			  itemStyle: {
+				normal: {
+				  areaStyle: {
+					type: 'default'
+				  }
+				}
+			  },
+			  data: [10, 12, 21, 54, 260, 830, 710]
+			}, {
+			  name: 'Pre-order',
+			  type: 'line',
+			  smooth: true,
+			  itemStyle: {
+				normal: {
+				  areaStyle: {
+					type: 'default'
+				  }
+				}
+			  },
+			  data: [30, 182, 434, 791, 390, 30, 10]
+			}, {
+			  name: 'Intent',
+			  type: 'line',
+			  smooth: true,
+			  itemStyle: {
+				normal: {
+				  areaStyle: {
+					type: 'default'
+				  }
+				}
+			  },
+			  data: [1320, 1132, 601, 234, 120, 90, 20]
+			}]
+		  });
+		
+		</script>
+	</th:block>
+	
+</html>

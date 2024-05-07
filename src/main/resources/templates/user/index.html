@@ -1,0 +1,134 @@
+<html lang="ko" layout:decorate="~{/user/layout/default}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<th:block layout:fragment="customCss">
+    <link rel="stylesheet" th:href="@{/user/css/style.css}">
+    <link rel="stylesheet" th:href="@{/user/css/daterangepicker.css}">
+    <link rel="stylesheet" th:href="@{/user/css/aos.css}">
+    <link rel="stylesheet" th:href="@{/common/css/font/font.css}">
+</th:block>
+
+<th:block layout:fragment="customPageSection">
+    <div class="hero">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-7">
+                    <div class="intro-wrap">
+                        <h1 class="mb-5">
+                            <span class="d-block">당신의 여행 계획을</span> 세워보아요 :
+                            <br><span class="typed-words"></span>
+                        </h1>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <form class="form" method="post" th:action="@{/trip/detail}">
+                                    <div class="row mb-2">
+                                        <div class="col-sm-12 col-md-6 mb-3 mb-lg-0 col-lg-4">
+                                            <select class="form-control custom-select" id="" name="">
+                                                <option value="">지역</option>
+                                                <option value="">Peru</option>
+                                                <option value="">Japan</option>
+                                                <option value="">Thailand</option>
+                                                <option value="">Brazil</option>
+                                                <option value="">United States</option>
+                                                <option value="">Israel</option>
+                                                <option value="">China</option>
+                                                <option value="">Russia</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-12 col-md-6 mb-3 mb-lg-0 col-lg-5">
+                                            <input type="text" name="daterange" id="dateRange" class="form-control">
+                                            <input type="hidden" name="startDate" id="startDate">
+                                            <input type="hidden" name="endDate" id="endDate">
+                                            <div th:if="${errorMessage}" th:text="${errorMessage}"></div>
+                                        </div>
+                                        <div class="col-sm-12 col-md-6 mb-3 mb-lg-0 col-lg-3">
+                                            <input type="number" class="form-control" name="numPeople" id="numPeople" placeholder="인원 수를 입력하세요">
+                                        </div>
+
+                                    </div>
+                                    <div class="row align-items-center">
+                                        <div class="col-sm-12 col-md-6 mb-3 mb-lg-0 col-lg-4">
+                                            <input class="btn btn-primary btn-block" type="submit"
+                                                   value="작성">
+                                        </div>
+                                        <div class="col-lg-8">
+                                            <label class="control control--checkbox mt-3">
+                                                <span class="caption">Save this search</span>
+                                                <input checked="checked" type="checkbox"/>
+                                                <div class="control__indicator"></div>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="slides">
+                        <img alt="Image" class="img-fluid active"
+                             th:src="@{/user/img/index/hero-slider-1.jpg}">
+                        <img alt="Image" class="img-fluid"
+                             th:src="@{/user/img/index/hero-slider-2.jpg}">
+                        <img alt="Image" class="img-fluid"
+                             th:src="@{/user/img/index/hero-slider-3.jpg}">
+                        <img alt="Image" class="img-fluid"
+                             th:src="@{/user/img/index/hero-slider-4.jpg}">
+                        <img alt="Image" class="img-fluid"
+                             th:src="@{/user/img/index/hero-slider-5.jpg}">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</th:block>
+
+<th:block layout:fragment="customJsFIle">
+    <script th:src="@{/user/js/owl.carousel.min.js}"></script>
+    <script th:src="@{/user/js/aos.js}"></script>
+    <script th:src="@{/user/js/jquery.waypoints.min.js}"></script>
+    <script th:src="@{/user/js/typed.js}"></script>
+    <script th:src="@{/user/js/moment.min.js}"></script>
+    <script th:src="@{/user/js/daterangepicker.js}"></script>
+
+    <script th:src="@{/user/js/custom.js}"></script>
+</th:block>
+<th:block layout:fragment="customJs">
+    <script>
+        $(function () {
+            const slides = $('.slides'),
+                images = slides.find('img');
+
+            images.each(function (i) {
+                $(this).attr('data-id', i + 1);
+            })
+
+            const typed = new Typed('.typed-words', {
+                strings: ["전주 한옥마을.", " 강원도 양양.", " 부산 해운대.", " 경주 불국사.", " 제주도 우도.", "서울 경복궁"],
+                typeSpeed: 80,
+                backSpeed: 80,
+                backDelay: 4000,
+                startDelay: 1000,
+                loop: true,
+                showCursor: true,
+                preStringTyped: (arrayPos, self) => {
+                    arrayPos++;
+                    $('.slides img').removeClass('active');
+                    $('.slides img[data-id="' + arrayPos + '"]').addClass('active');
+                }
+
+            });
+        })
+    </script>
+    <script>
+        $('#dateRange').on('apply.daterangepicker', function (ev, picker){
+            const start = picker.startDate.format('YYYY-MM-DD');
+            const end = picker.endDate.format('YYYY-MM-DD');
+            $('#startDate').val(start);
+            $('#endDate').val(end);
+        });
+    </script>
+</th:block>
+</html>

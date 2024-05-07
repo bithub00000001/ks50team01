@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ko" layout:decorate="~{/user/layout/default}"
+     			xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    			xmlns:th="http://www.thymeleaf.org">
+    			
+<head>
+<title>공지사항</title>
+<th:block layout:fragment="customHead">
+	<link rel="stylesheet" th:href="@{/user/css/list-style.css}">
+</th:block>
+</head>
+
+<th:block layout:fragment="customPageSection">
+	<!-- list-style -->
+
+
+	<!-- 여기에 메인 컨텐츠가 삽입됩니다. -->
+	<div class="main-wrapper pages">
+		<div class="d-flex align-items-start">
+			<div class="dropdown mt-3">
+				<button class="btn btn-primary dropdown-toggle" type="button"
+					id="dropdownMenuButton" data-bs-toggle="dropdown">공지사항</button>
+				<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+					<li><a class="dropdown-item" href="javascript:void(0)">일반공지</a></li>
+					<li><a class="dropdown-item" href="javascript:void(0)">긴급공지</a></li>
+					<li><a class="dropdown-item" href="javascript:void(0)">예정공지</a></li>
+					<li><a class="dropdown-item" href="javascript:void(0)">시스템공지</a></li>
+					<li><a class="dropdown-item" href="javascript:void(0)">이벤트공지</a></li>
+				</ul>
+			</div>
+		</div>
+
+
+		<div class="flex-grow-1 d-flex justify-content-center">
+			<div id="board-search"
+				style="width: 500px;">
+				<form class="mb-6" action="index.html" method="post">
+					<div class="input-group input-group-sm">
+						<input type="text" class="form-control form-control-sm rounded-0"
+							required="" placeholder="검색어를 입력해주세요." aria-label="Search....">
+						<button class="btn bg-primary border-0 rounded-0" type="submit">
+							<span class="text-white text-uppercase font-weight-bold">검색</span>
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+
+
+
+		<div class="pt-5 mb-5" id="navs">
+			<div class="row">
+				<div class="col-lg-12 mb-12 mb-lg-0">
+					<div id="destination">
+						<div class="mb-0">
+							<ul class="nav nav-tabs destination-tabs" id="destinationTab"
+								role="tablist">
+								<li class="nav-item"><a class="nav-link active"
+									id="overView-tab" data-bs-toggle="tab" href="#overView"
+									role="tab" aria-controls="overView" aria-selected="true">최신순</a>
+								</li>
+
+								<li class="nav-item"><a class="nav-link" id="tourGuide-tab"
+									data-bs-toggle="tab" href="#tourGuide" role="tab"
+									aria-controls="tourGuide" aria-selected="false">조회순</a></li>
+
+
+								<li class="nav-item d-none"></li>
+							</ul>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<!-- body -->
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="table-responsive">
+
+					<table class="table table-hover table-bordered">
+						<colgroup>
+							<col class="col-sm-1" />
+							<col class="col-sm-7" />
+							<col class="col-sm-1" />
+							<col class="col-sm-2" />
+							<col class="col-sm-1" />
+						</colgroup>
+						<thead>
+							<tr class="active" style="text-align: center">
+								<th>번호</th>
+								<th>제목</th>
+								<th>작성자</th>
+								<th>등록일</th>
+								<th>조회</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td class="noticeNum noticeCenter">1</td>
+								<td><i class="badge rounded-pill bg-primary">긴급공지</i><a
+									href="">웹사이트 서버 점검 공지</a></td>
+								<td class="noticeCenter">관리자</td>
+								<td class="noticeCenter">2024-04-29</td>
+								<td class="noticeCenter">100</td>
+							</tr>
+							<tr>
+								<td class="noticeNum noticeCenter">2</td>
+								<td><i class="badge rounded-pill bg-primary">예정공지</i><a
+									href="">시스템 업그레이드 예정 공지</a></td>
+								<td class="noticeCenter">관리자</td>
+								<td class="noticeCenter">2024-04-29</td>
+								<td class="noticeCenter">100</td>
+							</tr>
+							<tr>
+								<td class="noticeNum noticeCenter">3</td>
+								<td><i class="badge rounded-pill bg-primary">시스템공지</i><a
+									href="">시스템 장애 공지</a></td>
+								<td class="noticeCenter">관리자</td>
+								<td class="noticeCenter">2024-04-29</td>
+								<td class="noticeCenter">100</td>
+							</tr>
+							<tr>
+								<td class="noticeNum noticeCenter">4</td>
+								<td><i class="badge rounded-pill bg-primary">일반공지</i><a
+									href="">고객센터 휴무 공지</a></td>
+								<td class="noticeCenter">관리자</td>
+								<td class="noticeCenter">2024-04-29</td>
+								<td class="noticeCenter">100</td>
+							</tr>
+							<tr>
+								<td class="noticeNum noticeCenter">5</td>
+								<td><i class="badge rounded-pill bg-primary">이벤트공지</i><a href="">이벤트공지</a></td>
+								<td class="noticeCenter">관리자</td>
+								<td class="noticeCenter">2024-04-29</td>
+								<td class="noticeCenter">100</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+		<!-- 페이징 -->
+		<section class="pt-5 pt-md-7">
+			<div class="container" style="margin-bottom: 50px">
+				<nav aria-label="Page navigation">
+					<ul class="pagination justify-content-center align-items-center">
+						<li class="page-item"><a class="page-link"
+							href="javascript:void(0)" tabindex="-1"> <i
+								aria-hidden="true"></i> ◀ 이전
+						</a></li>
+
+						<li class="page-item"><a class="page-link active"
+							href="javascript:void(0)">1</a></li>
+
+						<li class="page-item"><a class="page-link"
+							href="javascript:void(0)">2</a></li>
+
+						<li class="page-item"><a class="page-link"
+							href="javascript:void(0)">3</a></li>
+
+						<li class="page-item"><a class="page-link"
+							href="javascript:void(0)">4</a></li>
+
+						<li class="page-item"><a class="page-link"
+							href="javascript:void(0)">5</a></li>
+
+						<li class="page-item"><a class="page-link"
+							href="javascript:void(0)">다음 ▶ <i aria-hidden="true"></i>
+						</a></li>
+					</ul>
+				</nav>
+			</div>
+		</section>
+	</div>
+</th:block>
+
+<th:block layout:fragment="customJs">
+
+</th:block>
+</html>

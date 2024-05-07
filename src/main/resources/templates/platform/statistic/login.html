@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+                layout:decorate="~{platform/layout/default}">
+	<head>
+		<style type="text/css">
+			.control-label{
+				text-align: center !important;
+				background-color: #f8f8f8 !important;
+				padding-bottom: 8px !important;	
+			}
+			.radio label{
+				margin-left: 10px !important;
+			}
+			.reservation{
+				padding-left: 10px !important;
+			}
+		</style>
+	</head>
+	<th:block layout:fragment="customContent">
+		<div class="col-md-12col-sm-6 col-xs-12">
+			<div class="x_panel">
+				<div class="x_title">
+					<h2 th:text="${title}"></h2>
+					<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+					<form class="form-horizontal">
+					
+						<div class="form-group">
+							<label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">검색대상</label>
+							<div class="col-md-9 col-sm-9 col-xs-12 form-element">
+								<div class="radio">
+									<label>
+										<input type="radio" value="option1" id="optionsRadios1" name="cateRadios" checked="checked"> 지역별
+									</label>
+									<label>
+										<input type="radio" value="option2" id="optionsRadios2" name="cateRadios"> 카테고리
+									</label>
+									<label>
+										<input type="radio" value="option3" id="optionsRadios3" name="cateRadios"> 넣을 예정
+									</label>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">기간단위</label>
+							<div class="col-md-9 col-sm-9 col-xs-12 form-element">
+								<div class="radio">
+									<label>
+										<input type="radio" value="option1" id="radiosDate1" name="dateRadios" checked="checked"> 일
+									</label>
+									<label>
+										<input type="radio" value="option2" id="radiosDate2" name="dateRadios"> 주
+									</label>
+									<label>
+										<input type="radio" value="option2" id="radiosDate3" name="dateRadios"> 월
+									</label>
+								</div>
+							</div>
+						</div>										
+						<div class="form-group">
+							<label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">기간선택</label>
+							<div class="input-prepend input-group col-md-8 col-sm-8 col-xs-12 reservation">
+								<span class="add-on input-group-addon">
+									<i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+								</span>
+								<input type="text" style="width: 200px" name="reservation"
+									   id="reservation" class="form-control" value="01/01/2024 - 01/25/2024" />
+							</div>
+						</div>
+						<div class="ln_solid"></div>
+						<div class="form-group">
+							<div class="col-md-12 col-sm-12 col-xs-12 text-center">
+								<button class="btn btn-success btn-lg" type="button">검색</button>
+								<button type="reset" class="btn btn-dark btn-lg">초기화</button>
+							</div>
+						</div>
+					</form>
+					<!-- 표 -->
+					<div id="map" class="col-md-auto" style="height: 700px;" th:text="${title}"></div>
+				</div>
+			</div>
+		</div>
+	</th:block>
+	
+	<th:block layout:fragment="customCss">
+		<!-- bootstrap-daterangepicker -->
+	    <link th:href="@{/platform/vendors/bootstrap-daterangepicker/daterangepicker.css}" rel="stylesheet">
+	</th:block>
+	
+	<th:block layout:fragment="customJsFile">
+	    <!-- ECharts -->
+		<script th:src="@{/platform/vendors/echarts/dist/echarts.min.js}"></script>
+		<script th:src="@{/platform/vendors/echarts/map/js/world.js}"></script>
+		<!-- bootstrap-daterangepicker -->
+		<script th:src="@{/platform/vendors/moment/min/moment.min.js}"></script>
+		<script th:src="@{/platform/vendors/bootstrap-daterangepicker/daterangepicker.js}"></script>
+	</th:block>
+	
+</html>

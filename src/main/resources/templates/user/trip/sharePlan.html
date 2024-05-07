@@ -1,0 +1,110 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/user/layout/default}">
+<th:block layout:fragment="customCss">
+    <link rel="stylesheet" th:href="@{/user/css/list-style.css}"/>
+</th:block>
+
+<th:block layout:fragment="customPageSection">
+    <div>
+        <div class="col-sm-12">
+            <div class="table-responsive">
+
+                <table class="table table-hover table-bordered">
+                    <colgroup>
+                        <col class="col-sm-1" />
+                        <col class="col-sm-6" />
+                        <col class="col-sm-2" />
+                        <col class="col-sm-1" />
+                        <col class="col-sm-2" />
+                    </colgroup>
+                    <thead>
+                    <tr class="active" style="text-align: center">
+                        <th>번호</th>
+                        <th>제목</th>
+                        <th>글쓴이</th>
+                        <th>추천 수</th>
+                        <th>등록일</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class="noticeNum noticeCenter">5</td>
+                        <td><a href="">2박 3일 전주 여행</a></td>
+                        <td class="noticeCenter">회원5</td>
+                        <td class="noticeCenter">0</td>
+                        <td class="noticeCenter">2024-04-29</td>
+                    </tr>
+                    <tr>
+                        <td class="noticeNum noticeCenter">4</td>
+                        <td><a href="">당일치기 서울 여행</a></td>
+                        <td class="noticeCenter">서창우</td>
+                        <td class="noticeCenter">2</td>
+                        <td class="noticeCenter">2024-05-03</td>
+                    </tr>
+                    <tr>
+                        <td class="noticeNum noticeCenter">3</td>
+                        <td><a href="">1박2일 여수 여행</a></td>
+                        <td class="noticeCenter">회원3</td>
+                        <td class="noticeCenter">0</td>
+                        <td class="noticeCenter">2024-04-29</td>
+                    </tr>
+                    <tr>
+                        <td class="noticeNum noticeCenter">2</td>
+                        <td><a href="">3박4일 집콕</a></td>
+                        <td class="noticeCenter">회원2</td>
+                        <td class="noticeCenter">0</td>
+                        <td class="noticeCenter">2024-04-29</td>
+                    </tr>
+                    <tr>
+                        <td class="noticeNum noticeCenter">1</td>
+                        <td><a href="">당신의 여행 계획을 공유해 주세요</a></td>
+                        <td class="noticeCenter">관리자</td>
+                        <td class="noticeCenter">1</td>
+                        <td class="noticeCenter">2024-04-23</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    <!-- 페이징 -->
+    <section class="pt-5 pt-md-7">
+        <div class="container" style="margin-bottom: 50px">
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center align-items-center">
+                    <li class="page-item"><a class="page-link"
+                                             href="#" tabindex="-1"> <i
+                            aria-hidden="true"></i> ◀ 이전
+                    </a></li>
+
+                    <li class="page-item"><a class="page-link active"
+                                             href="#">1</a></li>
+
+                    <li class="page-item"><a class="page-link"
+                                             href="#">2</a></li>
+
+                    <li class="page-item"><a class="page-link"
+                                             href="#">3</a></li>
+
+                    <li class="page-item"><a class="page-link"
+                                             href="#">4</a></li>
+
+                    <li class="page-item"><a class="page-link"
+                                             href="#">5</a></li>
+
+                    <li class="page-item"><a class="page-link"
+                                             href="#">다음 ▶ <i aria-hidden="true"></i>
+                    </a></li>
+                </ul>
+            </nav>
+        </div>
+    </section>
+    </div>
+
+</th:block>
+
+<th:block layout:fragment="customJsFIle"></th:block>
+
+<th:block layout:fragment="customJs"></th:block>
+</html>

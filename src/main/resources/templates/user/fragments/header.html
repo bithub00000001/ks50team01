@@ -1,0 +1,334 @@
+!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<header class="header" id="pageTop" style="height: auto" th:fragment="headerFragment">
+    <!-- ====================================
+    ——— HEADER
+    ===================================== -->
+    <!-- Menu Zord -->
+    <nav class="nav-menuzord">
+        <div class="container clearfix">
+            <div class="menuzord menuzord-responsive" id="menuzord">
+                <a class="menuzord-brand" th:href="@{/trip}">
+                    <img alt="logo-img" class="lazyestload"
+                         data-src="/user/img/logo-color-big.png"
+                         src="/user/img/logo-color-big.png">
+                </a>
+                <div class="nav-item dropdown nav-item-left me-0">
+                    <button class="btn btn-xs btn-primary d-none d-lg-inline-block notify-toggler">
+                        <i aria-hidden="true" class="fa fa-search text-white me-0"></i>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-end dropdown-notify rounded-0">
+                        <form action="index.html" class="mb-0" method="post">
+                            <div class="input-group input-group-sm">
+                                <input aria-label="Search...." class="form-control form-control-sm rounded-0"
+                                       placeholder="Search...."
+                                       required="" type="text">
+                                <button class="btn bg-primary border-0 rounded-0" type="submit">
+                                    <span class="text-white text-uppercase font-weight-bold">Search</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <ul class="menuzord-menu menuzord-right">
+                    <li class="">
+                        <a class="" th:href="@{/trip/}">Home</a>
+                    </li>
+                    <li class="">
+                        <a href="#">여행 계획</a>
+                        <ul class="dropdown drop-up" id="trip">
+                            <li class="">
+                                <a th:href="@{/trip/list}">?내 여행 계획 목록</a>
+                            </li>
+                            <li class="">
+                                <a th:href="@{/trip/detail}">? 여행 계획 세부 사항</a>
+                            </li>
+                            <li class="">
+                                <a href="#">Profile</a>
+                            </li>
+                            <li class="">
+                                <a th:href="@{/trip/board}">? 여행 계획 공유</a>
+                            </li>
+                            <li class="">
+                                <a data-bs-target="#signup" data-bs-toggle="modal"
+                                   href="#">Signup</a>
+                            </li>
+                            <li class="">
+                                <a data-bs-target="#login" data-bs-toggle="modal"
+                                   href="#">Login</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="">
+                        <a href="#">Tours</a>
+                        <div class="megamenu drop-up">
+                            <div class="megamenu-row">
+                                <div class="col4">
+                                    <ul class="list-unstyled">
+                                        <li>Tour Packages Grid View</li>
+                                        <li class="">
+                                            <a href="packages-grid-left-sidebar.html">Packages Sidebar Left</a>
+                                        </li>
+                                        <li class="">
+                                            <a href="packages-grid-right-sidebar.html">Packages Sidebar Right</a>
+                                        </li>
+                                        <li class="">
+                                            <a href="packages-grid.html">Packages 3 Columns</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col4">
+                                    <ul class="list-unstyled">
+                                        <li>Tour Packages List View</li>
+                                        <li class="">
+                                            <a href="packages-list-left-sidebar.html">Packages Sidebar Left</a>
+                                        </li>
+
+                                        <li class="">
+                                            <a href="packages-list-right-sidebar.html">Packages Sidebar Right</a>
+                                        </li>
+
+                                        <li class="">
+                                            <a href="packages-list.html">Packages List</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col4">
+                                    <ul class="list-unstyled">
+                                        <li>Single Package</li>
+                                        <li class="">
+                                            <a href="single-package-left-sidebar.html">Packages Sidebar Left</a>
+                                        </li>
+
+                                        <li class="">
+                                            <a href="single-package-right-sidebar.html">Packages Sidebar Right</a>
+                                        </li>
+
+                                        <li class="">
+                                            <a href="single-package-fullwidth.html">Packages Fullwidth</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="">
+                        <a href="#">Hotels</a>
+                        <div class="megamenu drop-up">
+                            <div class="megamenu-row">
+                                <div class="col3">
+                                    <ul class="list-unstyled">
+                                        <li>Hotels Grid View</li>
+
+                                        <li class="">
+                                            <a href="hotels-grid-left-sidebar.html">Hotels Sidebar Left</a>
+                                        </li>
+
+                                        <li class="">
+                                            <a href="hotels-grid-right-sidebar.html">Hotels Sidebar Right</a>
+                                        </li>
+
+                                        <li class="">
+                                            <a href="hotels-grid.html">Hotels 3 Columns</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col3">
+                                    <ul class="list-unstyled">
+                                        <li>Hotels List View</li>
+                                        <li class="">
+                                            <a href="hotels-list-left-sidebar.html">Hotels Sidebar Left</a>
+                                        </li>
+                                        <li class="">
+                                            <a href="hotels-list-right-sidebar.html">Hotels Sidebar Right</a>
+                                        </li>
+                                        <li class="">
+                                            <a href="hotels-list.html">Hotels List</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col3">
+                                    <ul class="list-unstyled">
+                                        <li>Single Hotel</li>
+                                        <li class="">
+                                            <a href="single-hotel-left-sidebar.html">Hotels Sidebar Left</a>
+                                        </li>
+                                        <li class="">
+                                            <a href="single-hotel-right-sidebar.html">Hotels Sidebar Right</a>
+                                        </li>
+                                        <li class="">
+                                            <a href="single-hotel-fullwidth.html">Hotels Fullwidth</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col3">
+                                    <ul class="list-unstyled">
+                                        <li>Booking Steps</li>
+                                        <li class="">
+                                            <a href="booking-step-1.html">Step 1 - Personal Info</a>
+                                        </li>
+                                        <li class="">
+                                            <a href="booking-step-2.html">Step 2 - Payment Info</a>
+                                        </li>
+                                        <li class="">
+                                            <a href="booking-step-3.html">Step 3 - Confirmation</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="">
+                        <a href="#">Pages</a>
+                        <ul class="dropdown drop-up">
+                            <li class="">
+                                <a href="about-us.html">About Us</a>
+                            </li>
+                            <li class="">
+                                <a href="contact.html">Contact Us</a>
+                            </li>
+                            <li class="">
+                                <a href="#">Gallery</a>
+                                <ul class="dropdown drop-sub-menu-left drop-up">
+                                    <li class="">
+                                        <a href="gallery-grid.html">Gallery Grid</a>
+                                    </li>
+                                    <li class="">
+                                        <a href="gallery-masonry.html">Gallery Masonry</a>
+                                    </li>
+                                    <li class="">
+                                        <a href="gallery-photo-slider.html">Photo Slider</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="">
+                                <a href="#">Destinations</a>
+                                <ul class="dropdown drop-sub-menu-left drop-up">
+                                    <li class="">
+                                        <a href="destination-cities.html">Destination Cities</a>
+                                    </li>
+                                    <li class="">
+                                        <a href="destination-single-city.html">Single Destination</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="">
+                                <a href="#">Components</a>
+                                <ul class="dropdown drop-sub-menu-left drop-up navComponents">
+                                    <li class="scrollNav">
+                                        <a class="removeNav" href="components.html#accordion">Accordion</a>
+                                    </li>
+                                    <li class="scrollNav">
+                                        <a class="removeNav" href="components.html#alerts">Alerts</a>
+                                    </li>
+                                    <li class="scrollNav">
+                                        <a class="removeNav" href="components.html#badge">Badge</a>
+                                    </li>
+                                    <li class="scrollNav">
+                                        <a class="removeNav" href="components.html#breadcrumb">Breadcrumb</a>
+                                    </li>
+                                    <li class="scrollNav">
+                                        <a class="removeNav" href="components.html#buttons">Buttons</a>
+                                    </li>
+                                    <li class="scrollNav">
+                                        <a class="removeNav" href="components.html#collapse">Collapse</a>
+                                    </li>
+                                    <li class="scrollNav">
+                                        <a class="removeNav" href="components.html#card">Card</a>
+                                    </li>
+                                    <li class="scrollNav">
+                                        <a class="removeNav" href="components.html#forms">Forms</a>
+                                    </li>
+                                    <li class="scrolling">
+                                        <a class="removeNav" href="components.html#dropdowns">Dropdowns</a>
+                                    </li>
+                                    <li class="scrollNav">
+                                        <a class="removeNav" href="components.html#list-group">List Group</a>
+                                    </li>
+                                    <li class="scrollNav">
+                                        <a class="removeNav" href="components.html#modal">Modal</a>
+                                    </li>
+                                    <li class="scrollNav">
+                                        <a class="removeNav" href="components.html#navs">Navs</a>
+                                    </li>
+                                    <li class="scrollNav">
+                                        <a class="removeNav" href="components.html#offcanvas">Offcanvas</a>
+                                    </li>
+                                    <li class="scrollNav">
+                                        <a class="removeNav" href="components.html#pagination">Pagination</a>
+                                    </li>
+                                    <li class="scrollNav">
+                                        <a class="removeNav" href="components.html#tooltips">Tooltips</a>
+                                    </li>
+                                    <li class="scrollNav">
+                                        <a class="removeNav" href="components.html#spinners">Spinners</a>
+                                    </li>
+                                    <li class="scrollNav">
+                                        <a class="removeNav" href="components.html#progress">Progress</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="404.html">404 Not Found</a>
+                            </li>
+                            <li>
+                                <a href="coming-soon.html">Coming Soon</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="">
+                        <a href="#">Admin</a>
+                        <ul class="dropdown drop-up" id="admin">
+                            <li class="">
+                                <a href="dashboard.html">Dashboard</a>
+                            </li>
+                            <li class="">
+                                <a href="booking.html">Booking</a>
+                            </li>
+                            <li class="">
+                                <a href="profile.html">Profile</a>
+                            </li>
+                            <li class="">
+                                <a href="setting.html">Settings</a>
+                            </li>
+                            <li class="">
+                                <a data-bs-target="#signup" data-bs-toggle="modal"
+                                   href="#">Signup</a>
+                            </li>
+                            <li class="">
+                                <a data-bs-target="#login" data-bs-toggle="modal"
+                                   href="#">Login</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="py-6">
+                        <div class=" nav-item nav-item-left me-0">
+                            <a data-bs-target="#login" data-bs-toggle="modal"
+                               href="#"><button type="button" class="btn btn-xs btn-outline-primary d-none d-lg-inline-block"><span class="font-weight-bold">로그인</span></button></a>
+                        </div>
+                    </li>
+                    <li class="py-6">
+                        <div class="nav-item nav-item-left me-0">
+                            <a data-bs-target="#login" data-bs-toggle="modal"
+                               href="#"><button type="button" class="btn btn-xs btn-outline-primary d-none d-lg-inline-block"><span class="font-weight-bold">로그아웃</span></button></a>
+                        </div>
+                    </li>
+                    <li class="py-4">
+                        <form action="index.html" class="d-lg-none" method="post">
+                            <div class="input-group input-group-sm">
+                                <input aria-label="Search...." class="form-control form-control-sm rounded-0"
+                                       placeholder="Search...."
+                                       required="" type="text">
+                                <button class="btn bg-primary border-0 rounded-0" type="submit">
+                                    <span class="text-white text-uppercase font-weight-bold">Search</span>
+                                </button>
+                            </div>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>

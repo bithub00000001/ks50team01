@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <!-- ===========================================
+        ———	CITE META INFO START
+        ========================================== -->
+        <meta charset="utf-8">
+        <meta content="IE=edge" http-equiv="X-UA-Compatible">
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
+        <title>여행 계획</title>
+        <!-- ===========================================
+        ———	CITE META INFO END
+        ========================================== -->
+
+        <!-- ===========================================
+        ———	COMMON PLUGINS CSS STYLE START
+        ========================================== -->
+        <link rel='stylesheet' th:href="@{/user/plugins/fontawesome-5.15.2/css/all.min.css}">
+        <link rel='stylesheet' th:href="@{/user/plugins/fontawesome-5.15.2/css/fontawesome.min.css}">
+        <link rel="stylesheet" th:href="@{/user/plugins/animate/animate.css}">
+        <link rel="stylesheet" th:href="@{/user/plugins/menuzord/css/menuzord.css}">
+        <link rel="stylesheet" th:href="@{/user/plugins/menuzord/css/menuzord-animations.css}">
+        <link rel='stylesheet' th:href="@{/user/plugins/fancybox/jquery.fancybox.min.css}">
+        <link rel='stylesheet' th:href="@{/user/plugins/selectric/selectric.css}">
+        <!-- ===========================================
+        ———	COMMON PLUGINS CSS STYLE END
+        ========================================== -->
+
+        <!-- ===========================================
+        ———	CUSTOM PLUGINS CSS STYLE START
+        ========================================== -->
+        <th:block layout:fragment="customCss"></th:block>
+        <!-- ===========================================
+        ———	CUSTOM PLUGINS CSS STYLE END
+        ========================================== -->
+
+        <!-- ===========================================
+        ———	TEMPLATE CSS STYLE START
+        ========================================== -->
+        <link id="option_style" rel="stylesheet" th:href="@{/user/css/star.css}">
+        <!-- ===========================================
+        ———	TEMPLATE CSS STYLE END
+        ========================================== -->
+
+        <!-- ===========================================
+        ———	CITE FAVICON START
+        ========================================== -->
+        <link href="/user/img/favicon.png" rel="shortcut icon" type="image/png"/>
+        <!-- ===========================================
+        ———	CITE FAVICON END
+        ========================================== -->
+    </head>
+    <body class="up-scroll" data-bs-offset="100" data-bs-spy="scroll" data-bs-target=".element-right-sidebar" id="body">
+
+        <!-- ===========================================
+        ———	HEADER NAVIGATION START
+        ========================================== -->
+        <header th:replace="~{user/fragments/header :: headerFragment}"></header>
+        <!-- ===========================================
+        ———	HEADER NAVIGATION END
+        ========================================== -->
+
+        <div class="main-wrapper">
+            <!-- ====================================
+            ———	PAGE TITLE START
+            ===================================== -->
+            <header th:replace="~{user/fragments/banner :: bannerFragment}"></header>
+            <!--/*<th:block layout:fragment="customPageTitle"></th:block>*/-->
+            <!-- ====================================
+            ———	PAGE TITLE END
+            ===================================== -->
+            <section>
+                <div class="container">
+                    <!-- Elements Breadcrumb -->
+                    <div class="pt-5 mb-5" id="breadcrumb">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="mb-12">
+                                    <!-- ====================================
+                                    ———	Dynamic Breadcrumb START
+                                    ===================================== -->
+                                    <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);"  aria-label="breadcrumb">
+                                        <ol class="breadcrumb">
+                                            <li th:each="item, iterStat : ${breadcrumb}"
+                                                th:classappend="${iterStat.last} ? 'breadcrumb-item active' : 'breadcrumb-item'">
+                                                <th:block th:if="${iterStat.last}" th:text="${item.name}" aria-current="page"></th:block>
+                                                <a th:if="!${iterStat.last}" th:href="${item.url}" th:text="${item.name}">Item</a>
+                                            </li>
+                                        </ol>
+                                    </nav>
+                                    <!-- ====================================
+                                    ———	Dynamic Breadcrumb END
+                                    ===================================== -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ====================================
+            ———	PAGE SECTION START
+            ===================================== -->
+            <section class="pb-10">
+                <div class="container">
+                    <div class="mb-6">
+                        <div class="row">
+            <th:block layout:fragment="customPageSection">
+
+            </th:block>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- ====================================
+            ———	PAGE SECTION END
+            ===================================== -->
+        </div>
+
+        <!-- ====================================
+        ———	FOOTER CONTENT START
+        ===================================== -->
+        <div th:replace="~{user/fragments/footer :: footerFragment}"></div>
+        <!-- ====================================
+        ———	FOOTER CONTENT END
+        ===================================== -->
+
+        <!-- ===========================================
+        ———	COMMON JAVASCRIPT RESOUCES START
+        ========================================== -->
+        <script th:src="@{/user/plugins/jquery/jquery-3.4.1.min.js}"></script>
+        <script th:src="@{/user/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+        <script th:src="@{/user/plugins/menuzord/js/menuzord.js}"></script>
+        <script th:src="@{/user/plugins/fancybox/jquery.fancybox.min.js}"></script>
+        <script th:src="@{/user/plugins/selectric/jquery.selectric.min.js}"></script>
+        <script th:src="@{/user/plugins/lazyestload/lazyestload.js}"></script>
+        <script th:src="@{/user/plugins/velocity/velocity.min.js}"></script>
+        <script th:src="@{/user/plugins/smoothscroll/SmoothScroll.js}"></script>
+        <!-- ===========================================
+        ———	COMMON JAVASCRIPT RESOUCES END
+        ========================================== -->
+
+
+        <!-- ===========================================
+        ———	CUSTOM JAVASCRIPT RESOUCES START
+        ========================================== -->
+        <th:block layout:fragment="customJsFIle"></th:block>
+        <!-- ===========================================
+        ———	CUSTOM JAVASCRIPT RESOUCES END
+        ========================================== -->
+
+        <script th:src="@{/user/js/star.js}"></script>
+
+        <!-- ===========================================
+        ———	CUSTOM JAVASCRIPT SCRIPT START
+        ========================================== -->
+        <th:block layout:fragment="customJs"></th:block>
+        <!-- ===========================================
+        ———	CUSTOM JAVASCRIPT SCRIPT END
+        ========================================== -->
+    </body>
+</html>

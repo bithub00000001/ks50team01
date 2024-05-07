@@ -1,0 +1,250 @@
+@charset "UTF-8";
+.separator1 {
+    border-top: 3px solid #ff9b40; /* 굵은 직선 스타일 설정 */
+    margin: 10px 0; /* 위아래 여백 설정 */
+}
+.separator2 {
+    border-top: 1px solid #ffd0a5; /* 굵은 직선 스타일 설정 */
+    margin: 10px 0; /* 위아래 여백 설정 */
+}
+
+/* 리뷰 텍스트 입력 박스 */
+.form-group_box input[type="text"],
+.form-group_box textarea {
+    width: 100%;
+    height: 300px;
+    padding: 1%;
+    border: 2px solid #ffd0a5;
+    border-radius: 5px;
+    box-sizing: border-box;
+    /* 수정된 부분: 최대 글자 수 제한 */
+    resize: none;
+    overflow-y: auto; /* 텍스트 내용이 넘칠 경우 스크롤바 표시 */
+}
+
+/* 취소와 등록 버튼 */
+/* .form-group .btn { */
+/*     padding: 10px 20px; */
+/*     background-color: #ff9b40; */
+/*     color: #fff; */
+/*     border: none; */
+/*     border-radius: 5px; */
+/*     cursor: pointer; */
+/*     margin-left: 10px; */
+/* } */
+
+/* 등록 버튼 스타일 */
+.form-group .btn.register-button {
+    padding: 10px 20px;
+    background-color: #ff9b40; /* 주황색 배경색 */
+    color: #fff; /* 흰색 글자색 */
+    border: 2px solid #ff9b40; /* 주황색 테두리 */
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: background-color 0.3s, border-color 0.3s; /* 호버 효과를 위한 transition 속성 추가 */
+}
+/* 등록 버튼 호버 효과 */
+.form-group .btn.register-button:hover {
+    background-color: #ff7c00; /* 더 진한 주황색 배경색 */
+    border-color: #ff7c00; /* 더 진한 주황색 테두리 */
+}
+
+/* 취소 버튼 스타일 */
+.form-group .btn.cancel-button {
+    padding: 10px 20px;
+    background-color: #6c757d; /* 회색 배경색 */
+    color: #fff; /* 흰색 글자색 */
+    border: 2px solid #6c757d; /* 회색 테두리 */
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: background-color 0.3s, border-color 0.3s; /* 호버 효과를 위한 transition 속성 추가 */
+}
+
+
+/* 취소 버튼 호버 효과 */
+.form-group .btn.cancel-button:hover {
+    background-color: #495057; /* 더 진한 회색 배경색 */
+    border-color: #495057; /* 더 진한 회색 테두리 */
+}
+
+/* 취소와 등록 버튼 왼쪽 정렬 */
+.form-group {
+    text-align: right;
+}
+
+/* 별점 문구 텍스트 */
+.evaluation {
+    text-align: center;
+    font-size: 15px;
+    margin-top: 10px;
+}
+
+/* input버튼이 사라지고 별만 남음 */
+.star-rating input {
+display: none;
+}
+
+/* 별 크기 */
+.star-rating label {
+    display: inline-block;
+    font-size: 40px; /* 별 크기 조정 */
+    color: #f5f5f5; /* 별 색상 */
+    cursor: pointer;
+}
+
+/* 호버 시 색 채움 - 근데 반대로 되는 상황 발생 */
+/*
+.star-rating label:hover,
+.star-rating input[type="radio"]:hover ~ label {
+    color: #ffcc00;
+    flex-direction: row;
+    position: relative;
+}
+*/
+
+
+/* 별점 평가 문구 하단의 마진 */
+.star-group_box {
+    margin-block-end: 20px;
+}
+
+/* 별점 타이틀 글씨 스타일 */
+.star-group_box label[for="rating"] {
+    display: block;
+    text-align: center;
+    font-size: 20px; /* 별점 글씨 크기 조정 */
+    margin-bottom: 2px; /* 필요한 경우 마진 조정 */
+}
+
+/* 구매후기작성 타이틀 글씨 스타일 */
+.form-group_box label[for="review"] {
+    display: block;
+    text-align: center;
+    font-size: 20px; /* 구매후기작성 글씨 크기 조정 */
+    margin-bottom: 0px; /* 구매후기 텍스트와 실제 텍스트 박스 사이의 아래 마진 조정 */
+}
+
+/* 글자수 (0/1000) 글자색과 위치 */
+.char-count {
+    position: absolute;
+    bottom: 10px; /* 아래 여백 조정 */
+    right: 10px; /* 오른쪽 여백 조정 */
+    font-size: 15px;
+    color: #ff9b40;
+}
+
+/* 글자수 (0/1000) 텍스트 박스 안으로 이동 -> 텍스트를 많이 사용하면 텍스트와 겹침*/
+.form-group_box {
+    position: relative; /* 부모 요소 설정 */
+}
+
+
+/* 취소와 등록버튼과 굵은 선 사이의 마진 */
+.form-group {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* 별점 등록 글씨 두께*/
+/* 구매 후기 작성 글씨 두께 -> 적용시 별 사라짐 */
+.star-group_box label,
+.form-group_box label {
+    display: block;
+    font-weight: bold;
+    font-size: 1px;
+    margin-bottom: 10px;
+}
+
+/* 적용시 별이 생김 */
+.star-rating label {
+    display: inline-block;
+    font-size: 40px; /* 별 크기 조정 */
+    color: #f5f5f5; /* 별 색상 */
+    cursor: pointer;
+}
+
+/* 별 가운데 정렬 */
+.star-rating {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row; /* 왼쪽에서 오른쪽으로 정렬 */
+    position: relative; /* 부모 요소 설정 */
+}
+
+/* 사진 첨부 글씨 */
+.attachment-text {
+    display: block;
+    font-weight: bold;
+    font-size: 15px;
+    align-items: center;
+}
+
+/* 첨부하기 버튼 스타일 */
+.file-upload-btn {
+    padding: 10px 20px;
+    background-color: #ff9b40;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px; /* 버튼과 텍스트 사이 여백 조정 */
+    margin-top: 10px;
+}
+
+/* (0/10) 색과 위치 지정 */
+#fileCount {
+    color: #ff9b40; /* 파일 갯수 텍스트만 주황색으로 설정 */
+    margin-right: 15px; /* 텍스트를 오른쪽으로 이동하여 버튼의 오른쪽에 정렬 */
+    margin-top: 5px;
+}
+
+/* 첨부하기 버튼과 (0/10) 오른쪽 정렬 */
+.attachment-text {
+  margin-right: auto; /* 텍스트를 오른쪽으로 이동 */
+}
+.photo-upload-section {
+    display: flex;
+    align-items: center;
+}
+
+/* 등록한 첨부파일 세로정렬 */
+.attached-file {
+  display: flex; /* 요소를 수평으로 정렬 */
+  align-items: center; /* 요소를 수직으로 가운데 정렬 */
+  margin-bottom: 10px; /* 하단 여백 추가 */
+  width: 100%; /* 요소를 부모 요소의 너비에 맞춤 */
+}
+
+/* 등록된 이미지 미리보기 크기 */
+.attached-file img {
+  max-width: 100px; /* 썸네일 이미지의 최대 너비 */
+  max-height: 100px; /* 썸네일 이미지의 최대 높이 */
+  margin-right: 10px; /* 이미지와 파일명 사이 간격 */
+}
+
+/* 첨부파일명 */
+.attached-file span {
+    display: block; /* 각 파일 아이템을 세로로 배치하기 위해 블록 요소로 변경합니다. */
+  white-space: nowrap; /* 파일명이 길어도 한 줄에 표시되도록 설정 */
+  overflow: hidden; /* 파일명이 넘칠 경우 자르고 나머지는 숨김 */
+  text-overflow: ellipsis; /* 넘친 파일명은 생략 부호로 표시 */
+}
+
+/* 첨부파일 x 버튼 스타일 */
+.delete-button {
+    background-color: #ff9b40;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+
+

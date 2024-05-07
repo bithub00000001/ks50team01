@@ -29,30 +29,32 @@
     }
 
   });
-  
+
   $(document).ready(function() {
+    // removeNav 클릭 이벤트 핸들러
     $('.removeNav').on('click', function() {
       $('.dropdown').hide();
     });
-  });
 
-  $(document).ready(function($) {
+    // 창 크기 변화에 따른 메뉴 스타일 변경
     var n = function() {
       var ww = document.body.clientWidth;
       if (ww > 768) {
         $('.menuzord-menu').removeClass('remove-menuzord');
       } else if (ww <= 769) {
         $('.menuzord-menu').addClass('remove-menuzord');
-      };
+      }
     };
+
+    // 창 크기 변화 감지하여 메뉴 스타일 변경 함수 호출
     $(window).resize(function(){
       n();
     });
-    //Fire it when the page first loads:
-    n();
-  });
 
-  $(document).ready(function() {
+    // 페이지 로딩 시 메뉴 스타일 변경 함수 호출
+    n();
+
+    // scrollNav 클릭 이벤트 핸들러
     $('.scrollNav').on('click', function() {
       $('.remove-menuzord').hide();
     });
@@ -826,8 +828,8 @@
       }
     });
   }
-
-  /*======== 12. MAP ========*/
+/*
+  /!*======== 12. MAP ========*!/
   function initialize() {
     var myLatLng = { lat: 40.697488, lng: -73.979681 };
 
@@ -847,7 +849,7 @@
   var mapId = $('#map');
   if (mapId.length) {
     google.maps.event.addDomListener(window, 'load', initialize);
-  }
+  }*/
 
 })(jQuery);
 

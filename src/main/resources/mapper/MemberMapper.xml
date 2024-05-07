@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ksmart.ks50team01.platform.member.management.mapper.MemberMapper">
+
+	
+	<update id="updateMember" parameterType="PMember">
+	    UPDATE MEMBER_MANAGE
+	    SET
+	        MBR_PW = #{memberPw},
+	        MBR_NM = #{memberName},
+	        MBR_NICKNAME = #{memberNickname},
+	        MBR_EML_ADDR = #{memberEmail},
+	        MBR_TELNO = #{memberTelNum},
+	        MBR_MDFCN_YMD = NOW()
+	    WHERE
+	        MBR_ID = #{memberId}
+	</update>
+	
+
+	<delete id="delMember" parameterType="map">
+		/* 회원 탈퇴 */
+		DELETE 
+		FROM 
+			MEMBER_MANAGE 
+		WHERE 
+			MBR_ID = #{memberId}
+	</delete>
+
+	<update id="updateMemberGrade" parameterType="map">
+		/* 회원 등급 업데이트 */
+	    UPDATE MEMBER_MANAGE
+	    SET 
+	    	MBR_GRD_NO = #{memberGrdNum}
+	    WHERE 
+	    	MBR_ID = #{memberId}
+	</update>
+
+	
+
+	<select id="getMemberGrade" resultType="PMember">
+		/* 회원 등급 조회 */
+		SELECT 
+			MBR_GRD_NO		AS	memberGrdNum, 
+			MBR_GRD_NM		AS	memberLevelName
+		FROM 
+			MEMBER_GRADE
+	</select>
+
+	<select id="memberCount" resultType="Int">
+		/* 가입된 회원 카운트 조회 */
+		SELECT
+			COUNT(MBR_ID)
+		FROM
+			MEMBER_MANAGE
+	</select>
+	
+	
+	
+	<select id="getMemberList" resultType="PMember">
+		/* 회원목록 조회 */
+		SELECT 
+			MBR_ID			AS	memberId, 
+			MBR_GRD_NO		AS	memberGrdNum, 
+			MBR_PW			AS	memberPw, 
+			MBR_NM			AS	memberName, 
+			MBR_NICKNAME	AS	memberNickname, 
+			MBR_EML_ADDR	AS	memberEmail, 
+			MBR_TELNO		AS	memberTelNum, 
+			MBR_REG_YMD		AS	memberRegDate, 
+			MBR_MDFCN_YMD	AS	memberFormDate
+		FROM 
+			MEMBER_MANAGE;
+	</select>
+	
+	<select id="getMemberInfoById" resultType="PMember">
+		/* 검색 회원 등급 조회 */
+		SELECT 
+			MBR_ID			AS	memberId, 
+			MBR_GRD_NO		AS	memberGrdNum, 
+			MBR_PW			AS	memberPw, 
+			MBR_NM			AS	memberName, 
+			MBR_NICKNAME	AS	memberNickname, 
+			MBR_EML_ADDR	AS	memberEmail, 
+			MBR_TELNO		AS	memberTelNum, 
+			MBR_REG_YMD		AS	memberRegDate, 
+			MBR_MDFCN_YMD	AS	memberFormDate
+		FROM 
+			MEMBER_MANAGE
+		WHERE
+			MBR_ID = #{memberId};
+	</select>
+	
+</mapper>

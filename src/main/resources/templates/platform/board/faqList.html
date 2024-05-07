@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/platform/layout/default}">
+      
+    <head>
+    	<style>
+    		table thead tr{
+    			height: 50px !important;
+    			font-size: 18px;
+    			font-weight: 900;
+    		}
+    		table tbody tr{
+    			height: 50px !important;
+    			font-size: 18px;
+    		}
+    	</style>
+    </head>
+
+<th:block layout:fragment="customContent">
+	<!-- 여기에 메인 컨텐츠가 삽입됩니다. -->
+
+
+		<div class="d-flex align-items-start">
+			<div class="dropdown mt-3">
+				<button class="btn btn-primary dropdown-toggle" type="button"
+					id="dropdownMenuButton" data-bs-toggle="dropdown">자주찾는 질문</button>
+				<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+					<li><a class="dropdown-item" href="javascript:void(0)">계정 관리</a></li>
+					<li><a class="dropdown-item" href="javascript:void(0)">이용 문의</a></li>
+					<li><a class="dropdown-item" href="javascript:void(0)">건의 및 제안</a></li>
+					<li><a class="dropdown-item" href="javascript:void(0)">결제 및 환불</a></li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="flex-grow-1 d-flex justify-content-center">
+			<div id="board-search"
+				style="margin-top: 50px; margin-bottom: 20px; width: 500px;">
+				<form class="mb-6" action="index.html" method="post">
+					<div class="input-group input-group-sm">
+						<input type="text" class="form-control form-control-sm rounded-0"
+							required="" placeholder="검색어를 입력해주세요." aria-label="Search....">
+						<button class="btn bg-primary border-0 rounded-0" type="submit">
+							<span class="text-white text-uppercase font-weight-bold">검색</span>
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<!-- Elements Alerts -->
+		<section class="pt-7 pb-9 pt-lg-9 pb-lg-10">
+			<div class="container">
+				<div class="row">
+					<div class="col-xl-12">
+						<div class="accordion" id="accordionOne">
+
+							<div class="card">
+								<div class="card-header" id="headingOne">
+									<h5 class="icon-bg" data-bs-toggle="collapse"
+										data-bs-target="#collapseOne" aria-expanded="true"
+										aria-controls="collapseOne">
+										<span
+											class="text-capitalize font-weight-medium font-size-base text-dark"><i
+											class="badge rounded-pill bg-primary">계정관리</i>회원탈퇴는 어떻게 하나요?</span>
+									</h5>
+								</div>
+
+								<div id="collapseOne" class="collapse show"
+									aria-labelledby="headingOne" data-bs-parent="#accordionOne">
+									<div class="card-body pt-3">
+										로그인 후 내정보 > 회원탈퇴에서 회원탈퇴를 하실 수 있습니다. <br> 회원탈퇴를 하시면 포인트와
+										상품은 소멸되어 재가입 하시더라도 복구되지 않으므로 유의하시기 바랍니다. <br> 한번 탈퇴하신 후에는
+										해당 아이디로 재가입이 어렵습니다. <br>
+									</div>
+								</div>
+							</div>
+
+							<div class="card">
+								<div class="card-header" id="headingTwo">
+									<h5 class="icon-bg collapsed" data-bs-toggle="collapse"
+										data-bs-target="#collapseTwo" aria-expanded="false"
+										aria-controls="collapseTwo">
+										<span
+											class="text-capitalize font-weight-medium font-size-base text-dark"><i
+											class="badge rounded-pill bg-primary">계정관리</i>아이디, 비밀번호를
+											분실했어요!</span>
+									</h5>
+								</div>
+
+								<div id="collapseTwo" class="collapse"
+									aria-labelledby="headingTwo" data-bs-parent="#accordionOne">
+									<div class="card-body pt-3">홈페이지 메인 로그인 화면 하단에 보이는
+										[아이디/비밀번호 찾기] 버튼을 통해 가입 당시 등록하신 이름과 이메일을 입력하시면 아이디와 비밀번호를 찾으실
+										수 있습니다.</div>
+								</div>
+
+								<div class="card">
+									<div class="card-header" id="headingTwo">
+										<h5 class="icon-bg collapsed" data-bs-toggle="collapse"
+											data-bs-target="#collapseTwo" aria-expanded="false"
+											aria-controls="collapseTwo">
+											<span
+												class="text-capitalize font-weight-medium font-size-base text-dark"><i
+												class="badge rounded-pill bg-primary">이용문의</i>문의하는 방법을 알려주세요</span>
+										</h5>
+									</div>
+
+									<div id="collapseTwo" class="collapse"
+										aria-labelledby="headingTwo" data-bs-parent="#accordionOne">
+										<div class="card-body pt-3">1:1문의로 ...</div>
+									</div>
+								</div>
+
+								<div class="card mb-0">
+									<div class="card-header" id="headingThree">
+										<h5 class="icon-bg collapsed" data-bs-toggle="collapse"
+											data-bs-target="#collapseThree" aria-expanded="false"
+											aria-controls="collapseThree">
+											<span
+												class="text-capitalize font-weight-medium font-size-base text-dark"><i
+												class="badge rounded-pill bg-primary">결제 및 환불</i>구매를 취소하고
+												싶어요</span>
+										</h5>
+									</div>
+
+									<div id="collapseThree" class="collapse"
+										aria-labelledby="headingThree" data-bs-parent="#accordionOne">
+										<div class="card-body pt-3">아래의 페이지 ...</div>
+									</div>
+
+									<div class="row">
+										<div class="col-12"
+											style="text-align: right; margin-top: 100px; margin-bottom: 10px;">
+											<!-- 글쓰기 버튼 클릭하면 /platform/board/noticeWrite 페이지로 이동 -->
+											<a th:href="@{/platform/board/faqWrite}"><button type="button" class="btn btn-outline-primary btn-sm">글쓰기</button></a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+	</section>
+
+
+	<div class="row mb-5">
+			<div class="col-12 d-flex justify-content-center">
+				<nav aria-label="Page navigation">
+					<ul class="pagination align-items-center">
+						<li class="page-item"><a class="page-link"
+							href="javascript:void(0)" tabindex="-1"> <i
+								aria-hidden="true"></i> ◀ 이전
+						</a></li>
+
+						<li class="page-item"><a class="page-link active"
+							href="javascript:void(0)">1</a></li>
+						<li class="page-item"><a class="page-link"
+							href="javascript:void(0)">2</a></li>
+						<li class="page-item"><a class="page-link"
+							href="javascript:void(0)">3</a></li>
+						<li class="page-item"><a class="page-link"
+							href="javascript:void(0)">4</a></li>
+						<li class="page-item"><a class="page-link"
+							href="javascript:void(0)">5</a></li>
+						<li class="page-item"><a class="page-link"
+							href="javascript:void(0)">6</a></li>
+						<li class="page-item"><a class="page-link"
+							href="javascript:void(0)">7</a></li>
+						<li class="page-item"><a class="page-link"
+							href="javascript:void(0)">8</a></li>
+						<li class="page-item"><a class="page-link"
+							href="javascript:void(0)">9</a></li>
+						<li class="page-item"><a class="page-link"
+							href="javascript:void(0)">10</a></li>
+						<li class="page-item"><a class="page-link"
+							href="javascript:void(0)"> 다음 ▶ <i aria-hidden="true"></i>
+						</a></li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+</th:block>
+</html>
