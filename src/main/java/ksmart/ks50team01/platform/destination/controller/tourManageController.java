@@ -41,5 +41,14 @@ public class tourManageController {
 		
 		return "/platform/destination/destinationRegister";
 	}
+	
+	@GetMapping("/destination/categoryManage")
+	public String categoryManage(Model model) {
+		
+		model.addAttribute("title", "카테고리 관리");
+		
+		return "/platform/destination/categoryManage";
+		
+	}
 
 }
