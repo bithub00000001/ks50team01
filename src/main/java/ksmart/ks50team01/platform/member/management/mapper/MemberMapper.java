@@ -9,6 +9,9 @@ import ksmart.ks50team01.platform.member.management.dto.PMember;
 @Mapper
 public interface MemberMapper {
 	
+	// 회원 정보 수정
+	int updateMember(PMember member);
+	
 	// 회원탈퇴
 	int delMember(String memberId);
 	
