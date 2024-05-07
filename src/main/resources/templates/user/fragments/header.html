@@ -1,6 +1,17 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <header class="header" id="pageTop" style="height: auto" th:fragment="headerFragment">
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    const loginError = /*[[${loginError}]]*/ false;
+    if (loginError) {
+        alert("아이디 혹은 비밀번호가 틀렸습니다.");
+        $(document).ready(function() {
+            $('#login').modal('show');
+        });
+    }
+    /*]]>*/
+</script>
     <!-- ====================================
     ——— HEADER
     ===================================== -->
@@ -18,7 +29,8 @@
 	          </div>
 	
 	          <div class="modal-body">
-			    <form class="" th:action="@{/login}" method="post">
+				<div th:if="${message}" th:text="${message}" class="alert alert-info" role="alert"></div>
+			    <form th:action="@{/login/login}" method="post">
 			        <div class="mb-3">
 			            <input type="id" class="form-control bg-smoke" required="" placeholder="id" name="id">
 			        </div>
@@ -352,18 +364,27 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="py-6">
-                        <div class=" nav-item nav-item-left me-0">
-                            <a data-bs-target="#login" data-bs-toggle="modal"
-                               href="#"><button type="button" class="btn btn-xs btn-outline-primary d-none d-lg-inline-block"><span class="font-weight-bold">로그인</span></button></a>
-                        </div>
-                    </li>
-                    <li class="py-6">
-                        <div class="nav-item nav-item-left me-0">
-                            <a data-bs-target="#login" data-bs-toggle="modal"
-                               href="#"><button type="button" class="btn btn-xs btn-outline-primary d-none d-lg-inline-block"><span class="font-weight-bold">로그아웃</span></button></a>
-                        </div>
-                    </li>
+                    <li class="py-6" th:if="${session.loginId == null}">
+					    <div class="nav-item nav-item-left me-0">
+					        <a data-bs-target="#login" data-bs-toggle="modal" href="#">
+					            <button type="button" class="btn btn-xs btn-outline-primary d-none d-lg-inline-block">
+					                <span class="font-weight-bold">로그인</span>
+					            </button>
+					        </a>
+					    </div>
+					</li>
+                    <li class="py-6" th:if="${session.loginId != null}">
+					    <div class="nav-item nav-item-left me-0">
+					        <a th:href="@{/login/logout}">
+					            <button type="button" class="btn btn-xs btn-outline-primary d-none d-lg-inline-block">
+					                <span class="font-weight-bold">로그아웃</span>
+					            </button>
+					        </a>
+					        <div th:if="${session.loginId != null}">
+							    <div th:text="${session.loginName} + ' 님 환영합니다!'" class="text-primary font-weight-bold"></div>
+							</div>
+					    </div>
+					</li>
                     <li class="py-4">
                         <form action="index.html" class="d-lg-none" method="post">
                             <div class="input-group input-group-sm">
@@ -381,3 +402,5 @@
         </div>
     </nav>
 </header>
+</html>
+
