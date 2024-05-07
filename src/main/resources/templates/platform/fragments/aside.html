@@ -36,11 +36,8 @@
                             <span class="fa fa-chevron-down"></span>
                         </a>
                         <ul class="nav child_menu">
-                            <li><a href="/platform/member/memberManagement">회원 정보관리</a></li>
-                            <li><a href="/platform/member/memberGrade">회원 등급관리</a></li>
-                            <li><a href="#">?회원 등록</a></li>
-                            <li><a href="#">?회원 일괄 등록</a></li>
-                            <li><a href="#">?회원 일괄 메일발송</a></li>
+                            <li><a href="/platform/member/memberManagement">회원정보 조회 및 등급변경</a></li>
+                            <li><a href="/platform/member/memberManageChange">?회원정보 수정 및 탈퇴</a></li>
                         </ul>
                     </li>
                     <li>
@@ -103,7 +100,7 @@
                             <li><a href="#">?카테고리 관리</a></li>
                             <li><a th:href="@{/platform/board/noticeList}">공지사항 관리</a></li>
                             <li><a th:href="@{/platform/board/faqList}">자주찾는 질문 관리</a></li>
-                            <li><a href="#">?1:1문의 관리</a></li>
+                            <li><a th:href="@{/platform/board/qnaList}">1:1문의 관리</a></li>
                             <li><a href="#">?게시판 관리</a></li>
                             <li><a href="#">?게시판 신고내역 관리</a></li>
                         </ul>

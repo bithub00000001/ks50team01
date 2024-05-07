@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(value = "/user/board")
 public class UNoticeController {
 	
-	@GetMapping("/noticeList")
+	@GetMapping("/notice")
 	public String notice(Model model) {
 		
-		model.addAttribute("title", "공지사항페이지");
+		model.addAttribute("title", "공지사항");
 		return "user/board/noticeList";
 		
 	}
