@@ -16,6 +16,10 @@ public class MemberService {
 
 	private final MemberMapper memberMapper;
 	
+	public int updateMember(PMember member) {
+		return memberMapper.updateMember(member);
+	}
+	
 	
 	public int delMember(String memberId) {
 		int delMember = memberMapper.delMember(memberId);

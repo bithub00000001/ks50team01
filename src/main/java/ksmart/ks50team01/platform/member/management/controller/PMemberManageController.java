@@ -1,11 +1,11 @@
 package ksmart.ks50team01.platform.member.management.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,27 +22,44 @@ public class PMemberManageController {
 
 	public final MemberService memberService;
 	
-	@GetMapping("/memberGrade")
-	public String getMemberGrade(Model model) {
-		
-		return "platform/member/memberGrade";
+	
+	@GetMapping("/delMember")
+	public String delMember(@RequestParam("memberId") String memberId) {
+	    memberService.delMember(memberId);
+	    return "redirect:/platform/member/memberManageChange";
 	}
 	
 	
-	@PostMapping("/memberGrade2")
-	public String modifyMember(@RequestParam(value="memberId") String memberId
-							  ,Model model) {
+	@PostMapping("/memberModify")
+	public String memberModifyProcess(@ModelAttribute PMember member) {
+	    memberService.updateMember(member);
+	    return "redirect:/platform/member/memberManageChange";
+	}
+	
+	
+	@GetMapping("/memberModify")
+	public String memberModify(@RequestParam("memberId") String memberId, Model model) {
+	    PMember memberInfo = memberService.getMemberInfoById(memberId);
+	    List<PMember> memberGrade = memberService.getMemberGrade();
 
-		PMember memberInfo = memberService.getMemberInfoById(memberId);
-		List<PMember> memberList = memberService.getMemberList();
-		
-		model.addAttribute("title", "회원수정");
-		model.addAttribute("memberInfo", memberInfo);
-		model.addAttribute("memberList", memberList);
-		
+	    model.addAttribute("memberInfo", memberInfo);
+	    model.addAttribute("memberGrade", memberGrade);
+	    model.addAttribute("title", "회원수정");
 
-		
-		return "platform/member/memberGrade2";
+	    return "platform/member/memberModify";
+	}
+	
+	
+	@GetMapping("/memberManageChange")
+	public String memberManageChange(Model model) {
+	    List<PMember> memberList = memberService.getMemberList();
+	    List<PMember> memberGrade = memberService.getMemberGrade();
+
+	    model.addAttribute("memberList", memberList);
+	    model.addAttribute("memberGrade", memberGrade);
+	    model.addAttribute("title", "회원관리");
+
+	    return "platform/member/memberManageChange";
 	}
 	
 	
@@ -58,27 +75,6 @@ public class PMemberManageController {
 	    return "platform/member/memberManagement";
 	}
 	 
-	@PostMapping("/memberSearch")
-	public String searchMember(@RequestParam("searchId") String searchId, Model model) {
-	    if (searchId.trim().isEmpty()) {
-	        return "redirect:/platform/member/memberManagement";
-	    }
-	    
-	    PMember memberInfo = memberService.getMemberInfoById(searchId);
-	    List<PMember> memberGrade = memberService.getMemberGrade();
-
-	    List<PMember> memberList = new ArrayList<>();
-	    if (memberInfo != null) {
-	        memberList.add(memberInfo);
-	    }
-
-	    model.addAttribute("memberInfo", memberInfo);
-	    model.addAttribute("memberList", memberList);
-	    model.addAttribute("memberGrade", memberGrade);
-	    model.addAttribute("title", "회원관리");
-
-	    return "platform/member/memberManagement";
-	}
 	
 	@PostMapping("/memberManagement")
 	public String handleMemberAction(@RequestParam("memberId") String memberId,
