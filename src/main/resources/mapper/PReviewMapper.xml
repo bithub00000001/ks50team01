@@ -17,20 +17,20 @@
  	</resultMap>
  	
  	<resultMap type="PReviewReport" id="PReviewReportResultMap">
- 		<id property="reportNum" column=""/>
- 		<result property="reportNum" column=""/>
- 		<result property="reportId" column=""/>
- 		<result property="reportCategories" column=""/>
- 		<result property="reportReviewCode" column=""/>
- 		<result property="reportContent" column=""/>
- 		<result property="reportDate" column=""/>
- 		<result property="reportApprove" column=""/>
- 		<result property="reportApproveId" column=""/>
- 		<result property="reportApproveDate" column=""/>
+ 		<id property="reportNum" column="REV_REPT_NO"/>
+ 		<result property="reportNum" column="REV_REPT_NO"/>
+ 		<result property="reportId" column="REG_MBR_ID"/>
+ 		<result property="reportCategories" column="REPT_CTGRY_NO"/>
+ 		<result property="reportReviewCode" column="PRCHS_REV_CD"/>
+ 		<result property="reportContent" column="REV_REPT_CN"/>
+ 		<result property="reportDate" column="REPT_YMD"/>
+ 		<result property="reportApprove" column="REV_REPT_APRV"/>
+ 		<result property="reportApproveId" column="APRV_PF_ID"/>
+ 		<result property="reportApproveDate" column="APRV_YMD"/>
  	</resultMap>
  
 	 <select id="getPReviewList" resultMap="PReviewResultMap">
-	 /*상품 리뷰 목록 리스트*/
+	  /* 상품 리뷰 목록 리스트 */
 	 	SELECT 
 			PRCHS_REV_CD, 
 			REG_MBR_ID, 
@@ -43,5 +43,21 @@
 			REG_YMD
 		FROM 
 			PURCHASE_REVIEW
+	 </select>
+	 
+	 <select id="getPReviewReport" resultMap="PReviewReportResultMap">
+	 	/* 상품 리뷰 목록 리스트 */
+	 	SELECT 
+			REV_REPT_NO,
+			REG_MBR_ID,  
+			REPT_CTGRY_NO, 
+			PRCHS_REV_CD, 
+			REV_REPT_CN,
+			REPT_YMD,
+			REV_REPT_APRV, 
+			APRV_PF_ID,
+			APRV_YMD
+		FROM 
+			REVIEW_REPORT_HISTORY
 	 </select>
  </mapper>

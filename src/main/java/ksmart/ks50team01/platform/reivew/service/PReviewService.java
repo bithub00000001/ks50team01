@@ -17,7 +17,10 @@ public class PReviewService {
 	
 	private final PReviewMapper pReviewMapper;
 	
-	
+	/**
+	 * 신고 목록 리스트
+	 * @return
+	 */
 	public List<PReviewReport> getPReviewReports(){
 		return pReviewMapper.getPReviewReport();
 	}

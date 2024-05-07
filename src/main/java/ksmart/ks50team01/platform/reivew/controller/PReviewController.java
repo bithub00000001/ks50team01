@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import ksmart.ks50team01.platform.reivew.dto.PReview;
+import ksmart.ks50team01.platform.reivew.dto.PReviewReport;
 import ksmart.ks50team01.platform.reivew.service.PReviewService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +27,11 @@ public class PReviewController {
 	 */
 	@GetMapping("/report/list")
 	public String reportList(Model model) {
+		
+		List<PReviewReport> pReviewReport = pReviewService.getPReviewReports();
+		
+		model.addAttribute("title", "상품리뷰전체목록");
+		model.addAttribute("pReviewReport", pReviewReport);
 		
 		return "platform/review/reportList";
 	}
