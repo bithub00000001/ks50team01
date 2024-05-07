@@ -31,10 +31,9 @@ public class MemberLoginController {
 	    if (loginMember != null) {
 	        session.setAttribute("loginId", loginMember.getId());		// 세션에 회원 아이디 저장	
 	        session.setAttribute("loginName", loginMember.getName());	// 세션에 회원 이름 저장
-	        return "redirect:/trip";
-	    } else {
+		} else {
 	        redirectAttributes.addFlashAttribute("loginError", true);
-	        return "redirect:/trip";
-	    }
+		}
+		return "redirect:/trip";
 	}
 }
