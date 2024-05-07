@@ -32,16 +32,30 @@
                 </div>
                 <ul class="menuzord-menu menuzord-right">
                     <li class="">
-                        <a class="" href="#">Home</a>
-                        <ul class="dropdown drop-up">
+                        <a class="" th:href="@{/trip/}">Home</a>
+                    </li>
+                    <li class="">
+                        <a href="#">여행 계획</a>
+                        <ul class="dropdown drop-up" id="trip">
                             <li class="">
-                                <a th:href="@{/trip/}">Home Main</a>
+                                <a th:href="@{/trip/list}">?내 여행 계획 목록</a>
                             </li>
                             <li class="">
-                                <a href="index-2.html">Home City</a>
+                                <a th:href="@{/trip/detail}">? 여행 계획 세부 사항</a>
                             </li>
                             <li class="">
-                                <a href="index-3.html">Home Destination</a>
+                                <a href="#">Profile</a>
+                            </li>
+                            <li class="">
+                                <a th:href="@{/trip/board}">? 여행 계획 공유</a>
+                            </li>
+                            <li class="">
+                                <a data-bs-target="#signup" data-bs-toggle="modal"
+                                   href="#">Signup</a>
+                            </li>
+                            <li class="">
+                                <a data-bs-target="#login" data-bs-toggle="modal"
+                                   href="#">Login</a>
                             </li>
                         </ul>
                     </li>
@@ -164,34 +178,7 @@
                             </div>
                         </div>
                     </li>
-                    <li class="">
-                        <a href="#">Rental</a>
-                        <ul class="dropdown drop-up">
-                            <li class="">
 
-                                <a href="#">Cars</a>
-                                <ul class="dropdown drop-sub-menu-left drop-up">
-                                    <li class="">
-                                        <a href="cars-list.html">Cars List View</a>
-                                    </li>
-                                    <li class="">
-                                        <a href="cars-grid.html">Cars Grid View</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class=" ">
-                                <a href="#">Cruises</a>
-                                <ul class="dropdown drop-sub-menu-left drop-up">
-                                    <li class="">
-                                        <a href="cruises-list.html">Cruises List View</a>
-                                    </li>
-                                    <li class="">
-                                        <a href="cruises-grid.html">Cruises Grid View</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
                     <li class="">
                         <a href="#">Pages</a>
                         <ul class="dropdown drop-up">
@@ -290,48 +277,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="">
-                        <a href="#">Blog</a>
 
-                        <ul class="dropdown drop-up">
-                            <li class="">
-                                <a href="#">Blog Grid View</a>
-                                <ul class="dropdown drop-sub-menu-left drop-up">
-                                    <li class="">
-                                        <a href="blog-grid-three-col.html">Blog Grid 3 Col</a>
-                                    </li>
-                                    <li class="">
-                                        <a href="blog-grid-two-col.html">Blog Grid 2 Col</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="">
-                                <a href="#">Blog List View</a>
-                                <ul class="dropdown drop-sub-menu-left drop-up">
-                                    <li class="">
-                                        <a href="blog-list-right-sidebar.html">Blog List Right Sidebar</a>
-                                    </li>
-                                    <li class="">
-                                        <a href="blog-list-left-sidebar.html">Blog List Left Sidebar</a>
-                                    </li>
-                                    <li class="">
-                                        <a href="blog-list-fullwidth.html">Blog List Fullwidth</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="">
-                                <a href="#">Blog Single Post</a>
-                                <ul class="dropdown drop-sub-menu-left drop-up">
-                                    <li class="">
-                                        <a href="blog-single-right-sidebar.html">Blog Right Sidebar</a>
-                                    </li>
-                                    <li class="">
-                                        <a href="blog-single-left-sidebar.html">Blog Left Sidebar</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
                     <li class="">
                         <a href="#">Admin</a>
                         <ul class="dropdown drop-up" id="admin">
@@ -356,6 +302,18 @@
                                    href="#">Login</a>
                             </li>
                         </ul>
+                    </li>
+                    <li class="py-6">
+                        <div class=" nav-item nav-item-left me-0">
+                            <a data-bs-target="#login" data-bs-toggle="modal"
+                               href="#"><button type="button" class="btn btn-xs btn-outline-primary d-none d-lg-inline-block"><span class="font-weight-bold">로그인</span></button></a>
+                        </div>
+                    </li>
+                    <li class="py-6">
+                        <div class="nav-item nav-item-left me-0">
+                            <a data-bs-target="#login" data-bs-toggle="modal"
+                               href="#"><button type="button" class="btn btn-xs btn-outline-primary d-none d-lg-inline-block"><span class="font-weight-bold">로그아웃</span></button></a>
+                        </div>
                     </li>
                     <li class="py-4">
                         <form action="index.html" class="d-lg-none" method="post">

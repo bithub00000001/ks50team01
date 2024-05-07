@@ -2,14 +2,16 @@
 <html lang="ko" layout:decorate="~{/platform/layout/default}"
 				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 				xmlns:th="http://www.thymeleaf.org">
-	
-	
+
+<head>
+<title>공지사항 작성</title>
 <th:block layout:fragment="customCss">
 	<link th:href="@{/platform/css/noticewWrite.css}" rel="stylesheet">
 </th:block>
+</head>
 
 <th:block layout:fragment="customContent">
-	<!-- Elements Forms -->
+<!-- Elements Forms -->
 	<div class="row">
 		<div class="col-12">
 			<h3 class="element-title">공지사항</h3>
@@ -80,5 +82,5 @@
 		</div>
 	</div>
 
-
 </th:block>
+</html>

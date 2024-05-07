@@ -85,6 +85,7 @@ $(document).ready(function() {
     $('.sortable').each(function (i, el) {
         initializeSortable(el.id);
     });
+    // 담기 버튼 이벤트 처리
     $(document).on('click', '.btn-addPlan', function() {
         const element = $(this).closest('li');
         const name = element.find('h5').text();
@@ -95,26 +96,36 @@ $(document).ready(function() {
 
         addToPlan(name, category, schedule, additional, id);
     });
-    // "1일차" 탭을 활성화합니다.
-    $('#day1-tab').addClass('active');
+
 });
 
+// 탭 패널 ID에 따라 숙박, 식당, 관광지 중 하나를 반환
 function getAccommodationType(selector) {
     return selector.includes('accommodation') ? '숙박' : (selector.includes('restaurant') ? '식당' : '관광지');
 }
 
+// 선택한 항목을 여행 계획에 추가
 function addToPlan(name, category, schedule, additional, id) {
     const activeTabLink = $('#myDayTab .nav-link.active');
     const activeTabContentId = activeTabLink.attr('href');
     const activeTabContent = $(activeTabContentId);
     const planDayX = activeTabContent.find('ul.sortable').attr('id');
 
-    const newItem = `
+    // HTML 요소 생성 항수로 분리
+    const newItemHtml = createNewItemHtml(name, category, schedule, additional, id, planDayX);
+
+    $(`#${planDayX}`).append(newItemHtml);
+    initializeSortable(planDayX);
+}
+
+// 새로운 HTML 요소 생성
+function createNewItemHtml(name, category, schedule, additional, id, planDayId) {
+    return `
     <li class="sortable-item list-group-item list-group-item-action" data-id="${id}">
         <div class="row align-items-center">
             <div class="col-1">
-                <div class="border border-dark bg-facebook text-white rounded-circle d-flex justify-content-center align-items-center mt-1" style="height:22px;width:22px;">
-                    <span class="number">${$(`#${planDayX} .sortable-item`).length + 1}</span>
+                <div class="border border-dark badge bg-success text-white d-flex justify-content-center align-items-center mt-1" style="height:22px;width:22px;">
+                    <span class="number">${$(`#${planDayId} .sortable-item`).length + 1}</span>
                 </div>
             </div>
             <div class="col-7 mt-2">
@@ -124,36 +135,48 @@ function addToPlan(name, category, schedule, additional, id) {
                 <small>여기에 시간 입력</small>
             </div>
         </div>
-        <button type="button" class="btn btn-outline-danger btn-delete btn-xs float-end">제거</button>
+        <button type="button" class="btn btn-outline-danger btn-delete btn-xs float-end" aria-label="Delete">제거</button>
         <p class="text-black mb-1">${schedule}</p>
                 <small>${category}</small>
                 <small>${additional}</small>
             </div>
         </div>
     </li>`;
-
-    $(`#${planDayX}`).append(newItem);
-    initializeSortable(planDayX);
 }
 
-function initializeSortable(id) {
-    const el = document.getElementById(id);
-    const sortable = Sortable.create(el, {
+// Sortable 라이브러리를 사용하여 드래그 기능 초기화
+function initializeSortable(sortableId) {
+    const sortableElement = document.getElementById(sortableId);
+    const sortable = Sortable.create(sortableElement, {
         animation: 150,
         ghostClass: 'sortable-ghost',
         chosenClass: 'sortable-chosen',
         dragClass: 'sortable-drag',
         onUpdate: function (evt) {
-            $(`#${id} .sortable-item`).each(function (index, item) {
+            $(`#${sortableId} .sortable-item`).each(function (index, item) {
                 $(item).find('.number').text(index + 1);
             });
         }
     });
 }
 
+// 번호를 조정하는 함수
+function updateItemNumbers() {
+    $('.sortable-item').each(function(index) {
+        // 각 .sortable-item 요소에 대해 순서 번호를 다시 설정 (index는 0부터 시작하므로 1을 더함)
+        $(this).find('.number').text(index + 1);
+    });
+}
+
+// 스케줄 항목의 삭제 버튼 이벤트
+$(document).on('click', '.btn-delete', function() {
+    $(this).closest('.sortable-item').remove();
+    // 삭제 후 순서 번호를 다시 조정
+    updateItemNumbers();
+});
 
 
-// 현재 일차 계산
+// 새로운 일차 추가 버튼 클릭 이벤트
 $('.add-day').click(function () {
     let dayCount = $("#myDayTab .nav-item:not(.add-day)").length + 1;
     let newTabId = "day" + dayCount + "-tab";
@@ -183,6 +206,7 @@ $('.add-day').click(function () {
         'html': $('<ul/>', {
             'class': 'sortable',
             'id': `planDay${dayCount}`,
+            'style': `padding-left: 0;`
         })
     }).appendTo('#myDayTabContent');
 

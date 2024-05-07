@@ -1,0 +1,133 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{user/layout/default}">
+<th:block layout:fragment="customCss">
+        <link rel="stylesheet" th:href="@{/user/css/style.css}">
+        <link rel="stylesheet" th:href="@{/user/css/daterangepicker.css}">
+        <link rel="stylesheet" th:href="@{/user/css/aos.css}">
+        <link rel="stylesheet" th:href="@{/common/css/font/font.css}">
+</th:block>
+
+<th:block layout:fragment="customPageSection">
+    <div>
+        <form th:action="@{/trip/details}" method="post" th:object="${uTripOption}">
+            <div class="mb-3">
+                <label for="tripTitle" class="form-label">여행 제목:</label>
+                <input type="text" class="form-control" id="tripTitle" th:field="*{tripTitle}" required>
+            </div>
+            <div class="mb-3">
+                <label for="startDate" class="form-label">시작 날짜:</label>
+                <input type="date" class="form-control" id="startDate" th:value="*{startDate}" required>
+            </div>
+            <div class="mb-3">
+                <label for="endDate" class="form-label">종료 날짜:</label>
+                <input type="date" class="form-control" id="endDate" th:value="*{endDate}" required>
+            </div>
+            <div class="mb-3">
+                <label for="numPeople" class="form-label">인원 수:</label>
+                <input type="number" class="form-control" id="numPeople" th:value="*{numPeople}" min="1" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">회원 유형:</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" th:field="*{memberType}" value="real" id="realMember" checked>
+                    <label class="form-check-label" for="realMember">실제 회원</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" th:field="*{memberType}" value="virtual" id="virtualMember">
+                    <label class="form-check-label" for="virtualMember">가상 회원</label>
+                </div>
+            </div>
+            <div id="realMemberSearch" class="mb-3">
+                <button id="searchMemberBtn" class="btn btn-outline-primary btn-xs" type="button" data-bs-toggle="modal" data-bs-target="#searchMemberModal">검색</button>
+            </div>
+            <div id="virtualMemberAdjust" class="mb-3" style="display: none;">
+                <!-- 가상 회원 수 조정 UI -->
+            </div>
+            <input type="hidden" id="dateRange" th:field="*{dateRange}">
+            <div class="row">
+                <div class="col-md-6">
+                    <div id="memberList"></div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">총 인원 수</h5>
+                            <p class="card-text"><span id="totalMemberCount">0</span>명</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="float-end">
+                <button class="btn btn-primary btn-sm" type="submit">저장</button>
+                <button class="btn btn-secondary btn-sm" type="button">취소</button>
+            </div>
+        </form>
+
+        <!-- 회원 검색 모달 -->
+        <div class="modal fade" id="searchMemberModal" tabindex="-1" aria-labelledby="searchMemberModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="searchMemberModalLabel">회원 검색</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="text" class="form-control" id="searchMemberInput" placeholder="회원 이름 또는 ID 입력">
+                        <div id="searchResultContainer" class="mt-3"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</th:block>
+
+<th:block layout:fragment="customJsFIle">
+    <script th:src="@{/user/js/owl.carousel.min.js}"></script>
+    <script th:src="@{/user/js/aos.js}"></script>
+    <script th:src="@{/user/js/jquery.waypoints.min.js}"></script>
+    <script th:src="@{/user/js/typed.js}"></script>
+    <script th:src="@{/user/js/moment.min.js}"></script>
+    <script th:src="@{/user/js/daterangepicker.js}"></script>
+
+    <script th:src="@{/user/js/custom.js}"></script>
+</th:block>
+
+<th:block layout:fragment="customJs">
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        const dateRange = /*[[${uTripOption.dateRange}]]*/ '';
+        console.log(dateRange)
+
+        $(document).ready(function() {
+
+
+            // 회원 유형 라디오 버튼 변경 이벤트
+            $('input[name="memberType"]').change(function () {
+                var selectedValue = $(this).val();
+                if (selectedValue === 'real') {
+                    $('#realMemberSearch').show();
+                    $('#virtualMemberAdjust').hide();
+                } else {
+                    $('#realMemberSearch').hide();
+                    $('#virtualMemberAdjust').show();
+                }
+            });
+
+            const realMembers = []; // 실제 회원 배열
+            const virtualMembers = []; // 가상 회원 배열
+
+            // 검색 버튼 클릭 이벤트
+            $('#searchMemberBtn').click(function () {
+                // 검색 결과 렌더링 코드 추가
+                // ...
+            });
+        });
+    </script>
+</th:block>
+</html>

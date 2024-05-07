@@ -1,9 +1,28 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
-                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-                layout:decorate="~{platform/layout/default}">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{platform/layout/default}">
+	<head>
+		<!-- Datatables -->
+	    <link th:href="@{/platform/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css}" rel="stylesheet">
+	    <link th:href="@{/platform/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css}" rel="stylesheet">
+	    <link th:href="@{/platform/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css}" rel="stylesheet">
+	    <link th:href="@{/platform/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css}" rel="stylesheet">
+	    <link th:href="@{/platform/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css}" rel="stylesheet">
+	
+		<style type="text/css">
+			.control-label{
+				text-align: center !important;
+				background-color: #f8f8f8 !important;
+				padding-bottom: 8px !important;	
+			}
+		</style>
+		
+
+	</head>
 
 	<th:block layout:fragment="customContent">
+	
 		<div class="col-md-12col-sm-6 col-xs-12">
 			<div class="x_panel">
 				<div class="x_title">
@@ -13,24 +32,25 @@
 					<h3 th:text="${'총 회원의 수  :   '+memberList.size+'명'}"></h3>
 					<div class="clearfix"></div>
 				</div>
-				<div>
+				
+				
 				<form id="modifyForm" th:action="@{/platform/member/memberManagement}" method="post">
-					선택 멤버를 &nbsp;&nbsp;
-					<select>
-						<option value="">====회원등급을 선택해주세요====</option>
-						<option th:each="grade : ${memberGrade}" th:value="${grade.memberGrdNum}" th:text="${grade.memberLevelName}"></option>
+				<div>
+				
+				    선택 멤버를 &nbsp;&nbsp;
+				    <select name="memberGrdNum">
+					    <option value="">====회원등급을 선택해주세요====</option>
+					    <option th:each="grade : ${memberGrade}" th:value="${grade.memberGrdNum}" th:text="${grade.memberLevelName}" th:selected="${memberInfo != null && memberInfo.memberGrdNum == grade.memberGrdNum}"></option>
 					</select>
-					(으)로 &nbsp;&nbsp;
-					<button type="submit" id="changeGrade" >변경</button>
-					<button type="button" id="test" class="test">강제탈퇴</button>
-				</form>
+				    (으)로 &nbsp;&nbsp;
+				    <button type="button" id="changeGrade" name="memberId" data-action="update">변경</button>		
 				</div>
 				<div class="x_content">
 					<div class="clearfix"></div>
 				</div>
 				<div class="row">
 					<div class="col-xs-12 table">
-						<table class="table table-striped">
+						<table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap"  cellspacing="0" width="100%">
 							<thead>
 								<tr>
 									<th><input type="checkbox" id="checkAll" name="checkAll"></th>
@@ -46,27 +66,47 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:unless="${memberList != null}">
-									<td align="center" colspan="10">등록된 회원의 정보가 없습니다.</td>
-								</tr>
-								<tr th:if="${memberList != null}" th:each="l, iterStat : ${memberList}">
-									<td><input type="checkbox" th:id="'memberCheck' + ${iterStat.index+1}" th:name="'memberCheck' + ${iterStat.index+1}"></td>
-									<td th:text="${l.memberId}"></td>
-									<td th:text="${l.memberLevelName}"></td>
-									<td th:text="${l.memberPw}"></td>
-									<td th:text="${l.memberName}"></td>
-									<td th:text="${l.memberNickname}"></td>
-									<td th:text="${l.memberEmail}"></td>
-									<td th:text="${l.memberTelNum}"></td>
-									<td th:text="${l.memberRegDate}"></td>
-									<td th:text="${l.memberFormDate}"></td>
-								</tr>
+								<tr th:if="${memberList != null and memberList.size() > 0}" th:each="l, iterStat : ${memberList}">
+						            <td><input type="checkbox" th:id="'memberCheck' + ${iterStat.count}" th:name="'memberId'" th:value="${l.memberId}"></td>
+						            <td th:text="${l.memberId}"></td>
+						            <td th:text="${l.memberLevelName}"></td>
+						            <td th:text="${l.memberPw}"></td>
+						            <td th:text="${l.memberName}"></td>
+						            <td th:text="${l.memberNickname}"></td>
+						            <td th:text="${l.memberEmail}"></td>
+						            <td th:text="${l.memberTelNum}"></td>
+						            <td th:text="${l.memberRegDate}"></td>
+						            <td th:text="${l.memberFormDate}"></td>
+						        </tr>
+						        <tr th:if="${memberList == null or memberList.size() == 0}">
+						            <td align="center" colspan="10">검색 결과가 없습니다.</td>
+						        </tr>
 							</tbody>
 						</table>
 					</div>
 				</div>
+				</form>
 			</div>
 		</div>
+		
+		</th:block>
+		<th:block layout:fragment="customJsFile">
+		<!-- Datatables -->
+	    <script th:src="@{/platform/vendors/datatables.net/js/jquery.dataTables.min.js}"></script>
+	    <script th:src="@{/platform/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js}"></script>
+	    <script th:src="@{/platform/vendors/datatables.net-buttons/js/dataTables.buttons.min.js}"></script>
+	    <script th:src="@{/platform/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js}"></script>
+	    <script th:src="@{/platform/vendors/datatables.net-buttons/js/buttons.flash.min.js}"></script>
+	    <script th:src="@{/platform/vendors/datatables.net-buttons/js/buttons.html5.min.js}"></script>
+	    <script th:src="@{/platform/vendors/datatables.net-buttons/js/buttons.print.min.js}"></script>
+	    <script th:src="@{/platform/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js}"></script>
+	    <script th:src="@{/platform/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js}"></script>
+	    <script th:src="@{/platform/vendors/datatables.net-responsive/js/dataTables.responsive.min.js}"></script>
+	    <script th:src="@{/platform/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js}"></script>
+	    <script th:src="@{/platform/vendors/datatables.net-scroller/js/dataTables.scroller.min.js}"></script>
+	    <script th:src="@{/platform/vendors/jszip/dist/jszip.min.js}"></script>
+	    <script th:src="@{/platform/vendors/pdfmake/build/pdfmake.min.js}"></script>
+	    <script th:src="@{/platform/vendors/pdfmake/build/vfs_fonts.js}"></script>
 		</th:block>
 		
 		<!-- custom js file start -->

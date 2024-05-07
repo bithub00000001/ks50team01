@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" layout:decorate="~{/user/layout/default}"
+<html lang="ko" layout:decorate="~{/platform/layout/default}"
      			xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
     			xmlns:th="http://www.thymeleaf.org">
 
@@ -12,26 +12,6 @@
 
 <th:block layout:fragment="customContent">
 	<!-- list-style -->
-
-
-	<!-- 여기에 메인 컨텐츠가 삽입됩니다. -->
-	<div class="main-wrapper pages">
-		<section class="page-title">
-			<div class="page-title-img bg-img bg-overlay-darken"
-				style="background-image: url(/user/img/pages/page-title-bg12.jpg);">
-				<div class="container">
-					<div class="row align-items-center justify-content-center">
-						<div class="col-lg-9 col-xl-8">
-							<div class="page-title-content py-7 py-md-8">
-								<div class="">
-									<h2 class="text-uppercase text-white font-weight-bold">공지사항</h2>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
 
 
 		<div class="d-flex align-items-start">
@@ -166,9 +146,8 @@
 
 					<div class="row">
 						<div class="col-12" style="text-align: right; margin-top: 100px; margin-bottom: 10px;">
-							<!-- th:onclick 속성을 사용하여 클릭 이벤트를 처리하고 JavaScript 함수를 호출합니다. -->
-							<button type="button" class="btn btn-outline-primary btn-sm"
-								th:onclick="'javascript:redirectToNoticeWrite();'">글쓰기</button>
+							<!-- 글쓰기 버튼 클릭하면 /platform/board/noticeWrite 페이지로 이동 -->
+							<a th:href="@{/platform/board/noticeWrite}"><button type="button" class="btn btn-outline-primary btn-sm">글쓰기</button></a>
 						</div>
 					</div>
 				</div>
@@ -211,16 +190,6 @@
 </th:block>
 
 <th:block layout:fragment="customJs">
-
-
-<!-- JavaScript 함수 정의 -->
-<script th:inline="javascript">
-    function redirectToNoticeWrite() {
-        // window.location.href를 사용하여 특정 URL로 이동합니다.
-        window.location.href = /*[[@{/platform/board/noticeWrite}]]*/ '';
-    }
-</script>
-
 
 </th:block>
 </html>

@@ -65,7 +65,8 @@
             <!-- ====================================
             ———	PAGE TITLE START
             ===================================== -->
-            <th:block layout:fragment="customPageTitle"></th:block>
+            <header th:replace="~{user/fragments/banner :: bannerFragment}"></header>
+            <!--/*<th:block layout:fragment="customPageTitle"></th:block>*/-->
             <!-- ====================================
             ———	PAGE TITLE END
             ===================================== -->
@@ -74,13 +75,13 @@
                     <!-- Elements Breadcrumb -->
                     <div class="pt-5 mb-5" id="breadcrumb">
                         <div class="row">
-                            <div class="col-md-4">
-                                <div class="mb-5">
+                            <div class="col-md-12">
+                                <div class="mb-12">
                                     <!-- ====================================
                                     ———	Dynamic Breadcrumb START
                                     ===================================== -->
                                     <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);"  aria-label="breadcrumb">
-                                        <ol class="breadcrumb mt-6">
+                                        <ol class="breadcrumb">
                                             <li th:each="item, iterStat : ${breadcrumb}"
                                                 th:classappend="${iterStat.last} ? 'breadcrumb-item active' : 'breadcrumb-item'">
                                                 <th:block th:if="${iterStat.last}" th:text="${item.name}" aria-current="page"></th:block>
@@ -141,9 +142,6 @@
         ========================================== -->
 
 
-        <script th:src="@{/user/js/star.js}"></script>
-
-
         <!-- ===========================================
         ———	CUSTOM JAVASCRIPT RESOUCES START
         ========================================== -->
@@ -152,7 +150,7 @@
         ———	CUSTOM JAVASCRIPT RESOUCES END
         ========================================== -->
 
-
+        <script th:src="@{/user/js/star.js}"></script>
 
         <!-- ===========================================
         ———	CUSTOM JAVASCRIPT SCRIPT START
