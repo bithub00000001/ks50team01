@@ -1,6 +1,6 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{/user/layout/default}">
+      layout:decorate="~{user/layout/default}">
 <th:block layout:fragment="customCss"></th:block>
 
 <th:block layout:fragment="customPageSection">
@@ -17,6 +17,10 @@
                 <div class="accordion-body">
                     <!-- 첫 번째 페이지 내용 -->
                     <form th:action="@{/trip/details}" method="post" th:object="${uTripOption}">
+                        <div class="d-flex justify-content-end">
+                            <button class="btn btn-primary btn-sm me-2" type="button">임시 저장</button>
+                            <button class="btn btn-secondary btn-sm" type="button">목록으로</button>
+                        </div>
                         <div class="mb-3">
                             <label for="tripTitle" class="form-label">여행 제목:</label>
                             <input type="text" class="form-control" name="tripTitle" id="tripTitle"
@@ -42,10 +46,6 @@
                             <input type="number" class="form-control" name="numPeople" id="numPeople"
                                    th:field="*{numPeople}" min="1"
                                    required>
-                        </div>
-                        <div class="d-flex justify-content-end">
-                            <button class="btn btn-primary btn-sm me-2" type="submit">저장</button>
-                            <button class="btn btn-secondary btn-sm" type="button">취소</button>
                         </div>
                     </form>
                     <div class="row">
@@ -134,6 +134,9 @@
                 <div class="accordion-body">
                     <!-- 두 번째 페이지 내용 -->
                     <div class="row justify-content-between">
+                        <div class="d-flex justify-content-end">
+                            <button class="btn btn-secondary btn-sm" type="button">이전으로</button>
+                        </div>
                         <!-- 지역 선택 -->
                         <div class="form-group col-lg-6 mb-md-6 mb-lg-0">
                             <label for="region">지역 선택:</label>
@@ -344,7 +347,7 @@
                                             <li class="sortable-item list-group-item list-group-item-action">
                                                 <div class="row align-items-center">
                                                     <div class="col-1">
-                                                        <div class="border border-dark bg-facebook text-white rounded-circle d-flex justify-content-center align-items-center mt-1"
+                                                        <div class="border border-dark badge bg-success text-white d-flex justify-content-center align-items-center mt-1"
                                                              style="height:22px;width:22px;">
                                                             <span class="number">1</span>
                                                         </div>
@@ -366,7 +369,7 @@
                                             <li class="sortable-item list-group-item list-group-item-action">
                                                 <div class="row align-items-center">
                                                     <div class="col-1">
-                                                        <div class="border border-dark bg-facebook text-white rounded-circle d-flex justify-content-center align-items-center mt-1"
+                                                        <div class="border border-dark badge bg-success text-white d-flex justify-content-center align-items-center mt-1"
                                                              style="height:22px;width:22px;">
                                                             <span class="number">2</span>
                                                         </div>
@@ -388,7 +391,7 @@
                                             <li class="sortable-item list-group-item list-group-item-action">
                                                 <div class="row align-items-center">
                                                     <div class="col-1">
-                                                        <div class="border border-dark bg-facebook text-white rounded-circle d-flex justify-content-center align-items-center mt-1"
+                                                        <div class="border border-dark badge bg-success text-white d-flex justify-content-center align-items-center mt-1"
                                                              style="height:22px;width:22px;">
                                                             <span class="number">3</span>
                                                         </div>
@@ -457,6 +460,11 @@
 <th:block layout:fragment="customJs">
     <script th:inline="javascript">
 
+        // 페이지 로드 시 maxPeople 값을 업데이트
+        $(document).ready(function() {
+            updateMaxPeople();
+        });
+
         // 실제 회원 데이터 (예시)
         const realMembers = [
             {id: 1, name: '실제 회원 예시 1'},
@@ -466,11 +474,16 @@
 
         // 인원 수 입력 필드에 이벤트 리스너 추가
         const numPeopleInput = $('#numPeople');
-        let maxPeople = 1; // 최대 인원 수를 저장할 변수
+        let maxPeople = 1; // 초기 최대 인원 수
 
-        numPeopleInput.on('input', () => {
-            maxPeople = parseInt(numPeopleInput.val(), 10) || 1; // 입력된 값을 정수로 변환해 maxPeople 에 저장
-        });
+        // maxPeople 값을 업데이트하는 함수 정의
+        function updateMaxPeople() {
+            // 입력된 값을 정수로 변환하여 maxPeople에 저장하고, 변환할 수 없는 값이라면 1을 사용
+            maxPeople = parseInt(numPeopleInput.val(), 10) || 1;
+        }
+
+        // numPeople input 필드에 입력이 있을 때마다 maxPeople 값을 업데이트
+        numPeopleInput.on('input', updateMaxPeople);
 
         // 초대된 회원 목록
         const invitedMembers = [];
@@ -573,6 +586,7 @@
                     class: 'btn btn-danger btn-xs float-end',
                     text: '제거'
                 });
+                // 위 와 같이 작성해도 된다
                 /*const removeBtn = document.createElement('button');
                 removeBtn.classList.add('btn', 'btn-danger', 'btn-xs', 'float-end');
                 removeBtn.textContent = '제거';*/

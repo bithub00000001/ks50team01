@@ -11,7 +11,7 @@ import java.util.List;
 @Transactional
 @RequiredArgsConstructor
 public class RegionServiceImpl implements RegionService{
-
+ 
     private final TripOptionMapper tripOptionMapper;
 
     @Override

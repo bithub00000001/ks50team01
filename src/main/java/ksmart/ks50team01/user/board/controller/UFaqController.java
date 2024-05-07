@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 @RequestMapping(value = "/user/board")
 public class UFaqController {
 	
-	@GetMapping("/faqList")
+	@GetMapping("/faq")
 	public String faq(Model model) {
 		
-		model.addAttribute("title", "자주찾는질문페이지");
+		model.addAttribute("title", "자주찾는질문");
 		return "user/board/faqList";
 	}
 	

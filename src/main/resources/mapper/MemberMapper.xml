@@ -4,6 +4,21 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ksmart.ks50team01.platform.member.management.mapper.MemberMapper">
 
+	
+	<update id="updateMember" parameterType="PMember">
+	    UPDATE MEMBER_MANAGE
+	    SET
+	        MBR_PW = #{memberPw},
+	        MBR_NM = #{memberName},
+	        MBR_NICKNAME = #{memberNickname},
+	        MBR_EML_ADDR = #{memberEmail},
+	        MBR_TELNO = #{memberTelNum},
+	        MBR_MDFCN_YMD = NOW()
+	    WHERE
+	        MBR_ID = #{memberId}
+	</update>
+	
+
 	<delete id="delMember" parameterType="map">
 		/* 회원 탈퇴 */
 		DELETE 

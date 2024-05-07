@@ -13,6 +13,7 @@ public class UReportController {
 	@GetMapping("/report")
 	public String report(Model model) {
 		
+		model.addAttribute("title", "신고");
 		return "user/board/report";
 	}
 	
