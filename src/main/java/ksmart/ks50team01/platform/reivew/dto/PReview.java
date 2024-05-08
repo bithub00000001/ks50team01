@@ -11,6 +11,17 @@ public class PReview {
 	private String reviewDislike; //싫어요 수
 	private String reviewApprove; //공개여부
 	
+	private String tripLargeCode;//여행지 대분류 코드
+	private String districtSubclassCode;//지역 소분류 코드
+	private String tripSubclassCode;//여행지 소분류 코드
+	private String paymentCode;//결제 인증 첨부파일 코드
+	private String reservationCode;//예약번호
+	private String goodsOption;//상품옵션
+	private String goodsInformation;//상품정보
+	private String reportTotal;//신고합계
+	private String reviewModifyDate;//수정일자
+	
+	
 	
 	public String getReviewCode() {
 		return reviewCode;
@@ -67,11 +78,69 @@ public class PReview {
 		this.reviewApprove = reviewApprove;
 	}
 	
+	public String getTripLargeCode() {
+		return tripLargeCode;
+	}
+	public void setTripLargeCode(String tripLargeCode) {
+		this.tripLargeCode = tripLargeCode;
+	}
+	public String getDistrictSubclassCode() {
+		return districtSubclassCode;
+	}
+	public void setDistrictSubclassCode(String districtSubclassCode) {
+		this.districtSubclassCode = districtSubclassCode;
+	}
+	public String getTripSubclassCode() {
+		return tripSubclassCode;
+	}
+	public void setTripSubclassCode(String tripSubclassCode) {
+		this.tripSubclassCode = tripSubclassCode;
+	}
+	public String getPaymentCode() {
+		return paymentCode;
+	}
+	public void setPaymentCode(String paymentCode) {
+		this.paymentCode = paymentCode;
+	}
+	public String getReservationCode() {
+		return reservationCode;
+	}
+	public void setReservationCode(String reservationCode) {
+		this.reservationCode = reservationCode;
+	}
+	public String getGoodsOption() {
+		return goodsOption;
+	}
+	public void setGoodsOption(String goodsOption) {
+		this.goodsOption = goodsOption;
+	}
+	public String getGoodsInformation() {
+		return goodsInformation;
+	}
+	public void setGoodsInformation(String goodsInformation) {
+		this.goodsInformation = goodsInformation;
+	}
+	public String getReportTotal() {
+		return reportTotal;
+	}
+	public void setReportTotal(String reportTotal) {
+		this.reportTotal = reportTotal;
+	}
+	public String getReviewModifyDate() {
+		return reviewModifyDate;
+	}
+	public void setReviewModifyDate(String reviewModifyDate) {
+		this.reviewModifyDate = reviewModifyDate;
+	}
+	
 	@Override
 	public String toString() {
 		return "PReview [reviewCode=" + reviewCode + ", reviewId=" + reviewId + ", reviewGoods=" + reviewGoods
 				+ ", reviewStar=" + reviewStar + ", reviewContent=" + reviewContent + ", reviewDate=" + reviewDate
 				+ ", reviewLike=" + reviewLike + ", reviewDislike=" + reviewDislike + ", reviewApprove=" + reviewApprove
-				+ "]";
+				+ ", tripLargeCode=" + tripLargeCode + ", districtSubclassCode=" + districtSubclassCode
+				+ ", tripSubclassCode=" + tripSubclassCode + ", paymentCode=" + paymentCode + ", reservationCode="
+				+ reservationCode + ", goodsOption=" + goodsOption + ", goodsInformation=" + goodsInformation
+				+ ", reportTotal=" + reportTotal + ", reviewModifyDate=" + reviewModifyDate + "]";
 	}
 }
