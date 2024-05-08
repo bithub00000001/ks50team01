@@ -305,6 +305,15 @@
                             </a>
                         </div>
                     </li>
+                    <li class="py-6" th:if="${session.loginId == null}" style="padding:13px;">
+                        <div class="nav-item nav-item-left me-2">
+                            <a data-bs-target="#join" data-bs-toggle="modal" href="#">
+                                <button type="button" class="btn btn-xs btn-outline-primary d-none d-lg-inline-block">
+                                    <span class="font-weight-bold">회원가입</span>
+                                </button>
+                            </a>
+                        </div>
+                    </li>
 
                     <div th:if="${session.loginId != null}" class="nav-item nav-item-left me-2"
                          style="position: absolute; top: 70px; right: 0; z-index: 1000">

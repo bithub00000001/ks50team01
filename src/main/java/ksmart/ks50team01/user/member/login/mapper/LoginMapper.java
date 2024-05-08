@@ -11,4 +11,6 @@ public interface LoginMapper {
 	public Login login(Login login);
 	
 	String findId(@Param("name") String name, @Param("phone") String phone);
+	
+	void joinMember(Login Login);
 }

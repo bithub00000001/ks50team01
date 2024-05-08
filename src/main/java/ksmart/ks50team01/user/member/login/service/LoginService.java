@@ -13,6 +13,10 @@ import lombok.RequiredArgsConstructor;
 public class LoginService {
 
 	private final LoginMapper loginMapper;
+	
+	public void joinMember(Login Login) {
+        loginMapper.joinMember(Login);
+    }
 	    
 	public Login login(Login login) {
 	    return loginMapper.login(login);
