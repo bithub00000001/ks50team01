@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ksmart.ks50team01.platform.reivew.dto.PPublic;
 import ksmart.ks50team01.platform.reivew.dto.PReivewComment;
 import ksmart.ks50team01.platform.reivew.dto.PReview;
-import ksmart.ks50team01.platform.reivew.dto.PReviewPublic;
 import ksmart.ks50team01.platform.reivew.dto.PReviewReact;
 import ksmart.ks50team01.platform.reivew.dto.PReviewReport;
 import ksmart.ks50team01.platform.reivew.mapper.PReviewMapper;
@@ -42,26 +42,52 @@ public class PReviewService {
 		return pReviewMapper.getPReviewReport();
 	}
 	
-	/**
-	 * 공개여부수정
+	/** 
+	 * 05.08 작성
+	 * 리뷰정보수정
 	 */
-	public void modifyPReviewPublic(PReview review) {
-		pReviewMapper.modifyPReviewPublic(review);
+	public void modifyPReview(PReview review) {
+		pReviewMapper.modifyPReview(review);
 	}
 	
 	/**
-	 * 공개여부조회
+	 * 05.08 작성
+	 * 리뷰정보조회
 	 */
-	public List<PReviewPublic> getPReviewPublic(){
-		return pReviewMapper.getPReviewPublic();
-		
+	public PReview getPReviewInfoById(String reviewId) {
+		PReview reviewInfo = pReviewMapper.getPReviewInfoById(reviewId);
+		return reviewInfo;
 	}
 	
 	/**
-	 * 리뷰 목록 리스트
+	 * 05.08 작성
+	 * 공개 조회
+	 */
+	public List<PPublic> getPPublicList(){
+		return pReviewMapper.getPPublicList();
+	}
+	
+	/**
+	 * 05.08 수정
+	 * 리뷰 목록 리스트 
 	 * @return
 	 */
 	public List<PReview> getPReviewList(){
-		return pReviewMapper.getPReviewList();
+		List<PReview> pReviewList = pReviewMapper.getPReviewList();
+		
+		if(pReviewList != null) {
+			pReviewList.forEach(review -> {
+				String reviewApprove = review.getReviewApprove();
+				String reviewApproveName = "";
+				switch (reviewApprove) {
+	            case "DISCLOSURE_001":reviewApproveName = "전체공개";
+	                break;
+	            case "DISCLOSURE_002":reviewApproveName = "나만공개";
+	                break;
+				}
+				review.setReviewApproveName(reviewApproveName);
+			});
+		}
+		return pReviewList;
 	}
 }

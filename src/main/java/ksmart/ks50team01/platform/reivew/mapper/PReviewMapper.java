@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import ksmart.ks50team01.platform.reivew.dto.PPublic;
 import ksmart.ks50team01.platform.reivew.dto.PReivewComment;
 import ksmart.ks50team01.platform.reivew.dto.PReview;
-import ksmart.ks50team01.platform.reivew.dto.PReviewPublic;
 import ksmart.ks50team01.platform.reivew.dto.PReviewReact;
 import ksmart.ks50team01.platform.reivew.dto.PReviewReport;
 
@@ -23,11 +23,14 @@ public interface PReviewMapper {
 	//신고목록조회
 	List<PReviewReport> getPReviewReport();
 	
-	//리뷰공개여부수정
-	String modifyPReviewPublic(PReview review);
+	//리뷰정보수정 05.08
+	int modifyPReview(PReview review);
 	
-	//공개여부조회
-	List<PReviewPublic> getPReviewPublic();
+	//리뷰정보조회 05.08
+	PReview getPReviewInfoById(String reviewId);
+	
+	//공개 조회 05.08
+	List<PPublic> getPPublicList();
 	
 	//리뷰목록조회
 	List<PReview> getPReviewList();

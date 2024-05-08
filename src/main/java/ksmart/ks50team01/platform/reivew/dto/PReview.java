@@ -10,7 +10,16 @@ public class PReview {
 	private String reviewLike; //좋아요 수
 	private String reviewDislike; //싫어요 수
 	private String reviewApprove; //공개여부
+	private String reviewApproveName; //공개여부이름
 	
+	
+	public String getReviewApproveName() {
+		return reviewApproveName;
+	}
+	public void setReviewApproveName(String reviewApproveName) {
+		this.reviewApproveName = reviewApproveName;
+	}
+
 	private String tripLargeCode;//여행지 대분류 코드
 	private String districtSubclassCode;//지역 소분류 코드
 	private String tripSubclassCode;//여행지 소분류 코드
@@ -138,9 +147,10 @@ public class PReview {
 		return "PReview [reviewCode=" + reviewCode + ", reviewId=" + reviewId + ", reviewGoods=" + reviewGoods
 				+ ", reviewStar=" + reviewStar + ", reviewContent=" + reviewContent + ", reviewDate=" + reviewDate
 				+ ", reviewLike=" + reviewLike + ", reviewDislike=" + reviewDislike + ", reviewApprove=" + reviewApprove
-				+ ", tripLargeCode=" + tripLargeCode + ", districtSubclassCode=" + districtSubclassCode
-				+ ", tripSubclassCode=" + tripSubclassCode + ", paymentCode=" + paymentCode + ", reservationCode="
-				+ reservationCode + ", goodsOption=" + goodsOption + ", goodsInformation=" + goodsInformation
-				+ ", reportTotal=" + reportTotal + ", reviewModifyDate=" + reviewModifyDate + "]";
+				+ ", reviewApproveName=" + reviewApproveName + ", tripLargeCode=" + tripLargeCode
+				+ ", districtSubclassCode=" + districtSubclassCode + ", tripSubclassCode=" + tripSubclassCode
+				+ ", paymentCode=" + paymentCode + ", reservationCode=" + reservationCode + ", goodsOption="
+				+ goodsOption + ", goodsInformation=" + goodsInformation + ", reportTotal=" + reportTotal
+				+ ", reviewModifyDate=" + reviewModifyDate + "]";
 	}
 }

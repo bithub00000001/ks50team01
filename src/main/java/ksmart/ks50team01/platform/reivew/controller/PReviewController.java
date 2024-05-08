@@ -67,6 +67,17 @@ public class PReviewController {
 	}
 	
 	/**
+	 * 리뷰 공개 여부 수정
+	 * @return
+	 */
+	@GetMapping("/public")
+	public String reviewPublic() {
+
+		return "platform/review/reviewPublic";
+	}
+	
+	
+	/**
 	 * 리뷰 좋아요 싫어요 기록 목록
 	 */
 	@GetMapping("/react")
@@ -80,18 +91,6 @@ public class PReviewController {
 		return "platform/review/reviewReact";
 	}
 	
-	/**
-	 * 리뷰 공개 여부 수정
-	 * @return
-	 */
-	@GetMapping("/public")
-	public String reviewPublic(PReview review) {
-		log.info("공개여부수정: {}", review);
-		
-		pReviewService.modifyPReviewPublic(review);
-		
-		return "platform/review/reviewPublic";
-	}
 	
 	/**
 	 * 리뷰 신고 누적 개수
