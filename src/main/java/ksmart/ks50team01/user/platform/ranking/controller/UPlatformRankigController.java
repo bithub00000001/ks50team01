@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import lombok.RequiredArgsConstructor;
 
 @Controller
-@RequestMapping(value="/user/platformranking")
+@RequestMapping(value="/user")
 @RequiredArgsConstructor
 public class UPlatformRankigController {
 
@@ -19,19 +19,19 @@ public class UPlatformRankigController {
 		return "user/platformranking/ranking";
 	}
 	
-	@GetMapping("/rankingList")
+	@GetMapping("/ranking/rankingList")
 	public String platformRankingList(Model model) {
 		
 		model.addAttribute("title", "플랫폼 추천 인기순위");
 		return "user/platformranking/rankingList";
 	}
-	@GetMapping("/userRankingList")
+	@GetMapping("/ranking/userRankingList")
 	public String userRankingList(Model model) {
 		
 		model.addAttribute("title", "회원추천 인기순위");
 		return "user/platformranking/userRankingList";
 	}
-	@GetMapping("/planRankingList")
+	@GetMapping("/ranking/planRankingList")
 	public String planRankingList(Model model) {
 		
 		model.addAttribute("title", "다른회원의 여행계획 추천");
