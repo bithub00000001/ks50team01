@@ -26,15 +26,15 @@
  		<result property="reviewModifyDate" 	column="MDFCN_YMD"/>
  	</resultMap>
  	
-<!--  	<resultMap type="PReviewPublic" id="PReviewPublicResultMap">
- 		<id property="publicCode" column="RLS_YN_CD"/>
- 		<result property="publicCode" column="RLS_YN_CD"/>
- 		<result property="publicId" column="REG_PF_ID"/>
- 		<result property="publicContent" column="RLS_CN"/>
- 		<result property="publicActivity" column="ACT_YN"/>
- 		<result property="publicDate" column="REG_YMD"/>
- 		<result property="publicModifyDate" column="MDFCN_YMD"/>
- 	</resultMap> -->
+ 	<resultMap type="PPublic" id="PPublicResultMap">
+ 		<id property="pPublicCode" column="RLS_YN_CD"/>
+ 		<result property="pPublicCode" column="RLS_YN_CD"/>
+ 		<result property="pPublicId" column="REG_PF_ID"/>
+ 		<result property="pPublicContent" column="RLS_CN"/>
+ 		<result property="pPublicActivty" column="ACT_YN"/>
+ 		<result property="pPublicDate" column="REG_YMD"/>
+ 		<result property="pPublicModifyDate" column="MDFCN_YMD"/>
+ 	</resultMap>
  	
  	<resultMap type="PReviewReport" id="PReviewReportResultMap">
  		<id property="reportNum" column="REV_REPT_NO"/>
@@ -97,8 +97,8 @@
 			PURCHASE_REVIEW
 	 </select>
 	 
-<!-- 	 <select id="" resultMap="">
-	 	/* 공개 여부 */
+	 <select id="getPPublicList" resultMap="PPublicResultMap">
+	 	/* 공개 조회 */
 	 	SELECT 
 			RLS_YN_CD, 
 			REG_PF_ID, 
@@ -108,8 +108,7 @@
 			MDFCN_YMD
 		FROM 
 			DISCLOSURE_STATUS
-	 	
-	 </select> -->
+	 </select>
 	 
 	 <select id="getPReviewReport" resultMap="PReviewReportResultMap">
 	 	/* 상품 리뷰 신고 리스트 */

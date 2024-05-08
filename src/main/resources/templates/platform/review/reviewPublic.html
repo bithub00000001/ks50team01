@@ -5,9 +5,6 @@
 
 <th:block layout:fragment="customCss">
 <style>
-
-
-
         table {
             width: 100%;
             border-collapse: collapse;
@@ -81,66 +78,71 @@
 			</div>
 			<div class="x_content">
 				<p class="text-muted font-13 m-b-30"> 리뷰 공개 여부를 선택해주세요
-	<!-- 			<form id="modifyForm" th:action="@{/member/modifyMember}" method="post">	 -->	
+	<form id="modifyForm" th:action="@{/review/reviewPublic}" method="post">
 			
-			<table>
+			<table th:object="${reviewInfo}">
 		        <tbody>
 		            <tr>
 		                <td>
-		                    <label for="memberId">리뷰 번호</label>
+		                    <label for="reviewCode">리뷰 번호</label>
 		                </td>
 		                <td>
-		                    <input type="text" id="memberId" name="memberId" value="" readonly="readonly" />
-		                </td>
-		            </tr>
-		            <tr>
-		                <td>
-		                    <label for="memberPw">작성자 아이디</label>
-		                </td>
-		                <td>
-		                    <input type="text" id="memberPw" name="memberPw" value="" />
+		                    <input type="text" id="reviewCode" name="reviewCode" value="*{reviewCode}" readonly="readonly" />
 		                </td>
 		            </tr>
 		            <tr>
 		                <td>
-		                    <label for="memberName">리뷰 상품</label>
+		                    <label for="reviewId">작성자 아이디</label>
 		                </td>
 		                <td>
-		                    <input type="text" id="memberName" name="memberName" value="" />
-		                </td>
-		            </tr>
-		            <tr>
-		                <td>
-		                    <label for="memberLevel">별점</label>
-		                </td>
-		                <td>
-		                    <input type="text" id="memberAddr" name="memberAddr" value="" />
+		                    <input type="text" id="reviewId" name="reviewId" value="*{reviewId}" />
 		                </td>
 		            </tr>
 		            <tr>
 		                <td>
-		                    <label for="memberEmail">리뷰 내용</label>
+		                    <label for="reviewGoods">리뷰 상품</label>
 		                </td>
 		                <td>
-		                    <input type="text" id="memberEmail" name="memberEmail" value="" />
-		                </td>
-		            </tr>
-		            <tr>
-		                <td>
-		                    <label for="memberAddr">리뷰작성일자</label>
-		                </td>
-		                <td>
-		                    <input type="text" id="memberAddr" name="memberAddr" value="" />
+		                    <input type="text" id="reviewGoods" name="reviewGoods" value="*{reviewGoods}" />
 		                </td>
 		            </tr>
 		            <tr>
 		                <td>
-		                    <label for="memberAddr">공개여부</label>
+		                    <label for="reviewStar">별점</label>
 		                </td>
 		                <td>
-		                    <select id="memberLevel" name="memberLevel">
-		                        <option value="">====공개여부를 선택해주세요====</option>
-		                        <!-- <option value="1">Y</option>
+		                    <input type="text" id="reviewStar" name="reviewStar" value="*{reviewStar}" />
+		                </td>
+		            </tr>
+		            <tr>
+		                <td>
+		                    <label for="reviewContent">리뷰 내용</label>
+		                </td>
+		                <td>
+		                    <input type="text" id="reviewContent" name="reviewContent" value="*{reviewContent}" />
+		                </td>
+		            </tr>
+		            <tr>
+		                <td>
+		                    <label for="reviewDate">리뷰작성일자</label>
+		                </td>
+		                <td>
+		                    <input type="text" id="reviewDate" name="reviewDate" value="*{reviewDate}" />
+		                </td>
+		            </tr>
+		            <tr>
+		                <td>
+		                    <label for="reviewApprove">공개여부</label>
+		                </td>
+		                <td>
+						<select id="reviewApprove" name="reviewApprove">
+						    <option value="">====공개여부를 선택해주세요====</option>
+						    <th:block th:if="${PPublicList != null}" th:each="l : ${PPublicList}">
+						        <option th:value="${l.pPublicCode}" th:selected="${l.pPublicCode} == *{reviewApprove}">
+						            [[${l.reviewApproveName}]]
+						        </option>
+								</th:block>
+										<!-- <option value="1">Y</option>
 									 <option value="2">N</option> -->
 		                    </select>
 		                </td>
@@ -155,7 +157,7 @@
 		            </tr>
 		        </tfoot>    
 		    </table>
-			<!--  </form> -->
+			</form>
 				
 			</div>
 		</div>

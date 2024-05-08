@@ -5,9 +5,11 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import ksmart.ks50team01.platform.reivew.dto.PPublic;
 import ksmart.ks50team01.platform.reivew.dto.PReivewComment;
 import ksmart.ks50team01.platform.reivew.dto.PReview;
 import ksmart.ks50team01.platform.reivew.dto.PReviewReact;
@@ -49,12 +51,14 @@ public class PReviewController {
 		return "platform/review/reportApprove";
 	}
 	
+	
 	/**
-	 * 리뷰 전체 목록
+	 * 05.08 수정
+	 * 리뷰 전체 목록 - 회원목록조회
 	 * @return
 	 */
 	@GetMapping("/list")
-	public String reviewPlatformList(Model model) {
+	public String getPReviewList(Model model) {
 		
 		List<PReview> pReviewList = pReviewService.getPReviewList();
 		log.info("pReviewList: {}", pReviewList);
@@ -67,12 +71,34 @@ public class PReviewController {
 	}
 	
 	/**
-	 * 리뷰 공개 여부 수정
+	 * 리뷰 수정 - 회원 수정
+	 * 05.08 작성
+	 */
+	@PostMapping("/public")
+	public String modifyPReview(PReview review) {
+		log.info("리뷰 수정 : {}", review);
+		
+		pReviewService.modifyPReview(review);
+		
+		return "redirect:/review/PreviewList";
+	}
+	
+	/**
+	 * 05.08 수정
+	 * 리뷰 공개 여부 수정(수정페이지) - 회원 수정 화면
 	 * @return
 	 */
 	@GetMapping("/public")
-	public String reviewPublic() {
-
+	public String modifyPReview(@RequestParam(value="reviewCode") String reviewCode, Model model) {
+		log.info("수정화면 reviewCode : {}", reviewCode);
+		PReview reviewInfo = pReviewService.getPReviewInfoById(reviewCode);
+		List<PPublic> pPublicList = pReviewService.getPPublicList();
+		
+		model.addAttribute("title", "리뷰수정");
+		model.addAttribute("reviewInfo", reviewInfo);
+		model.addAttribute("pPublicList", pPublicList);
+		
+		
 		return "platform/review/reviewPublic";
 	}
 	

@@ -54,8 +54,8 @@ public class PReviewService {
 	 * 05.08 작성
 	 * 리뷰정보조회
 	 */
-	public PReview getPReviewInfoById(String reviewId) {
-		PReview reviewInfo = pReviewMapper.getPReviewInfoById(reviewId);
+	public PReview getPReviewInfoById(String reviewCode) {
+		PReview reviewInfo = pReviewMapper.getPReviewInfoById(reviewCode);
 		return reviewInfo;
 	}
 	
