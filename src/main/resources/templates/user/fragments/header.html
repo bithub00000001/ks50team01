@@ -1,9 +1,10 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <header class="header" id="pageTop" style="height: auto" th:fragment="headerFragment">
     <!-- ====================================
     ——— HEADER
     ===================================== -->
+
     <!-- Menu Zord -->
     <nav class="nav-menuzord">
         <div class="container clearfix">
@@ -13,23 +14,6 @@
                          data-src="/user/img/logo-color-big.png"
                          src="/user/img/logo-color-big.png">
                 </a>
-                <div class="nav-item dropdown nav-item-left me-0">
-                    <button class="btn btn-xs btn-primary d-none d-lg-inline-block notify-toggler">
-                        <i aria-hidden="true" class="fa fa-search text-white me-0"></i>
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-end dropdown-notify rounded-0">
-                        <form action="index.html" class="mb-0" method="post">
-                            <div class="input-group input-group-sm">
-                                <input aria-label="Search...." class="form-control form-control-sm rounded-0"
-                                       placeholder="Search...."
-                                       required="" type="text">
-                                <button class="btn bg-primary border-0 rounded-0" type="submit">
-                                    <span class="text-white text-uppercase font-weight-bold">Search</span>
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
                 <ul class="menuzord-menu menuzord-right">
                     <li class="">
                         <a class="" th:href="@{/trip/}">Home</a>
@@ -59,7 +43,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="">
+                    <!--/* <li class="">
                         <a href="#">Tours</a>
                         <div class="megamenu drop-up">
                             <div class="megamenu-row">
@@ -302,33 +286,36 @@
                                    href="#">Login</a>
                             </li>
                         </ul>
-                    </li>
-                    <li class="py-6">
-                        <div class=" nav-item nav-item-left me-0">
-                            <a data-bs-target="#login" data-bs-toggle="modal"
-                               href="#"><button type="button" class="btn btn-xs btn-outline-primary d-none d-lg-inline-block"><span class="font-weight-bold">로그인</span></button></a>
-                        </div>
-                    </li>
-                    <li class="py-6">
+                    </li> */-->
+                    <li class="py-6" th:if="${session.loginId == null}">
                         <div class="nav-item nav-item-left me-0">
-                            <a data-bs-target="#login" data-bs-toggle="modal"
-                               href="#"><button type="button" class="btn btn-xs btn-outline-primary d-none d-lg-inline-block"><span class="font-weight-bold">로그아웃</span></button></a>
+                            <a data-bs-target="#login" data-bs-toggle="modal" href="#">
+                                <button type="button" class="btn btn-xs btn-outline-primary d-none d-lg-inline-block">
+                                    <span class="font-weight-bold">로그인</span>
+                                </button>
+                            </a>
                         </div>
                     </li>
-                    <li class="py-4">
-                        <form action="index.html" class="d-lg-none" method="post">
-                            <div class="input-group input-group-sm">
-                                <input aria-label="Search...." class="form-control form-control-sm rounded-0"
-                                       placeholder="Search...."
-                                       required="" type="text">
-                                <button class="btn bg-primary border-0 rounded-0" type="submit">
-                                    <span class="text-white text-uppercase font-weight-bold">Search</span>
+                    <li class="py-6" th:if="${session.loginId != null}">
+                        <div class="nav-item nav-item-left me-2">
+                            <a th:href="@{/login/logout}">
+                                <button type="button" class="btn btn-xs btn-outline-primary d-none d-lg-inline-block">
+                                    <span class="font-weight-bold">로그아웃</span>
                                 </button>
-                            </div>
-                        </form>
+                            </a>
+                        </div>
                     </li>
+
+                    <div th:if="${session.loginId != null}" class="nav-item nav-item-left me-2"
+                         style="position: absolute; top: 70px; right: 0; z-index: 1000">
+                            <span th:text="${session.loginName} + ' 님 환영합니다!'"
+                                  class="text-primary font-weight-bold"></span>
+                    </div>
                 </ul>
             </div>
         </div>
     </nav>
 </header>
+</html>
+
+
