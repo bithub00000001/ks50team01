@@ -14,7 +14,7 @@ public class IndexInterceptor implements HandlerInterceptor {
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 		ModelAndView modelAndView) throws Exception {
 		if (modelAndView != null && !modelAndView.getViewName().startsWith("redirect:")) {
-			modelAndView.addObject("isMainPage", request.getRequestURI().equals("/trip"));
+			modelAndView.addObject("isMainPage", request.getRequestURI().matches("^/trip/?$"));
 		}
 
 		HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
