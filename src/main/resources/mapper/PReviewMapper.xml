@@ -26,14 +26,14 @@
  		<result property="reviewModifyDate" 	column="MDFCN_YMD"/>
  	</resultMap>
  	
- 	<resultMap type="PPublic" id="PPublicResultMap">
- 		<id property="pPublicCode" column="RLS_YN_CD"/>
- 		<result property="pPublicCode" column="RLS_YN_CD"/>
- 		<result property="pPublicId" column="REG_PF_ID"/>
- 		<result property="pPublicContent" column="RLS_CN"/>
- 		<result property="pPublicActivty" column="ACT_YN"/>
- 		<result property="pPublicDate" column="REG_YMD"/>
- 		<result property="pPublicModifyDate" column="MDFCN_YMD"/>
+ 	<resultMap type="pOpen" id="pOpenResultMap">
+ 		<id property="pOpenCode" column="RLS_YN_CD"/>
+ 		<result property="pOpenCode" column="RLS_YN_CD"/>
+ 		<result property="pOpenId" column="REG_PF_ID"/>
+ 		<result property="pOpenContent" column="RLS_CN"/>
+ 		<result property="pOpenActivty" column="ACT_YN"/>
+ 		<result property="pOpenDate" column="REG_YMD"/>
+ 		<result property="pOpenModifyDate" column="MDFCN_YMD"/>
  	</resultMap>
  	
  	<resultMap type="PReviewReport" id="PReviewReportResultMap">
@@ -97,7 +97,7 @@
 			PURCHASE_REVIEW
 	 </select>
 	 
-	 <select id="getPPublicList" resultMap="PPublicResultMap">
+	 <select id="getPOpenList" resultMap="pOpenResultMap">
 	 	/* 공개 조회 */
 	 	SELECT 
 			RLS_YN_CD, 
@@ -108,6 +108,32 @@
 			MDFCN_YMD
 		FROM 
 			DISCLOSURE_STATUS
+	 </select>
+	 
+	 <select id="getPReviewInfoById" parameterType="String" resultMap="PReviewResultMap">
+	 	 SELECT 
+			PRCHS_REV_CD, 
+			REG_MBR_ID, 
+			RLS_YN_CD, 
+			RAT_CTGRY_NO, 
+			PRTNR_BPLC_CD, 
+			PRCHS_REV_CN, 
+			LIKE_TOTAL, 
+			DISLIKE_TOTAL,
+			REG_YMD,
+			RGN_SCTGRY_CD, 
+			TRIP_LCTGRY_CD, 
+			TRIP_SCTGRY_CD, 
+			STLM_CERT_FILE_CD, 
+			BZENTY_RSVT_NO, 
+			PRCHS_CD, 
+			PRCHS_GDSOPT_CD, 
+			MDFCN_YMD,
+			REPT_TOTAL
+		FROM 
+			PURCHASE_REVIEW
+		WHERE
+			PRCHS_REV_CD = #{reviewCode};
 	 </select>
 	 
 	 <select id="getPReviewReport" resultMap="PReviewReportResultMap">

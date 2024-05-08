@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import ksmart.ks50team01.platform.reivew.dto.PPublic;
+import ksmart.ks50team01.platform.reivew.dto.POpen;
 import ksmart.ks50team01.platform.reivew.dto.PReivewComment;
 import ksmart.ks50team01.platform.reivew.dto.PReview;
 import ksmart.ks50team01.platform.reivew.dto.PReviewReact;
@@ -52,55 +52,7 @@ public class PReviewController {
 	}
 	
 	
-	/**
-	 * 05.08 수정
-	 * 리뷰 전체 목록 - 회원목록조회
-	 * @return
-	 */
-	@GetMapping("/list")
-	public String getPReviewList(Model model) {
-		
-		List<PReview> pReviewList = pReviewService.getPReviewList();
-		log.info("pReviewList: {}", pReviewList);
-		System.out.println("pReviewList : " + pReviewList);
-		
-		model.addAttribute("title", "상품리뷰전체목록");
-		model.addAttribute("pReviewList", pReviewList);
-		
-		return "platform/review/PreviewList";
-	}
 	
-	/**
-	 * 리뷰 수정 - 회원 수정
-	 * 05.08 작성
-	 */
-	@PostMapping("/public")
-	public String modifyPReview(PReview review) {
-		log.info("리뷰 수정 : {}", review);
-		
-		pReviewService.modifyPReview(review);
-		
-		return "redirect:/review/PreviewList";
-	}
-	
-	/**
-	 * 05.08 수정
-	 * 리뷰 공개 여부 수정(수정페이지) - 회원 수정 화면
-	 * @return
-	 */
-	@GetMapping("/public")
-	public String modifyPReview(@RequestParam(value="reviewCode") String reviewCode, Model model) {
-		log.info("수정화면 reviewCode : {}", reviewCode);
-		PReview reviewInfo = pReviewService.getPReviewInfoById(reviewCode);
-		List<PPublic> pPublicList = pReviewService.getPPublicList();
-		
-		model.addAttribute("title", "리뷰수정");
-		model.addAttribute("reviewInfo", reviewInfo);
-		model.addAttribute("pPublicList", pPublicList);
-		
-		
-		return "platform/review/reviewPublic";
-	}
 	
 	
 	/**
@@ -132,10 +84,10 @@ public class PReviewController {
 	 * 답글 공개 여부 수정
 	 * @return
 	 */
-	@GetMapping("/comment/public")
-	public String commentPublic() {
+	@GetMapping("/comment/open")
+	public String commentOpen() {
 		
-		return "platform/review/commentPublic";
+		return "platform/review/commentOpen";
 	}
 	
 	/**
@@ -153,5 +105,66 @@ public class PReviewController {
 		return "platform/review/commentList";
 	}
 	
+	
+	
+	
+	
+	/**
+	 * 리뷰 수정 - 회원 수정
+	 * 05.08 작성
+	 */
+	/*
+	 * @PostMapping("/open") public String modifyPReview(PReview review) {
+	 * log.info("리뷰 수정 : {}", review);
+	 * 
+	 * pReviewService.modifyPReview(review);
+	 * 
+	 * return "redirect:/review/PreviewList"; }
+	 */
+	@PostMapping("/open")
+	public String modifyPReview(@RequestParam("reviewCode") String reviewCode, PReview review) {
+	    log.info("리뷰 수정 : {}", review);
+	    
+	    pReviewService.modifyPReview(review);
+	    
+	    return "redirect:/review/PreviewList";
+	}
+	
+	/**
+	 * 05.08 수정
+	 * 리뷰 공개 여부 수정(수정페이지) - 회원 수정 화면
+	 * @return
+	 */
+	@GetMapping("/open")
+	public String modifyPReview(@RequestParam(value="reviewCode", required = true) String reviewCode, Model model) {
+		log.info("수정화면 reviewCode : {}", reviewCode);
+		PReview reviewInfo = pReviewService.getPReviewInfoById(reviewCode);
+		List<POpen> pOpenList = pReviewService.getPOpenList();
+		
+		model.addAttribute("title", "리뷰수정");
+		model.addAttribute("reviewInfo", reviewInfo);
+		model.addAttribute("pOpenList", pOpenList);
+		
+		
+		return "platform/review/reviewOpen";
+	}
+	
+	/**
+	 * 05.08 수정
+	 * 리뷰 전체 목록 - 회원목록조회
+	 * @return
+	 */
+	@GetMapping("/list")
+	public String getPReviewList(Model model) {
+		
+		List<PReview> pReviewList = pReviewService.getPReviewList();
+		log.info("pReviewList: {}", pReviewList);
+		System.out.println("pReviewList : " + pReviewList);
+		
+		model.addAttribute("title", "상품리뷰전체목록");
+		model.addAttribute("pReviewList", pReviewList);
+		
+		return "platform/review/PreviewList";
+	}
 
 }

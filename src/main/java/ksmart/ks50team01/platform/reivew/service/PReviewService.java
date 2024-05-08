@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ksmart.ks50team01.platform.reivew.dto.PPublic;
+import ksmart.ks50team01.platform.reivew.dto.POpen;
 import ksmart.ks50team01.platform.reivew.dto.PReivewComment;
 import ksmart.ks50team01.platform.reivew.dto.PReview;
 import ksmart.ks50team01.platform.reivew.dto.PReviewReact;
@@ -42,6 +42,11 @@ public class PReviewService {
 		return pReviewMapper.getPReviewReport();
 	}
 	
+	
+	
+	
+	
+	
 	/** 
 	 * 05.08 작성
 	 * 리뷰정보수정
@@ -63,8 +68,8 @@ public class PReviewService {
 	 * 05.08 작성
 	 * 공개 조회
 	 */
-	public List<PPublic> getPPublicList(){
-		return pReviewMapper.getPPublicList();
+	public List<POpen> getPOpenList(){
+		return pReviewMapper.getPOpenList();
 	}
 	
 	/**
