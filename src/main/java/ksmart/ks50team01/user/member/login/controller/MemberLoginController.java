@@ -26,7 +26,7 @@ public class MemberLoginController {
 	private final LoginService loginService;
     
 	@PostMapping("/join")
-	public RedirectView joinMember(Login login, RedirectAttributes redirectAttributes, HttpServletRequest request) {
+	public String joinMember(Login login, RedirectAttributes redirectAttributes, HttpServletRequest request) {
 	    try {
 	        loginService.joinMember(login);
 	        
@@ -44,7 +44,7 @@ public class MemberLoginController {
 	    }
 
 	    String referer = request.getHeader("Referer");
-	    return new RedirectView(referer);
+	    return "redirect:/trip";
 	}
 	
 	@PostMapping("/findId")

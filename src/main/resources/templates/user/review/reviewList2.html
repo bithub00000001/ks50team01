@@ -4,7 +4,7 @@
                 layout:decorate="~{user/layout/default}">
 
 	<head>
-		<title>리뷰 목록</title>
+		<title>리뷰 목록 - innerHTML</title>
 	    <link th:href="@{/user/plugins/owl-carousel/owl.carousel.min.css}" rel="stylesheet" media="screen">
 		<link th:href="@{/user/plugins/owl-carousel/owl.theme.default.min.css}" rel="stylesheet" media="screen">
 	</head>
@@ -380,20 +380,20 @@
 											<div class="separator2"></div> <!-- 굵은 직선 추가 -->
 											<div class="dropdown-1">
 											
-											<div class="button-container">
-											    <div class="recommend-dropdown">
-											        <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">추천순</button>
-											        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-											            <li><a class="dropdown-item" href="#">최신순</a></li>
-											            <li><a class="dropdown-item" href="#">좋아요순</a></li>
-											            <li><a class="dropdown-item" href="#">오래된순</a></li>
-											        </ul>
-											    </div>
-											
-											    <div class="write-btn-container"> <!-- ml-auto 클래스를 추가하여 버튼을 오른쪽으로 정렬합니다 -->
-											        <a th:href="@{/user/review/write}"><button type="button" class="btn btn-outline-primary btn-sm">작성하기</button></a>
-											    </div>
-											</div>
+<div class="button-container">
+    <div class="recommend-dropdown">
+        <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">추천순</button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <li><a class="dropdown-item" href="#">최신순</a></li>
+            <li><a class="dropdown-item" href="#">좋아요순</a></li>
+            <li><a class="dropdown-item" href="#">오래된순</a></li>
+        </ul>
+    </div>
+
+    <div class="write-btn-container"> <!-- ml-auto 클래스를 추가하여 버튼을 오른쪽으로 정렬합니다 -->
+        <a th:href="@{/user/review/write}"><button type="button" class="btn btn-outline-primary btn-sm">작성하기</button></a>
+    </div>
+</div>
 											
 											<div class="review-box" id="review-box">
 												<!-- 리뷰 내용이 여기에 동적으로 추가 -->
@@ -572,12 +572,6 @@
 	        // 좋아요, 싫어요 카운트
 	        let likeCounts = {};
 	        let dislikeCounts = {};
-	        
-	     // 리뷰 데이터를 기반으로 좋아요와 싫어요 카운트 초기화
-	        reviews.forEach(review => {
-	            likeCounts[review.id] = 0;
-	            dislikeCounts[review.id] = 0;
-	        });
         </script>
         
         <script>
@@ -662,136 +656,76 @@
             reviewBox.innerHTML = '';
 
             if (reviews.length === 0) {
-                const noReviewHTML = document.createElement('div');
-                noReviewHTML.classList.add('no-review');
-                noReviewHTML.textContent = '작성된 리뷰가 없습니다.';
-                reviewBox.appendChild(noReviewHTML);
+                const noReviewHTML = '<div class="no-review">작성된 리뷰가 없습니다.</div>';
+                reviewBox.innerHTML = noReviewHTML;
             } else {
                 reviews.forEach(review => {
-                    const reviewContainer = document.createElement('div');
-                    reviewContainer.classList.add('review');
+                    // 좋아요, 싫어요 카운트 초기화
+                    likeCounts[review.id] = 0;
+                    dislikeCounts[review.id] = 0;
 
-                    const reviewContent = document.createElement('div');
-                    reviewContent.classList.add('review-content');
-
-                    const userId = document.createElement('div');
-                    userId.classList.add('user-id');
-                    userId.textContent = review.userId;
-                    reviewContent.appendChild(userId);
-
-                    const date = document.createElement('div');
-                    date.classList.add('date');
                     let modifiedDateHTML = review.modifiedDate ? ` (수정됨 ${review.modifiedDate})` : '';
-                    date.textContent = `${review.date}${modifiedDateHTML}`;
-                    reviewContent.appendChild(date);
 
-                    const rating = document.createElement('div');
-                    rating.classList.add('rating');
-                    rating.innerHTML = displayRating(review.rating);
-                    reviewContent.appendChild(rating);
+                    let imageHTML = ''; // 이미지 HTML을 저장할 변수 초기화
 
-                    const content = document.createElement('p');
-                    content.textContent = review.content;
-                    reviewContent.appendChild(content);
-
-                    let imageContainer = null;
+                    // 이미지가 배열 형태인지 확인
                     if (Array.isArray(review.image)) {
-                        imageContainer = document.createElement('div');
-                        imageContainer.classList.add('image-container');
-                        imageContainer.id = `review-${review.id}`;
+                        // 이미지가 배열인 경우, 모든 이미지를 표시
+                        imageHTML += `<div class="image-container" id="review-${review.id}">`; // 이미지를 감싸는 컨테이너 열기
                         review.image.forEach((image, index) => {
-                            const img = document.createElement('img');
-                            img.src = image;
-                            img.alt = `Review Image ${index + 1}`;
-                            imageContainer.appendChild(img);
+                            imageHTML += `<img src="${image}" alt="Review Image ${index + 1}">`;
                         });
+                        imageHTML += `</div>`; // 이미지를 감싸는 컨테이너 닫기
                     } else {
-                        const img = document.createElement('img');
-                        img.src = review.image;
-                        img.alt = 'Review Image';
-                        imageContainer = img;
-                    }
-                    reviewContent.appendChild(imageContainer);
-
-                    reviewContainer.appendChild(reviewContent);
-
-                    const buttonContainer = document.createElement('div');
-                    buttonContainer.classList.add('button-container', 'd-flex', 'justify-content-between', 'align-items-center');
-
-                    const likeDislikeContainer = document.createElement('div');
-                    likeDislikeContainer.classList.add('like-dislike-container', 'd-flex', 'flex-column');
-
-                    const likeBtn = document.createElement('button');
-                    likeBtn.classList.add('like-btn', 'mb-2');
-                    likeBtn.textContent = `❤️ 좋아요 (${likeCounts[review.id]})`;
-                    likeBtn.addEventListener('click', () => increaseLike(review.id));
-                    const likeCountSpan = document.createElement('span');
-                    likeCountSpan.id = `like-count-${review.id}`;
-                    likeCountSpan.textContent = likeCounts[review.id];
-                    likeBtn.appendChild(likeCountSpan);
-                    likeDislikeContainer.appendChild(likeBtn);
-
-                    const dislikeBtn = document.createElement('button');
-                    dislikeBtn.classList.add('dislike-btn');
-                    dislikeBtn.textContent = `❌ 싫어요 (${dislikeCounts[review.id]})`;
-                    dislikeBtn.addEventListener('click', () => increaseDislike(review.id));
-                    const dislikeCountSpan = document.createElement('span');
-                    dislikeCountSpan.id = `dislike-count-${review.id}`;
-                    dislikeCountSpan.textContent = dislikeCounts[review.id];
-                    dislikeBtn.appendChild(dislikeCountSpan);
-                    likeDislikeContainer.appendChild(dislikeBtn);
-
-                    buttonContainer.appendChild(likeDislikeContainer);
-
-                    const reportBtnContainer = document.createElement('div');
-                    reportBtnContainer.classList.add('report-btn-container');
-
-                    const reportBtn = document.createElement('button');
-                    reportBtn.type = 'button';
-                    reportBtn.classList.add('btn', 'btn-danger');
-                    reportBtn.dataset.bsToggle = 'modal';
-                    reportBtn.dataset.bsTarget = '#staticBackdrop';
-                    reportBtn.textContent = '신고하기';
-                    reportBtnContainer.appendChild(reportBtn);
-
-                    buttonContainer.appendChild(reportBtnContainer);
-
-                    reviewContainer.appendChild(buttonContainer);
-
-                    const relevantComments = comment.filter(c => c.reviewid === review.id);
-                    if (relevantComments.length > 0) {
-                        const commentsContainer = document.createElement('div');
-                        commentsContainer.classList.add('comments-container', 'relevantComments');
-                        relevantComments.forEach(comment => {
-                            const commentDiv = document.createElement('div');
-                            commentDiv.classList.add('comment');
-
-                            const userId = document.createElement('div');
-                            userId.classList.add('user-id');
-                            userId.textContent = comment.userId;
-                            commentDiv.appendChild(userId);
-
-                            const date = document.createElement('div');
-                            date.classList.add('date');
-                            date.textContent = comment.date;
-                            commentDiv.appendChild(date);
-
-                            const content = document.createElement('div');
-                            content.classList.add('content');
-                            content.textContent = comment.content;
-                            commentDiv.appendChild(content);
-
-                            commentsContainer.appendChild(commentDiv);
-                        });
-                        reviewContainer.appendChild(commentsContainer);
+                        // 이미지가 배열이 아닌 경우, 단일 이미지 표시
+                        imageHTML = `<img src="${review.image}" alt="Review Image">`;
                     }
 
-                    reviewBox.appendChild(reviewContainer);
+                    let reviewHTML = `
+                        <div class="review">
+                            <div class="review-content">
+                                <div class="user-id">${review.userId}</div>
+                                <div class="date">${review.date}${modifiedDateHTML}</div>
+                                <div class="rating">${displayRating(review.rating)}</div>
+                                <p>${review.content}</p>
+                               
+                                ${imageHTML}<!--   이미지 HTML 삽입 -->
+                            </div>
+                            
+                            <div class="button-container d-flex justify-content-between align-items-center">
+                            <div class="like-dislike-container d-flex flex-column">
+                                <button class="like-btn mb-2" onclick="increaseLike(${review.id})">❤️ 좋아요 (<span id="like-count-${review.id}">${likeCounts[review.id]}</span>)</button>
+                                <button class="dislike-btn" onclick="increaseDislike(${review.id})">❌ 싫어요 (<span id="dislike-count-${review.id}">${dislikeCounts[review.id]}</span>)</button>
+                            </div>
+                            <div class="report-btn-container">
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">신고하기</button>
+                                </a>
+                            </div>
+                        </div>
+
+                        `;
+
+					// 리뷰에 해당하는 댓글 찾기
+					const relevantComments = comment.filter(c => c.reviewid === review.id);
+					if (relevantComments.length > 0) {
+					    reviewHTML += '<div class="comments-container relevantComments">';
+					    relevantComments.forEach(comment => {
+					        reviewHTML += `
+					            <div class="comment">
+					                <div class="user-id">${comment.userId}</div>
+					                <div class="date">${comment.date}</div>
+					                <div class="content">${comment.content}</div>
+					            </div>
+					        `;
+					    });
+					    reviewHTML += '</div>';
+					}
+
+                    reviewHTML += '</div>'; // 리뷰 컨테이너 닫기
+                    reviewBox.innerHTML += reviewHTML;
                 });
             }
-        }
-
-
+        };
 		</script>
 		
 		<script>
