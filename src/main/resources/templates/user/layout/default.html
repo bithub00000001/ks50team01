@@ -166,7 +166,7 @@
                                     <a class="" href="#">비밀번호 찾기</a>
                                 </div>
                                 <div style="float: left; width: 33%; text-align:center;">
-                                    <a class="" href="#">회원가입</a>
+                                    <a data-bs-target="#join" data-bs-toggle="modal" href="#">회원가입</a>
                                 </div>
                             </div>
 
@@ -210,6 +210,51 @@
                 </div>
             </div>
         </div>
+        
+        
+        <!-- join Modal -->
+        <div class="modal fade" id="join" tabindex="-1" role="dialog" aria-label="loginModalLabel" aria-hidden="true">
+		    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+		        <div class="modal-content">
+		            <div class="modal-header rounded">
+		                <h3 class="modal-title text-uppercase font-weight-bold">회원가입</h3>
+		                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		            </div>
+		
+		            <div class="modal-body">
+		                <form th:action="@{/login/join}" method="post">
+		                    <div class="mb-3">
+		                        <input type="text" class="form-control bg-smoke" required="" placeholder="아이디" name="id">
+		                    </div>
+		
+		                    <div class="mb-3">
+		                        <input type="password" class="form-control bg-smoke" required="" placeholder="비밀번호" name="password">
+		                    </div>
+		
+		                    <div class="mb-3">
+		                        <input type="text" class="form-control bg-smoke" required="" placeholder="이름" name="name">
+		                    </div>
+		
+		                    <div class="mb-3">
+		                        <input type="text" class="form-control bg-smoke" required="" placeholder="닉네임" name="nickname">
+		                    </div>
+		
+		                    <div class="mb-3">
+		                        <input type="email" class="form-control bg-smoke" required="" placeholder="이메일" name="email">
+		                    </div>
+		
+		                    <div class="mb-3">
+		                        <input type="text" class="form-control bg-smoke" required="" placeholder="전화번호(- 포함)" name="phone">
+		                    </div>
+		
+		                    <div class="d-grid">
+		                        <button type="submit" class="btn btn-primary text-uppercase">회원가입</button>
+		                    </div>
+		                </form>
+		            </div>
+		        </div>
+		    </div>
+		</div>
 
         <!-- ===========================================
         ———	COMMON JAVASCRIPT RESOUCES START
@@ -242,9 +287,9 @@
             const loginError = /*[[${loginError}]]*/ false;
             if (loginError) {
                 alert("아이디 혹은 비밀번호가 틀렸습니다.");
-                $(document).ready(function () {
-                    $('#login').modal('show');
-                });
+                setTimeout(function(){
+                	$('#login').modal('show');
+                }, 30);
             }
         </script>
         <script th:inline="javascript">
@@ -257,6 +302,12 @@
                 alert(message);
             }
         </script>
+        <script th:inline="javascript">
+		    const joinMessage = /*[[${joinMessage}]]*/ null;
+		    if (joinMessage != null) {
+		        alert(joinMessage);
+		    }
+		</script>
         <script th:inline="javascript">
             /*document.addEventListener("DOMContentLoaded", function (){
                 // 현재 페이지의 URL

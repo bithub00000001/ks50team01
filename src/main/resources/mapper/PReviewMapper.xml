@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="ksmart.ks50team01.platform.reivew.mapper.PReviewMapper">
+ 	<resultMap type="PReview" id="PReviewResultMap">
+ 		<id property="reviewCode" 			column="PRCHS_REV_CD"/>
+ 		<result property="reviewCode" 		column="PRCHS_REV_CD"/>
+ 		<result property="reviewId" 		column="REG_MBR_ID"/>
+ 		<result property="reviewGoods" 		column="RAT_CTGRY_NO"/>
+ 		<result property="reviewStar" 		column="PRCHS_REV_CD"/>
+ 		<result property="reviewContent" 	column="PRCHS_REV_CN"/>
+ 		<result property="reviewDate" 		column="REG_YMD"/>
+ 		<result property="reviewLike" 		column="LIKE_TOTAL"/>
+ 		<result property="reviewDislike" 	column="DISLIKE_TOTAL"/>
+ 		<result property="reviewApprove" 	column="RLS_YN_CD"/>
+ 		
+ 		<result property="tripLargeCode" 	column="TRIP_LCTGRY_CD"/>
+ 		<result property="districtSubclassCode" 	column="RGN_SCTGRY_CD"/>
+ 		<result property="tripSubclassCode" 	column="TRIP_SCTGRY_CD"/>
+ 		<result property="paymentCode" 	column="STLM_CERT_FILE_CD"/>
+ 		<result property="reservationCode" 	column="BZENTY_RSVT_NO"/>
+ 		<result property="goodsOption" 	column="PRCHS_GDSOPT_CD"/>
+ 		<result property="goodsInformation" 	column="PRCHS_CD"/>
+ 		<result property="reportTotal" 	column="REPT_TOTAL"/>
+ 		<result property="reviewModifyDate" 	column="MDFCN_YMD"/>
+ 	</resultMap>
+ 	
+<!--  	<resultMap type="PReviewPublic" id="PReviewPublicResultMap">
+ 		<id property="publicCode" column="RLS_YN_CD"/>
+ 		<result property="publicCode" column="RLS_YN_CD"/>
+ 		<result property="publicId" column="REG_PF_ID"/>
+ 		<result property="publicContent" column="RLS_CN"/>
+ 		<result property="publicActivity" column="ACT_YN"/>
+ 		<result property="publicDate" column="REG_YMD"/>
+ 		<result property="publicModifyDate" column="MDFCN_YMD"/>
+ 	</resultMap> -->
+ 	
+ 	<resultMap type="PReviewReport" id="PReviewReportResultMap">
+ 		<id property="reportNum" column="REV_REPT_NO"/>
+ 		<result property="reportNum" column="REV_REPT_NO"/>
+ 		<result property="reportId" column="REG_MBR_ID"/>
+ 		<result property="reportCategories" column="REPT_CTGRY_NO"/>
+ 		<result property="reportReviewCode" column="PRCHS_REV_CD"/>
+ 		<result property="reportContent" column="REV_REPT_CN"/>
+ 		<result property="reportDate" column="REPT_YMD"/>
+ 		<result property="reportApprove" column="REV_REPT_APRV"/>
+ 		<result property="reportApproveId" column="APRV_PF_ID"/>
+ 		<result property="reportApproveDate" column="APRV_YMD"/>
+ 	</resultMap>
+ 	
+ 	<resultMap type="PReivewComment" id="PReivewCommentResultMap">
+ 		<id property="commenCode" column="REV_CMNT_CD"/>
+ 		<result property="commenCode" column="REV_CMNT_CD"/>
+ 		<result property="commentId" column="REG_BIZ_ID"/>
+ 		<result property="commentReviewCode" column="PRCHS_REV_CD"/>
+ 		<result property="commentApprove" column="RLS_YN_CD"/>
+ 		<result property="businessCode" column="PRTNR_BPLC_CD"/>
+ 		<result property="commentContent" column="REV_CMNT_CN"/>
+ 		<result property="commentDate" column="REG_YMD"/>
+ 		<result property="tripLargeCode" column="TRIP_LCTGRY_CD"/>
+ 		<result property="districtSubclass" column="RGN_SCTGRY_NM"/>
+ 	</resultMap>
+ 	
+ 	<resultMap type="PReviewReact" id="PReviewReactResultMap">
+ 		<id property="reviewReactCode" column="REV_LIKE_DISLIKE_CD"/>
+ 		<result property="reviewReactCode" column="REG_MBR_ID"/>
+ 		<result property="reviewReactId" column="PRCHS_REV_CD"/>
+ 		<result property="reactReviewCode" column="PRCHS_REV_CD"/>
+ 		<result property="reviewReactCheck" column="LIKE_DISLIKE_YN"/>
+ 		<result property="reviewReactDate" column="REG_YMD"/>
+ 		<result property="reviewReactModifyDate" column="MDFCN_YMD"/>
+ 	</resultMap>
+ 
+	 <select id="getPReviewList" resultMap="PReviewResultMap">
+	  /* 상품 리뷰 목록 리스트 */
+	 	SELECT 
+			PRCHS_REV_CD, 
+			REG_MBR_ID, 
+			RLS_YN_CD, 
+			RAT_CTGRY_NO, 
+			PRTNR_BPLC_CD, 
+			PRCHS_REV_CN, 
+			LIKE_TOTAL, 
+			DISLIKE_TOTAL,
+			REG_YMD,
+			RGN_SCTGRY_CD, 
+			TRIP_LCTGRY_CD, 
+			TRIP_SCTGRY_CD, 
+			STLM_CERT_FILE_CD, 
+			BZENTY_RSVT_NO, 
+			PRCHS_CD, 
+			PRCHS_GDSOPT_CD, 
+			MDFCN_YMD,
+			REPT_TOTAL
+		FROM 
+			PURCHASE_REVIEW
+	 </select>
+	 
+<!-- 	 <select id="" resultMap="">
+	 	/* 공개 여부 */
+	 	SELECT 
+			RLS_YN_CD, 
+			REG_PF_ID, 
+			RLS_CN, 
+			ACT_YN, 
+			REG_YMD, 
+			MDFCN_YMD
+		FROM 
+			DISCLOSURE_STATUS
+	 	
+	 </select> -->
+	 
+	 <select id="getPReviewReport" resultMap="PReviewReportResultMap">
+	 	/* 상품 리뷰 신고 리스트 */
+	 	SELECT 
+			REV_REPT_NO,
+			REG_MBR_ID,  
+			REPT_CTGRY_NO, 
+			PRCHS_REV_CD, 
+			REV_REPT_CN,
+			REPT_YMD,
+			REV_REPT_APRV, 
+			APRV_PF_ID,
+			APRV_YMD
+		FROM 
+			REVIEW_REPORT_HISTORY
+	 </select>
+	 
+	 <select id="getPReivewComment" resultMap="PReivewCommentResultMap">
+	 	/* 답글 목록 리스트 */
+		 SELECT 
+			REV_CMNT_CD, 
+			REG_BIZ_ID, 
+			PRCHS_REV_CD, 
+			RLS_YN_CD, 
+			PRTNR_BPLC_CD, 
+			REV_CMNT_CN, 
+			REG_YMD,
+			TRIP_LCTGRY_CD,
+			RGN_SCTGRY_NM
+		FROM 
+			REVIEW_COMMENT	
+	 </select>
+	 
+	 <select id="getPReviewReact" resultMap="PReviewReactResultMap">
+	 	/* 좋아요 싫어요 기록 목록 리스트 */
+	 	SELECT 
+			REV_LIKE_DISLIKE_CD, 
+			REG_MBR_ID, 
+			PRCHS_REV_CD, 
+			LIKE_DISLIKE_YN, 
+			REG_YMD, 
+			MDFCN_YMD
+		FROM 
+			REVIEW_LIKE_DISLIKE
+	 </select>
+ </mapper>

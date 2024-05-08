@@ -14,5 +14,9 @@ public class UReviewListController {
 	public String reviewList() {
 		return "user/review/reviewList";
 	}
+	@GetMapping("/list2")
+	public String reviewList2() {
+		return "user/review/reviewList2";
+	}
 	
 }
