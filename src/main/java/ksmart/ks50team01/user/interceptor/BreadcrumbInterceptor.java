@@ -11,10 +11,8 @@ import org.springframework.web.servlet.ModelAndView;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import ksmart.ks50team01.user.breadcrumb.Breadcrumb;
-import lombok.extern.slf4j.Slf4j;
 
 @Component
-@Slf4j
 public class BreadcrumbInterceptor implements HandlerInterceptor {
 
 	@Override
