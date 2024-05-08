@@ -1,18 +1,40 @@
 package ksmart.ks50team01.platform.destination.controller;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import ksmart.ks50team01.platform.destination.dto.Destination;
+import ksmart.ks50team01.platform.destination.service.DestinationService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
+
 @Controller
 @RequestMapping(value = "/platform")
-public class tourManageController {
+@RequiredArgsConstructor
+public class DestinationManageController {
+	
+	private final DestinationService destinationService;
+	
+	@PostMapping("/destination/tourModify")
+	public String tourModifyProcess(@RequestBody Destination destination) {
+		destinationService.updateTourInfo(destination);
+		
+		return "redirect:/platform/destination/tourManageChange";
+	}
+	
 	
 	@GetMapping("/destination/tourManage")
 	public String tourManage(Model model) {
+		List<Destination> tourInfoList = destinationService.getTourInfoList();
 		
 		model.addAttribute("title","관광지 관리");
+		model.addAttribute("tourInfoList", tourInfoList);
 		
 		return "/platform/destination/tourManage";
 	}

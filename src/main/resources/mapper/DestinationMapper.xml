@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="ksmart.ks50team01.platform.destination.mapper.DestinationMapper">
+					
+		
+
+	<select id="getTourInfoList" resultType="destination">
+		
+		/* 관광지 정보 조회 */
+
+		SELECT
+			TOUR_INFO_CD	AS	tourInfoCode,
+			REG_PF_BIZ_ID	AS	tourAuthorityId,
+			TOUR_NAME		AS	tourName,
+			TOUR_ADDR		AS	tourAddr,
+			TOUR_SITE 		AS tourSite,
+			TOUR_CONTATC1	AS	tourContectNum,
+			REG_YMD			AS	tourRegDate,
+			MDFCN_YMD		AS	tourFormDate
+		FROM
+			TOUR_INFO;
+	
+
+	</select>
+
+
+
+</mapper>  
