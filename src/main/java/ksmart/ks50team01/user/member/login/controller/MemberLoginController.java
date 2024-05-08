@@ -13,6 +13,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import ksmart.ks50team01.common.mail.MailSender;
 import ksmart.ks50team01.user.member.login.dto.Login;
 import ksmart.ks50team01.user.member.login.service.LoginService;
 import lombok.RequiredArgsConstructor;
@@ -28,11 +29,18 @@ public class MemberLoginController {
 	public RedirectView joinMember(Login login, RedirectAttributes redirectAttributes, HttpServletRequest request) {
 	    try {
 	        loginService.joinMember(login);
+	        
+	        // 메일 발송 코드 호출
+	        String recipient = login.getEmail();
+	        String subject = "환영합니다! 회원가입을 축하드립니다.";
+	        String body = "회원님의 가입을 진심으로 환영합니다. 저희 서비스를 많이 이용해주세요.";
+	        MailSender.sendMail(recipient, subject, body);
+	        
 	        redirectAttributes.addFlashAttribute("joinMessage", "회원가입에 성공하셨습니다!");
 	    } catch (DuplicateKeyException e) {
 	        redirectAttributes.addFlashAttribute("joinMessage", "이미 존재하는 아이디입니다.");
 	    } catch (Exception e) {
-	        redirectAttributes.addFlashAttribute("joinMessage", "회원가입에 실패하셨습니다.");
+	        e.printStackTrace(); // 예외 추적을 위해 추가
 	    }
 
 	    String referer = request.getHeader("Referer");
