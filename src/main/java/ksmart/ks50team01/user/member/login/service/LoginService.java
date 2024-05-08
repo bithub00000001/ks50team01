@@ -17,4 +17,8 @@ public class LoginService {
 	public Login login(Login login) {
 	    return loginMapper.login(login);
 	}
+	
+	public String findId(String name, String phone) {
+	    return loginMapper.findId(name, phone);
+	}
 }

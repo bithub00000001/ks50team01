@@ -15,4 +15,11 @@
 		MBR_ID = #{id} AND MBR_PW = #{password}
   </select>
   
+  <select id="findId" resultType="string">
+        SELECT MBR_ID
+        FROM MEMBER_MANAGE
+        WHERE MBR_NM = #{name}
+          AND MBR_TELNO = #{phone}
+    </select>
+  
 </mapper>

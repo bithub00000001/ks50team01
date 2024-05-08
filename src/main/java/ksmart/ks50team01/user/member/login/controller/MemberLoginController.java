@@ -1,10 +1,12 @@
 package ksmart.ks50team01.user.member.login.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.servlet.http.HttpSession;
@@ -19,6 +21,17 @@ public class MemberLoginController {
 
 	private final LoginService loginService;
     
+	@PostMapping("/findId")
+	public String findId(@RequestParam("name") String name, @RequestParam("phone") String phone, Model model, RedirectAttributes redirectAttributes) {
+	    String memberId = loginService.findId(name, phone);
+	    if (memberId != null) {
+	        redirectAttributes.addFlashAttribute("memberId", memberId);
+	    } else {
+	        redirectAttributes.addFlashAttribute("message", "해당 정보로 등록된 회원이 없습니다.");
+	    }
+	    return "redirect:/trip";
+	}
+	
 	@GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate(); // 세션 무효화

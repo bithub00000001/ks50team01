@@ -324,62 +324,99 @@
         <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header rounded">
-                    <h3 class="modal-title text-uppercase font-weight-bold">Log in to your account</h3>
+                    <h3 class="modal-title text-uppercase font-weight-bold">로그인</h3>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
                 <div class="modal-body">
-                    <div th:if="${message}" th:text="${message}" class="alert alert-info" role="alert"></div>
                     <form th:action="@{/login/login}" method="post">
                         <div class="mb-3">
-                            <input type="id" class="form-control bg-smoke" required="" placeholder="id" name="id">
+                            <input type="id" class="form-control bg-smoke" required="" placeholder="아이디" name="id">
                         </div>
 
                         <div class="mb-3">
-                            <input type="password" class="form-control bg-smoke" required="" placeholder="Password"
+                            <input type="password" class="form-control bg-smoke" required="" placeholder="비밀번호"
                                    name="password">
                         </div>
 
-                        <div class="mb-3 form-check mb-0">
+                        <div class="form-check mb-0">
                             <input type="checkbox" class="form-check-input" id="exampleCheck5">
                             <label class="form-check-label text-gray-color mb-3" for="exampleCheck5">
-                                Remember me
+                                로그인 상태 유지
                             </label>
-                            <a class="pull-right" href="#">Forgot Password?</a>
+                        </div>
+                        <div class="mb-3" style="display: flex;">
+	                        <div style="float: left; width: 33%; text-align:center;">
+									<a data-bs-target="#findId" data-bs-toggle="modal" href="#">아이디 찾기</a>
+	                        </div>
+	                        <div style="float: left; width: 33%; text-align:center;">
+									<a class="" href="#">비밀번호 찾기</a>
+	                        </div>
+	                        <div style="float: left; width: 33%; text-align:center;">
+		                            <a class="" href="#">회원가입</a>
+	                        </div>
                         </div>
 
                         <div class="d-grid">
-                            <button type="submit" class="btn btn-primary text-uppercase">Login</button>
-                        </div>
-
-                        <div class="text-uppercase text-center py-3">Or</div>
-
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-facebook text-uppercase text-white">Login with
-                                facebook
-                            </button>
+                            <button type="submit" class="btn btn-primary text-uppercase">로그인</button>
                         </div>
                     </form>
-                </div>
-
-                <div class="modal-footer justify-content-center">
-                    <p class="mb-1">Don’t have an Account? <a href="#">Sign up</a></p>
                 </div>
             </div>
         </div>
     </div>
-    <!--/* 스크립트는 우선 맨 아래로 옮기긴 했는데 나중에 js파일로 분리해주세요 그리고 CDATA부분은 xml에서 사용되는 주석 처리 방법 아닌지?*/-->
+    
+    
+    <!-- findId Modal -->
+    <div class="modal fade" id="findId" tabindex="-1" role="dialog" aria-label="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header rounded">
+                    <h3 class="modal-title text-uppercase font-weight-bold">아이디 찾기</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <form th:action="@{/login/findId}" method="post">
+                        <div class="mb-3">
+                            <input type="text" class="form-control bg-smoke" required="" placeholder="이름을 입력하세요" name="name">
+                        </div>
+
+                        <div class="mb-3">
+                            <input type="text" class="form-control bg-smoke" required="" placeholder="전화번호를 입력하세요(- 포함)"
+                                   name="phone">
+                        </div>
+
+                        
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary text-uppercase">로그인</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+   
     <script th:inline="javascript">
-        /*<![CDATA[*/
-        const loginError = /*[[${loginError}]]*/ false;
-        if (loginError) {
-            alert("아이디 혹은 비밀번호가 틀렸습니다.");
-            $(document).ready(function () {
-                $('#login').modal('show');
-            });
-        }
-        /*]]>*/
-    </script>
+	    const loginError = /*[[${loginError}]]*/ false;
+	    if (loginError) {
+	        alert("아이디 혹은 비밀번호가 틀렸습니다.");
+	        $(document).ready(function () {
+	            $('#login').modal('show');
+	        });
+	    }
+	</script>
+	<script th:inline="javascript">
+	    const memberId = /*[[${memberId}]]*/ null;
+	    const message = /*[[${message}]]*/ null;
+	
+	    if (memberId != null) {
+	        alert("회원님의 아이디는 " + memberId + " 입니다.");
+	    } else if (message != null) {
+	        alert(message);
+	    }
+	</script>
 
 </header>
 </html>
