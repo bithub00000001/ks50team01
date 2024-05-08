@@ -20,7 +20,7 @@ public class UTourApiServiceImpl implements UTourApiService{
 	private String apiKey2;
 
 	public UTourApiServiceImpl(WebClient.Builder webClientBuilder) {
-		this.webClient = webClientBuilder.baseUrl("http://apis.data.go.kr/B551011/KorService1").build();
+		this.webClient = webClientBuilder.baseUrl("http://apis.data.go.kr/").build();
 	}
 
 	@Override
@@ -42,4 +42,5 @@ public class UTourApiServiceImpl implements UTourApiService{
 			.retrieve()
 			.bodyToMono(UTourApi.class);
 	}
+
 }
