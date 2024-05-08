@@ -11,10 +11,10 @@ import jakarta.servlet.http.HttpServletResponse;
 public class IndexInterceptor implements HandlerInterceptor {
 
 	@Override
-	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-	    String viewName = (modelAndView != null) ? modelAndView.getViewName() : null;
-	    if (viewName != null && !viewName.startsWith("redirect:")) {
-			modelAndView.addObject("isMainPage", request.getRequestURI().equals("/trip"));
+	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
+		ModelAndView modelAndView) throws Exception {
+		if (modelAndView != null && !modelAndView.getViewName().startsWith("redirect:")) {
+			modelAndView.addObject("isMainPage", request.getRequestURI().matches("^/trip/?$"));
 		}
 
 		HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);

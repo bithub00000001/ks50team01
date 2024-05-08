@@ -463,6 +463,30 @@
         // 페이지 로드 시 maxPeople 값을 업데이트
         $(document).ready(function() {
             updateMaxPeople();
+
+            $('#startDate, #endDate').blur(function() {
+                const startDate = $('#startDate').val();
+                const endDate = $('#endDate').val();
+
+                if (startDate && endDate) {
+                    const start = new Date(startDate);
+                    const end = new Date(endDate);
+                    const diff = new Date(end - start);
+                    const days = diff / 1000 / 60 / 60 / 24 + 1; // 일차 계산
+
+                    // 종료 날짜가 시작 날짜보다 앞선 경우를 처리
+                    if(days < 1) {
+                        alert('종료 날짜가 시작 날짜보다 앞설 수 없습니다.');
+                        setTimeout(function (){
+                            $('#endDate').val('');
+                        }, 30);
+                    } else {
+                        $('#numDate').val(days);
+                    }
+                } else {
+                    $('#numDate').val(''); // 일차 입력 필드를 초기화
+                }
+            });
         });
 
         // 실제 회원 데이터 (예시)
@@ -499,12 +523,12 @@
 
         // 실제 회원 검색창 표시 여부 설정
         realMemberCheckbox.change(() => {
-            realMemberSearch.css('display', realMemberCheckbox.is(':checked') ? 'block' : 'none'); //.style.display = realMemberCheckbox.checked ? 'block' : 'none';
+            realMemberSearch.css('display', realMemberCheckbox.is(':checked') ? 'block' : 'none');
         });
 
         // 가상 회원 조정창 표시 여부 설정
         virtualMemberCheckbox.change(() => {
-            virtualMemberAdjust.css('display', virtualMemberCheckbox.is(':checked') ? 'block' : 'none'); //.style.display = virtualMemberCheckbox.checked ? 'block' : 'none';
+            virtualMemberAdjust.css('display', virtualMemberCheckbox.is(':checked') ? 'block' : 'none');
         });
 
         // 회원 검색 모달 열기 이벤트 설정
