@@ -20,9 +20,9 @@
                     </li>
                     <li class="">
                         <a href="#">여행 계획</a>
-                        <ul class="dropdown drop-up" id="trip">
+                        <ul class="dropdown drop-up" id="plan">
                             <li class="">
-                                <a th:href="@{/trip/list}">?내 여행 계획 목록</a>
+                                <a th:href="@{/trip/list}">? 내 여행 계획 목록</a>
                             </li>
                             <li class="">
                                 <a th:href="@{/trip/detail}">? 여행 계획 세부 사항</a>
@@ -32,6 +32,23 @@
                             </li>
                             <li class="">
                                 <a th:href="@{/trip/board}">? 여행 계획 공유</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="">
+                        <a href="#">여행 추천</a>
+                        <ul class="dropdown drop-up" id="recommendations">
+                            <li class="">
+                                <a th:href="@{/allRanking}">? 통합 여행 추천</a>
+                            </li>
+                            <li class="">
+                                <a th:href="@{allRanking/rankingList}">? 플랫폼 추천</a>
+                            </li>
+                            <li class="">
+                                <a th:href="@{allRanking/userRankingList}">? 회원 추천</a>
+                            </li>
+                            <li class="">
+                                <a th:href="@{allRanking/planRankingList }">? 여행계획 추천</a>
                             </li>
                         </ul>
                     </li>
