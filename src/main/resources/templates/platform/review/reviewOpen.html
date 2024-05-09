@@ -79,7 +79,8 @@
 			<div class="x_content">
 				<p class="text-muted font-13 m-b-30"> 리뷰 공개 여부를 선택해주세요
 				
-			<form id="modifyForm" th:action="@{/review/reviewOpen}" method="post">
+			<form id="modifyForm" th:action="@{/platform/review/open}" method="post">
+				
 				<table th:object="${reviewInfo}">
 				
 			        <tbody>
@@ -88,7 +89,7 @@
 			                    <label for="reviewCode">리뷰 번호</label>
 			                </td>
 			                <td>
-			                    <input type="text" id="reviewCode" name="reviewCode" value="*{reviewCode}" readonly="readonly" />
+			                    <input type="text" id="reviewCode" name="reviewCode" value="${reviewInfo.reviewCode}" readonly="readonly" />
 			                </td>
 			            </tr>
 			            <tr>

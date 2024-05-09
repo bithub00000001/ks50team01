@@ -110,7 +110,7 @@
 			DISCLOSURE_STATUS
 	 </select>
 	 
-	 <select id="getPReviewInfoById" parameterType="String" resultMap="PReviewResultMap">
+	 <select id="getPReviewInfoById" resultMap="PReviewResultMap">
 	 	 SELECT 
 			PRCHS_REV_CD, 
 			REG_MBR_ID, 
@@ -135,6 +135,48 @@
 		WHERE
 			PRCHS_REV_CD = #{reviewCode};
 	 </select>
+	 
+	 
+	 
+	 
+	 
+	 <select id="getPReviewReact" resultMap="PReviewReactResultMap">
+	 	/* 좋아요 싫어요 기록 목록 리스트 */
+	 	SELECT 
+			REV_LIKE_DISLIKE_CD, 
+			REG_MBR_ID, 
+			PRCHS_REV_CD, 
+			LIKE_DISLIKE_YN, 
+			REG_YMD, 
+			MDFCN_YMD
+		FROM 
+			REVIEW_LIKE_DISLIKE
+	 </select>
+	 
+	 <select id="getPReviewReactInfoById" resultMap="PReviewReactResultMap">
+	 	/* 좋아요 싫어요 기록 조회 */
+	 	SELECT 
+			REV_LIKE_DISLIKE_CD, 
+			REG_MBR_ID, 
+			PRCHS_REV_CD, 
+			LIKE_DISLIKE_YN, 
+			REG_YMD, 
+			MDFCN_YMD
+		FROM 
+			REVIEW_LIKE_DISLIKE
+		WHERE
+			REV_LIKE_DISLIKE_CD = '#{reviewReactCode}';
+	 </select>
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
 	 
 	 <select id="getPReviewReport" resultMap="PReviewReportResultMap">
 	 	/* 상품 리뷰 신고 리스트 */
@@ -168,16 +210,4 @@
 			REVIEW_COMMENT	
 	 </select>
 	 
-	 <select id="getPReviewReact" resultMap="PReviewReactResultMap">
-	 	/* 좋아요 싫어요 기록 목록 리스트 */
-	 	SELECT 
-			REV_LIKE_DISLIKE_CD, 
-			REG_MBR_ID, 
-			PRCHS_REV_CD, 
-			LIKE_DISLIKE_YN, 
-			REG_YMD, 
-			MDFCN_YMD
-		FROM 
-			REVIEW_LIKE_DISLIKE
-	 </select>
  </mapper>

@@ -129,7 +129,7 @@
 							</thead>
 							<tbody>
 								<tr th:unless="${pReviewReacts != null}">
-									<td colspan="6"  class="center-text">작성된 리뷰가 없습니다.</td>
+									<td colspan="6"  class="center-text">좋아요 싫어요를 클릭한 기록이 없습니다.</td>
 								</tr>
 								<tr th:if="${pReviewReacts != null}" th:each="l : ${pReviewReacts}">
 									<td th:text="${l.reviewReactCode}"></td>

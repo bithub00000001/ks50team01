@@ -20,12 +20,6 @@ public class PReviewService {
 	
 	private final PReviewMapper pReviewMapper;
 	
-	/**
-	 * 좋아요 싫어요 기록 목록 리스트
-	 */
-	public List<PReviewReact> getPReviewReact(){
-		return pReviewMapper.getPReviewReact();
-	}
 	
 	/**
 	 * 댓글 목록 리스트
@@ -44,6 +38,22 @@ public class PReviewService {
 	
 	
 	
+	
+	
+	/**
+	 * 좋아요 싫어요 기록 조회
+	 */
+	public PReviewReact getPReviewReactInfoById(String reviewReactCode) {
+		PReviewReact reactInfo = pReviewMapper.getPReviewReactInfoById(reviewReactCode);
+		return reactInfo;
+	}
+	
+	/**
+	 * 좋아요 싫어요 기록 목록 리스트
+	 */
+	public List<PReviewReact> getPReviewReact(){
+		return pReviewMapper.getPReviewReact();
+	}
 	
 	
 	

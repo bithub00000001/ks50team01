@@ -55,19 +55,6 @@ public class PReviewController {
 	
 	
 	
-	/**
-	 * 리뷰 좋아요 싫어요 기록 목록
-	 */
-	@GetMapping("/react")
-	public String reviewReact(Model model) {
-		
-		List<PReviewReact> pReviewReacts = pReviewService.getPReviewReact();
-		
-		model.addAttribute("title", "좋아요 싫어요 기록 목록");
-		model.addAttribute("pReviewReacts", pReviewReacts);
-		
-		return "platform/review/reviewReact";
-	}
 	
 	
 	/**
@@ -109,6 +96,43 @@ public class PReviewController {
 	
 	
 	
+	
+	
+	
+	
+	
+	/**
+	 * 리뷰 좋아요 싫어요 기록 목록 수정
+	 */
+	@GetMapping("/react/open")
+	public String modifyReact(@RequestParam("reviewReactCode") String reviewReactCode, Model model) {
+		log.info("수정화면 reviewCode : {}", reviewReactCode);
+		PReviewReact reactInfo = pReviewService.getPReviewReactInfoById(reviewReactCode);
+		
+		model.addAttribute("title", "리뷰수정");
+		model.addAttribute("reviewInfo", reactInfo);
+		
+		return "platform/review/reactOpen";
+	}
+	
+	
+	/**
+	 * 리뷰 좋아요 싫어요 기록 목록
+	 */
+	@GetMapping("/react")
+	public String reviewReact(Model model) {
+		
+		List<PReviewReact> pReviewReacts = pReviewService.getPReviewReact();
+		
+		model.addAttribute("title", "좋아요 싫어요 기록 목록");
+		model.addAttribute("pReviewReacts", pReviewReacts);
+		
+		return "platform/review/reviewReact";
+	}
+	
+	
+	
+	
 	/**
 	 * 리뷰 수정 - 회원 수정
 	 * 05.08 작성
@@ -136,7 +160,7 @@ public class PReviewController {
 	 * @return
 	 */
 	@GetMapping("/open")
-	public String modifyPReview(@RequestParam(value="reviewCode", required = true) String reviewCode, Model model) {
+	public String modifyPReview(@RequestParam(value="reviewCode", required = false) String reviewCode, Model model) {
 		log.info("수정화면 reviewCode : {}", reviewCode);
 		PReview reviewInfo = pReviewService.getPReviewInfoById(reviewCode);
 		List<POpen> pOpenList = pReviewService.getPOpenList();
