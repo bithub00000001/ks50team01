@@ -19,10 +19,12 @@ import ksmart.ks50team01.common.mail.MailSender;
 import ksmart.ks50team01.user.member.login.dto.Login;
 import ksmart.ks50team01.user.member.login.service.LoginService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping("/login")
 @RequiredArgsConstructor
+@Slf4j
 public class MemberLoginController {
 
 	private final LoginService loginService;
@@ -77,15 +79,20 @@ public class MemberLoginController {
 	@PostMapping("/login")
 	public String login(@ModelAttribute Login login, HttpSession session, RedirectAttributes redirectAttributes, HttpServletRequest request) {
 	    Login loginMember = loginService.login(login);
-
+	    
 	    if (loginMember != null) {
-	        session.setAttribute("loginId", loginMember.getId()); // 세션에 회원 아이디 저장
-	        session.setAttribute("loginName", loginMember.getName()); // 세션에 회원 이름 저장
+	    	session.setAttribute("loginId", loginMember.getId());
+	        session.setAttribute("loginName", loginMember.getName());
+	        
+	        // 세션에 저장된 값 확인
+	        String loginId = (String) session.getAttribute("loginId");
+	        String loginName = (String) session.getAttribute("loginName");
+	        log.info("loginId from session: {}", loginId);
+	        log.info("loginName from session: {}", loginName);
 	    } else {
 	        redirectAttributes.addFlashAttribute("loginError", true);
 	    }
-
-	    // 현재 페이지로 리다이렉트
+	    
 	    String referer = request.getHeader("Referer");
 	    return "redirect:" + referer;
 	}

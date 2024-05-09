@@ -75,7 +75,7 @@ public class UTripPlanController {
     @GetMapping("/list")
     public String planListPage(Model model){
 
-        // uTourDataService.upsertSigunguData(apiKey);
+        uTourDataService.upsertSigunguData(apiKey);
         model.addAttribute("title", "내 여행 계획 목록");
         return "user/trip/planList";
     }
@@ -83,7 +83,7 @@ public class UTripPlanController {
     @GetMapping("/schedule")
     public String planSchedulePage(Model model){
 
-        // uTourDataService.upsertAreaData(apiKey);
+        uTourDataService.upsertAreaData(apiKey);
         model.addAttribute("title", "여행 스케줄");
 
         return "user/trip/planSchedule";

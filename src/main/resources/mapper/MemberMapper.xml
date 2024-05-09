@@ -19,7 +19,7 @@
 	</update>
 	
 
-	<delete id="delMember" parameterType="map">
+	<delete id="delMember" parameterType="string">
 		/* 회원 탈퇴 */
 		DELETE 
 		FROM 
