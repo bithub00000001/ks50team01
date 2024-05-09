@@ -16,7 +16,7 @@
                 </a>
                 <ul class="menuzord-menu menuzord-right">
                     <li class="">
-                        <a class="" th:href="@{/trip/}">Home</a>
+                        <a class="" th:href="@{/trip}">Home</a>
                     </li>
                     <li class="">
                         <a href="#">여행 계획</a>
@@ -28,22 +28,14 @@
                                 <a th:href="@{/trip/detail}">? 여행 계획 세부 사항</a>
                             </li>
                             <li class="">
-                                <a href="#">Profile</a>
+                                <a th:href="@{/trip/schedule}">? 여행 스케줄</a>
                             </li>
                             <li class="">
                                 <a th:href="@{/trip/board}">? 여행 계획 공유</a>
                             </li>
-                            <li class="">
-                                <a data-bs-target="#signup" data-bs-toggle="modal"
-                                   href="#">Signup</a>
-                            </li>
-                            <li class="">
-                                <a data-bs-target="#login" data-bs-toggle="modal"
-                                   href="#">Login</a>
-                            </li>
                         </ul>
                     </li>
-                    <li class="">
+                    <!--/* <li class="">
                         <a href="#">Tours</a>
                         <div class="megamenu drop-up">
                             <div class="megamenu-row">
@@ -286,7 +278,7 @@
                                    href="#">Login</a>
                             </li>
                         </ul>
-                    </li>
+                    </li> */-->
                     <li class="py-6" th:if="${session.loginId == null}">
                         <div class="nav-item nav-item-left me-0">
                             <a data-bs-target="#login" data-bs-toggle="modal" href="#">
@@ -305,9 +297,18 @@
                             </a>
                         </div>
                     </li>
+                    <li class="py-6" th:if="${session.loginId == null}" style="padding:13px;">
+                        <div class="nav-item nav-item-left me-2">
+                            <a data-bs-target="#join" data-bs-toggle="modal" href="#">
+                                <button type="button" class="btn btn-xs btn-outline-primary d-none d-lg-inline-block">
+                                    <span class="font-weight-bold">회원가입</span>
+                                </button>
+                            </a>
+                        </div>
+                    </li>
 
                     <div th:if="${session.loginId != null}" class="nav-item nav-item-left me-2"
-                         style="position: absolute; top: 70px; right: 0px; z-index: 1000">
+                         style="position: absolute; top: 70px; right: 0; z-index: 1000">
                             <span th:text="${session.loginName} + ' 님 환영합니다!'"
                                   class="text-primary font-weight-bold"></span>
                     </div>
@@ -315,72 +316,6 @@
             </div>
         </div>
     </nav>
-
-    <!-- ====================================
-    ——— MODAL SECTION
-    ===================================== -->
-    <!-- Login Modal -->
-    <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-label="loginModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header rounded">
-                    <h3 class="modal-title text-uppercase font-weight-bold">Log in to your account</h3>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-
-                <div class="modal-body">
-                    <div th:if="${message}" th:text="${message}" class="alert alert-info" role="alert"></div>
-                    <form th:action="@{/login/login}" method="post">
-                        <div class="mb-3">
-                            <input type="id" class="form-control bg-smoke" required="" placeholder="id" name="id">
-                        </div>
-
-                        <div class="mb-3">
-                            <input type="password" class="form-control bg-smoke" required="" placeholder="Password"
-                                   name="password">
-                        </div>
-
-                        <div class="mb-3 form-check mb-0">
-                            <input type="checkbox" class="form-check-input" id="exampleCheck5">
-                            <label class="form-check-label text-gray-color mb-3" for="exampleCheck5">
-                                Remember me
-                            </label>
-                            <a class="pull-right" href="#">Forgot Password?</a>
-                        </div>
-
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-primary text-uppercase">Login</button>
-                        </div>
-
-                        <div class="text-uppercase text-center py-3">Or</div>
-
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-facebook text-uppercase text-white">Login with
-                                facebook
-                            </button>
-                        </div>
-                    </form>
-                </div>
-
-                <div class="modal-footer justify-content-center">
-                    <p class="mb-1">Don’t have an Account? <a href="#">Sign up</a></p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--/* 스크립트는 우선 맨 아래로 옮기긴 했는데 나중에 js파일로 분리해주세요 그리고 CDATA부분은 xml에서 사용되는 주석 처리 방법 아닌지?*/-->
-    <script th:inline="javascript">
-        /*<![CDATA[*/
-        const loginError = /*[[${loginError}]]*/ false;
-        if (loginError) {
-            alert("아이디 혹은 비밀번호가 틀렸습니다.");
-            $(document).ready(function () {
-                $('#login').modal('show');
-            });
-        }
-        /*]]>*/
-    </script>
-
 </header>
 </html>
 

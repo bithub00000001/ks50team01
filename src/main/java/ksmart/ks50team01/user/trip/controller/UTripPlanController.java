@@ -72,4 +72,11 @@ public class UTripPlanController {
         model.addAttribute("title", "내 여행 계획 목록");
         return "user/trip/planList";
     }
+
+    @GetMapping("/schedule")
+    public String planSchedulePage(Model model){
+        model.addAttribute("title", "여행 스케줄");
+
+        return "user/trip/planSchedule";
+    }
 }
