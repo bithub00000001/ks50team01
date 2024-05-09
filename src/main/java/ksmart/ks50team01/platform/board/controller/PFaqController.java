@@ -30,7 +30,7 @@ public class PFaqController {
 	@GetMapping("/faqList")
 	public String faqList(Model model) {
 		List<PFaq> faqList = pFaqService.getFaqList();
-		
+		log.info("faqList: {}", faqList);
 		model.addAttribute("faqList", faqList);
 		model.addAttribute("title", "자주찾는 질문");
 		return "platform/board/faqList";
@@ -39,7 +39,7 @@ public class PFaqController {
 	@GetMapping("/faqWrite")
 	public String faqWrite(Model model) {
 		
-		model.addAttribute("title", "자주찾는 질문 작성");
+		model.addAttribute("title", "자주찾는질문 작성");
 		return "platform/board/faqWrite";
 	}
 	

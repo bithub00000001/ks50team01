@@ -122,7 +122,7 @@
 						</thead>
 						<tbody>
 							<tr th:unless="${categoryList != null}">
-								<td colspan="10">등록된 카테고리가 없습니다.</td>
+								<td colspan="11">등록된 카테고리가 없습니다.</td>
 							</tr>
 							<tr th:if="${categoryList != null}" th:each="l : ${categoryList}">
 								<td th:text="${l.cateNum}"></td>
