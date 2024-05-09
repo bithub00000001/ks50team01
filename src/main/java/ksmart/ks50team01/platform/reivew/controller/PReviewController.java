@@ -35,7 +35,7 @@ public class PReviewController {
 		
 		List<PReviewReport> pReviewReport = pReviewService.getPReviewReports();
 		
-		model.addAttribute("title", "상품리뷰전체목록");
+		model.addAttribute("title", "상품리뷰신고목록");
 		model.addAttribute("pReviewReport", pReviewReport);
 		
 		return "platform/review/reportList";
@@ -50,13 +50,7 @@ public class PReviewController {
 		
 		return "platform/review/reportApprove";
 	}
-	
-	
-	
-	
-	
-	
-	
+
 	/**
 	 * 리뷰 신고 누적 개수
 	 * @return
@@ -78,17 +72,16 @@ public class PReviewController {
 	 * @return
 	 */
 	@GetMapping("/comment/open")
-	public String commentOpen(@RequestParam("commentCode") String commentCode, Model model) {
+	public String commentOpen(@RequestParam(value="commentCode") String commentCode, Model model) {
 		log.info("답글수정화면 reviewCode : {}", commentCode);
-		PReview commentInfo = pReviewService.getPReviewInfoById(commentCode);
+		PReivewComment commentInfo = pReviewService.getPReivewCommentInfoById(commentCode);
+		List<POpen> pOpenList = pReviewService.getPOpenList();
 		
 		if(commentInfo == null){
 			System.out.println("commentInfo is null");
 		}else{
 			System.out.println("not null");
 		}
-		
-		List<POpen> pOpenList = pReviewService.getPOpenList();
 		
 		model.addAttribute("title", "답글수정화면");
 		model.addAttribute("commentInfo", commentInfo);
@@ -170,7 +163,14 @@ public class PReviewController {
 		PReview reviewInfo = pReviewService.getPReviewInfoById(reviewCode);
 		List<POpen> pOpenList = pReviewService.getPOpenList();
 		
-		model.addAttribute("title", "상품리뷰리뷰수정");
+		if(reviewInfo == null){
+			System.out.println("reviewInfo is null");
+		}else{
+			System.out.println("reviewInfo: "+reviewInfo);
+		}
+		
+		
+		model.addAttribute("title", "상품 리뷰 공개 여부 수정");
 		model.addAttribute("reviewInfo", reviewInfo);
 		model.addAttribute("pOpenList", pOpenList);
 		
@@ -190,7 +190,7 @@ public class PReviewController {
 		log.info("pReviewList: {}", pReviewList);
 		System.out.println("pReviewList : " + pReviewList);
 		
-		model.addAttribute("title", "상품리뷰전체목록");
+		model.addAttribute("title", "상품 리뷰 전체 목록");
 		model.addAttribute("pReviewList", pReviewList);
 		
 		return "platform/review/PreviewList";

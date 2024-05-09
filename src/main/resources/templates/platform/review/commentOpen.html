@@ -81,8 +81,8 @@
 			</div>
 			<div class="x_content">
 				<p class="text-muted font-13 m-b-30"> 답글 공개 여부를 선택해주세요
-		<form id="modifyForm" th:action="@{/platform/review/open}" method="post">
-			<table >
+		<form id="modifyForm"  th:action="@{/platform/review/open}" method="post">
+			<table th:object="${commentInfo}">
 		        <tbody>
 		            <tr>
 		                <td>

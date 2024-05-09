@@ -39,7 +39,6 @@ public class PReviewService {
 	 */
 	public PReivewComment getPReivewCommentInfoById(String commentCode) {
 		PReivewComment commentInfo = pReviewMapper.getPReivewCommentInfoById(commentCode);
-		
 		return commentInfo;
 	}
 	

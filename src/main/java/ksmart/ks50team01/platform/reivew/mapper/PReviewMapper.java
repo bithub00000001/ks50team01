@@ -24,6 +24,7 @@ public interface PReviewMapper {
 	
 	//댓글정보조회
 	PReivewComment getPReivewCommentInfoById(String commentCode);
+	
 	//댓글목록조회
 	List<PReivewComment> getPReivewComment();
 	
