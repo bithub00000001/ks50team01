@@ -5,9 +5,11 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import ksmart.ks50team01.platform.reivew.dto.POpen;
 import ksmart.ks50team01.platform.reivew.dto.PReivewComment;
 import ksmart.ks50team01.platform.reivew.dto.PReview;
 import ksmart.ks50team01.platform.reivew.dto.PReviewReact;
@@ -49,31 +51,68 @@ public class PReviewController {
 		return "platform/review/reportApprove";
 	}
 	
+	
+	
+	
+	
+	
+	
 	/**
-	 * 리뷰 전체 목록
+	 * 리뷰 신고 누적 개수
 	 * @return
 	 */
-	@GetMapping("/list")
-	public String reviewPlatformList(Model model) {
+	@GetMapping("/total/list")
+	public String reviewTotal() {
 		
-		List<PReview> pReviewList = pReviewService.getPReviewList();
-		log.info("pReviewList: {}", pReviewList);
-		System.out.println("pReviewList : " + pReviewList);
-		
-		model.addAttribute("title", "상품리뷰전체목록");
-		model.addAttribute("pReviewList", pReviewList);
-		
-		return "platform/review/PreviewList";
+		return "platform/review/reportTotal";
 	}
 	
 	/**
-	 * 리뷰 공개 여부 수정
+	 * 답글 공개 여부 수정
 	 * @return
 	 */
-	@GetMapping("/public")
-	public String reviewPublic() {
-
-		return "platform/review/reviewPublic";
+	@GetMapping("/comment/open")
+	public String commentOpen() {
+		
+		return "platform/review/commentOpen";
+	}
+	
+	/**
+	 * 답글 목록
+	 * @return
+	 */
+	@GetMapping("/comment/list")
+	public String commentList(Model model) {
+		
+		List<PReivewComment> pReivewComment = pReviewService.getPReivewComment();
+		
+		model.addAttribute("title", "댓글 목록 리스트");
+		model.addAttribute("pReivewComment", pReivewComment);
+		
+		return "platform/review/commentList";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * 리뷰 좋아요 싫어요 기록 목록 수정
+	 */
+	@GetMapping("/react/open")
+	public String modifyReact(@RequestParam("reviewReactCode") String reviewReactCode, Model model) {
+		log.info("수정화면 reviewCode : {}", reviewReactCode);
+		PReviewReact reactInfo = pReviewService.getPReviewReactInfoById(reviewReactCode);
+		
+		model.addAttribute("title", "리뷰수정");
+		model.addAttribute("reviewInfo", reactInfo);
+		
+		return "platform/review/reactOpen";
 	}
 	
 	
@@ -92,40 +131,64 @@ public class PReviewController {
 	}
 	
 	
+	
+	
 	/**
-	 * 리뷰 신고 누적 개수
-	 * @return
+	 * 리뷰 수정 - 회원 수정
+	 * 05.08 작성
 	 */
-	@GetMapping("/total/list")
-	public String reviewTotal() {
-		
-		return "platform/review/reportTotal";
+	/*
+	 * @PostMapping("/open") public String modifyPReview(PReview review) {
+	 * log.info("리뷰 수정 : {}", review);
+	 * 
+	 * pReviewService.modifyPReview(review);
+	 * 
+	 * return "redirect:/review/PreviewList"; }
+	 */
+	@PostMapping("/open")
+	public String modifyPReview(@RequestParam("reviewCode") String reviewCode, PReview review) {
+	    log.info("리뷰 수정 : {}", review);
+	    
+	    pReviewService.modifyPReview(review);
+	    
+	    return "redirect:/review/PreviewList";
 	}
 	
 	/**
-	 * 답글 공개 여부 수정
+	 * 05.08 수정
+	 * 리뷰 공개 여부 수정(수정페이지) - 회원 수정 화면
 	 * @return
 	 */
-	@GetMapping("/comment/public")
-	public String commentPublic() {
+	@GetMapping("/open")
+	public String modifyPReview(@RequestParam(value="reviewCode", required = false) String reviewCode, Model model) {
+		log.info("수정화면 reviewCode : {}", reviewCode);
+		PReview reviewInfo = pReviewService.getPReviewInfoById(reviewCode);
+		List<POpen> pOpenList = pReviewService.getPOpenList();
 		
-		return "platform/review/commentPublic";
+		model.addAttribute("title", "리뷰수정");
+		model.addAttribute("reviewInfo", reviewInfo);
+		model.addAttribute("pOpenList", pOpenList);
+		
+		
+		return "platform/review/reviewOpen";
 	}
 	
 	/**
-	 * 답글 목록
+	 * 05.08 수정
+	 * 리뷰 전체 목록 - 회원목록조회
 	 * @return
 	 */
-	@GetMapping("/comment/list")
-	public String commentList(Model model) {
+	@GetMapping("/list")
+	public String getPReviewList(Model model) {
 		
-		List<PReivewComment> pReivewComment = pReviewService.getPReivewComment();
+		List<PReview> pReviewList = pReviewService.getPReviewList();
+		log.info("pReviewList: {}", pReviewList);
+		System.out.println("pReviewList : " + pReviewList);
 		
-		model.addAttribute("title", "댓글 목록 리스트");
-		model.addAttribute("pReivewComment", pReivewComment);
+		model.addAttribute("title", "상품리뷰전체목록");
+		model.addAttribute("pReviewList", pReviewList);
 		
-		return "platform/review/commentList";
+		return "platform/review/PreviewList";
 	}
-	
 
 }
