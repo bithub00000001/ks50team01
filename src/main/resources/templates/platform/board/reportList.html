@@ -17,10 +17,7 @@
 					background-color: #f8f8f8 !important;
 					padding-bottom: 8px !important;	
 				}
-		
-			#datatable-responsive th {
-				white-space: nowrap; /* 열 제목이 줄바꿈 되지 않도록 설정 */
-			}
+
 		</style>
 	</head>
 
@@ -144,7 +141,7 @@
 							</thead>
 							<tbody>
 								<tr th:unless="${noticeList != null}">
-									<td colspan="10">등록된 공지사항이 없습니다.</td>
+									<td colspan="10">등록된 신고내역이 없습니다.</td>
 								</tr>
 								<tr th:if="${noticeList != null}" th:each="l : ${noticeList}">
 									<td th:text="${l.noticeNum}"></td>
