@@ -14,6 +14,21 @@ public class LoginService {
 
 	private final LoginMapper loginMapper;
 	
+	public boolean findPasswordByIdAndEmail(String id, String email) {
+	    return loginMapper.findPasswordByIdAndEmail(id, email) > 0;
+	}
+
+	public String generateAndUpdatePassword(String id) {
+	    String newPassword = generateRandomPassword();
+	    loginMapper.updatePassword(id, newPassword);
+	    return newPassword;
+	}
+
+	private String generateRandomPassword() {
+	    // 1~9, A~Z 중 랜덤으로 8자리 비밀번호 생성 로직
+		return PasswordGenerator.generateRandomPassword();
+	}
+	
 	public void joinMember(Login Login) {
         loginMapper.joinMember(Login);
     }

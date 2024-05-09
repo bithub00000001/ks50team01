@@ -163,7 +163,7 @@
                                     <a data-bs-target="#findId" data-bs-toggle="modal" href="#">아이디 찾기</a>
                                 </div>
                                 <div style="float: left; width: 33%; text-align:center;">
-                                    <a class="" href="#">비밀번호 찾기</a>
+                                    <a data-bs-target="#findPw" data-bs-toggle="modal" href="#">비밀번호 찾기</a>
                                 </div>
                                 <div style="float: left; width: 33%; text-align:center;">
                                     <a data-bs-target="#join" data-bs-toggle="modal" href="#">회원가입</a>
@@ -203,13 +203,42 @@
 
 
                             <div class="d-grid">
-                                <button type="submit" class="btn btn-primary text-uppercase">로그인</button>
+                                <button type="submit" class="btn btn-primary text-uppercase">아이디 찾기</button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
+        
+        
+        <!-- findPw Modal -->
+        <div class="modal fade" id="findPw" tabindex="-1" role="dialog" aria-label="loginModalLabel" aria-hidden="true">
+		    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+		        <div class="modal-content">
+		            <div class="modal-header rounded">
+		                <h3 class="modal-title text-uppercase font-weight-bold">비밀번호 찾기</h3>
+		                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		            </div>
+		
+		            <div class="modal-body">
+		                <form th:action="@{/login/findPw}" method="post">
+		                    <div class="mb-3">
+		                        <input type="text" class="form-control bg-smoke" required="" placeholder="아이디를 입력하세요" name="id">
+		                    </div>
+		
+		                    <div class="mb-3">
+		                        <input type="email" class="form-control bg-smoke" required="" placeholder="이메일을 입력하세요" name="email">
+		                    </div>
+		
+		                    <div class="d-grid">
+		                        <button type="submit" class="btn btn-primary text-uppercase">비밀번호 찾기</button>
+		                    </div>
+		                </form>
+		            </div>
+		        </div>
+		    </div>
+		</div>
         
         
         <!-- join Modal -->

@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ksmart.ks50team01.platform.reivew.dto.PPublic;
+import ksmart.ks50team01.platform.reivew.dto.POpen;
 import ksmart.ks50team01.platform.reivew.dto.PReivewComment;
 import ksmart.ks50team01.platform.reivew.dto.PReview;
 import ksmart.ks50team01.platform.reivew.dto.PReviewReact;
@@ -20,12 +20,6 @@ public class PReviewService {
 	
 	private final PReviewMapper pReviewMapper;
 	
-	/**
-	 * 좋아요 싫어요 기록 목록 리스트
-	 */
-	public List<PReviewReact> getPReviewReact(){
-		return pReviewMapper.getPReviewReact();
-	}
 	
 	/**
 	 * 댓글 목록 리스트
@@ -42,6 +36,27 @@ public class PReviewService {
 		return pReviewMapper.getPReviewReport();
 	}
 	
+	
+	
+	
+	
+	/**
+	 * 좋아요 싫어요 기록 조회
+	 */
+	public PReviewReact getPReviewReactInfoById(String reviewReactCode) {
+		PReviewReact reactInfo = pReviewMapper.getPReviewReactInfoById(reviewReactCode);
+		return reactInfo;
+	}
+	
+	/**
+	 * 좋아요 싫어요 기록 목록 리스트
+	 */
+	public List<PReviewReact> getPReviewReact(){
+		return pReviewMapper.getPReviewReact();
+	}
+	
+	
+	
 	/** 
 	 * 05.08 작성
 	 * 리뷰정보수정
@@ -54,8 +69,8 @@ public class PReviewService {
 	 * 05.08 작성
 	 * 리뷰정보조회
 	 */
-	public PReview getPReviewInfoById(String reviewId) {
-		PReview reviewInfo = pReviewMapper.getPReviewInfoById(reviewId);
+	public PReview getPReviewInfoById(String reviewCode) {
+		PReview reviewInfo = pReviewMapper.getPReviewInfoById(reviewCode);
 		return reviewInfo;
 	}
 	
@@ -63,8 +78,8 @@ public class PReviewService {
 	 * 05.08 작성
 	 * 공개 조회
 	 */
-	public List<PPublic> getPPublicList(){
-		return pReviewMapper.getPPublicList();
+	public List<POpen> getPOpenList(){
+		return pReviewMapper.getPOpenList();
 	}
 	
 	/**

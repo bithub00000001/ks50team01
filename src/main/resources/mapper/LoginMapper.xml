@@ -5,15 +5,19 @@
     
 <mapper namespace="ksmart.ks50team01.user.member.login.mapper.LoginMapper">
 
-	<update id="findPw" parameterType="ksmart.ks50team01.user.member.login.dto.Login">
-		UPDATE 
-			MEMBER_MANAGE
-		SET
-			MBR_PW=#{password}
-		WHERE
-			MBR_ID=#{id} AND
-			MBR_EML_ADDR=#{email}
-	</update>
+	<select id="findPasswordByIdAndEmail" resultType="int">
+        SELECT COUNT(*) 
+        FROM MEMBER_MANAGE
+        WHERE MBR_ID = #{id} 
+          AND MBR_EML_ADDR = #{email}
+    </select>
+
+    <update id="updatePassword">
+        UPDATE MEMBER_MANAGE
+        SET MBR_PW = #{newPassword}
+        WHERE MBR_ID = #{id}
+    </update>
+    
 
 	<insert id="joinMember" parameterType="ksmart.ks50team01.user.member.login.dto.Login">
 	    INSERT INTO MEMBER_MANAGE

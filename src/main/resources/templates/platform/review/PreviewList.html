@@ -146,7 +146,7 @@
 									<td th:text="${l.reviewApprove}"></td>
 									<td>
 										<!-- /* /member/modifyMember?memberId=id001 */ --> 
-										<a th:href="@{/platform/review/public}">작성</a>
+										<a th:href="@{/platform/review/open(reviewCode=${l.reviewCode})}">작성</a>
 									</td>
 								</tr>
 							</tbody>
