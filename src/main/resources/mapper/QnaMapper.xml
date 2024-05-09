@@ -16,7 +16,23 @@
 		<result property="qnaRegDate" column="REG_YMD" />
 		<result property="qnaMdfDate" column="MDFCN_YMD" />
 		<result property="qnartrDate" column="RTRCN_YMD" />
+	
+		<!-- 1:1 association -->
+		<association property="faqCate" javaType="PFaq">
+			<id 		property="faqCateNum" 		column="FAQ_CTGRY_NO"/>
+			<result 	property="faqRegId" 		column="REG_PF_ID"/>
+			<result 	property="faqCateType" 		column="FAQ_CTGRY_TYPE"/>
+			<result 	property="faqMdfId" 		column="MDFCN_PF_ID"/>
+			<result 	property="faqAct" 			column="ACT_YN"/>
+			<result 	property="faqRegDate" 		column="REG_YMD"/>
+			<result 	property="faqMdfDate" 		column="MDFCN_YMD"/>
+		</association> 
+	
+	
+	
 	</resultMap>
+	
+	
 
 	<select id="getQnaList" resultMap="qnaResultMap">
 	 	/* 1:1문의 조회 */			
