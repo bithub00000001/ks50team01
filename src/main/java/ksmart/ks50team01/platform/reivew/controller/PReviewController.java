@@ -160,7 +160,7 @@ public class PReviewController {
 	 * @return
 	 */
 	@GetMapping("/open")
-	public String modifyPReview(@RequestParam(value="reviewCode", required = false) String reviewCode, Model model) {
+	public String modifyPReview(@RequestParam(value="reviewCode", defaultValue="") String reviewCode, Model model) {
 		log.info("수정화면 reviewCode : {}", reviewCode);
 		PReview reviewInfo = pReviewService.getPReviewInfoById(reviewCode);
 		List<POpen> pOpenList = pReviewService.getPOpenList();

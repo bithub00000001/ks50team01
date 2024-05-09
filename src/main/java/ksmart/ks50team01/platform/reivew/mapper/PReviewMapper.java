@@ -3,7 +3,6 @@ package ksmart.ks50team01.platform.reivew.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import ksmart.ks50team01.platform.reivew.dto.POpen;
 import ksmart.ks50team01.platform.reivew.dto.PReivewComment;
@@ -37,7 +36,7 @@ public interface PReviewMapper {
 	int modifyPReview(PReview review);
 	
 	//리뷰정보조회 05.08
-	PReview getPReviewInfoById(@Param("reviewCode") String reviewCode);
+	PReview getPReviewInfoById(String reviewCode);
 	
 	//공개 조회 05.08
 	List<POpen> getPOpenList();
