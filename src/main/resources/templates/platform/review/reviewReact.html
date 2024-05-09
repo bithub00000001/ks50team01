@@ -124,24 +124,19 @@
 									<th>좋아요/삻어요/기본</th>
 									<th>등록일자</th>
 									<th>수정일자</th>
-									<th>수정</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:unless="${pReviewReacts != null}">
-									<td colspan="6"  class="center-text">좋아요 싫어요를 클릭한 기록이 없습니다.</td>
+								<tr th:unless="${pReviewReact != null}">
+									<td colspan="7"  class="center-text">좋아요 싫어요를 클릭한 기록이 없습니다.</td>
 								</tr>
-								<tr th:if="${pReviewReacts != null}" th:each="l : ${pReviewReacts}">
+								<tr th:if="${pReviewReact != null}" th:each="l : ${pReviewReact}">
 									<td th:text="${l.reviewReactCode}"></td>
 									<td th:text="${l.reviewReactId}"></td>
 									<td th:text="${l.reactReviewCode}"></td>
 									<td th:text="${l.reviewReactCheck}"></td>
 									<td th:text="${l.reviewReactDate}"></td>
 									<td th:text="${l.reviewReactModifyDate}"></td>
-									<td>
-										<!-- /* /member/modifyMember?memberId=id001 */ --> 
-										<a th:href="@{/platform/review/open}">수정</a>
-									</td>
 								</tr>
 							</tbody>
 						</table>

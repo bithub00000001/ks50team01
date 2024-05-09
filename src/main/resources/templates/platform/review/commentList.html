@@ -133,7 +133,7 @@
 								<td colspan="7" class="center-text">작성된 답글이 없습니다.</td>
 							</tr>
 							<tr th:if="${pReivewComment != null}" th:each="l : ${pReivewComment}">
-								<td th:text="${l.commenCode}"></td>
+								<td th:text="${l.commentCode}"></td>
 								<td th:text="${l.commentId}"></td>
 								<td th:text="${l.businessCode}"></td>
 								<td th:text="${l.commentReviewCode}"></td>
@@ -142,7 +142,7 @@
 								<td th:text="${l.commentApprove}"></td>
 								<td>
 									<!-- /* /member/modifyMember?memberId=id001 */ --> 
-									<a th:href="@{/platform/review/comment/open}">수정</a>
+									<a th:href="@{/platform/review/comment/open(commentCode=${l.commentCode})}">수정</a>
 								</td>
 							</tr>
 							

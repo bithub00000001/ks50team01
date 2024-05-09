@@ -1,10 +1,11 @@
 package ksmart.ks50team01.platform.reivew.dto;
 
 public class PReivewComment {
-	private String commenCode;//댓글 코드
+	private String commentCode;//답글 코드
 	private String commentId;//작성자 아이디
 	private String commentReviewCode;//상품 리뷰 코드
 	private String commentApprove;//공개여부
+	private String commentApproveName;//공개여부
 	private String businessCode;//사업장 코드
 	private String commentContent;//답글 내용
 	private String commentDate;//답글 등록일자
@@ -15,11 +16,17 @@ public class PReivewComment {
 	
 	
 	
-	public String getCommenCode() {
-		return commenCode;
+	public String getCommentApproveName() {
+		return commentApproveName;
 	}
-	public void setCommenCode(String commenCode) {
-		this.commenCode = commenCode;
+	public void setCommentApproveName(String commentApproveName) {
+		this.commentApproveName = commentApproveName;
+	}
+	public String getCommentCode() {
+		return commentCode;
+	}
+	public void setCommentCode(String commentCode) {
+		this.commentCode = commentCode;
 	}
 	public String getCommentId() {
 		return commentId;
@@ -72,9 +79,10 @@ public class PReivewComment {
 	
 	@Override
 	public String toString() {
-		return "PReivewComment [commenCode=" + commenCode + ", commentId=" + commentId + ", commentReviewCode="
-				+ commentReviewCode + ", commentApprove=" + commentApprove + ", businessCode=" + businessCode
-				+ ", commentContent=" + commentContent + ", commentDate=" + commentDate + ", tripLargeCode="
-				+ tripLargeCode + ", districtSubclass=" + districtSubclass + "]";
+		return "PReivewComment [commentCode=" + commentCode + ", commentId=" + commentId + ", commentReviewCode="
+				+ commentReviewCode + ", commentApprove=" + commentApprove + ", commentApproveName="
+				+ commentApproveName + ", businessCode=" + businessCode + ", commentContent=" + commentContent
+				+ ", commentDate=" + commentDate + ", tripLargeCode=" + tripLargeCode + ", districtSubclass="
+				+ districtSubclass + "]";
 	}
 }

@@ -16,17 +16,19 @@ public interface PReviewMapper {
 	
 	
 	
+
+	//신고목록조회
+	List<PReviewReport> getPReviewReport();
+
+	
+	
+	
+	//댓글정보조회
+	PReivewComment getPReivewCommentInfoById(String commentCode);
 	//댓글목록조회
 	List<PReivewComment> getPReivewComment();
 	
-	//신고목록조회
-	List<PReviewReport> getPReviewReport();
 	
-	
-	
-	
-	//좋아요싫어요정보조회
-	PReviewReact getPReviewReactInfoById(String reviewReactCode);
 	
 	//좋아요싫어요기록목록조회
 	List<PReviewReact> getPReviewReact();
@@ -37,7 +39,7 @@ public interface PReviewMapper {
 	int modifyPReview(PReview review);
 	
 	//리뷰정보조회 05.08
-	PReview getPReviewInfoById(@Param("reviewCode") String reviewCode);
+	PReview getPReviewInfoById(String reviewCode);
 	
 	//공개 조회 05.08
 	List<POpen> getPOpenList();
