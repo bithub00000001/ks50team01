@@ -16,19 +16,39 @@ public class DestinationService {
 	
 	private final DestinationMapper destinationMapper;
 	
+	/**
+	 * 관광지 정보 리스트
+	 * @return
+	 */
 	public List<Destination> getTourInfoList(){
-		
 		List<Destination> tourInfoList = destinationMapper.getTourInfoList();
 		
 		return destinationMapper.getTourInfoList();
 	}
 	
-	public int updateTourInfo(String tourName, String tourAuthorityId) {
+	public List<Destination> getTourGoodsList(){
+		List<Destination> tourGoodsList = destinationMapper.getTourGoodsList();
 		
-		int updateTourInfo = destinationMapper.updateTourInfo(tourName, tourAuthorityId);
-		
-		return updateTourInfo;
+		return destinationMapper.getTourGoodsList();
 	}
+	
+	
+	/**
+	 * 숙소 정보
+	 * @return
+	 */
+	public List<Destination> getLodgingInfoList(){
+		List<Destination> lodgingInfoList = destinationMapper.getLodgingInfoList();
+		
+		return destinationMapper.getLodgingInfoList();
+	}
+	
+	public List<Destination> getrestaurantInfoList(){
+		List<Destination> restaurantInfoList = destinationMapper.getRestaurantInfoList();
+		
+		return destinationMapper.getRestaurantInfoList();
+	}
+	
 	
 	
 

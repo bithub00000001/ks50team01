@@ -16,16 +16,55 @@
 			REG_PF_BIZ_ID	AS	tourAuthorityId,
 			TOUR_NAME		AS	tourName,
 			TOUR_ADDR		AS	tourAddr,
-			TOUR_SITE 		AS tourSite,
+			TOUR_SITE 		AS 	tourSite,
 			TOUR_CONTATC1	AS	tourContectNum,
 			REG_YMD			AS	tourRegDate,
 			MDFCN_YMD		AS	tourFormDate
 		FROM
 			TOUR_INFO;
 	
-
 	</select>
-
+	
+	<select id="getTourGoodsList" resultType="destination">
+		/* 관광지 옵션 */
+			SELECT
+				TOUR_GDS_CD 	AS	tourGoodsCode
+			FORM
+				TOUR_GOODS;	
+	
+	</select>
+	
+	<select id="getLodgingInfoList" resultType="destination">
+		/* 숙소 정보 */
+			SELECT
+				LODGING_INFO_CD		AS	lodgingInfoCode,
+				REG_PF_BIZ_ID		AS 	lodgingAuthorityId,
+				LODGING_NAME		AS 	lodgingName,
+				LODGING_ADDR		AS 	lodgingAddr,
+				LODGING_CONTACT1	AS 	lodgingContectNum,
+				LODGING_SITE		AS 	lodgingSite,
+				REG_YMD				AS 	lodgingRegDate,
+				MDFCN_YMD			AS 	lodgingFormDate
+			FROM
+				LODGING_INFO;
+	</select>
+	
+	<select id="getRestaurantInfoList" resultType="destination">
+		/* 식당 정보 */
+	
+			SELECT
+				RSTRN_INFO_CD	AS 	restaurantInfoCode,
+				REG_PF_BIZ_ID 	AS 	restaurantAuthorityId,
+				RSTRN_NAME		AS	restaurantName,
+				RSTRN_ADDR		AS	restaurantAddr,
+				RSTRN_CONTACT	AS	restaurantContectNum,
+				RSTRN_SITE		AS 	restaurantSite,
+				REG_YMD			AS 	restaurantRegDate,
+				MDFCN_YMD		AS 	restaurantFormDate
+			FROM
+				RESTAURANT_INFO;
+	</select>	
+	
 
 
 </mapper>  

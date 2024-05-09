@@ -14,5 +14,25 @@ public class Destination {
 	private String tourRegDate;
 	private String tourFormDate;
 	
+	private String lodgingName;
+	private String lodgingInfoCode;
+	private String lodgingAuthorityId;
+	private String lodgingAddr;
+	private String lodgingSite;
+	private String lodgingContectNum;
+	private String lodgingRegDate;
+	private String lodgingFormDate;
+	
+	private String restaurantName;
+	private String restaurantInfoCode;
+	private String restaurantAuthorityId;
+	private String restaurantAddr;
+	private String restaurantSite;
+	private String restaurantContectNum;
+	private String restaurantRegDate;
+	private String restaurantFormDate;
+	
+	private String tourGoodsCode;
+	
 	
 }

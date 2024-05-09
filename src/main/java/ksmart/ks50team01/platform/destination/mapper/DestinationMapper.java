@@ -11,6 +11,12 @@ public interface DestinationMapper {
 	// 관광지 조회
 	List<Destination> getTourInfoList();
 	
-	//관광지 정보 수정
-	int updateTourInfo(Destination tourName);
+	//숙소 조회
+	List<Destination> getLodgingInfoList();
+	
+	//식당 조회
+	List<Destination> getRestaurantInfoList();
+	
+	//관광상품 조회
+	List<Destination> getTourGoodsList();
 }

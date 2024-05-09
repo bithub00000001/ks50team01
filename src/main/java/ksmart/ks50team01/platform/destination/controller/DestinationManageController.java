@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import ksmart.ks50team01.platform.destination.dto.Destination;
 import ksmart.ks50team01.platform.destination.service.DestinationService;
@@ -21,13 +23,6 @@ public class DestinationManageController {
 	
 	private final DestinationService destinationService;
 	
-	@PostMapping("/destination/tourModify")
-	public String tourModifyProcess(@RequestBody Destination destination) {
-		destinationService.updateTourInfo(destination);
-		
-		return "redirect:/platform/destination/tourManageChange";
-	}
-	
 	
 	@GetMapping("/destination/tourManage")
 	public String tourManage(Model model) {
@@ -39,18 +34,35 @@ public class DestinationManageController {
 		return "/platform/destination/tourManage";
 	}
 	
+	@GetMapping("/destination/tourGoodsManage")
+	public String tourGoodsManage(Model model) {
+		List<Destination> tourGoodsList = destinationService.getTourGoodsList();
+		
+		model.addAttribute("tourGoodsList", tourGoodsList);
+		model.addAttribute("title", "관광상품 관리");
+		
+		return "/platform/destination/tourGoodsManage";
+	}
+	
+	
 	@GetMapping("/destination/lodgingManage")
 	public String lodgingManage(Model model) {
+		List<Destination> lodgingInfoList = destinationService.getLodgingInfoList();
 		
+		model.addAttribute("lodgingInfoList", lodgingInfoList);
 		model.addAttribute("title", "숙소 관리");
 		
 		return "/platform/destination/lodgingManage";
 	
 	}
 	
+
+	
 	@GetMapping("/destination/restaurantManage")
 	public String restaurantManage(Model model) {
+		List<Destination> restaurantInfoList = destinationService.getrestaurantInfoList();
 		
+		model.addAttribute("restaurantInfoList", restaurantInfoList);
 		model.addAttribute("title", "식당 관리");
 		
 		return "/platform/destination/restaurantManage";
