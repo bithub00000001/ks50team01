@@ -290,6 +290,15 @@
                     </li>
                     <li class="py-6" th:if="${session.loginId != null}">
                         <div class="nav-item nav-item-left me-2">
+                        	<a th:href="@{/mypage/mypage(loginId=${session.loginId})}">
+                                <button type="button" class="btn btn-xs btn-outline-primary d-none d-lg-inline-block">
+                                    <span class="font-weight-bold">마이페이지 이동</span>
+                                </button>
+                            </a>
+                        </div>
+                    </li>
+                    <li class="py-6" th:if="${session.loginId != null}">
+                        <div class="nav-item nav-item-right me-20">
                             <a th:href="@{/login/logout}">
                                 <button type="button" class="btn btn-xs btn-outline-primary d-none d-lg-inline-block">
                                     <span class="font-weight-bold">로그아웃</span>
@@ -307,7 +316,7 @@
                         </div>
                     </li>
 
-                    <div th:if="${session.loginId != null}" class="nav-item nav-item-left me-2"
+                    <div th:if="${session.loginId != null}" class="nav-item nav-item-left me-9"
                          style="position: absolute; top: 70px; right: 0; z-index: 1000">
                             <span th:text="${session.loginName} + ' 님 환영합니다!'"
                                   class="text-primary font-weight-bold"></span>

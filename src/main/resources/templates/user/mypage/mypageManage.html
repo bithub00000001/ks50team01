@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{user/mypage/layout/default}">
+<body>
+    <!-- 기존 body 요소들 -->
+    <th:block layout:fragment="customContent">
+        <div class="col-md-12 col-sm-6 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h3>회원정보수정</h3>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <form id="modifyForm" th:action="@{/mypage/mypageManage}" method="post">
+                        <input type="hidden" name="memberId" th:value="${memberInfo.memberId}">
+                        <div class="form-group">
+                            <label for="memberGrdNum">회원등급</label>
+                            <select id="memberGrdNum" name="memberGrdNum" class="form-control" required disabled="disabled">
+                                <option value="">회원등급 선택</option>
+                                <option th:each="grade : ${memberGrade}" th:value="${grade.memberGrdNum}" th:text="${grade.memberLevelName}" th:selected="${memberInfo.memberGrdNum == grade.memberGrdNum}"></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="memberPw">회원비밀번호</label>
+                            <input type="text" class="form-control" id="memberPw" name="memberPw" th:value="${memberInfo.memberPw}">
+                        </div>
+                        <div class="form-group">
+                            <label for="memberName">회원이름</label>
+                            <input type="text" class="form-control" id="memberName" name="memberName" th:value="${memberInfo.memberName}">
+                        </div>
+                        <div class="form-group">
+                            <label for="memberNickname">회원닉네임</label>
+                            <input type="text" class="form-control" id="memberNickname" name="memberNickname" th:value="${memberInfo.memberNickname}">
+                        </div>
+                        <div class="form-group">
+                            <label for="memberEmail">회원이메일</label>
+                            <input type="email" class="form-control" id="memberEmail" name="memberEmail" th:value="${memberInfo.memberEmail}">
+                        </div>
+                        <div class="form-group">
+                            <label for="memberTelNum">회원연락처</label>
+                            <input type="tel" class="form-control" id="memberTelNum" name="memberTelNum" th:value="${memberInfo.memberTelNum}">
+                        </div>
+                        <button type="submit" class="btn btn-primary">저장</button>
+                        <button type="button" class="btn btn-secondary" onclick="location.href='/mypage/mypage'">취소</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </th:block>
+</body>
+</html>

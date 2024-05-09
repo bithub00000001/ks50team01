@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <!-- Meta, title, CSS, favicons, etc. -->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>시간과 금을 치유해주는 여행친구</title>
+
+        <!-- Bootstrap -->
+        <link th:href="@{/platform/vendors/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet">
+        <!-- Font Awesome -->
+        <link th:href="@{/platform/vendors/font-awesome/css/font-awesome.min.css}" rel="stylesheet">
+        <!-- NProgress -->
+        <link th:href="@{/platform/vendors/nprogress/nprogress.css}" rel="stylesheet">
+        <!-- iCheck -->
+        <link th:href="@{/platform/vendors/iCheck/skins/flat/green.css}" rel="stylesheet">
+
+        <!-- Custom Theme css strt-->
+        <th:block layout:fragment="customCss"></th:block>
+        <!-- Custom Theme css end -->
+
+        <!-- Custom Theme Style -->
+        <link th:href="@{/platform/build/css/custom.min.css}" rel="stylesheet">
+    </head>
+    <body class="nav-md">
+        <div class="container body">
+            <div class="main_container">
+                <!-- aside start -->
+                <div th:replace="~{user/mypage/fragments/aside :: asideFragment}"></div>
+                <!-- aside end -->
+
+                <!-- top navigation start -->
+                <div th:replace="~{user/mypage/fragments/header :: headerFragment}"></div>
+                <!-- top navigation end -->
+
+                <!-- page content start -->
+                <div class="right_col" role="main">
+                    <div class="">
+                        <div class="page-title">
+                            <div class="title_left">
+                                <h3 th:text="${title}">Form Elements</h3>
+                            </div>
+
+                            <div class="title_right">
+                                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                                    <div class="input-group">
+
+                                        <input class="form-control" placeholder="Search for/admin." type="text">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button">Go!</button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <!-- custom page content start -->
+                        <th:block layout:fragment="customContent"></th:block>
+                        <!-- custom page content end -->
+
+                    </div>
+                </div>
+                <!-- page content end -->
+
+                <!-- footer content start -->
+                <div th:replace="~{platform/fragments/footer :: footerFragment}"></div>
+                <!-- footer content end -->
+            </div>
+        </div>
+
+        <!-- jQuery -->
+        <script th:src="@{/platform/vendors/jquery/dist/jquery.min.js}"></script>
+        <!-- Bootstrap -->
+        <script th:src="@{/platform/vendors/bootstrap/dist/js/bootstrap.min.js}"></script>
+        <!-- FastClick -->
+        <script th:src="@{/platform/vendors/fastclick/lib/fastclick.js}"></script>
+        <!-- NProgress -->
+        <script th:src="@{/platform/vendors/nprogress/nprogress.js}"></script>
+
+        <!-- iCheck -->
+        <script th:src="@{/platform/vendors/iCheck/icheck.min.js}"></script>
+
+        <!-- custom js start -->
+        <th:block layout:fragment="customJsFile"></th:block>
+        <!-- custom js end -->
+
+        <!-- Custom Theme Scripts -->
+		<script th:src="@{/platform/build/js/custom.min.js}"></script>
+
+        <!-- custom js file start -->
+        <th:block layout:fragment="customJs"></th:block>
+        <!-- custom js file end -->
+    </body>
+</html>
