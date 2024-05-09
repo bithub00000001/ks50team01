@@ -22,16 +22,37 @@ public class PReviewService {
 	
 	
 	
+	
+	/**
+	 * 신고 정보 조회
+	 */
+	public PReviewReport getPReviewReportInfoById(String reportNum) {
+		PReviewReport reportInfo = pReviewMapper.getPReviewReportInfoById(reportNum);
+		return reportInfo;
+	}
+	
 	/**
 	 * 신고 목록 리스트
 	 * @return
 	 */
 	public List<PReviewReport> getPReviewReports(){
-		return pReviewMapper.getPReviewReport();
+		List<PReviewReport> pReportList = pReviewMapper.getPReviewReport();
+		if(pReportList != null) {
+			pReportList.forEach(report -> {
+				String reportApprove = report.getReportApprove();
+				String reportApproveName = "";
+				switch (reportApprove) {
+	            case "Y":reportApproveName = "승인";
+	                break;
+	            case "N":reportApproveName = "미승인";
+	                break;
+				}
+				report.setReportApproveName(reportApproveName);
+			});
+		}
+		return pReportList;
 	}
-	
-	
-	
+		
 	
 	
 	/**
@@ -42,14 +63,6 @@ public class PReviewService {
 		return commentInfo;
 	}
 	
-	/**
-	 * 05.08 작성
-	 * 리뷰정보조회
-	 */
-	public PReview getPReviewInfoById(String reviewCode) {
-		PReview reviewInfo = pReviewMapper.getPReviewInfoById(reviewCode);
-		return reviewInfo;
-	}
 	
 	/**
 	 * 댓글 목록 리스트
@@ -94,6 +107,14 @@ public class PReviewService {
 		pReviewMapper.modifyPReview(review);
 	}
 	
+	/**
+	 * 05.08 작성
+	 * 리뷰정보조회
+	 */
+	public PReview getPReviewInfoById(String reviewCode) {
+		PReview reviewInfo = pReviewMapper.getPReviewInfoById(reviewCode);
+		return reviewInfo;
+	}
 	
 	/**
 	 * 05.08 작성

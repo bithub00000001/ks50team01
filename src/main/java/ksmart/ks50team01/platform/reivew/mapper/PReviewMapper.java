@@ -16,9 +16,11 @@ public interface PReviewMapper {
 	
 	
 
+	//신고정보조회
+	PReviewReport getPReviewReportInfoById(String reportNum);
+	
 	//신고목록조회
 	List<PReviewReport> getPReviewReport();
-
 	
 	
 	

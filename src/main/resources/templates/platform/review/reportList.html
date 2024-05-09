@@ -59,7 +59,7 @@
 									<td th:text="${l.reportApproveDate}"></td>
 									<td>
 										<!-- /* /member/modifyMember?memberId=id001 */ --> 
-										<a th:href="@{/platform/review/report/approve}">수정</a>
+										<a th:href="@{/platform/review/report/approve(reportNum=${l.reportNum})}">수정</a>
 									</td>
 								</tr>
 							</tbody>

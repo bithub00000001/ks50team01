@@ -7,8 +7,8 @@
  		<id property="reviewCode" 			column="PRCHS_REV_CD"/>
  		<result property="reviewCode" 		column="PRCHS_REV_CD"/>
  		<result property="reviewId" 		column="REG_MBR_ID"/>
- 		<result property="reviewGoods" 		column="RAT_CTGRY_NO"/>
- 		<result property="reviewStar" 		column="PRCHS_REV_CD"/>
+ 		<result property="reviewGoods" 		column="PRTNR_BPLC_CD"/>
+ 		<result property="reviewStar" 		column="RAT_CTGRY_NO"/>
  		<result property="reviewContent" 	column="PRCHS_REV_CN"/>
  		<result property="reviewDate" 		column="REG_YMD"/>
  		<result property="reviewLike" 		column="LIKE_TOTAL"/>
@@ -194,17 +194,6 @@
 	 </select>
 	 
 	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
 	 <select id="getPReviewReport" resultMap="PReviewReportResultMap">
 	 	/* 상품 리뷰 신고 리스트 */
 	 	SELECT 
@@ -220,6 +209,34 @@
 		FROM 
 			REVIEW_REPORT_HISTORY
 	 </select>
+	 
+	 <select id="getPReviewReportInfoById" resultMap="PReviewReportResultMap">
+	 	/*신고정보조회*/
+	 	SELECT 
+			REV_REPT_NO,
+			REG_MBR_ID,  
+			REPT_CTGRY_NO, 
+			PRCHS_REV_CD, 
+			REV_REPT_CN,
+			REPT_YMD,
+			REV_REPT_APRV, 
+			APRV_PF_ID,
+			APRV_YMD
+		FROM 
+			REVIEW_REPORT_HISTORY
+		WHERE
+			REV_REPT_NO = #{reportNum};
+	 </select>
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
 	 
 	 
  </mapper>

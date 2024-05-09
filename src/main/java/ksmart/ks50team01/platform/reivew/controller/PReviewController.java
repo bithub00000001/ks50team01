@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import ksmart.ks50team01.platform.board.service.PReportService;
 import ksmart.ks50team01.platform.reivew.dto.POpen;
 import ksmart.ks50team01.platform.reivew.dto.PReivewComment;
 import ksmart.ks50team01.platform.reivew.dto.PReview;
@@ -27,29 +28,7 @@ public class PReviewController {
 
 	private final PReviewService pReviewService;
 	
-	/**
-	 * 리뷰 신고 목록
-	 */
-	@GetMapping("/report/list")
-	public String reportList(Model model) {
-		
-		List<PReviewReport> pReviewReport = pReviewService.getPReviewReports();
-		
-		model.addAttribute("title", "상품리뷰신고목록");
-		model.addAttribute("pReviewReport", pReviewReport);
-		
-		return "platform/review/reportList";
-	}
-	
-	/**
-	 * 리뷰 신고 승인
-	 * @return
-	 */
-	@GetMapping("/report/approve")
-	public String reporApprove() {
-		
-		return "platform/review/reportApprove";
-	}
+
 
 	/**
 	 * 리뷰 신고 누적 개수
@@ -63,8 +42,42 @@ public class PReviewController {
 	
 	
 	
+	/**
+	 * 신고 승인 화면
+	 */
+	@GetMapping("/report/approve")
+	public String reportApprove(@RequestParam(value="reportNum", required = false) String reportNum, Model model) {
+		log.info("신고 승인 화면 reportApprove: {}", reportNum);
+		PReviewReport reportInfo = pReviewService.getPReviewReportInfoById(reportNum);
+		
+		if(reportInfo == null) {
+			System.out.println("reportInfo is null");
+		}else {
+			System.out.println("reportInfo : "+reportInfo);
+		}
+		
+		model.addAttribute("title", "신고 승인 화면");
+		model.addAttribute("reportInfo", reportInfo);
+		
+		return "platform/review/reportApprove";
+	}
 	
 	
+	/**
+	 * 리뷰 신고 목록
+	 */
+	@GetMapping("/report/list")
+	public String reportList(Model model) {
+		
+		List<PReviewReport> pReviewReport = pReviewService.getPReviewReports();
+		log.info("pReviewReport: {}", pReviewReport);
+		System.out.println("pReviewReport: "+pReviewReport);
+		
+		model.addAttribute("title", "상품리뷰신고목록");
+		model.addAttribute("pReviewReport", pReviewReport);
+		
+		return "platform/review/reportList";
+	}
 	
 	
 	/**
@@ -73,14 +86,14 @@ public class PReviewController {
 	 */
 	@GetMapping("/comment/open")
 	public String commentOpen(@RequestParam(value="commentCode") String commentCode, Model model) {
-		log.info("답글수정화면 reviewCode : {}", commentCode);
+		log.info("답글수정화면 commentCode : {}", commentCode);
 		PReivewComment commentInfo = pReviewService.getPReivewCommentInfoById(commentCode);
 		List<POpen> pOpenList = pReviewService.getPOpenList();
 		
 		if(commentInfo == null){
 			System.out.println("commentInfo is null");
 		}else{
-			System.out.println("not null");
+			System.out.println("commentInfo: "+commentInfo);
 		}
 		
 		model.addAttribute("title", "답글수정화면");
@@ -89,8 +102,6 @@ public class PReviewController {
 		
 		return "platform/review/commentOpen";
 	}
-	
-	
 	
 	/**
 	 * 답글 목록

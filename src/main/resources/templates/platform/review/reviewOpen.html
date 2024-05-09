@@ -136,14 +136,13 @@
 			                </td>
 			                <td>
 							<select id="reviewApprove" name="reviewApprove">
-							    <option value="">====공개여부를 선택해주세요====</option>
-							    <th:block th:if="${pOpenList != null}" th:each="l : ${pOpenList}">
+							    <option value="">공개여부를 선택해주세요</option>
+
+ 						    <th:block th:if="${pOpenList != null}" th:each="l : ${pOpenList}">
 							       <option th:value="${l.pOpenCode}" th:selected="${l.pOpenCode == reviewApprove}">
 							            [[${l.pOpenContent}]]
 							        </option>
-									</th:block>
-											<!-- <option value="1">Y</option>
-										 <option value="2">N</option> -->
+							</th:block>
 			                    </select>
 			                </td>
 			            </tr>

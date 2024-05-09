@@ -8,9 +8,17 @@ public class PReviewReport {
 	private String reportContent; //신고 내용
 	private String reportDate; //신고 일자
 	private String reportApprove; //신고승인여부
+	private String reportApproveName; //신고승인여부
 	private String reportApproveId; //신고승인자
 	private String reportApproveDate; //신고승인자
 	
+	
+	public String getReportApproveName() {
+		return reportApproveName;
+	}
+	public void setReportApproveName(String reportApproveName) {
+		this.reportApproveName = reportApproveName;
+	}
 	public String getReportNum() {
 		return reportNum;
 	}
@@ -69,8 +77,9 @@ public class PReviewReport {
 	public String toString() {
 		return "PReviewReport [reportNum=" + reportNum + ", reportId=" + reportId + ", reportCategories="
 				+ reportCategories + ", reportReviewCode=" + reportReviewCode + ", reportContent=" + reportContent
-				+ ", reportDate=" + reportDate + ", reportApprove=" + reportApprove + ", reportApproveId="
-				+ reportApproveId + ", reportApproveDate=" + reportApproveDate + "]";
+				+ ", reportDate=" + reportDate + ", reportApprove=" + reportApprove + ", reportApproveName="
+				+ reportApproveName + ", reportApproveId=" + reportApproveId + ", reportApproveDate="
+				+ reportApproveDate + "]";
 	}
 	
 	
