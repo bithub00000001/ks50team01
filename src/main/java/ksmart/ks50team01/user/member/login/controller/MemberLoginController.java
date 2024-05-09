@@ -1,5 +1,7 @@
 package ksmart.ks50team01.user.member.login.controller;
 
+import javax.mail.MessagingException;
+
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,27 +26,35 @@ import lombok.RequiredArgsConstructor;
 public class MemberLoginController {
 
 	private final LoginService loginService;
+	
+	@PostMapping("/findPw")
+	public String findPassword(@RequestParam("id") String id, @RequestParam("email") String email, RedirectAttributes redirectAttributes) throws MessagingException {
+	    boolean isValidUser = loginService.findPasswordByIdAndEmail(id, email);
+	    if (isValidUser) {
+	        String newPassword = loginService.generateAndUpdatePassword(id);
+	        MailSender.sendMail(email, "임시 비밀번호 발급", "임시 비밀번호는 " + newPassword + " 입니다.");
+	        redirectAttributes.addFlashAttribute("message", "이메일로 임시 비밀번호가 전송되었습니다.");
+	    } else {
+	        redirectAttributes.addFlashAttribute("message", "아이디 또는 이메일 정보가 일치하지 않습니다.");
+	    }
+	    return "redirect:/trip";
+	}
+	
+	
     
 	@PostMapping("/join")
-	public String joinMember(Login login, RedirectAttributes redirectAttributes, HttpServletRequest request) {
+	public RedirectView joinMember(Login login, RedirectAttributes redirectAttributes, HttpServletRequest request) {
 	    try {
 	        loginService.joinMember(login);
-	        
-	        // 메일 발송 코드 호출
-	        String recipient = login.getEmail();
-	        String subject = "환영합니다! 회원가입을 축하드립니다.";
-	        String body = "회원님의 가입을 진심으로 환영합니다. 저희 서비스를 많이 이용해주세요.";
-	        MailSender.sendMail(recipient, subject, body);
-	        
 	        redirectAttributes.addFlashAttribute("joinMessage", "회원가입에 성공하셨습니다!");
 	    } catch (DuplicateKeyException e) {
 	        redirectAttributes.addFlashAttribute("joinMessage", "이미 존재하는 아이디입니다.");
 	    } catch (Exception e) {
-	        e.printStackTrace(); // 예외 추적을 위해 추가
+	        redirectAttributes.addFlashAttribute("joinMessage", "회원가입에 실패하셨습니다.");
 	    }
 
 	    String referer = request.getHeader("Referer");
-	    return "redirect:/trip";
+	    return new RedirectView(referer);
 	}
 	
 	@PostMapping("/findId")
