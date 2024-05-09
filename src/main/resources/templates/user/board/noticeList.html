@@ -103,7 +103,7 @@
 								<td><i class="badge rounded-pill bg-primary">긴급공지</i><a
 									href="">웹사이트 서버 점검 공지</a></td>
 								<td class="noticeCenter">관리자</td>
-								<td class="noticeCenter">2024-04-29</td>
+								<td class="noticeCenter">2024-05-01</td>
 								<td class="noticeCenter">100</td>
 							</tr>
 							<tr>
@@ -111,31 +111,31 @@
 								<td><i class="badge rounded-pill bg-primary">예정공지</i><a
 									href="">시스템 업그레이드 예정 공지</a></td>
 								<td class="noticeCenter">관리자</td>
-								<td class="noticeCenter">2024-04-29</td>
-								<td class="noticeCenter">100</td>
+								<td class="noticeCenter">2024-05-02</td>
+								<td class="noticeCenter">300</td>
 							</tr>
 							<tr>
 								<td class="noticeNum noticeCenter">3</td>
 								<td><i class="badge rounded-pill bg-primary">시스템공지</i><a
 									href="">시스템 장애 공지</a></td>
 								<td class="noticeCenter">관리자</td>
-								<td class="noticeCenter">2024-04-29</td>
-								<td class="noticeCenter">100</td>
+								<td class="noticeCenter">2024-05-03</td>
+								<td class="noticeCenter">500</td>
 							</tr>
 							<tr>
 								<td class="noticeNum noticeCenter">4</td>
 								<td><i class="badge rounded-pill bg-primary">일반공지</i><a
 									href="">고객센터 휴무 공지</a></td>
 								<td class="noticeCenter">관리자</td>
-								<td class="noticeCenter">2024-04-29</td>
-								<td class="noticeCenter">100</td>
+								<td class="noticeCenter">2024-05-04</td>
+								<td class="noticeCenter">200</td>
 							</tr>
 							<tr>
 								<td class="noticeNum noticeCenter">5</td>
 								<td><i class="badge rounded-pill bg-primary">이벤트공지</i><a href="">이벤트공지</a></td>
 								<td class="noticeCenter">관리자</td>
-								<td class="noticeCenter">2024-04-29</td>
-								<td class="noticeCenter">100</td>
+								<td class="noticeCenter">2024-05-05</td>
+								<td class="noticeCenter">400</td>
 							</tr>
 						</tbody>
 					</table>
@@ -179,6 +179,52 @@
 </th:block>
 
 <th:block layout:fragment="customJs">
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // 최신순과 조회순 버튼 요소 가져오기
+            const newestBtn = document.getElementById('overView-tab');
+            const mostViewedBtn = document.getElementById('tourGuide-tab');
+
+            // 테이블의 tbody 요소 가져오기
+            const tbody = document.querySelector('tbody');
+
+            // 최신순 버튼 클릭 시
+            newestBtn.addEventListener('click', function() {
+                sortTable(3, 'desc'); // 등록일을 기준으로 내림차순 정렬
+            });
+
+            // 조회순 버튼 클릭 시
+            mostViewedBtn.addEventListener('click', function() {
+                sortTable(4, 'desc'); // 조회수를 기준으로 내림차순 정렬
+            });
+
+            // 테이블 정렬 함수
+            function sortTable(columnIndex, order) {
+                const rows = Array.from(tbody.querySelectorAll('tr'));
+
+                // 정렬할 때 기준이 되는 값 추출
+                const getValue = (row) => row.cells[columnIndex].textContent.trim();
+
+                // 정렬하기
+                rows.sort((a, b) => {
+                    const aValue = getValue(a);
+                    const bValue = getValue(b);
+                    if (order === 'asc') {
+                        return aValue.localeCompare(bValue);
+                    } else {
+                        return bValue.localeCompare(aValue);
+                    }
+                });
+
+                // 정렬된 순서대로 다시 테이블에 추가
+                rows.forEach(row => tbody.appendChild(row));
+            }
+        });
+    </script>
+
+
 
 </th:block>
 </html>

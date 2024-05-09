@@ -1,5 +1,7 @@
 package ksmart.ks50team01.user.member.login.controller;
 
+import javax.mail.MessagingException;
+
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +15,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import ksmart.ks50team01.common.mail.MailSender;
 import ksmart.ks50team01.user.member.login.dto.Login;
 import ksmart.ks50team01.user.member.login.service.LoginService;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +26,21 @@ import lombok.RequiredArgsConstructor;
 public class MemberLoginController {
 
 	private final LoginService loginService;
+	
+	@PostMapping("/findPw")
+	public String findPassword(@RequestParam("id") String id, @RequestParam("email") String email, RedirectAttributes redirectAttributes) throws MessagingException {
+	    boolean isValidUser = loginService.findPasswordByIdAndEmail(id, email);
+	    if (isValidUser) {
+	        String newPassword = loginService.generateAndUpdatePassword(id);
+	        MailSender.sendMail(email, "임시 비밀번호 발급", "임시 비밀번호는 " + newPassword + " 입니다.");
+	        redirectAttributes.addFlashAttribute("message", "이메일로 임시 비밀번호가 전송되었습니다.");
+	    } else {
+	        redirectAttributes.addFlashAttribute("message", "아이디 또는 이메일 정보가 일치하지 않습니다.");
+	    }
+	    return "redirect:/trip";
+	}
+	
+	
     
 	@PostMapping("/join")
 	public RedirectView joinMember(Login login, RedirectAttributes redirectAttributes, HttpServletRequest request) {

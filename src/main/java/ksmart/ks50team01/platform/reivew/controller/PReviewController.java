@@ -166,6 +166,7 @@ public class PReviewController {
 	@GetMapping("/open")
 	public String modifyPReview(@RequestParam("reviewCode") String reviewCode, Model model) {
 		log.info("상품리뷰수정화면 reviewCode : {}", reviewCode);
+
 		PReview reviewInfo = pReviewService.getPReviewInfoById(reviewCode);
 		List<POpen> pOpenList = pReviewService.getPOpenList();
 		

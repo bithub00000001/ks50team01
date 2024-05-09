@@ -3,7 +3,6 @@ package ksmart.ks50team01.platform.reivew.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import ksmart.ks50team01.platform.reivew.dto.POpen;
 import ksmart.ks50team01.platform.reivew.dto.PReivewComment;
