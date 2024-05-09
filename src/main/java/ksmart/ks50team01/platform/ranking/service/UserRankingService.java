@@ -1,5 +1,5 @@
 package ksmart.ks50team01.platform.ranking.service;
 
-public class PRankingService {
+public class UserRankingService {
 
 }
