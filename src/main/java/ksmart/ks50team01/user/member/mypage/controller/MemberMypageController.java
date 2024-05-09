@@ -7,8 +7,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -29,26 +31,24 @@ public class MemberMypageController {
     
 
     @PostMapping("/mypageManage")
-    public String memberModifyProcess(@ModelAttribute Mypage mypage, RedirectAttributes redirectAttributes, HttpSession session) {
+    @ResponseBody
+    public String memberModifyProcess(@ModelAttribute Mypage mypage) {
         int updatedCount = mypageService.updateMember(mypage);
-        String loginId = (String) session.getAttribute("loginId");
 
         if (updatedCount > 0) {
-            redirectAttributes.addFlashAttribute("successMessage", "회원 정보가 수정되었습니다.");
+            return "success";
         } else {
-            redirectAttributes.addFlashAttribute("errorMessage", "회원 정보 수정에 실패했습니다.");
+            return "fail";
         }
-
-        redirectAttributes.addAttribute("loginId", loginId);
-        return "redirect:/mypage/mypageManage";
     }
     
-    @GetMapping("/delMember")
-    public String delMember(@RequestParam("memberId") String memberId, HttpSession session) {
-        mypageService.delMember(memberId);
-        log.info("memberId: {}", memberId);
-        session.invalidate(); // 세션 무효화
-        return "redirect:/trip";
+    @PostMapping("/delMember")
+    @ResponseBody
+    public String delMember(HttpSession session) {
+        String loginId = (String) session.getAttribute("loginId");
+        mypageService.delMember(loginId);
+        session.invalidate();
+        return "success";
     }
     
     @GetMapping("/logout")
@@ -58,20 +58,16 @@ public class MemberMypageController {
     }
 
     @GetMapping("/mypage")
-    public String mypage(Model model) {
-        model.addAttribute("title", "마이페이지");
+    public String mypage(Model model, HttpSession session) {
+        String loginId = (String) session.getAttribute("loginId");
+        model.addAttribute("loginId", loginId);
         return "user/mypage/main";
     }
 
     @GetMapping("/mypageManage")
-    public String memberModify(@SessionAttribute("loginId") String loginId, Model model) {
+    @ResponseBody
+    public Mypage memberModify(@SessionAttribute("loginId") String loginId) {
         Mypage memberInfo = mypageService.getMemberInfoById(loginId);
-        List<Mypage> memberGrade = mypageService.getMemberGrade();
-
-        model.addAttribute("memberInfo", memberInfo);
-        model.addAttribute("memberGrade", memberGrade);
-        model.addAttribute("title", "회원정보수정");
-
-        return "user/mypage/mypageManage";
+        return memberInfo;
     }
 }

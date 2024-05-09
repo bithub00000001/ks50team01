@@ -290,7 +290,7 @@
                     </li>
                     <li class="py-6" th:if="${session.loginId != null}">
                         <div class="nav-item nav-item-left me-2">
-                        	<a th:href="@{/mypage/mypage(loginId=${session.loginId})}">
+                        	<a data-bs-target="#mypageModal" data-bs-toggle="modal" href="#">
                                 <button type="button" class="btn btn-xs btn-outline-primary d-none d-lg-inline-block">
                                     <span class="font-weight-bold">마이페이지 이동</span>
                                 </button>

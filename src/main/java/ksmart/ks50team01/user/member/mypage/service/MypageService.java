@@ -16,8 +16,9 @@ public class MypageService {
 	
 	private final MypageMapper mypageMapper;
 	
-	public int delMember(String memberId) {
-		int delMember = mypageMapper.delMember(memberId);
+	
+	public int delMember(String loginId) {
+		int delMember = mypageMapper.delMember(loginId);
 		
 		return delMember;
 	}
