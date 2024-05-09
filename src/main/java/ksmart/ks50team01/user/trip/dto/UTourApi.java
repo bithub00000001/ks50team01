@@ -5,13 +5,16 @@ import lombok.Data;
 @Data
 public class UTourApi {
 
-
+	private String contentId;
 	private String title;
-	private String address;
-	private Long areaCode;
-	private Long contentTypeId;
+	private String address1;
+	private String address2;
+	private Integer areaCode;
+	private Integer sigunguCode;
+	private Integer contentTypeId;
 	private String firstImage;
 	private double mapX;
 	private double mapY;
+	private String tel;
 
 }
