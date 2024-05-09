@@ -1,44 +1,149 @@
 <!DOCTYPE html>
-<html lang="ko" layout:decorate="~{/platform/layout/default}"
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
      			xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    			xmlns:th="http://www.thymeleaf.org">
+      			layout:decorate="~{/platform/layout/default}">
 
 <head>
-<title>1:1문의</title>
-<th:block layout:fragment="customHead">
-	<link rel="stylesheet" th:href="@{/user/css/list-style.css}">
-</th:block>
+<!-- Datatables -->
+<style type="text/css">
+.control-label {
+	text-align: center !important;
+	background-color: #f8f8f8 !important;
+	padding-bottom: 8px !important;
+}
+</style>
 </head>
 
 <th:block layout:fragment="customContent">
-	<!-- list-style -->
-
-
-		<div class="row mt-5">
-			<div
-				class="col-xl-12 alert alert-light alert-dismissible d-flex justify-content-center"
-				style="margin-top: 10px;">
-				<form class="mb-0 col-sm-6 col-xl-6" action="#" method="post">
-					<div class="input-group input-group-sm">
-						<div class="select-default">
-							<select class="select-option">
-								<option>작성자</option>
-								<option>문의유형</option>
-								<option>문의제목</option>
-							</select>
+	<!-- search start -->
+	<div class="row">
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<div class="x_panel">
+				<div class="x_title">
+					<h2>
+						검색 <small>search form</small>
+					</h2>
+					<ul class="nav navbar-right panel_toolbox">
+						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+						</li>
+						<li class="dropdown"><a href="#" class="dropdown-toggle"
+							data-toggle="dropdown" role="button" aria-expanded="false"><i
+								class="fa fa-wrench"></i></a>
+							<ul class="dropdown-menu" role="menu">
+								<li><a href="#">Settings 1</a></li>
+								<li><a href="#">Settings 2</a></li>
+							</ul></li>
+						<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+					</ul>
+					<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+					<br />
+					<form id="demo-form2" class="form-horizontal form-label-left">
+						<div class="form-group">
+							<div class="col-md-2 col-sm-2 col-xs-0"></div>
+							<label class="control-label col-md-1 col-sm-1 col-xs-12"
+								for="first-name">제목</label>
+							<div class="col-md-3 col-sm-3 col-xs-12 form-element">
+								<input type="text" id="first-name"
+									class="form-control col-md-4 col-xs-12">
+							</div>
+							<label class="control-label col-md-1 col-sm-1 col-xs-12"
+								for="middle-name">작성자</label>
+							<div class="col-md-3 col-sm-3 col-xs-12 form-element">
+								<input id="middle-name" class="form-control col-md-7 col-xs-12"
+									type="text" name="middle-name">
+							</div>
+							<div class="col-md-2 col-sm-2 col-xs-0"></div>
 						</div>
-						<input type="text" class="form-control form-control-sm rounded-0"
-							placeholder="검색어를 입력해주세요." aria-label="Search....">
-						<button class="btn bg-primary border-0 rounded-0" type="button">
-							<span class="text-white text-uppercase font-weight-bold">검색</span>
-						</button>
-						<button class="btn bg-primary border-0 rounded-0" type="button">
-							<span class="text-white text-uppercase font-weight-bold">초기화</span>
-						</button>
-					</div>
-				</form>
+						<div class="form-group">
+							<div class="col-md-2 col-sm-2 col-xs-0"></div>
+							<label class="control-label col-md-2 col-sm-2 col-xs-12">1:1문의 유형</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<select class="form-control text-center">
+									<option>계정 관리</option>
+									<option>이용 문의</option>
+									<option>건의 및 제안</option>
+									<option>결제 및 환불</option>
+								</select>
+							</div>
+							<div class="col-md-2 col-sm-2 col-xs-0"></div>
+						</div>
+						<div class="form-group">
+							<div class="col-md-2 col-sm-2 col-xs-0"></div>
+							<label class="control-label col-md-2 col-sm-2 col-xs-12">정렬 기준</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<div class="radio">
+									<label class="align-item-center"><input type="radio"
+										value="option1" id="optionsRadios1" name="optionsRadios"
+										checked="checked">최신순</label> <label><input
+										type="radio" value="option2" id="optionsRadios2"
+										name="optionsRadios">??순</label>
+								</div>
+							</div>
+							<div class="col-md-2 col-sm-2 col-xs-0"></div>
+						</div>
+						<div class="ln_solid"></div>
+						<div class="form-group">
+							<div class="col-md-12 col-sm-12 col-xs-12 text-center">
+								<button class="btn btn-success btn-lg" type="button">검색</button>
+								<button type="reset" class="btn btn-dark btn-lg">초기화</button>
+							</div>
+						</div>
+
+					</form>
+				</div>
 			</div>
 		</div>
+	</div>
+	<!-- search end -->
+		<!-- grid table start -->
+	<div class="row">
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<div class="x_panel">
+				<div class="x_content">
+					<table id="datatable-responsive"
+						class="table table-striped table-bordered dt-responsive nowrap"
+						cellspacing="0" width="100%">
+						<thead>
+							<tr>
+		                        <th>번호</th>
+		                        <th>작성자</th>
+		                        <th>카테고리번호</th>
+		                        <th>진행상황번호</th>
+		                        <th>진행상황</th>
+		                        <th>제목</th>
+		                        <th>내용</th>
+		                        <th>답변자</th>
+		                        <th>등록일</th>
+		                        <th>수정일</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:unless="${qnaList != null}">
+								<td colspan="10">등록된 1:1문의가 없습니다.</td>
+							</tr>
+							<tr th:if="${qnaList != null}" th:each="l : ${qnaList}">
+								<td th:text="${l.qnaNum}"></td>
+								<td th:text="${l.qnaRegId}"></td>
+								<td th:text="${l.faqCateNum}"></td>
+								<td th:text="${l.qnaProNum}"></td>
+								<td th:text="${l.qnaProCate}"></td>
+								<td th:text="${l.qnaTitle}"></td>
+								<td th:text="${l.qnaContent}"></td>
+								<td th:text="${l.ansRegId}"></td>
+								<td th:text="${l.qnaRegDate}"></td>
+								<td th:text="${l.qnaMdfDate}"></td>
+								<td th:text="${l.qnartrDate}"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- grid table end -->
+</th:block>
 
 
 

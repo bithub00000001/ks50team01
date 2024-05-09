@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
-				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-				layout:decorate="~{platform/layout/default}">
-
+     			xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      			layout:decorate="~{/platform/layout/default}">
+      
 <head>
 <!-- Datatables -->
 <style type="text/css">
@@ -10,10 +10,6 @@
 	text-align: center !important;
 	background-color: #f8f8f8 !important;
 	padding-bottom: 8px !important;
-}
-
-#datatable-responsive th {
-	white-space: nowrap; /* 열 제목이 줄바꿈 되지 않도록 설정 */
 }
 </style>
 </head>
@@ -62,31 +58,21 @@
 						</div>
 						<div class="form-group">
 							<div class="col-md-2 col-sm-2 col-xs-0"></div>
-							<label for="middle-name"
-								class="control-label col-md-2 col-sm-2 col-xs-12">작성자</label>
-							<div class="col-md-6 col-sm-6 col-xs-12">
-								<input id="middle-name" class="form-control col-md-7 col-xs-12"
-									type="text" name="middle-name">
-							</div>
-							<div class="col-md-2 col-sm-2 col-xs-0"></div>
-						</div>
-						<div class="form-group">
-							<div class="col-md-2 col-sm-2 col-xs-0"></div>
-							<label class="control-label col-md-2 col-sm-2 col-xs-12">공지 유형</label>
+							<label class="control-label col-md-2 col-sm-2 col-xs-12">카테고리 유형</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
 								<select class="form-control text-center">
-									<option>일반 공지</option>
-									<option>긴급 공지</option>
-									<option>예정 공지</option>
-									<option>시스템 공지</option>
-									<option>이벤트 공지</option>
+									<option>계정 관리</option>
+									<option>이용 문의</option>
+									<option>건의 및 제안</option>
+									<option>결제 및 환불</option>
 								</select>
 							</div>
 							<div class="col-md-2 col-sm-2 col-xs-0"></div>
 						</div>
 						<div class="form-group">
 							<div class="col-md-2 col-sm-2 col-xs-0"></div>
-							<label class="control-label col-md-2 col-sm-2 col-xs-12">정렬 기준</label>
+							<label class="control-label col-md-2 col-sm-2 col-xs-12">정렬
+								기준</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
 								<div class="radio">
 									<label class="align-item-center"><input type="radio"
@@ -112,6 +98,7 @@
 		</div>
 	</div>
 	<!-- search end -->
+		
 	<!-- grid table start -->
 	<div class="row">
 		<div class="col-md-12 col-sm-12 col-xs-12">
@@ -127,36 +114,25 @@
 								<th>카테고리번호</th>
 								<th>제목</th>
 								<th>내용</th>
-								<th>조회수</th>
 								<th>수정자</th>
 								<th>활성화여부</th>
 								<th>등록일</th>
 								<th>수정일</th>
-								<th>수정</th>
-								<th>삭제</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:unless="${noticeList != null}">
-								<td colspan="10">등록된 공지사항이 없습니다.</td>
+							<tr th:unless="${categoryList != null}">
+								<td colspan="11">등록된 카테고리가 없습니다.</td>
 							</tr>
-							<tr th:if="${noticeList != null}" th:each="l : ${noticeList}">
-								<td th:text="${l.noticeNum}"></td>
-								<td th:text="${l.noticeRegId}"></td>
-								<td th:text="${l.noticeCateNum}"></td>
-								<td th:text="${l.noticeTitle}"></td>
-								<td th:text="${l.noticeContent}"></td>
-								<td th:text="${l.noticeInqCnt}"></td>
-								<td th:text="${l.noticeMdfId}"></td>
-								<td th:text="${l.noticeAct}"></td>
-								<td th:text="${l.noticeRegDate}"></td>
-								<td th:text="${l.noticeMdfDate}"></td>
-								<td>
-									<a th:href="@{/platform/board/noticeModify}">수정</a>
-								</td>
-								<td>
-									<a href="#">삭제</a>
-								</td>
+							<tr th:if="${categoryList != null}" th:each="l : ${categoryList}">
+								<td th:text="${l.cateNum}"></td>
+								<td th:text="${l.cateRegId}"></td>
+								<td th:text="${l.cateTitle}"></td>
+								<td th:text="${l.cateContent}"></td>
+								<td th:text="${l.cateMdfId}"></td>
+								<td th:text="${l.cateAct}"></td>
+								<td th:text="${l.cateRegDate}"></td>
+								<td th:text="${l.cateMdfDate}"></td>
 							</tr>
 						</tbody>
 					</table>
@@ -166,54 +142,6 @@
 	</div>
 	<!-- grid table end -->
 </th:block>
-<th:block layout:fragment="customJsFile">
-</th:block>
 
 
-<th:block layout:fragment="customJs">
-
-  	<script th:inline="javascript">
-    document.addEventListener("DOMContentLoaded", function() {
-        // 최신순과 조회순 버튼 요소 가져오기
-        const newestBtn = document.getElementById('optionsRadios1');
-        const mostViewedBtn = document.getElementById('optionsRadios2');
-
-        // 테이블의 tbody 요소 가져오기
-        const tbody = document.querySelector('tbody');
-
-        // 최신순 버튼 클릭 시
-        newestBtn.addEventListener('click', function() {
-            sortTable(8, 'desc'); // 등록일을 기준으로 내림차순 정렬
-        });
-
-        // 조회순 버튼 클릭 시
-        mostViewedBtn.addEventListener('click', function() {
-            sortTable(5, 'desc'); // 조회수를 기준으로 내림차순 정렬
-        });
-
-        // 테이블 정렬 함수
-        function sortTable(columnIndex, order) {
-            const rows = Array.from(tbody.querySelectorAll('tr:not(:first-child)'));
-
-            // 정렬할 때 기준이 되는 값 추출
-            const getValue = (row) => row.cells[columnIndex].textContent.trim();
-
-            // 정렬하기
-            rows.sort((a, b) => {
-                const aValue = getValue(a);
-                const bValue = getValue(b);
-                if (order === 'asc') {
-                    return aValue.localeCompare(bValue);
-                } else {
-                    return bValue.localeCompare(aValue);
-                }
-            });
-
-            // 정렬된 순서대로 다시 테이블에 추가
-            rows.forEach(row => tbody.appendChild(row));
-        }
-    });
-    </script> 
-
-</th:block>
 </html>
