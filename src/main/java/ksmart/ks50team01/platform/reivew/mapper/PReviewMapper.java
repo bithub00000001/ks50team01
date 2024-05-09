@@ -15,17 +15,19 @@ public interface PReviewMapper {
 	
 	
 	
+
+	//신고목록조회
+	List<PReviewReport> getPReviewReport();
+
+	
+	
+	
+	//댓글정보조회
+	PReivewComment getPReivewCommentInfoById(String commentCode);
 	//댓글목록조회
 	List<PReivewComment> getPReivewComment();
 	
-	//신고목록조회
-	List<PReviewReport> getPReviewReport();
 	
-	
-	
-	
-	//좋아요싫어요정보조회
-	PReviewReact getPReviewReactInfoById(String reviewReactCode);
 	
 	//좋아요싫어요기록목록조회
 	List<PReviewReact> getPReviewReact();

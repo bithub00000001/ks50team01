@@ -21,12 +21,6 @@ public class PReviewService {
 	private final PReviewMapper pReviewMapper;
 	
 	
-	/**
-	 * 댓글 목록 리스트
-	 */
-	public List<PReivewComment> getPReivewComment(){
-		return pReviewMapper.getPReivewComment();
-	}
 	
 	/**
 	 * 신고 목록 리스트
@@ -41,12 +35,48 @@ public class PReviewService {
 	
 	
 	/**
-	 * 좋아요 싫어요 기록 조회
+	 * 댓글정보조회
 	 */
-	public PReviewReact getPReviewReactInfoById(String reviewReactCode) {
-		PReviewReact reactInfo = pReviewMapper.getPReviewReactInfoById(reviewReactCode);
-		return reactInfo;
+	public PReivewComment getPReivewCommentInfoById(String commentCode) {
+		PReivewComment commentInfo = pReviewMapper.getPReivewCommentInfoById(commentCode);
+		
+		return commentInfo;
 	}
+	
+	/**
+	 * 05.08 작성
+	 * 리뷰정보조회
+	 */
+	public PReview getPReviewInfoById(String reviewCode) {
+		PReview reviewInfo = pReviewMapper.getPReviewInfoById(reviewCode);
+		return reviewInfo;
+	}
+	
+	/**
+	 * 댓글 목록 리스트
+	 */
+	public List<PReivewComment> getPReivewComment(){
+		
+		List<PReivewComment> pCommentList = pReviewMapper.getPReivewComment();
+		
+		if(pCommentList != null) {
+			pCommentList.forEach(review -> {
+				String commentApprove = review.getCommentApprove();
+				String commentApproveName = "";
+				switch (commentApprove) {
+	            case "DISCLOSURE_001":commentApproveName = "전체공개";
+	                break;
+	            case "DISCLOSURE_002":commentApproveName = "나만공개";
+	                break;
+				}
+				review.setCommentApproveName(commentApproveName);
+			});
+		}
+		return pCommentList;
+	}
+	
+	
+
 	
 	/**
 	 * 좋아요 싫어요 기록 목록 리스트
@@ -65,14 +95,6 @@ public class PReviewService {
 		pReviewMapper.modifyPReview(review);
 	}
 	
-	/**
-	 * 05.08 작성
-	 * 리뷰정보조회
-	 */
-	public PReview getPReviewInfoById(String reviewCode) {
-		PReview reviewInfo = pReviewMapper.getPReviewInfoById(reviewCode);
-		return reviewInfo;
-	}
 	
 	/**
 	 * 05.08 작성

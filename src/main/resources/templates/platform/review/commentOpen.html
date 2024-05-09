@@ -70,78 +70,80 @@
 </style>
 </th:block>
 <th:block layout:fragment="customContent">
-    <h1>리뷰 공개 여부</h1>
+    <h1>답글 공개 여부</h1>
 	<div class="col-md-12 col-sm-12 col-xs-12">
 		<div class="x_panel">
 			<div class="x_title">
 				<h2>
-					리뷰 공개 여부 수정<small>Users</small>
+					답글 공개 여부 수정<small>Users</small>
 				</h2>
 				<div class="clearfix"></div>
 			</div>
 			<div class="x_content">
-				<p class="text-muted font-13 m-b-30"> 리뷰 공개 여부를 선택해주세요
-	<!-- 			<form id="modifyForm" th:action="@{/member/modifyMember}" method="post">	 -->	
-			
-			<table>
+				<p class="text-muted font-13 m-b-30"> 답글 공개 여부를 선택해주세요
+		<form id="modifyForm" th:action="@{/platform/review/open}" method="post">
+			<table >
 		        <tbody>
 		            <tr>
 		                <td>
-		                    <label for="memberId">리뷰 번호</label>
+		                    <label for="commentCode">답글 번호</label>
 		                </td>
 		                <td>
-		                    <input type="text" id="memberId" name="memberId" value="" readonly="readonly" />
-		                </td>
-		            </tr>
-		            <tr>
-		                <td>
-		                    <label for="memberPw">작성자 아이디</label>
-		                </td>
-		                <td>
-		                    <input type="text" id="memberPw" name="memberPw" value="" />
+		                    <input type="text" id="commentCode" name="commentCode" th:value="*{commentCode}" readonly="readonly" />
 		                </td>
 		            </tr>
 		            <tr>
 		                <td>
-		                    <label for="memberName">리뷰 상품</label>
+		                    <label for="commentId">작성자 아이디</label>
 		                </td>
 		                <td>
-		                    <input type="text" id="memberName" name="memberName" value="" />
-		                </td>
-		            </tr>
-		            <tr>
-		                <td>
-		                    <label for="memberLevel">별점</label>
-		                </td>
-		                <td>
-		                    <input type="text" id="memberAddr" name="memberAddr" value="" />
+		                    <input type="text" id="commentId" name="commentId" th:value="*{commentId}" readonly="readonly" />
 		                </td>
 		            </tr>
 		            <tr>
 		                <td>
-		                    <label for="memberEmail">리뷰 내용</label>
+		                    <label for="commentReviewCode">상품 리뷰 코드</label>
 		                </td>
 		                <td>
-		                    <input type="text" id="memberEmail" name="memberEmail" value="" />
-		                </td>
-		            </tr>
-		            <tr>
-		                <td>
-		                    <label for="memberAddr">리뷰작성일자</label>
-		                </td>
-		                <td>
-		                    <input type="text" id="memberAddr" name="memberAddr" value="" />
+		                    <input type="text" id="commentReviewCode" name="commentReviewCode" th:value="*{commentReviewCode}" readonly="readonly" />
 		                </td>
 		            </tr>
 		            <tr>
 		                <td>
-		                    <label for="memberAddr">공개여부</label>
+		                    <label for="businessCode">사업장코드</label>
 		                </td>
 		                <td>
-		                    <select id="memberLevel" name="memberLevel">
+		                    <input type="text" id="businessCode" name="businessCode" th:value="*{businessCode}" readonly="readonly" />
+		                </td>
+		            </tr>
+		            <tr>
+		                <td>
+		                    <label for="commentContent">답글 내용</label>
+		                </td>
+		                <td>
+		                    <input type="text" id="commentContent" name="commentContent" th:value="*{commentContent}" readonly="readonly" />
+		                </td>
+		            </tr>
+		            <tr>
+		                <td>
+		                    <label for="commentDate">답글작성일자</label>
+		                </td>
+		                <td>
+		                    <input type="text" id="commentDate" name="commentDate" th:value="*{commentDate}" readonly="readonly" />
+		                </td>
+		            </tr>
+		            <tr>
+		                <td>
+		                    <label for="commentApprove">공개여부</label>
+		                </td>
+		                <td>
+		                    <select id="commentApprove" name="commentApprove">
 		                        <option value="">====공개여부를 선택해주세요====</option>
-		                        <!-- <option value="1">Y</option>
-									 <option value="2">N</option> -->
+		                        <th:block th:if="${pOpenList != null}" th:each="l : ${pOpenList}">
+							       <option th:value="${l.pOpenCode}" th:selected="${l.pOpenCode == commentApprove}">
+							            [[${l.pOpenContent}]]
+							        </option>
+								</th:block>
 		                    </select>
 		                </td>
 		            </tr>
@@ -155,7 +157,7 @@
 		            </tr>
 		        </tfoot>    
 		    </table>
-			<!--  </form> -->
+			</form>
 				
 			</div>
 		</div>
