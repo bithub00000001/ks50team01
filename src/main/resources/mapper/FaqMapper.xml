@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ksmart.ks50team01.platform.board.mapper.PFaqMapper">
+	
+	<resultMap id="faqResultMap" type="PFaq">
+		<id property="faqNum" 			column="F.FAQ_NO" />
+		<result property="faqRegId" 	column="F.REG_PF_ID" />
+		<result property="faqCateNum" 	column="F.FAQ_CTGRY_NO" />
+		<result property="faqTitle" 	column="F.FAQ_TTL" />
+		<result property="faqContent" 	column="F.FAQ_CN" />
+		<result property="faqMdfId" 	column="F.MDFCN_PF_ID" />
+		<result property="faqAct" 		column="F.ACT_YN" />
+		<result property="faqRegDate" 	column="F.REG_YMD" />
+		<result property="faqMdfDate" 	column="F.MDFCN_YMD" />
+		
+		<!-- 1:1 asscociation -->
+		<association property="faqCate" javaType="PFaq">
+			<id 		property="faqCateNum" 		column="C.FAQ_CTGRY_NO"/>
+			<result 	property="faqRegId" 		column="C.REG_PF_ID"/>
+			<result 	property="faqCateType" 		column="C.FAQ_CTGRY_TYPE"/>
+			<result 	property="faqMdfId" 		column="C.MDFCN_PF_ID"/>
+			<result 	property="faqAct" 			column="C.ACT_YN"/>
+			<result 	property="faqRegDate" 		column="C.REG_YMD"/>
+			<result 	property="faqMdfDate" 		column="C.MDFCN_YMD"/>
+		</association> 
+	</resultMap>
+
+	<select id="getFaqList" resultMap="faqResultMap">
+	 	/* 자주찾는질문 조회 */
+		SELECT 
+			F.FAQ_NO, 
+			F.REG_PF_ID, 
+			C.FAQ_CTGRY_TYPE,
+			F.FAQ_TTL, 
+			F.FAQ_CN, 
+			F.MDFCN_PF_ID,
+			F.ACT_YN, 
+			F.REG_YMD, 
+			F.MDFCN_YMD
+		FROM 
+			FREQUENTLY_ASKED_QUESTIONS AS F
+			INNER JOIN
+			FAQ_CATEGORY AS C
+			ON
+			F.FAQ_CTGRY_NO = C.FAQ_CTGRY_NO;
+	</select>
+
+
+	<select id="searchFaqByTitle" resultType="PFaq">
+		SELECT * FROM faq_table WHERE faq_title LIKE CONCAT('%', #{title}, '%')
+	</select>
+	
+
+
+
+    <update id="updateFaq" parameterType="PFaq">
+        /* 자주찾는질문 업데이트 */
+        UPDATE FREQUENTLY_ASKED_QUESTIONS AS F
+        SET
+            F.FAQ_CTGRY_NO = #{faqCateNum},
+            F.FAQ_TTL = #{faqTitle},
+            F.FAQ_CN = #{faqContent},
+            F.ACT_YN = #{faqAct},
+            F.MDFCN_YMD = NOW()
+        WHERE
+            F.FAQ_NO = #{faqNum};
+    </update>
+
+    <delete id="delFaq" parameterType="map">
+        /* 자주찾는질문 삭제 */
+        DELETE 
+        FROM 
+            FREQUENTLY_ASKED_QUESTIONS as AS F
+        WHERE 
+            F.FAQ_NO = #{faqNum};
+    </delete>
+
+    
+	
+</mapper>

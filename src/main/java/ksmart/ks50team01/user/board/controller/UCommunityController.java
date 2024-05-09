@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 
 @Controller
-@RequestMapping(value = "/board")
+@RequestMapping(value = "/user/board")
 public class UCommunityController {
 	
 	@GetMapping("/community")
@@ -28,10 +28,10 @@ public class UCommunityController {
 	}
 	
 	@PostMapping("/writeProcess")
-	public String postwriteProcess(String title, String content) {
+	public String postwriteProcess(String postTitle, String postContent) {
 		
-		System.out.println("제목 : " + title);
-		System.out.println("내용 : " + content);
+		System.out.println("제목 : " + postTitle);
+		System.out.println("내용 : " + postContent);
 		return "";
 	}
 	
