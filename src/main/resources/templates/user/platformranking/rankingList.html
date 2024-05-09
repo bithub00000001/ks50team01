@@ -386,7 +386,7 @@
 	    <nav aria-label="Page navigation">
 	      <ul class="pagination justify-content-center align-items-center">
 	        <li class="page-item">
-	          <a class="page-link" href="javascript:void(0)" tabindex="-1">
+	          <a class="page-link" href="/allRanking/rankingList" tabindex="-1">
 	            <i class="fas fa-long-arrow-alt-left d-none d-md-inline-block me-md-1" aria-hidden="true"></i> Previous
 	          </a>
 	        </li>
@@ -398,21 +398,13 @@
 	        <li class="page-item">
 	          <a class="page-link" href="javascript:void(0)">2</a>
 	        </li>
-	    
-	        <li class="page-item">
-	          <a class="page-link" href="javascript:void(0)">3</a>
-	        </li>
-	    
+	   
 	        <li class="page-item">
 	          <a class="page-link" href="javascript:void(0)">...</a>
 	        </li>
-	    
+
 	        <li class="page-item">
-	          <a class="page-link" href="javascript:void(0)">9</a>
-	        </li>
-	    
-	        <li class="page-item">
-	          <a class="page-link" href="javascript:void(0)">Next
+	          <a class="page-link" href="/allRanking/rankingList">Next
 	            <i class="fas fa-long-arrow-alt-right d-none d-md-inline-block ms-md-1" aria-hidden="true"></i>
 	          </a>
 	        </li>
@@ -420,5 +412,15 @@
 	    </nav>
 	   </div>
 	 </section>
+     <div class="col-lg-12">
+       <button type="button" class="btn btn-primary btn-sm" onclick="location.href='/allRanking/rankingList#pageTop'" style="float:right;">Top</button>
+     </div>
+     <script>
+	  window.onload = function() {
+		  if ('scrollRestoration' in history) {
+		    history.scrollRestoration = 'manual';
+		  }
+		}			
+	 </script>
    </section>
 </div><!-- element wrapper ends -->  	  

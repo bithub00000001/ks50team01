@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ksmart.ks50team01.platform.board.mapper.PCategoryMapper">
+	
+	<resultMap id="faqCategoryResultMap" type="PCategory">
+		<id 		property="faqCateNum" 		column="FAQ_CTGRY_NO"/>
+		<result 	property="faqRegId" 		column="REG_PF_ID"/>
+		<result 	property="faqCateType" 		column="FAQ_CTGRY_TYPE"/>
+		<result 	property="faqMdfId" 		column="MDFCN_PF_ID"/>
+		<result 	property="faqAct" 			column="ACT_YN"/>
+		<result 	property="faqRegDate" 		column="REG_YMD"/>
+		<result 	property="faqMdfDate" 		column="MDFCN_YMD"/>
+	</resultMap>
+
+	<select id="getFaqCategoryList" resultMap="faqCategoryResultMap">
+	 	/* 카테고리 조회 */
+		SELECT 
+			FAQ_CTGRY_NO, 
+			REG_PF_ID, 
+			FAQ_CTGRY_TYPE, 
+			MDFCN_PF_ID, 
+			ACT_YN, 
+			REG_YMD, 
+			MDFCN_YMD
+		FROM 
+			FAQ_CATEGORY
+	</select>
+
+
+    <update id="updateFaqCategory" parameterType="PCategory">
+        /* 카테고리 업데이트 */
+        UPDATE FAQ_CATEGORY
+        SET
+            F.FAQ_CTGRY_NO = #{faqCateNum},
+            F.FAQ_TTL = #{faqTitle},
+            F.FAQ_CN = #{faqContent},
+            F.ACT_YN = #{faqAct},
+            F.MDFCN_YMD = NOW()
+        WHERE
+            F.FAQ_NO = #{faqNum};
+    </update>
+
+    <delete id="delFaqCategory" parameterType="map">
+        /* 카테고리 삭제 */
+        DELETE 
+        FROM 
+            FAQ_CATEGORY
+        WHERE 
+            F.FAQ_NO = #{faqNum};
+    </delete>
+	
+</mapper>

@@ -58,3 +58,7 @@
     color: gray; /* 텍스트 색상 설정 */
     margin-right: 20px;
 }
+
+.btn.btn-danger {
+    color: white;
+}
