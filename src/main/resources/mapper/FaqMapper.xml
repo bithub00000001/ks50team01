@@ -47,36 +47,5 @@
 			F.FAQ_CTGRY_NO = C.FAQ_CTGRY_NO;
 	</select>
 
-
-	<select id="searchFaqByTitle" resultType="PFaq">
-		SELECT * FROM faq_table WHERE faq_title LIKE CONCAT('%', #{title}, '%')
-	</select>
-	
-
-
-
-    <update id="updateFaq" parameterType="PFaq">
-        /* 자주찾는질문 업데이트 */
-        UPDATE FREQUENTLY_ASKED_QUESTIONS AS F
-        SET
-            F.FAQ_CTGRY_NO = #{faqCateNum},
-            F.FAQ_TTL = #{faqTitle},
-            F.FAQ_CN = #{faqContent},
-            F.ACT_YN = #{faqAct},
-            F.MDFCN_YMD = NOW()
-        WHERE
-            F.FAQ_NO = #{faqNum};
-    </update>
-
-    <delete id="delFaq" parameterType="map">
-        /* 자주찾는질문 삭제 */
-        DELETE 
-        FROM 
-            FREQUENTLY_ASKED_QUESTIONS as AS F
-        WHERE 
-            F.FAQ_NO = #{faqNum};
-    </delete>
-
-    
 	
 </mapper>

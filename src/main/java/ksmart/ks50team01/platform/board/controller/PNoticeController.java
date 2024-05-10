@@ -33,6 +33,7 @@ public class PNoticeController {
 	@GetMapping("/noticeList")
 	public String noticeList(Model model) {
 	    List<PNotice> noticeList = pNoticeService.getNoticeList();
+	    log.info("noticeList: {}", noticeList);
 	    
 	    model.addAttribute("noticeList", noticeList);
 		model.addAttribute("title", "공지사항 조회");
