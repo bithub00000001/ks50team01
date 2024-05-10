@@ -26,27 +26,11 @@
 	</select>
 	
 	<select id="getTourGoodsList" resultType="destination">
-		/* 관광지 옵션 조회 */
+		/* 관광지 옵션 */
 			SELECT
-				tg.TOUR_GDS_CTGRY			AS	tourGoodsCate,
-				tgo.TOUR_GDSOPT_LIST		AS	tourGoodsList,
-				tgo.TOUR_GDSOPT_TIME		AS 	tourGoodsTime,
-				tgo.RGN_SCTGRY_NM			AS 	RegionSCate,
-				tg.REG_PF_BIZ_ID			AS 	tourgoodsAuthorityId,
-				tg.TOUR_GDS_CD				AS	tourGoodsCode,
-				tgo.TOUR_GDSOPT_CD			AS  tourGoodsOptionCd,		 	
-				tgo.TOUR_GDSOPT_RMRK		AS  tourOptionRemarks,
-				tg.FAVS_TOTAL				AS  tourTotal,
-				tgo.REG_YMD					AS  tourRegDate,
-				tgo.MDFCN_YMD				AS  tourFormDate	
-				
-				
-			FROM
-				TOUR_GOODS AS tg
-				INNER JOIN
-				TOUR_GOODSOPTION AS tgo
-				ON 
-				tg.TOUR_GDS_CD = tgo.TOUR_GDS_CD;
+				TOUR_GDS_CD 	AS	tourGoodsCode
+			FORM
+				TOUR_GOODS;	
 	
 	</select>
 	
@@ -64,19 +48,6 @@
 			FROM
 				LODGING_INFO;
 	</select>
-	<select id="getLodgingGoodsList" resultType="destination">
-		/* 숙소상품 정보 */
-			SELECT
-				lm.LODGING_MENU_CD AS lodgingMenuCode
-			FROM
-				LODGING_MENU AS lm
-				INNER JOIN
-				LODGING_INFO li
-				ON
-				lm.LODGING_INFO_CD = li.LODGING_INFO_CD;
-					
-	
-	</select>	
 	
 	<select id="getRestaurantInfoList" resultType="destination">
 		/* 식당 정보 */
@@ -92,20 +63,7 @@
 				MDFCN_YMD		AS 	restaurantFormDate
 			FROM
 				RESTAURANT_INFO;
-	</select>
-	<select id="getRestaurantMenuList" resultType="destination">
-		/* 식당메뉴 정보 */
-		SELECT
-			ri.RSTRN_NAME 	AS restaurantName,
-			rm.RSTRN_MENU 	AS restaurantMenu
-		FROM
-			RESTAURANT_INFO AS ri
-			INNER JOIN
-			RESTAURANT_MENU AS rm
-			ON
-			ri.RSTRN_INFO_CD = rm.RSTRN_INFO_CD;
-	</select>
-
+	</select>	
 	
 
 
