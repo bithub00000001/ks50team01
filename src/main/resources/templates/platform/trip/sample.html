@@ -2,9 +2,16 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
                 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
                 layout:decorate="~{platform/layout/default}">
+<th:block layout:fragment="customCss"></th:block>
+
+
 
 <th:block layout:fragment="customContent">
 	<h2 th:text="title"></h2>
 	업로드용샘플
 </th:block>
+
+<th:block layout:fragment="customJsFile"></th:block>
+
+<th:block layout:fragment="customJs"></th:block>
 </html>
