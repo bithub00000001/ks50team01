@@ -19605,12 +19605,12 @@ input[type=number]::-webkit-inner-spin-button {
 .nav-menuzord .menuzord .menuzord-menu > li > a {
   font-weight: 400;
   color: #000;
-  text-transform: uppercase;
+  text-transform: none;
 }
 @media (min-width: 992px) {
   .nav-menuzord .menuzord .menuzord-menu > li > a {
     padding: 37px 0;
-    margin: 0 11px;
+    margin: 0 8px;
     position: relative;
   }
   .nav-menuzord .menuzord .menuzord-menu > li > a:before {
@@ -19710,7 +19710,7 @@ input[type=number]::-webkit-inner-spin-button {
 }
 .nav-menuzord .menuzord .menuzord-menu .menuzord-btn .btn {
   color: #fff;
-  text-transform: uppercase;
+  text-transform: none;
   font-weight: 700;
   padding: 7px 19px;
   margin: 15px 0;
