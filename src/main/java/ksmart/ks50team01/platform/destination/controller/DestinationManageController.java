@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ksmart.ks50team01.platform.destination.dto.Destination;
 import ksmart.ks50team01.platform.destination.service.DestinationService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @Controller
 @RequestMapping(value = "/platform")
 @RequiredArgsConstructor
+@Slf4j
 public class DestinationManageController {
 	
 	private final DestinationService destinationService;
@@ -56,17 +59,39 @@ public class DestinationManageController {
 	
 	}
 	
+	@GetMapping("/destination/lodgingGoodsManage")
+	public String lodgingGoodsManage(Model model) {
+		List<Destination> lodgingGoodsList = destinationService.getLodgingGoodsList();
+		
+		model.addAttribute("lodgingGoodsList", lodgingGoodsList);
+		model.addAttribute("title", "숙소옵션 관리");
+		
+		return "/platform/destination/lodgingGoodsManage";
+	}
+	
 
 	
 	@GetMapping("/destination/restaurantManage")
 	public String restaurantManage(Model model) {
-		List<Destination> restaurantInfoList = destinationService.getrestaurantInfoList();
+		List<Destination> restaurantInfoList = destinationService.getRestaurantInfoList();
 		
 		model.addAttribute("restaurantInfoList", restaurantInfoList);
 		model.addAttribute("title", "식당 관리");
 		
 		return "/platform/destination/restaurantManage";
 	}
+	
+	@GetMapping("/destination/restaurantMenuManage")
+	public String restaurantMenuManage(Model model) {
+		List<Destination> restaurantMenuList = destinationService.getRestaurantMenuList();
+		log.info("DestinationManageController restaurantMenuList:{}", restaurantMenuList);
+		
+		model.addAttribute("restaurantMenuList", restaurantMenuList);
+		model.addAttribute("title", "식당메뉴 관리");
+		
+		return "/platform/destination/restaurantMenuManage";
+	}
+	
 	
 	@GetMapping("/destination/destinationRegister")
 	public String destinationRegister(Model model) {

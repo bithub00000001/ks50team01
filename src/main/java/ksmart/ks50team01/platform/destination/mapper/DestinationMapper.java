@@ -19,4 +19,10 @@ public interface DestinationMapper {
 	
 	//관광상품 조회
 	List<Destination> getTourGoodsList();
+	
+	//숙소상품 조회
+	List<Destination> getLodgingGoodsList();
+	
+	//식당 메뉴 조회
+	List<Destination> getRestaurantMenuList();
 }
