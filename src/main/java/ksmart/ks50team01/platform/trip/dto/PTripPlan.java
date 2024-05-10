@@ -7,6 +7,7 @@ public class PTripPlan {
 	private String planId;
 	private Integer planNumber;
 	private String memberId;
+	private String planRegionSmallCate;
 	private String planAddr;
 	private String startDate;
 	private String endDate;
@@ -16,10 +17,12 @@ public class PTripPlan {
 	private Integer budgetPerAttend;
 	private Integer totalAvailBudget;
 	private Integer totalPlanBudget;
+	private Integer diffBudget;
 	private String planStatus;
 	private boolean isShare;
 	private String isShareString;
 	private String regDate;
 	private String modDate;
+	private String sessionId;
 
 }

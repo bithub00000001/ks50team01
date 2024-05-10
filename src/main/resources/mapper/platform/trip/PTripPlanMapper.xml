@@ -19,6 +19,28 @@
         <result column="regDate" property="regDate"/>
         <result column="modDate" property="modDate"/>
     </resultMap>
+    <update id="UpdateTripPlan" parameterType="pTripPlan">
+        /* 여행 계획 업데이트 */
+        UPDATE
+            INDIVIDUAL_TRIP_PLAN
+        SET
+            RGN_SCTGRY_CD= #{planRegionSmallCate},
+            TRIP_PLN_BGNG_YMD = #{startDate},
+            TRIP_PLN_END_YMD = #{endDate},
+            TRIP_PLN_DAY = #{planDays},
+            TRIP_PLN_TTL = #{planTitle},
+            TRIP_PLN_NOPE = #{planAttend},
+            AVAILABLE_BUDGET = #{budgetPerAttend},
+            TOTAL_AVAIL_BUDGET = #{totalAvailBudget},
+            TOTAL_PLNNED_BUDGET = #{totalPlanBudget},
+            REMAINING_BUDGET = #{diffBudget},
+            IN_PRGRS = #{planStatus},
+            SHARED_YN = #{isShare},
+            MDFCN_MBR_ID = #{sessionId},
+            MDFCN_YMD = NOW()
+        WHERE
+            TRIP_PLN_NO=#{planId}
+    </update>
 
     <select id="getPlanList" resultMap="tripPlanMap">
         /* 전체 여행 계획을 조회하는 쿼리 */
@@ -28,8 +50,7 @@
             MBR_ID,
             CONCAT_WS(' ',
                       REGION_SMALL_CATEGORY.RGN_LCTGRY_NM,
-                      REGION_SMALL_CATEGORY.RGN_MCTGRY_NM,
-                      REGION_SMALL_CATEGORY.RGN_SCTGRY_NM) as planAddr,
+                      REGION_SMALL_CATEGORY.RGN_MCTGRY_NM) as planAddr,
             TRIP_PLN_BGNG_YMD,
             TRIP_PLN_END_YMD,
             TRIP_PLN_DAY,
@@ -48,5 +69,35 @@
                 REGION_SMALL_CATEGORY
             ON
                 INDIVIDUAL_TRIP_PLAN.RGN_SCTGRY_CD = REGION_SMALL_CATEGORY.RGN_SCTGRY_CD
+    </select>
+    <select id="getTripPlanById" resultMap="tripPlanMap">
+        /* 계획 id에 해당하는 여행 계획 조회 */
+        SELECT
+            row_number() OVER (ORDER BY INDIVIDUAL_TRIP_PLAN.REG_YMD) as planNum,
+            TRIP_PLN_NO,
+            MBR_ID,
+            CONCAT_WS(' ',REGION_SMALL_CATEGORY.RGN_LCTGRY_NM,
+                      REGION_SMALL_CATEGORY.RGN_MCTGRY_NM) as planAddr,
+            TRIP_PLN_BGNG_YMD,
+            TRIP_PLN_END_YMD,
+            TRIP_PLN_DAY,
+            TRIP_PLN_TTL,
+            TRIP_PLN_NOPE,
+            AVAILABLE_BUDGET,
+            TOTAL_AVAIL_BUDGET,
+            TOTAL_PLNNED_BUDGET,
+            REMAINING_BUDGET,
+            IN_PRGRS,
+            SHARED_YN,
+            INDIVIDUAL_TRIP_PLAN.REG_YMD,
+            INDIVIDUAL_TRIP_PLAN.MDFCN_YMD
+        FROM
+            INDIVIDUAL_TRIP_PLAN
+                INNER JOIN
+            REGION_SMALL_CATEGORY
+            ON
+                INDIVIDUAL_TRIP_PLAN.RGN_SCTGRY_CD = REGION_SMALL_CATEGORY.RGN_SCTGRY_CD
+        WHERE
+            INDIVIDUAL_TRIP_PLAN.TRIP_PLN_NO = #{PlanId}
     </select>
 </mapper>

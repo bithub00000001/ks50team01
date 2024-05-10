@@ -11,11 +11,18 @@
     <link th:href="@{/platform/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css}" rel="stylesheet">
     <link th:href="@{/platform/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css}" rel="stylesheet">
     <!-- Datatables CSS END -->
+    <style>
+        .custom-search-field {
+            width: 100%;
+            height: 40px;
+            padding: 5px;
+        }
+    </style>
 </th:block>
 
 <th:block layout:fragment="customContent">
 
-    <div class="col-md-12col-sm-6 col-xs-12">
+    <div class="col-md-12 col-sm-6 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
                 <h3 th:text="${tripPlanList != null ? '여행 계획 개수 : ' + tripPlanList.size + '개' : '여행 계획 개수 : 0개'}"></h3>
@@ -25,7 +32,9 @@
 
 
             <div class="x_content">
-                <div class="clearfix"></div>
+                <div class="clearfix">
+                    <input type="search" id="mySearch" class="custom-search-field" placeholder="검색어 입력">
+                </div>
             </div>
             <div class="row">
                 <div class="col-xs-12 table">
@@ -48,6 +57,7 @@
                             <th>공유 여부</th>
                             <th>등록 날짜</th>
                             <th>수정 날짜</th>
+                            <th>상세 보기</th>
                             <th>수정</th>
                             <th>삭제</th>
                         </tr>
@@ -67,9 +77,12 @@
                             <td th:text="${list.totalPlanBudget}"></td>
                             <td th:text="${(list.totalAvailBudget - list.totalPlanBudget)}"></td>
                             <td th:text="${list.planStatus}"></td>
-                            <td th:text="${list.isShare}"></td>
+                            <td th:text="${list.isShareString}"></td>
                             <td th:text="${list.regDate}"></td>
                             <td th:text="${list.modDate}"></td>
+                            <td>
+                                <a th:href="@{/platform/member/memberModify(planId=${list.planId})}">상세 보기</a>
+                            </td>
                             <td>
                                 <a th:href="@{/platform/member/memberModify(planId=${list.planId})}">수정</a>
                             </td>
@@ -90,7 +103,7 @@
 </th:block>
 
 <th:block layout:fragment="customJsFile">
-    <!-- Datatables JS START -->
+    <!-- Datatables JSFILE START -->
     <script th:src="@{/platform/vendors/datatables.net/js/jquery.dataTables.min.js}"></script>
     <script th:src="@{/platform/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js}"></script>
     <script th:src="@{/platform/vendors/datatables.net-buttons/js/dataTables.buttons.min.js}"></script>
@@ -106,8 +119,20 @@
     <script th:src="@{/platform/vendors/jszip/dist/jszip.min.js}"></script>
     <script th:src="@{/platform/vendors/pdfmake/build/pdfmake.min.js}"></script>
     <script th:src="@{/platform/vendors/pdfmake/build/vfs_fonts.js}"></script>
-    <!-- Datatables JS END -->
+    <!-- Datatables JSFILE END -->
 </th:block>
 
-<th:block layout:fragment="customJs"></th:block>
+<th:block layout:fragment="customJs">
+    <script th:inline="javascript">
+        $(document).ready(function () {
+
+            $('#mySearch').on('keyup', function () {
+                const searchValue = $(this).val().toLowerCase();
+                $('#datatable-responsive tbody tr').filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(searchValue) > -1);
+                });
+            });
+        });
+    </script>
+</th:block>
 </html>
