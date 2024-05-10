@@ -14,6 +14,8 @@ import ksmart.ks50team01.platform.reivew.dto.PReviewReport;
 public interface PReviewMapper {
 	
 	
+	//신고합계조회
+	List<PReviewReport> getPReviewReportTotal();
 	
 
 	//신고정보조회

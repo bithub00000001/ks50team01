@@ -5,11 +5,11 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import ksmart.ks50team01.platform.board.service.PReportService;
 import ksmart.ks50team01.platform.reivew.dto.POpen;
 import ksmart.ks50team01.platform.reivew.dto.PReivewComment;
 import ksmart.ks50team01.platform.reivew.dto.PReview;
@@ -35,7 +35,14 @@ public class PReviewController {
 	 * @return
 	 */
 	@GetMapping("/total/list")
-	public String reviewTotal() {
+	public String reviewTotal(Model model) {
+		
+		List<PReviewReport> pReviewTotal = pReviewService.getPReviewReportTotal();
+		log.info("pReviewTotal: {}",pReviewTotal);
+		System.out.println("pReviewTotal"+pReviewTotal);
+		
+		model.addAttribute("title", "리뷰 신고 누적 조회");
+		model.addAttribute("pReviewTotal", pReviewTotal);
 		
 		return "platform/review/reportTotal";
 	}
@@ -142,29 +149,19 @@ public class PReviewController {
 	
 	
 	/**
-	 * 리뷰 수정 - 회원 수정
-	 * 05.08 작성
+	 * 리뷰 수정
 	 */
-	/*
-	 * @PostMapping("/open") public String modifyPReview(PReview review) {
-	 * log.info("리뷰 수정 : {}", review);
-	 * 
-	 * pReviewService.modifyPReview(review);
-	 * 
-	 * return "redirect:/review/PreviewList"; }
-	 */
-	@PostMapping("/open")
-	public String modifyPReview(@RequestParam("reviewCode") String reviewCode, PReview review) {
-	    log.info("리뷰 수정 : {}", review);
-	    
-	    pReviewService.modifyPReview(review);
-	    
-	    return "redirect:/review/PreviewList";
-	}
-	
+	  @PostMapping("/open") 
+	  public String modifyPReview(PReview review) {
+	  log.info("상품 리뷰 수정 : {}", review);
+
+	  pReviewService.modifyPReview(review);
+	  
+	  return "redirect:/platform/review/PreviewList"; 
+	  }
+	 
 	/**
-	 * 05.08 수정
-	 * 리뷰 공개 여부 수정(수정페이지) - 회원 수정 화면
+	 * 리뷰 공개 여부 수정화면(수정페이지)
 	 * @return
 	 */
 	@GetMapping("/open")
@@ -190,8 +187,7 @@ public class PReviewController {
 	}
 	
 	/**
-	 * 05.08 수정
-	 * 리뷰 전체 목록 - 회원목록조회
+	 * 리뷰 전체 목록
 	 * @return
 	 */
 	@GetMapping("/list")

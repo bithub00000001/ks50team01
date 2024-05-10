@@ -79,7 +79,7 @@
 			<div class="x_content">
 				<p class="text-muted font-13 m-b-30"> 리뷰 공개 여부를 선택해주세요
 				
-			<form id="modifyForm" th:object="${reviewInfo}" th:action="@{/platform/review/open}" method="post">
+			<form id="modifyForm" th:object="${reviewInfo}" th:action="@{/platform/review/open}" method="get">
 				<table>
 			        <tbody>
 			            <tr>
@@ -135,6 +135,7 @@
 			                    <label for="reviewApprove">공개여부</label>
 			                </td>
 			                <td>
+			                	<!-- <input type="text" id="reviewApproveInput" name="reviewApprove" th:value=*{reviewApprove} readonly="readonly"> -->
 							<select id="reviewApprove" name="reviewApprove">
 							    <option value="">공개여부를 선택해주세요</option>
 
@@ -150,7 +151,7 @@
 			        <tfoot>
 			            <tr>
 			                <td colspan="2">
-			                    <button type="submit" id="modifyMemberBtn">확인</button>
+			                    <button type="submit" id="modifyPReviewBtn">확인</button>
 			                    <button type="reset" id="resetBtn">취소</button>
 			                </td>
 			            </tr>
@@ -164,7 +165,16 @@
 </th:block>
 
 <th:block layout:fragment="customJsFile">
+<script>
+/*     document.addEventListener('DOMContentLoaded', function() {
+        var selectElement = document.getElementById('reviewApprove');
+        var inputElement = document.getElementById('reviewApproveInput');
 
+        selectElement.addEventListener('change', function() {
+            inputElement.value = selectElement.value;
+        });
+    }); */
+</script>
 
 </th:block>
 </html>

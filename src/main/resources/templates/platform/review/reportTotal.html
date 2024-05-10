@@ -32,25 +32,16 @@
 							<thead>
 								<tr>
 									<th>리뷰 번호</th>
-									<th>작성자 아이디</th>
-									<th>리뷰 상품</th>
-									<th>신고 카테고리</th>
-									<th>횟수</th>
-									<th>총합 횟수</th>
+									<th>신고 당한 횟수</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:unless="${memberList != null}">
-									<td colspan="6"  class="center-text">신고된 리뷰가 없습니다.</td>
+								<tr th:unless="${pReviewTotal != null}">
+									<td colspan="2"  class="center-text">신고된 리뷰가 없습니다.</td>
 								</tr>
-								<tr th:if="${memberList != null}" th:each="l : ${memberList}">
-									<td th:text="${}"></td>
-									<td th:text="${}"></td>
-									<td th:text="${}"></td>
-									<td th:text="${}"></td>
-									<td th:text="${}"></td>
-									<td th:text="${}"></td>
-		
+								<tr th:if="${pReviewTotal != null}" th:each="l : ${pReviewTotal}">
+									<td th:text="${l.reportReviewCode}"></td>
+									<td th:text="${l.reportTotal}"></td>
 								</tr>
 							</tbody>
 						</table>

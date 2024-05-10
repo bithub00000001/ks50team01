@@ -143,6 +143,16 @@
 			PRCHS_REV_CD = #{reviewCode};
 	 </select>
 	 
+	 <update id="modifyPReview" parameterType="PReview">
+	 	UPDATE 
+	 		PURCHASE_REVIEW
+	 	<set>
+	 		RLS_YN_CD = #{reviewApprove}
+	 	</set>
+	 	WHERE
+	 		PRCHS_REV_CD = #{reviewCode};
+	 </update>
+	 
 
 	 <select id="getPReviewReact" resultMap="PReviewReactResultMap">
 	 	/* 좋아요 싫어요 기록 목록 리스트 */
@@ -228,7 +238,18 @@
 			REV_REPT_NO = #{reportNum};
 	 </select>
 	 
-	 
+	 <select id="getPReviewReportTotal" resultMap="PReviewReportResultMap">
+	 	/*신고 누적 개수 조회*/
+		 SELECT 
+			PRCHS_REV_CD,
+			COUNT(PRCHS_REV_CD) AS reportTotal
+			FROM 
+			REVIEW_REPORT_HISTORY
+			WHERE
+			REV_REPT_APRV = "Y"
+		GROUP BY
+			PRCHS_REV_CD;
+	 </select>
 	 
 	 
 	 

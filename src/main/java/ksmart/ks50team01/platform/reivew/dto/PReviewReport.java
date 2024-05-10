@@ -11,8 +11,15 @@ public class PReviewReport {
 	private String reportApproveName; //신고승인여부
 	private String reportApproveId; //신고승인자
 	private String reportApproveDate; //신고승인자
+	private int reportTotal; //누적갯수
 	
 	
+	public int getReportTotal() {
+		return reportTotal;
+	}
+	public void setReportTotal(int reportTotal) {
+		this.reportTotal = reportTotal;
+	}
 	public String getReportApproveName() {
 		return reportApproveName;
 	}
@@ -79,7 +86,7 @@ public class PReviewReport {
 				+ reportCategories + ", reportReviewCode=" + reportReviewCode + ", reportContent=" + reportContent
 				+ ", reportDate=" + reportDate + ", reportApprove=" + reportApprove + ", reportApproveName="
 				+ reportApproveName + ", reportApproveId=" + reportApproveId + ", reportApproveDate="
-				+ reportApproveDate + "]";
+				+ reportApproveDate + ", reportTotal=" + reportTotal + "]";
 	}
 	
 	
