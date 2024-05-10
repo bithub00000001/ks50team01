@@ -52,278 +52,119 @@
                             </li>
                         </ul>
                     </li>
-                    <!--/* <li class="">
-                        <a href="#">Tours</a>
-                        <div class="megamenu drop-up">
-                            <div class="megamenu-row">
-                                <div class="col4">
-                                    <ul class="list-unstyled">
-                                        <li>Tour Packages Grid View</li>
-                                        <li class="">
-                                            <a href="packages-grid-left-sidebar.html">Packages Sidebar Left</a>
-                                        </li>
-                                        <li class="">
-                                            <a href="packages-grid-right-sidebar.html">Packages Sidebar Right</a>
-                                        </li>
-                                        <li class="">
-                                            <a href="packages-grid.html">Packages 3 Columns</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="col4">
-                                    <ul class="list-unstyled">
-                                        <li>Tour Packages List View</li>
-                                        <li class="">
-                                            <a href="packages-list-left-sidebar.html">Packages Sidebar Left</a>
-                                        </li>
-
-                                        <li class="">
-                                            <a href="packages-list-right-sidebar.html">Packages Sidebar Right</a>
-                                        </li>
-
-                                        <li class="">
-                                            <a href="packages-list.html">Packages List</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="col4">
-                                    <ul class="list-unstyled">
-                                        <li>Single Package</li>
-                                        <li class="">
-                                            <a href="single-package-left-sidebar.html">Packages Sidebar Left</a>
-                                        </li>
-
-                                        <li class="">
-                                            <a href="single-package-right-sidebar.html">Packages Sidebar Right</a>
-                                        </li>
-
-                                        <li class="">
-                                            <a href="single-package-fullwidth.html">Packages Fullwidth</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
                     <li class="">
-                        <a href="#">Hotels</a>
-                        <div class="megamenu drop-up">
-                            <div class="megamenu-row">
-                                <div class="col3">
-                                    <ul class="list-unstyled">
-                                        <li>Hotels Grid View</li>
-
-                                        <li class="">
-                                            <a href="hotels-grid-left-sidebar.html">Hotels Sidebar Left</a>
-                                        </li>
-
-                                        <li class="">
-                                            <a href="hotels-grid-right-sidebar.html">Hotels Sidebar Right</a>
-                                        </li>
-
-                                        <li class="">
-                                            <a href="hotels-grid.html">Hotels 3 Columns</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="col3">
-                                    <ul class="list-unstyled">
-                                        <li>Hotels List View</li>
-                                        <li class="">
-                                            <a href="hotels-list-left-sidebar.html">Hotels Sidebar Left</a>
-                                        </li>
-                                        <li class="">
-                                            <a href="hotels-list-right-sidebar.html">Hotels Sidebar Right</a>
-                                        </li>
-                                        <li class="">
-                                            <a href="hotels-list.html">Hotels List</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="col3">
-                                    <ul class="list-unstyled">
-                                        <li>Single Hotel</li>
-                                        <li class="">
-                                            <a href="single-hotel-left-sidebar.html">Hotels Sidebar Left</a>
-                                        </li>
-                                        <li class="">
-                                            <a href="single-hotel-right-sidebar.html">Hotels Sidebar Right</a>
-                                        </li>
-                                        <li class="">
-                                            <a href="single-hotel-fullwidth.html">Hotels Fullwidth</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="col3">
-                                    <ul class="list-unstyled">
-                                        <li>Booking Steps</li>
-                                        <li class="">
-                                            <a href="booking-step-1.html">Step 1 - Personal Info</a>
-                                        </li>
-                                        <li class="">
-                                            <a href="booking-step-2.html">Step 2 - Payment Info</a>
-                                        </li>
-                                        <li class="">
-                                            <a href="booking-step-3.html">Step 3 - Confirmation</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-
-                    <li class="">
-                        <a href="#">Pages</a>
-                        <ul class="dropdown drop-up">
+                        <a href="#">여행지 정보</a>
+                        <ul class="dropdown drop-up" id="tourInfo">
                             <li class="">
-                                <a href="about-us.html">About Us</a>
+                                <a th:href="@{/user/destination/tourCheck}">? 관광지 조회</a>
                             </li>
                             <li class="">
-                                <a href="contact.html">Contact Us</a>
+                                <a th:href="@{/user/destination/lodgingCheck}">? 숙소 조회</a>
                             </li>
                             <li class="">
-                                <a href="#">Gallery</a>
-                                <ul class="dropdown drop-sub-menu-left drop-up">
-                                    <li class="">
-                                        <a href="gallery-grid.html">Gallery Grid</a>
-                                    </li>
-                                    <li class="">
-                                        <a href="gallery-masonry.html">Gallery Masonry</a>
-                                    </li>
-                                    <li class="">
-                                        <a href="gallery-photo-slider.html">Photo Slider</a>
-                                    </li>
-                                </ul>
+                                <a th:href="@{/user/destination/restaurantCheck}">? 음식점 조회</a>
                             </li>
                             <li class="">
-                                <a href="#">Destinations</a>
-                                <ul class="dropdown drop-sub-menu-left drop-up">
-                                    <li class="">
-                                        <a href="destination-cities.html">Destination Cities</a>
-                                    </li>
-                                    <li class="">
-                                        <a href="destination-single-city.html">Single Destination</a>
-                                    </li>
-                                </ul>
+                                <a th:href="@{/user/destination/tourCheckDetails}">? 관광지 세부사항</a>
                             </li>
                             <li class="">
-                                <a href="#">Components</a>
-                                <ul class="dropdown drop-sub-menu-left drop-up navComponents">
-                                    <li class="scrollNav">
-                                        <a class="removeNav" href="components.html#accordion">Accordion</a>
-                                    </li>
-                                    <li class="scrollNav">
-                                        <a class="removeNav" href="components.html#alerts">Alerts</a>
-                                    </li>
-                                    <li class="scrollNav">
-                                        <a class="removeNav" href="components.html#badge">Badge</a>
-                                    </li>
-                                    <li class="scrollNav">
-                                        <a class="removeNav" href="components.html#breadcrumb">Breadcrumb</a>
-                                    </li>
-                                    <li class="scrollNav">
-                                        <a class="removeNav" href="components.html#buttons">Buttons</a>
-                                    </li>
-                                    <li class="scrollNav">
-                                        <a class="removeNav" href="components.html#collapse">Collapse</a>
-                                    </li>
-                                    <li class="scrollNav">
-                                        <a class="removeNav" href="components.html#card">Card</a>
-                                    </li>
-                                    <li class="scrollNav">
-                                        <a class="removeNav" href="components.html#forms">Forms</a>
-                                    </li>
-                                    <li class="scrolling">
-                                        <a class="removeNav" href="components.html#dropdowns">Dropdowns</a>
-                                    </li>
-                                    <li class="scrollNav">
-                                        <a class="removeNav" href="components.html#list-group">List Group</a>
-                                    </li>
-                                    <li class="scrollNav">
-                                        <a class="removeNav" href="components.html#modal">Modal</a>
-                                    </li>
-                                    <li class="scrollNav">
-                                        <a class="removeNav" href="components.html#navs">Navs</a>
-                                    </li>
-                                    <li class="scrollNav">
-                                        <a class="removeNav" href="components.html#offcanvas">Offcanvas</a>
-                                    </li>
-                                    <li class="scrollNav">
-                                        <a class="removeNav" href="components.html#pagination">Pagination</a>
-                                    </li>
-                                    <li class="scrollNav">
-                                        <a class="removeNav" href="components.html#tooltips">Tooltips</a>
-                                    </li>
-                                    <li class="scrollNav">
-                                        <a class="removeNav" href="components.html#spinners">Spinners</a>
-                                    </li>
-                                    <li class="scrollNav">
-                                        <a class="removeNav" href="components.html#progress">Progress</a>
-                                    </li>
-                                </ul>
+                                <a th:href="@{/user/destination/lodgingCheckDetails}">? 숙소 세부</a>
                             </li>
-                            <li>
-                                <a href="404.html">404 Not Found</a>
-                            </li>
-                            <li>
-                                <a href="coming-soon.html">Coming Soon</a>
+                            <li class="">
+                                <a th:href="@{/user/destination/restaurantCheckDetails}">? 음식점 세부</a>
                             </li>
                         </ul>
                     </li>
-
                     <li class="">
-                        <a href="#">Admin</a>
-                        <ul class="dropdown drop-up" id="admin">
+                        <a href="#">회원 정보</a>
+                        <ul class="dropdown drop-up" id="userInfo">
                             <li class="">
-                                <a href="dashboard.html">Dashboard</a>
+                                <a data-bs-target="#login" data-bs-toggle="modal" th:href="@{#}">? 로그인 모달</a>
                             </li>
                             <li class="">
-                                <a href="booking.html">Booking</a>
+                                <a data-bs-target="#join" data-bs-toggle="modal" th:href="@{#}">? 회원 가입 모달</a>
                             </li>
                             <li class="">
-                                <a href="profile.html">Profile</a>
+                                <a data-bs-target="#mypageModal" data-bs-toggle="modal" th:href="@{#}">? 마이페이지 모달</a>
                             </li>
                             <li class="">
-                                <a href="setting.html">Settings</a>
+                                <a data-bs-target="#findId" data-bs-toggle="modal" th:href="@{#}">? 아이디찾기 모달</a>
                             </li>
                             <li class="">
-                                <a data-bs-target="#signup" data-bs-toggle="modal"
-                                   href="#">Signup</a>
+                                <a data-bs-target="#findPw" data-bs-toggle="modal" th:href="@{#}">? 비밀번호찾기 모달</a>
                             </li>
                             <li class="">
-                                <a data-bs-target="#login" data-bs-toggle="modal"
-                                   href="#">Login</a>
+                                <a data-bs-target="#modifyModal" data-bs-toggle="modal" th:href="@{#}">? 회원정보 수정 모달</a>
                             </li>
                         </ul>
-                    </li> */-->
-                    <li class="py-6" th:if="${session.loginId == null}">
-                        <div class="nav-item nav-item-left me-0">
-                            <a data-bs-target="#login" data-bs-toggle="modal" href="#">
-                                <button type="button" class="btn btn-xs btn-outline-primary d-none d-lg-inline-block">
-                                    <span class="font-weight-bold">로그인</span>
-                                </button>
-                            </a>
-                        </div>
                     </li>
-                    <li class="py-6" th:if="${session.loginId != null}">
-                        <div class="nav-item nav-item-left me-2">
-                            <a th:href="@{/login/logout}">
-                                <button type="button" class="btn btn-xs btn-outline-primary d-none d-lg-inline-block">
-                                    <span class="font-weight-bold">로그아웃</span>
-                                </button>
-                            </a>
-                        </div>
+                    <li class="">
+                        <a href="#">커뮤니티&고객센터</a>
+                        <ul class="dropdown drop-up" id="communityBoard">
+                            <li class="">
+                                <a th:href="@{#}"># 여행 정보</a>
+                            </li>
+                            <li class="">
+                                <a th:href="@{#}"># 여행 후기</a>
+                            </li>
+                            <li class="">
+                                <a th:href="@{#}"># 여행 친구 찾기</a>
+                            </li>
+                            <li class="">
+                                <a th:href="@{#}"># 자유 게시판</a>
+                            </li>
+                            <li class="">
+                                <a th:href="@{#}"># 질문 게시판</a>
+                            </li>
+                            <li class="">
+                                <a th:href="@{/user/board/notice}">? 공지사항</a>
+                            </li>
+                            <li class="">
+                                <a th:href="@{/user/board/faq}">? 자주 찾는 질문</a>
+                            </li>
+                            <li class="">
+                                <a th:href="@{/user/board/qna}">? 1:1 문의</a>
+                            </li>
+                        </ul>
                     </li>
-                    <li class="py-6" th:if="${session.loginId == null}" style="padding:13px;">
-                        <div class="nav-item nav-item-left me-2">
-                            <a data-bs-target="#join" data-bs-toggle="modal" href="#">
-                                <button type="button" class="btn btn-xs btn-outline-primary d-none d-lg-inline-block">
-                                    <span class="font-weight-bold">회원가입</span>
-                                </button>
-                            </a>
-                        </div>
+                    <li class="">
+                        <a href="#">리뷰</a>
+                        <ul class="dropdown drop-up" id="customerReview">
+                            <li class="">
+                                <a th:href="@{/user/review/list}">? 작성한 리뷰 리스트</a>
+                            </li>
+                            <li class="">
+                                <a th:href="@{/user/review/write}">? 상품 리뷰 작성</a>
+                            </li>
+                        </ul>
                     </li>
-
+                        <li class="py-6" th:if="${session.loginId == null}">
+                            <div class="nav-item nav-item-left me-0">
+                                <a data-bs-target="#login" data-bs-toggle="modal" href="#">
+                                    <button type="button" class="btn btn-xs btn-outline-primary d-none d-lg-inline-block">
+                                        <span class="font-weight-bold">로그인</span>
+                                    </button>
+                                </a>
+                            </div>
+                        </li>
+                        <li class="py-6" th:if="${session.loginId != null}">
+                            <div class="nav-item nav-item-left me-2">
+                                <a th:href="@{/login/logout}">
+                                    <button type="button" class="btn btn-xs btn-outline-primary d-none d-lg-inline-block">
+                                        <span class="font-weight-bold">로그아웃</span>
+                                    </button>
+                                </a>
+                            </div>
+                        </li>
+                        <li class="py-6" th:if="${session.loginId == null}">
+                            <div class="nav-item nav-item-left me-2">
+                                <a data-bs-target="#join" data-bs-toggle="modal" href="#">
+                                    <button type="button" class="btn btn-xs btn-outline-primary d-none d-lg-inline-block">
+                                        <span class="font-weight-bold">회원가입</span>
+                                    </button>
+                                </a>
+                            </div>
+                        </li>
                     <div th:if="${session.loginId != null}" class="nav-item nav-item-left me-2"
                          style="position: absolute; top: 70px; right: 0; z-index: 1000">
                             <span th:text="${session.loginName} + ' 님 환영합니다!'"

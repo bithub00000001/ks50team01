@@ -36,7 +36,6 @@
                 code = #{areaCode}))
         ON DUPLICATE KEY UPDATE
             name = VALUES(name),
-            code = VALUES(code),
             area_id = (SELECT
                             id
                         FROM
