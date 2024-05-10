@@ -15,7 +15,9 @@
     <!-- 전체 지역 코드 조회 -->
     <select id="findAllAreas" resultType="ksmart.ks50team01.user.trip.dto.UArea">
         SELECT
-            *
+            id,
+            code,
+            name
         FROM
             area
     </select>

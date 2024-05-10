@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{platform/layout/default}">
+
+<th:block layout:fragment="customCss">
+    <!-- Datatables CSS START -->
+    <link th:href="@{/platform/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/platform/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/platform/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/platform/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/platform/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css}" rel="stylesheet">
+    <!-- Datatables CSS END -->
+</th:block>
+
+<th:block layout:fragment="customContent">
+
+    <div class="col-md-12col-sm-6 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h3 th:text="${tripPlanList != null ? '여행 계획 개수 : ' + tripPlanList.size + '개' : '여행 계획 개수 : 0개'}"></h3>
+                <div class="clearfix"></div>
+            </div>
+
+
+
+            <div class="x_content">
+                <div class="clearfix"></div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 table">
+                    <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap"  cellspacing="0" width="100%">
+                        <thead>
+                        <tr>
+                            <th>번호</th>
+                            <th>등록아이디</th>
+                            <th>지역</th>
+                            <th>출발 날짜</th>
+                            <th>도착 날짜</th>
+                            <th>여행 일자</th>
+                            <th>계획 제목</th>
+                            <th>인원수</th>
+                            <th>인당 가용 예산</th>
+                            <th>총 가용 예산</th>
+                            <th>총 계획 예산</th>
+                            <th>차액</th>
+                            <th>상태</th>
+                            <th>공유 여부</th>
+                            <th>등록 날짜</th>
+                            <th>수정 날짜</th>
+                            <th>수정</th>
+                            <th>삭제</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:if="${tripPlanList != null and tripPlanList.size() > 0}" th:each="list, iterStat : ${tripPlanList}">
+                            <td th:text="${list.planNumber}"></td>
+                            <td th:text="${list.memberId}"></td>
+                            <td th:text="${list.planAddr}"></td>
+                            <td th:text="${list.startDate}"></td>
+                            <td th:text="${list.endDate}"></td>
+                            <td th:text="${list.planDays}"></td>
+                            <td th:text="${list.planTitle}"></td>
+                            <td th:text="${list.planAttend}"></td>
+                            <td th:text="${list.budgetPerAttend}"></td>
+                            <td th:text="${list.totalAvailBudget}"></td>
+                            <td th:text="${list.totalPlanBudget}"></td>
+                            <td th:text="${(list.totalAvailBudget - list.totalPlanBudget)}"></td>
+                            <td th:text="${list.planStatus}"></td>
+                            <td th:text="${list.isShare}"></td>
+                            <td th:text="${list.regDate}"></td>
+                            <td th:text="${list.modDate}"></td>
+                            <td>
+                                <a th:href="@{/platform/member/memberModify(planId=${list.planId})}">수정</a>
+                            </td>
+                            <td>
+                                <a href="#" th:data-member-id="${list.planId}">삭제</a>
+                            </td>
+                        </tr>
+                        <tr th:if="${tripPlanList == null or tripPlanList.size() == 0}">
+                            <td align="center" colspan="18">검색 결과가 없습니다.</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</th:block>
+
+<th:block layout:fragment="customJsFile">
+    <!-- Datatables JS START -->
+    <script th:src="@{/platform/vendors/datatables.net/js/jquery.dataTables.min.js}"></script>
+    <script th:src="@{/platform/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js}"></script>
+    <script th:src="@{/platform/vendors/datatables.net-buttons/js/dataTables.buttons.min.js}"></script>
+    <script th:src="@{/platform/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js}"></script>
+    <script th:src="@{/platform/vendors/datatables.net-buttons/js/buttons.flash.min.js}"></script>
+    <script th:src="@{/platform/vendors/datatables.net-buttons/js/buttons.html5.min.js}"></script>
+    <script th:src="@{/platform/vendors/datatables.net-buttons/js/buttons.print.min.js}"></script>
+    <script th:src="@{/platform/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js}"></script>
+    <script th:src="@{/platform/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js}"></script>
+    <script th:src="@{/platform/vendors/datatables.net-responsive/js/dataTables.responsive.min.js}"></script>
+    <script th:src="@{/platform/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js}"></script>
+    <script th:src="@{/platform/vendors/datatables.net-scroller/js/dataTables.scroller.min.js}"></script>
+    <script th:src="@{/platform/vendors/jszip/dist/jszip.min.js}"></script>
+    <script th:src="@{/platform/vendors/pdfmake/build/pdfmake.min.js}"></script>
+    <script th:src="@{/platform/vendors/pdfmake/build/vfs_fonts.js}"></script>
+    <!-- Datatables JS END -->
+</th:block>
+
+<th:block layout:fragment="customJs"></th:block>
+</html>

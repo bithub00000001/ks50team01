@@ -80,7 +80,7 @@ public class UTourDataServiceImpl implements UTourDataService {
 						USigungu uSigungu = new USigungu();
 						uSigungu.setCode(item.getCode());
 						uSigungu.setName(item.getName());
-						// 여기에 areaCode를 설정합니다.
+						// 여기에 areaCode를 설정
 						uSigungu.setAreaCode(Integer.parseInt(area.getCode()));
 						return uSigungu;
 					})
