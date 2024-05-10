@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping(value = "/user/board")
+@RequestMapping(value = "/notice")
 public class UNoticeController {
 	
-	@GetMapping("/notice")
+	@GetMapping({"/",""})
 	public String notice(Model model) {
 		
 		model.addAttribute("title", "공지사항");
