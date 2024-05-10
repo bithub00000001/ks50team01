@@ -1,0 +1,28 @@
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ksmart.ks50team01.platform.ranking.mapper.UserRankingMapper">
+	
+	<select id="getUserRankingList" resultType="UserRanking">
+		/* 회원추천 조회 */
+	SELECT 
+		ROW_NUMBER() OVER(ORDER BY MBR_ARTCL_RANK) 		AS userRankingNum,
+		REG_PF_ID 										AS userRankingRegId,
+		PRTNR_BPLC_CD 									AS partnerBusinessCode,
+		TRIP_LCTGRY_CD 									AS tripLctgryCode,
+		RGN_SCTGRY_NM 									AS rgnSctgryName, 
+		TOT_RANK 										AS userRank, 
+		ARTCL_RANK_TOP_FIVE								AS artclRankigNum, 
+		REV_STATS_STRT_YMD 								AS reviewStatsStart, 
+		REV_STATS_END_YMD 								AS reviewStatsEnd, 
+		PF_PSTG_STRT_YMD 								AS platformAdStart,
+		PF_PSTG_END_YMD 								AS platformAdEnd, 
+		ACT_YN 											AS activate,
+		REG_YMD											AS regDate, 	
+		MDFCN_YMD 										AS modifyDate
+	
+	FROM
+		MEMBER_RECOMMENDATION_RANKING
+	</select>
+
+</mapper>
