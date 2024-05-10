@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import ksmart.ks50team01.platform.ranking.dto.Ranking;
@@ -19,6 +20,19 @@ import lombok.extern.slf4j.Slf4j;
 public class RankingController {
 
 	private final RankingService rankingService;
+	
+	@PostMapping("/modifyRanking")
+	public String modifyRanking(Ranking ranking) {
+		rankingService.modifyRanking(ranking);
+		return "redirect:/platform/ranking/rankingList";
+	}
+	
+	@PostMapping("/addRanking")
+	public String addRanking(Ranking ranking) {
+		 
+		rankingService.addRanking(ranking);
+		return "redirect:/platform/ranking/rankingList";
+	}
 	
 	@GetMapping("/rankingList")
 	public String getRankingList(Model model) {

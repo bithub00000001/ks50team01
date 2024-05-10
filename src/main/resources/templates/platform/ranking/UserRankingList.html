@@ -139,10 +139,10 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:unless="${rankingList != null}">
+								<tr th:unless="${userRankingList != null}">
 									<td colspan="7">등록된 회원의 정보가 없습니다.</td>
 								</tr>
-								<tr th:if="${rankingList != null}" th:each="l : ${rankingList}">
+								<tr th:if="${userRankingList != null}" th:each="l : ${userRankingList}">
 									<td th:text="${l.pRankingNum}"></td>
 									<td th:text="${l.pRankingRegId}"></td>
 									<td th:text="${l.partnerBusinessCode}"></td>
@@ -162,10 +162,10 @@
 									<td th:text="${l.modifyDate}"></td>
 									<td>
 										<!--/* /member/modifyMember?memberId=id001 */-->
-										<a th:href="@{/platform/ranking/modifyRanking(pRankingNum=${l.pRankingNum})}">수정</a>
+										<a th:href="@{/platform/ranking/modifyUserRanking(pRankingNum=${l.pRankingNum})}">수정</a>
 									</td>
 									<td>
-										<a th:href="@{/platform/ranking/removeRanking(pRankingNum=${l.pRankingNum})}">삭제</a>					
+										<a th:href="@{/platform/ranking/removeUserRanking(pRankingNum=${l.pRankingNum})}">삭제</a>					
 									</td>
 								</tr>
 							</tbody>

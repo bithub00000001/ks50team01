@@ -16,6 +16,22 @@ public class RankingService {
 
 	private final RankingMapper rankingMapper;
 	
+	public void modifyRanking(Ranking ranking) {
+		rankingMapper.modifyRanking(ranking);
+	}
+	
+	/**
+	 * 플랫폼 추천 리스트 등록
+	 * @param ranking
+	 */
+	public void addRanking(Ranking ranking) {
+		rankingMapper.addRanking(ranking);
+	}
+	
+	/**
+	 * 플랫폼 추천 조회
+	 * @return rankingList
+	 */
 	public List<Ranking> getRankingList(){
 		
 		List<Ranking> rankingList = rankingMapper.getRankingList();
