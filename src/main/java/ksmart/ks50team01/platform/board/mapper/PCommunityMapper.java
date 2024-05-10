@@ -14,7 +14,7 @@ public interface PCommunityMapper {
 	List<PCommunity> getPostList();
 	
 	// 댓글 조회
-		List<PCommunity> getCommentList();
+	List<PCommunity> getCommentList();
 }
 	
 

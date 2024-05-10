@@ -31,13 +31,18 @@
                         <label for="noticeContent">내용</label>
                         <textarea class="form-control" id="noticeContent" name="noticeContent" rows="5" th:text="${noticeContent}"></textarea>
                     </div>
-                
-                
+                    
                     <button type="submit" class="btn btn-primary">저장</button>
-                    <button type="button" class="btn btn-secondary" onclick="location.href='/platform/board/notice'">취소</button>
+                    <button type="button" class="btn btn-secondary" onclick="location.href='/platform/board/noticeList'">취소</button>
+                
                 </form>
             </div>
         </div>
     </div>
+</th:block>
+
+<th:block layout:fragment="customJsFile">
+
+
 </th:block>
 </html>

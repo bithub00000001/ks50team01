@@ -11,10 +11,10 @@
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
-                <form id="modifyForm" th:action="@{/platform/board/noticeModify}" method="post">
+                <form id="modifyForm" th:action="@{/platform/board/faqModify}" method="post">
                     <div class="form-group">
-                        <label for="noticeCategory">카테고리</label>
-                        <select class="form-control" id="noticeCategory" name="noticeCategory" th:value="${noticeCateNum}">
+                        <label for="faqCategory">카테고리</label>
+                        <select class="form-control" id="faqModify" name="faqModify" th:value="${faqCateType}">
                             <option value="general">계정 관리</option>
                             <option value="urgent">이용 문의</option>
                             <option value="schedule">건의 및 제안</option>
@@ -22,18 +22,18 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="noticeTitle">제목</label>
-                        <input type="text" class="form-control" id="noticeTitle" name="noticeTitle" th:value="${noticeTitle}">
+                        <label for="faqTitle">제목</label>
+                        <input type="text" class="form-control" id="faqTitle" name="faqTitle" th:value="${faqTitle}">
                     </div>
                 
                     <div class="form-group">
-                        <label for="noticeContent">내용</label>
-                        <textarea class="form-control" id="noticeContent" name="noticeContent" rows="5" th:text="${noticeContent}"></textarea>
+                        <label for="faqContent">내용</label>
+                        <textarea class="form-control" id="faqContent" name="faqContent" rows="5" th:text="${faqContent}"></textarea>
                     </div>
                 
                 
                     <button type="submit" class="btn btn-primary">저장</button>
-                    <button type="button" class="btn btn-secondary" onclick="location.href='/platform/board/notice'">취소</button>
+                    <button type="button" class="btn btn-secondary" onclick="location.href='/platform/board/faqList'">취소</button>
                 </form>
             </div>
         </div>
