@@ -71,21 +71,17 @@
                     <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap"  cellspacing="0" width="100%">
                         <thead>
 							<tr>
-								<th>플랫폼제휴추천</th>
+								<th>여행계획추천</th>
 								<th>등록플랫폼권한아이디</th>
-								<th>제휴사업장코드</th>
-								<th>여행지대분류코드</th>
-								<th>사업자상호</th>
+								<th>여행계획평가합계</th>
+								<th>개별여행계획번호</th>
 								<th>지역소분류명</th>
-								<th>제휴브랜드명</th>
-								<th>항목순위</th>
-								<th>제휴기간시작</th>
-								<th>제휴기간종료</th>
-								<th>제휴형태</th>
-								<th>제휴내용</th>
-								<th>배너광고시작</th>
-								<th>배너광고종료</th>
-								<th>활성화</th>
+								<th>순위</th>
+								<th>한달기준합계시작일</th>
+								<th>한달기분합계종료일</th>
+								<th>플랫폼게시기간시작일</th>
+								<th>플랫폼게시기간종료일</th>
+								<th>활성화여부</th>
 								<th>등록일자</th>
 								<th>수정일자</th>
 								<th>수정</th>
@@ -93,33 +89,28 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:unless="${rankingList != null}">
+							<tr th:unless="${planRankingList != null}">
 								<td colspan="7">등록된 정보가 없습니다.</td>
 							</tr>
-							<tr th:if="${rankingList != null}" th:each="l : ${rankingList}">
-								<td th:text="${l.pRankingNum}"></td>
+							<tr th:if="${planRankingList != null}" th:each="l : ${planRankingList}">
+								<td th:text="${l.userTripPlan}"></td>
 								<td th:text="${l.pRankingRegId}"></td>
-								<td th:text="${l.partnerBusinessCode}"></td>
-								<td th:text="${l.tripLctgryCode}"></td>
-								<td th:text="${l.businessName}"></td>
+								<td th:text="${l.tripPlanNum}"></td>
 								<td th:text="${l.rgnSctgryName}"></td>
-								<td th:text="${l.partnerBrandName}"></td>
-								<td th:text="${l.artclRankigNum}"></td>
-								<td th:text="${l.partnerShipStart}"></td>
-								<td th:text="${l.partnerShipStartEnd}"></td>
-								<td th:text="${l.partnerType}"></td>
-								<td th:text="${l.partnerShipDetail}"></td>
-								<td th:text="${l.adStart}"></td>
-								<td th:text="${l.adEnd}"></td>
+								<td th:text="${l.tripPlanRank}"></td>
+								<td th:text="${l.reviewStatsStart}"></td>
+								<td th:text="${l.reviewStatsEnd}"></td>
+								<td th:text="${l.platformAdStart}"></td>
+								<td th:text="${l.platformAdEnd}"></td>
 								<td th:text="${l.activate}"></td>
 								<td th:text="${l.regDate}"></td>
 								<td th:text="${l.modifyDate}"></td>
 								<td>
 									<!--/* /member/modifyMember?memberId=id001 */-->
-									<a th:href="@{/platform/ranking/modifyRanking(pRankingNum=${l.pRankingNum})}">수정</a>
+									<a th:href="@{/platform/ranking/modifyPlanRankingList(pRankingNum=${l.userRankingNum})}">수정</a>
 								</td>
 								<td>
-									<a th:href="@{/platform/ranking/removeRanking(pRankingNum=${l.pRankingNum})}">삭제</a>					
+									<a th:href="@{/platform/ranking/removePlanRankingList(pRankingNum=${l.userRankingNum})}">삭제</a>					
 								</td>
 							</tr>
 						</tbody>

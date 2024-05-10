@@ -10,19 +10,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import ksmart.ks50team01.platform.ranking.dto.UserRanking;
 import ksmart.ks50team01.platform.ranking.service.UserRankingService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping(value="/platform/ranking")
 @RequiredArgsConstructor
+@Slf4j
 public class UserRankingController {
 
-	@GetMapping("/UserRankingList")
+	private final UserRankingService userRankingService;
+	
+	@GetMapping("/userRankingList")
 	public String getUserRankingList(Model model) {
 		
-		
+		List<UserRanking> userRankingList = userRankingService.getUserRankingList();
+		log.info("UserRankingController getUserRankingList: {}", userRankingList);
 		
 		model.addAttribute("title", "회원 추천 관리");
-//		model.addAttribute("UserRankingList", UserRankingList);
-		return "platform/ranking/UserRankingList";
+		model.addAttribute("userRankingList", userRankingList);
+
+		return "platform/ranking/userRankingList";
 	}
 }
