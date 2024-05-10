@@ -7,12 +7,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import ksmart.ks50team01.platform.board.dto.PFaq;
-import ksmart.ks50team01.platform.board.dto.PNotice;
 import ksmart.ks50team01.platform.board.service.PFaqService;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 
@@ -33,6 +31,7 @@ public class PFaqController {
 		log.info("faqList: {}", faqList);
 		model.addAttribute("faqList", faqList);
 		model.addAttribute("title", "자주찾는 질문");
+		
 		return "platform/board/faqList";
 	}
 	

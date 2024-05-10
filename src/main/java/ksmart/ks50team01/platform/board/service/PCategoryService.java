@@ -19,9 +19,16 @@ public class PCategoryService {
 	private final PCategoryMapper pCategoryMapper;
 	
 	/**
+	 * 자주찾는질문 카테고리 조회
 	 * @return List<PCategory>
 	 */
-	public List<PCategory> getCategoryList() {
-		return pCategoryMapper.getCategoryList();
+	public List<PCategory> getFaqCategoryList() {
+		
+		List<PCategory> faqCategoryList = pCategoryMapper.getFaqCategoryList();
+		return faqCategoryList;
 	}
+
+
+
+
 }
