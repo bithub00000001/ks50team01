@@ -54,12 +54,12 @@
 									<td th:text="${l.reportReviewCode}"></td>
 									<td th:text="${l.reportContent}"></td>
 									<td th:text="${l.reportDate}"></td>
-									<td th:text="${l.reportApprove}"></td>
+									<td th:text="${l.reportApproveName}"></td>
 									<td th:text="${l.reportApproveId}"></td>
 									<td th:text="${l.reportApproveDate}"></td>
 									<td>
 										<!-- /* /member/modifyMember?memberId=id001 */ --> 
-										<a th:href="@{/platform/review/report/approve(reportNum=${l.reportNum})}">수정</a>
+										<a th:href="@{/platform/review/report/approve(reportCode=${l.reportCode})}">수정</a>
 									</td>
 								</tr>
 							</tbody>

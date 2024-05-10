@@ -86,10 +86,10 @@
 		        <tbody>
 		            <tr>
 		                <td>
-		                    <label for="reportNum">신고 번호</label>
+		                    <label for="reportCode">신고 번호</label>
 		                </td>
 		                <td>
-		                    <input type="text" id="reportNum" name="reportNum" th:value="*{reportNum}" readonly="readonly" />
+		                    <input type="text" id="reportCode" name="reportCode" th:value="*{reportCode}" readonly="readonly" />
 		                </td>
 		            </tr>
 		            <tr>
@@ -155,8 +155,8 @@
                 <td>
                     <select id="reportApprove" name="reportApprove">
                         <option value="">승인 여부를 선택하세요</option>
-                        <option value="Y" th:selected="*{reportApprove == 'Y'}">승인</option>
-                        <option value="N" th:selected="*{reportApprove == 'N'}">미승인</option>
+                        <option th:value="Y" th:selected="*{reportApprove == 'Y'}">승인</option>
+                        <option th:value="N" th:selected="*{reportApprove == 'N'}">미승인</option>
                     </select>
                 </td>
 		            </tr>

@@ -48,14 +48,24 @@ public class PReviewController {
 	}
 	
 	
+	/**
+	 * 신고 승인
+	 */
+	@PostMapping("/report/approve")
+	public String modifyPReviewReport(PReviewReport report) {
+		log.info("신고 승인 : {}", report);
+		pReviewService.modifyPReviewReport(report);
+		
+		return "redirect:/platform/review/report/list";
+	}
 	
 	/**
 	 * 신고 승인 화면
 	 */
 	@GetMapping("/report/approve")
-	public String reportApprove(@RequestParam(value="reportNum", required = false) String reportNum, Model model) {
-		log.info("신고 승인 화면 reportApprove: {}", reportNum);
-		PReviewReport reportInfo = pReviewService.getPReviewReportInfoById(reportNum);
+	public String reportApprove(@RequestParam(value="reportCode", required = false) String reportCode, Model model) {
+		log.info("신고 승인 화면 reportApprove: {}", reportCode);
+		PReviewReport reportInfo = pReviewService.getPReviewReportInfoById(reportCode);
 		
 		if(reportInfo == null) {
 			System.out.println("reportInfo is null");
@@ -86,6 +96,17 @@ public class PReviewController {
 		return "platform/review/reportList";
 	}
 	
+	
+	/**
+	 * 답글 수정
+	 */
+	@PostMapping("/comment/open")
+	public String modifyPReivewComment(PReivewComment comment) {
+		log.info("답글 수정: {}", comment);
+		pReviewService.modifyPReivewComment(comment);
+		
+		return "redirect:/platform/review/comment/list"; 
+	}
 	
 	/**
 	 * 답글 공개 여부 수정 화면
@@ -155,9 +176,9 @@ public class PReviewController {
 	  public String modifyPReview(PReview review) {
 	  log.info("상품 리뷰 수정 : {}", review);
 
-	  pReviewService.modifyPReview(review);
+	  	pReviewService.modifyPReview(review);
 	  
-	  return "redirect:/platform/review/PreviewList"; 
+	  return "redirect:/platform/review/list"; 
 	  }
 	 
 	/**

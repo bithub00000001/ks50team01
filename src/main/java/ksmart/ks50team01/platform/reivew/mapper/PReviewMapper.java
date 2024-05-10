@@ -18,13 +18,17 @@ public interface PReviewMapper {
 	List<PReviewReport> getPReviewReportTotal();
 	
 
+	// 신고정보수정
+	int modifyPReviewReport(PReviewReport report);
 	//신고정보조회
-	PReviewReport getPReviewReportInfoById(String reportNum);
+	PReviewReport getPReviewReportInfoById(String reportCode);
 	
 	//신고목록조회
 	List<PReviewReport> getPReviewReport();
 	
 	
+	//댓글정보수정
+	int modifyPReivewComment(PReivewComment comment);
 	
 	//댓글정보조회
 	PReivewComment getPReivewCommentInfoById(String commentCode);

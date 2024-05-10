@@ -79,7 +79,7 @@
 			<div class="x_content">
 				<p class="text-muted font-13 m-b-30"> 리뷰 공개 여부를 선택해주세요
 				
-			<form id="modifyForm" th:object="${reviewInfo}" th:action="@{/platform/review/open}" method="get">
+			<form id="modifyForm" th:object="${reviewInfo}" th:action="@{/platform/review/open}" method="post">
 				<table>
 			        <tbody>
 			            <tr>
@@ -135,8 +135,8 @@
 			                    <label for="reviewApprove">공개여부</label>
 			                </td>
 			                <td>
-			                	<!-- <input type="text" id="reviewApproveInput" name="reviewApprove" th:value=*{reviewApprove} readonly="readonly"> -->
-							<select id="reviewApprove" name="reviewApprove">
+			                <p id="reviewApproveInput" name="reviewApprove"></p>
+                <select id="reviewApproveSelect" name="reviewApprove" onchange="updateReviewApprove()">
 							    <option value="">공개여부를 선택해주세요</option>
 
  						    <th:block th:if="${pOpenList != null}" th:each="l : ${pOpenList}">
@@ -166,14 +166,11 @@
 
 <th:block layout:fragment="customJsFile">
 <script>
-/*     document.addEventListener('DOMContentLoaded', function() {
-        var selectElement = document.getElementById('reviewApprove');
-        var inputElement = document.getElementById('reviewApproveInput');
-
-        selectElement.addEventListener('change', function() {
-            inputElement.value = selectElement.value;
-        });
-    }); */
+        function updateReviewApprove() {
+            var selectElement = document.getElementById("reviewApproveSelect");
+            var pElement = document.getElementById("reviewApproveInput");
+            pElement.innerHTML = selectElement.value;
+        }
 </script>
 
 </th:block>

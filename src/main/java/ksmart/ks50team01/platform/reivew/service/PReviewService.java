@@ -29,10 +29,23 @@ public class PReviewService {
 	}
 
 	/**
+	 * 신고 정보 수정
+	 */
+	public int modifyPReviewReport(PReviewReport report) {
+		
+		try {
+			return pReviewMapper.modifyPReviewReport(report);
+	    } catch (Exception e) {
+	        // 실패 시에는 -1을 반환합니다.
+	        return -1;
+	    }
+	}
+	
+	/**
 	 * 신고 정보 조회
 	 */
-	public PReviewReport getPReviewReportInfoById(String reportNum) {
-		PReviewReport reportInfo = pReviewMapper.getPReviewReportInfoById(reportNum);
+	public PReviewReport getPReviewReportInfoById(String reportCode) {
+		PReviewReport reportInfo = pReviewMapper.getPReviewReportInfoById(reportCode);
 		return reportInfo;
 	}
 
@@ -60,12 +73,26 @@ public class PReviewService {
 		}
 		return pReportList;
 	}
+	
+	
+	/**
+	 * 댓글정보수정
+	 */
+	public int modifyPReivewComment(PReivewComment comment) {
+		try {
+		return pReviewMapper.modifyPReivewComment(comment);
+	    } catch (Exception e) {
+	        // 실패 시에는 -1을 반환합니다.
+	        return -1;
+	    }
+	}
 
 	/**
 	 * 댓글정보조회
 	 */
 	public PReivewComment getPReivewCommentInfoById(String commentCode) {
 		PReivewComment commentInfo = pReviewMapper.getPReivewCommentInfoById(commentCode);
+
 		return commentInfo;
 	}
 
@@ -93,6 +120,7 @@ public class PReviewService {
 		}
 		return pCommentList;
 	}
+	
 
 	/**
 	 * 좋아요 싫어요 기록 목록 리스트
@@ -100,6 +128,7 @@ public class PReviewService {
 	public List<PReviewReact> getPReviewReact() {
 		return pReviewMapper.getPReviewReact();
 	}
+	
 
 	/**
 	 * 리뷰정보수정
@@ -136,6 +165,8 @@ public class PReviewService {
 			pReviewList.forEach(review -> {
 				String reviewApprove = review.getReviewApprove();
 				String reviewApproveName = "";
+				String reviewStar = review.getReviewStar();
+				String reviewStarPoint = "";
 				switch (reviewApprove) {
 				case "DISCLOSURE_001":
 					reviewApproveName = "전체공개";
@@ -145,6 +176,24 @@ public class PReviewService {
 					break;
 				}
 				review.setReviewApproveName(reviewApproveName);
+				switch (reviewStar) {
+				case "RAT_CTGRY_01":
+					reviewStarPoint = "1점";
+					break;
+				case "RAT_CTGRY_02":
+					reviewStarPoint = "2점";
+					break;
+				case "RAT_CTGRY_03":
+					reviewStarPoint = "3점";
+					break;
+				case "RAT_CTGRY_04":
+					reviewStarPoint = "4점";
+					break;
+				case "RAT_CTGRY_05":
+					reviewStarPoint = "5점";
+					break;
+				}
+				review.setReviewStarPoint(reviewStarPoint);
 			});
 		}
 		return pReviewList;

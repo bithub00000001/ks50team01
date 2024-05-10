@@ -48,15 +48,15 @@
 									<td colspan="10"  class="center-text">작성된 리뷰가 없습니다.</td>
 								</tr>
 								<tr th:if="${pReviewList != null}" th:each="l : ${pReviewList}">
-									<td th:text="${l.reviewCode}"></td>
+									<td th:text="${l.reviewNum}"></td>
 									<td th:text="${l.reviewId}"></td>
-									<td th:text="${l.reviewStar}"></td>
 									<td th:text="${l.reviewGoods}"></td>
+									<td th:text="${l.reviewStarPoint}"></td>
 									<td th:text="${l.reviewContent}"></td>
 									<td th:text="${l.reviewDate}"></td>
 									<td th:text="${l.reviewLike}"></td>
 									<td th:text="${l.reviewDislike}"></td>
-									<td th:text="${l.reviewApprove}"></td>
+									<td th:text="${l.reviewApproveName}"></td>
 									<td>
 										<!-- /* /member/modifyMember?memberId=id001 */ --> 
 										<a th:href="@{/platform/review/open(reviewCode=${l.reviewCode})}">작성</a>

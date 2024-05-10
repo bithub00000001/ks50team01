@@ -14,6 +14,7 @@
  		<result property="reviewLike" 		column="LIKE_TOTAL"/>
  		<result property="reviewDislike" 	column="DISLIKE_TOTAL"/>
  		<result property="reviewApprove" 	column="RLS_YN_CD"/>
+ 		<result property="reviewNum"		column="reviewNum"/>
  		
  		<result property="tripLargeCode" 	column="TRIP_LCTGRY_CD"/>
  		<result property="districtSubclassCode" 	column="RGN_SCTGRY_CD"/>
@@ -39,8 +40,8 @@
 
 
  	<resultMap type="PReviewReport" id="PReviewReportResultMap">
- 		<id property="reportNum" column="REV_REPT_NO"/>
- 		<result property="reportNum" column="REV_REPT_NO"/>
+ 		<id property="reportCode" column="REV_REPT_NO"/>
+ 		<result property="reportCode" column="REV_REPT_NO"/>
  		<result property="reportId" column="REG_MBR_ID"/>
  		<result property="reportCategories" column="REPT_CTGRY_NO"/>
  		<result property="reportReviewCode" column="PRCHS_REV_CD"/>
@@ -81,6 +82,7 @@
 	 <select id="getPReviewList" resultMap="PReviewResultMap">
 	  /* 상품 리뷰 목록 리스트 */
 	 	SELECT 
+			ROW_NUMBER() OVER(ORDER BY PRCHS_REV_CD) AS reviewNum,
 			PRCHS_REV_CD, 
 			REG_MBR_ID, 
 			RLS_YN_CD, 
@@ -99,8 +101,8 @@
 			PRCHS_GDSOPT_CD, 
 			MDFCN_YMD,
 			REPT_TOTAL
-		FROM 
-			PURCHASE_REVIEW
+	FROM 
+		PURCHASE_REVIEW
 	 </select>
 	 
 	 <select id="getPOpenList" resultMap="pOpenResultMap">
@@ -144,6 +146,7 @@
 	 </select>
 	 
 	 <update id="modifyPReview" parameterType="PReview">
+	 /*리뷰 정보 수정*/
 	 	UPDATE 
 	 		PURCHASE_REVIEW
 	 	<set>
@@ -156,7 +159,8 @@
 
 	 <select id="getPReviewReact" resultMap="PReviewReactResultMap">
 	 	/* 좋아요 싫어요 기록 목록 리스트 */
-	 	SELECT 
+	 	SELECT
+	 		ROW_NUMBER() OVER(ORDER BY REV_LIKE_DISLIKE_CD) AS reviewReactNum,
 			REV_LIKE_DISLIKE_CD, 
 			REG_MBR_ID, 
 			PRCHS_REV_CD, 
@@ -171,7 +175,8 @@
 	 
 	 <select id="getPReivewComment" resultMap="PReivewCommentResultMap">
 	 	/* 답글 목록 리스트 */
-		 SELECT 
+		 SELECT
+		 	ROW_NUMBER() OVER(ORDER BY REV_CMNT_CD) AS commentNum,
 			REV_CMNT_CD, 
 			REG_BIZ_ID, 
 			PRCHS_REV_CD, 
@@ -203,10 +208,23 @@
 			REV_CMNT_CD = #{commentCode};
 	 </select>
 	 
+	 <select id="modifyPReivewComment" resultMap="PReivewCommentResultMap">
+	 /*답글 정보 수정*/
+	 	UPDATE 
+	 		REVIEW_COMMENT
+	 	<set>
+	 		RLS_YN_CD = #{commentApprove}
+	 	</set>
+	 	WHERE
+	 		REV_CMNT_CD = #{commentCode};
+	 
+	 </select>
+	 
 	 
 	 <select id="getPReviewReport" resultMap="PReviewReportResultMap">
 	 	/* 상품 리뷰 신고 리스트 */
-	 	SELECT 
+	 	SELECT
+	 		ROW_NUMBER() OVER(ORDER BY REV_REPT_NO) AS reportNum,
 			REV_REPT_NO,
 			REG_MBR_ID,  
 			REPT_CTGRY_NO, 
@@ -235,20 +253,47 @@
 		FROM 
 			REVIEW_REPORT_HISTORY
 		WHERE
-			REV_REPT_NO = #{reportNum};
+			REV_REPT_NO = #{reportCode};
+	 </select>
+	 
+	 <select id="modifyPReviewReport" resultMap="PReviewReportResultMap">
+	 /*신고정보수정*/
+	 	UPDATE 
+	 		REVIEW_REPORT_HISTORY
+	 	<set>
+	 		REV_REPT_APRV = #{reportApprove}
+	 	</set>
+	 	WHERE
+	 		REV_REPT_NO = #{reportCode};
 	 </select>
 	 
 	 <select id="getPReviewReportTotal" resultMap="PReviewReportResultMap">
 	 	/*신고 누적 개수 조회*/
 		 SELECT 
 			PRCHS_REV_CD,
-			COUNT(PRCHS_REV_CD) AS reportTotal
+			COUNT(PRCHS_REV_CD) AS reportTotal,
+			REV_REPT_APRV
 			FROM 
 			REVIEW_REPORT_HISTORY
 			WHERE
 			REV_REPT_APRV = "Y"
 		GROUP BY
 			PRCHS_REV_CD;
+			
+<!-- 					SELECT 
+			prh.PRCHS_REV_CD,
+			COUNT(pr.PRCHS_REV_CD) AS reportTotal,
+			pr.RLS_YN_CD
+		FROM 
+			REVIEW_REPORT_HISTORY AS prh
+			INNER JOIN
+			PURCHASE_REVIEW AS pr
+			ON
+			prh.PRCHS_REV_CD = pr.PRCHS_REV_CD
+			WHERE
+			prh.REV_REPT_APRV = "Y"
+		GROUP BY
+			pr.PRCHS_REV_CD; -->
 	 </select>
 	 
 	 
