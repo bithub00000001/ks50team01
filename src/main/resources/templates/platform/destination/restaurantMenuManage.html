@@ -19,71 +19,13 @@
 		</style>
 	
 	</head>
-	
 	<th:block layout:fragment="customContent">
-	<!-- search start -->
-		<div class="row">
-			<div class="col-md-12 col-sm-12 col-xs-12">
-				<div class="x_panel">
-					<div class="x_title">
-						<h2>
-							검색 <small>search form</small>
-						</h2>
-						<ul class="nav navbar-right panel_toolbox">
-							<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-							</li>
-							<li class="dropdown"><a href="#" class="dropdown-toggle"
-								data-toggle="dropdown" role="button" aria-expanded="false"><i
-									class="fa fa-wrench"></i></a>
-								<ul class="dropdown-menu" role="menu">
-									<li><a href="#">Settings 1</a></li>
-									<li><a href="#">Settings 2</a></li>
-								</ul></li>
-							<li><a class="close-link"><i class="fa fa-close"></i></a></li>
-						</ul>
-						<div class="clearfix"></div>
-					</div>
-					<div class="x_content">
-						<br />
-						<form id="demo-form2" class="form-horizontal form-label-left">
-	
-							<div class="form-group">
-								<div class="col-md-2 col-sm-2 col-xs-0"></div>
-								<label class="control-label col-md-2 col-sm-2 col-xs-12">category</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<select class="form-control text-center">
-										<option>숙소 관리</option>
-										<option>숙소 상품 관리</option>
-
-									</select>
-								</div>
-								<div class="col-md-2 col-sm-2 col-xs-0"></div>
-							</div>
-	
-							<div class="ln_solid"></div>
-							<div class="form-group">
-								<div class="col-md-12 col-sm-12 col-xs-12 text-center">
-									<a href="@{/platform/destination/tourGoodsManage}">
-										<button class="btn btn-success btn-lg" type="button">
-											<span>검색</span>
-										</button>
-									</a>
-									<button type="reset" class="btn btn-dark btn-lg">초기화</button>
-								</div>
-							</div>
-	
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- search end -->
 	
 		<div class="col-md-12col-sm-6 col-xs-12">
 			<div class="x_panel">
 				<div class="x_title">
 
-					<h3 th:text="${lodgingInfoList != null ? '총 숙소 수 : ' + lodgingInfoList.size + '개' : '총 숙소 수 : 0개'}"></h3>
+					<h3 th:text="${restaurantMenuList != null ? '총 음식점 메뉴 개수 : ' + restaurantMenuList.size + '개' : '총 음식점 메뉴 개수 : 0개'}"></h3>
 					<div class="clearfix"></div>
 				</div>
 
@@ -97,30 +39,16 @@
 							cellspacing="0" width="100%">
 							<thead>
 								<tr>
-									<th>숙소 이름</th>
-									<th>숙소 코드</th>
-									<th>숙소 등록권한 아이디</th>
-									<th>숙소 주소</th>
-									<th>숙소 사이트</th>
-									<th>숙소 연락처</th>
-									<th>수정</th>
-									<th>삭제</th>
+									<th>식당 이름</th>
+									<th>메뉴 이름</th>
+
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:if="${lodgingInfoList != null and lodgingInfoList.size() > 0}" th:each="l : ${lodgingInfoList}">
-									<td th:text="${l.lodgingName}"></td>
-									<td th:text="${l.lodgingInfoCode}"></td>
-									<td th:text="${l.lodgingAuthorityId}"></td>
-									<td th:text="${l.lodgingAddr}"></td>
-									<td th:text="${l.lodgingSite}"></td>
-									<td th:text="${l.lodgingContectNum}"></td>
-									<td>
-									    <a th:href="@{/platform/destination/lodgingModify(lodgingAuthorityId=${l.lodgingAuthorityId})}">수정</a>
-									</td>
-						            <td>
-						            	<a href="#" th:data-member-id="${l.lodgingAuthorityId}" th:onclick="deleteConfirm(this)">삭제</a>
-					            	</td>
+								<tr th:if="${restaurantMenuList != null and restaurantMenuList.size() > 0}" th:each="l : ${restaurantMenuList}">
+									<td th:text="${l.restaurantName}"></td>
+									<td th:text="${l.restaurantMenu}"></td>
+
 								</tr>
 	
 							</tbody>
@@ -132,6 +60,8 @@
 	
 	</th:block>
 	<th:block layout:fragment="customJsFile">
+	
+	
 		<!-- Datatables -->
 		<script th:src="@{/platform/vendors/datatables.net/js/jquery.dataTables.min.js}"></script>
 	    <script th:src="@{/platform/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js}"></script>
@@ -148,12 +78,15 @@
 	    <script th:src="@{/platform/vendors/jszip/dist/jszip.min.js}"></script>
 	    <script th:src="@{/platform/vendors/pdfmake/build/pdfmake.min.js}"></script>
 	    <script th:src="@{/platform/vendors/pdfmake/build/vfs_fonts.js}"></script>
+	    
+
+	    
 	</th:block>
 
 	<!-- custom js file start -->
 	<th:block layout:fragment="customJs">
 	<script type="text/javascript" th:src="@{/platform/js/checkbox/memberDel.js}"></script>
 	</th:block>
-	<!-- custom js file end -->
+	<!-- custom js file end -->>
 
 </html>
