@@ -131,7 +131,7 @@
 							</thead>
 							<tbody>
 								<tr th:unless="${faqList != null}">
-									<td colspan="10">등록된 자주찾는 질문이 없습니다.</td>
+									<td colspan="11">등록된 자주찾는 질문이 없습니다.</td>
 								</tr>
 								<tr th:if="${faqList != null}" th:each="l : ${faqList}">
 									<td th:text="${l.faqNum}"></td>
@@ -152,6 +152,9 @@
 								</tr>
 							</tbody>
 						</table>
+						<div class="text-right">
+							<a th:href="@{/platform/board/faqWrite}" class="btn btn-primary">작성</a>
+						</div>
 					</div>
 				</div>
 			</div>

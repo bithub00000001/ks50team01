@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+		     	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		      	layout:decorate="~{platform/layout/default}">
+		      	
+<th:block layout:fragment="customContent">
+    <div class="col-md-12 col-sm-6 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h3>카테고리 추가</h3>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <form id="addForm" th:action="@{/platform/board/categoryAdd}" method="post">
+                    <div class="form-group">
+                        <label for="boardType">게시판 종류</label>
+                        <select class="form-control" id="boardType" name="boardType" th:value="${boardType}">
+                            <option value="general">커뮤니티</option>
+                            <option value="urgent">공지사항</option>
+                            <option value="schedule">자주찾는 질문 및 1:1문의</option>
+                            <option value="system">신고</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="cateType">카테고리 유형</label>
+                        <input type="text" class="form-control" id="cateType" name="cateType" th:value="${cateType}">
+                    </div>
+
+                
+                    <button type="submit" class="btn btn-primary">확인</button>
+                    <button type="button" class="btn btn-secondary" onclick="location.href='/platform/board/categoryList'">취소</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</th:block>
+</html>
