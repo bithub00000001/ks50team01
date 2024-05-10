@@ -15,7 +15,9 @@
     <!-- 전체 지역 코드 조회 -->
     <select id="findAllAreas" resultType="ksmart.ks50team01.user.trip.dto.UArea">
         SELECT
-            *
+            id,
+            code,
+            name
         FROM
             area
     </select>
@@ -36,7 +38,6 @@
                 code = #{areaCode}))
         ON DUPLICATE KEY UPDATE
             name = VALUES(name),
-            code = VALUES(code),
             area_id = (SELECT
                             id
                         FROM
