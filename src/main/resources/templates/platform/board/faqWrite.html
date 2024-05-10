@@ -1,82 +1,78 @@
 <!DOCTYPE html>
-<html lang="ko" layout:decorate="~{/platform/layout/default}"
-				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-				xmlns:th="http://www.thymeleaf.org">
-	
-	
-<th:block layout:fragment="customCss">
-	<link th:href="@{/platform/css/faqwWrite.css}" rel="stylesheet">
-</th:block>
-
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+		     	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		      	layout:decorate="~{platform/layout/default}">
+		      	
 <th:block layout:fragment="customContent">
-	<!-- Elements Forms -->
-	<div class="row">
-		<div class="col-12">
-			<h3 class="element-title">공지사항</h3>
-			<div class="mb-6">
+    <div class="col-md-12 col-sm-6 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h3>자주찾는 질문 작성</h3>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <form id="writeForm" th:action="@{/platform/board/faqWrite}" method="post">
+                    <div class="form-group">
+                        <label for="faqCategory">자주찾는 질문 유형</label>
+                        <select class="form-control" id="faqCateType" name="faqCateType" th:value="${faqCateType}">
+                            <option value="general">계정 관리</option>
+                            <option value="urgent">이용 문의</option>
+                            <option value="schedule">건의 및 제안</option>
+                            <option value="system">결제 및 환불</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="faqTitle">자주찾는 질문 제목</label>
+                        <input type="text" class="form-control" id="faqTitle" name="faqTitle" th:value="${faqTitle}">
+                    </div>
+                
+                    <div class="form-group">
+                        <label for="faqContent">자주찾는 질문 답변</label>
+                        <textarea class="form-control" id="faqContent" name="faqContent" rows="6" th:text="${faqContent}"></textarea>
+                    </div>
+                    
+                    <!-- Elements Modal -->
+					<div class="pt-5 mb-5" id="modal">
+						<div class="row">
+							<div class="col-md-6 col-lg-4">
+								<label class="element-title mb-5 font-weight-bold">첨부 파일</label>
+								<!-- Button trigger modal -->
+								<div>
+									<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">+ 파일 첨부하기 (0/10)</button>
+								</div>
 
-				<form>
-					<div class="form-group">
-						<label for="exampleInputText">자주찾는 질문 유형</label>
-						<div class="select-default">
-							<select class="select-option">
-								<option>계정 관리</option>
-								<option>이용 문의</option>
-								<option>건의 및 제안</option>
-								<option>결제 및 환불</option>
-							</select>
+								<!-- Modal -->
+								<div class="modal fade mb-8" id="exampleModal" tabindex="-1"
+									role="dialog" aria-labelledby="exampleModalLabel"
+									aria-hidden="true">
+									<div class="modal-dialog" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title">파일 첨부하기</h5>
+												<button type="button" class="btn-close"
+													data-bs-dismiss="modal" aria-label="Close"></button>
+											</div>
+											<div class="modal-body">
+												<p>jpg, jpeg, gif, png, pdf만 첨부 가능하며 20MB까지 등록 가능합니다.</p>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-secondary"
+													data-bs-dismiss="modal">닫기</button>
+												<button type="button" class="btn btn-primary">파일
+													첨부하기</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
-
-					<div class="form-group">
-						<label for="inputPassword" class="col-sm-2 col-form-label">자주찾는 질문 제목</label> <input type="" class="form-control" id="inputPassword"
-							placeholder="제목">
-					</div>
-
-					<div class="form-group">
-						<label for="exampleFormControlTextarea1">자주찾는 질문 답변</label>
-						<textarea class="form-control" rows="6"></textarea>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-
-
-	<!-- Elements Modal -->
-	<div class="pt-5 mb-5" id="modal">
-		<div class="row">
-			<div class="col-md-6 col-lg-4">
-				<h3 class="element-title mb-5">첨부 파일</h3>
-				<!-- Button trigger modal -->
-				<button type="button" class="btn btn-primary" data-bs-toggle="modal"
-					data-bs-target="#exampleModal">+ 파일 첨부하기 (0/10)</button>
-
-				<!-- Modal -->
-				<div class="modal fade mb-8" id="exampleModal" tabindex="-1"
-					role="dialog" aria-labelledby="exampleModalLabel"
-					aria-hidden="true">
-					<div class="modal-dialog" role="document">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h5 class="modal-title">파일 첨부하기</h5>
-								<button type="button" class="btn-close" data-bs-dismiss="modal"
-									aria-label="Close"></button>
-							</div>
-							<div class="modal-body">
-								<p>jpg, jpeg, gif, png, pdf만 첨부 가능하며 20MB까지 등록 가능합니다.</p>
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary"
-									data-bs-dismiss="modal">닫기</button>
-								<button type="button" class="btn btn-primary">파일 첨부하기</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-
+                
+                    <button type="submit" class="btn btn-primary">확인</button>
+                    <button type="button" class="btn btn-secondary" onclick="location.href='/platform/board/faqList'">취소</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </th:block>
+</html>
