@@ -32,20 +32,7 @@ public class Destination {
 	private String restaurantRegDate;
 	private String restaurantFormDate;
 	
-	private String tourGoodsCate;
-	private String tourGoodsList;
-	private String tourGoodsTime;
-	private String RegionSName;
-	private String tourgoodsAuthorityId;
 	private String tourGoodsCode;
-	private String tourGoodsOptionCd;
-	private String tourOptionRemarks;
-	private String tourTotal;
 	
-	private String lodgingMenuCode;
-
-	
-	private String restaurantMenu;
-
 	
 }
