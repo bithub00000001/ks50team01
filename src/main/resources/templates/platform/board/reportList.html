@@ -129,6 +129,7 @@
 							cellspacing="0" width="100%">
 							<thead>
 								<tr>
+									<th><input type="checkbox" id="checkAll" name="checkAll"></th>
 									<th>번호</th>
 									<th>신고자</th>
 									<th>카테고리</th>
@@ -144,9 +145,10 @@
 							</thead>
 							<tbody>
 								<tr th:unless="${reportList != null}">
-									<td colspan="11">등록된 신고내역이 없습니다.</td>
+									<td colspan="12" class="text-center">등록된 신고내역이 없습니다.</td>
 								</tr>
 								<tr th:if="${reportList != null}" th:each="l : ${reportList}">
+									<td><input type="checkbox" id="checkbox_${l.reportNum}" name="reportNum" th:value="${l.reportNum}"></td>
 									<td th:text="${l.reportNum}"></td>
 									<td th:text="${l.reportId}"></td>
 									<td th:text="${l.reportCate}"></td>
@@ -158,18 +160,39 @@
 									<td th:text="${l.reportApprove}"></td>
 									<td th:text="${l.approveDate}"></td>
 									<td>
-										<a th:href="#">승인</a>
+										<a href="#">승인</a>
 									</td>
 								</tr>
 							</tbody>
 						</table>
+						<div class="text-left">
+							<button type="button" class="btn btn-primary" id="approveSelected">선택 승인</button>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 		<!-- grid table end -->
 	</th:block>
+	
+	
 	<th:block layout:fragment="customJsFile">
+		<!-- Datatables -->
+	    <script th:src="@{/platform/vendors/datatables.net/js/jquery.dataTables.min.js}"></script>
+	    <script th:src="@{/platform/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js}"></script>
+	    <script th:src="@{/platform/vendors/datatables.net-buttons/js/dataTables.buttons.min.js}"></script>
+	    <script th:src="@{/platform/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js}"></script>
+	    <script th:src="@{/platform/vendors/datatables.net-buttons/js/buttons.flash.min.js}"></script>
+	    <script th:src="@{/platform/vendors/datatables.net-buttons/js/buttons.html5.min.js}"></script>
+	    <script th:src="@{/platform/vendors/datatables.net-buttons/js/buttons.print.min.js}"></script>
+	    <script th:src="@{/platform/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js}"></script>
+	    <script th:src="@{/platform/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js}"></script>
+	    <script th:src="@{/platform/vendors/datatables.net-responsive/js/dataTables.responsive.min.js}"></script>
+	    <script th:src="@{/platform/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js}"></script>
+	    <script th:src="@{/platform/vendors/datatables.net-scroller/js/dataTables.scroller.min.js}"></script>
+	    <script th:src="@{/platform/vendors/jszip/dist/jszip.min.js}"></script>
+	    <script th:src="@{/platform/vendors/pdfmake/build/pdfmake.min.js}"></script>
+	    <script th:src="@{/platform/vendors/pdfmake/build/vfs_fonts.js}"></script>
 	</th:block>
 	
 	
@@ -217,6 +240,19 @@
 	        }
 	    });
 	    </script> 
+	    
+	    
+		<script type="text/javascript" th:src="@{/platform/js/checkbox/categoryDel.js}"></script>
+		
+		<script>
+		    document.getElementById('checkAll').addEventListener('change', function() {
+		        var checkboxes = document.querySelectorAll('[id^=checkbox_]');
+		        checkboxes.forEach(function(checkbox) {
+		            checkbox.checked = document.getElementById('checkAll').checked;
+		        });
+		    });
+		</script>
+	    
 	
 	</th:block>
 	</html>

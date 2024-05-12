@@ -32,6 +32,7 @@ public class UCommunityService {
 	}
 	
 
+
 	
 	/**
 	 * 게시글 작성
@@ -52,8 +53,21 @@ public class UCommunityService {
 		file.transferTo(saveFile);
 		
 		uCommunityMapper.postSave(uCommunity);
+		uCommunityMapper.insertPost(uCommunity);
 		
 	}
+	
+	
+
+
+
+    // 게시글 추가
+    private void insertPost(UCommunity uCommunity) {
+        uCommunityMapper.insertPost(uCommunity);
+    }
+
+	
+	
 	
 	
 
@@ -74,6 +88,8 @@ public class UCommunityService {
     public void postUpdate(UCommunity uCommunity) {
         uCommunityMapper.postUpdate(uCommunity);
     }
+    
+    
     
 
     /**

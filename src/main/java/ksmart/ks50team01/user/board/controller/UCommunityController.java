@@ -29,6 +29,7 @@ public class UCommunityController {
 	@GetMapping({"/",""})
 	public String postList(Model model) {
 		List<UCommunity> postList = uCommunityService.getPostList();
+		model.addAttribute("postList", postList); // postList를 모델에 추가
 		model.addAttribute("title", "커뮤니티");
 		return "user/board/postList";
 	
@@ -51,15 +52,15 @@ public class UCommunityController {
 			uCommunityService.postSave(uCommunity, file);
 			return "redirect:/community";
 		} catch (Exception e) {
-			// 예외 발생 시 에러 메시지를 리다이렉트할 페이지로 전달하여 이동
             redirectAttributes.addFlashAttribute("error", e.getMessage());
             return "redirect:/error";
             
-            // /error 경로에 매핑된 뷰를 렌더링
             // return "error";
             
 		}
 	}
+	
+	
 	
 	
 	// 게시글 작성 폼 이동

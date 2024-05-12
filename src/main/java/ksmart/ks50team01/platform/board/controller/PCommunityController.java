@@ -21,6 +21,10 @@ public class PCommunityController {
 	
 	private final PCommunityService pCommunityService;
 	
+	
+	// getCommunityList, getPostList ??
+	
+	
 
 	// 커뮤니티 조회 페이지
 	@GetMapping("/communityList")

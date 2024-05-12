@@ -126,6 +126,7 @@
 							cellspacing="0" width="100%">
 							<thead>
 								<tr>
+									<th><input type="checkbox" id="checkAll" name="checkAll"></th>
 									<th>번호</th>
 									<th>작성자</th>
 									<th>카테고리</th>
@@ -144,9 +145,10 @@
 							</thead>
 							<tbody>
 								<tr th:unless="${communityList != null}">
-									<td colspan="14">등록된 게시글이 없습니다.</td>
+									<td colspan="15" class="text-center" >등록된 게시글이 없습니다.</td>
 								</tr>
 								<tr th:if="${communityList != null}" th:each="l : ${communityList}">
+									<td><input type="checkbox" id="checkbox_${l.postNum}" name="postNum" th:value="${l.postNum}"></td>
 									<td th:text="${l.postNum}"></td>
 									<td th:text="${l.postRegId}"></td>
 									<td th:text="${l.postCateNum}"></td>
@@ -164,6 +166,9 @@
 								</tr>
 							</tbody>
 						</table>
+						<div class="text-left">
+							<button type="button" class="btn btn-danger" id="disabled">비활성화</button>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -189,4 +194,26 @@
 	    <script th:src="@{/platform/vendors/pdfmake/build/pdfmake.min.js}"></script>
 	    <script th:src="@{/platform/vendors/pdfmake/build/vfs_fonts.js}"></script>
 	</th:block>
+	
+	
+	
+	<!-- custom js file start -->
+	<th:block layout:fragment="customJs">
+	<script type="text/javascript" th:src="@{/platform/js/checkbox/categoryDel.js}"></script>
+	<script type="text/javascript" th:src="@{/platform/js/checkbox/disabled.js}"></script>
+	
+	<script>
+	    document.getElementById('checkAll').addEventListener('change', function() {
+	        var checkboxes = document.querySelectorAll('[id^=checkbox_]');
+	        checkboxes.forEach(function(checkbox) {
+	            checkbox.checked = document.getElementById('checkAll').checked;
+	        });
+	    });
+	</script>
+	
+	
+	</th:block>
+	<!-- custom js file end -->
+	
+	
 </html>

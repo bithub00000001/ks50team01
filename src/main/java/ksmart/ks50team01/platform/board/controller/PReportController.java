@@ -28,6 +28,7 @@ public class PReportController {
 	public String reportList(Model model) {
 		List<PReport> reportList = pReportService.getReportList();
 		log.info("reportList:{}", reportList);
+		model.addAttribute("reportList", reportList);
 		model.addAttribute("title", "게시판 신고내역 조회");
 		return "platform/board/reportList";
 	}

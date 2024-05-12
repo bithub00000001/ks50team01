@@ -26,6 +26,7 @@ public class PQnaController {
 	public String qnaList(Model model) {
 		List<PQna> qnaList = pQnaService.getQnaList();
 		log.info("qnaList: {}", qnaList);
+		model.addAttribute("qnaList", qnaList);
 		model.addAttribute("title", "1:1문의 조회");
 		return "platform/board/qnaList";
 	}

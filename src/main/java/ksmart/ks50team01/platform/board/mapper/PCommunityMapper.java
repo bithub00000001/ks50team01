@@ -16,6 +16,11 @@ public interface PCommunityMapper {
 	
 	// 댓글 조회
 	List<PCommunity> getCommentList();
+
+	void updatePost(PCommunity post);
+
+
+	PCommunity getPostByNum(String postNum);
 	
 }
 	

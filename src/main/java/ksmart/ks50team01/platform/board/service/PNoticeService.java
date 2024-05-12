@@ -25,7 +25,7 @@ public class PNoticeService {
 	}
 	
 	/**
-	 * 공지사항 작
+	 * 공지사항 작성
 	 * @param pNotice
 	 */
 	public void noticeWrite(PNotice pNotice) {

@@ -55,7 +55,6 @@
 			<div class="row">
 				<div class="col-sm-12">
 					<div class="table-responsive overflow-hidden">
-	
 						<table class="table table-hover table-bordered">
 							<colgroup>
 								<col class="col-sm-1" />
@@ -74,70 +73,22 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td class="noticeNum noticeCenter">1</td>
-									<td><i class="badge rounded-pill bg-primary">여행 친구 찾기</i><a
-										href="">이번 주말 같이 남해여행 가실분</a></td>
-									<td class="noticeCenter">member001</td>
-									<td class="noticeCenter">2024-04-29</td>
-									<td class="noticeCenter">100</td>
+								
+								<tr th:unless="${postList != null}">
+									<td colspan="5" class="text-center">등록된 게시글이 없습니다.</td>
 								</tr>
-								<tr>
-									<td class="noticeNum noticeCenter">2</td>
-									<td><i class="badge rounded-pill bg-primary">자유게시판</i><a
-										href="">(사진) 강남역에서 칼부림 일어남</a></td>
-									<td class="noticeCenter">member002</td>
-									<td class="noticeCenter">2024-04-29</td>
-									<td class="noticeCenter">100</td>
+								<tr th:if="${postList != null}" th:each="l : ${postList}">
+									<td class="text-center" th:text="${l.postNum}"></td>
+									<td>
+										<i class="badge rounded-pill bg-primary" th:text="${l.postCateNum}"></i>
+										<a th:href="@{/community/postDetail/{postNum}(postNum=${l.postNum})}" th:text="${l.postTitle}"></a>
+									</td>
+									<td class="text-center" th:text="${l.postRegId}"></td>
+									<td class="text-center" th:text="${l.postRegDate}"></td>
+									<td class="text-center" th:text="${l.postInqCnt}"></td>
 								</tr>
-								<tr>
-									<td class="noticeNum noticeCenter">3</td>
-									<td><i class="badge rounded-pill bg-primary">여행 정보</i><a
-										href="">양평 여행 가시는 분</a></td>
-									<td class="noticeCenter">member003</td>
-									<td class="noticeCenter">2024-04-29</td>
-									<td class="noticeCenter">100</td>
-								</tr>
-								<tr>
-									<td class="noticeNum noticeCenter">4</td>
-									<td><i class="badge rounded-pill bg-primary">여행 정보</i><a
-										href="">양평 여행 가시는 분</a></td>
-									<td class="noticeCenter">member001</td>
-									<td class="noticeCenter">2024-04-29</td>
-									<td class="noticeCenter">100</td>
-								</tr>
-								<tr>
-									<td class="noticeNum noticeCenter">5</td>
-									<td><i class="badge rounded-pill bg-primary">여행 정보</i><a
-										href="">양평 여행 가시는 분</a></td>
-									<td class="noticeCenter">member004</td>
-									<td class="noticeCenter">2024-04-29</td>
-									<td class="noticeCenter">100</td>
-								</tr>
-								<tr>
-									<td class="noticeNum noticeCenter">6</td>
-									<td><i class="badge rounded-pill bg-primary">여행 정보</i><a
-										href="">양평 여행 가시는 분</a></td>
-									<td class="noticeCenter">member007</td>
-									<td class="noticeCenter">2024-04-29</td>
-									<td class="noticeCenter">100</td>
-								</tr>
-								<tr>
-									<td class="noticeNum noticeCenter">7</td>
-									<td><i class="badge rounded-pill bg-primary">질문게시판</i><a
-										href="">전주 사시는분 있나요?</a></td>
-									<td class="noticeCenter">member004</td>
-									<td class="noticeCenter">2024-04-29</td>
-									<td class="noticeCenter">100</td>
-								</tr>
-								<tr>
-									<td class="noticeNum noticeCenter">8</td>
-									<td><i class="badge rounded-pill bg-primary">자유게시판</i><a
-										href="">내일부터 날씨 풀리네요</a></td>
-									<td class="noticeCenter">member006</td>
-									<td class="noticeCenter">2024-04-29</td>
-									<td class="noticeCenter">100</td>
-								</tr>
+								
+							
 							</tbody>
 						</table>
 						<div class="row">
@@ -298,3 +249,4 @@
 		</script>
 	</th:block>
 </html>
+

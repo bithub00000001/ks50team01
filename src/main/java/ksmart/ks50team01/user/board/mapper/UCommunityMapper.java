@@ -24,7 +24,8 @@ public interface UCommunityMapper {
 
 	// 게시글 삭제
 	void deletePost(String postNum);
-	
-	
+
+	// 게시글 DB에 추가
+	void insertPost(UCommunity uCommunity);
 
 }

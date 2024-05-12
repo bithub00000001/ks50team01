@@ -44,10 +44,34 @@
     <insert id="postSave" parameterType="ksmart.ks50team01.user.board.dto.UCommunity">
     	/* 게시글 작성 */
         INSERT INTO 
-        	post (title, content)
+        	POST (postTitle, postContent)
         VALUES 
-        	(#{title}, #{content})
+        	(#{postTitle}, #{postContent});
     </insert>
+    
+    
+   	<!-- getPostById 쿼리 정의 -->
+    <select id="getPostById" resultType="UCommunity">
+        SELECT
+        	PST_NO, 
+			REG_MBR_ID, 
+			PST_CTGRY_NO, 
+			PST_TTL, 
+			PST_CN, 
+			PST_INQ_CNT, 
+			PST_CMNT_TOTAL, 
+			PST_LIKE_TOTAL, 
+			PST_DISLIKE_TOTAL, 
+			PST_REPT_TOTAL, 
+			ACT_YN, 
+			REG_YMD, 
+			MDFCN_YMD, 
+			DEL_YMD
+    	FROM
+    		POST
+		WHERE
+			PST_NO = #{postNum};
+    </select>
 	
 
     
