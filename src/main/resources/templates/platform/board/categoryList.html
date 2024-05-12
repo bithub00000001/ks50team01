@@ -109,12 +109,16 @@
 									<td th:text="${l.faqAct}"></td>
 									<td th:text="${l.faqRegDate}"></td>
 									<td th:text="${l.faqMdfDate}"></td>
-									<td><a th:href="@{/platform/board/categoryModify}">수정</a></td>
-									<td><a href="#">삭제</a></td>
+									<td>
+										<a th:href="@{/platform/board/categoryModify}">수정</a>
+									</td>
+									<td>
+										<a href="#" th:data-category-num="${l.faqCateNum}" th:onclick="deleteConfirm(this)">삭제</a>
+									</td>
 								</tr>
 							</tbody>
 						</table>
-						<div class="text-right">
+						<div class="text-left">
 							<a th:href="@{/platform/board/categoryAdd}" class="btn btn-primary">추가</a>
 						</div>
 					</div>
@@ -142,4 +146,11 @@
 	    <script th:src="@{/platform/vendors/pdfmake/build/pdfmake.min.js}"></script>
 	    <script th:src="@{/platform/vendors/pdfmake/build/vfs_fonts.js}"></script>
 	</th:block>
+	
+	<!-- custom js file start -->
+	<th:block layout:fragment="customJs">
+		<script type="text/javascript" th:src="@{/platform/js/checkbox/categoryDel.js}"></script>
+	</th:block>
+	<!-- custom js file end -->
+	
 </html>

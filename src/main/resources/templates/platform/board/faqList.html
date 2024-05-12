@@ -152,7 +152,7 @@
 								</tr>
 							</tbody>
 						</table>
-						<div class="text-right">
+						<div class="text-left">
 							<a th:href="@{/platform/board/faqWrite}" class="btn btn-primary">작성</a>
 						</div>
 					</div>
@@ -179,5 +179,11 @@
 	    <script th:src="@{/platform/vendors/pdfmake/build/pdfmake.min.js}"></script>
 	    <script th:src="@{/platform/vendors/pdfmake/build/vfs_fonts.js}"></script>
 	</th:block>
+	
+	<!-- custom js file start -->
+	<th:block layout:fragment="customJs">
+	<script type="text/javascript" th:src="@{/platform/js/checkbox/memberDel.js}"></script>
+	</th:block>
+	<!-- custom js file end -->
 
 </html>

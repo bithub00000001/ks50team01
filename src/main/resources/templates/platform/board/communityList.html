@@ -128,7 +128,7 @@
 								<tr>
 									<th>번호</th>
 									<th>작성자</th>
-									<th>카테고리번호</th>
+									<th>카테고리</th>
 									<th>제목</th>
 									<th>내용</th>
 									<th>조회수</th>
@@ -143,10 +143,10 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:unless="${postList != null}">
+								<tr th:unless="${communityList != null}">
 									<td colspan="14">등록된 게시글이 없습니다.</td>
 								</tr>
-								<tr th:if="${postList != null}" th:each="l : ${postList}">
+								<tr th:if="${communityList != null}" th:each="l : ${communityList}">
 									<td th:text="${l.postNum}"></td>
 									<td th:text="${l.postRegId}"></td>
 									<td th:text="${l.postCateNum}"></td>

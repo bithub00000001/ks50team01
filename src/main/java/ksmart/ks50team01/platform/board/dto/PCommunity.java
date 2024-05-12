@@ -4,16 +4,17 @@ import lombok.Data;
 
 @Data
 public class PCommunity {
+	
 	private String postNum;
 	private String postRegId;
 	private String postCateNum;
 	private String postTitle;
 	private String postContent;
-	private String postInqCnt;
-	private String commentTotal;
-	private String likeTotal;
-	private String dislikeTotal;
-	private String reportTotal;
+	private int postInqCnt;
+	private int commentTotal;
+	private int likeTotal;
+	private int dislikeTotal;
+	private int reportTotal;
 	private String postAct;
 	private String postRegDate;
 	private String postMdfDate;

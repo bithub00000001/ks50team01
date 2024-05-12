@@ -8,15 +8,24 @@ import org.springframework.transaction.annotation.Transactional;
 import ksmart.ks50team01.platform.board.dto.PCommunity;
 import ksmart.ks50team01.platform.board.mapper.PCommunityMapper;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
-@Slf4j
 public class PCommunityService {
 	
-	private PCommunityMapper pCommunityMapper;
+	private final PCommunityMapper pCommunityMapper;
+	
+	
+	/**
+	 * 커뮤니티 조회
+	 * @return List<PCommunity>
+	 */
+	public List<PCommunity> getCommunityList(){
+		return pCommunityMapper.getCommunityList();
+	}
+	
+	
 	
 	/**
 	 * 게시글 조회

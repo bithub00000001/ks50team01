@@ -6,7 +6,7 @@
 	
 	<resultMap id="postResultMap" type="PCommunity">
 		<id property="postNum" column="PST_NO" />
-		<result property="postRegId" column="REG_PF_ID" />
+		<result property="postRegId" column="REG_MBR_ID" />
 		<result property="postCateNum" column="PST_CTGRY_NO" />
 		<result property="postTitle" column="PST_TTL" />
 		<result property="postContent" column="PST_CN" />
@@ -21,8 +21,8 @@
 		<result property="postDelDate" column="DEL_YMD" />
 	</resultMap>
 
-	<select id="getPostList" resultMap="postResultMap">
-	 	/* 게시글 조회 */
+	<select id="getCommunityList" resultMap="postResultMap">
+	 	/* 커뮤니티 조회 */
 		SELECT 
 			PST_NO, 
 			REG_MBR_ID, 

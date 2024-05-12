@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ksmart.ks50team01.user.board.mapper.UCommunityMapper">
+
+		<resultMap id="postResultMap" type="UCommunity">
+		<id property="postNum" column="PST_NO" />
+		<result property="postRegId" column="REG_MBR_ID" />
+		<result property="postCateNum" column="PST_CTGRY_NO" />
+		<result property="postTitle" column="PST_TTL" />
+		<result property="postContent" column="PST_CN" />
+		<result property="postInqCnt" column="PST_INQ_CNT" />
+		<result property="commentTotal" column="PST_CMNT_TOTAL" />
+		<result property="likeTotal" column="PST_LIKE_TOTAL" />
+		<result property="dislikeTotal" column="PST_DISLIKE_TOTAL" />
+		<result property="reportTotal" column="PST_REPT_TOTAL" />
+		<result property="postAct" column="ACT_YN" />
+		<result property="postRegDate" column="REG_YMD" />
+		<result property="postMdfDate" column="MDFCN_YMD" />
+		<result property="postDelDate" column="DEL_YMD" />
+	</resultMap>
+	
+
+	<select id="getPostList" resultMap="postResultMap">
+	 	/* 커뮤니티 조회 */
+		SELECT 
+			PST_NO, 
+			REG_MBR_ID, 
+			PST_CTGRY_NO, 
+			PST_TTL, 
+			PST_CN, 
+			PST_INQ_CNT, 
+			PST_CMNT_TOTAL, 
+			PST_LIKE_TOTAL, 
+			PST_DISLIKE_TOTAL, 
+			PST_REPT_TOTAL, 
+			ACT_YN, 
+			REG_YMD, 
+			MDFCN_YMD, 
+			DEL_YMD
+		FROM 
+			POST;
+    </select>
+	
+    <insert id="postSave" parameterType="ksmart.ks50team01.user.board.dto.UCommunity">
+    	/* 게시글 작성 */
+        INSERT INTO 
+        	post (title, content)
+        VALUES 
+        	(#{title}, #{content})
+    </insert>
+	
+
+    
+	
+</mapper>
