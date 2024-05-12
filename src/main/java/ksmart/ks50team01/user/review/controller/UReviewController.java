@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 @RequestMapping(value="/user/review")
-public class UReviewListController {
+public class UReviewController {
 	
 	@GetMapping("/list")
 	public String reviewList() {
