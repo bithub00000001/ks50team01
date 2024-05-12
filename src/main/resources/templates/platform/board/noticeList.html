@@ -125,6 +125,7 @@
 						cellspacing="0" width="100%">
 						<thead>
 							<tr>
+								<th><input type="checkbox" id="checkAll" name="checkAll"></th>
 								<th>번호</th>
 								<th>작성자</th>
 								<th>카테고리</th>
@@ -141,9 +142,10 @@
 						</thead>
 						<tbody>
 							<tr th:unless="${noticeList != null}">
-								<td colspan="10">등록된 공지사항이 없습니다.</td>
+								<td colspan="13" class="text-center">등록된 공지사항이 없습니다.</td>
 							</tr>
 							<tr th:if="${noticeList != null}" th:each="l : ${noticeList}">
+								<td><input type="checkbox" id="checkbox_${l.noticeNum}" name="noticeNum" th:value="${l.noticeNum}"></td>
 								<td th:text="${l.noticeNum}"></td>
 								<td th:text="${l.noticeRegId}"></td>
 								<td th:text="${l.noticeCate.noticeCateType}"></td>
@@ -159,8 +161,9 @@
 							</tr>
 						</tbody>
 					</table>
-					<div class="text-right">
-						<a th:href="@{/platform/board/noticeWrite}" class="btn btn-primary">작성</a>
+					<div class="text-left">
+						<a th:href="@{/platform/board/noticeWrite}" class="btn btn-primary">추가</a>
+						<button type="button" class="btn btn-danger" id="deleteSelected">선택 삭제</button>
 					</div>
 				</div>
 			</div>
@@ -189,7 +192,8 @@
 
 
 <th:block layout:fragment="customJs">
-
+	<script type="text/javascript" th:src="@{/platform/js/checkbox/categoryDel.js}"></script>
+	<script type="text/javascript" th:src="@{/platform/js/checkbox/selectedDel.js}"></script>
   	<script th:inline="javascript">
     document.addEventListener("DOMContentLoaded", function() {
         // 최신순과 조회순 버튼 요소 가져오기
@@ -232,6 +236,21 @@
         }
     });
     </script> 
+    
+    
+    
+   	<script>
+	    document.getElementById('checkAll').addEventListener('change', function() {
+	        var checkboxes = document.querySelectorAll('[id^=checkbox_]');
+	        checkboxes.forEach(function(checkbox) {
+	            checkbox.checked = document.getElementById('checkAll').checked;
+	        });
+	    });
+	</script>
+    
+    
+    
+    
 
 </th:block>
 </html>

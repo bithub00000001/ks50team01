@@ -23,7 +23,8 @@ public class PQnaService {
 	 * @return List<PQna>
 	 */
 	public List<PQna> getQnaList(){
-		return pQnaMapper.getQnaList();
+		List<PQna> qnaList = pQnaMapper.getQnaList();
+		log.info("1:1문의 조회 결과: {}", qnaList);
+		return qnaList;
 	}
-
 }

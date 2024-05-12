@@ -1,5 +1,8 @@
 package ksmart.ks50team01.platform.board.dto;
 
+import lombok.Data;
+
+@Data
 public class PReport {
 	private String reportNum;
 	private String reportId;

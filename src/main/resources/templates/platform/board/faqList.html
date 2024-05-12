@@ -116,6 +116,7 @@
 							cellspacing="0" width="100%">
 							<thead>
 								<tr>
+									<th><input type="checkbox" id="checkAll" name="checkAll"></th>
 									<th>번호</th>
 									<th>작성자</th>
 									<th>카테고리</th>
@@ -131,9 +132,10 @@
 							</thead>
 							<tbody>
 								<tr th:unless="${faqList != null}">
-									<td colspan="11">등록된 자주찾는 질문이 없습니다.</td>
+									<td colspan="11" class="text-center">등록된 자주찾는 질문이 없습니다.</td>
 								</tr>
 								<tr th:if="${faqList != null}" th:each="l : ${faqList}">
+									<td><input type="checkbox" id="checkbox_${l.faqNum}" name="faqNum" th:value="${l.faqNum}"></td>
 									<td th:text="${l.faqNum}"></td>
 									<td th:text="${l.faqRegId}"></td>
 									<td th:text="${l.faqCate.faqCateType}"></td>
@@ -152,14 +154,17 @@
 								</tr>
 							</tbody>
 						</table>
-						<div class="text-right">
-							<a th:href="@{/platform/board/faqWrite}" class="btn btn-primary">작성</a>
+						
+						<div class="text-left">
+							<a th:href="@{/platform/board/faqWrite}" class="btn btn-primary">추가</a>
+							<button type="button" class="btn btn-danger" id="deleteSelected">선택 삭제</button>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 		<!-- grid table end -->
+		
 	</th:block>
 	<th:block layout:fragment="customJsFile">
 		<!-- Datatables -->
@@ -179,5 +184,23 @@
 	    <script th:src="@{/platform/vendors/pdfmake/build/pdfmake.min.js}"></script>
 	    <script th:src="@{/platform/vendors/pdfmake/build/vfs_fonts.js}"></script>
 	</th:block>
+	
+	<!-- custom js file start -->
+	<th:block layout:fragment="customJs">
+	<script type="text/javascript" th:src="@{/platform/js/checkbox/categoryDel.js}"></script>
+	<script type="text/javascript" th:src="@{/platform/js/checkbox/selectedDel.js}"></script>
+	
+	<script>
+	    document.getElementById('checkAll').addEventListener('change', function() {
+	        var checkboxes = document.querySelectorAll('[id^=checkbox_]');
+	        checkboxes.forEach(function(checkbox) {
+	            checkbox.checked = document.getElementById('checkAll').checked;
+	        });
+	    });
+	</script>
+	
+	
+	</th:block>
+	<!-- custom js file end -->
 
 </html>

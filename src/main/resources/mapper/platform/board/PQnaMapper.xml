@@ -15,7 +15,7 @@
 		<result property="ansRegId" column="ANS_REG_PF_ID" />
 		<result property="qnaRegDate" column="REG_YMD" />
 		<result property="qnaMdfDate" column="MDFCN_YMD" />
-		<result property="qnartrDate" column="RTRCN_YMD" />
+		<result property="qnartnDate" column="RTRCN_YMD" />
 	
 		<!-- 1:1 association -->
 		<association property="faqCate" javaType="PFaq">
@@ -26,9 +26,8 @@
 			<result 	property="faqAct" 			column="ACT_YN"/>
 			<result 	property="faqRegDate" 		column="REG_YMD"/>
 			<result 	property="faqMdfDate" 		column="MDFCN_YMD"/>
-		</association> 
-	
-	
+		</association>
+		
 	
 	</resultMap>
 	
@@ -36,47 +35,42 @@
 
 	<select id="getQnaList" resultMap="qnaResultMap">
 	 	/* 1:1문의 조회 */			
-		SELECT 
+		SELECT
 			Q.QNA_NO,
 			Q.REG_MBR_BIZ_ID,
-			F.FAQ_CTGRY_NO, 
-			Q.QNA_PRGRS_NO, 
-			Q.QNA_PRGRS_CTGRY, 
-			Q.QNA_TTL, 
-			Q.QNA_CN, 
-			A.REG_PF_ID, 
-			Q.REG_YMD, 
-			Q.MDFCN_YMD, 
+			F.FAQ_CTGRY_TYPE,
+			Q.QNA_PRGRS_CTGRY,
+			Q.QNA_TTL,
+			Q.QNA_CN,
+			Q.ANS_REG_PF_ID,
+			Q.REG_YMD,
+			Q.MDFCN_YMD,
 			Q.RTRCN_YMD
-		FROM 
+		FROM
 			QNA_QUESTION AS Q
 			INNER JOIN
 			FAQ_CATEGORY AS F
 			ON
 			Q.REG_MBR_BIZ_ID = F.REG_PF_ID
-			INNER JOIN
-			QNA_ANSWER AS A
-			ON
-			Q.QNA_NO = A.QNA_NO;
 	</select>
 	
 
 
 
     <update id="updateQna" parameterType="PQna">
-        /* 자주찾는질문 업데이트 */
+        /* 1:1문의 업데이트 */
         UPDATE QNA_QUESTION
         SET
-            F.FAQ_CTGRY_NO = #{faqCateNum},
-            Q.QNA_TTL = #{qnaTitle},
-            Q.QNA_CN = #{qnaContent},
-            Q.MDFCN_YMD = NOW()
+            FAQ_CTGRY_NO = #{faqCateNum},
+            QNA_TTL = #{qnaTitle},
+            QNA_CN = #{qnaContent},
+            MDFCN_YMD = NOW()
         WHERE
-            A.REG_PF_ID, = #{qnaRegId};
+            REG_PF_ID = #{qnaRegId};
     </update>
 
-    <delete id="delFaq" parameterType="map">
-        /* 자주찾는질문 삭제 */
+    <delete id="delQna" parameterType="PQna">
+        /* 1:1문의 삭제 */
         DELETE 
         FROM 
             QNA_QUESTION
