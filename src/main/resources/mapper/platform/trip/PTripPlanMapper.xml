@@ -3,23 +3,24 @@
 <mapper namespace="ksmart.ks50team01.platform.trip.mapper.PTripPlanMapper">
 
     <resultMap id="tripPlanMap" type="pTripPlan">
-        <id column="TRIP_PLN_NO" property="planId"/>
-        <result column="MBR_ID" property="memberId"/>
-        <result column="planNum" property="planNumber"/>
-        <result column="planAddr" property="planAddr"/>
-        <result column="TRIP_PLN_BGNG_YMD" property="startDate"/>
-        <result column="TRIP_PLN_END_YMD" property="endDate"/>
-        <result column="TRIP_PLN_DAY" property="planDays"/>
-        <result column="TRIP_PLN_TTL" property="planTitle"/>
-        <result column="TRIP_PLN_NOPE" property="planAttend"/>
-        <result column="AVAILABLE_BUDGET" property="budgetPerAttend"/>
-        <result column="TOTAL_AVAIL_BUDGET" property="totalAvailBudget"/>
+        <id     column="TRIP_PLN_NO"         property="planId"/>
+        <result column="MBR_ID"              property="memberId"/>
+        <result column="planNum"             property="planNumber"/>
+        <result column="planAddr"            property="planAddr"/>
+        <result column="TRIP_PLN_BGNG_YMD"   property="startDate"/>
+        <result column="TRIP_PLN_END_YMD"    property="endDate"/>
+        <result column="TRIP_PLN_DAY"        property="planDays"/>
+        <result column="TRIP_PLN_TTL"        property="planTitle"/>
+        <result column="TRIP_PLN_NOPE"       property="planAttend"/>
+        <result column="AVAILABLE_BUDGET"    property="budgetPerAttend"/>
+        <result column="TOTAL_AVAIL_BUDGET"  property="totalAvailBudget"/>
         <result column="TOTAL_PLNNED_BUDGET" property="totalPlanBudget"/>
-        <result column="IN_PRGRS" property="planStatus"/>
-        <result column="regDate" property="regDate"/>
-        <result column="modDate" property="modDate"/>
+        <result column="IN_PRGRS"            property="planStatus"/>
+        <result column="regDate"             property="regDate"/>
+        <result column="modDate"             property="modDate"/>
+        <result column="SHARED_YN"           property="isShare"/>
     </resultMap>
-    <update id="UpdateTripPlan" parameterType="pTripPlan">
+    <update id="updateTripPlan" parameterType="pTripPlan">
         /* 여행 계획 업데이트 */
         UPDATE
             INDIVIDUAL_TRIP_PLAN
@@ -43,7 +44,7 @@
     </update>
 
     <select id="getPlanList" resultMap="tripPlanMap">
-        /* 전체 여행 계획을 조회하는 쿼리 */
+        /* 전체 여행 계획 조회 */
         SELECT
             row_number() OVER (ORDER BY INDIVIDUAL_TRIP_PLAN.REG_YMD) as planNum,
             TRIP_PLN_NO,
@@ -64,11 +65,11 @@
             INDIVIDUAL_TRIP_PLAN.REG_YMD as regDate,
             INDIVIDUAL_TRIP_PLAN.MDFCN_YMD as modDate
         FROM
-                INDIVIDUAL_TRIP_PLAN
-            INNER JOIN
-                REGION_SMALL_CATEGORY
-            ON
-                INDIVIDUAL_TRIP_PLAN.RGN_SCTGRY_CD = REGION_SMALL_CATEGORY.RGN_SCTGRY_CD
+            INDIVIDUAL_TRIP_PLAN
+        INNER JOIN
+            REGION_SMALL_CATEGORY
+        ON
+            INDIVIDUAL_TRIP_PLAN.RGN_SCTGRY_CD = REGION_SMALL_CATEGORY.RGN_SCTGRY_CD
     </select>
     <select id="getTripPlanById" resultMap="tripPlanMap">
         /* 계획 id에 해당하는 여행 계획 조회 */
