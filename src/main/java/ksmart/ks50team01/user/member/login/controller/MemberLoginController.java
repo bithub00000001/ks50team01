@@ -30,7 +30,7 @@ public class MemberLoginController {
 	private final LoginService loginService;
 	
 	@PostMapping("/findPw")
-	public String findPassword(@RequestParam("id") String id, @RequestParam("email") String email, RedirectAttributes redirectAttributes) throws MessagingException {
+	public RedirectView findPassword(@RequestParam("id") String id, @RequestParam("email") String email, RedirectAttributes redirectAttributes, HttpServletRequest request) throws MessagingException {
 	    boolean isValidUser = loginService.findPasswordByIdAndEmail(id, email);
 	    if (isValidUser) {
 	        String newPassword = loginService.generateAndUpdatePassword(id);
@@ -39,9 +39,24 @@ public class MemberLoginController {
 	    } else {
 	        redirectAttributes.addFlashAttribute("message", "아이디 또는 이메일 정보가 일치하지 않습니다.");
 	    }
-	    return "redirect:/trip";
+	    String referer = request.getHeader("Referer");
+	    return new RedirectView(referer);
 	}
 	
+	@PostMapping("/bsnsJoin")
+	public RedirectView bsnsJoinMember(Login login, RedirectAttributes redirectAttributes, HttpServletRequest request) {
+	    try {
+	        loginService.bsnsJoinMember(login);
+	        redirectAttributes.addFlashAttribute("joinMessage", "회원가입에 성공하셨습니다!");
+	    } catch (DuplicateKeyException e) {
+	        redirectAttributes.addFlashAttribute("joinMessage", "이미 존재하는 아이디입니다.");
+	    } catch (Exception e) {
+	        redirectAttributes.addFlashAttribute("joinMessage", "회원가입에 실패하셨습니다.");
+	    }
+
+	    String referer = request.getHeader("Referer");
+	    return new RedirectView(referer);
+	}
 	
     
 	@PostMapping("/join")
@@ -95,5 +110,29 @@ public class MemberLoginController {
 	    
 	    String referer = request.getHeader("Referer");
 	    return "redirect:" + referer;
+	}
+	
+	@PostMapping("/adminLogin")
+	public String adminLogin(@ModelAttribute Login login, HttpSession session, RedirectAttributes redirectAttributes, HttpServletRequest request) {
+	    Login loginMember = loginService.login(login);
+
+	    if (loginMember != null) {
+	        session.setAttribute("loginId", loginMember.getId());
+	        session.setAttribute("loginName", loginMember.getName());
+
+	        // 세션에 저장된 값 확인
+	        String loginId = (String) session.getAttribute("loginId");
+	        String loginName = (String) session.getAttribute("loginName");
+
+	        log.info("loginId from session: {}", loginId);
+	        log.info("loginName from session: {}", loginName);
+
+	        return "redirect:/platform/main"; // 로그인 성공 시 /platform/main으로 리다이렉트
+	    } else {
+	        redirectAttributes.addFlashAttribute("loginError", true);
+
+	        String referer = request.getHeader("Referer");
+	        return "redirect:" + referer; // 로그인 실패 시 현재 페이지로 리다이렉트
+	    }
 	}
 }

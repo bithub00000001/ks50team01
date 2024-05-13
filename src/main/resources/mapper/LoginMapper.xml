@@ -24,6 +24,13 @@
 	    (MBR_ID, MBR_PW, MBR_NM, MBR_NICKNAME, MBR_EML_ADDR, MBR_TELNO, MBR_GRD_NO, MBR_REG_YMD)
 	    VALUES (#{id}, #{password}, #{name}, #{nickname}, #{email}, #{phone}, 'uln_301', NOW())
 	</insert>
+	
+	
+	<insert id="bsnsJoinMember" parameterType="ksmart.ks50team01.user.member.login.dto.Login">
+	    INSERT INTO MEMBER_MANAGE
+	    (MBR_ID, MBR_PW, MBR_NM, MBR_NICKNAME, MBR_EML_ADDR, MBR_TELNO, MBR_GRD_NO, MBR_REG_YMD)
+	    VALUES (#{id}, #{password}, #{name}, #{nickname}, #{email}, #{phone}, 'uln_101', NOW())
+	</insert>
   
   
   <select id="login" parameterType="ksmart.ks50team01.user.member.login.dto.Login" resultType="ksmart.ks50team01.user.member.login.dto.Login">
