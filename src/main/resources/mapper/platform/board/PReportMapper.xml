@@ -7,7 +7,7 @@
 	<resultMap id="reportResultMap" type="PReport">
 		<id 	property="reportNum" 		column="PST_CMNT_REPT_NO" />
 		<result property="reportId" 		column="REPORT_MBR_ID" />
-		<result property="reportCate" 		column="REPT_CTGRY_NO" />
+		<result property="reportCateNum" 		column="REPT_CTGRY_NO" />
 		<result property="postCmntNum" 		column="PST_PST_CMNT_NO" />
 		<result property="reportContent" 	column="PST_CMNT_REPT_CN" />
 		<result property="reportDate" 		column="PST_CMNT_REPT_YMD" />
@@ -15,6 +15,19 @@
 		<result property="approveId" 		column="APRV_PF_ID" />
 		<result property="reportApprove" 	column="PST_CMNT_REPT_APRV" />
 		<result property="approveDate" 		column="PST_CMNT_REPT_APRV_YMD" />
+		
+		
+		<!-- 1:1 association -->
+		<association property="reportCate" javaType="PReport">
+			<id 		property="reportCateNum" 		column="REPT_CTGRY_NO"/>
+			<result 	property="reportRegId" 		column="REG_PF_ID"/>
+			<result 	property="reportCateType" 		column="REPT_CTGRY_TYPE"/>
+			<result 	property="reportMdfId" 		column="MDFCN_PF_ID"/>
+			<result 	property="reportAct" 			column="ACT_YN"/>
+			<result 	property="reportRegDate" 		column="REG_YMD"/>
+			<result 	property="reportMdfDate" 		column="MDFCN_YMD"/>
+		</association>
+		
 	
 	</resultMap>
 	
@@ -23,19 +36,22 @@
 	<select id="getReportList" resultMap="reportResultMap">
 	 	/* 신고내역 조회 */			
 		SELECT 
-			PST_CMNT_REPT_NO,
-			REPORT_MBR_ID,
-			REPT_CTGRY_NO,
-			PST_PST_CMNT_NO,
-			PST_CMNT_REPT_CN,
-			PST_CMNT_REPT_YMD,
-			REPORTED_MBR_ID,
-			APRV_PF_ID,
-			PST_CMNT_REPT_APRV,
-			PST_CMNT_REPT_APRV_YMD
-
+			H.PST_CMNT_REPT_NO,
+			H.REPORT_MBR_ID,
+			C.REPT_CTGRY_TYPE,
+			H.PST_PST_CMNT_NO,
+			H.PST_CMNT_REPT_CN,
+			H.PST_CMNT_REPT_YMD,
+			H.REPORTED_MBR_ID,
+			H.APRV_PF_ID,
+			H.PST_CMNT_REPT_APRV,
+			H.PST_CMNT_REPT_APRV_YMD
 		FROM 
-			REPORT_HISTORY;
+			REPORT_HISTORY AS H
+			INNER JOIN
+			REPORT_CATEGORY AS C
+			ON
+			H.REPT_CTGRY_NO = C.REPT_CTGRY_NO;
 	</select>
 
 	
