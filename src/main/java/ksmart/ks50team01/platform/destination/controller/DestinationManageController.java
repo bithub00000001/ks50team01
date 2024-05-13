@@ -26,6 +26,20 @@ public class DestinationManageController {
 	
 	private final DestinationService destinationService;
 	
+	@PostMapping("/destination/tourModify")
+	public String tourModifyProcess(@ModelAttribute Destination destination) {
+		
+		return "redirect:/platform/destination/tourGoodsManage";
+	}
+	
+	@GetMapping("/destination/tourModify")
+	public String tourModify(@RequestParam("tourInfo") String tourInfo, Model model) {
+		
+		model.addAttribute("title", "관광지 수정");
+		
+		return "/platform/destination/tourModify";
+	}
+	
 	
 	@GetMapping("/destination/tourManage")
 	public String tourManage(Model model) {

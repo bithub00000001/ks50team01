@@ -51,9 +51,9 @@
 								<div class="col-md-2 col-sm-2 col-xs-0"></div>
 								<label class="control-label col-md-2 col-sm-2 col-xs-12">category</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<select class="form-control text-center">
-										<option>관광지 관리</option>
-										<option>관광지 상품 관리</option>
+									<select class="form-control text-center searchCate">
+										<option value="tourManage">관광지 관리</option>
+										<option value="tourGoodsManage">관광지 상품 관리</option>
 
 									</select>
 								</div>
@@ -63,11 +63,11 @@
 							<div class="ln_solid"></div>
 							<div class="form-group">
 								<div class="col-md-12 col-sm-12 col-xs-12 text-center">
-									<a href="@{/platform/destination/tourGoodsManage}">
-										<button class="btn btn-success btn-lg" type="button">
-											<span>검색</span>
-										</button>
-									</a>
+									
+									<button class="btn btn-success btn-lg searchBtn" type="button">
+										<span>검색</span>
+									</button>
+									
 									<button type="reset" class="btn btn-dark btn-lg">초기화</button>
 								</div>
 							</div>
@@ -101,10 +101,11 @@
 									<th>관광지 코드</th>
 									<th>관광지 등록권한 아이디</th>
 									<th>관광지 주소</th>
+									<th>관광지 상세주소</th>
 									<th>관광지 사이트</th>
 									<th>관광지 연락처</th>
-									<th>수정</th>
-									<th>삭제</th>
+									<th>등록일자</th>
+									<th>수정일자</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -113,14 +114,11 @@
 									<td th:text="${l.tourInfoCode}"></td>
 									<td th:text="${l.tourAuthorityId}"></td>
 									<td th:text="${l.tourAddr}"></td>
+									<td th:text="${l.tourDaddr}"></td>
 									<td th:text="${l.tourSite}"></td>
 									<td th:text="${l.tourContectNum}"></td>
-									<td>
-									    <a th:href="@{/platform/destination/tourModify(tourAuthorityId=${l.tourAuthorityId})}">수정</a>
-									</td>
-						            <td>
-						            	<a href="#" th:data-member-id="${l.tourAuthorityId}" th:onclick="deleteConfirm(this)">삭제</a>
-					            	</td>
+									<td th:text="${l.tourRegDate}"></td>
+									<td th:text="${l.tourFormDate}"></td>
 								</tr>
 	
 							</tbody>
@@ -155,5 +153,23 @@
 	<script type="text/javascript" th:src="@{/platform/js/checkbox/memberDel.js}"></script>
 	</th:block>
 	<!-- custom js file end -->
+	<th:block layout:fragment="customJs">
+	<script>
+		$(document).ready(function(){
+			$('#searchItem').on('keyup', function(){
+				const searchValue = $(this).val().toLowerCase();
+				$('#datatable-responsive tbody tr').filter(function(){
+					$(this).toggle($(this).text().toLowerCase().indexOf(searchValue) > -1);
+				});
+			});
+			
+			$(document).on('click','.searchBtn', function(){
+				const movePage = $('.searchCate :selected').val();
+				
+				if(movePage) location.href = '/platform/destination/' + movePage;
+			});
+		});
+	</script>
+	</th:block>
 
 </html>

@@ -9,6 +9,7 @@ public class Destination {
 	private String tourInfoCode;
 	private String tourAuthorityId;
 	private String tourAddr;
+	private String tourDaddr;
 	private String tourSite;
 	private String tourContectNum;
 	private String tourRegDate;
@@ -46,6 +47,8 @@ public class Destination {
 
 	
 	private String restaurantMenu;
+	
+	
 
 	
 }

@@ -16,6 +16,7 @@
 			REG_PF_BIZ_ID	AS	tourAuthorityId,
 			TOUR_NAME		AS	tourName,
 			TOUR_ADDR		AS	tourAddr,
+			TOUR_DADDR		AS  tourDaddr,
 			TOUR_SITE 		AS 	tourSite,
 			TOUR_CONTATC1	AS	tourContectNum,
 			REG_YMD			AS	tourRegDate,
@@ -25,28 +26,38 @@
 	
 	</select>
 	
+	<update id="updateTour" parameterType="destination">
+		/* 관광지 수정 */
+		
+		
+	
+	</update>
+	
 	<select id="getTourGoodsList" resultType="destination">
 		/* 관광지 옵션 조회 */
 			SELECT
-				tg.TOUR_GDS_CTGRY			AS	tourGoodsCate,
-				tgo.TOUR_GDSOPT_LIST		AS	tourGoodsList,
-				tgo.TOUR_GDSOPT_TIME		AS 	tourGoodsTime,
-				tgo.RGN_SCTGRY_NM			AS 	RegionSCate,
-				tg.REG_PF_BIZ_ID			AS 	tourgoodsAuthorityId,
-				tg.TOUR_GDS_CD				AS	tourGoodsCode,
-				tgo.TOUR_GDSOPT_CD			AS  tourGoodsOptionCd,		 	
-				tgo.TOUR_GDSOPT_RMRK		AS  tourOptionRemarks,
-				tg.FAVS_TOTAL				AS  tourTotal,
-				tgo.REG_YMD					AS  tourRegDate,
-				tgo.MDFCN_YMD				AS  tourFormDate	
-				
-				
+				ti.TOUR_NAME				AS 		tourName,
+				tg.TOUR_GDS_CTGRY			AS		tourGoodsCate,
+				tgo.TOUR_GDSOPT_LIST		AS		tourGoodsList,
+				tgo.TOUR_GDSOPT_TIME		AS 		tourGoodsTime,
+				tgo.RGN_SCTGRY_NM			AS 		RegionSCate,
+				tg.REG_PF_BIZ_ID			AS 		tourgoodsAuthorityId,
+				tg.TOUR_GDS_CD				AS		tourGoodsCode,
+				tgo.TOUR_GDSOPT_CD			AS  	tourGoodsOptionCd,		 	
+				tgo.TOUR_GDSOPT_RMRK		AS  	tourOptionRemarks,
+				tg.FAVS_TOTAL				AS  	tourTotal,
+				tgo.REG_YMD					AS  	tourRegDate,
+				tgo.MDFCN_YMD				AS  	tourFormDate	
 			FROM
-				TOUR_GOODS AS tg
+				TOUR_GOODS AS tg 
 				INNER JOIN
-				TOUR_GOODSOPTION AS tgo
+				TOUR_GOODSOPTION AS tgo 
 				ON 
-				tg.TOUR_GDS_CD = tgo.TOUR_GDS_CD;
+				tg.TOUR_GDS_CD = tgo.TOUR_GDS_CD
+				INNER JOIN 
+				TOUR_INFO AS ti
+				ON 
+				tg.TOUR_INFO_CD = ti.TOUR_INFO_CD;
 	
 	</select>
 	

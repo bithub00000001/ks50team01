@@ -10,6 +10,9 @@ import ksmart.ks50team01.platform.destination.dto.Destination;
 public interface DestinationMapper {
 	// 관광지 조회
 	List<Destination> getTourInfoList();
+	// 관광지 수정
+	int updateTour(Destination destination);
+	
 	
 	//숙소 조회
 	List<Destination> getLodgingInfoList();
