@@ -4,12 +4,16 @@ import java.io.File;
 import java.util.List;
 import java.util.UUID;
 
+import javax.xml.stream.events.Comment;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import ksmart.ks50team01.user.board.dto.UComment;
 import ksmart.ks50team01.user.board.dto.UCommunity;
 import ksmart.ks50team01.user.board.mapper.UCommunityMapper;
+import ksmart.ks50team01.user.board.mapper.UNoticeMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Slf4j
 public class UCommunityService {
-	
+
 	private final UCommunityMapper uCommunityMapper;
 	
 	/**
@@ -73,12 +77,21 @@ public class UCommunityService {
 
     /**
      * 특정 게시글 상세 조회
-     * @param postId 조회할 게시글 ID
+     * @param postNum 조회할 게시글 ID
      * @return UCommunity
      */
-    public UCommunity getPostById(String postNum) {
-        return uCommunityMapper.getPostById(postNum);
+    public UCommunity getPostByPostNum(String postNum) {
+    	UCommunity postDetail = uCommunityMapper.getPostByPostNum(postNum);
+    	log.info("getPostByPostNum : {}", postDetail);
+        return postDetail;
     }
+    
+    
+    
+    public List<UCommunity> getCommentByPostNum(String postNum) {
+        return uCommunityMapper.getCommentByPostNum(postNum); // 게시글 번호에 해당하는 모든 댓글을 가져오는 메서드 호출
+    }
+    
     
     
     /**
@@ -94,10 +107,15 @@ public class UCommunityService {
 
     /**
      * 게시글 삭제
-     * @param postId 삭제할 게시글 ID
+     * @param postNum 삭제할 게시글 번호
      */
-    public void deletePost(String postId) {
-        uCommunityMapper.deletePost(postId);
+    public void deletePost(String postNum) {
+        uCommunityMapper.deletePost(postNum);
     }
+
+
+
+
+
 }
 	
