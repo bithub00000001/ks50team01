@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 @RequestMapping(value="/user/review")
 public class UReviewContentController {
 	
-	@GetMapping("/write")
-	public String reviewWrite() {
-		return "user/review/reviewWrite";
-	}
+	/*
+	 * @GetMapping("/write") public String reviewWrite() { return
+	 * "user/review/reviewWrite"; }
+	 */
 	
 }

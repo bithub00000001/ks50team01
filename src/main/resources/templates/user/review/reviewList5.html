@@ -409,11 +409,11 @@
 												        <span>후기 작성일: </span>
 												        <span th:text="${l.reviewDate}"></span><br>
 												        <span class="reviewContent-text" th:text="${l.reviewContent}"></span><br>
-													    <button type="button" class="btn like-btn btn-primary btn-xs" onclick="increaseLike('${l.reviewId}')">❤️ 좋아요 ( 
+													    <button type="button" class="btn like-btn btn-primary btn-xs" onclick="increaseLike('${l.reviewId}')">좋아요 ( 
 														    <span class="like-count" th:text="${l.reviewLike}"></span>
 														    <span> ) </span><br>
 													    </button>
-													     <button type="button" class="btn dislike-btn btn-primary btn-xs" onclick="increaseDislike('${l.reviewId}')">❌ 싫어요 ( 
+													     <button type="button" class="btn dislike-btn btn-primary btn-xs" onclick="increaseDislike('${l.reviewId}')">싫어요 ( 
 														    <span></span>
 														    <span class="dislike-count" th:text="${l.reviewDislike}"></span>
 														    <span> ) </span><br>
