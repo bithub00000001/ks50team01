@@ -382,7 +382,9 @@
 											
 											<div class="button-container">
 											    <div class="recommend-dropdown">
-											        <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">추천순</button>
+											        <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="selected-sorting-option" data-bs-toggle="dropdown" aria-expanded="false">
+											        추천순
+											        </button>
 											        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
 											            <li><a class="dropdown-item" href="#">최신순</a></li>
 											            <li><a class="dropdown-item" href="#">좋아요순</a></li>
@@ -399,25 +401,39 @@
 												<div th:unless="${uReviewList != null}" class="center-text">작성된 리뷰가 없습니다.</div>
 												<div th:if="${uReviewList != null}" th:each="l : ${uReviewList}">
 												    <div class="review-details">
-												        <span class="reviewId-text" th:text="${l.reviewId}"></span><br>
+												    	<div class="reviewId-text">
+													        <span th:text="${l.reviewId}"></span><br>
+												    	</div>
 												        <!-- <span>별점: </span> -->
 												        <!-- <span th:text="${l.reviewStarPoint}"></span> -->
 														<span class="star" th:each="star : ${#numbers.sequence(1, 5)}">
 														    <span th:if="${star <= l.reviewStarPoint}" class="star-filled">★</span>
 														    <span th:unless="${star <= l.reviewStarPoint}" class="empty-star">☆</span>
 														</span><br>
-												        <span>후기 작성일: </span>
-												        <span th:text="${l.reviewDate}"></span><br>
-												        <span class="reviewContent-text" th:text="${l.reviewContent}"></span><br>
-													    <button type="button" class="btn like-btn btn-primary btn-xs" onclick="increaseLike('${l.reviewId}')">❤️ 좋아요 ( 
-														    <span class="like-count" th:text="${l.reviewLike}"></span>
-														    <span> ) </span><br>
-													    </button>
-													     <button type="button" class="btn dislike-btn btn-primary btn-xs" onclick="increaseDislike('${l.reviewId}')">❌ 싫어요 ( 
-														    <span></span>
-														    <span class="dislike-count" th:text="${l.reviewDislike}"></span>
-														    <span> ) </span><br>
-													    </button>
+														<div class="reviewDate-text">
+													        <span> 후기 작성일 : </span>
+													        <span th:text="${l.reviewDate}"></span><br>
+														</div>
+														<div class="reviewContent-text">
+													        <span th:text="${l.reviewContent}"></span><br>
+														</div>
+														<div class="like">
+														    <button type="button" class="btn like-btn btn-outline-primary btn-xs" onclick="increaseLike('${l.reviewId}')">❤️ 좋아요 ( 
+															    <span class="like-count" th:text="${l.reviewLike}"></span>
+															    <span> ) </span><br>
+														    </button>
+														</div>
+														<div class="dislike">
+														     <button type="button" class="btn dislike-btn btn-outline-primary btn-xs" onclick="increaseDislike('${l.reviewId}')">❌ 싫어요 ( 
+															    <span class="dislike-count" th:text="${l.reviewDislike}"></span>
+															    <span> ) </span><br>
+														    </button>
+														</div>
+													    <div class="report-btn">
+													    	<button type="button" class="btn btn-danger btn-xs" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+													    	신고하기
+													    	</button>
+													    </div>
 												    </div>
 												        <div class="separator3"></div> <!-- 굵은 직선 추가 -->
 												</div>
@@ -505,81 +521,34 @@
 	
 
 	<th:block layout:fragment="customJs">
+	
 		<script>
-	     	// 별점을 표시하는 함수
-	        function displayRating(rating) {
-	            let stars = '';
-	            for (let i = 0; i < 5; i++) {
-	                if (i < rating) {
-	                    stars += '<span class="rating">★</span>';
-	                } else {
-	                    stars += '<span class="rating">☆</span>'; // Use ☆ (empty star) for ratings less than current index
-	                }
-	            }
-	            return stars;
-	        }
-	
-		 	// 평균 평점을 별로 표시하는 함수
-		    function displayRatingWithColor(rating) {
-		        let stars = '';
-		        for (let i = 0; i < 5; i++) {
-		            if (i < rating) {
-		                stars += '<span class="rating orange-star">★</span>'; // 주황색 별 모양
-		            } else {
-		                stars += '<span class="rating">★</span>'; // 빈 별 모양
-		            }
-		        }
-		        return stars;
-		    }
+		// 드롭다운에서 선택한 값에 따라 정렬 기능 호출
+		document.querySelectorAll('.dropdown-item').forEach(item => {
+		    item.addEventListener('click', event => {
+		        var selectedOption = event.target.innerText;
+		        var selectedOptionElement = document.getElementById("selected-sorting-option");
+		        selectedOptionElement.innerText = selectedOption; // 선택된 값 업데이트
 
-		 // 리뷰 총 개수 및 평균 평점 계산 함수
-		    function calculateReviewStats() {
-		        let totalReviews = reviews.length;
-		        let totalRating = 0;
-	
-		        reviews.forEach(review => {
-		            totalRating += review.rating;
-		        });
-	
-		        let averageRating = totalRating / totalReviews;
-	
-		        // 평균 평점을 소수점 첫째자리까지 반올림하여 표시
-		        document.getElementById('total-reviews').textContent = totalReviews;
-		        document.getElementById('average-rating').textContent = averageRating.toFixed(1);
-		    
-		        // 별 모양 표시
-		        displayRatingWithColor(averageRating);
-			 }
-			 
-			 
-		 // 별점을 표시하는 함수
-		    function displayRatingWithColor(rating) {
-		        const ratingStarsContainer = document.querySelector('.rating-stars-avg');
-		        ratingStarsContainer.innerHTML = ''; // 기존의 내용을 지웁니다.
-	
-		        const integerPart = Math.floor(rating); // 정수 부분
-		        const decimalPart = rating - integerPart; // 소수 부분
-	
-		        for (let i = 0; i < 5; i++) {
-		            const star = document.createElement('span');
-		            if (i < integerPart) {
-		                star.textContent = '★';
-		                star.style.color = 'orange'; // 정수 부분은 모두 주황색으로 채색합니다.
-		            } else if (i === integerPart && decimalPart > 0) {
-		                // 소수 부분이 있는 경우 해당 별의 일부만 채색합니다.
-		                const gradient = `linear-gradient(to right, orange ${decimalPart * 100}%, gray ${decimalPart * 100}%)`;
-		                star.textContent = '★';
-		                star.style.backgroundImage = gradient;
-		                star.style.webkitBackgroundClip = 'text'; // 텍스트만 그라데이션을 적용합니다.
-		                star.style.color = 'transparent';
-		            } else {
-		                star.textContent = '★';
-		                star.style.color = 'gray'; // 나머지 별은 회색으로 채색합니다.
-		            }
-		            ratingStarsContainer.appendChild(star);
+		        if (selectedOption === '최신순') {
+		            // 최신순으로 정렬하는 함수 호출
+		            sortByDate('최신순');
+		        } else if (selectedOption === '좋아요순') {
+		            // 좋아요순으로 정렬하는 함수 호출
+		            sortByLikes();
+		        } else if (selectedOption === '오래된순') {
+		            // 오래된순으로 정렬하는 함수 호출
+		            sortByDate('오래된순');
+		        } else if (selectedOption === '추천순') {
+		            // 추천순으로 정렬하는 함수 호출
+		            sortByRecommendation();
 		        }
-		    }
-        </script>
+		    });
+		});
+
+		
+
+		</script>
         
         <script th:inline="javascript">
 		    function fillStars(starPoint) {
@@ -595,6 +564,7 @@
 		        });
 		    }
 		</script>
+		
         
 	</th:block>
 </html>
