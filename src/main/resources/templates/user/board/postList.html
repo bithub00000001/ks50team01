@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+                layout:decorate="~{user/layout/default}">
+
+	<head>
+		<title>커뮤니티</title>
+			<link rel="stylesheet" th:href="@{/user/css/list-style.css}">
+	</head>
+
+	<th:block layout:fragment="customCss"></th:block>
+
+	<th:block layout:fragment="customPageSection">
+		<!-- 여기에 메인 컨텐츠가 삽입됩니다. -->
+		<div class="main-wrapper pages">
+	
+			<div class="d-flex align-items-start">
+				<div class="dropdown">
+					<button class="btn btn-primary dropdown-toggle" type="button"
+						id="dropdownMenuButton" data-bs-toggle="dropdown">커뮤니티</button>
+					<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+						<li><a class="dropdown-item" href="javascript:void(0)">여행 정보</a></li>
+						<li><a class="dropdown-item" href="javascript:void(0)">여행 후기</a></li>
+						<li><a class="dropdown-item" href="javascript:void(0)">여행 친구 찾기</a></li>
+						<li><a class="dropdown-item" href="javascript:void(0)">자유게시판</a></li>
+						<li><a class="dropdown-item" href="javascript:void(0)">질문게시판</a></li>
+					</ul>
+				</div>
+			</div>
+	
+	
+			<div class="row mt-5">
+				<div class="col-xl-12 alert alert-light alert-dismissible d-flex justify-content-center">
+					<form class="mb-0 col-sm-6 col-xl-6" action="#" method="post">
+						<div class="input-group input-group-sm">
+							<div class="select-default">
+								<select class="select-option">
+									<option>제목</option>
+									<option>내용</option>
+									<option>작성자</option>
+								</select>
+							</div>
+							<input type="text" class="form-control form-control-sm rounded-0"
+								placeholder="검색어를 입력해주세요." aria-label="Search....">
+							<button class="btn bg-primary border-0 rounded-0" type="button">
+								<span class="text-white text-uppercase font-weight-bold">검색</span>
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+	
+	
+			<!-- body -->
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="table-responsive overflow-hidden">
+						<table class="table table-hover table-bordered">
+							<colgroup>
+								<col class="col-sm-1" />
+								<col class="col-sm-7" />
+								<col class="col-sm-1" />
+								<col class="col-sm-2" />
+								<col class="col-sm-1" />
+							</colgroup>
+							<thead>
+								<tr class="active" style="text-align: center">
+									<th>번호</th>
+									<th>제목</th>
+									<th>작성자</th>
+									<th>등록일</th>
+									<th>조회</th>
+								</tr>
+							</thead>
+							<tbody>
+								
+								<tr th:unless="${postList != null}">
+									<td colspan="5" class="text-center">등록된 게시글이 없습니다.</td>
+								</tr>
+								<tr th:if="${postList != null}" th:each="l : ${postList}">
+									<td class="text-center" th:text="${l.postNum}"></td>
+									<td>
+										<i class="badge rounded-pill bg-primary" th:text="${l.postCateNum}"></i>
+										<a th:href="@{/community/postDetail/{postNum}(postNum=${l.postNum})}" th:text="${l.postTitle}"></a>
+									</td>
+									<td class="text-center" th:text="${l.postRegId}"></td>
+									<td class="text-center" th:text="${l.postRegDate}"></td>
+									<td class="text-center" th:text="${l.postInqCnt}"></td>
+								</tr>
+								
+							
+							</tbody>
+						</table>
+						<div class="row">
+							<div class="col-12"
+								style="text-align: right;">
+								<!-- 글쓰기 버튼을 클릭하면 /community/postWrite 페이지로 이동 -->
+								<a th:href="@{/community/postWrite}"><button type="button" class="btn btn-outline-primary btn-sm">글쓰기</button></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+	
+			<!-- 페이징
+			<div class="row mb-5">
+				<div class="col-12 d-flex justify-content-center">
+					<nav aria-label="Page navigation">
+						<ul class="pagination align-items-center">
+							<li class="page-item"><a class="page-link"
+								href="javascript:void(0)" tabindex="-1"> <i
+									aria-hidden="true"></i> ◀ 이전
+							</a></li>
+	
+							<li class="page-item"><a class="page-link active"
+								href="javascript:void(0)">1</a></li>
+							<li class="page-item"><a class="page-link"
+								href="javascript:void(0)">2</a></li>
+							<li class="page-item"><a class="page-link"
+								href="javascript:void(0)">3</a></li>
+							<li class="page-item"><a class="page-link"
+								href="javascript:void(0)">4</a></li>
+							<li class="page-item"><a class="page-link"
+								href="javascript:void(0)">5</a></li>
+							<li class="page-item"><a class="page-link"
+								href="javascript:void(0)">6</a></li>
+							<li class="page-item"><a class="page-link"
+								href="javascript:void(0)">7</a></li>
+							<li class="page-item"><a class="page-link"
+								href="javascript:void(0)">8</a></li>
+							<li class="page-item"><a class="page-link"
+								href="javascript:void(0)">9</a></li>
+							<li class="page-item"><a class="page-link"
+								href="javascript:void(0)">10</a></li>
+							<li class="page-item"><a class="page-link"
+								href="javascript:void(0)"> 다음 ▶ <i aria-hidden="true"></i>
+							</a></li>
+						</ul>
+					</nav>
+				</div>
+			</div>  -->
+	
+			<!-- 페이징 -->
+			<section class="pt-5 pt-md-7">
+				<div class="container" style="margin-bottom: 50px">
+					<nav aria-label="Page navigation">
+						<ul class="pagination justify-content-center align-items-center">
+							<li class="page-item"><a class="page-link"
+								href="javascript:void(0)" tabindex="-1"> <i
+									aria-hidden="true"></i> ◀ 이전
+							</a></li>
+	
+							<li class="page-item"><a class="page-link active"
+								href="javascript:void(0)">1</a></li>
+	
+							<li class="page-item"><a class="page-link"
+								href="javascript:void(0)">2</a></li>
+	
+							<li class="page-item"><a class="page-link"
+								href="javascript:void(0)">3</a></li>
+	
+							<li class="page-item"><a class="page-link"
+								href="javascript:void(0)">4</a></li>
+	
+							<li class="page-item"><a class="page-link"
+								href="javascript:void(0)">5</a></li>
+	
+							<li class="page-item"><a class="page-link"
+								href="javascript:void(0)">다음 ▶ <i aria-hidden="true"></i>
+							</a></li>
+						</ul>
+					</nav>
+				</div>
+			</section> 
+		</div>
+	</th:block>
+
+	<th:block layout:fragment="customJsFIle">
+		<script th:src="@{/user/plugins/owl-carousel/owl.carousel.min.js}"></script>
+	</th:block>
+
+	<th:block layout:fragment="customJs">
+		<script>
+		
+	     // 선택된 드롭다운 메뉴에 해당하는 게시글 조회
+        document.addEventListener("DOMContentLoaded", function() {
+            const menuItems = document.querySelectorAll('.dropdown-item');
+
+            menuItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const selectedMenu = this.textContent;
+                    const tbody = document.querySelector('tbody');
+                    const rows = tbody.querySelectorAll('tr');
+
+                    rows.forEach(row => row.style.display = 'none');
+
+                    rows.forEach(row => {
+                        const title = row.querySelector('td:nth-child(2)').textContent;
+                        if (title.includes(selectedMenu)) {
+                            row.style.display = '';
+                        }
+                    });
+                });
+            });
+        });
+	     
+	     
+	     
+        document.addEventListener("DOMContentLoaded", function() {
+            const searchBtn = document.querySelector('.btn.bg-primary'); // 검색 버튼 가져오기
+            const searchInput = document.querySelector('.form-control.form-control-sm'); // 검색어 입력 필드 가져오기
+
+            // 검색 버튼 클릭 시
+            searchBtn.addEventListener('click', performSearch);
+
+            // 검색어 입력 필드에서 엔터 키 눌렀을 때
+            searchInput.addEventListener('keyup', function(event) {
+                if (event.keyCode === 13) { // Enter 키 눌렀을 때
+                    performSearch();
+                }
+            });
+
+            // 검색 기능을 수행하는 함수
+            function performSearch() {
+                const searchValue = searchInput.value.trim().toLowerCase(); // 검색어 가져오기 (소문자로 변환, 공백 제거)
+
+                const tbody = document.querySelector('tbody');
+                const rows = tbody.querySelectorAll('tr');
+
+                rows.forEach(row => {
+                    const title = row.querySelector('td:nth-child(2)').textContent.replace(/\s+/g, '').toLowerCase(); // // 각 행의 제목에서 공백을 제거하고 소문자로 변환하여 저장
+                    const content = row.querySelector('td:nth-child(4)').textContent.replace(/\s+/g, '').toLowerCase(); // // 각 행의 내용에서 공백을 제거하고 소문자로 변환하여 저장
+                    const author = row.querySelector('td:nth-child(3)').textContent.replace(/\s+/g, '').toLowerCase(); // // 각 행의 작성자에서 공백을 제거하고 소문자로 변환하여 저장
+
+                    const searchValueWithoutSpaces = searchValue.replace(/\s+/g, ''); // 검색어에서 공백을 제거한 후 소문자로 변환하여 저장
+                    
+                    // 검색어가 포함된 경우 행을 표시하고 아닌 경우 행을 숨김
+                    if (title.includes(searchValueWithoutSpaces) || content.includes(searchValueWithoutSpaces) || author.includes(searchValueWithoutSpaces)) {
+                        row.style.display = '';
+                       	found = true; // 검색 결과가 있음을 표시
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            }
+        });
+	     
+	     
+		</script>
+	</th:block>
+</html>
+

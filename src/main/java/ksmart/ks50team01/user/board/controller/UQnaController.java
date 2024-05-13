@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping(value = "user/board")
+@RequestMapping(value = "/qna")
 public class UQnaController {
 	
-	@GetMapping("/qna")
+	@GetMapping({"/",""})
 	public String qna(Model model) {
 		
 		model.addAttribute("title", "1:1문의");
@@ -20,7 +20,7 @@ public class UQnaController {
 	@GetMapping("/qnaWrite")
 	public String qnaWrite(Model model) {
 		
-		model.addAttribute("title", "1:1문의글쓰기");
+		model.addAttribute("title", "1:1문의 작성");
 		return "user/board/qnaWrite";
 		
 	}

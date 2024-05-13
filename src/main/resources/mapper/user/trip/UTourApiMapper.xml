@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ksmart.ks50team01.user.trip.mapper.UTourApiMapper">
+
+    <!-- 지역 코드 업서트 -->
+    <insert id="upsertArea" parameterType="ksmart.ks50team01.user.trip.dto.UArea">
+        INSERT INTO
+            area (code, name)
+        VALUES
+            (#{code}, #{name})
+        ON DUPLICATE KEY UPDATE
+            name = #{name}
+    </insert>
+
+    <!-- 전체 지역 코드 조회 -->
+    <select id="findAllAreas" resultType="ksmart.ks50team01.user.trip.dto.UArea">
+        SELECT
+            id,
+            code,
+            name
+        FROM
+            area
+    </select>
+
+    <!-- 시군구 코드 업서트 -->
+    <insert id="upsertSigungu" parameterType="ksmart.ks50team01.user.trip.dto.USigungu">
+        /* 시군구 코드를 업서트 */
+        INSERT INTO
+            sigungu (code, name, area_id)
+        VALUES
+            (#{code},
+            #{name},
+            (SELECT
+                id
+            FROM
+                area
+            WHERE
+                code = #{areaCode}))
+        ON DUPLICATE KEY UPDATE
+            name = VALUES(name),
+            area_id = (SELECT
+                            id
+                        FROM
+                            area
+                        WHERE
+                            code = #{areaCode})
+    </insert>
+
+</mapper>

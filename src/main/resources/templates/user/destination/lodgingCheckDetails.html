@@ -139,14 +139,91 @@
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" id="tourGuide-tab" data-bs-toggle="tab" href="#tourGuide" role="tab"
-                aria-controls="tourGuide" aria-selected="false">Tour guide</a>
-            </li>
-
-            <li class="nav-item">
               <a class="nav-link" id="locationMap-tab" data-bs-toggle="tab" href="#locationMap" role="tab"
                 aria-controls="locationMap" aria-selected="false">Location map</a>
             </li>
+            
+            <li class="nav-item">
+				<a class="nav-link" id="tourGuide-tab" data-bs-toggle="tab" href="#tourGuide" role="tab" aria-controls="tourGuide" aria-selected="false">후기</a>
+			</li>
+
+			<li class="nav-item ms-md-auto">
+				<ul class="list-unstyled d-flex justify-content-center mb-0">
+					<li class="me-3">
+						<a href="javascript:void(0)" class="text-gray-color hover-text-primary">
+							<i class="fab fa-facebook-f" aria-hidden="true"></i>
+						</a>
+					</li>
+
+					<li class="me-3">
+						<a href="javascript:void(0)" class="text-gray-color hover-text-primary"> 
+							<i class="fab fa-twitter" aria-hidden="true"></i>
+						</a>
+					</li>
+					<li class="me-3">
+						<a href="javascript:void(0)" class="text-gray-color hover-text-primary"> 
+							<i class="fab fa-google-plus-g" aria-hidden="true"></i>
+						</a>
+					</li>
+					
+					<!-- 리뷰 리스트 start -->
+					<div class="tab-pane" id="tourGuide" role="tabpanel" aria-labelledby="tourGuide-tab">
+						<div class="row">
+							<div class="review-container">
+							    <!-- 리뷰 총 개수 및 평균 평점 -->
+							    <div class="review-stats_avg">
+						    	    <div class="rating-stars-avg"> </div>
+							    
+							        <p class="average-rating-text">평점: <span id="average-rating"></span></p>
+							        <p class="total-reviews-text">리뷰 개수: <span id="total-reviews"></span></p>
+							    </div>	  
+							    
+								<div class="separator1"></div> <!-- 굵은 직선 추가 -->
+								<div class="separator2"></div> <!-- 굵은 직선 추가 -->
+								<div class="dropdown-1">
+								
+								<div class="button-container">
+								    <div class="recommend-dropdown">
+								        <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">추천순</button>
+								        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+								            <li><a class="dropdown-item" href="#">최신순</a></li>
+								            <li><a class="dropdown-item" href="#">좋아요순</a></li>
+								            <li><a class="dropdown-item" href="#">오래된순</a></li>
+								        </ul>
+								    </div>
+								
+								    <div class="write-btn-container"> <!-- ml-auto 클래스를 추가하여 버튼을 오른쪽으로 정렬합니다 -->
+								        <a th:href="@{/user/review/write}"><button type="button" class="btn btn-outline-primary btn-sm">작성하기</button></a>
+								    </div>
+								</div>
+								
+								<div class="review-box" id="review-box">
+									<!-- 리뷰 내용이 여기에 동적으로 추가 -->
+								</div>
+								<!-- 버튼 영역을 리뷰 영역에 포함시킴 -->
+								<div class="review-box" id="button-container">
+									<!-- 버튼 영역이 여기에 동적으로 추가 -->
+								</div>
+
+								
+							</div>
+						</div>
+					</div>
+					<!-- 리뷰 리스트 end -->
+
+					<li class="me-3">
+						<a href="javascript:void(0)" class="text-gray-color hover-text-primary">
+							<i class="fab fa-pinterest-p" aria-hidden="true"></i>
+						</a>
+					</li>
+					<li>
+						<a href="javascript:void(0)" class="text-gray-color hover-text-primary">
+							<i class="fab fa-vimeo-v" aria-hidden="true"></i>
+						</a>
+					</li>
+				</ul>
+			</li>
+            
 
             <li class="nav-item ms-md-auto">
               <ul class="list-unstyled d-flex justify-content-center mb-0">
@@ -691,4 +768,356 @@
 	<script th:src="@{/user/plugins/owl-carousel/owl.carousel.min.js}"></script>
 	<script src='https://maps.googleapis.com/maps/api/js?key=AIzaSyDU79W1lu5f6PIiuMqNfT1C6M0e_lq1ECY'></script>
 </th:block>
-</html>>
+
+<th:block layout:fragment="customJs">
+		<script>
+/* 			const monthArray = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+			const dayArray = ['Sunday','Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+			const d = new Date();
+			const year = d.getFullYear();
+			const month = monthArray[d.getMonth()+1];
+			const date = d.getDate()
+			const day = dayArray[d.getDay()];
+			document.getElementById("copy-year").innerHTML = year;
+			document.getElementById("copy-month").innerHTML = month;
+			document.getElementById("copy-date").innerHTML = date;
+			document.getElementById("copy-day").innerHTML = day; */
+        </script>
+        
+        <script>
+	     	 //더미 리뷰 데이터
+	        const reviews = [
+	            {
+	                id: 1,
+	                userId: "user123",
+	                rating: 4,
+	                date: "2024-04-25",
+	                modifiedDate: "2024-04-28",
+	                content: "이 상품 정말 좋아요!",
+	                image: ["/user/img/blog/blog-03.jpg", "/user/img/blog/blog-04.jpg"]
+	            },
+	            {
+	                id: 2,
+	                userId: "user456",
+	                rating: 5,
+	                date: "2024-04-20",
+	                content: "완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!",
+	                image: ["/user/img/blog/blog-03.jpg"]
+	            },
+	            {
+	                id: 3,
+	                userId: "user123",
+	                rating: 2,
+	                date: "2024-04-25",
+	                modifiedDate: "2024-04-28",
+	                content: "이 상품 정말 좋아요!",
+	                image: []
+	            },
+	            {
+	                id: 4,
+	                userId: "user456",
+	                rating: 4,
+	                date: "2024-04-20",
+	                content: "완전 강추합니다!",
+	                image:["/user/img/blog/blog-03.jpg", "/user/img/blog/blog-04.jpg", "/user/img/blog/blog-03.jpg", "/user/img/blog/blog-04.jpg"]
+	            },
+	            {
+	                id: 5,
+	                userId: "user456",
+	                rating: 3,
+	                date: "2024-04-20",
+	                content: "완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!",
+	                image: ["/user/img/blog/blog-03.jpg", "/user/img/blog/blog-04.jpg"]
+	            },
+	        ];
+	     	 
+	     	 const comment = [
+		            {
+		                reviewid: 1,
+		                userId: "user123",
+		                date: "2024-04-25",
+		                content: "이 상품 정말 좋아요!"
+		            },
+		            {
+		            	reviewid: 2,
+		                userId: "user456",
+		                date: "2024-04-20",
+		                content: "완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!완전 강추합니다!"
+		            },
+		        ];
+        </script>
+        
+        <script>
+        	// 좋아요 클릭 시
+	        function increaseLike(reviewId) {
+	            likeCounts[reviewId]++;
+	            document.getElementById(`like-count-${reviewId}`).textContent = likeCounts[reviewId];
+	        }
+	
+	        // 싫어요 클릭 시
+	        function increaseDislike(reviewId) {
+	            dislikeCounts[reviewId]++;
+	            document.getElementById(`dislike-count-${reviewId}`).textContent = dislikeCounts[reviewId];
+	        }
+	        
+	        // 좋아요, 싫어요 카운트
+	        let likeCounts = {};
+	        let dislikeCounts = {};
+	        
+	     // 리뷰 데이터를 기반으로 좋아요와 싫어요 카운트 초기화
+	        reviews.forEach(review => {
+	            likeCounts[review.id] = 0;
+	            dislikeCounts[review.id] = 0;
+	        });
+        </script>
+        
+        <script>
+	     	// 별점을 표시하는 함수
+	        function displayRating(rating) {
+	            let stars = '';
+	            for (let i = 0; i < 5; i++) {
+	                if (i < rating) {
+	                    stars += '<span class="rating">★</span>';
+	                } else {
+	                    stars += '<span class="rating">☆</span>'; // Use ☆ (empty star) for ratings less than current index
+	                }
+	            }
+	            return stars;
+	        }
+	
+		 	// 평균 평점을 별로 표시하는 함수
+		    function displayRatingWithColor(rating) {
+		        let stars = '';
+		        for (let i = 0; i < 5; i++) {
+		            if (i < rating) {
+		                stars += '<span class="rating orange-star">★</span>'; // 주황색 별 모양
+		            } else {
+		                stars += '<span class="rating">★</span>'; // 빈 별 모양
+		            }
+		        }
+		        return stars;
+		    }
+
+		 // 리뷰 총 개수 및 평균 평점 계산 함수
+		    function calculateReviewStats() {
+		        let totalReviews = reviews.length;
+		        let totalRating = 0;
+	
+		        reviews.forEach(review => {
+		            totalRating += review.rating;
+		        });
+	
+		        let averageRating = totalRating / totalReviews;
+	
+		        // 평균 평점을 소수점 첫째자리까지 반올림하여 표시
+		        document.getElementById('total-reviews').textContent = totalReviews;
+		        document.getElementById('average-rating').textContent = averageRating.toFixed(1);
+		    
+		        // 별 모양 표시
+		        displayRatingWithColor(averageRating);
+			 }
+			 
+			 
+		 // 별점을 표시하는 함수
+		    function displayRatingWithColor(rating) {
+		        const ratingStarsContainer = document.querySelector('.rating-stars-avg');
+		        ratingStarsContainer.innerHTML = ''; // 기존의 내용을 지웁니다.
+	
+		        const integerPart = Math.floor(rating); // 정수 부분
+		        const decimalPart = rating - integerPart; // 소수 부분
+	
+		        for (let i = 0; i < 5; i++) {
+		            const star = document.createElement('span');
+		            if (i < integerPart) {
+		                star.textContent = '★';
+		                star.style.color = 'orange'; // 정수 부분은 모두 주황색으로 채색합니다.
+		            } else if (i === integerPart && decimalPart > 0) {
+		                // 소수 부분이 있는 경우 해당 별의 일부만 채색합니다.
+		                const gradient = `linear-gradient(to right, orange ${decimalPart * 100}%, gray ${decimalPart * 100}%)`;
+		                star.textContent = '★';
+		                star.style.backgroundImage = gradient;
+		                star.style.webkitBackgroundClip = 'text'; // 텍스트만 그라데이션을 적용합니다.
+		                star.style.color = 'transparent';
+		            } else {
+		                star.textContent = '★';
+		                star.style.color = 'gray'; // 나머지 별은 회색으로 채색합니다.
+		            }
+		            ratingStarsContainer.appendChild(star);
+		        }
+		    }
+        </script>
+        
+        <script>
+        function displayReviews() {
+            const reviewBox = document.getElementById('review-box');
+            reviewBox.innerHTML = '';
+
+            if (reviews.length === 0) {
+                const noReviewHTML = document.createElement('div');
+                noReviewHTML.classList.add('no-review');
+                noReviewHTML.textContent = '작성된 리뷰가 없습니다.';
+                reviewBox.appendChild(noReviewHTML);
+            } else {
+                reviews.forEach(review => {
+                    const reviewContainer = document.createElement('div');
+                    reviewContainer.classList.add('review');
+
+                    const reviewContent = document.createElement('div');
+                    reviewContent.classList.add('review-content');
+
+                    const userId = document.createElement('div');
+                    userId.classList.add('user-id');
+                    userId.textContent = review.userId;
+                    reviewContent.appendChild(userId);
+
+                    const date = document.createElement('div');
+                    date.classList.add('date');
+                    let modifiedDateHTML = review.modifiedDate ? ` (수정됨 ${review.modifiedDate})` : '';
+                    date.textContent = `${review.date}${modifiedDateHTML}`;
+                    reviewContent.appendChild(date);
+
+                    const rating = document.createElement('div');
+                    rating.classList.add('rating');
+                    rating.innerHTML = displayRating(review.rating);
+                    reviewContent.appendChild(rating);
+
+                    const content = document.createElement('p');
+                    content.textContent = review.content;
+                    reviewContent.appendChild(content);
+
+                    let imageContainer = null;
+                    if (Array.isArray(review.image)) {
+                        imageContainer = document.createElement('div');
+                        imageContainer.classList.add('image-container');
+                        imageContainer.id = `review-${review.id}`;
+                        review.image.forEach((image, index) => {
+                            const img = document.createElement('img');
+                            img.src = image;
+                            img.alt = `Review Image ${index + 1}`;
+                            imageContainer.appendChild(img);
+                        });
+                    } else {
+                        const img = document.createElement('img');
+                        img.src = review.image;
+                        img.alt = 'Review Image';
+                        imageContainer = img;
+                    }
+                    reviewContent.appendChild(imageContainer);
+
+                    reviewContainer.appendChild(reviewContent);
+
+                    const buttonContainer = document.createElement('div');
+                    buttonContainer.classList.add('button-container', 'd-flex', 'justify-content-between', 'align-items-center');
+
+                    const likeDislikeContainer = document.createElement('div');
+                    likeDislikeContainer.classList.add('like-dislike-container', 'd-flex', 'flex-column');
+
+                    const likeBtn = document.createElement('button');
+                    likeBtn.classList.add('like-btn', 'mb-2');
+                    likeBtn.textContent = `❤️ 좋아요 (${likeCounts[review.id]})`;
+                    likeBtn.addEventListener('click', () => increaseLike(review.id));
+                    const likeCountSpan = document.createElement('span');
+                    likeCountSpan.id = `like-count-${review.id}`;
+                    likeCountSpan.textContent = likeCounts[review.id];
+                    likeBtn.appendChild(likeCountSpan);
+                    likeDislikeContainer.appendChild(likeBtn);
+
+                    const dislikeBtn = document.createElement('button');
+                    dislikeBtn.classList.add('dislike-btn');
+                    dislikeBtn.textContent = `❌ 싫어요 (${dislikeCounts[review.id]})`;
+                    dislikeBtn.addEventListener('click', () => increaseDislike(review.id));
+                    const dislikeCountSpan = document.createElement('span');
+                    dislikeCountSpan.id = `dislike-count-${review.id}`;
+                    dislikeCountSpan.textContent = dislikeCounts[review.id];
+                    dislikeBtn.appendChild(dislikeCountSpan);
+                    likeDislikeContainer.appendChild(dislikeBtn);
+
+                    buttonContainer.appendChild(likeDislikeContainer);
+
+                    const reportBtnContainer = document.createElement('div');
+                    reportBtnContainer.classList.add('report-btn-container');
+
+                    const reportBtn = document.createElement('button');
+                    reportBtn.type = 'button';
+                    reportBtn.classList.add('btn', 'btn-danger');
+                    reportBtn.dataset.bsToggle = 'modal';
+                    reportBtn.dataset.bsTarget = '#staticBackdrop';
+                    reportBtn.textContent = '신고하기';
+                    reportBtnContainer.appendChild(reportBtn);
+
+                    buttonContainer.appendChild(reportBtnContainer);
+
+                    reviewContainer.appendChild(buttonContainer);
+
+                    const relevantComments = comment.filter(c => c.reviewid === review.id);
+                    if (relevantComments.length > 0) {
+                        const commentsContainer = document.createElement('div');
+                        commentsContainer.classList.add('comments-container', 'relevantComments');
+                        relevantComments.forEach(comment => {
+                            const commentDiv = document.createElement('div');
+                            commentDiv.classList.add('comment');
+
+                            const userId = document.createElement('div');
+                            userId.classList.add('user-id');
+                            userId.textContent = comment.userId;
+                            commentDiv.appendChild(userId);
+
+                            const date = document.createElement('div');
+                            date.classList.add('date');
+                            date.textContent = comment.date;
+                            commentDiv.appendChild(date);
+
+                            const content = document.createElement('div');
+                            content.classList.add('content');
+                            content.textContent = comment.content;
+                            commentDiv.appendChild(content);
+
+                            commentsContainer.appendChild(commentDiv);
+                        });
+                        reviewContainer.appendChild(commentsContainer);
+                    }
+
+                    reviewBox.appendChild(reviewContainer);
+                });
+            }
+        }
+
+
+		</script>
+		
+		<script>
+	    document.addEventListener('DOMContentLoaded', function () {
+	        let dropdownButton = document.querySelector('.modal-dialog .dropdown-toggle');
+	        let dropdownMenuItems = document.querySelectorAll('.modal-dialog .dropdown-menu .dropdown-item');
+
+	        dropdownMenuItems.forEach(function (item) {
+	            item.addEventListener('click', function () {
+	                let selectedText = item.textContent;
+	                if (dropdownButton.textContent !== selectedText) {
+	                    dropdownButton.textContent = selectedText;
+	                }
+	            });
+	        });
+
+	        dropdownButton.addEventListener('click', function () {
+	            if (dropdownButton.textContent === "신고 유형 선택") {
+	                return;
+	            } else {
+	                dropdownButton.textContent = "신고 유형 선택";
+	            }
+	        });
+	    });
+	</script>
+
+        
+        <script>
+		    // 문서가 로드된 후 실행되는 코드
+			document.addEventListener("DOMContentLoaded", function() {
+			    calculateReviewStats(); // 리뷰 통계 계산
+			    displayReviews(); // 리뷰 표시 함수 호출
+			    /* initImageSlider(); // 이미지 슬라이더 초기화 (240503 에러나는중) */
+			});
+        </script>
+        
+	</th:block>
+</html>

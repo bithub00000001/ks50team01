@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  	  layout:decorate="~{user/layout/default}">
+
+	<th:block layout:fragment="customPageSection">
+
+		<!-- ====================================
+		———	SEARCH SECTION
+		===================================== -->
+		<section class="py-10">
+		  <div class="container">
+		    <div class="bg-dark-light rounded p-6 mb-7">
+		      <div class="row align-items-center">
+		        <div class="col-xl-3">
+		          <div class="section-title-bg mb-1 mb-lg-3 mb-xl-0">
+		            <h2 class="text-white text-uppercase font-weight-bold mb-0">HOT <span class="text-primary">여행</span></h2>
+		            <h1 class="text-white text-uppercase mb-0">인기순위</h1>
+		          </div>
+		        </div>
+		  
+		        <div class="col-xl-9">
+		          <form method="GET" action="index.html">
+		            <div class="row">
+		              <div class="col-lg-10">
+		                <div class="row">
+		                  <div class="col-md-6 col-lg-3">
+		                    <div class="select-dropdown">
+		                      <div class="form-group mb-lg-0">
+		                        <div class="select-default select-search-box">
+		                          <select class="select-option" id="cate">
+		                            <option value="platform">플랫폼 추천</option>
+		                            <option value="user">회원 추천</option>
+		                            <option value="plan">다른회원의 계획추천</option>
+		                          </select>
+		                        </div>
+		                      </div>
+		                    </div>
+		                  </div>
+		  
+		                  <div class="col-md-6 col-lg-3">
+		                    <div class="form-group form-group-icon mb-lg-0">
+		                      <i class="far fa-calendar-alt" aria-hidden="true"></i>
+		                      <input type="text" class="form-control daterange-picker" autocomplete="off" name="dateRange" value=""
+		                        placeholder="YYYY/MM/DD" />
+		                    </div>
+		                  </div>
+		  
+		                  <div class="col-md-6 col-lg-3">
+		                    <div class="form-group form-group-icon mb-lg-0">
+		                      <i class="far fa-calendar-alt" aria-hidden="true"></i>
+		                      <input type="text" class="form-control daterange-picker" autocomplete="off" name="dateRange" value=""
+		                        placeholder="YYYY/MM/DD" />
+		                    </div>
+		                  </div>
+		  
+		                  <div class="col-md-6 col-lg-3">
+		                    <div class="select-dropdown">
+		                      <div class="form-group mb-lg-0">
+		                        <div class="select-default select-search-box">
+		                          <select class="select-option">
+		                            <option>최근 1개월</option>
+		                            <option>저번달</option>
+		                          </select>
+		                        </div>
+		                      </div>
+		                    </div>
+		                  </div>
+		                </div>
+		              </div>
+		  
+		              <div class="col-lg-2">
+		                <button class="btn btn-primary text-uppercase" type="button"
+		                  onclick="redirectToSelectedCategory();">
+		                  찾기
+		               </button>
+		               <script>
+							function redirectToSelectedCategory() {
+							  // 선택된 카테고리의 값을 가져옴
+							  const selectedCategory = document.getElementById("cate").value;
+							  
+							  // 선택된 카테고리에 따라서 다른 주소로 이동
+							  switch (selectedCategory) {
+							    case "platform":
+							      window.location.href = "/allRanking/rankingList";
+							      break;
+							    case "user":
+							      window.location.href = "/allRanking/userRankingList";
+							      break;
+							    case "plan":
+							      window.location.href = "/allRanking/planRankingList";
+							      break;
+							    default:
+							      // 기본적으로 어디로도 이동하지 않음
+							      break;
+							  }
+							}
+							</script>
+		              </div>
+		            </div>
+		          </form>
+		        </div>
+		      </div>
+		    </div>
+		
+		    <div class="mb-6 mb-lg-7">
+		      <div class="row">
+		        <div class="col-md-6">
+		          <div class="media media-list-view-sm flex-column mb-5 mb-md-0">
+		            <div class="media-img position-relative mb-5">
+		              <img class="w-100 rounded lazyestload" data-src="/user/img/cities/cities-big-01.jpg" src="/user/img/cities/cities-big-01.jpg" alt="Generic placeholder image">
+		              <a class="media-img-overlay rounded badge-hover d-flex flex-column" href="/allRanking/rankingList">
+		                <div class="badge badge-black-Offset badge-rounded position-relative">
+		                  <span class="d-block text-uppercase font-size-20">
+		                    플랫폼 추천
+		                  </span>
+		                </div>
+		              </a>
+		            </div>
+		
+		            <div class="media-body">
+		              <div class="row">
+		                <div class="col-lg-4 mb-5 mb-lg-0">
+		                  <div class="media media-list-sm align-items-center bg-smoke">
+		                    <div class="media-img">
+		                      <img class="w-100 lazyestload" data-src="/user/img/cities/cities-sm-01.jpg" src="/user/img/cities/cities-sm-01.jpg" alt="Generic placeholder image">
+		                      <a href="/allRanking/rankingList#location5" class="media-img-overlay"></a>
+		                    </div>
+		
+		                    <div class="media-body ps-3">
+		                      <a href="/allRanking/rankingList#location5" class="text-uppercase h6 text-dark hover-text-primary mb-3">관광지 top 3</a>
+		                      <h6 class="text-primary mb-0">관광지</h6>
+		                    </div>
+		                  </div>
+		                </div>
+		              
+		                <div class="col-lg-4 mb-5 mb-lg-0">
+		                  <div class="media media-list-sm align-items-center bg-smoke">
+		                    <div class="media-img">
+		                      <img class="w-100 lazyestload" data-src="/user/img/cities/cities-sm-02.jpg" src="/user/img/cities/cities-sm-02.jpg" alt="Generic placeholder image">
+		                      <a href="/allRanking/rankingList#location2" class="media-img-overlay"></a>
+		                    </div>
+		                  
+		                    <div class="media-body ps-3">
+		                      <a href="/allRanking/rankingList#location2" class="text-uppercase h6 text-dark hover-text-primary mb-3">숙소 top 3</a>
+		                      <h6 class="text-primary mb-0">숙소</h6>
+		                    </div>
+		                  </div>
+		                </div>
+		                
+		                <div class="col-lg-4 mb-5 mb-lg-0">
+		                  <div class="media media-list-sm align-items-center bg-smoke">
+		                    <div class="media-img">
+		                      <img class="w-100 lazyestload" data-src="/user/img/cities/cities-sm-02.jpg" src="/user/img/cities/cities-sm-02.jpg" alt="Generic placeholder image">
+		                      <a href="/allRanking/rankingList#location1" class="media-img-overlay"></a>
+		                    </div>
+		                  
+		                    <div class="media-body ps-3">
+		                      <a href="/allRanking/rankingList#location1" class="text-uppercase h6 text-dark hover-text-primary mb-3">음식점 top 3</a>
+		                      <h6 class="text-primary mb-0">음식점</h6>
+		                    </div>
+		                  </div>
+		                </div>
+		                
+		              </div>
+		            </div>
+		          </div>
+		        </div>
+		      
+		        <div class="col-md-6">
+		          <div class="media media-list-view-sm flex-column">
+		            <div class="media-img position-relative mb-5">
+		              <img class="w-100 rounded lazyestload" data-src="/user/img/cities/cities-big-02.jpg" src="/user/img/cities/cities-big-02.jpg" alt="Generic placeholder image">
+		              <a class="media-img-overlay rounded badge-hover d-flex flex-column" href="/allRanking/userRankingList">
+		                <div class="badge badge-black-Offset badge-rounded position-relative">
+		                  <span class="d-block text-uppercase font-size-20">
+		                    회원추천
+		                  </span>
+		                </div>
+		              </a>
+		            </div>
+		        
+		            <div class="media-body">
+		              <div class="row">
+		                <div class="col-lg-4">
+		                  <div class="media media-list-sm align-items-center bg-smoke mb-5 mb-lg-0">
+		                    <div class="media-img">
+		                      <img class="w-100 lazyestload" data-src="/user/img/cities/cities-sm-03.jpg" src="/user/img/cities/cities-sm-03.jpg" alt="Generic placeholder image">
+		                      <a href="/allRanking/userRankingList#location6" class="media-img-overlay"></a>
+		                    </div>
+		        
+		                    <div class="media-body ps-3">
+		                      <a href="/allRanking/userRankingList#location6" class="text-uppercase h6 text-dark hover-text-primary mb-3">관광지 top 3</a>
+		                      <h6 class="text-primary mb-0">관광지</h6>
+		                    </div>
+		                  </div>
+		                </div>
+		        
+		                <div class="col-lg-4">
+		                  <div class="media media-list-sm align-items-center bg-smoke mb-5 mb-lg-0">
+		                    <div class="media-img">
+		                      <img class="w-100 lazyestload" data-src="/user/img/cities/cities-sm-04.jpg" src="/user/img/cities/cities-sm-04.jpg" alt="Generic placeholder image">
+		                      <a href="/allRanking/userRankingList#location4" class="media-img-overlay"></a>
+		                    </div>
+		        
+		                    <div class="media-body ps-3">
+		                      <a href="/allRanking/userRankingList#location4" class="text-uppercase h6 text-dark hover-text-primary mb-3">숙소 top 3</a>
+		                      <h6 class="text-primary mb-0">숙소</h6>
+		                    </div>
+		                  </div>
+		                </div>
+		                
+		                 <div class="col-lg-4">
+		                  <div class="media media-list-sm align-items-center bg-smoke mb-5 mb-lg-0">
+		                    <div class="media-img">
+		                      <img class="w-100 lazyestload" data-src="/user/img/cities/cities-sm-04.jpg" src="/user/img/cities/cities-sm-04.jpg" alt="Generic placeholder image">
+		                      <a href="/allRanking/userRankingList#location3" class="media-img-overlay"></a>
+		                    </div>
+		        
+		                    <div class="media-body ps-3">
+		                      <a href="/allRanking/userRankingList#location3" class="text-uppercase h6 text-dark hover-text-primary mb-3">음식점 top 3</a>
+		                      <h6 class="text-primary mb-0">음식점</h6>
+		                    </div>
+		                  </div>
+		                </div>
+		              </div>
+		            </div>
+		          </div>
+		        </div>
+		      </div>
+		    </div>
+		
+		    <div class="mb-9">
+		      <div class="row">
+		        <div class="col-md-6">
+		          <div class="media media-list-view-sm flex-column mb-5 mb-md-0">
+		            <div class="media-img position-relative mb-5">
+		              <img class="w-100 rounded lazyestload" data-src="/user/img/cities/cities-big-03.jpg" src="/user/img/cities/cities-big-03.jpg" alt="Generic placeholder image">
+		              <a class="media-img-overlay rounded badge-hover d-flex flex-column" href="/allRanking/planRankingList">
+		                <div class="badge badge-black-Offset badge-rounded position-relative">
+		                  <span class="d-block text-uppercase font-size-20">
+		                    다른회원의 여행계획 추천
+		                  </span>
+		                </div>
+		              </a>
+		            </div> 
+				  </div>
+				   <div class="mb-6 mb-lg-7">
+					<div class="media-body">
+		              <div class="row">
+		                <div class="col-lg-7">
+		                  <div class="media media-list-sm align-items-center bg-smoke">
+		                    <div class="media-img">
+		                      <img class="w-100 lazyestload" data-src="/user/img/cities/cities-sm-05.jpg" src="/user/img/cities/cities-sm-05.jpg" alt="Generic placeholder image">
+		                      <a href="/allRanking/planRankingList#location7" class="media-img-overlay"></a>
+		                    </div>
+		    
+		                    <div class="media-body ps-4">
+		                      <a href="/allRanking/planRankingList#location7" class="text-uppercase h4 text-dark hover-text-primary mb-3">여행계획 top 5</a>
+		                      <h4 class="text-primary mb-0">여행계획</h4>	                  
+		                    </div>
+		                  </div>
+		                </div>
+              		   </div>	            	 	                     
+			         </div>
+			        </div>
+				   </div>
+				
+					<!-- 사이드 nav -->
+					<div class="col-lg-6">
+						<div class="col-lg-12">
+								<div class="mb-0">
+									<ul class="nav nav-tabs nav-justified blog-tabs" id="myTab"
+										role="tablist">
+										<li class="nav-item"><a class="nav-link active"
+											id="recent-tab" data-bs-toggle="tab" href="#recent"
+											role="tab" aria-controls="recent" aria-selected="true">플랫폼 추천순위</a>
+										</li>
+	
+										<li class="nav-item"><a class="nav-link"
+											id="popular-tab" data-bs-toggle="tab" href="#popular"
+											role="tab" aria-controls="popular" aria-selected="false">회원추천 인기순위</a>
+										</li>
+										<li class="nav-item"><a class="nav-link" id="new-tab"
+											data-bs-toggle="tab" href="#new" role="tab"
+											aria-controls="new" aria-selected="false">여행계획 추천순위</a></li>
+									</ul>
+	
+									<div
+										class="tab-content bg-smoke border border-light-gray border-top-0 rounded-bottom px-3 py-5"
+										id="myTabContent">
+										<div class="tab-pane fade show active" id="recent"
+											role="tabpanel" aria-labelledby="recent-tab">
+											<div
+												class="media meta-post-sm border-bottom border-off-white pb-3 mb-3">
+												<div class="img-overlay rounded me-2">
+													<img class="lazyestload"
+														data-src="/user/img/blog/tab-01.jpg"
+														src="/user/img/blog/tab-01.jpg"
+														alt="Generic placeholder image"> <a
+														href="/allRanking/rankingList" class="hover-img-overlay-dark"></a>
+												</div>
+	
+												<div class="media-body">
+													<a href="/allRanking/rankingList"
+														class="text-dark hover-text-primary text-capitalize mb-1">
+														관광지 1위 </a>
+	
+													<ul class="list-unstyled d-flex flex-wrap mb-0">
+														<li class="meta-tag text-gray-color me-4 mb-1"><i
+															class="far fa-calendar-alt" aria-hidden="true"></i> <span
+															class="ms-1 text-capitalize">5 March, 2021</span></li>
+													</ul>
+												</div>
+											</div>
+	
+											<div
+												class="media meta-post-sm border-bottom border-off-white pb-3 mb-3">
+												<div class="img-overlay rounded me-2">
+													<img class="lazyestload"
+														data-src="/user/img/blog/tab-02.jpg"
+														src="/user/img/blog/tab-02.jpg"
+														alt="Generic placeholder image"> <a
+														href="/allRanking/rankingList" class="hover-img-overlay-dark"></a>
+												</div>
+	
+												<div class="media-body">
+													<a href="/allRanking/rankingList"
+														class="text-dark hover-text-primary text-capitalize mb-1">
+														관광지 2위 </a>
+	
+													<ul class="list-unstyled d-flex flex-wrap mb-0">
+														<li class="meta-tag text-gray-color me-4 mb-1"><i
+															class="far fa-calendar-alt" aria-hidden="true"></i> <span
+															class="ms-1 text-capitalize">5 March, 2021</span></li>
+													</ul>
+												</div>
+											</div>
+																							
+											<div class="media meta-post-sm">
+												<div class="img-overlay rounded me-2">
+													<img class="lazyestload"
+														data-src="/user/img/blog/tab-04.jpg"
+														src="/user/img/blog/tab-04.jpg"
+														alt="Generic placeholder image"> <a
+														href="/allRanking/rankingList" class="hover-img-overlay-dark"></a>
+												</div>
+	
+												<div class="media-body">
+													<a href="/allRanking/rankingList"
+														class="text-dark hover-text-primary text-capitalize mb-1">
+														관광지 3위 </a>
+	
+													<ul class="list-unstyled d-flex flex-wrap mb-0">
+														<li class="meta-tag text-gray-color me-4 mb-1"><i
+															class="far fa-calendar-alt" aria-hidden="true"></i> <span
+															class="ms-1 text-capitalize">5 March, 2021</span></li>
+													</ul>
+												</div>
+											</div>
+										</div>
+	
+										<div class="tab-pane fade" id="popular" role="tabpanel"
+											aria-labelledby="popular-tab">
+											<div
+												class="media meta-post-sm border-bottom border-off-white pb-3 mb-3">
+												<div class="img-overlay rounded me-2">
+													<img class="lazyestload"
+														data-src="/user/img/blog/tab-04.jpg"
+														src="/user/img/blog/tab-04.jpg"
+														alt="Generic placeholder image"> <a
+														href="/allRanking/userRankingList" class="hover-img-overlay-dark"></a>
+												</div>
+	
+												<div class="media-body">
+													<a href="/allRanking/userRankingList"
+														class="text-dark hover-text-primary text-capitalize mb-1">
+														관광지 1위 </a>
+	
+													<ul class="list-unstyled d-flex flex-wrap mb-0">
+														<li class="meta-tag text-gray-color me-4 mb-1"><i
+															class="far fa-calendar-alt" aria-hidden="true"></i> <span
+															class="ms-1 text-capitalize">5 March, 2021</span></li>
+													</ul>
+												</div>
+											</div>
+	
+											<div
+												class="media meta-post-sm border-bottom border-off-white pb-3 mb-3">
+												<div class="img-overlay rounded me-2">
+													<img class="lazyestload"
+														data-src="/user/img/blog/tab-03.jpg"
+														src="/user/img/blog/tab-03.jpg"
+														alt="Generic placeholder image"> <a
+														href="/allRanking/userRankingList" class="hover-img-overlay-dark"></a>
+												</div>
+	
+												<div class="media-body">
+													<a href="/allRanking/userRankingList"
+														class="text-dark hover-text-primary text-capitalize mb-1">
+														관광지 2위 </a>
+	
+													<ul class="list-unstyled d-flex flex-wrap mb-0">
+														<li class="meta-tag text-gray-color me-4 mb-1"><i
+															class="far fa-calendar-alt" aria-hidden="true"></i> <span
+															class="ms-1 text-capitalize">5 March, 2021</span></li>
+													</ul>
+												</div>
+											</div>
+																					
+											<div class="media meta-post-sm">
+												<div class="img-overlay rounded me-2">
+													<img class="lazyestload"
+														data-src="/user/img/blog/tab-01.jpg"
+														src="/user/img/blog/tab-01.jpg"
+														alt="Generic placeholder image"> <a
+														href="/allRanking/userRankingList" class="hover-img-overlay-dark"></a>
+												</div>
+	
+												<div class="media-body">
+													<a href="/allRanking/userRankingList"
+														class="text-dark hover-text-primary text-capitalize mb-1">
+														관광지 3위 </a>
+	
+													<ul class="list-unstyled d-flex flex-wrap mb-0">
+														<li class="meta-tag text-gray-color me-4 mb-1"><i
+															class="far fa-calendar-alt" aria-hidden="true"></i> <span
+															class="ms-1 text-capitalize">5 March, 2021</span></li>
+													</ul>
+												</div>	
+											</div>
+										</div>
+	
+										<div class="tab-pane fade" id="new" role="tabpanel"
+											aria-labelledby="new-tab">
+											<div
+												class="media meta-post-sm border-bottom border-off-white pb-3 mb-3">
+												<div class="img-overlay rounded me-2">
+													<img class="lazyestload"
+														data-src="/user/img/blog/tab-02.jpg"
+														src="/user/img/blog/tab-02.jpg"
+														alt="Generic placeholder image"> <a
+														href="/allRanking/planRankingList" class="hover-img-overlay-dark"></a>
+												</div>
+	
+												<div class="media-body">
+													<a href="/allRanking/planRankingList"
+														class="text-dark hover-text-primary text-capitalize mb-1">
+														여행계획 1위 </a>
+	
+													<ul class="list-unstyled d-flex flex-wrap mb-0">
+														<li class="meta-tag text-gray-color me-4 mb-1"><i
+															class="far fa-calendar-alt" aria-hidden="true"></i> <span
+															class="ms-1 text-capitalize">5 March, 2021</span></li>
+													</ul>
+												</div>
+											</div>
+	
+											<div
+												class="media meta-post-sm border-bottom border-off-white pb-3 mb-3">
+												<div class="img-overlay rounded me-2">
+													<img class="lazyestload"
+														data-src="/user/img/blog/tab-04.jpg"
+														src="/user/img/blog/tab-04.jpg"
+														alt="Generic placeholder image"> <a
+														href="/allRanking/planRankingList" class="hover-img-overlay-dark"></a>
+												</div>
+	
+												<div class="media-body">
+													<a href="/allRanking/planRankingList"
+														class="text-dark hover-text-primary text-capitalize mb-1">
+														여행계획 2위 </a>
+	
+													<ul class="list-unstyled d-flex flex-wrap mb-0">
+														<li class="meta-tag text-gray-color me-4 mb-1"><i
+															class="far fa-calendar-alt" aria-hidden="true"></i> <span
+															class="ms-1 text-capitalize">5 March, 2021</span></li>
+													</ul>
+												</div>
+											</div>
+	
+											<div
+												class="media meta-post-sm border-bottom border-off-white pb-3 mb-3">
+												<div class="img-overlay rounded me-2">
+													<img class="lazyestload"
+														data-src="/user/img/blog/tab-01.jpg"
+														src="/user/img/blog/tab-01.jpg"
+														alt="Generic placeholder image"> <a
+														href="/allRanking/planRankingList" class="hover-img-overlay-dark"></a>
+												</div>
+	
+												<div class="media-body">
+													<a href="/allRanking/planRankingList"
+														class="text-dark hover-text-primary text-capitalize mb-1">
+														여행계획 3위 </a>
+	
+													<ul class="list-unstyled d-flex flex-wrap mb-0">
+														<li class="meta-tag text-gray-color me-4 mb-1"><i
+															class="far fa-calendar-alt" aria-hidden="true"></i> <span
+															class="ms-1 text-capitalize">5 March, 2021</span></li>
+													</ul>
+												</div>
+											</div>
+	
+											<div class="media meta-post-sm border-bottom border-off-white pb-3 mb-3">
+												<div class="img-overlay rounded me-2">
+													<img class="lazyestload"
+														data-src="/user/img/blog/tab-03.jpg"
+														src="/user/img/blog/tab-03.jpg"
+														alt="Generic placeholder image"> <a
+														href="/allRanking/planRankingList" class="hover-img-overlay-dark"></a>
+												</div>
+	
+												<div class="media-body">
+													<a href="/allRanking/planRankingList"
+														class="text-dark hover-text-primary text-capitalize mb-1">
+														여행계획 4위 </a>
+	
+													<ul class="list-unstyled d-flex flex-wrap mb-0">
+														<li class="meta-tag text-gray-color me-4 mb-1"><i
+															class="far fa-calendar-alt" aria-hidden="true"></i> <span
+															class="ms-1 text-capitalize">5 March, 2021</span></li>
+													</ul>
+												</div>
+											</div>
+											
+												<div class="media meta-post-sm">
+												<div class="img-overlay rounded me-2">
+													<img class="lazyestload"
+														data-src="/user/img/blog/tab-03.jpg"
+														src="/user/img/blog/tab-03.jpg"
+														alt="Generic placeholder image"> <a
+														href="/allRanking/planRankingList" class="hover-img-overlay-dark"></a>
+												</div>
+	
+												<div class="media-body">
+													<a href="/allRanking/planRankingList"
+														class="text-dark hover-text-primary text-capitalize mb-1">
+														여행계획 5위 </a>
+	
+													<ul class="list-unstyled d-flex flex-wrap mb-0">
+														<li class="meta-tag text-gray-color me-4 mb-1"><i
+															class="far fa-calendar-alt" aria-hidden="true"></i> <span
+															class="ms-1 text-capitalize">5 March, 2021</span></li>
+													</ul>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- 사이드 nav 끝 -->
+				</div>
+		       </div>
+        
+	        
+	       	
+		
+		    <ul class="list-unstyled d-flex flex-column flex-md-row text-center justify-content-center mb-0">
+		      <li class="mb-5 mb-md-0 me-md-3">
+		        <a href="/user/destination/tourCheck" class="btn btn-sm btn-outline-secondary text-uppercase py-2">다른 여행지</a>
+		      </li>
+		
+		      <li>
+		        <a href="/trip" class="btn btn-sm btn-outline-secondary text-uppercase py-2">메인으로</a>
+		      </li>
+		    </ul>
+		  </div>
+		</section>
+	</th:block>
+
+</html>

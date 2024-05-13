@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="ksmart.ks50team01.platform.destination.mapper.DestinationMapper">
+					
+		
+
+	<select id="getTourInfoList" resultType="destination">
+		
+		/* 관광지 정보 조회 */
+
+		SELECT
+			TOUR_INFO_CD	AS	tourInfoCode,
+			REG_PF_BIZ_ID	AS	tourAuthorityId,
+			TOUR_NAME		AS	tourName,
+			TOUR_ADDR		AS	tourAddr,
+			TOUR_SITE 		AS 	tourSite,
+			TOUR_CONTATC1	AS	tourContectNum,
+			REG_YMD			AS	tourRegDate,
+			MDFCN_YMD		AS	tourFormDate
+		FROM
+			TOUR_INFO;
+	
+	</select>
+	
+	<select id="getTourGoodsList" resultType="destination">
+		/* 관광지 옵션 조회 */
+			SELECT
+				tg.TOUR_GDS_CTGRY			AS	tourGoodsCate,
+				tgo.TOUR_GDSOPT_LIST		AS	tourGoodsList,
+				tgo.TOUR_GDSOPT_TIME		AS 	tourGoodsTime,
+				tgo.RGN_SCTGRY_NM			AS 	RegionSCate,
+				tg.REG_PF_BIZ_ID			AS 	tourgoodsAuthorityId,
+				tg.TOUR_GDS_CD				AS	tourGoodsCode,
+				tgo.TOUR_GDSOPT_CD			AS  tourGoodsOptionCd,		 	
+				tgo.TOUR_GDSOPT_RMRK		AS  tourOptionRemarks,
+				tg.FAVS_TOTAL				AS  tourTotal,
+				tgo.REG_YMD					AS  tourRegDate,
+				tgo.MDFCN_YMD				AS  tourFormDate	
+				
+				
+			FROM
+				TOUR_GOODS AS tg
+				INNER JOIN
+				TOUR_GOODSOPTION AS tgo
+				ON 
+				tg.TOUR_GDS_CD = tgo.TOUR_GDS_CD;
+	
+	</select>
+	
+	<select id="getLodgingInfoList" resultType="destination">
+		/* 숙소 정보 */
+			SELECT
+				LODGING_INFO_CD		AS	lodgingInfoCode,
+				REG_PF_BIZ_ID		AS 	lodgingAuthorityId,
+				LODGING_NAME		AS 	lodgingName,
+				LODGING_ADDR		AS 	lodgingAddr,
+				LODGING_CONTACT1	AS 	lodgingContectNum,
+				LODGING_SITE		AS 	lodgingSite,
+				REG_YMD				AS 	lodgingRegDate,
+				MDFCN_YMD			AS 	lodgingFormDate
+			FROM
+				LODGING_INFO;
+	</select>
+	<select id="getLodgingGoodsList" resultType="destination">
+		/* 숙소상품 정보 */
+			SELECT
+				lm.LODGING_MENU_CD AS lodgingMenuCode
+			FROM
+				LODGING_MENU AS lm
+				INNER JOIN
+				LODGING_INFO li
+				ON
+				lm.LODGING_INFO_CD = li.LODGING_INFO_CD;
+					
+	
+	</select>	
+	
+	<select id="getRestaurantInfoList" resultType="destination">
+		/* 식당 정보 */
+	
+			SELECT
+				RSTRN_INFO_CD	AS 	restaurantInfoCode,
+				REG_PF_BIZ_ID 	AS 	restaurantAuthorityId,
+				RSTRN_NAME		AS	restaurantName,
+				RSTRN_ADDR		AS	restaurantAddr,
+				RSTRN_CONTACT	AS	restaurantContectNum,
+				RSTRN_SITE		AS 	restaurantSite,
+				REG_YMD			AS 	restaurantRegDate,
+				MDFCN_YMD		AS 	restaurantFormDate
+			FROM
+				RESTAURANT_INFO;
+	</select>
+	<select id="getRestaurantMenuList" resultType="destination">
+		/* 식당메뉴 정보 */
+		SELECT
+			ri.RSTRN_NAME 	AS restaurantName,
+			rm.RSTRN_MENU 	AS restaurantMenu
+		FROM
+			RESTAURANT_INFO AS ri
+			INNER JOIN
+			RESTAURANT_MENU AS rm
+			ON
+			ri.RSTRN_INFO_CD = rm.RSTRN_INFO_CD;
+	</select>
+
+	
+
+
+</mapper>  

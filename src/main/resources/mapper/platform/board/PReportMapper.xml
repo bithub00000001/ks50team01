@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ksmart.ks50team01.platform.board.mapper.PReportMapper">
+	
+	<resultMap id="reportResultMap" type="PReport">
+		<id 	property="reportNum" 		column="PST_CMNT_REPT_NO" />
+		<result property="reportId" 		column="REPORT_MBR_ID" />
+		<result property="reportCate" 		column="REPT_CTGRY_NO" />
+		<result property="postCmntNum" 		column="PST_PST_CMNT_NO" />
+		<result property="reportContent" 	column="PST_CMNT_REPT_CN" />
+		<result property="reportDate" 		column="PST_CMNT_REPT_YMD" />
+		<result property="reportedId" 		column="REPORTED_MBR_ID" />
+		<result property="approveId" 		column="APRV_PF_ID" />
+		<result property="reportApprove" 	column="PST_CMNT_REPT_APRV" />
+		<result property="approveDate" 		column="PST_CMNT_REPT_APRV_YMD" />
+	
+	</resultMap>
+	
+	
+
+	<select id="getReportList" resultMap="reportResultMap">
+	 	/* 신고내역 조회 */			
+		SELECT 
+			PST_CMNT_REPT_NO,
+			REPORT_MBR_ID,
+			REPT_CTGRY_NO,
+			PST_PST_CMNT_NO,
+			PST_CMNT_REPT_CN,
+			PST_CMNT_REPT_YMD,
+			REPORTED_MBR_ID,
+			APRV_PF_ID,
+			PST_CMNT_REPT_APRV,
+			PST_CMNT_REPT_APRV_YMD
+
+		FROM 
+			REPORT_HISTORY;
+	</select>
+
+	
+</mapper>

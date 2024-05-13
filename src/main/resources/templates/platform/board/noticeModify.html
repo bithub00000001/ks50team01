@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+		     	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		      	layout:decorate="~{platform/layout/default}">
+		      	
+<th:block layout:fragment="customContent">
+    <div class="col-md-12 col-sm-6 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h3>공지사항 수정</h3>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <form id="modifyForm" th:action="@{/platform/board/noticeModify}" method="post">
+                    <div class="form-group">
+                        <label for="noticeCategory">카테고리</label>
+                        <select class="form-control" id="noticeCategory" name="noticeCategory" th:value="${noticeCateNum}">
+                            <option value="general">일반 공지</option>
+                            <option value="urgent">긴급 공지</option>
+                            <option value="schedule">예정 공지</option>
+                            <option value="system">시스템 공지</option>
+                            <option value="event">이벤트 공지</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="noticeTitle">제목</label>
+                        <input type="text" class="form-control" id="noticeTitle" name="noticeTitle" th:value="${noticeTitle}">
+                    </div>
+                
+                    <div class="form-group">
+                        <label for="noticeContent">내용</label>
+                        <textarea class="form-control" id="noticeContent" name="noticeContent" rows="5" th:text="${noticeContent}"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">저장</button>
+                    <button type="button" class="btn btn-secondary" onclick="location.href='/platform/board/noticeList'">취소</button>
+                
+                </form>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+<th:block layout:fragment="customJsFile">
+
+
+</th:block>
+</html>

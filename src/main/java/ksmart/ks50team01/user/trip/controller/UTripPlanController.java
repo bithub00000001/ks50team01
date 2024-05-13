@@ -3,6 +3,7 @@ package ksmart.ks50team01.user.trip.controller;
 import java.time.format.DateTimeParseException;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ksmart.ks50team01.user.trip.dto.UTripOption;
+import ksmart.ks50team01.user.trip.service.UTourDataService;
 import ksmart.ks50team01.user.trip.service.UTripPlanService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +25,10 @@ import lombok.extern.slf4j.Slf4j;
 public class UTripPlanController {
 
     private final UTripPlanService uTripPlanService;
+    private final UTourDataService uTourDataService;
+
+    @Value("${tour.api.key}")
+    private String apiKey;
 
     @GetMapping("/plan")
     public String tripPlanPage(Model model){
@@ -69,7 +75,17 @@ public class UTripPlanController {
     @GetMapping("/list")
     public String planListPage(Model model){
 
+        // uTourDataService.upsertSigunguData(apiKey);
         model.addAttribute("title", "내 여행 계획 목록");
         return "user/trip/planList";
+    }
+
+    @GetMapping("/schedule")
+    public String planSchedulePage(Model model){
+
+        // uTourDataService.upsertAreaData(apiKey);
+        model.addAttribute("title", "여행 스케줄");
+
+        return "user/trip/planSchedule";
     }
 }

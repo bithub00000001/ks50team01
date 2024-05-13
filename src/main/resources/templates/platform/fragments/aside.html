@@ -47,11 +47,11 @@
                             <span class="fa fa-chevron-down"></span>
                         </a>
                         <ul class="nav child_menu">
-                            <li><a href="#">?카테고리 관리</a></li>
-                            <li><a href="#">?관광지 관리</a></li>
-                            <li><a href="#">?숙소 관리</a></li>
-                            <li><a href="#">?음식점 관리</a></li>
-                            <li><a href="#">?여행지 일괄 등록</a></li>
+                            <li><a href="/platform/destination/categoryManage">?카테고리 관리</a></li>
+                            <li><a href="/platform/destination/tourManage">?관광지 관리</a></li>
+                            <li><a href="/platform/destination/lodgingManage">?숙소 관리</a></li>
+                            <li><a href="/platform/destination/restaurantManage">?음식점 관리</a></li>
+                            <li><a href="/platform/destination/destinationRegister">?여행지 일괄 등록</a></li>
                         </ul>
                     </li>
 
@@ -62,63 +62,55 @@
                     		<span class="fa fa-chevron-down"></span>
                    		</a>
                         <ul class="nav child_menu">
-                            <li><a href="#">?무엇이</a></li>
+                            <li><a th:href="@{/platform/plan/list}">여행 계획 목록 조회</a></li>
                             <li><a href="#">?필요한가</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                    	<a>
-                    		<i class="fa fa-bar-chart-o"></i>
-                    		?4.결재내역 관리-무열
-                    		<span class="fa fa-chevron-down"></span>
-                   		</a>
-                        <ul class="nav child_menu">
-                            <li><a href="#">?무엇을</a></li>
-                            <li><a href="#">?넣어드릴까?</a></li>
                         </ul>
                     </li>
                     <li>
                         <a>
                             <i class="fa fa-bug"></i>
-                            ?5.후기 관리-유희
+                            4.후기 관리-유희
                             <span class="fa fa-chevron-down"></span>
                         </a>
                         <ul class="nav child_menu">
-                            <li><a href="#">카테고리 관리</a></li>
-                            <li><a href="#">여행상품 리뷰 관리</a></li>
-                            <li><a href="#">여행계획 리뷰 관리</a></li>
-                            <li><a href="#">리뷰 신고내역 관리</a></li>
+                            <li><a th:href="@{/platform/review/list}">상품 리뷰 목록 관리</a></li>
+                            <li><a th:href="@{/platform/review/react}">상품 리뷰 좋아요 싫어요 기록 목록 관리</a></li>
+                            <li><a th:href="@{/platform/review/report/list}">상품 리뷰 신고 목록 관리</a></li>
+                            <li><a th:href="@{/platform/review/total/list}">상품 리뷰 신고 누적 관리</a></li>
+                            <li><a th:href="@{/platform/review/comment/list}">답글 리뷰 목록 관리</a></li>
                         </ul>
                     </li>
                     <li>
                         <a>
                             <i class="fa fa-desktop"></i>
-                            ?6.플랫폼 운영-윤
+                            5.플랫폼 운영-윤
                             <span class="fa fa-chevron-down"></span>
                         </a>
                         <ul class="nav child_menu">
-                            <li><a href="#">?카테고리 관리</a></li>
+                            <li><a th:href="@{/platform/board/communityList}">커뮤니티 관리</a></li>
                             <li><a th:href="@{/platform/board/noticeList}">공지사항 관리</a></li>
                             <li><a th:href="@{/platform/board/faqList}">자주찾는 질문 관리</a></li>
                             <li><a th:href="@{/platform/board/qnaList}">1:1문의 관리</a></li>
-                            <li><a href="#">?게시판 관리</a></li>
-                            <li><a href="#">?게시판 신고내역 관리</a></li>
+                            <li><a th:href="@{/platform/board/categoryList}">카테고리 관리</a></li>
+                            <li><a th:href="@{/platform/board/reportList}">게시판 신고내역 관리</a></li>
                         </ul>
                     </li>
                     <li>
                     	<a>
                     		<i class="fa fa-windows"></i>
-                    		?7.추천 관리-창우
+                    		?6.추천 관리-창우
                     		<span class="fa fa-chevron-down"></span>
                    		</a>
                         <ul class="nav child_menu">
-                            <li><a href="#">Pricing Tables</a></li>
+                            <li><a th:href="@{/platform/ranking/rankingList}">?플랫폼 추천 관리</a></li>
+                            <li><a href="#">?회원 추천 관리</a></li>
+                            <li><a href="#">?여행계획 추천 관리</a></li>
                         </ul>
                     </li>
 					<li>
                     	<a>
                     		<i class="fa fa-windows"></i>
-                    		8.통계 분석-성민
+                    		7.통계 분석-성민
                     		<span class="fa fa-chevron-down"></span>
                    		</a>
                         <ul class="nav child_menu">

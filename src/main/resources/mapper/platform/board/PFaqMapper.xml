@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ksmart.ks50team01.platform.board.mapper.PFaqMapper">
+	
+	<resultMap id="faqResultMap" type="PFaq">
+		<id property="faqNum" 			column="FAQ_NO" />
+		<result property="faqRegId" 	column="REG_PF_ID" />
+		<result property="faqCateNum" 	column="FAQ_CTGRY_NO" />
+		<result property="faqTitle" 	column="FAQ_TTL" />
+		<result property="faqContent" 	column="FAQ_CN" />
+		<result property="faqMdfId" 	column="MDFCN_PF_ID" />
+		<result property="faqAct" 		column="ACT_YN" />
+		<result property="faqRegDate" 	column="REG_YMD" />
+		<result property="faqMdfDate" 	column="MDFCN_YMD" />
+		
+		<!-- 1:1 association -->
+		<association property="faqCate" javaType="PFaq">
+			<id 		property="faqCateNum" 		column="FAQ_CTGRY_NO"/>
+			<result 	property="faqRegId" 		column="REG_PF_ID"/>
+			<result 	property="faqCateType" 		column="FAQ_CTGRY_TYPE"/>
+			<result 	property="faqMdfId" 		column="MDFCN_PF_ID"/>
+			<result 	property="faqAct" 			column="ACT_YN"/>
+			<result 	property="faqRegDate" 		column="REG_YMD"/>
+			<result 	property="faqMdfDate" 		column="MDFCN_YMD"/>
+		</association> 
+	</resultMap>
+
+	<select id="getFaqList" resultMap="faqResultMap">
+	 	/* 자주찾는질문 조회 */
+		SELECT 
+			F.FAQ_NO, 
+			F.REG_PF_ID, 
+			C.FAQ_CTGRY_TYPE,
+			F.FAQ_TTL, 
+			F.FAQ_CN, 
+			F.MDFCN_PF_ID,
+			F.ACT_YN, 
+			F.REG_YMD, 
+			F.MDFCN_YMD
+		FROM 
+			FREQUENTLY_ASKED_QUESTIONS AS F
+			INNER JOIN
+			FAQ_CATEGORY AS C
+			ON
+			F.FAQ_CTGRY_NO = C.FAQ_CTGRY_NO;
+	</select>
+
+	
+</mapper>

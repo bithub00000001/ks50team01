@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+                layout:decorate="~{user/layout/default}">
+                
+	<head>
+	    <title>게시글 상세 페이지</title>
+	    <th:block layout:fragment="customCss">
+	        <link th:href="@{/user/css/postWrite.css}" rel="stylesheet">
+	    </th:block>
+	
+	</head>
+
+	<th:block layout:fragment="customPageSection">
+	<!-- 게시물 내용을 보여주는 컨테이너 -->
+	    <div class="card mb-4">
+	        <div class="card-body">
+	            <h2 class="card-title" th:text="${postTitle}">게시물 제목</h2>
+	            <p class="card-text" th:text="${postContent}">게시물 내용이 여기에 표시됩니다.</p>
+	        </div>
+	    </div>
+	
+	    <!-- 댓글 창 -->
+	    <div class="card mb-4">
+	        <div class="card-body">
+	            <h2 class="card-title">댓글</h2>
+	            <form th:action="@{/comment}" method="post">
+	                <textarea class="form-control mb-3" name="comment" rows="4" placeholder="댓글을 입력하세요"></textarea>
+	                <input type="hidden" name="postId" th:value="${postId}">
+	                <button type="submit" class="btn btn-primary">댓글 남기기</button>
+	            </form>
+	        </div>
+	    </div>
+	
+	    <!-- 댓글 목록 -->
+	    <div class="card mb-4">
+	        <div class="card-body">
+	            <h3 class="card-title">댓글 목록</h3>
+	            <div th:each="comment : ${comments}" class="mb-3">
+	                <div class="card">
+	                    <div class="card-body">
+	                        <h5 class="card-title" th:text="${comment.author}">댓글 작성자</h5>
+	                        <p class="card-text" th:text="${comment.content}">댓글 내용</p>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	
+	    <!-- 뒤로 가기 버튼 -->
+	    <button onclick="goBack()" class="btn btn-secondary">뒤로 가기</button>
+	
+	
+	</th:block>
+	<th:block layout:fragment="customJs">
+	    <script>
+	        // 뒤로 가기 함수
+	        function goBack() {
+	            window.history.back();
+	        }
+	    </script>
+	
+	</th:block>
+
+</html>
