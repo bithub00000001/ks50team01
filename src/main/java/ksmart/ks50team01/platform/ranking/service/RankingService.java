@@ -15,17 +15,26 @@ import lombok.RequiredArgsConstructor;
 public class RankingService {
 
 	private final RankingMapper rankingMapper;
-	
-	public void modifyRanking(Ranking ranking) {
-		rankingMapper.modifyRanking(ranking);
+
+	public Ranking getRankingInfoById(String pRankingNum) {
+		
+		return rankingMapper.getMemberInfoById(pRankingNum);
+	}
+	/**
+	 * 플랫폼 추천 리스트 중복체크
+	 * @param pRankingNum
+	 * @return
+	 */
+	public boolean rankingListCheck(String pRankingNum) {
+		return rankingMapper.rankingListCheck(pRankingNum);
 	}
 	
 	/**
 	 * 플랫폼 추천 리스트 등록
 	 * @param ranking
 	 */
-	public void addRanking(Ranking ranking) {
-		rankingMapper.addRanking(ranking);
+	public int addRanking(Ranking ranking) {
+		return rankingMapper.addRanking(ranking);
 	}
 	
 	/**
