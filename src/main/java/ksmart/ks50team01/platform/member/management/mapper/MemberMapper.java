@@ -1,4 +1,4 @@
-ㅑㅜㅅpackage ksmart.ks50team01.platform.member.management.mapper;
+package ksmart.ks50team01.platform.member.management.mapper;
 
 import java.util.List;
 
