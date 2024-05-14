@@ -16,8 +16,11 @@
 			REG_PF_BIZ_ID	AS	tourAuthorityId,
 			TOUR_NAME		AS	tourName,
 			TOUR_ADDR		AS	tourAddr,
+			TOUR_DADDR		AS  tourDaddr,
 			TOUR_SITE 		AS 	tourSite,
 			TOUR_CONTATC1	AS	tourContectNum,
+			TOUR_CONTATC2	AS	tourContectNum2,
+			TOUR_OTHERS		AS	tourOthers,
 			REG_YMD			AS	tourRegDate,
 			MDFCN_YMD		AS	tourFormDate
 		FROM
@@ -25,30 +28,109 @@
 	
 	</select>
 	
+	<select id="getTourInfoByName" resultType="destination">
+	
+			SELECT
+				TOUR_INFO_CD	AS	tourInfoCode,
+				REG_PF_BIZ_ID	AS	tourAuthorityId,
+				TOUR_NAME		AS	tourName,
+				TOUR_ADDR		AS	tourAddr,
+				TOUR_DADDR		AS  tourDaddr,
+				TOUR_SITE 		AS 	tourSite,
+				TOUR_CONTATC1	AS	tourContectNum,
+				TOUR_CONTATC2	AS	tourContectNum2,
+				TOUR_OTHERS		AS	tourOthers,
+				REG_YMD			AS	tourRegDate,
+				MDFCN_YMD		AS	tourFormDate
+			FROM
+				TOUR_INFO
+			where 
+				TOUR_INFO_CD = #{tourInfoCode}
+		
+	</select>
+	
+	<update id="updateTour" parameterType="destination">
+		/* 관광지 수정 */
+			
+			UPDATE TOUR_INFO
+			SET
+				TOUR_NAME = #{tourName},
+				TOUR_ADDR = #{tourAddr},
+				TOUR_DADDR = #{tourDaddr},
+				TOUR_CONTATC1 = #{tourContectNum},
+				TOUR_CONTATC2 = #{tourContectNum2},
+				TOUR_SITE = #{tourSite},
+				TOUR_OTHERS = #{tourOthers},
+				MDFCN_YMD = NOW()
+			WHERE
+				TOUR_INFO_CD = #{tourInfoCode}
+		
+		
+	
+	</update>
+	
 	<select id="getTourGoodsList" resultType="destination">
 		/* 관광지 옵션 조회 */
 			SELECT
-				tg.TOUR_GDS_CTGRY			AS	tourGoodsCate,
-				tgo.TOUR_GDSOPT_LIST		AS	tourGoodsList,
-				tgo.TOUR_GDSOPT_TIME		AS 	tourGoodsTime,
-				tgo.RGN_SCTGRY_NM			AS 	RegionSCate,
-				tg.REG_PF_BIZ_ID			AS 	tourgoodsAuthorityId,
-				tg.TOUR_GDS_CD				AS	tourGoodsCode,
-				tgo.TOUR_GDSOPT_CD			AS  tourGoodsOptionCd,		 	
-				tgo.TOUR_GDSOPT_RMRK		AS  tourOptionRemarks,
-				tg.FAVS_TOTAL				AS  tourTotal,
-				tgo.REG_YMD					AS  tourRegDate,
-				tgo.MDFCN_YMD				AS  tourFormDate	
-				
-				
+				ti.TOUR_NAME				AS 		tourName,
+				tg.TOUR_GDS_CTGRY			AS		tourGoodsCate,
+				tgo.TOUR_GDSOPT_LIST		AS		tourGoodsList,
+				tgo.TOUR_GDSOPT_TIME		AS 		tourGoodsTime,
+				tgo.RGN_SCTGRY_NM			AS 		RegionSCate,
+				tg.REG_PF_BIZ_ID			AS 		tourgoodsAuthorityId,
+				tg.TOUR_GDS_CD				AS		tourGoodsCode,
+				tgo.TOUR_GDSOPT_CD			AS  	tourGoodsOptionCd,		 	
+				tgo.TOUR_GDSOPT_RMRK		AS  	tourOptionRemarks,
+				tg.FAVS_TOTAL				AS  	tourTotal,
+				tgo.REG_YMD					AS  	tourRegDate,
+				tgo.MDFCN_YMD				AS  	tourFormDate	
 			FROM
-				TOUR_GOODS AS tg
+				TOUR_GOODS AS tg 
 				INNER JOIN
-				TOUR_GOODSOPTION AS tgo
+				TOUR_GOODSOPTION AS tgo 
 				ON 
-				tg.TOUR_GDS_CD = tgo.TOUR_GDS_CD;
+				tg.TOUR_GDS_CD = tgo.TOUR_GDS_CD
+				INNER JOIN 
+				TOUR_INFO AS ti
+				ON 
+				tg.TOUR_INFO_CD = ti.TOUR_INFO_CD;
 	
 	</select>
+	
+	<select id="getLodgingInfoById" resultType="destination">
+		SELECT
+				LODGING_INFO_CD		AS	lodgingInfoCode,
+				REG_PF_BIZ_ID		AS 	lodgingAuthorityId,
+				LODGING_NAME		AS 	lodgingName,
+				LODGING_ADDR		AS 	lodgingAddr,
+				LODGING_CONTACT1	AS 	lodgingContactNum,
+				LODGING_CONTACT2	AS 	lodgingContactNum2,
+				LODGING_SITE		AS 	lodgingSite,
+				REG_YMD				AS 	lodgingRegDate,
+				MDFCN_YMD			AS 	lodgingFormDate
+			FROM
+				LODGING_INFO
+			WHERE
+				LODGING_INFO_CD = #{lodgingInfoCode}; 
+					
+	
+	</select>
+	
+	<update id="updateLodging" parameterType="destination">
+	
+	UPDATE LODGING_INFO
+	SET	
+		LODGING_NAME = #{lodgingName},
+		LODGING_ADDR = #{lodgingAddr},
+		LODGING_DADDR = #{lodgingDaddr},
+		LODGING_CONTACT1 = #{lodgingContactNum},
+		LODGING_CONTACT2 = #{lodgingContactNum2},
+		LODGING_SITE = #{lodgingSite},
+		LODGING_ETC = #{lodgingOthers},
+		MDFCN_YMD = NOW()
+	WHERE LODGING_INFO_CD = #{lodgingInfoCode}
+	
+	</update>
 	
 	<select id="getLodgingInfoList" resultType="destination">
 		/* 숙소 정보 */
@@ -57,13 +139,15 @@
 				REG_PF_BIZ_ID		AS 	lodgingAuthorityId,
 				LODGING_NAME		AS 	lodgingName,
 				LODGING_ADDR		AS 	lodgingAddr,
-				LODGING_CONTACT1	AS 	lodgingContectNum,
+				LODGING_CONTACT1	AS 	lodgingContactNum,
+				LODGING_CONTACT2	AS 	lodgingContactNum2,
 				LODGING_SITE		AS 	lodgingSite,
 				REG_YMD				AS 	lodgingRegDate,
 				MDFCN_YMD			AS 	lodgingFormDate
 			FROM
 				LODGING_INFO;
 	</select>
+	
 	<select id="getLodgingGoodsList" resultType="destination">
 		/* 숙소상품 정보 */
 			SELECT
@@ -86,7 +170,7 @@
 				REG_PF_BIZ_ID 	AS 	restaurantAuthorityId,
 				RSTRN_NAME		AS	restaurantName,
 				RSTRN_ADDR		AS	restaurantAddr,
-				RSTRN_CONTACT	AS	restaurantContectNum,
+				RSTRN_CONTACT	AS	restaurantContactNum,
 				RSTRN_SITE		AS 	restaurantSite,
 				REG_YMD			AS 	restaurantRegDate,
 				MDFCN_YMD		AS 	restaurantFormDate

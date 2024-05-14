@@ -8,8 +8,20 @@ import ksmart.ks50team01.platform.destination.dto.Destination;
 
 @Mapper
 public interface DestinationMapper {
+	
 	// 관광지 조회
 	List<Destination> getTourInfoList();
+	
+	// 관광지 수정
+	int updateTour(Destination destination);
+	
+	
+	Destination getTourInfoByName(String tourName);
+	//숙소 수정
+	
+	int updateLodging(Destination destination);
+	
+	Destination getLodgingInfoById(String lodgingName);
 	
 	//숙소 조회
 	List<Destination> getLodgingInfoList();
@@ -25,4 +37,8 @@ public interface DestinationMapper {
 	
 	//식당 메뉴 조회
 	List<Destination> getRestaurantMenuList();
+
+	
+
+	
 }
