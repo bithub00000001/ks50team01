@@ -6,15 +6,19 @@ import lombok.Data;
 public class PQna {
 	private String qnaNum;
 	private String qnaRegId;
-	private String faqCateNum;
-	private String qnaProNum;
+	private String faqCateType;
 	private String qnaProCate;
 	private String qnaTitle;
 	private String qnaContent;
 	private String ansRegId;
 	private String qnaRegDate;
 	private String qnaMdfDate;
-	private String qnartrDate;
+	private String qnartnDate;
+	
+	// 추가된 association을 위한 멤버 변수
+	private PFaq faqCate;
+	
+	private PAnswer answer;
 	
 
 }

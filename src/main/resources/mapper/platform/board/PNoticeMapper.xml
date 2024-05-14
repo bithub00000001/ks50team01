@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ksmart.ks50team01.platform.board.mapper.PNoticeMapper">
+	
+	<resultMap id="noticeResultMap" type="PNotice">
+		<id property="noticeNum"		 	column="NTC_NO" />
+		<result property="noticeRegId" 		column="REG_PF_ID" />
+		<result property="noticeCateNum"	column="NTC_CTGRY_NO" />
+		<result property="noticeTitle" 		column="NTC_TTL" />
+		<result property="noticeContent" 	column="NTC_CN" />
+		<result property="noticeInqCnt" 	column="NTC_INQ_CNT" />
+		<result property="noticeMdfId" 		column="MDFCN_PF_ID" />
+		<result property="noticeAct" 		column="ACT_YN" />
+		<result property="noticeRegDate" 	column="REG_YMD" />
+		<result property="noticeMdfDate" 	column="MDFCN_YMD" />
+		
+		<!-- 1:1 association -->
+		<association property="noticeCate" javaType="PNotice">
+			<id 		property="noticeCateNum" 		column="NTC_CTGRY_NO"/>
+			<result 	property="noticeRegId" 			column="REG_PF_ID"/>
+			<result 	property="noticeCateType" 		column="NTC_CTGRY_TYPE"/>
+			<result 	property="noticeMdfId" 			column="MDFCN_PF_ID"/>
+			<result 	property="noticeAct" 			column="ACT_YN"/>
+			<result 	property="noticeRegDate" 		column="REG_YMD"/>
+			<result 	property="noticeMdfDate" 		column="MDFCN_YMD"/>
+		</association> 
+	</resultMap>
+
+	<select id="getNoticeList" resultMap="noticeResultMap">
+	 	/* 공지사항 조회 */
+		SELECT
+            N.NTC_NO,
+            N.REG_PF_ID,
+            C.NTC_CTGRY_TYPE,
+            N.NTC_TTL,
+            N.NTC_CN,
+            N.NTC_INQ_CNT,
+            N.MDFCN_PF_ID,
+            N.ACT_YN, 
+            N.REG_YMD,
+            N.MDFCN_YMD
+		FROM 
+			NOTICE AS N
+			INNER JOIN
+			NOTICE_CATEGORY AS C
+			ON
+			N.NTC_CTGRY_NO = C.NTC_CTGRY_NO;
+	</select>
+
+
+    
+	
+</mapper>

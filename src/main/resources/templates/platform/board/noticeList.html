@@ -22,6 +22,12 @@
 	</head>
 
 	<th:block layout:fragment="customContent">
+		
+	
+	
+	
+	
+	
 		<!-- search start -->
 		<div class="row">
 			<div class="col-md-12 col-sm-12 col-xs-12">
@@ -116,58 +122,60 @@
 		</div>
 		<!-- search end -->
 		<!-- grid table start -->
-		<div class="row">
-			<div class="col-md-12 col-sm-12 col-xs-12">
-				<div class="x_panel">
-					<div class="x_content">
-						<table id="datatable-responsive"
-							class="table table-striped table-bordered dt-responsive nowrap"
-							cellspacing="0" width="100%">
-							<thead>
-								<tr>
-									<th>번호</th>
-									<th>작성자</th>
-									<th>카테고리번호</th>
-									<th>제목</th>
-									<th>내용</th>
-									<th>조회수</th>
-									<th>수정자</th>
-									<th>활성화여부</th>
-									<th>등록일</th>
-									<th>수정일</th>
-									<th>수정</th>
-									<th>삭제</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr th:unless="${noticeList != null}">
-									<td colspan="10">등록된 공지사항이 없습니다.</td>
-								</tr>
-								<tr th:if="${noticeList != null}" th:each="l : ${noticeList}">
-									<td th:text="${l.noticeNum}"></td>
-									<td th:text="${l.noticeRegId}"></td>
-									<td th:text="${l.noticeCateNum}"></td>
-									<td th:text="${l.noticeTitle}"></td>
-									<td th:text="${l.noticeContent}"></td>
-									<td th:text="${l.noticeInqCnt}"></td>
-									<td th:text="${l.noticeMdfId}"></td>
-									<td th:text="${l.noticeAct}"></td>
-									<td th:text="${l.noticeRegDate}"></td>
-									<td th:text="${l.noticeMdfDate}"></td>
-									<td>
-										<a th:href="@{/platform/board/noticeModify}">수정</a>
-									</td>
-									<td>
-										<a href="#">삭제</a>
-									</td>
-								</tr>
-							</tbody>
-						</table>
+	<div class="row">
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<div class="x_panel">
+				<div class="x_content">
+					<table id="datatable-responsive"
+						class="table table-striped table-bordered dt-responsive nowrap"
+						cellspacing="0" width="100%">
+						<thead>
+							<tr>
+								<th><input type="checkbox" id="checkAll" name="checkAll"></th>
+								<th>번호</th>
+								<th>작성자</th>
+								<th>카테고리</th>
+								<th>제목</th>
+								<th>내용</th>
+								<th>조회수</th>
+								<th>수정자</th>
+								<th>활성화여부</th>
+								<th>등록일</th>
+								<th>수정일</th>
+								<th>수정</th>
+								<th>삭제</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:unless="${noticeList != null}">
+								<td colspan="13" class="text-center">등록된 공지사항이 없습니다.</td>
+							</tr>
+							<tr th:if="${noticeList != null}" th:each="l : ${noticeList}">
+								<td><input type="checkbox" id="checkbox_${l.noticeNum}" name="noticeNum" th:value="${l.noticeNum}"></td>
+								<td th:text="${l.noticeNum}"></td>
+								<td th:text="${l.noticeRegId}"></td>
+								<td th:text="${l.noticeCate.noticeCateType}"></td>
+								<td th:text="${l.noticeTitle}"></td>
+								<td th:text="${l.noticeContent}"></td>
+								<td th:text="${l.noticeInqCnt}"></td>
+								<td th:text="${l.noticeMdfId}"></td>
+								<td th:text="${l.noticeAct}"></td>
+								<td th:text="${l.noticeRegDate}"></td>
+								<td th:text="${l.noticeMdfDate}"></td>
+								<td><a th:href="@{/platform/board/noticeModify}">수정</a></td>
+								<td><a href="#">삭제</a></td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="text-left">
+						<a th:href="@{/platform/board/noticeWrite}" class="btn btn-primary">추가</a>
+						<button type="button" class="btn btn-danger" id="deleteSelected">선택 삭제</button>
 					</div>
 				</div>
 			</div>
 		</div>
-		<!-- grid table end -->
+	</div>
+	<!-- grid table end -->
 	</th:block>
 	<th:block layout:fragment="customJsFile">
 		<!-- Datatables -->
@@ -190,7 +198,8 @@
 
 
 <th:block layout:fragment="customJs">
-
+	<script type="text/javascript" th:src="@{/platform/js/checkbox/categoryDel.js}"></script>
+	<script type="text/javascript" th:src="@{/platform/js/checkbox/selectedDel.js}"></script>
   	<script th:inline="javascript">
     document.addEventListener("DOMContentLoaded", function() {
         // 최신순과 조회순 버튼 요소 가져오기
@@ -233,6 +242,21 @@
         }
     });
     </script> 
+    
+    
+    
+   	<script>
+	    document.getElementById('checkAll').addEventListener('change', function() {
+	        var checkboxes = document.querySelectorAll('[id^=checkbox_]');
+	        checkboxes.forEach(function(checkbox) {
+	            checkbox.checked = document.getElementById('checkAll').checked;
+	        });
+	    });
+	</script>
+    
+    
+    
+    
 
 </th:block>
 </html>

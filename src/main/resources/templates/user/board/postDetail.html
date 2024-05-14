@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+                layout:decorate="~{user/layout/default}">
+                db
+	<head>
+	    <title>게시글 상세 페이지</title>
+	    <th:block layout:fragment="customCss">
+	        <link th:href="@{/user/css/postWrite.css}" rel="stylesheet">
+	    </th:block>
+	
+	</head>
+
+	<th:block layout:fragment="customPageSection">
+<!-- 게시물 내용을 보여주는 컨테이너 -->
+<div class="container post-detail-container">
+    <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+            <div class="post" th:object="${postDetail}">
+                <h2 class="post-title" th:text="*{postTitle}">게시물 제목</h2>
+                <p class="post-meta">작성자: <span th:text="*{postRegId}">작성자 아이디</span> | 등록일: <span th:text="${postDetail.postRegDate}">작성일</span></p>
+                <p class="post-content" th:text="*{postContent}">게시물 내용이 여기에 표시됩니다.</p>
+            </div>
+            <div class="comments">
+                <h3 class="">댓글 목록</h3>
+                <div class="comment-list">
+                    <ul style="padding-left: 0rem;">
+                    <!-- 댓글 목록 표시 -->
+				    <li th:each="l : ${commentList}" class="list-group">
+				        <div class="comment list-group-item">
+				            <div class="comment-meta">
+				                <span class="comment-author" th:text="${l.commentRegId}">댓글 작성자 아이디</span>
+				                <span class="comment-date" th:text="${l.commentRegDate}">댓글 작성일</span>
+				            </div>
+				            <p class="comment-content" th:text="${l.commentContent}">댓글 내용</p>
+				        </div>
+				    </li>
+				</ul>
+				</div>
+            <div class="comment-form">
+                <h3 class="">댓글 작성</h3>
+                <form th:action="@{/comment}" method="post">
+                    <textarea class="form-control mb-3" name="comment" rows="4" placeholder="댓글을 입력하세요"></textarea>
+                    <input type="hidden" name="postId" th:value="${postDetail.postNum}">
+                    <button type="submit" class="btn btn-primary">댓글 남기기</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</th:block>
+
+<th:block layout:fragment="customJs">
+    <script>
+        // 뒤로 가기 함수
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</th:block>
+</body>
+</html>

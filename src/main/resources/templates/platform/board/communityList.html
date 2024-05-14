@@ -65,13 +65,24 @@
 							</div>
 							<div class="form-group">
 								<div class="col-md-2 col-sm-2 col-xs-0"></div>
+								<label for="middle-name"
+									class="control-label col-md-2 col-sm-2 col-xs-12">작성자</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input id="middle-name" class="form-control col-md-7 col-xs-12"
+										type="text" name="middle-name">
+								</div>
+								<div class="col-md-2 col-sm-2 col-xs-0"></div>
+							</div>
+							<div class="form-group">
+								<div class="col-md-2 col-sm-2 col-xs-0"></div>
 								<label class="control-label col-md-2 col-sm-2 col-xs-12">카테고리 유형</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
 									<select class="form-control text-center">
-										<option>계정 관리</option>
-										<option>이용 문의</option>
-										<option>건의 및 제안</option>
-										<option>결제 및 환불</option>
+										<option>여행 정보</option>
+										<option>여행 후기</option>
+										<option>여행 친구 찾기</option>
+										<option>자유 게시판</option>
+										<option>질문 게시판</option>
 									</select>
 								</div>
 								<div class="col-md-2 col-sm-2 col-xs-0"></div>
@@ -82,11 +93,10 @@
 									기준</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
 									<div class="radio">
-										<label class="align-item-center"><input type="radio"
-											value="option1" id="optionsRadios1" name="optionsRadios"
-											checked="checked">최신순</label> <label><input
-											type="radio" value="option2" id="optionsRadios2"
-											name="optionsRadios">조회순</label>
+										<label class="align-item-center"><input type="radio" value="option1" id="optionsRadios1" name="optionsRadios" checked="checked">최신순</label> 
+										<label><input type="radio" value="option2" id="optionsRadios2" name="optionsRadios">조회순</label>
+										<label><input type="radio" value="option3" id="optionsRadios3" name="optionsRadios">인기순</label>
+										<label><input type="radio" value="option4" id="optionsRadios4" name="optionsRadios">댓글순</label>
 									</div>
 								</div>
 								<div class="col-md-2 col-sm-2 col-xs-0"></div>
@@ -116,9 +126,10 @@
 							cellspacing="0" width="100%">
 							<thead>
 								<tr>
+									<th><input type="checkbox" id="checkAll" name="checkAll"></th>
 									<th>번호</th>
 									<th>작성자</th>
-									<th>카테고리번호</th>
+									<th>카테고리</th>
 									<th>제목</th>
 									<th>내용</th>
 									<th>조회수</th>
@@ -134,20 +145,30 @@
 							</thead>
 							<tbody>
 								<tr th:unless="${communityList != null}">
-									<td colspan="11">등록된 게시글이 없습니다.</td>
+									<td colspan="15" class="text-center" >등록된 게시글이 없습니다.</td>
 								</tr>
-								<tr th:if="${communityList != null}" th:each="l : ${categoryList}">
-									<td th:text="${l.cateNum}"></td>
-									<td th:text="${l.cateRegId}"></td>
-									<td th:text="${l.cateTitle}"></td>
-									<td th:text="${l.cateContent}"></td>
-									<td th:text="${l.cateMdfId}"></td>
-									<td th:text="${l.cateAct}"></td>
-									<td th:text="${l.cateRegDate}"></td>
-									<td th:text="${l.cateMdfDate}"></td>
+								<tr th:if="${communityList != null}" th:each="l : ${communityList}">
+									<td><input type="checkbox" id="checkbox_${l.postNum}" name="postNum" th:value="${l.postNum}"></td>
+									<td th:text="${l.postNum}"></td>
+									<td th:text="${l.postRegId}"></td>
+									<td th:text="${l.postCate.postCateType}"></td>
+									<td th:text="${l.postTitle}"></td>
+									<td th:text="${l.postContent}"></td>
+									<td th:text="${l.postInqCnt}"></td>
+									<td th:text="${l.commentTotal}"></td>
+									<td th:text="${l.likeTotal}"></td>
+									<td th:text="${l.dislikeTotal}"></td>
+									<td th:text="${l.reportTotal}"></td>
+									<td th:text="${l.postAct}"></td>
+									<td th:text="${l.postRegDate}"></td>
+									<td th:text="${l.postMdfDate}"></td>
+									<td th:text="${l.postDelDate}"></td>
 								</tr>
 							</tbody>
 						</table>
+						<div class="text-left">
+							<button type="button" class="btn btn-danger" id="disabled">비활성화</button>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -173,4 +194,26 @@
 	    <script th:src="@{/platform/vendors/pdfmake/build/pdfmake.min.js}"></script>
 	    <script th:src="@{/platform/vendors/pdfmake/build/vfs_fonts.js}"></script>
 	</th:block>
+	
+	
+	
+	<!-- custom js file start -->
+	<th:block layout:fragment="customJs">
+	<script type="text/javascript" th:src="@{/platform/js/checkbox/categoryDel.js}"></script>
+	<script type="text/javascript" th:src="@{/platform/js/checkbox/disabled.js}"></script>
+	
+	<script>
+	    document.getElementById('checkAll').addEventListener('change', function() {
+	        var checkboxes = document.querySelectorAll('[id^=checkbox_]');
+	        checkboxes.forEach(function(checkbox) {
+	            checkbox.checked = document.getElementById('checkAll').checked;
+	        });
+	    });
+	</script>
+	
+	
+	</th:block>
+	<!-- custom js file end -->
+	
+	
 </html>

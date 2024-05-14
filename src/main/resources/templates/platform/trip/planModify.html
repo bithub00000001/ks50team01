@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{platform/layout/default}">
+
+<th:block layout:fragment="customCss"></th:block>
+
+<th:block layout:fragment="customContent">
+
+    <div class="col-md-12 col-sm-6 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h3>회원수정</h3>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <form id="modifyForm"
+                      th:action="@{/platform/plan/modify}" method="post">
+                    <input type="hidden" name="planId" th:value="${planInfo.planId}">
+                    <input type="hidden" name="sessionId" th:value="${session.loginId}">
+
+                    <div class="form-group">
+                        <label for="planRegionSmallCate">지역 분류</label>
+                        <select id="planRegionSmallCate" name="planRegionSmallCate" class="form-control">
+                            <option value="">회원등급 선택</option>
+                            <option th:each="grade : ${memberGrade}" th:value="${grade.memberGrdNum}"
+                                    th:text="${grade.memberLevelName}"
+                                    th:selected="${memberInfo.memberGrdNum == grade.memberGrdNum}"></option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="planTitle">계획 제목</label>
+                        <input type="text" class="form-control" id="planTitle" name="planTitle"
+                               th:value="${planInfo.planTitle}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="planAttend">참여 인원</label>
+                        <input type="text" class="form-control" id="planAttend" name="planAttend"
+                               th:value="${planInfo.planAttend}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="startDate">시작 날짜</label>
+                        <input type="date" class="form-control" id="startDate" name="startDate"
+                               th:value="${planInfo.startDate}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="startDate">종료 날짜</label>
+                        <input type="date" class="form-control" id="endDate" name="endDate"
+                               th:value="${planInfo.endDate}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="planDays">여행 일차</label>
+                        <input type="text" class="form-control" id="planDays" name="planDays"
+                               th:value="${planInfo.planDays}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="budgetPerAttend">인당 예산</label>
+                        <input type="text" class="form-control" id="budgetPerAttend" name="budgetPerAttend"
+                               th:value="${planInfo.budgetPerAttend}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="totalAvailBudget">총 예산</label>
+                        <input type="text" class="form-control" id="totalAvailBudget" name="totalAvailBudget"
+                               th:value="${planInfo.totalAvailBudget}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="totalPlanBudget">지출 합계</label>
+                        <input type="text" class="form-control" id="totalPlanBudget" name="totalPlanBudget"
+                               th:value="${planInfo.totalPlanBudget}" readonly="readonly">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="planStatus">계획 상태</label>
+                        <select id="planStatus" name="planStatus" class="form-control"
+                                th:field="${planInfo.planStatus}" required>
+                            <option value="">==== 계획 상태 선택 ====</option>
+                            <option th:each="status : ${statuses}"
+                                    th:value="${status.getEnumValue()}"
+                                    th:text="${status.getEnumValue()}"
+                                    th:selected="${status.getEnumValue() == planInfo.planStatus}"></option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="isShare">공유 유무</label>
+                        <select id="isShare" name="isShare" class="form-control"
+                                required th:field="${planInfo.isShare}">
+                            <option value="">==== 공유 유무 선택 ====</option>
+                            <option value="Y" th:selected="${planInfo.isShare == 'Y'}">공유 중</option>
+                            <option value="N" th:selected="${planInfo.isShare == 'N'}">공유 안함</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-md">저장</button>
+                    <button type="button" class="btn btn-secondary btn-md" id="btn-cancel">취소
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</th:block>
+
+<th:block layout:fragment="customJsFile"></th:block>
+
+<th:block layout:fragment="customJs">
+    <script th:inline="javascript">
+        $('#btn-cancel').click(function () {
+            window.history.back();
+        })
+    </script>
+</th:block>
+</html>

@@ -32,6 +32,10 @@ public class LoginService {
 	public void joinMember(Login Login) {
         loginMapper.joinMember(Login);
     }
+	
+	public void bsnsJoinMember(Login Login) {
+        loginMapper.bsnsJoinMember(Login);
+    }
 	    
 	public Login login(Login login) {
 	    return loginMapper.login(login);

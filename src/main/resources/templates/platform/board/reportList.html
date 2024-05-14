@@ -66,7 +66,7 @@
 							<div class="form-group">
 								<div class="col-md-2 col-sm-2 col-xs-0"></div>
 								<label for="middle-name"
-									class="control-label col-md-2 col-sm-2 col-xs-12">작성자</label>
+									class="control-label col-md-2 col-sm-2 col-xs-12">아이디</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
 									<input id="middle-name" class="form-control col-md-7 col-xs-12"
 										type="text" name="middle-name">
@@ -75,14 +75,18 @@
 							</div>
 							<div class="form-group">
 								<div class="col-md-2 col-sm-2 col-xs-0"></div>
-								<label class="control-label col-md-2 col-sm-2 col-xs-12">공지 유형</label>
+								<label class="control-label col-md-2 col-sm-2 col-xs-12">신고 유형</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
 									<select class="form-control text-center">
-										<option>일반 공지</option>
-										<option>긴급 공지</option>
-										<option>예정 공지</option>
-										<option>시스템 공지</option>
-										<option>이벤트 공지</option>
+										<option>욕설/인신공격</option>
+										<option>홍보/상업성</option>
+										<option>음란/선정성</option>
+										<option>같은 내용 도배</option>
+										<option>부적절한 콘텐츠</option>
+										<option>스팸 또는 광고</option>
+										<option>개인정보 노출</option>
+										<option>권리침해 신고</option>
+										<option>기타</option>
 									</select>
 								</div>
 								<div class="col-md-2 col-sm-2 col-xs-0"></div>
@@ -96,7 +100,7 @@
 											value="option1" id="optionsRadios1" name="optionsRadios"
 											checked="checked">최신순</label> <label><input
 											type="radio" value="option2" id="optionsRadios2"
-											name="optionsRadios">조회순</label>
+											name="optionsRadios">???</label>
 									</div>
 								</div>
 								<div class="col-md-2 col-sm-2 col-xs-0"></div>
@@ -125,51 +129,70 @@
 							cellspacing="0" width="100%">
 							<thead>
 								<tr>
+									<th><input type="checkbox" id="checkAll" name="checkAll"></th>
 									<th>번호</th>
-									<th>작성자</th>
-									<th>카테고리번호</th>
-									<th>제목</th>
+									<th>신고자</th>
+									<th>카테고리</th>
+									<th>게시글 및 댓글 번호</th>
 									<th>내용</th>
-									<th>조회수</th>
-									<th>수정자</th>
-									<th>활성화여부</th>
-									<th>등록일</th>
-									<th>수정일</th>
-									<th>수정</th>
-									<th>삭제</th>
+									<th>신고일자</th>
+									<th>피신고자</th>
+									<th>승인자</th>
+									<th>승인여부</th>
+									<th>승인일자</th>
+									<th>승인</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:unless="${noticeList != null}">
-									<td colspan="10">등록된 신고내역이 없습니다.</td>
+								<tr th:unless="${reportList != null}">
+									<td colspan="12" class="text-center">등록된 신고내역이 없습니다.</td>
 								</tr>
-								<tr th:if="${noticeList != null}" th:each="l : ${noticeList}">
-									<td th:text="${l.noticeNum}"></td>
-									<td th:text="${l.noticeRegId}"></td>
-									<td th:text="${l.noticeCateNum}"></td>
-									<td th:text="${l.noticeTitle}"></td>
-									<td th:text="${l.noticeContent}"></td>
-									<td th:text="${l.noticeInqCnt}"></td>
-									<td th:text="${l.noticeMdfId}"></td>
-									<td th:text="${l.noticeAct}"></td>
-									<td th:text="${l.noticeRegDate}"></td>
-									<td th:text="${l.noticeMdfDate}"></td>
+								<tr th:if="${reportList != null}" th:each="l : ${reportList}">
+									<td><input type="checkbox" id="checkbox_${l.reportNum}" name="reportNum" th:value="${l.reportNum}"></td>
+									<td th:text="${l.reportNum}"></td>
+									<td th:text="${l.reportId}"></td>
+									<td th:text="${l.reportCate.reportCateType}"></td>
+									<td th:text="${l.postCmntNum}"></td>
+									<td th:text="${l.reportContent}"></td>
+									<td th:text="${l.reportDate}"></td>
+									<td th:text="${l.reportedId}"></td>
+									<td th:text="${l.approveId}"></td>
+									<td th:text="${l.reportApprove}"></td>
+									<td th:text="${l.approveDate}"></td>
 									<td>
-										<a th:href="@{/platform/board/noticeModify}">수정</a>
-									</td>
-									<td>
-										<a href="#">삭제</a>
+										<a href="#">승인</a>
 									</td>
 								</tr>
 							</tbody>
 						</table>
+						<div class="text-left">
+							<button type="button" class="btn btn-primary" id="approveSelected">선택 승인</button>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 		<!-- grid table end -->
 	</th:block>
+	
+	
 	<th:block layout:fragment="customJsFile">
+		<!-- Datatables -->
+	    <script th:src="@{/platform/vendors/datatables.net/js/jquery.dataTables.min.js}"></script>
+	    <script th:src="@{/platform/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js}"></script>
+	    <script th:src="@{/platform/vendors/datatables.net-buttons/js/dataTables.buttons.min.js}"></script>
+	    <script th:src="@{/platform/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js}"></script>
+	    <script th:src="@{/platform/vendors/datatables.net-buttons/js/buttons.flash.min.js}"></script>
+	    <script th:src="@{/platform/vendors/datatables.net-buttons/js/buttons.html5.min.js}"></script>
+	    <script th:src="@{/platform/vendors/datatables.net-buttons/js/buttons.print.min.js}"></script>
+	    <script th:src="@{/platform/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js}"></script>
+	    <script th:src="@{/platform/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js}"></script>
+	    <script th:src="@{/platform/vendors/datatables.net-responsive/js/dataTables.responsive.min.js}"></script>
+	    <script th:src="@{/platform/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js}"></script>
+	    <script th:src="@{/platform/vendors/datatables.net-scroller/js/dataTables.scroller.min.js}"></script>
+	    <script th:src="@{/platform/vendors/jszip/dist/jszip.min.js}"></script>
+	    <script th:src="@{/platform/vendors/pdfmake/build/pdfmake.min.js}"></script>
+	    <script th:src="@{/platform/vendors/pdfmake/build/vfs_fonts.js}"></script>
 	</th:block>
 	
 	
@@ -217,6 +240,19 @@
 	        }
 	    });
 	    </script> 
+	    
+	    
+		<script type="text/javascript" th:src="@{/platform/js/checkbox/categoryDel.js}"></script>
+		
+		<script>
+		    document.getElementById('checkAll').addEventListener('change', function() {
+		        var checkboxes = document.querySelectorAll('[id^=checkbox_]');
+		        checkboxes.forEach(function(checkbox) {
+		            checkbox.checked = document.getElementById('checkAll').checked;
+		        });
+		    });
+		</script>
+	    
 	
 	</th:block>
 	</html>
