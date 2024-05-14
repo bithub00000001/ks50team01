@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -22,11 +23,29 @@ public class UReviewController {
 	
 	private final UReviewService uReviewService;
 	
+	/**
+	 * 리뷰 작성
+	 * @return
+	 */
 	@GetMapping("/write")
 	public String reviewWrite() {
 		return "user/review/reviewWrite";
 	}
 	
+	/**
+	 * 리뷰 상세 내용
+	 * @return
+	 */
+	@GetMapping("/detail")
+	public String reviewDetail() {
+		return "user/review/reviewdetail";
+	}
+	
+	/**
+	 * 리뷰 json
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/lybalb")
 	@ResponseBody
 	public List<UReview> reviewJsonView(Model model) {
@@ -42,6 +61,11 @@ public class UReviewController {
 		return uReviewList;
 	}
 	
+	/**
+	 * 리뷰 목록 조회
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/list")
 	public String reviewList(Model model) {
 		

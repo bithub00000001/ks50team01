@@ -2,87 +2,86 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
- <mapper namespace="ksmart.ks50team01.user.review.mapper.UReviewMapper">
- 	<resultMap type="UReview" id="UReviewResultMap">
- 		<id property="reviewCode" 			column="PRCHS_REV_CD"/>
- 		<result property="reviewCode" 		column="PRCHS_REV_CD"/>
- 		<result property="reviewId" 		column="REG_MBR_ID"/>
- 		<result property="reviewGoods" 		column="PRTNR_BPLC_CD"/>
- 		<result property="reviewStar" 		column="RAT_CTGRY_NO"/>
- 		<result property="reviewContent" 	column="PRCHS_REV_CN"/>
- 		<result property="reviewDate" 		column="REG_YMD"/>
- 		<result property="reviewLike" 		column="LIKE_TOTAL"/>
- 		<result property="reviewDislike" 	column="DISLIKE_TOTAL"/>
- 		<result property="reviewApprove" 	column="RLS_YN_CD"/>
- 		<result property="reviewNum"		column="reviewNum"/>
- 		
- 		<result property="tripLargeCode" 	column="TRIP_LCTGRY_CD"/>
- 		<result property="districtSubclassCode" 	column="RGN_SCTGRY_CD"/>
- 		<result property="tripSubclassCode" 	column="TRIP_SCTGRY_CD"/>
- 		<result property="paymentCode" 	column="STLM_CERT_FILE_CD"/>
- 		<result property="reservationCode" 	column="BZENTY_RSVT_NO"/>
- 		<result property="goodsOption" 	column="PRCHS_GDSOPT_CD"/>
- 		<result property="goodsInformation" 	column="PRCHS_CD"/>
- 		<result property="reportTotal" 	column="REPT_TOTAL"/>
- 		<result property="reviewModifyDate" 	column="MDFCN_YMD"/>
- 	</resultMap>
+<mapper namespace="ksmart.ks50team01.user.review.mapper.UReviewMapper">
+    <resultMap type="UReview" id="UReviewResultMap">
+        <id property="reviewCode" column="PRCHS_REV_CD"/>
+        <result property="reviewCode" column="PRCHS_REV_CD"/>
+        <result property="reviewId" column="REG_MBR_ID"/>
+        <result property="reviewGoods" column="PRTNR_BPLC_CD"/>
+        <result property="reviewStar" column="RAT_CTGRY_NO"/>
+        <result property="reviewContent" column="PRCHS_REV_CN"/>
+        <result property="reviewDate" column="REG_YMD"/>
+        <result property="reviewLike" column="LIKE_TOTAL"/>
+        <result property="reviewDislike" column="DISLIKE_TOTAL"/>
+        <result property="reviewApprove" column="RLS_YN_CD"/>
+        <result property="reviewNum" column="reviewNum"/>
+        <result property="tripLargeCode" column="TRIP_LCTGRY_CD"/>
+        <result property="districtSubclassCode" column="RGN_SCTGRY_CD"/>
+        <result property="tripSubclassCode" column="TRIP_SCTGRY_CD"/>
+        <result property="paymentCode" column="STLM_CERT_FILE_CD"/>
+        <result property="reservationCode" column="BZENTY_RSVT_NO"/>
+        <result property="goodsOption" column="PRCHS_GDSOPT_CD"/>
+        <result property="goodsInformation" column="PRCHS_CD"/>
+        <result property="reportTotal" column="REPT_TOTAL"/>
+        <result property="reviewModifyDate" column="MDFCN_YMD"/>
+    </resultMap>
 
- 	<resultMap type="UComment" id="UCommentResultMap">
- 		<id property="commentCode" column="REV_CMNT_CD"/>
- 		<result property="commentCode" column="REV_CMNT_CD"/>
- 		<result property="commentId" column="REG_BIZ_ID"/>
- 		<result property="commentReviewCode" column="PRCHS_REV_CD"/>
- 		<result property="commentApprove" column="RLS_YN_CD"/>
- 		<result property="businessCode" column="PRTNR_BPLC_CD"/>
- 		<result property="commentContent" column="REV_CMNT_CN"/>
- 		<result property="commentDate" column="REG_YMD"/>
- 		<result property="tripLargeCode" column="TRIP_LCTGRY_CD"/>
- 		<result property="districtSubclass" column="RGN_SCTGRY_NM"/>
- 	</resultMap>
- 	
-	 <select id="getUReview" resultMap="UReviewResultMap">
-	  /* 상품 리뷰 목록 리스트 */
-	 	SELECT 
-			ROW_NUMBER() OVER(ORDER BY PRCHS_REV_CD) AS reviewNum,
-			PRCHS_REV_CD, 
-			REG_MBR_ID, 
-			RLS_YN_CD, 
-			RAT_CTGRY_NO, 
-			PRTNR_BPLC_CD, 
-			PRCHS_REV_CN, 
-			LIKE_TOTAL, 
-			DISLIKE_TOTAL,
-			REG_YMD,
-			RGN_SCTGRY_CD, 
-			TRIP_LCTGRY_CD, 
-			TRIP_SCTGRY_CD, 
-			STLM_CERT_FILE_CD, 
-			BZENTY_RSVT_NO, 
-			PRCHS_CD, 
-			PRCHS_GDSOPT_CD, 
-			MDFCN_YMD,
-			REPT_TOTAL
-		FROM 
-			PURCHASE_REVIEW
-	 </select>
-	 
-	 <select id="getUComment" resultMap="UCommentResultMap">
-	 	/* 답글 목록 리스트 */
-		 SELECT
-		 	ROW_NUMBER() OVER(ORDER BY REV_CMNT_CD) AS commentNum,
-			REV_CMNT_CD, 
-			REG_BIZ_ID, 
-			PRCHS_REV_CD, 
-			RLS_YN_CD, 
-			PRTNR_BPLC_CD, 
-			REV_CMNT_CN, 
-			REG_YMD,
-			TRIP_LCTGRY_CD,
-			RGN_SCTGRY_NM
-		FROM 
-			REVIEW_COMMENT	
-	 </select>
-	 
-	 
-	 
- </mapper>
+    <resultMap type="UReviewComment" id="UCommentResultMap">
+        <id property="commentCode" column="REV_CMNT_CD"/>
+        <result property="commentCode" column="REV_CMNT_CD"/>
+        <result property="commentId" column="REG_BIZ_ID"/>
+        <result property="commentReviewCode" column="PRCHS_REV_CD"/>
+        <result property="commentApprove" column="RLS_YN_CD"/>
+        <result property="businessCode" column="PRTNR_BPLC_CD"/>
+        <result property="commentContent" column="REV_CMNT_CN"/>
+        <result property="commentDate" column="REG_YMD"/>
+        <result property="tripLargeCode" column="TRIP_LCTGRY_CD"/>
+        <result property="districtSubclass" column="RGN_SCTGRY_NM"/>
+    </resultMap>
+    
+    
+    
+
+    <select id="getUReview" resultMap="UReviewResultMap">
+    /*리뷰 목록 리스트*/
+        SELECT 
+            ROW_NUMBER() OVER(ORDER BY PRCHS_REV_CD) AS reviewNum,
+            PRCHS_REV_CD, 
+            REG_MBR_ID, 
+            RLS_YN_CD, 
+            RAT_CTGRY_NO, 
+            PRTNR_BPLC_CD, 
+            PRCHS_REV_CN, 
+            LIKE_TOTAL, 
+            DISLIKE_TOTAL,
+            REG_YMD,
+            RGN_SCTGRY_CD, 
+            TRIP_LCTGRY_CD, 
+            TRIP_SCTGRY_CD, 
+            STLM_CERT_FILE_CD, 
+            BZENTY_RSVT_NO, 
+            PRCHS_CD, 
+            PRCHS_GDSOPT_CD, 
+            MDFCN_YMD,
+            REPT_TOTAL
+        FROM 
+            PURCHASE_REVIEW
+    </select>
+
+    <select id="getUReviewComment" resultMap="UCommentResultMap">
+    /* 답글 목록 리스트 */
+        SELECT
+            ROW_NUMBER() OVER(ORDER BY REV_CMNT_CD) AS commentNum,
+            REV_CMNT_CD, 
+            REG_BIZ_ID, 
+            PRCHS_REV_CD, 
+            RLS_YN_CD, 
+            PRTNR_BPLC_CD, 
+            REV_CMNT_CN, 
+            REG_YMD,
+            TRIP_LCTGRY_CD,
+            RGN_SCTGRY_NM
+        FROM 
+            REVIEW_COMMENT    
+    </select>
+</mapper>

@@ -3,7 +3,7 @@ package ksmart.ks50team01.user.review.dto;
 import lombok.Data;
 
 @Data
-public class UComment {
+public class UReviewComment {
 	private String commentCode;//답글 코드
 	private String commentId;//작성자 아이디
 	private String commentReviewCode;//상품 리뷰 코드

@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ksmart.ks50team01.user.review.dto.UComment;
+import ksmart.ks50team01.user.review.dto.UReviewComment;
 import ksmart.ks50team01.user.review.dto.UReview;
 import ksmart.ks50team01.user.review.mapper.UReviewMapper;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +16,13 @@ import lombok.RequiredArgsConstructor;
 public class UReviewService {
 	
 	private final UReviewMapper uReviewMapper;
+	
+	
+	
+	
+	
+	
+	
 	
 	/**
 	 * 댓글 목록
@@ -66,8 +73,8 @@ public class UReviewService {
 	/**
 	 * 답글 목록
 	 */
-	public List<UComment> getUComment(){
-		return uReviewMapper.getUComment();
+	public List<UReviewComment> getUReveiwComment(){
+		return uReviewMapper.getUReviewComment();
 	}
 	
 	
