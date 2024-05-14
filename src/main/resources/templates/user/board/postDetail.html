@@ -10,11 +10,6 @@
 	<link th:href="@{/user/css/report.css}" rel="stylesheet">
 </th:block>
 
-
-
-
-
-
 </head>
 
 <th:block layout:fragment="customPageSection">
@@ -22,14 +17,6 @@
 	<div class="container post-detail-container">
 		<div class="row">
 			<div class="col-lg-8 col-md-10 mx-auto">
-
-
-
-
-
-
-
-
 				<div class="post" th:object="${postDetail}">
 					<h2 class="post-title" th:text="*{postTitle}">게시물 제목</h2>
 					<span class="badge bg-primary"
@@ -38,8 +25,6 @@
 					<i class="fa-solid fa-comment"> <span class="badge bg-primary"
 						th:text="${#lists.size(commentList)}"></span>
 					</i>
-
-
 
 					<p class="post-meta">
 						<span th:text="'작성자 : ' + *{postRegId}">작성자 아이디</span> <span
@@ -80,35 +65,105 @@
 							<li th:each="l : ${commentList}" class="list-group">
 								<div class="comment list-group-item">
 									<div class="comment-meta">
-										<!-- 작성자 아이콘 -->
-										<i class="fa fa-user-circle fa-3x text-primary"
-											aria-hidden="true"></i> <span class="comment-author"
-											th:text="${l.commentRegId}">댓글 작성자 아이디</span> <span
-											class="comment-date" th:text="${l.commentRegDate}">댓글
-											작성일</span>
+										<div class="col-10 d-flex align-items-center">
+											<!-- 작성자 아이콘 -->
+											<i class="fa fa-user-circle fa-3x text-primary" aria-hidden="true"></i> 
+											<span class="comment-author" th:text="${l.commentRegId}">댓글 작성자 아이디</span> 
+											<span class="comment-date m-2" th:text="${#strings.substring(l.commentRegDate, 0, 10)}">댓글 작성일</span> 
+											<button type="button" class="btn btn-danger btn-xs report-button"
+												data-bs-toggle="modal" data-bs-target="#staticBackdrop">🚨										</button>
+										</div>
+											<!-- 추천 비추천 버튼, 삭제 버튼 
+											<i class="fa-regular fa-thumbs-down fa-2x"></i> 
+											<i class="fa-regular fa-thumbs-up fa-2x"></i> 
+											<i class="fa-solid fa-trash-can fa-2x"></i>
+											<i class="fa-regular fa-trash-can"></i> -->
 
 
-
-
-
-										<!--
-                <i class="fa-regular fa-thumbs-down fa-2x"></i>
-
-                <i class="fa-regular fa-thumbs-up fa-2x"></i>
-                <i class="fa-solid fa-trash-can fa-2x"></i>
-                <i class="fa-regular fa-trash-can"></i>
-          -->
-
-
-
-										<!-- 신고 버튼 -->
-
+											<!-- 신고 버튼 -->
+										<div class="col-2">
+											
+											<div class="dropdown float-end">
+												  <button class="btn btn-xs dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="true">
+												  </button>
+												  <ul class="dropdown-menu P-0" aria-labelledby="dropdownMenuButton1">
+												    <li><a class="dropdown-item small" href="#" onclick="editComment()"><i class="fa-solid fa-eraser fa-2x edit-button"></i> 수정</a></li>
+												    <li><a class="dropdown-item small" href="#" onclick="deleteComment()"><i class="fa-solid fa-trash-can fa-2x delete-button"></i> 삭제</a></li>
+												  </ul>
+												</div>
+											</div>
 										<!-- Button trigger modal -->
 
-										<button type="button"
-											class="btn btn-danger btn-sm report-button"
-											data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-											신고</button>
+										
+
+
+										<!-- 댓글 수정 및 삭제 아이콘 
+										<div class="modify-btn delete-btn">
+											<i class="fa-solid fa-eraser fa-2x"></i>
+											사각형 닫기 아이콘
+											<i class="fa-solid fa-square-xmark fa-2x"></i>
+											원형 닫기 아이콘
+											<i class="fa-solid fa-circle-xmark fa-2x"></i>
+										</div> -->
+
+
+										<!-- 댓글 수정, 댓글 삭제 드롭다운
+										<div class="dropdown">
+											<i class="fa-solid fa-ellipsis-vertical fa-2x"
+												onclick="toggleDropdownMenu()"></i>
+											<div id="dropdown-menu" class="dropdown-menu">
+												<i class="dropdown-item1 fa-solid fa-eraser fa-2x edit-button" onclick="editComment()"></i>
+												<i class="dropdown-item2 fa-solid fa-square-xmark fa-2x delete-button" onclick="deleteComment()"></i>
+												<i class="dropdown-item3 fa-solid fa-trash-can fa-2x delete-button" onclick="deleteComment()"></i>
+												<i class="dropdown-item4 fa-regular fa-trash-can fa-2x delete-button" onclick="deleteComment()"></i>
+											</div>
+										</div> -->
+
+									</div>
+
+									<p class="comment-content" th:text="${l.commentContent}">댓글
+										내용</p>
+
+									<div class="comment-actions">
+										<!-- 답글 달기 버튼 -->
+										<button class="btn btn-primary rounded-pill btn-xs btn-reply">
+											<i class="fa fa-reply"></i> 답글
+										</button>
+										<!-- 좋아요 버튼 -->
+										<button class="btn btn-outline-primary btn-xs like-btn">
+											<i class="fa-regular fa-thumbs-up"></i>
+										</button>
+										<!-- 싫어요 버튼 -->
+										<button class="btn btn-outline-danger btn-xs dislike-btn">
+											<i class="fa-regular fa-thumbs-down"></i>
+										</button>
+									</div>
+
+
+								</div>
+							</li>
+						</ul>
+					</div>
+					<!-- 댓글 작성 폼 -->
+					<div class="comment-form">
+						<h3 class="">댓글 작성</h3>
+						<form th:action="@{/comment}" method="post">
+							<textarea class="form-control mb-3" name="comment" rows="5"
+								placeholder="댓글을 입력하세요."></textarea>
+							<input type="hidden" name="postId"
+								th:value="${postDetail.postNum}">
+							<button type="submit" class="btn btn-primary">등록</button>
+						</form>
+					</div>
+					<div class="list-btn">
+						<button type="button" class="btn btn-dark">목록</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
 
 										<!-- Modal -->
 										<div class="modal fade" id="staticBackdrop"
@@ -158,92 +213,6 @@
 												</div>
 											</div>
 										</div>
-
-
-										<div class="modify-btn delete-btn">
-											<i class="fa-solid fa-eraser fa-2x"></i> <i
-												class="fa-solid fa-square-xmark fa-2x"></i> <i
-												class="fa-solid fa-eraser fa-2x"></i> <i
-												class="fa-solid fa-circle-xmark fa-2x"></i>
-										</div>
-
-
-
-										<!-- 댓글 수정, 댓글 삭제
-<div class="dropdown">		
-	<i class="fa-solid fa-ellipsis-vertical fa-2x" onclick="toggleDropdownMenu()"></i>
-	<div id="dropdown-menu" class="dropdown-menu">
-		<i class="dropdown-item1 fa-solid fa-eraser fa-2x edit-button" onclick="editComment()"></i>
-		 <i class="dropdown-item2 fa-solid fa-square-xmark fa-2x delete-button" onclick="deleteComment()"></i>
-		<i class="dropdown-item3 fa-solid fa-trash-can fa-2x delete-button" onclick="deleteComment()"></i>
-		<i class="dropdown-item4 fa-regular fa-trash-can fa-2x delete-button" onclick="deleteComment()"></i>
-    </div>
-</div>	 -->
-
-
-
-										<div class="dropdown">
-											<i class="fa-solid fa-ellipsis-vertical fa-2x"
-												onclick="toggleDropdownMenu()"></i>
-											<div id="dropdown-menu" class="dropdown-menu">
-												<div class="dropdown-item dropdown-item1"
-													onclick="editComment()">
-													<i class="fa-solid fa-eraser fa-2x"></i> 수정
-												</div>
-												<div class="dropdown-item dropdown-item3"
-													onclick="deleteComment()">
-													<i class="fa-solid fa-trash-can fa-2x"></i> 삭제
-												</div>
-											</div>
-										</div>
-
-
-									</div>
-
-									<p class="comment-content" th:text="${l.commentContent}">댓글
-										내용</p>
-
-									<div class="comment-actions">
-										<!-- 답글 달기 버튼 -->
-										<button class="btn btn-primary rounded-pill btn-sm btn-reply">
-											<i class="fa fa-reply"></i> 답글
-										</button>
-										<!-- 좋아요 버튼 -->
-										<button class="btn btn-outline-primary btn-sm like-btn">
-											<i class="fa-regular fa-thumbs-up"></i>
-										</button>
-										<!-- 싫어요 버튼 -->
-										<button class="btn btn-outline-danger btn-sm dislike-btn">
-											<i class="fa-regular fa-thumbs-down"></i>
-										</button>
-									</div>
-
-
-								</div>
-							</li>
-						</ul>
-					</div>
-					<!-- 댓글 작성 폼 -->
-					<div class="comment-form">
-						<h3 class="">댓글 작성</h3>
-						<form th:action="@{/comment}" method="post">
-							<textarea class="form-control mb-3" name="comment" rows="5"
-								placeholder="댓글을 입력하세요."></textarea>
-							<input type="hidden" name="postId"
-								th:value="${postDetail.postNum}">
-							<button type="submit" class="btn btn-primary">등록</button>
-						</form>
-					</div>
-					<div class="list-btn">
-						<button type="button" class="btn btn-dark">목록</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-
-
 
 
 </th:block>
