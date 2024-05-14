@@ -3,13 +3,78 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ksmart.ks50team01.platform.ranking.mapper.RankingMapper">
 	
-	<insert id="addRanking" parameterType="Ranking">
-		INSERT INTO PLATFORM_PARTNERSHIP
-		(PF_MNGR_RANK, REG_PF_ID, PRTNR_BPLC_CD, TRIP_LCTGRY_CD, BZMN_CONM, RGN_SCTGRY_NM, PRTNR_BRD_NM, 
-		ARTCL_RANK_TOP_FIVE, BRD_CTRT_STRT_YMD, BRD_CTRT_END_YMD, BRD_TYPE, BRD_CN, AD_STRT_YMD, AD_END_YMD, ACT_YN, REG_YMD, MDFCN_YMD)
-		VALUES ('#{pRankingNum}', '#{pRankingRegId}', '#{partnerBusinessCode}', '#{tripLctgryCode}', '#{businessName}', '#{rgnSctgryName}', 
-		'#{partnerBrandName}', 0, NOW(), NOW(), '#{partnerType}', '#{partnerShipDetail}', NOW(), NOW(), 'Y', NOW(), NOW());
+	<select id="getRankingInfoById" parameterType="String" resultType="Ranking">
+		SELECT 
+			ROW_NUMBER() OVER(ORDER BY PF_MNGR_RANK)	AS pRankingNum,
+			REG_PF_ID 									AS pRankingRegId,
+			PRTNR_BPLC_CD 								AS partnerBusinessCode,
+			TRIP_LCTGRY_CD								AS tripLctgryCode,
+			BZMN_CONM 									AS businessName,
+			RGN_SCTGRY_NM 								AS rgnSctgryName,
+			PRTNR_BRD_NM 								AS partnerBrandName,
+			ARTCL_RANK_TOP_FIVE 						AS artclRankigNum,
+			BRD_CTRT_STRT_YMD 							AS partnerShipStart,
+			BRD_CTRT_END_YMD 							AS partnerShipStartEnd,
+			BRD_TYPE 									AS partnerType,
+			BRD_CN 										AS partnerShipDetail,
+			AD_STRT_YMD 								AS adStart,
+			AD_END_YMD 									AS adEnd,
+			ACT_YN 										AS activate,
+			REG_YMD 									AS regDate,
+			MDFCN_YMD 									AS modifyDate
+		FROM 
+			PLATFORM_PARTNERSHIP AS p
+		WHERE
+			p.PF_MNGR_RANK = #{pRankingNum};
+	</select>
 	
+	<select id="rankingListCheck" parameterType="String" resultType="boolean">
+		/* 중복플랫폼리스트 체크 */
+		SELECT 
+			COUNT(PF_MNGR_RANK)
+		FROM 
+			PLATFORM_PARTNERSHIP
+		WHERE 
+			PF_MNGR_RANK = #{PF_MNGR_RANK};
+	</select>
+	
+	<insert id="addRanking" parameterType="Ranking">
+		/* 플랫폼 추천 리스트 추가 */
+		INSERT INTO 
+			PLATFORM_PARTNERSHIP
+			(PF_MNGR_RANK, 
+			REG_PF_ID, 
+			PRTNR_BPLC_CD, 
+			TRIP_LCTGRY_CD, 
+			BZMN_CONM, 
+			RGN_SCTGRY_NM, 
+			PRTNR_BRD_NM, 
+			ARTCL_RANK_TOP_FIVE, 
+			BRD_CTRT_STRT_YMD, 
+			BRD_CTRT_END_YMD,
+			BRD_TYPE, 
+			BRD_CN, 
+			AD_STRT_YMD, 
+			AD_END_YMD,
+			ACT_YN, 
+			REG_YMD)
+		VALUES (
+			#{pRankingNum}, 
+			#{pRankingRegId}, 
+			#{partnerBusinessCode}, 
+			#{tripLctgryCode}, 
+			#{businessName}, 
+			#{rgnSctgryName}, 
+			#{partnerBrandName}, 
+			#{artclRankigNum}, 
+			#{partnerShipStart}, 
+			#{partnerShipStartEnd}, 
+			#{partnerType}, 
+			#{partnerShipDetail}, 
+			#{adStart}, 
+			#{adEnd}, 
+			#{activate}, 
+			NOW());
 	</insert>
 	
 	<select id="getRankingList" resultType="Ranking">

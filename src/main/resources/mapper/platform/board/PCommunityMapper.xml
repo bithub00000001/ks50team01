@@ -4,42 +4,60 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ksmart.ks50team01.platform.board.mapper.PCommunityMapper">
 	
-	<resultMap id="postResultMap" type="PCommunity">
-		<id property="postNum" column="PST_NO" />
-		<result property="postRegId" column="REG_MBR_ID" />
-		<result property="postCateNum" column="PST_CTGRY_NO" />
-		<result property="postTitle" column="PST_TTL" />
-		<result property="postContent" column="PST_CN" />
-		<result property="postInqCnt" column="PST_INQ_CNT" />
+	<resultMap 	id="postResultMap" 		type="PCommunity">
+		<id 	property="postNum" 		column="PST_NO" />
+		<result property="postRegId" 	column="REG_MBR_ID" />
+		<result property="postCateNum" 	column="PST_CTGRY_NO" />
+		<result property="postTitle" 	column="PST_TTL" />
+		<result property="postContent" 	column="PST_CN" />
+		<result property="postInqCnt" 	column="PST_INQ_CNT" />
 		<result property="commentTotal" column="PST_CMNT_TOTAL" />
-		<result property="likeTotal" column="PST_LIKE_TOTAL" />
+		<result property="likeTotal" 	column="PST_LIKE_TOTAL" />
 		<result property="dislikeTotal" column="PST_DISLIKE_TOTAL" />
-		<result property="reportTotal" column="PST_REPT_TOTAL" />
-		<result property="postAct" column="ACT_YN" />
-		<result property="postRegDate" column="REG_YMD" />
-		<result property="postMdfDate" column="MDFCN_YMD" />
-		<result property="postDelDate" column="DEL_YMD" />
+		<result property="reportTotal" 	column="PST_REPT_TOTAL" />
+		<result property="postAct" 		column="ACT_YN" />
+		<result property="postRegDate" 	column="REG_YMD" />
+		<result property="postMdfDate" 	column="MDFCN_YMD" />
+		<result property="postDelDate" 	column="DEL_YMD" />
+		
+		
+		<!-- 1:1 association -->
+		<association 	property="postCate" 			javaType="PCommunity">
+			<id 		property="postCateNum" 			column="PST_CTGRY_NO"/>
+			<result 	property="postCateRegId" 		column="REG_PF_ID"/>
+			<result 	property="postCateType" 		column="PST_CTGRY_NM"/>
+			<result 	property="postCateMdfId" 		column="MDFCN_PF_ID"/>
+			<result 	property="postAct" 				column="ACT_YN"/>
+			<result 	property="postRegDate" 			column="REG_YMD"/>
+			<result 	property="postMdfDate" 			column="MDFCN_YMD"/>
+			<!-- postAct , postRegDate, postMdfDate => postCateAct postCateRegDate postCateMdfDate로 하면 오류나는 이유가 뭘까 ...?  -->
+		</association>
+		
 	</resultMap>
 
 	<select id="getCommunityList" resultMap="postResultMap">
 	 	/* 커뮤니티 조회 */
 		SELECT 
-			PST_NO, 
-			REG_MBR_ID, 
-			PST_CTGRY_NO, 
-			PST_TTL, 
-			PST_CN, 
-			PST_INQ_CNT, 
-			PST_CMNT_TOTAL, 
-			PST_LIKE_TOTAL, 
-			PST_DISLIKE_TOTAL, 
-			PST_REPT_TOTAL, 
-			ACT_YN, 
-			REG_YMD, 
-			MDFCN_YMD, 
-			DEL_YMD
+			P.PST_NO, 
+			P.REG_MBR_ID, 
+			C.PST_CTGRY_NM,
+			P.PST_TTL, 
+			P.PST_CN, 
+			P.PST_INQ_CNT, 
+			P.PST_CMNT_TOTAL, 
+			P.PST_LIKE_TOTAL, 
+			P.PST_DISLIKE_TOTAL, 
+			P.PST_REPT_TOTAL, 
+			P.ACT_YN, 
+			P.REG_YMD, 
+			P.MDFCN_YMD, 
+			P.DEL_YMD
 		FROM 
-			POST;
+			POST AS P
+			INNER JOIN
+			POST_CATEGORY AS C
+			ON
+			P.PST_CTGRY_NO = C.PST_CTGRY_NO;
 	</select>
 	
 

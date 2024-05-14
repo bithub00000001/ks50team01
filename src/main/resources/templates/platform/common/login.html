@@ -30,26 +30,24 @@
       <div class="login_wrapper">
         <div class="animate form login_form">
           <section class="login_content">
-            <form>
+            <form th:action="@{/login/adminLogin}" method="post">
               <h1>시금치 관리자</h1>
               <div>
-                <input type="text" class="form-control" placeholder="Username" required="" />
+                <input type="text" class="form-control" placeholder="아이디" required="" name="id" />
               </div>
               <div>
-                <input type="password" class="form-control" placeholder="Pass+word" required="" />
+                <input type="password" class="form-control" placeholder="비밀번호" required="" name="password" />
               </div>
-              <div>
-                <a class="btn btn-default submit" th:href="@{/platform/main}">Log in</a>
-                <a class="reset_pass" href="#">Lost your password?</a>
-              </div>
+				<div class="d-grid">
+					<button type="submit" class="btn btn-default submit">로그인</button>
+				</div>
 
               <div class="clearfix"></div>
 
               <div class="separator">
-                <p class="change_link">New to site?
-                  <a href="#signup" class="to_register"> Create Account </a>
+				<p class="change_link">비밀번호를 잃어버리셨나요?
+                  <a href="#signup" class="to_register"> 비밀번호찾기 </a>
                 </p>
-
                 <div class="clearfix"></div>
                 <br />
 
@@ -64,26 +62,29 @@
 
         <div id="register" class="animate form registration_form">
           <section class="login_content">
-            <form>
-              <h1>Create Account</h1>
-              <div>
-                <input type="text" class="form-control" placeholder="Username" required="" />
-              </div>
-              <div>
-                <input type="email" class="form-control" placeholder="Email" required="" />
-              </div>
-              <div>
-                <input type="password" class="form-control" placeholder="Password" required="" />
-              </div>
-              <div>
-                <a class="btn btn-default submit" href="index.html">Submit</a>
-              </div>
+            <form th:action="@{/login/findPw}" method="post">
+              <h1>비밀번호 찾기</h1>
+				<div class="mb-3">
+					<input type="text" class="form-control bg-smoke" required=""
+						placeholder="아이디를 입력하세요" name="id">
+				</div>
 
-              <div class="clearfix"></div>
+				<div class="mb-3">
+					<input type="email" class="form-control bg-smoke" required=""
+						placeholder="이메일을 입력하세요" name="email">
+				</div>
+
+				<div class="d-grid">
+					<button type="submit" class="btn btn-default submit">
+					비밀번호찾기
+					</button>
+				</div>
+
+				<div class="clearfix"></div>
 
               <div class="separator">
-                <p class="change_link">Already a member ?
-                  <a href="#signin" class="to_register"> Log in </a>
+                <p class="change_link">로그인 페이지로 돌아가시겠습니까?
+                  <a href="#signin" class="to_register"> 로그인 </a>
                 </p>
 
                 <div class="clearfix"></div>
@@ -100,4 +101,34 @@
       </div>
     </div>
   </body>
+	<script th:inline="javascript">
+		const memberId = /*[[${memberId}]]*/null;
+		const message = /*[[${message}]]*/null;
+	
+		if (memberId != null) {
+			alert("회원님의 아이디는 " + memberId + " 입니다.");
+		} else if (message != null) {
+			alert(message);
+		}
+	</script>
+	
+	<script th:inline="javascript">
+		const loginError = /*[[${loginError}]]*/false;
+		if (loginError) {
+			alert("아이디 혹은 비밀번호가 틀렸습니다.");
+			setTimeout(function() {
+				$('#login').modal('show');
+			}, 30);
+		}
+	</script>
+	
+	<script th:inline="javascript">
+		const managerLoginError = /*[[${managerLoginError}]]*/false;
+		if (managerLoginError) {
+			alert("관리자가 아닙니다.");
+			setTimeout(function() {
+				$('#login').modal('show');
+			}, 30);
+		}
+	</script>
 </html>

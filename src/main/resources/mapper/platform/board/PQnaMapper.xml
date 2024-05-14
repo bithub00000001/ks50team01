@@ -51,7 +51,7 @@
 			INNER JOIN
 			FAQ_CATEGORY AS F
 			ON
-			Q.REG_MBR_BIZ_ID = F.REG_PF_ID
+			Q.FAQ_CTGRY_NO = F.FAQ_CTGRY_NO;
 	</select>
 	
 
