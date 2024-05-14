@@ -105,6 +105,8 @@
 									<th>관광상품 옵션코드</th>
 									<th>관광상품 비고</th>
 									<th>관광상품 비용</th>
+									<th>등록일자</th>
+									<th>수정일자</th>
 									<th>수정</th>
 									<th>삭제</th>
 								</tr>
@@ -121,6 +123,8 @@
 									<td th:text="${l.tourGoodsOptionCd}"></td>
 									<td th:text="${l.tourOptionRemarks}"></td>
 									<td th:text="${l.tourTotal}"></td>
+									<td th:text="${l.tourOthers}"></td>
+									<td th:text="${l.tourRegDate}"></td>
 									<td>
 									    <a th:href="@{/platform/destination/tourGoodsModify(tourgoodsAuthorityId=${l.tourgoodsAuthorityId})}">수정</a>
 									</td>

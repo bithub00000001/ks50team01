@@ -16,28 +16,6 @@ public class Destination {
 	private String tourOthers;
 	private String tourRegDate;
 	private String tourFormDate;
-	
-	private String lodgingName;
-	private String lodgingInfoCode;
-	private String lodgingAuthorityId;
-	private String lodgingAddr;
-	private String lodgingDaddr;
-	private String lodgingSite;
-	private String lodgingContactNum;
-	private String lodgingContactNum2;
-	private String lodgingOthers;
-	private String lodgingRegDate;
-	private String lodgingFormDate;
-	
-	private String restaurantName;
-	private String restaurantInfoCode;
-	private String restaurantAuthorityId;
-	private String restaurantAddr;
-	private String restaurantSite;
-	private String restaurantContactNum;
-	private String restaurantRegDate;
-	private String restaurantFormDate;
-	
 	private String tourGoodsCate;
 	private String tourGoodsList;
 	private String tourGoodsTime;
@@ -48,9 +26,35 @@ public class Destination {
 	private String tourOptionRemarks;
 	private String tourTotal;
 	
-	private String lodgingMenuCode;
-
 	
+	private String lodgingName;
+	private String lodgingMenuType;
+	private String lodgingInfoCode;
+	private String lodgingAuthorityId;
+	private String lodgingMenuCode;
+	private String lodgingMenuMinPct;
+	private String lodgingMenuMaxPct;
+	private String lodgingAddr;
+	private String lodgingDaddr;
+	private String lodgingSite;
+	private String lodgingContactNum;
+	private String lodgingContactNum2;
+	private String lodgingOthers;
+	private String lodgingRegDate;
+	private String lodgingFormDate;
+	private String lodgingMenuPrc;
+	private String lodgingMenuAddprc;
+	private String lodgingMenuSmokeYn;
+	private String lodgingMenuBkYn;
+	
+	private String restaurantName;
+	private String restaurantInfoCode;
+	private String restaurantAuthorityId;
+	private String restaurantAddr;
+	private String restaurantSite;
+	private String restaurantContactNum;
+	private String restaurantRegDate;
+	private String restaurantFormDate;
 	private String restaurantMenu;
 	
 	

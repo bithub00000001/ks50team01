@@ -103,6 +103,7 @@
 				REG_PF_BIZ_ID		AS 	lodgingAuthorityId,
 				LODGING_NAME		AS 	lodgingName,
 				LODGING_ADDR		AS 	lodgingAddr,
+				LODGING_DADDR		AS 	lodgingDaddr,
 				LODGING_CONTACT1	AS 	lodgingContactNum,
 				LODGING_CONTACT2	AS 	lodgingContactNum2,
 				LODGING_SITE		AS 	lodgingSite,
@@ -151,13 +152,26 @@
 	<select id="getLodgingGoodsList" resultType="destination">
 		/* 숙소상품 정보 */
 			SELECT
-				lm.LODGING_MENU_CD AS lodgingMenuCode
+				li.LODGING_NAME				AS		lodgingName,
+				lm.LODGING_MENU_TYPE		AS		lodgingMenuType, 
+				li.LODGING_INFO_CD			AS		lodgingInfoCode,
+				lm.LODGING_MENU_CD			AS 		lodgingMenuCode,
+				lm.LODGING_MENU_MINCPCT		AS 		lodgingMenuMinPct,
+				lm.LODGING_MENU_MAXCPCT		AS		lodgingMenuMaxPct,
+				lm.LODGING_MENU_PRC			AS		lodgingMenuPrc,
+				lm.LODGING_MENU_ADDPRC		AS		lodgingMenuAddprc,
+				lm.LODGING_MENU_SMOKE_YN 	AS 		lodgingMenuSmokeYn,
+				lm.LODGING_MENU_BK_YN		AS    	lodgingMenuBkYn,
+				li.REG_YMD					AS		lodgingRegDate,
+				li.MDFCN_YMD				AS 		lodgingFormDate
+				
 			FROM
-				LODGING_MENU AS lm
+				LODGING_INFO AS li
 				INNER JOIN
-				LODGING_INFO li
-				ON
-				lm.LODGING_INFO_CD = li.LODGING_INFO_CD;
+				LODGING_MENU AS lm
+				ON 
+				li.LODGING_INFO_CD = lm.LODGING_INFO_CD;
+
 					
 	
 	</select>	
