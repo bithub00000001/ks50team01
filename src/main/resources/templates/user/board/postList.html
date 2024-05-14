@@ -72,20 +72,24 @@
 									<th>조회</th>
 								</tr>
 							</thead>
-<tbody>
-    <!-- 역순으로 순회 -->
-    <tr th:each="l, i : ${postList}" th:order="${-i.count}">
-        <!-- 숫자 형태로 번호 출력 -->
-        <td class="text-center" th:text="${#lists.size(postList) - i.count + 1}"></td>
-        <td>
-            <i class="badge rounded-pill bg-primary" th:text="${l.postCate.postCateType}"></i>
-            <a th:href="@{/community/postDetail(postNum=${l.postNum})}" th:text="${l.postTitle}"></a>
-        </td>
-        <td class="text-center" th:text="${l.postRegId}"></td>
-        <td class="text-center" th:text="${l.postRegDate}"></td>
-        <td class="text-center" th:text="${l.postInqCnt}"></td>
-    </tr>
-</tbody>
+							<tbody>
+								
+								<tr th:unless="${postList != null}">
+									<td colspan="5" class="text-center">등록된 게시글이 없습니다.</td>
+								</tr>
+								<tr th:if="${postList != null}" th:each="l : ${postList}">
+									<td class="text-center" th:text="${l.postNum}"></td>
+									<td>
+										<i class="badge rounded-pill bg-primary" th:text="${l.postCate.postCateType}"></i>
+										<a th:href="@{/community/postDetail(postNum=${l.postNum})}" th:text="${l.postTitle}"></a>
+									</td>
+									<td class="text-center" th:text="${l.postRegId}"></td>
+									<td class="text-center" th:text="${l.postRegDate}"></td>
+									<td class="text-center" th:text="${l.postInqCnt}"></td>
+								</tr>
+								
+							
+							</tbody>
 						</table>
 						<div class="row">
 							<div class="col-12"

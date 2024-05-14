@@ -2,9 +2,11 @@ package ksmart.ks50team01.user.board.mapper;
 
 import java.util.List;
 
+import javax.xml.stream.events.Comment;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import ksmart.ks50team01.user.board.dto.UComment;
 import ksmart.ks50team01.user.board.dto.UCommunity;
 
 
