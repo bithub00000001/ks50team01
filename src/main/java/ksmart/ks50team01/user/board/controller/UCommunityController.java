@@ -1,5 +1,6 @@
 package ksmart.ks50team01.user.board.controller;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.xml.stream.events.Comment;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import ksmart.ks50team01.user.board.dto.UComment;
 import ksmart.ks50team01.user.board.dto.UCommunity;
 import ksmart.ks50team01.user.board.service.UCommunityService;
 import lombok.RequiredArgsConstructor;
@@ -38,6 +38,7 @@ public class UCommunityController {
 		model.addAttribute("postList", postList); // postList를 모델에 추가
 		model.addAttribute("title", "커뮤니티");
 		return "user/board/postList";
+		
 	
 	}
 	
@@ -84,8 +85,6 @@ public class UCommunityController {
 		UCommunity postDetail = uCommunityService.getPostByPostNum(postNum);
 	    List<UCommunity> commentList = uCommunityService.getCommentByPostNum(postNum); // 해당 게시글의 모든 댓글을 가져오는 메서드 호출
 
-
-	    
 	    
 	    model.addAttribute("commentList", commentList);
 	    model.addAttribute("postDetail", postDetail);
