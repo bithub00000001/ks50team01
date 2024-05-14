@@ -9,8 +9,11 @@ public class Destination {
 	private String tourInfoCode;
 	private String tourAuthorityId;
 	private String tourAddr;
+	private String tourDaddr;
 	private String tourSite;
 	private String tourContectNum;
+	private String tourContectNum2;
+	private String tourOthers;
 	private String tourRegDate;
 	private String tourFormDate;
 	
@@ -18,8 +21,11 @@ public class Destination {
 	private String lodgingInfoCode;
 	private String lodgingAuthorityId;
 	private String lodgingAddr;
+	private String lodgingDaddr;
 	private String lodgingSite;
-	private String lodgingContectNum;
+	private String lodgingContactNum;
+	private String lodgingContactNum2;
+	private String lodgingOthers;
 	private String lodgingRegDate;
 	private String lodgingFormDate;
 	
@@ -28,7 +34,7 @@ public class Destination {
 	private String restaurantAuthorityId;
 	private String restaurantAddr;
 	private String restaurantSite;
-	private String restaurantContectNum;
+	private String restaurantContactNum;
 	private String restaurantRegDate;
 	private String restaurantFormDate;
 	
@@ -46,6 +52,8 @@ public class Destination {
 
 	
 	private String restaurantMenu;
+	
+	
 
 	
 }
