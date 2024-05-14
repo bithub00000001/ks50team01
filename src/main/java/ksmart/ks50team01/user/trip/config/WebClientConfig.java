@@ -9,6 +9,8 @@ public class WebClientConfig {
 
 	@Bean
 	public WebClient webClient() {
-		return WebClient.builder().baseUrl("https://apis.data.go.kr/B551011/KorService1").build();
+		return WebClient.builder()
+			.baseUrl("https://apis.data.go.kr/B551011/KorService1")
+			.build();
 	}
 }
