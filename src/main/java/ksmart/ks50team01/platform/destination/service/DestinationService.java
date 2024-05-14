@@ -18,6 +18,20 @@ public class DestinationService {
 	
 	private final DestinationMapper destinationMapper;
 	
+	public void updateTour(Destination destination) {
+		log.info("service destination:{}", destination);
+		destinationMapper.updateTour(destination);
+	}
+	
+	/**
+	 * 여행 정보 id에 해당하는 투어 정보 조회
+	 * @param tourName
+	 * @return
+	 */
+	public Destination getTourInfoByName(String tourName) {
+		
+		return destinationMapper.getTourInfoByName(tourName);
+	}
 	/**
 	 * 관광지 정보 리스트
 	 * @return
@@ -38,6 +52,16 @@ public class DestinationService {
 		return destinationMapper.getTourGoodsList();
 	}
 	
+
+	public void updateLodging(Destination destination) {
+		destinationMapper.updateLodging(destination);
+	}
+	
+	public Destination getLodgingInfoById(String lodgingInfoCode) {
+		
+		return destinationMapper.getLodgingInfoById(lodgingInfoCode);
+
+	}
 	
 	/**
 	 * 숙소 정보
@@ -81,6 +105,7 @@ public class DestinationService {
 		return restaurantMenuList;
 		
 	}
+
 	
 	
 	

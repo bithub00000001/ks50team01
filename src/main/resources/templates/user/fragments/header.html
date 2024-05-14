@@ -14,7 +14,7 @@
                          data-src="/user/img/logo-color-big.png"
                          src="/user/img/logo-color-big.png">
                 </a>
-                <ul class="menuzord-menu menuzord-right">
+                <ul class="menuzord-menu menuzord-right" style="padding-right: 0px;">
                     <li class="">
                         <a class="" th:href="@{/trip}">Home</a>
                     </li>
@@ -79,22 +79,22 @@
                         <a href="#">회원 정보</a>
                         <ul class="dropdown drop-up" id="userInfo">
                             <li class="">
-                                <a data-bs-target="#login" data-bs-toggle="modal" th:href="@{#}">? 로그인 모달</a>
+                                <a data-bs-target="#login" data-bs-toggle="modal" th:href="@{#}"> 로그인 모달</a>
                             </li>
                             <li class="">
-                                <a data-bs-target="#join" data-bs-toggle="modal" th:href="@{#}">? 회원 가입 모달</a>
+                                <a data-bs-target="#joinSelect" data-bs-toggle="modal" th:href="@{#}"> 회원 가입 모달</a>
                             </li>
                             <li class="">
-                                <a data-bs-target="#mypageModal" data-bs-toggle="modal" th:href="@{#}">? 마이페이지 모달</a>
+                                <a data-bs-target="#mypageModal" data-bs-toggle="modal" th:href="@{#}"> 마이페이지 모달</a>
                             </li>
                             <li class="">
-                                <a data-bs-target="#findId" data-bs-toggle="modal" th:href="@{#}">? 아이디찾기 모달</a>
+                                <a data-bs-target="#findId" data-bs-toggle="modal" th:href="@{#}"> 아이디찾기 모달</a>
                             </li>
                             <li class="">
-                                <a data-bs-target="#findPw" data-bs-toggle="modal" th:href="@{#}">? 비밀번호찾기 모달</a>
+                                <a data-bs-target="#findPw" data-bs-toggle="modal" th:href="@{#}"> 비밀번호찾기 모달</a>
                             </li>
                             <li class="">
-                                <a data-bs-target="#modifyModal" data-bs-toggle="modal" th:href="@{#}">? 회원정보 수정 모달</a>
+                                <a data-bs-target="#modifyModal" data-bs-toggle="modal" th:href="@{#}"> 회원정보 수정 모달</a>
                             </li>
                         </ul>
                     </li>
@@ -127,7 +127,7 @@
                         </ul>
                     </li>
                         <li class="py-6" th:if="${session.loginId == null}">
-                            <div class="nav-item nav-item-left me-0">
+                            <div class="nav-item nav-item-left me-2">
                                 <a data-bs-target="#login" data-bs-toggle="modal" href="#">
                                     <button type="button" class="btn btn-xs btn-outline-primary d-none d-lg-inline-block">
                                         <span class="font-weight-bold">로그인</span>
@@ -146,14 +146,25 @@
                         </li>
                         <li class="py-6" th:if="${session.loginId == null}">
                             <div class="nav-item nav-item-left me-2">
-                                <a data-bs-target="#join" data-bs-toggle="modal" href="#">
+                                <a data-bs-target="#joinSelect" data-bs-toggle="modal" href="#">
                                     <button type="button" class="btn btn-xs btn-outline-primary d-none d-lg-inline-block">
                                         <span class="font-weight-bold">회원가입</span>
                                     </button>
                                 </a>
                             </div>
                         </li>
-                    <div th:if="${session.loginId != null}" class="nav-item nav-item-left me-2"
+                        
+						<li class="py-6" th:if="${session.loginId != null}">
+							<div class="nav-item nav-item-left me-2">
+								<a data-bs-target="#mypageModal" data-bs-toggle="modal" th:href="@{#}">
+									<button type="button"
+										class="btn btn-xs btn-outline-primary d-none d-lg-inline-block">
+										<span class="font-weight-bold">마이페이지</span>
+									</button>
+								</a>
+							</div>
+						</li>
+					<div th:if="${session.loginId != null}" class="nav-item nav-item-left me-2"
                          style="position: absolute; top: 70px; right: 0; z-index: 1000">
                             <span th:text="${session.loginName} + ' 님 환영합니다!'"
                                   class="text-primary font-weight-bold"></span>

@@ -1,0 +1,157 @@
+@charset "UTF-8";
+
+
+
+
+.post-content {
+    /* 최소 높이를 설정하고, 내용이 더 길어지면 스크롤이 생성되도록 합니다. */
+    min-height: 550px;
+    overflow-y: auto; /* 세로 스크롤만 표시됩니다. */
+    font-size: 20px; /* 적절한 크기로 조정하세요 */
+}
+
+.comment-author {
+    font-size: 18px; /* 적절한 크기로 조정하세요 */
+    padding-left: 10px;
+}
+
+.comment-date {
+    font-size: 11px; /* 적절한 크기로 조정하세요 */
+    padding-left: 10px;
+}
+
+
+.comment-content {
+    font-size: 16px; /* 적절한 크기로 조정하세요 */
+    padding-left: 50px; /* 적절한 여백 값으로 조정하세요 */
+}
+
+
+.btn-reply {
+    margin-left: 40px; /* 적절한 여백 값으로 조정하세요 */
+}
+
+.comment-list {
+    margin-bottom: 50px; /* 아래쪽 여백 설정 */
+}
+
+.comment-form {
+    margin-top: 100px; /* 위쪽 여백 설정 */
+}
+
+
+
+.comment .like-btn {
+    float: right;
+}
+
+.comment .dislike-btn {
+    float: right;
+} 
+
+
+
+
+.post-meta span:nth-child(1),
+.post-meta span:nth-child(2) {
+    display: block;
+}
+
+.post-meta span:nth-child(3) {
+    display: block;
+    text-align:right;
+}
+
+.comment-meta {
+    display: flex;
+    align-items: center;
+}
+
+.comment-meta .meta-info {
+    margin-right: auto;
+}
+
+.comment-meta .comment-actions {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+}
+
+
+.modify-btn {
+    margin-right: auto;
+    
+}
+
+.submit-btn {
+	margin-bottom: 50px; /* 아래쪽 여백 설정 */
+	
+}
+
+
+.list-btn {
+    text-align: right;
+    margin-top: 100px; /* 아래쪽 여백 설정 */
+}
+
+
+.dropdown {
+    position: relative;
+    text-align: right; /* 드롭다운 버튼을 오른쪽에 정렬 */
+}
+
+.btn.dropdown-toggle {
+    border: 1px solid #ced4da;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%; /* 드롭다운 메뉴가 드롭다운 버튼 아래에 위치하도록 함 */
+    right: 0; /* 오른쪽 정렬 */
+    background-color: #ffffff;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    padding: 5px;
+    z-index: 1;
+    --bs-dropdown-min-width: 5rem
+}
+
+.dropdown-menu.active {
+    display: block;
+}
+
+
+/* 버튼을 동그랗게 만들기 */
+.btn.btn-lg.rounded-pill {
+    position: relative;
+    border-radius: 50%;
+    width: 80px; /* 버튼 너비 */
+    height: 80px; /* 버튼 높이 */
+    line-height: 60px; /* 버튼 내부 텍스트 세로 가운데 정렬 */
+    font-size: 15px; /* 아이콘 크기 */
+    text-align: center; /* 아이콘 가로 정렬 */
+    padding: 0; /* 내부 여백 제거 */
+}
+
+/* 버튼의 테두리 및 아이콘 색상 */
+.btn.btn-lg.rounded-pill {
+    border-color: #ff9b40;
+    color: #ff9b40;
+}
+
+/* 버튼 내부 색상 */
+.btn.btn-lg.rounded-pill {
+    background-color: white;
+}
+
+
+
+/* 아이콘 위치 조정 */
+.btn.btn-lg.rounded-pill i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
