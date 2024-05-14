@@ -18,7 +18,7 @@ public class RankingService {
 
 	public Ranking getRankingInfoById(String pRankingNum) {
 		
-		return rankingMapper.getMemberInfoById(pRankingNum);
+		return rankingMapper.getRankingInfoById(pRankingNum);
 	}
 	/**
 	 * 플랫폼 추천 리스트 중복체크

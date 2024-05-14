@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,15 +24,21 @@ public class RankingController {
 
 	private final RankingService rankingService;
 	
+	@PostMapping("/modifyRanking")
+	public String modify(@RequestParam String pRankingId) {
+		rankingService.getRankingInfoById(pRankingId);
+		return "redirect:/platform/ranking/rankingList";
+	}
+	
 	@GetMapping("/modifyRanking")
-	public String modifyRanking(@RequestParam(value="pRankingNum") String pRankingNum
+	public String modifyRanking(@RequestParam(value="pRankingId") String pRankingId
 							  ,Model model) {
-		log.info("수정화면 pRankingNum : {}", pRankingNum);
-		Ranking rankingInfo = rankingService.getRankingInfoById(pRankingNum);
+		log.info("수정화면 pRankingNum : {}", pRankingId);
+		Ranking rankingInfo = rankingService.getRankingInfoById(pRankingId);
 		List<Ranking> rankingList = rankingService.getRankingList();
 		
-		model.addAttribute("title", "회원수정");
-		model.addAttribute("rankingInfo", rankingInfo);
+		model.addAttribute("title", "플랫폼리스트 수정");
+		model.addAttribute("ranking", rankingInfo);
 		model.addAttribute("rankingList", rankingList);
 		
 		return "platform/ranking/modifyRanking";
@@ -43,8 +50,8 @@ public class RankingController {
 	 */
 	@PostMapping("/rankingListCheck")
 	@ResponseBody
-	public boolean rankingListCheck(@RequestParam(value="pRankingNum") String pRankingNum) {
-		boolean isPRankingNum = rankingService.rankingListCheck(pRankingNum);
+	public boolean rankingListCheck(@RequestParam(value="pRankingId") String pRankingId) {
+		boolean isPRankingNum = rankingService.rankingListCheck(pRankingId);
 		return  isPRankingNum;
 	}
 	
