@@ -104,5 +104,38 @@
     text-align: right; /* 부모 요소를 오른쪽 정렬합니다. */
 }
 
+/* 사용자 정의 스타일링 */
+.custom-select {
+    position: relative;
+    display: inline-block;
+}
 
+.custom-select select {
+    display: inline-block !important;
+    padding: 0.375rem 0.75rem !important;
+    font-size: 1rem !important;
+    font-weight: 400 !important;
+    line-height: 1.5 !important;
+    color: #fff !important; /* 글자색 흰색으로 설정 */
+    background-color: #FFA500 !important; /* 주황색 배경 */
+    border: 1px solid #FFA500 !important; /* 테두리 색상도 주황색으로 설정 */
+    border-radius: 0.25rem !important;
+    cursor: pointer !important;
+}
+
+.custom-select::after {
+    content: '\25BC' !important; /* 화살표 아이콘 */
+    position: absolute !important;
+    top: 50% !important;
+    right: 1rem !important;
+    transform: translateY(-50%) !important;
+    pointer-events: none !important;
+    color: #fff !important; /* 화살표 아이콘의 색상을 흰색으로 설정 */
+}
+
+.custom-select select:focus {
+    outline: none !important;
+    border-color: #80bdff !important;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25) !important;
+}
 
