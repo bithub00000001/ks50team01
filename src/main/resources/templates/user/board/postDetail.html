@@ -2,62 +2,279 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
                 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
                 layout:decorate="~{user/layout/default}">
-                db
+                
 	<head>
 	    <title>게시글 상세 페이지</title>
 	    <th:block layout:fragment="customCss">
-	        <link th:href="@{/user/css/postWrite.css}" rel="stylesheet">
+	        <link th:href="@{/user/css/postDetail.css}" rel="stylesheet">
+	        <link th:href="@{/user/css/report.css}" rel="stylesheet">
 	    </th:block>
+	    
+
+	    
+	    
+	    
 	
 	</head>
 
 	<th:block layout:fragment="customPageSection">
 <!-- 게시물 내용을 보여주는 컨테이너 -->
-<div class="container post-detail-container">
-    <div class="row">
-        <div class="col-lg-8 col-md-10 mx-auto">
-            <div class="post" th:object="${postDetail}">
-                <h2 class="post-title" th:text="*{postTitle}">게시물 제목</h2>
-                <p class="post-meta">작성자: <span th:text="*{postRegId}">작성자 아이디</span> | 등록일: <span th:text="${postDetail.postRegDate}">작성일</span></p>
-                <p class="post-content" th:text="*{postContent}">게시물 내용이 여기에 표시됩니다.</p>
-            </div>
-            <div class="comments">
-                <h3 class="">댓글 목록</h3>
-                <div class="comment-list">
-                    <ul style="padding-left: 0rem;">
-                    <!-- 댓글 목록 표시 -->
-				    <li th:each="l : ${commentList}" class="list-group">
-				        <div class="comment list-group-item">
-				            <div class="comment-meta">
-				                <span class="comment-author" th:text="${l.commentRegId}">댓글 작성자 아이디</span>
-				                <span class="comment-date" th:text="${l.commentRegDate}">댓글 작성일</span>
-				            </div>
-				            <p class="comment-content" th:text="${l.commentContent}">댓글 내용</p>
-				        </div>
-				    </li>
-				</ul>
-				</div>
-            <div class="comment-form">
-                <h3 class="">댓글 작성</h3>
-                <form th:action="@{/comment}" method="post">
-                    <textarea class="form-control mb-3" name="comment" rows="4" placeholder="댓글을 입력하세요"></textarea>
-                    <input type="hidden" name="postId" th:value="${postDetail.postNum}">
-                    <button type="submit" class="btn btn-primary">댓글 남기기</button>
-                </form>
-            </div>
+        <div class="container post-detail-container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                
+                
+                
+                
+                
+                
+                
+                
+                    <div class="post" th:object="${postDetail}">
+                        <h2 class="post-title" th:text="*{postTitle}">게시물 제목</h2>
+        <span class="badge bg-primary" th:text="${#lists.size(commentList)}"></span> <!-- 총 댓글 수 -->
+<i class="fa-solid fa-comment">
+    <span class="badge bg-primary" th:text="${#lists.size(commentList)}"></span>
+</i>
+
+
+
+                        <p class="post-meta">
+                        	<span th:text="'작성자 : ' + *{postRegId}">작성자 아이디</span> 
+                        	<span th:text="'등록일 : ' + *{postRegDate}">작성일</span>
+                        	<span th:text="'조회수 : ' + *{postInqCnt}">0</span>
+                        </p>
+                        <hr class="my-4"> <!-- 굵은 직선 추가 -->
+                        <p class="post-content" th:text="*{postContent}">게시물 내용이 여기에 표시됩니다.</p>
+<div class="row mt-3">
+    <div class="col-md-6 offset-md-3 text-center">
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary btn-lg rounded-pill" style="margin-right: 50px;">
+                <i class="fa-regular fa-thumbs-up fa-2x"></i>
+            </button>
+            <button type="button" class="btn btn-primary btn-lg rounded-pill">
+                <i class="fa-regular fa-thumbs-down fa-2x"></i>
+            </button>
+ 
         </div>
     </div>
 </div>
-</div>
-</th:block>
+		                <hr class="my-4"> <!-- 굵은 직선 추가 -->
+                    </div>
+                    <div class="comments">
+                        <!-- 댓글 수 표시 -->
+                        <h3 class="comment-count" th:text="${#lists.size(commentList)} + '개의 댓글'"></h3>
+                        <!-- 댓글 목록 -->
+                        <div class="comment-list">
+                            <ul style="padding-left: 0rem;">
+                                <!-- 댓글 출력 및 답글 달기, 신고 버튼 추가 -->
+                                <li th:each="l : ${commentList}" class="list-group">
+                                    <div class="comment list-group-item">
+                                        <div class="comment-meta">
+                                        	<!-- 작성자 아이콘 -->
+                                        	<i class="fa fa-user-circle fa-3x text-primary" aria-hidden="true"></i> 
+                                            <span class="comment-author" th:text="${l.commentRegId}">댓글 작성자 아이디</span>
+                                            <span class="comment-date" th:text="${l.commentRegDate}">댓글 작성일</span>
 
-<th:block layout:fragment="customJs">
-    <script>
-        // 뒤로 가기 함수
-        function goBack() {
-            window.history.back();
-        }
-    </script>
-</th:block>
+
+
+
+
+<!--
+                <i class="fa-regular fa-thumbs-down fa-2x"></i>
+
+                <i class="fa-regular fa-thumbs-up fa-2x"></i>
+                <i class="fa-solid fa-trash-can fa-2x"></i>
+                <i class="fa-regular fa-trash-can"></i>
+          -->                                   
+          
+
+          
+                             <!-- 신고 버튼 -->
+                             
+		<!-- Button trigger modal -->
+		
+		<button type="button" class="btn btn-danger btn-sm report-button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+		  신고
+		</button>
+		
+		<!-- Modal -->
+		<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="staticBackdropLabel">신고하기</h5>
+		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		      </div>
+		      <!-- Example single danger button -->
+				<div class="btn-group">
+				  <button type="button" class="btn btn-primary dropdown-toggle px-3" data-bs-toggle="dropdown" aria-expanded="false">
+				    신고 유형 선택
+				  </button>
+				
+				  <ul class="dropdown-menu">
+				    <li><a class="dropdown-item">욕설/인신공격</a></li>
+				    <li><a class="dropdown-item">홍보/상업성</a></li>
+				    <li><a class="dropdown-item">음란/선정성</a></li>
+				    <li><a class="dropdown-item">같은 내용 도배</a></li>
+				    <li><a class="dropdown-item">부적절한 콘텐츠</a></li>
+				    <li><a class="dropdown-item">스팸 또는 광고</a></li>
+				    <li><a class="dropdown-item">개인정보 노출</a></li>
+				    <li><a class="dropdown-item">권리침해 신고</a></li>
+				    <li><a class="dropdown-item">기타</a></li>
+				  </ul>
+				</div>
+
+		      <div class="modal-body">
+		          <div class="mb-3">
+		            <label for="message-text" class="col-form-label">신고내용:</label>
+		            <textarea class="form-control" id="message-text" maxlength="100"></textarea>
+		            <div id="char-count">0/100</div>
+		          </div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+		        <button type="button" class="btn btn-primary">신고</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>    
+		
+
+		<div class="modify-btn delete-btn">
+            <i class="fa-solid fa-eraser fa-2x"></i>
+         	<i class="fa-solid fa-square-xmark fa-2x"></i>
+         	<i class="fa-solid fa-eraser fa-2x"></i>
+         	<i class="fa-solid fa-circle-xmark fa-2x"></i>                         
+		</div>
+		
+		
+		
+<div class="dropdown">		
+	<i class="fa-solid fa-ellipsis-vertical fa-2x" onclick="toggleDropdownMenu()"></i>
+	<div id="dropdown-menu" class="dropdown-menu">
+		<i class="dropdown-item1 fa-solid fa-eraser fa-2x edit-button" onclick="editComment()"></i>
+		<i class="dropdown-item2 fa-solid fa-square-xmark fa-2x delete-button" onclick="deleteComment()"></i>
+    </div>
+</div>		
+                             
+                             
+                                        </div>
+                                        
+                                        <p class="comment-content" th:text="${l.commentContent}">댓글 내용</p>
+                                     
+                                     <div class="comment-actions">
+								        <!-- 답글 달기 버튼 -->
+								        <button class="btn btn-primary rounded-pill btn-sm btn-reply">
+								            <i class="fa fa-reply"></i> 답글
+								        </button>
+								        <!-- 좋아요 버튼 -->
+								        <button class="btn btn-outline-primary btn-sm like-btn">
+								            <i class="fa-regular fa-thumbs-up"></i>
+								        </button>
+								        <!-- 싫어요 버튼 -->
+								        <button class="btn btn-outline-danger btn-sm dislike-btn">
+								            <i class="fa-regular fa-thumbs-down"></i>
+								        </button>
+								    </div>
+                                        
+                                      
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- 댓글 작성 폼 -->
+                        <div class="comment-form">
+                            <h3 class="">댓글 작성</h3>
+                            <form th:action="@{/comment}" method="post">
+                                <textarea class="form-control mb-3" name="comment" rows="5" placeholder="댓글을 입력하세요."></textarea>
+                                <input type="hidden" name="postId" th:value="${postDetail.postNum}">
+                                <button type="submit" class="btn btn-primary">등록</button>
+                            </form>
+                        </div>
+                        <div class="list-btn">
+                        <button type="button" class="btn btn-dark">목록</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        
+        
+    </th:block>
+    
+    
+    
+    <th:block layout:fragment="customJsFIle">
+	<script>
+	document.addEventListener("DOMContentLoaded", function() {
+	    var dropdownItems = document.querySelectorAll(".dropdown-item");
+	    var dropdownButton = document.querySelector(".dropdown-toggle");
+	    var selectedType = ""; // 선택한 유형을 저장할 변수
+
+	    dropdownItems.forEach(function(item) {
+	        item.addEventListener("click", function() {
+	            var newSelectedType = this.textContent; // 새로 선택한 항목을 변수에 저장
+	            if (newSelectedType !== selectedType) { // 새로 선택한 항목과 기존에 선택한 항목이 다를 때만 처리
+	                selectedType = newSelectedType; // 선택한 항목을 업데이트
+	                dropdownButton.textContent = selectedType; // 선택한 항목의 값을 버튼에 표시
+	            } else { // 같은 항목을 다시 선택한 경우
+	                selectedType = ""; // 선택 초기화
+	                dropdownButton.textContent = "신고유형선택"; // 드롭다운 버튼의 텍스트 초기화
+	            }
+	        });
+	    });
+	});
+    
+    
+    
+	</script>
+    
+    
+    
+    
+
+    <th:block layout:fragment="customJs">
+        <script>
+            // 뒤로 가기 함수
+            function goBack() {
+                window.history.back();
+            }
+        </script>
+        <script src="https://kit.fontawesome.com/8374b337d7.js" crossorigin="anonymous"></script>
+    
+<script>
+function toggleDropdownMenu() {
+    const dropdownMenu = document.getElementById('dropdown-menu');
+    dropdownMenu.classList.toggle('show');
+}
+
+function editComment() {
+    // 수정 버튼을 클릭했을 때 수행할 작업을 구현합니다.
+    // 이 함수는 실제로 수정 기능을 수행해야 합니다.
+}
+
+function deleteComment() {
+    // 삭제 버튼을 클릭했을 때 수행할 작업을 구현합니다.
+    // 이 함수는 실제로 삭제 기능을 수행해야 합니다.
+}
+
+// 클릭 이벤트가 발생한 곳이 아닌 다른 곳을 클릭하면 드롭다운 메뉴를 닫습니다.
+document.addEventListener('click', function(event) {
+    const dropdownMenu = document.getElementById('dropdown-menu');
+    if (!event.target.matches('.fa-solid.fa-ellipsis-vertical')) {
+        dropdownMenu.classList.remove('show');
+    }
+});
+</script>
+    
+    
+    
+    
+    </th:block>
 </body>
+
 </html>
