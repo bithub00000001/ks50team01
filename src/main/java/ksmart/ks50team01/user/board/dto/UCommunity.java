@@ -42,6 +42,8 @@ public class UCommunity {
 	private UCommunity Comment;
 	
 	
+	private List<UComment> commentList;
+	
     
     // 추가된 필드: 게시물 상세 정보
     private String postDetail; // 게시물 상세 정보

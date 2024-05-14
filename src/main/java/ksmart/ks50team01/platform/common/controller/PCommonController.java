@@ -10,7 +10,7 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 @RequestMapping(value="/platform")
 public class PCommonController {
-	
+
     @GetMapping("/main")
     public String platform(Model model, HttpSession session) {
         String loginLevel = (String) session.getAttribute("loginLevel");

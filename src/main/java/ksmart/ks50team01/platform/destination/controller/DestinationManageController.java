@@ -26,25 +26,6 @@ public class DestinationManageController {
 	
 	private final DestinationService destinationService;
 	
-	@PostMapping("/destination/tourModify")
-	public String tourModifyProcess(Destination destination) {
-		log.info("controller destination:{}", destination);
-		destinationService.updateTour(destination);		
-		return "redirect:/platform/destination/tourManage";
-	}
-	
-	@GetMapping("/destination/tourModify")
-	public String tourModify(@RequestParam(value = "tourInfoCode") String tourInfoCode, Model model) {
-		Destination tourInfo = destinationService.getTourInfoByName(tourInfoCode);
-		List<Destination> tourList = destinationService.getTourInfoList();
-		
-		model.addAttribute("tourList", tourList);
-		model.addAttribute("tourInfo", tourInfo);
-		model.addAttribute("title", "관광지 수정");
-		
-		return "/platform/destination/tourModify";
-	}
-	
 	
 	@GetMapping("/destination/tourManage")
 	public String tourManage(Model model) {
@@ -65,26 +46,6 @@ public class DestinationManageController {
 		
 		return "/platform/destination/tourGoodsManage";
 	}
-	
-	@PostMapping("/destination/lodgingModify")
-	public String lodgingModifyProcess(Destination destination) {
-		
-		destinationService.updateLodging(destination);
-		return "redirect:/platform/destination/lodgingManage";
-	}
-	
-	@GetMapping("/destination/lodgingModify")
-	public String lodgingModify(@RequestParam(value = "lodgingInfoCode") String lodgingInfoCode, Model model) {
-		Destination lodgingInfo = destinationService.getLodgingInfoById(lodgingInfoCode);
-		List<Destination> lodgingList = destinationService.getLodgingInfoList();
-		
-		model.addAttribute("lodgingList", lodgingList);
-		model.addAttribute("lodgingInfo", lodgingInfo);
-		model.addAttribute("title", "숙소 수정");
-		
-		return "/platform/destination/lodgingModify";
-	}
-	
 	
 	
 	@GetMapping("/destination/lodgingManage")
