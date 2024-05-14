@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ksmart.ks50team01.platform.trip.mapper.PTourApiMapper">
+
+    <resultMap id="areaMap" type="pTourApi">
+        <id     column="area_code" property="areaCode"/>
+        <result column="areaNum" property="areaNum"/>
+        <result column="area_name" property="areaName"/>
+        <result column="REG_YMD"   property="regDate"/>
+        <result column="MDFCN_YMD" property="modDate"/>
+
+    </resultMap>
+
+    <resultMap id="sigunguMap" type="pTourApi">
+        <id     column="sigungu_code" property="sigunguCode"/>
+        <result column="sigungu_name" property="sigunguName"/>
+        <result column="area_id"      property="areaCode"/>
+        <result column="REG_YMD"      property="regDate"/>
+        <result column="MDFCN_YMD"    property="modDate"/>
+    </resultMap>
+
+    <insert id="upsertAreaCode" parameterType="pTourApi">
+        /* 지역 코드 업서트 */
+        INSERT INTO
+            AREA_CODE (
+                        area_code,
+                        area_name,
+                        REG_YMD
+                        )
+        VALUES
+            (
+            #{areaCode},
+            #{areaName},
+            now()
+            )
+        ON DUPLICATE KEY
+            UPDATE
+                area_name = #{areaName},
+                MDFCN_YMD = now();
+    </insert>
+
+    <insert id="upsertSigunguCode">
+        /* 시군구 코드 업서트 */
+        INSERT INTO
+            SIGUNGU_CODE
+            (
+             sigungu_code,
+             sigungu_name,
+             area_id,
+             REG_YMD
+            )
+        VALUES
+            (
+            #{sigunguCode},
+            #{sigunguName},
+            (
+                SELECT
+                    area_code
+                FROM
+                    AREA_CODE
+                WHERE
+                    area_code = #{areaCode}
+                ),
+            now()
+            )
+        ON DUPLICATE KEY
+            UPDATE
+                sigungu_name = #{sigunguName},
+                area_id = (
+                            SELECT
+                                area_code
+                            FROM
+                                AREA_CODE
+                            WHERE
+                                area_code = #{areaCode}
+                            )
+    </insert>
+
+    <select id="getAllAreaCodes" resultMap="areaMap">
+        /* 전체 지역 코드 조회 */
+        SELECT
+            row_number() over (order by area_code) as areaNum,
+            area_code,
+            area_name,
+            REG_YMD,
+            MDFCN_YMD
+        FROM
+            AREA_CODE
+    </select>
+
+    <select id="getAllSigunguCodes" resultMap="sigunguMap">
+        /* 전체 시군 코드 조회 */
+        SELECT
+            row_number() over (order by sc.sigungu_code) as sigunNum,
+            sigungu_code,
+            sigungu_name,
+            area_id,
+            sc.REG_YMD,
+            sc.MDFCN_YMD
+        FROM
+            SIGUNGU_CODE as sc
+            inner join
+            AREA_CODE as ac
+            on
+            sc.area_id = ac.area_code
+    </select>
+</mapper>

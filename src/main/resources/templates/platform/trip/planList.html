@@ -90,7 +90,7 @@
                                 <a href="#" th:data-member-id="${list.planId}">삭제</a>
                             </td>
                         </tr>
-                        <tr th:if="${tripPlanList == null or tripPlanList.size() == 0}">
+                        <tr th:unless="${tripPlanList != null or tripPlanList.size() > 0}">
                             <td align="center" colspan="18">검색 결과가 없습니다.</td>
                         </tr>
                         </tbody>
