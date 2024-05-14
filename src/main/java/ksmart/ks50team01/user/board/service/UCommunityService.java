@@ -4,13 +4,16 @@ import java.io.File;
 import java.util.List;
 import java.util.UUID;
 
+import javax.xml.stream.events.Comment;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import ksmart.ks50team01.user.board.dto.UComment;
 import ksmart.ks50team01.user.board.dto.UCommunity;
 import ksmart.ks50team01.user.board.mapper.UCommunityMapper;
+import ksmart.ks50team01.user.board.mapper.UNoticeMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
