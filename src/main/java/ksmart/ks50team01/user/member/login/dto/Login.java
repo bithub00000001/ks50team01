@@ -1,10 +1,9 @@
 package ksmart.ks50team01.user.member.login.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+
+@Data
 public class Login {
 
 	private String id;
@@ -13,4 +12,5 @@ public class Login {
     private String nickname;
     private String email;
     private String phone;
+    private String level;
 }
