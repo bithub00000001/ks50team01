@@ -144,12 +144,13 @@
                     <div class="modal-body">
                         <form th:action="@{/login/login}" method="post">
                             <div class="mb-3">
-                                <input type="id" class="form-control bg-smoke" required="" placeholder="아이디" name="id">
+                                <input type="text" class="form-control bg-smoke" required="" placeholder="아이디" 
+                                	   name="id" value="id003">
                             </div>
 
                             <div class="mb-3">
                                 <input type="password" class="form-control bg-smoke" required="" placeholder="비밀번호"
-                                       name="password">
+                                       name="password" value="pw003">
                             </div>
 
                             <div class="form-check mb-0">
@@ -166,7 +167,7 @@
                                     <a data-bs-target="#findPw" data-bs-toggle="modal" href="#">비밀번호 찾기</a>
                                 </div>
                                 <div style="float: left; width: 33%; text-align:center;">
-                                    <a data-bs-target="#join" data-bs-toggle="modal" href="#">회원가입</a>
+                                    <a data-bs-target="#joinSelect" data-bs-toggle="modal" href="#">회원가입</a>
                                 </div>
                             </div>
 
@@ -285,6 +286,93 @@
 		    </div>
 		</div>
 		
+		
+		<!-- business join Modal -->
+        <div class="modal fade" id="bsnsJoin" tabindex="-1" role="dialog" aria-label="loginModalLabel" aria-hidden="true">
+		    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+		        <div class="modal-content">
+		            <div class="modal-header rounded">
+		                <h3 class="modal-title text-uppercase font-weight-bold">기업회원 회원가입</h3>
+		                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		            </div>
+		
+		            <div class="modal-body">
+		                <form th:action="@{/login/bsnsJoin}" method="post">
+		                    <div class="mb-3">
+		                        <input type="text" class="form-control bg-smoke" required="" placeholder="아이디" name="id">
+		                    </div>
+		
+		                    <div class="mb-3">
+		                        <input type="password" class="form-control bg-smoke" required="" placeholder="비밀번호" name="password">
+		                    </div>
+		
+		                    <div class="mb-3">
+		                        <input type="text" class="form-control bg-smoke" required="" placeholder="이름" name="name">
+		                    </div>
+		
+		                    <div class="mb-3">
+		                        <input type="text" class="form-control bg-smoke" required="" placeholder="닉네임" name="nickname">
+		                    </div>
+		
+		                    <div class="mb-3">
+		                        <input type="email" class="form-control bg-smoke" required="" placeholder="이메일" name="email">
+		                    </div>
+		
+		                    <div class="mb-3">
+		                        <input type="text" class="form-control bg-smoke" required="" placeholder="전화번호(- 포함)" name="phone">
+		                    </div>
+		                    
+		                    <div class="mb-3">
+		                        <input type="text" class="form-control bg-smoke" required="" placeholder="사업자번호" name="bsnsNum">
+		                    </div>
+		                    
+		                    <div class="mb-3">
+		                        <input type="text" class="form-control bg-smoke" required="" placeholder="주소" name="address">
+		                    </div>
+		                    
+		                    <div class="mb-3">
+		                        <select name="brand" class="form-control bg-smoke">
+					    			<option value="" >====제휴브랜드를선택해주세요 (없을시 선택 x)====</option>
+					    			<option value="">한국관광공사</option>
+					    			<option value="">전주시청 관광담당자</option>
+					    			<option value="">배달의 민족</option>
+					    			<option value="">요기요</option>
+					    			<option value="">여기어때</option>
+					    			<option value="">부킹닷컴</option>
+					    			<option value="">야놀자</option>
+				    			</select>
+		                    </div>
+		
+		                    <div class="d-grid">
+		                        <button type="submit" class="btn btn-primary text-uppercase">회원가입</button>
+		                    </div>
+		                </form>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+		
+		
+		<!-- JoinSelect Modal -->
+		<div class="modal fade" id="joinSelect" tabindex="-1" role="dialog" aria-label="mypageModalLabel" aria-hidden="true">
+		    <div class="modal-dialog modal-dialog-centered" role="document">
+		        <div class="modal-content">
+		            <div class="modal-header rounded">
+		                <h3 class="modal-title text-uppercase font-weight-bold">회원가입</h3>
+		                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		            </div>
+		
+		            <div class="modal-body">
+		                <div class="d-grid gap-2">
+		                    <button type="button" class="btn btn-primary text-uppercase" data-bs-toggle="modal" data-bs-target="#join">개인회원</button>
+		                    <button type="button" class="btn btn-primary text-uppercase" data-bs-toggle="modal" data-bs-target="#bsnsJoin">기업회원</button>
+		                </div>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+		
+		
 		<!-- Mypage Modal -->
 		<div class="modal fade" id="mypageModal" tabindex="-1" role="dialog" aria-label="mypageModalLabel" aria-hidden="true">
 		    <div class="modal-dialog modal-dialog-centered" role="document">
@@ -297,15 +385,14 @@
 		            <div class="modal-body">
 		                <div class="d-grid gap-2">
 		                    <button type="button" class="btn btn-primary text-uppercase" data-bs-toggle="modal" data-bs-target="#modifyModal" onclick="getMemberInfo()">회원정보수정</button>
-		                    <button type="button" class="btn btn-primary text-uppercase" onclick="location.href='/mypage/history'">이력관리</button>
 		                    <button type="button" class="btn btn-primary text-uppercase" th:onclick="'confirmDelete(\'' + ${loginId} + '\');'">회원탈퇴</button>
-		                    <button type="button" class="btn btn-primary text-uppercase" onclick="location.href='/mypage/reservation'">예약내역조회</button>
-		                    <button type="button" class="btn btn-primary text-uppercase" onclick="location.href='/mypage/mypost'">내가쓴 게시글보기</button>
-		                    <button type="button" class="btn btn-primary text-uppercase" onclick="location.href='/mypage/mycomment'">내가쓴 댓글보기</button>
-		                    <button type="button" class="btn btn-primary text-uppercase" onclick="location.href='/mypage/favpost'">즐겨찾기 게시글보기</button>
-		                    <button type="button" class="btn btn-primary text-uppercase" onclick="location.href='/mypage/favproduct'">즐겨찾기 상품보기</button>
-		                    <button type="button" class="btn btn-primary text-uppercase" onclick="location.href='/mypage/faq'">자주찾는 질문보기</button>
-		                    <button type="button" class="btn btn-primary text-uppercase" onclick="location.href='/mypage/inquiry'">1:1 문의하기</button>
+		                    <button type="button" class="btn btn-primary text-uppercase" onclick="location.href='#'">예약내역조회</button>
+		                    <button type="button" class="btn btn-primary text-uppercase" onclick="location.href='#'">내가쓴 게시글보기</button>
+		                    <button type="button" class="btn btn-primary text-uppercase" onclick="location.href='#'">내가쓴 댓글보기</button>
+		                    <button type="button" class="btn btn-primary text-uppercase" onclick="location.href='#'">즐겨찾기 게시글보기</button>
+		                    <button type="button" class="btn btn-primary text-uppercase" onclick="location.href='#'">즐겨찾기 상품보기</button>
+		                    <button type="button" class="btn btn-primary text-uppercase" onclick="location.href='#'">자주찾는 질문보기</button>
+		                    <button type="button" class="btn btn-primary text-uppercase" onclick="location.href='#'">1:1 문의하기</button>
 		                </div>
 		            </div>
 		        </div>
@@ -346,7 +433,7 @@
 		                </form>
 		            </div>
 		            <div class="modal-footer">
-		                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+		                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#mypageModal">취소</button>
 		                <button type="submit" form="modifyForm" class="btn btn-primary">저장</button>
 		            </div>
 		        </div>

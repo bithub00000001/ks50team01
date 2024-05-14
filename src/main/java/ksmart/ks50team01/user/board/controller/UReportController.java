@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 
 @Controller
-@RequestMapping(value = "/user/board")
+@RequestMapping(value = "/report")
 public class UReportController {
 	
-	@GetMapping("/report")
+	@GetMapping({"/",""})
 	public String report(Model model) {
 		
 		model.addAttribute("title", "신고");

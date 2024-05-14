@@ -5,7 +5,10 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import ksmart.ks50team01.platform.trip.dto.PTripPlan;
 import ksmart.ks50team01.platform.trip.service.PTripPlanService;
@@ -20,6 +23,28 @@ public class PTripPlanController {
 
 	private final PTripPlanService pTripPlanService;
 
+	// 여행 계획 목록 수정 post 요청
+	@PostMapping("/modify")
+	public String modify(@ModelAttribute PTripPlan pTripPlan) {
+		pTripPlanService.UpdatePTripPlan(pTripPlan);
+		return "redirect:/platform/plan/list";
+	}
+
+	// 여행 계획 목록 수정 페이지
+	@GetMapping("/modify")
+	public String planModify(@RequestParam(name = "planId") String planId,
+		Model model) {
+		PTripPlan pTripPlan = pTripPlanService.getPTripPlanById(planId);
+		PTripPlan. Status[] statuses = PTripPlan.Status.values();
+		model.addAttribute("title", "여행 계획 수정");
+		model.addAttribute("planInfo", pTripPlan);
+		model.addAttribute("statuses", statuses);
+
+		return "platform/trip/planModify";
+	}
+
+
+	// 여행 계획 목록 조회 페이지
 	@GetMapping("/list")
 	public String planList(Model model) {
 		List<PTripPlan> tripPlanList = pTripPlanService.getAllPTripPlan();

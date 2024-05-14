@@ -4,10 +4,8 @@
                 layout:decorate="~{user/layout/default}">
                 
 <head>
-<title>공지사항</title>
-<th:block layout:fragment="customHead">
-	<link rel="stylesheet" th:href="@{/user/css/list-style.css}">
-</th:block>
+	<title>공지사항</title>
+		<link rel="stylesheet" th:href="@{/user/css/list-style.css}">
 </head>
 
 <th:block layout:fragment="customPageSection">
@@ -178,9 +176,11 @@
 	</div>
 </th:block>
 
+
+
+
+
 <th:block layout:fragment="customJs">
-
-
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             // 최신순과 조회순 버튼 요소 가져오기
@@ -222,9 +222,81 @@
                 rows.forEach(row => tbody.appendChild(row));
             }
         });
+        
+        
+     // 선택된 드롭다운 메뉴에 해당하는 공지사항 조회
+        document.addEventListener("DOMContentLoaded", function() {
+            const menuItems = document.querySelectorAll('.dropdown-item');
+
+            menuItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const selectedMenu = this.textContent;
+                    const tbody = document.querySelector('tbody');
+                    const rows = tbody.querySelectorAll('tr');
+
+                    rows.forEach(row => row.style.display = 'none');
+
+                    rows.forEach(row => {
+                        const title = row.querySelector('td:nth-child(2)').textContent;
+                        if (title.includes(selectedMenu)) {
+                            row.style.display = '';
+                        }
+                    });
+                });
+            });
+        });
+     
+     
+     
+     
+     
+        document.addEventListener("DOMContentLoaded", function() {
+            // 검색 버튼 요소 가져오기
+            const searchBtn = document.querySelector('#board-search button[type="submit"]');
+
+            // 검색 버튼 클릭 시
+            searchBtn.addEventListener('click', function(event) {
+                event.preventDefault(); // 기본 동작 방지 (페이지 새로고침 방지)
+                performSearch();
+            });
+
+            // 검색어 입력 필드에서 Enter 키 눌렀을 때
+            document.querySelector('#board-search input[type="text"]').addEventListener('keyup', function(event) {
+                if (event.keyCode === 13) { // Enter 키 눌렀을 때
+                    performSearch();
+                }
+            });
+
+            // 검색 기능을 수행하는 함수
+            function performSearch() {
+                const searchValue = document.querySelector('#board-search input[type="text"]').value.trim().toLowerCase(); // 검색어를 소문자로 변환하여 저장
+                const rows = document.querySelectorAll('tbody tr'); // 테이블의 모든 행 가져오기
+                let found = false; // 검색 결과 여부 초기화
+
+                rows.forEach(row => {
+                    const title = row.querySelector('td:nth-child(2)').textContent.replace(/\s+/g, '').toLowerCase(); // 각 행의 제목에서 공백을 제거하고 소문자로 변환하여 저장
+                    const searchValueWithoutSpaces = searchValue.replace(/\s+/g, ''); // 검색어에서 공백을 제거한 후 소문자로 변환하여 저장
+                    
+                    if (title.includes(searchValueWithoutSpaces)) { // 검색어가 제목에 포함되어 있다면 해당 행을 보이게 함
+                        row.style.display = '';
+                        found = true; // 검색 결과가 있음을 표시
+                    } else { // 검색어가 제목에 포함되어 있지 않다면 해당 행을 숨김
+                        row.style.display = 'none';
+                    }
+                });
+
+                // 검색 결과가 없을 경우 메시지 출력
+                if (!found) {
+                    document.querySelector('#no-results').style.display = 'block';
+                } else {
+                    document.querySelector('#no-results').style.display = 'none';
+                }
+            }
+        });
+        
+        
+        
     </script>
-
-
 
 </th:block>
 </html>
