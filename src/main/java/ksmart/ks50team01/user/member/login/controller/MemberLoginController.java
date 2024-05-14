@@ -86,9 +86,11 @@ public class MemberLoginController {
 	}
 	
 	@GetMapping("/logout")
-    public String logout(HttpSession session) {
+    public String logout(HttpSession session, HttpServletRequest request) {
         session.invalidate(); // 세션 무효화
-        return "redirect:/trip";
+        
+        String referer = request.getHeader("Referer");
+	    return "redirect:" + referer;
     }
 	
 	@PostMapping("/login")
@@ -119,20 +121,31 @@ public class MemberLoginController {
 	    if (loginMember != null) {
 	        session.setAttribute("loginId", loginMember.getId());
 	        session.setAttribute("loginName", loginMember.getName());
+	        session.setAttribute("loginLevel", loginMember.getLevel());
 
 	        // 세션에 저장된 값 확인
 	        String loginId = (String) session.getAttribute("loginId");
 	        String loginName = (String) session.getAttribute("loginName");
+	        String loginLevel = (String) session.getAttribute("loginLevel");
 
 	        log.info("loginId from session: {}", loginId);
 	        log.info("loginName from session: {}", loginName);
+	        log.info("loginLevel from session: {}", loginLevel);
 
-	        return "redirect:/platform/main"; // 로그인 성공 시 /platform/main으로 리다이렉트
+	        if ("uln_001".equals(loginLevel)) {
+	            return "redirect:/platform/main"; // 로그인 성공 시 /platform/main으로 리다이렉트
+	        } else {
+	            // 로그인 실패 처리
+	            session.invalidate(); // 세션 무효화
+	            redirectAttributes.addFlashAttribute("managerLoginError", true);
+	            String referer = request.getHeader("Referer");
+	            return "redirect:" + referer; // 로그인 실패 시 현재 페이지로 리다이렉트
+	        }
 	    } else {
 	        redirectAttributes.addFlashAttribute("loginError", true);
-
 	        String referer = request.getHeader("Referer");
 	        return "redirect:" + referer; // 로그인 실패 시 현재 페이지로 리다이렉트
 	    }
 	}
+	
 }

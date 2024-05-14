@@ -113,13 +113,22 @@
 	</script>
 	
 	<script th:inline="javascript">
-        
-            const loginError = /*[[${loginError}]]*/ false;
-            if (loginError) {
-                alert("아이디 혹은 비밀번호가 틀렸습니다.");
-                setTimeout(function(){
-                	$('#login').modal('show');
-                }, 30);
-            }
-        </script>
+		const loginError = /*[[${loginError}]]*/false;
+		if (loginError) {
+			alert("아이디 혹은 비밀번호가 틀렸습니다.");
+			setTimeout(function() {
+				$('#login').modal('show');
+			}, 30);
+		}
+	</script>
+	
+	<script th:inline="javascript">
+		const managerLoginError = /*[[${managerLoginError}]]*/false;
+		if (managerLoginError) {
+			alert("관리자가 아닙니다.");
+			setTimeout(function() {
+				$('#login').modal('show');
+			}, 30);
+		}
+	</script>
 </html>
