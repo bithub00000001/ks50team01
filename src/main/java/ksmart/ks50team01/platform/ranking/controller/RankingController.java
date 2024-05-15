@@ -25,20 +25,19 @@ public class RankingController {
 	private final RankingService rankingService;
 	
 	@PostMapping("/modifyRanking")
-	public String modify(@RequestParam String pRankingId) {
-		rankingService.getRankingInfoById(pRankingId);
+	public String modify(@ModelAttribute Ranking ranking) {
+		rankingService.modifyRanking(ranking);
 		return "redirect:/platform/ranking/rankingList";
 	}
 	
 	@GetMapping("/modifyRanking")
-	public String modifyRanking(@RequestParam(value="pRankingId") String pRankingId
+	public String modifyRanking(@RequestParam(name="pRankingId") String pRankingId
 							  ,Model model) {
-		log.info("수정화면 pRankingNum : {}", pRankingId);
-		Ranking rankingInfo = rankingService.getRankingInfoById(pRankingId);
+		Ranking ranking = rankingService.getRankingInfoById(pRankingId);
 		List<Ranking> rankingList = rankingService.getRankingList();
 		
 		model.addAttribute("title", "플랫폼리스트 수정");
-		model.addAttribute("ranking", rankingInfo);
+		model.addAttribute("ranking", ranking);
 		model.addAttribute("rankingList", rankingList);
 		
 		return "platform/ranking/modifyRanking";

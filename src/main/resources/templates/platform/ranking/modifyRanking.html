@@ -26,9 +26,8 @@
                         <tbody>
 							<tr>
 								<td><label for="pRankingNum">플랫폼제휴추천</label></td>
-								<td><input type="text" id="pRankingNum" name="pRankingNum"
-									th:value="${ranking.pRankingId}"
-									placeholder="플랫폼리스트 넘버를 입력해주세요" readonly="readonly"/></td>
+								<td><input type="text" id="pRankingNum" name="pRankingId"
+									th:value="${ranking.pRankingId}" readonly="readonly"/></td>
 							</tr>
 							<tr>
 								<td><label for="pRankingRegId">등록플랫폼권한아이디</label></td>
@@ -154,7 +153,7 @@
 						<tfoot>
 							<tr>
 								<td colspan="3">
-									<button type="button" id="addMemberBtn">수정</button>
+									<button type="submit" id="addMemberBtn">수정</button>
 									<button type="reset" id="resetBtn">취소</button>
 								</td>
 							</tr>
