@@ -246,5 +246,16 @@ display: none;
     margin-left: 10px;
 }
 
+.container-fluid {
+	margin-bottom: 50px;
+}
 
+.input-cell1 {
+	margin-bottom: 20px;
+}
 
+.label-cell.label {
+    font-size: 18px; /* 텍스트 크기 키우기 */
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

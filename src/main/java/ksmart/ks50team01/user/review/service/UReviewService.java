@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ksmart.ks50team01.user.review.dto.UReviewComment;
 import ksmart.ks50team01.user.review.dto.UReview;
+import ksmart.ks50team01.user.review.dto.UReviewComment;
 import ksmart.ks50team01.user.review.mapper.UReviewMapper;
 import lombok.RequiredArgsConstructor;
 
@@ -18,9 +18,27 @@ public class UReviewService {
 	private final UReviewMapper uReviewMapper;
 	
 	
+	/**
+	 * 리뷰 수정
+	 */
+	public void modifyReview(UReview review) {
+		uReviewMapper.modifyReview(review);
+	}
 	
+	/**
+	 * 리뷰정보조회
+	 */
+	public UReview getReviewDetail(String reviewId) {
+		UReview reviewDetail = uReviewMapper.getReviewDetail(reviewId);
+		return reviewDetail;
+	}
 	
-	
+	/**
+	 * 리뷰등록
+	 */
+	public void reviewWrite(UReview review) {
+		uReviewMapper.reivewWrite(review);
+	}
 	
 	
 	

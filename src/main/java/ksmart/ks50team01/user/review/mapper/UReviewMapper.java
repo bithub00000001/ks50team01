@@ -10,14 +10,14 @@ import ksmart.ks50team01.user.review.dto.UReview;
 @Mapper
 public interface UReviewMapper {
 	
-	//리뷰작성페이지
-	void reivewSave(UReview review);
+	//리뷰작성
+	int reivewWrite(UReview review);
 	
 	//리뷰상세페이지
-	UReview getUReviewDetail(String reviewId);
+	UReview getReviewDetail(String reviewId);
 	
 	//리뷰수정
-	void reviewUpdate(UReview review);
+	void modifyReview(UReview review);
 	
 	
 	

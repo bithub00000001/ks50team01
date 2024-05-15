@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import jakarta.servlet.http.HttpSession;
 import ksmart.ks50team01.user.review.dto.UReview;
 import ksmart.ks50team01.user.review.service.UReviewService;
 import lombok.RequiredArgsConstructor;
@@ -24,13 +25,40 @@ public class UReviewController {
 	private final UReviewService uReviewService;
 	
 	/**
-	 * 리뷰 작성
+	 * 리뷰 작성 화면
 	 * @return
 	 */
-	@GetMapping("/write")
-	public String reviewWrite() {
-		return "user/review/reviewWrite";
+	
+	  @GetMapping("/write") public String reviewWrite(Model model) {
+	  
+	  //List<UReview> reviewList = uReviewService.getUReviewList();
+	  //System.out.println("reviewList: "+reviewList);
+	  
+	  model.addAttribute("title", "리뷰작성");
+	  //model.addAttribute("reviewList", reviewList);
+	  
+	  return "user/review/reviewWrite"; }
+	 
+	
+	/*
+	 * @GetMapping("/write") public String reviewWrite(Model model, HttpSession
+	 * session) { // 세션에서 로그인한 사용자 정보를 가져옴 String loginId = (String)
+	 * session.getAttribute("loginId"); if (loginId != null) { // 세션에 로그인한 사용자 정보가
+	 * 있다면 리뷰 작성 페이지로 이동 return "user/review/reviewWrite"; } else {
+	 * model.addAttribute("title", "리뷰작성"); // 세션에 로그인한 사용자 정보가 없다면 로그인 페이지로 리다이렉트
+	 * return "redirect:/trip"; // 로그인 페이지 경로로 변경 } }
+	 */
+
+	@PostMapping("/write")
+	public String reviewWrite(UReview review) {
+		
+		System.out.println("리뷰 작성 화면에서 입력받은 data"+review);
+		
+		//uReviewService.reviewWrite(review);
+		
+		return "redirect:/user/review/write";
 	}
+	
 	
 	/**
 	 * 리뷰 상세 내용
@@ -40,6 +68,11 @@ public class UReviewController {
 	public String reviewDetail() {
 		return "user/review/reviewdetail";
 	}
+	
+	
+	
+	
+	
 	
 	/**
 	 * 리뷰 json
