@@ -9,9 +9,9 @@ import ksmart.ks50team01.platform.ranking.dto.Ranking;
 @Mapper
 public interface RankingMapper {
 	
-	Ranking getRankingInfoById(String pRankingNum);
+	Ranking getRankingInfoById(String pRankingId);
 	
-	int modifyRanking(Ranking rankingInfo);
+	int modifyRanking(Ranking ranking);
 	
 	boolean rankingListCheck(String pRankingNum);
 		

@@ -21,11 +21,10 @@
 		<result property="activate" column="ACT_YN"/>
 	</resultMap>
 	
-	<!-- <update id="getRankingInfoById" parameterType="Ranking">
+	<update id="modifyRanking" parameterType="Ranking">
 		UPDATE 
 			PLATFORM_PARTNERSHIP
 		SET
-			PF_MNGR_RANK=#{pRankingNum},
 			REG_PF_ID=#{pRankingRegId},
 			PRTNR_BPLC_CD=#{partnerBusinessCode},
 			TRIP_LCTGRY_CD=#{tripLctgryCode},
@@ -41,8 +40,8 @@
 			AD_END_YMD=#{adEnd},
 			ACT_YN=#{activate}
 		WHERE 
-			PF_MNGR_RANK=#{pRankingNum};
-	</update> -->
+			PF_MNGR_RANK=#{pRankingId};
+	</update>
 	
 	<select id="getRankingInfoById" resultType="Ranking">
 		SELECT 
