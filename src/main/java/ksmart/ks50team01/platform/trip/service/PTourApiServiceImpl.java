@@ -58,8 +58,8 @@ public class PTourApiServiceImpl implements PTourApiService {
 					.queryParam("_type", "json");
 
 				// areaCode 가 존재한다면 그 값을 사용하여 쿼리 파라미터를 추가
-				optionalAreaCode.ifPresent(areaCode -> uriBuilder
-					.queryParam("areaCode", areaCode));
+				optionalAreaCode.ifPresent(areaCode ->
+					uriBuilder.queryParam("areaCode", areaCode));
 				log.info("uriBuilder: {}", uriBuilder.toUriString());
 				return builder.build();
 		})
@@ -82,8 +82,48 @@ public class PTourApiServiceImpl implements PTourApiService {
 				return pTourApiList;
 			});
 	}
+	/*
+	* Changes made:
 
-	//public Mono<PTourApi> getAccomodationData(String apiKey, )
+	 * Removed unnecessary comments
+	 * Simplified the UriBuilder creation using method chaining
+	 * Removed the unnecessary `builder` variable
+	 * Simplified the lambda expression in `optionalAreaCode.ifPresent()`
+	 * Removed the unnecessary `return` statement at the end of the method
+	 * Simplified the `map()` function by removing the unnecessary variable declaration
+	 * I replaced `UriBuilder.of` with `UriBuilder.newInstance()`, which is the correct method to create a new `UriBuilder` instance.
+	 * */
+	/*public Mono<List> getAreaData(String apiKey, Optional optionalAreaCode) {
+		log.info("getAreaData method's apiKey: {}", apiKey);
+		return webClient.get().uri(uriBuilder -> {
+			UriBuilder builder = uriBuilder
+				.path("/areaCode1")
+				.queryParam("serviceKey", apiKey)
+				.queryParam("numOfRows", 50)
+				.queryParam("pagerNo", 1)
+				.queryParam("MobileOS", "ETC")
+				.queryParam("MobileApp", "KSMART50")
+				.queryParam("_type", "json");
+			optionalAreaCode.ifPresent(areaCode -> builder.queryParam("areaCode", areaCode));
+			return builder.build();
+		}).accept(MediaType.APPLICATION_JSON).retrieve().bodyToMono(JsonNode.class).map(jsonNode -> {
+			JsonNode itemsNode = jsonNode.path("response").path("body").path("items").path("item");
+			return objectMapper.convertValue(itemsNode, new TypeReference<>() {
+			});
+		});
+	}*/
+
+	// 숙소 정보 조회 메서드 작성중
+	/*public Mono<PTourApi> getAccommodationData(String apiKey){
+		return webClient.get().uri(uriBuilder -> {
+			UriBuilder builder = uriBuilder
+				.path("/api/rest/pacakge")
+				.queryParam("ServiceKey", apiKey)
+				.queryParam()
+
+		})
+	}*/
+	//public Mono<PTourApi> getAccommodationData(String apiKey, )
 
 	/**
 	 * Tour API 에 지역 코드만 요청하는 메서드
