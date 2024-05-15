@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{platform/layout/default}">
+
+<th:block layout:fragment="customCss">
+    <!-- Datatables -->
+    <link th:href="@{/platform/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/platform/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/platform/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/platform/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/platform/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css}" rel="stylesheet">
+
+    <style type="text/css">
+        .control-label{
+            text-align: center !important;
+            background-color: #f8f8f8 !important;
+            padding-bottom: 8px !important;
+        }
+    </style>
+</th:block>
+
+<th:block layout:fragment="customContent">
+    <!-- search start -->
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>
+                        검색 <small>search form</small>
+                    </h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li class="dropdown"><a href="#" class="dropdown-toggle"
+                                                data-toggle="dropdown" role="button" aria-expanded="false"><i
+                                class="fa fa-wrench"></i></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#">Settings 1</a></li>
+                                <li><a href="#">Settings 2</a></li>
+                            </ul></li>
+                        <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <br />
+                    <form id="dataTrans" class="form-horizontal form-label-left">
+                        <div class="form-group">
+                            <div class="col-md-2 col-sm-2 col-xs-0"></div>
+                            <label class="control-label col-md-2 col-sm-2 col-xs-12">Choice1</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <select class="form-control text-center data-select">
+                                    <option value="reportList">상품리뷰신고목록</option>
+                                    <option value="react">좋아요 싫어요 기록 목록</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2 col-sm-2 col-xs-0"></div>
+                        </div>
+
+                        <div class="ln_solid"></div>
+                        <div class="form-group">
+                            <div class="col-md-12 col-sm-12 col-xs-12 text-center">
+                                <button class="btn btn-success btn-lg data-trans" type="button">검색</button>
+                                <button type="reset" class="btn btn-dark btn-lg">초기화</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- search end -->
+    <!-- grid table start -->
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_content">
+                    <table id="dataTbContent" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                        <thead>
+                        <tr>
+                            <th>번호</th>
+                            <th>지역 이름</th>
+                            <th>시군구 코드</th>
+                            <th>시군구 이름</th>
+                            <th>등록 날짜</th>
+                            <th>수정 날짜</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:unless="${pReviewReport != null}">
+                            <td colspan="9"  class="center-text">신고된 리뷰가 없습니다.</td>
+                        </tr>
+                        <tr th:if="${pReviewReport != null}" th:each="l : ${pReviewReport}">
+                            <td th:text="${l.reportNum}"></td>
+                            <td th:text="${l.reportId}"></td>
+                            <td th:text="${l.reportCategories}"></td>
+                            <td th:text="${l.reportReviewCode}"></td>
+                            <td th:text="${l.reportContent}"></td>
+                            <td th:text="${l.reportDate}"></td>
+                            <td th:text="${l.reportApprove}"></td>
+                            <td th:text="${l.reportApproveId}"></td>
+                            <td th:text="${l.reportApproveDate}"></td>
+                            <td>
+                                <!-- /* /member/modifyMember?memberId=id001 */ -->
+                                <a th:href="@{/platform/review/report/approve}">수정</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_content">
+                    <table id="dataTbContent2" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- grid table end -->
+</th:block>
+
+<th:block layout:fragment="customJsFile">
+    <!-- Datatables -->
+    <script th:src="@{/platform/vendors/datatables.net/js/jquery.dataTables.min.js}"></script>
+    <script th:src="@{/platform/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js}"></script>
+    <script th:src="@{/platform/vendors/datatables.net-buttons/js/dataTables.buttons.min.js}"></script>
+    <script th:src="@{/platform/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js}"></script>
+    <script th:src="@{/platform/vendors/datatables.net-buttons/js/buttons.flash.min.js}"></script>
+    <script th:src="@{/platform/vendors/datatables.net-buttons/js/buttons.html5.min.js}"></script>
+    <script th:src="@{/platform/vendors/datatables.net-buttons/js/buttons.print.min.js}"></script>
+    <script th:src="@{/platform/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js}"></script>
+    <script th:src="@{/platform/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js}"></script>
+    <script th:src="@{/platform/vendors/datatables.net-responsive/js/dataTables.responsive.min.js}"></script>
+    <script th:src="@{/platform/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js}"></script>
+    <script th:src="@{/platform/vendors/datatables.net-scroller/js/dataTables.scroller.min.js}"></script>
+    <script th:src="@{/platform/vendors/jszip/dist/jszip.min.js}"></script>
+    <script th:src="@{/platform/vendors/pdfmake/build/pdfmake.min.js}"></script>
+    <script th:src="@{/platform/vendors/pdfmake/build/vfs_fonts.js}"></script>
+</th:block>
+
+<th:block layout:fragment="customJs">
+    <script>
+        const table = $('#dataTbContent').dataTable();
+
+        $(document).on('click', '.data-trans', function(){
+            const dataTrans = String($('.data-select :selected').val()).trim();
+            if(dataTrans){
+                const colObj = {
+                    reportList : [
+                        {'title': '신고번호', 'data': 'reportNum'},
+                        {'title': '신고자아이디', 'data': 'reportId'},
+                        {'title': '신고카테고리', 'data': 'reportCategories'},
+                        {'title': '신고리뷰코드', 'data': 'reportReviewCode'},
+                        {'title': '신고내용', 'data': 'reportContent'},
+                        {'title': '신고일자', 'data': 'reportDate'},
+                        {'title': '신고승인여부', 'data': 'reportApprove'},
+                        {'title': '신고승인자', 'data': 'reportApproveId'},
+                        {'title': '신고승인일자', 'data': 'reportApproveDate'},
+                        {'title': '승인하기', 'data':'reportNum'}
+                    ],
+                    react : [
+                        {'title': '반응여부코드', 'data': 'reactReviewCode'},
+                        {'title': '클릭한 아이디', 'data': 'reviewReactId'},
+                        {'title': '클릭한 상품 리뷰 코드', 'data': 'reviewReactCode'},
+                        {'title': '좋아요/싫어요/기본', 'data': 'reviewReactCheck'},
+                        {'title': '등록일자', 'data': 'reviewReactDate'},
+                        {'title': '수정일자', 'data': 'reviewReactModifyDate'}
+                    ],
+
+                }
+
+                const colArr = [...colObj[`${dataTrans}`]];
+
+                const request = $.ajax({
+                    url:'/refer/' + dataTrans,
+                    method: 'POST',
+                    dataType: 'JSON'
+                });
+                request.done(function(json){
+                    table.fnDestroy();
+                    $('#dataTbContent').html('');
+
+                    const dataTableOption = {
+                        'searching' : true,
+                        'responsive': true,
+                        'destroy':true,
+                        'data' : json.data,
+                        'columns' : colArr,
+                        'columnDefs': [
+                            {
+                                targets: colArr.length-1,
+                                data: 'description',
+                                render: function (data, type, row, meta) {
+
+                                    const button = `<a href="/platform/review/report/approve?reportNum=${data}">수정</a>`;
+
+                                    return button;
+                                }
+                            }
+                        ]
+                    }
+
+                    if(dataTrans === 'react') delete dataTableOption.columnDefs;
+
+                    $('#dataTbContent').dataTable(dataTableOption);
+
+                    /*
+                    $('#dataTbContent').dataTable({
+                        'responsive': true,
+                        'destroy':true,
+                        'data' : json.data,
+                        'columns' : colArr,
+                        'columnDefs': [
+                            {
+                                targets: colArr.length-1,
+                                data: 'description',
+                                render: function (data, type, row, meta) {
+
+                                    const button = `<a href="/platform/review/report/approve?reportNum=${data}">수정</a>`;
+
+                                    return button;
+                                }
+                            }
+                        ]
+                    });
+                    */
+                })
+                /*
+                $('#dataTbContent').dataTable({
+                    'searching': false,
+                    'destroy': true,
+                    'ajax': {
+                        url: '/refer/' + dataTrans,
+                        method: 'POST',
+                        dataType: 'JSON',
+                        columns : colArr,
+                        dataSrc: ""
+
+                    }
+                })
+                */
+            }
+        });
+
+    </script>
+</th:block>
+</html>

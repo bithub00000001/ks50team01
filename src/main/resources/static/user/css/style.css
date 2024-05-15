@@ -576,6 +576,7 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4 {
   .hero .intro-wrap {
     position: relative;
     z-index: 1; }
+
   .hero .slides {
     background: #ffffff;
     max-width: 800px;
@@ -587,9 +588,17 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4 {
     box-shadow: 0 25px 50px -10px rgba(26, 55, 77, 0.4);
     height: 608px;
     margin-bottom: -200px; }
+    @media (max-width: 1199px) {
+      .hero .slides {
+        left: 0;
+        height: 500px;
+        position: relative;
+      } }
     @media (max-width: 991.98px) {
       .hero .slides {
-        left: 0; } }
+        display: none;
+      }
+    }
     .hero .slides img {
       position: absolute;
       border-radius: 200px;
