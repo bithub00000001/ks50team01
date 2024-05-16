@@ -13,6 +13,22 @@
 		<result 	property="faqRegDate" 		column="REG_YMD"/>
 		<result 	property="faqMdfDate" 		column="MDFCN_YMD"/>
 	</resultMap>
+	
+	
+
+    <!-- 게시판 종류에 해당하는 카테고리 조회 -->
+    <select id="getBoardType" resultType="PCategory">
+        SELECT
+        	* 
+        FROM 
+        	category_table 
+        WHERE
+        	board_type = #{boardType}
+    </select>
+    
+    
+    
+    
 
 	<select id="getFaqCategoryList" resultMap="faqCategoryResultMap">
 	 	/* 카테고리 조회 */

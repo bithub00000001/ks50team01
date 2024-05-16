@@ -17,5 +17,9 @@ public class UNotice {
 	
 	// 추가된 association을 위한 멤버 변수
 	private UNotice noticeCate;
+	
+	
+    // 추가된 필드: 공지사항 상세 정보
+    private String noticeDetail; // 공지사항 상세 정보
 
 }

@@ -51,6 +51,18 @@ public class PCategoryController {
 		return "platform/board/categoryModify";
 	}
 	
+	// 게시판 종류에 해당하는 카테고리 조회
+    @GetMapping("/categoryList")
+    public String categoryList(String boardType, Model model) {
+    	List<PCategory> categoryList = pCategoryService.getCategoryListByBoardType(boardType);
+    	log.info("categoryList:{}", categoryList);
+		model.addAttribute("title", "카테고리 조회");
+		model.addAttribute("categoryList", categoryList);
+    	return "platform/board/categoryList";
+    }
+	
+	
+	/**
 	// 카테고리 조회 페이지
 	@GetMapping("/categoryList")
 	public String faqList(Model model) {
@@ -60,4 +72,5 @@ public class PCategoryController {
 		model.addAttribute("faqCategoryList", faqCategoryList);
 		return "platform/board/categoryList";
 	}
+	*/
 }
