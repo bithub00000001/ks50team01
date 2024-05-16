@@ -1,5 +1,6 @@
 package ksmart.ks50team01.platform.reivew.dto;
 
+import ksmart.ks50team01.platform.board.dto.PReport;
 import lombok.Data;
 
 @Data
@@ -11,4 +12,6 @@ public class PReviewReact {
 	private String reviewReactDate; //등록일자
 	private String reviewReactModifyDate; //수정일자
 	private String reviewReactNum; //좋아요싫어요 기록 번호
+	
+	private PReport reportCate;
 }

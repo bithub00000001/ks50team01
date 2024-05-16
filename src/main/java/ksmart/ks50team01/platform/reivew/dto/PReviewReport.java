@@ -18,4 +18,7 @@ public class PReviewReport {
 	private int reportTotal; //누적갯수
 	
 	
+	private PReviewReportCategory PReviewReportCategoryInfo;
+	private PReview PReviewInfo;
+	
 }

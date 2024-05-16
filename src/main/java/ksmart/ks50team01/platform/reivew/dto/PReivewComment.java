@@ -17,4 +17,6 @@ public class PReivewComment {
 	private String tripLargeCode; //여행지 대분류 코드
 	private String districtSubclass; //지역 소분류명
 	
+	private PReviewBusiness ReviewBusinessInfo;
+	
 }

@@ -25,7 +25,31 @@
  		<result property="goodsInformation" 	column="PRCHS_CD"/>
  		<result property="reportTotal" 	column="REPT_TOTAL"/>
  		<result property="reviewModifyDate" 	column="MDFCN_YMD"/>
+ 		
+ 		<association property="ReviewBusinessInfo" javaType="PReviewBusiness">
+	 		<id property="partnershipBusinessCode" 			column="PRTNR_BPLC_CD"/>
+	 		<result property="partnershipBusinessCode" 		column="PRTNR_BPLC_CD"/>
+	 		<result property="businessAuthorityId" 		column="BZ_ID"/>
+	 		<result property="regionalSubcategoryCode" 		column="RGN_SCTGRY_CD"/>
+	 		<result property="partnershipBrandCategoryCode" 		column="PRTNR_BRD_CTGRY_CD"/>
+	 		<result property="regionalSubcategoryName" 	column="RGN_SCTGRY_NM"/>
+	 		<result property="partnershipBrandName" 		column="PRTNR_BRD_NM"/>
+	 		<result property="businessRegistrationNumber" 		column="BRNO"/>
+	 		<result property="businessName" 	column="BZMN_CONM"/>
+	 		<result property="businessOwnerName" 	column="BZMN_RBPRSN"/>
+	 		<result property="businessPhoneNumber"		column="BPLC_TELNO"/>
+	 		
+	 		<result property="businessAddress" 	column="BPLC_ADDR"/>
+	 		<result property="businessDetailedAddress" 	column="BPLC_ADDR_DETAILS"/>
+	 		<result property="paymentAvailability" 	column="STLM_PSBLTY_YN"/>
+	 		<result property="reservationAvailability" 	column="RSVT_PSBLTY_YN"/>
+	 		<result property="registrationDate" 	column="REG_YMD"/>
+	 		<result property="modificationDate" 	column="MDFCN_YMD"/>
+ 		</association>
  	</resultMap>
+ 	
+ 	
+ 	
  	
  	<resultMap type="pOpen" id="pOpenResultMap">
  		<id property="pOpenCode" column="RLS_YN_CD"/>
@@ -39,9 +63,13 @@
  	
 
 
+
+
+
  	<resultMap type="PReviewReport" id="PReviewReportResultMap">
  		<id property="reportCode" column="REV_REPT_NO"/>
  		<result property="reportCode" column="REV_REPT_NO"/>
+ 		<result property="reportNum" column="REPORT_NUM"/>
  		<result property="reportId" column="REG_MBR_ID"/>
  		<result property="reportCategories" column="REPT_CTGRY_NO"/>
  		<result property="reportReviewCode" column="PRCHS_REV_CD"/>
@@ -50,13 +78,54 @@
  		<result property="reportApprove" column="REV_REPT_APRV"/>
  		<result property="reportApproveId" column="APRV_PF_ID"/>
  		<result property="reportApproveDate" column="APRV_YMD"/>
+ 		<result property="reportTotal" column="reportTotal"/>
+ 		<result property="reportApproveName" column="reportApproveName" javaType="java.lang.String" jdbcType="VARCHAR" />
+ 		
+ 		<association property="PReviewReportCategoryInfo" javaType="PReviewReportCategory">
+	 		<id property="reportCategoryId" 			column="REPT_CTGRY_NO"/>
+	 		<result property="reportCategoryId" 		column="REPT_CTGRY_NO"/>
+	 		<result property="registeredPlatformAuthorityId" 		column="REG_PF_ID"/>
+	 		<result property="reportCategoryType" 		column="REPT_CTGRY_TYPE"/>
+	 		<result property="modifiedPlatformAuthorityId" 		column="MDFCN_PF_ID"/>
+	 		<result property="isActive" 	column="ACT_YN"/>
+	 		<result property="registrationDate" 		column="REG_YMD"/>
+	 		<result property="modificationDate" 		column="MDFCN_YMD"/>
+ 		</association>
+ 		
+ 		<association property="PReviewInfo" javaType="PReview">
+	 		<id property="reviewCode" 			column="PRCHS_REV_CD"/>
+	 		<result property="reviewCode" 		column="PRCHS_REV_CD"/>
+	 		<result property="reviewId" 		column="REG_MBR_ID"/>
+	 		<result property="reviewGoods" 		column="PRTNR_BPLC_CD"/>
+	 		<result property="reviewStar" 		column="RAT_CTGRY_NO"/>
+	 		<result property="reviewContent" 	column="PRCHS_REV_CN"/>
+	 		<result property="reviewDate" 		column="REG_YMD"/>
+	 		<result property="reviewLike" 		column="LIKE_TOTAL"/>
+	 		<result property="reviewDislike" 	column="DISLIKE_TOTAL"/>
+	 		<result property="reviewApprove" 	column="RLS_YN_CD"/>
+	 		<result property="reviewNum"		column="reviewNum"/>
+	 		
+	 		<result property="tripLargeCode" 	column="TRIP_LCTGRY_CD"/>
+	 		<result property="districtSubclassCode" 	column="RGN_SCTGRY_CD"/>
+	 		<result property="tripSubclassCode" 	column="TRIP_SCTGRY_CD"/>
+	 		<result property="paymentCode" 	column="STLM_CERT_FILE_CD"/>
+	 		<result property="reservationCode" 	column="BZENTY_RSVT_NO"/>
+	 		<result property="goodsOption" 	column="PRCHS_GDSOPT_CD"/>
+	 		<result property="goodsInformation" 	column="PRCHS_CD"/>
+	 		<result property="reportTotal" 	column="REPT_TOTAL"/>
+	 		<result property="reviewModifyDate" 	column="MDFCN_YMD"/>
+ 		</association>
  	</resultMap>
+ 	
+ 	
+ 	
  	
  	
  	
  	<resultMap type="PReivewComment" id="PReivewCommentResultMap">
  		<id property="commentCode" column="REV_CMNT_CD"/>
  		<result property="commentCode" column="REV_CMNT_CD"/>
+ 		<result property="commentNum" column="REV_CMNT_NUM"/>
  		<result property="commentId" column="REG_BIZ_ID"/>
  		<result property="commentReviewCode" column="PRCHS_REV_CD"/>
  		<result property="commentApprove" column="RLS_YN_CD"/>
@@ -65,7 +134,32 @@
  		<result property="commentDate" column="REG_YMD"/>
  		<result property="tripLargeCode" column="TRIP_LCTGRY_CD"/>
  		<result property="districtSubclass" column="RGN_SCTGRY_NM"/>
+ 		
+ 		<association property="ReviewBusinessInfo" javaType="PReviewBusiness">
+	 		<id property="partnershipBusinessCode" 			column="PRTNR_BPLC_CD"/>
+	 		<result property="partnershipBusinessCode" 		column="PRTNR_BPLC_CD"/>
+	 		<result property="businessAuthorityId" 		column="BZ_ID"/>
+	 		<result property="regionalSubcategoryCode" 		column="RGN_SCTGRY_CD"/>
+	 		<result property="partnershipBrandCategoryCode" 		column="PRTNR_BRD_CTGRY_CD"/>
+	 		<result property="regionalSubcategoryName" 	column="RGN_SCTGRY_NM"/>
+	 		<result property="partnershipBrandName" 		column="PRTNR_BRD_NM"/>
+	 		<result property="businessRegistrationNumber" 		column="BRNO"/>
+	 		<result property="businessName" 	column="BZMN_CONM"/>
+	 		<result property="businessOwnerName" 	column="BZMN_RBPRSN"/>
+	 		<result property="businessPhoneNumber"		column="BPLC_TELNO"/>
+	 		
+	 		<result property="businessAddress" 	column="BPLC_ADDR"/>
+	 		<result property="businessDetailedAddress" 	column="BPLC_ADDR_DETAILS"/>
+	 		<result property="paymentAvailability" 	column="STLM_PSBLTY_YN"/>
+	 		<result property="reservationAvailability" 	column="RSVT_PSBLTY_YN"/>
+	 		<result property="registrationDate" 	column="REG_YMD"/>
+	 		<result property="modificationDate" 	column="MDFCN_YMD"/>
+ 		</association>
  	</resultMap>
+ 	
+ 	
+ 	
+ 	
  	
  	
  	
@@ -79,30 +173,40 @@
  		<result property="reviewReactModifyDate" column="MDFCN_YMD"/>
  	</resultMap>
  
+ 
+ 
+ 
+ 
 	 <select id="getPReviewList" resultMap="PReviewResultMap">
 	  /* 상품 리뷰 목록 리스트 */
 	 	SELECT 
 			ROW_NUMBER() OVER(ORDER BY PRCHS_REV_CD) AS reviewNum,
-			PRCHS_REV_CD, 
-			REG_MBR_ID, 
-			RLS_YN_CD, 
-			RAT_CTGRY_NO, 
-			PRTNR_BPLC_CD, 
-			PRCHS_REV_CN, 
-			LIKE_TOTAL, 
-			DISLIKE_TOTAL,
-			REG_YMD,
-			RGN_SCTGRY_CD, 
-			TRIP_LCTGRY_CD, 
-			TRIP_SCTGRY_CD, 
-			STLM_CERT_FILE_CD, 
-			BZENTY_RSVT_NO, 
-			PRCHS_CD, 
-			PRCHS_GDSOPT_CD, 
-			MDFCN_YMD,
-			REPT_TOTAL
+			pr.PRCHS_REV_CD, 
+			pr.REG_MBR_ID, 
+			pr.RLS_YN_CD, 
+			pr.RAT_CTGRY_NO, 
+			pr.PRTNR_BPLC_CD, 
+			pr.PRCHS_REV_CN, 
+			pr.LIKE_TOTAL, 
+			pr.DISLIKE_TOTAL,
+			pr.REG_YMD,
+			pr.RGN_SCTGRY_CD, 
+			pr.TRIP_LCTGRY_CD, 
+			pr.TRIP_SCTGRY_CD, 
+			pr.STLM_CERT_FILE_CD, 
+			pr.BZENTY_RSVT_NO, 
+			pr.PRCHS_CD, 
+			pr.PRCHS_GDSOPT_CD, 
+			pr.MDFCN_YMD,
+			pr.REPT_TOTAL,
+			pb.BZMN_CONM
 	FROM 
-		PURCHASE_REVIEW
+		PURCHASE_REVIEW AS pr
+		INNER JOIN
+		PARTNER_BUSINESS_PLACE AS pb
+		ON
+		pr.PRTNR_BPLC_CD = pb.PRTNR_BPLC_CD;
+		
 	 </select>
 	 
 	 <select id="getPOpenList" resultMap="pOpenResultMap">
@@ -176,18 +280,23 @@
 	 <select id="getPReivewComment" resultMap="PReivewCommentResultMap">
 	 	/* 답글 목록 리스트 */
 		 SELECT
-		 	ROW_NUMBER() OVER(ORDER BY REV_CMNT_CD) AS commentNum,
-			REV_CMNT_CD, 
-			REG_BIZ_ID, 
-			PRCHS_REV_CD, 
-			RLS_YN_CD, 
-			PRTNR_BPLC_CD, 
-			REV_CMNT_CN, 
-			REG_YMD,
-			TRIP_LCTGRY_CD,
-			RGN_SCTGRY_NM
+		 	ROW_NUMBER() OVER(ORDER BY REV_CMNT_CD) AS REV_CMNT_NUM,
+			pc.REV_CMNT_CD, 
+			pc.REG_BIZ_ID, 
+			pc.PRCHS_REV_CD, 
+			pc.RLS_YN_CD, 
+			pc.PRTNR_BPLC_CD, 
+			pc.REV_CMNT_CN, 
+			pc.REG_YMD,
+			pc.TRIP_LCTGRY_CD,
+			pc.RGN_SCTGRY_NM,
+			pb.BZMN_CONM
 		FROM 
-			REVIEW_COMMENT	
+			REVIEW_COMMENT AS pc
+			INNER JOIN
+			PARTNER_BUSINESS_PLACE AS pb
+			ON
+			pc.PRTNR_BPLC_CD = pb.PRTNR_BPLC_CD;
 	 </select>
 	 
 	 <select id="getPReivewCommentInfoById" resultMap="PReivewCommentResultMap">
@@ -224,18 +333,23 @@
 	 <select id="getPReviewReport" resultMap="PReviewReportResultMap">
 	 	/* 상품 리뷰 신고 리스트 */
 	 	SELECT
-	 		ROW_NUMBER() OVER(ORDER BY REV_REPT_NO) AS reportNum,
-			REV_REPT_NO,
-			REG_MBR_ID,  
-			REPT_CTGRY_NO, 
-			PRCHS_REV_CD, 
-			REV_REPT_CN,
-			REPT_YMD,
-			REV_REPT_APRV, 
-			APRV_PF_ID,
-			APRV_YMD
+	 		ROW_NUMBER() OVER(ORDER BY REV_REPT_NO) AS REPORT_NUM,
+			rrh.REV_REPT_NO,
+			rrh.REG_MBR_ID,  
+			rrh.REPT_CTGRY_NO, 
+			rrh.PRCHS_REV_CD, 
+			rrh.REV_REPT_CN,
+			rrh.REPT_YMD,
+			rrh.REV_REPT_APRV, 
+			rrh.APRV_PF_ID,
+			rrh.APRV_YMD,
+			pbp.REPT_CTGRY_TYPE
 		FROM 
-			REVIEW_REPORT_HISTORY
+			REVIEW_REPORT_HISTORY AS rrh
+			INNER JOIN
+			REPORT_CATEGORY AS pbp
+			ON
+			rrh.REPT_CTGRY_NO = pbp.REPT_CTGRY_NO;
 	 </select>
 	 
 	 <select id="getPReviewReportInfoById" resultMap="PReviewReportResultMap">
@@ -269,16 +383,20 @@
 	 
 	 <select id="getPReviewReportTotal" resultMap="PReviewReportResultMap">
 	 	/*신고 누적 개수 조회*/
-		 SELECT 
-			PRCHS_REV_CD,
-			COUNT(PRCHS_REV_CD) AS reportTotal,
-			REV_REPT_APRV
-			FROM 
-			REVIEW_REPORT_HISTORY
-			WHERE
-			REV_REPT_APRV = "Y"
+		SELECT 
+			rrh.PRCHS_REV_CD,
+			COUNT(rrh.PRCHS_REV_CD) AS reportTotal,
+			pr.RLS_YN_CD
+		FROM 
+			REVIEW_REPORT_HISTORY AS rrh
+			INNER JOIN
+			PURCHASE_REVIEW AS pr
+			ON
+			rrh.PRCHS_REV_CD = pr.PRCHS_REV_CD
+		WHERE
+			rrh.REV_REPT_APRV = 'Y'
 		GROUP BY
-			PRCHS_REV_CD;
+			rrh.PRCHS_REV_CD;
 			
 <!-- 					SELECT 
 			prh.PRCHS_REV_CD,

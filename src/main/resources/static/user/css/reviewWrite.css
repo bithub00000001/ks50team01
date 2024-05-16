@@ -259,3 +259,9 @@ display: none;
     margin-top: 10px;
     margin-bottom: 10px;
 }
+
+.label-cell.label2 {
+    color: #666; /* 회색 */
+    font-size: small; /* 작은 글꼴 크기 */
+    margin-bottom: 10px; /* 아래쪽 여백 */
+}

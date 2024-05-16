@@ -33,6 +33,8 @@
 								<tr>
 									<th>리뷰 번호</th>
 									<th>신고 당한 횟수</th>
+									<th>공개 여부</th>
+									<th>공개 여부 이름</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -42,6 +44,8 @@
 								<tr th:if="${pReviewTotal != null}" th:each="l : ${pReviewTotal}">
 									<td th:text="${l.reportReviewCode}"></td>
 									<td th:text="${l.reportTotal}"></td>
+									<td th:text="${l.PReviewInfo.reviewApprove}"></td>
+									<td th:text="${l.PReviewInfo.reviewApproveName}"></td>
 								</tr>
 							</tbody>
 						</table>

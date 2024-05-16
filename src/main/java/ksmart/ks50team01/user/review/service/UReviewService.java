@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ksmart.ks50team01.user.review.dto.UOpen;
 import ksmart.ks50team01.user.review.dto.UReview;
 import ksmart.ks50team01.user.review.dto.UReviewComment;
 import ksmart.ks50team01.user.review.mapper.UReviewMapper;
@@ -40,6 +41,12 @@ public class UReviewService {
 		uReviewMapper.reivewWrite(review);
 	}
 	
+	/**
+	 * 공개여부 조회
+	 */
+	public List<UOpen> getUOpen(){
+		return uReviewMapper.getUOpen();
+	}
 	
 	
 	/**

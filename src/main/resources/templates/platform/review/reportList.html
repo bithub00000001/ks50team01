@@ -50,7 +50,7 @@
 								<tr th:if="${pReviewReport != null}" th:each="l : ${pReviewReport}">
 									<td th:text="${l.reportNum}"></td>
 									<td th:text="${l.reportId}"></td>
-									<td th:text="${l.reportCategories}"></td>
+									<td th:text="${l.PReviewReportCategoryInfo.reportCategoryType}"></td>
 									<td th:text="${l.reportReviewCode}"></td>
 									<td th:text="${l.reportContent}"></td>
 									<td th:text="${l.reportDate}"></td>

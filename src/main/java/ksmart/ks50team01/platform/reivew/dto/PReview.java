@@ -29,4 +29,6 @@ public class PReview {
 	private String reportTotal;//신고합계
 	private String reviewModifyDate;//수정일자
 
+	private PReviewBusiness ReviewBusinessInfo; 
+	
 }

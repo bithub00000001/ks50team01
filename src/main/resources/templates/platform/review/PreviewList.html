@@ -50,7 +50,7 @@
 								<tr th:if="${pReviewList != null}" th:each="l : ${pReviewList}">
 									<td th:text="${l.reviewNum}"></td>
 									<td th:text="${l.reviewId}"></td>
-									<td th:text="${l.reviewGoods}"></td>
+									<td th:text="${l.ReviewBusinessInfo.businessName}"></td>
 									<td th:text="${l.reviewStarPoint}"></td>
 									<td th:text="${l.reviewContent}"></td>
 									<td th:text="${l.reviewDate}"></td>

@@ -4,8 +4,9 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import ksmart.ks50team01.user.review.dto.UReviewComment;
+import ksmart.ks50team01.user.review.dto.UOpen;
 import ksmart.ks50team01.user.review.dto.UReview;
+import ksmart.ks50team01.user.review.dto.UReviewComment;
 
 @Mapper
 public interface UReviewMapper {
@@ -20,7 +21,8 @@ public interface UReviewMapper {
 	void modifyReview(UReview review);
 	
 	
-	
+	//공개여부조회
+	List<UOpen> getUOpen();
 	
 	
 	//리뷰 조회

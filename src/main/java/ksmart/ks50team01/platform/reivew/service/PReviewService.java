@@ -25,6 +25,25 @@ public class PReviewService {
 	 */
 	public List<PReviewReport> getPReviewReportTotal() {
 		List<PReviewReport> pReviewReportTotal = pReviewMapper.getPReviewReportTotal();
+		
+		pReviewReportTotal.forEach(report -> {
+		    String reportApprove = report.getReportApprove();
+		    String reportApproveName = "";
+		    if (reportApprove != null) {
+		        switch (reportApprove) {
+		            case "DISCLOSURE_001":
+		                reportApproveName = "승인";
+		                break;
+		            case "DISCLOSURE_002":
+		                reportApproveName = "미승인";
+		                break;
+		        }
+		    }
+		    report.setReportApproveName(reportApproveName);
+		});
+		
+		
+		
 		return pReviewReportTotal;
 	}
 

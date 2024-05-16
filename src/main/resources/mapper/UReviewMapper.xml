@@ -25,6 +25,9 @@
         <result property="goodsInformation" column="PRCHS_CD"/>
         <result property="reportTotal" column="REPT_TOTAL"/>
         <result property="reviewModifyDate" column="MDFCN_YMD"/>
+        
+        
+        
     </resultMap>
 
     <resultMap type="UReviewComment" id="UCommentResultMap">
@@ -49,7 +52,7 @@
 	</insert>
 
     
-    
+
     
     
     

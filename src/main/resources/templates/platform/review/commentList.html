@@ -48,7 +48,7 @@
 							<tr th:if="${pReivewComment != null}" th:each="l : ${pReivewComment}">
 								<td th:text="${l.commentNum}"></td>
 								<td th:text="${l.commentId}"></td>
-								<td th:text="${l.businessCode}"></td>
+								<td th:text="${l.ReviewBusinessInfo.businessName}"></td>
 								<td th:text="${l.commentReviewCode}"></td>
 								<td th:text="${l.commentContent}"></td>
 								<td th:text="${l.commentDate}"></td>

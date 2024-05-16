@@ -69,9 +69,11 @@
 					    <div class="info-section">
 					        <div class="label-cell label">작성자 아이디</div>
 					        <div class="input-cell1">
-					            <input type="text" class="form-control table-input input" name="reviewId" placeholder="입력">
+					      <span class="label" th:text="${loginId}">작성자 아이디</span>
+					            <!-- <input type="text" class="form-control table-input input" name="reviewId" th:value="${loginId}" readonly> -->
 					        </div>
 					        <div class="label-cell label">공개 여부</div>
+					        <div class="label-cell label2">* 공개 여부는 기본적으로 전체공개이며 누적하여 신고를 당할 시 나만공개로 전환됩니다</div>
 					        <div class="input-cell2">
 					            <input type="text" class="form-control table-input input" name="reviewApprove" placeholder="입력">
 					        </div>
