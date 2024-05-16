@@ -19,6 +19,14 @@ public class PCategory {
 	
 	
 	// 공지사항 카테고리
+	private String noticeCateNum;
+	private String noticeRegId;
+	private String noticeCateType;
+	private String noticeMdfId;
+	private String noticeActiveYN;
+	private String noticeRegDate;
+	private String noticeModDate;
+
 	
 	// 신고 카테고리
 }

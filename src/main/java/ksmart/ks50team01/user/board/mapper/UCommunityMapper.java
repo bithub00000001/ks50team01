@@ -46,8 +46,14 @@ public interface UCommunityMapper {
 
 	
 	// 특정 게시물의 댓글 수를 가져오는 메서드 추가
-	int getCommentCntByPostNum(String postNum);
+	//Integer getCommentCntByPostNum(String postNum);
 	
+	
+	/**
+	public Integer getCommentCntByPostNum(String postNum) {
+	    Integer count = uCommunityMapper.getCommentCntByPostNum(postNum);
+	    return count != null ? count : 0;
+	} */
 	
 
 

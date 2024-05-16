@@ -35,4 +35,6 @@ public class PCommunityController {
 		model.addAttribute("title", "커뮤니티 조회");
 		return "platform/board/communityList";
 	}
+	
+
 }

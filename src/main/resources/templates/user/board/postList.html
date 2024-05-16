@@ -95,8 +95,9 @@
 								<td class="text-center"
 									th:text="${#lists.size(postList) - i.count + 1}"></td>
 								<td>
+									<span class="badge bg-warning">N</span>
 									<!-- 게시물 카테고리 뱃지 -->
-									<i class="badge rounded-pill bg-primary" th:text="${l.postCate.postCateType}"></i>
+									<i class="badge rounded-pill bg-primary badge-cate" th:text="${l.postCate.postCateType}"></i>
 									<!-- 게시물 제목 -->
 									<a th:href="@{/community/postDetail(postNum=${l.postNum})}" th:text="${l.postTitle}">
 									<!-- 댓글 수가 0보다 큰 경우에만 뱃지 표시 -->
@@ -209,7 +210,7 @@
                 const rows = tbody.querySelectorAll('tr');
 
                 rows.forEach(row => {
-                    const categoryBadge = row.querySelector('td:nth-child(2) i'); // 각 행의 게시물 카테고리 뱃지
+                    const categoryBadge = row.querySelector('.badge-cate'); // 각 행의 게시물 카테고리 뱃지
                     const categoryText = categoryBadge.textContent; // 뱃지에 표시된 카테고리 텍스트
                     const display = category === '전체' || categoryText === category ? '' : 'none'; // 선택된 카테고리와 일치하는 행이면 보이게 함, 아니면 숨김
 

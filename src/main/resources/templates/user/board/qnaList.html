@@ -49,7 +49,33 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
+
+							<!-- 역순으로 순회 -->
+							<tr th:each="l, i : ${qnaList}" th:order="${-i.count}">
+								<!-- 숫자 형태로 번호 출력 -->
+								<td class="text-center"
+									th:text="${#lists.size(qnaList) - i.count + 1}"></td>
+								<td><span class="badge bg-warning">N</span>
+									<!-- QNA 카테고리 뱃지 --> 
+									<i class="badge rounded-pill bg-primary badge-cate"
+									th:text="${l.qnaCate.qnaCateType}"></i> 
+									<!-- QNA 제목 -->
+									<a th:href="@{/qna/qnaDetail(qnaNum=${l.qnaNum})}"
+									th:text="${l.qnaTitle}"> </a></td>
+								<td class="text-center"
+									th:text="${#strings.substring(l.noticeRegDate, 0, 10)}"></td>
+									
+									<!-- qna 진행상황  -->
+									
+									
+									
+									
+									
+							</tr>
+
+
+
+							<!-- <tr>
 						<td class="noticeNum noticeCenter" style="text-align: center">1</td>
 						<td><i class="badge rounded-pill bg-primary noticeCenter"
 							style="text-align: center">계정 관리</i><a href="">회원탈퇴는 어떻게 하나요?</a></td>
@@ -76,7 +102,8 @@
 							style="text-align: center">결제 / 환불</i><a href="">구매를 취소하고 싶어요</a></td>
 						<td class="noticeCenter" style="text-align: center">2024-04-29</td>
 						<td class="noticeCenter" style="text-align: center">검토중</td>
-					</tr>
+					</tr>  -->
+					
 				</tbody>
 			</table>
 			<div class="row">

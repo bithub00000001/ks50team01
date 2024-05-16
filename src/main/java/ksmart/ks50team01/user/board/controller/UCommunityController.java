@@ -35,9 +35,9 @@ public class UCommunityController {
 	@GetMapping({"/",""})
 	public String postList(Model model) {
 		List<UCommunity> postList = uCommunityService.getPostList();
-		List<Integer> commentCntList = uCommunityService.getCommentCntList(postList);
+		//List<Integer> commentList = uCommunityService.getCommentCntList(postList);
 		model.addAttribute("postList", postList); // postList를 모델에 추가
-		model.addAttribute("commentList", commentCntList); // commentCntList를 모델에 추가
+		//model.addAttribute("commentList", commentList); // commentCntList를 모델에 추가
 		model.addAttribute("title", "커뮤니티");
 		return "user/board/postList";
 		

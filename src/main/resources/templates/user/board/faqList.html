@@ -17,7 +17,11 @@
 		font-size: 18px;
 	}
 	</style>
+	
 </head>
+
+
+
 	
 	<th:block layout:fragment="customPageSection">
 		<!-- 여기에 메인 컨텐츠가 삽입됩니다. -->
@@ -69,45 +73,45 @@
 			</div>
 
 			<!-- Elements Alerts -->
-			<section class="pt-7 pb-9 pt-lg-9 pb-lg-10">
-				<div class="container">
-					<div class="row">
-						<div class="col-xl-12">
-							<div class="accordion" id="accordionOne">
-								<th:block th:each="l : ${faqList}">
-									<div class="card">
-										<div class="card-header" th:id="'headingOne_' + ${l.faqNum}">
-											<h5 class="icon-bg" data-bs-toggle="collapse"
-												th:data-bs-target="'#collapseOne_' + ${l.faqNum}"
-												aria-expanded="true"
-												th:aria-controls="'collapseOne_' + ${l.faqNum}">
-												<span
-													class="text-capitalize font-weight-medium font-size-base text-dark">
-													<!-- 카테고리 뱃지 --> <i class="badge rounded-pill bg-primary"
-													th:text="${l.faqCate.faqCateType}"></i> <!-- 제목 --> <a
-													th:text="${l.faqTitle}"></a>
-												</span>
-											</h5>
-										</div>
-										<div th:id="'collapseOne_' + ${l.faqNum}"
-											class="collapse show"
-											th:aria-labelledby="'headingOne_' + ${l.faqNum}"
-											data-bs-parent="#accordionOne">
-											<div class="card-body">
-												<p th:text="${l.faqContent}"></p>
-											</div>
-										</div>
+		<section class="pt-7 pb-9 pt-lg-9 pb-lg-10">
+			<div class="container">
+				<div class="row">
+					<div class="col-xl-12">
+						<div class="accordion" id="accordionOne">
+							<!-- th:block 대신에 th:each를 사용하여 반복문 처리 -->
+							<div class="card" th:each="l, idx : ${faqList}">
+								<div class="card-header" th:id="'headingOne_' + ${l.faqNum}">
+									<h5 class="icon-bg" data-bs-toggle="collapse"
+										th:data-bs-target="'#collapseOne_' + ${l.faqNum}"
+										aria-expanded="true"
+										th:aria-controls="'collapseOne_' + ${l.faqNum}">
+										<span
+											class="text-capitalize font-weight-medium font-size-base text-dark">
+											<!-- 카테고리 뱃지 --> <i
+											class="badge rounded-pill bg-primary badge-cate"
+											th:text="${l.faqCate.faqCateType}"></i> <!-- 제목 --> <a
+											th:text="${l.faqTitle}"></a>
+										</span>
+									</h5>
+								</div>
+								<div th:id="'collapseOne_' + ${l.faqNum}" class="collapse"
+									th:classappend="${(idx == 0)} ? 'show' : ''"
+									th:aria-labelledby="'headingOne_' + ${l.faqNum}"
+									data-bs-parent="#accordionOne">
+									<div class="card-body">
+										<p th:text="${l.faqContent}"></p>
 									</div>
-								</th:block>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</section>
+			</div>
+		</section>
 
 
 
-			<!-- 
+		<!-- 
 	
 								<div class="card">
 									<div class="card-header" id="headingOne">
@@ -278,22 +282,34 @@
 	       
 
 	       
-	       
-	       // 드롭다운 메뉴 선택 시 호출되는 함수
-	       function filterFAQs(category) {
-	           // 모든 질문 숨기기
-	           document.querySelectorAll('.card').forEach(function(card) {
-	               card.style.display = 'none';
-	           });
+	       // 드롭다운 메뉴 선택 시 해당하는 공지사항만 보이게 하는 함수
+	        function filterNotices(category) {
+	            const tbody = document.querySelector('tbody');
+	            const rows = tbody.querySelectorAll('tr');
 
-	           // 선택한 카테고리에 해당하는 질문만 표시
-	           document.querySelectorAll('.badge').forEach(function(badge) {
-	               if (badge.textContent === category) {
-	                   badge.closest('.card').style.display = 'block';
-	               }
-	           });
-	       }
-	    
+	            rows.forEach(row => {
+	                const categoryBadge = row.querySelector('.badge-cate'); // 각 행의 게시물 카테고리 뱃지
+	                const categoryText = categoryBadge.textContent; // 뱃지에 표시된 카테고리 텍스트
+	                const display = category === '전체' || categoryText === category ? '' : 'none'; // 선택된 카테고리와 일치하는 행이면 보이게 함, 아니면 숨김
+
+	                row.style.display = display;
+	            });
+	        }
+
+	        // 페이지 로드 시 실행되는 함수
+	        document.addEventListener("DOMContentLoaded", function() {
+	            const dropdownItems = document.querySelectorAll('.dropdown-item');
+
+	            dropdownItems.forEach(item => {
+	                item.addEventListener('click', function() {
+	                    const selectedCategory = this.textContent.trim(); // 선택된 드롭다운 메뉴의 텍스트
+
+	                    // 선택된 카테고리에 해당하는 게시물만 보이게 함
+	                    filterNotices(selectedCategory);
+	                });
+	            });
+	        });
+	     
 	    
 	    
 	    

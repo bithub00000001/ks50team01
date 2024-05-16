@@ -26,6 +26,10 @@ public class PCategoryService {
 	    return pCategoryMapper.getCategoryListByBoardType(boardType);
 	}
 	
+	public List<PCategory> getNoticeCateList(){
+		return pCategoryMapper.getNoticeCategoryList();
+	}
+	
 	
 	/**
 	 * 자주찾는질문 카테고리 조회

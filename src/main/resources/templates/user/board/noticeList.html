@@ -20,11 +20,11 @@
 				<button class="btn btn-primary dropdown-toggle" type="button"
 					id="dropdownMenuButton" data-bs-toggle="dropdown">공지사항</button>
 				<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-					<li><a class="dropdown-item" href="javascript:void(0)">일반공지</a></li>
-					<li><a class="dropdown-item" href="javascript:void(0)">긴급공지</a></li>
-					<li><a class="dropdown-item" href="javascript:void(0)">예정공지</a></li>
-					<li><a class="dropdown-item" href="javascript:void(0)">시스템공지</a></li>
-					<li><a class="dropdown-item" href="javascript:void(0)">이벤트공지</a></li>
+					<li><a class="dropdown-item" href="javascript:void(0)">일반 공지</a></li>
+					<li><a class="dropdown-item" href="javascript:void(0)">긴급 공지</a></li>
+					<li><a class="dropdown-item" href="javascript:void(0)">예정 공지</a></li>
+					<li><a class="dropdown-item" href="javascript:void(0)">시스템 공지</a></li>
+					<li><a class="dropdown-item" href="javascript:void(0)">이벤트 공지</a></li>
 				</ul>
 			</div>
 		</div>  
@@ -120,8 +120,9 @@
 								<td class="text-center"
 									th:text="${#lists.size(noticeList) - i.count + 1}"></td>
 								<td>
+									<span class="badge bg-warning">N</span>
 									<!-- 공지사항 카테고리 뱃지 --> 
-									<i class="badge rounded-pill bg-primary" th:text="${l.noticeCate.noticeCateType}"></i> 
+									<i class="badge rounded-pill bg-primary badge-cate" th:text="${l.noticeCate.noticeCateType}"></i> 
 									<!-- 공지사항 제목 --> 
 									<a th:href="@{/notice/noticeDetail(noticeNum=${l.noticeNum})}"
 									th:text="${l.noticeTitle}"> 
@@ -223,28 +224,37 @@
         });
         
         
-     // 선택된 드롭다운 메뉴에 해당하는 공지사항 조회
+
+     
+     
+     
+     // 드롭다운 메뉴 선택 시 해당하는 공지사항만 보이게 하는 함수
+        function filterNotices(category) {
+            const tbody = document.querySelector('tbody');
+            const rows = tbody.querySelectorAll('tr');
+
+            rows.forEach(row => {
+                const categoryBadge = row.querySelector('.badge-cate'); // 각 행의 게시물 카테고리 뱃지
+                const categoryText = categoryBadge.textContent; // 뱃지에 표시된 카테고리 텍스트
+                const display = category === '전체' || categoryText === category ? '' : 'none'; // 선택된 카테고리와 일치하는 행이면 보이게 함, 아니면 숨김
+
+                row.style.display = display;
+            });
+        }
+
+        // 페이지 로드 시 실행되는 함수
         document.addEventListener("DOMContentLoaded", function() {
-            const menuItems = document.querySelectorAll('.dropdown-item');
+            const dropdownItems = document.querySelectorAll('.dropdown-item');
 
-            menuItems.forEach(item => {
+            dropdownItems.forEach(item => {
                 item.addEventListener('click', function() {
-                    const selectedMenu = this.textContent;
-                    const tbody = document.querySelector('tbody');
-                    const rows = tbody.querySelectorAll('tr');
+                    const selectedCategory = this.textContent.trim(); // 선택된 드롭다운 메뉴의 텍스트
 
-                    rows.forEach(row => row.style.display = 'none');
-
-                    rows.forEach(row => {
-                        const title = row.querySelector('td:nth-child(2)').textContent;
-                        if (title.includes(selectedMenu)) {
-                            row.style.display = '';
-                        }
-                    });
+                    // 선택된 카테고리에 해당하는 게시물만 보이게 함
+                    filterNotices(selectedCategory);
                 });
             });
         });
-     
      
      
      
