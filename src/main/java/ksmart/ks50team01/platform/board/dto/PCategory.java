@@ -5,6 +5,9 @@ import lombok.Data;
 @Data
 public class PCategory {
 	
+	// 게시판 종류
+	private String boardType;
+	
 	// 자주찾는질문 및 1:1문의 카테고리
 	private String faqCateNum;
 	private String faqRegId;
@@ -13,6 +16,7 @@ public class PCategory {
 	private String faqAct;
 	private String faqRegDate;
 	private String faqMdfDate;
+	
 	
 	// 공지사항 카테고리
 	
