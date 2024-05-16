@@ -3,9 +3,50 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ksmart.ks50team01.platform.ranking.mapper.RankingMapper">
 	
-	<select id="getRankingInfoById" parameterType="String" resultType="Ranking">
+	<resultMap type="Ranking" id="RankingResultMap">
+		<id property="pRankingId" column="PF_MNGR_RANK"/>
+		<result property="pRankingRegId" column="REG_PF_ID"/>
+		<result property="partnerBusinessCode" column="PRTNR_BPLC_CD"/>
+		<result property="tripLctgryCode" column="TRIP_LCTGRY_CD"/>
+		<result property="businessName" column="BZMN_CONM"/>
+		<result property="rgnSctgryName" column="RGN_SCTGRY_NM"/>
+		<result property="partnerBrandName" column="PRTNR_BRD_NM"/>
+		<result property="artclRankigNum" column="ARTCL_RANK_TOP_FIVE"/>
+		<result property="partnerShipStart" column="BRD_CTRT_STRT_YMD"/>
+		<result property="partnerShipStartEnd" column="BRD_CTRT_END_YMD"/>
+		<result property="partnerType" column="BRD_TYPE"/>
+		<result property="partnerShipDetail" column="BRD_CN"/>
+		<result property="adStart" column="AD_STRT_YMD"/>
+		<result property="adEnd" column="AD_END_YMD"/>
+		<result property="activate" column="ACT_YN"/>
+	</resultMap>
+	
+	<update id="modifyRanking" parameterType="Ranking">
+		UPDATE 
+			PLATFORM_PARTNERSHIP
+		SET
+			REG_PF_ID=#{pRankingRegId},
+			PRTNR_BPLC_CD=#{partnerBusinessCode},
+			TRIP_LCTGRY_CD=#{tripLctgryCode},
+			BZMN_CONM=#{businessName},
+			RGN_SCTGRY_NM=#{rgnSctgryName},
+			PRTNR_BRD_NM=#{partnerBrandName},
+			ARTCL_RANK_TOP_FIVE=#{artclRankigNum},
+			BRD_CTRT_STRT_YMD=#{partnerShipStart},
+			BRD_CTRT_END_YMD=#{partnerShipStartEnd},
+			BRD_TYPE=#{partnerType},
+			BRD_CN=#{partnerShipDetail},
+			AD_STRT_YMD=#{adStart},
+			AD_END_YMD=#{adEnd},
+			ACT_YN=#{activate}
+		WHERE 
+			PF_MNGR_RANK=#{pRankingId};
+	</update>
+	
+	<select id="getRankingInfoById" resultType="Ranking">
 		SELECT 
 			ROW_NUMBER() OVER(ORDER BY PF_MNGR_RANK)	AS pRankingNum,
+			PF_MNGR_RANK								AS pRankingId,
 			REG_PF_ID 									AS pRankingRegId,
 			PRTNR_BPLC_CD 								AS partnerBusinessCode,
 			TRIP_LCTGRY_CD								AS tripLctgryCode,
@@ -81,6 +122,7 @@
 		/* 플랫폼 추천 조회 */
 		SELECT 
 			ROW_NUMBER() OVER(ORDER BY PF_MNGR_RANK)	AS pRankingNum,
+			PF_MNGR_RANK								AS pRankingId,
 			REG_PF_ID 									AS pRankingRegId,
 			PRTNR_BPLC_CD 								AS partnerBusinessCode,
 			TRIP_LCTGRY_CD								AS tripLctgryCode,
