@@ -14,4 +14,8 @@ public interface PTourApiService {
 	void upsertAreaData(String apiKey);
 
 	void upsertSigunguData(String apiKey);
+
+	List<PTourApi> getAreaCodeList();
+
+	List<PTourApi> getSigunguCodeList();
 }

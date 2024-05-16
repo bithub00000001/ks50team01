@@ -4,19 +4,29 @@
 
     <resultMap id="areaMap" type="pTourApi">
         <id     column="area_code" property="areaCode"/>
-        <result column="areaNum" property="areaNum"/>
+        <result column="areaNum"   property="areaNum"/>
         <result column="area_name" property="areaName"/>
-        <result column="REG_YMD"   property="regDate"/>
-        <result column="MDFCN_YMD" property="modDate"/>
+        <result column="areaRegDate"   property="areaRegDate"/>
+        <result column="areaModDate" property="areaModDate"/>
+
 
     </resultMap>
 
-    <resultMap id="sigunguMap" type="pTourApi">
-        <id     column="sigungu_code" property="sigunguCode"/>
+    <resultMap id="sigunMap" type="pTourApi">
+        <id     column="sigungu_id" property="sigunguId"/>
+        <result column="sigungu_code" property="sigunguCode"/>
         <result column="sigungu_name" property="sigunguName"/>
-        <result column="area_id"      property="areaCode"/>
-        <result column="REG_YMD"      property="regDate"/>
-        <result column="MDFCN_YMD"    property="modDate"/>
+        <result column="sigunNum"     property="sigunNum"/>
+        <result column="sigunRegDate" property="sigunRegDate"/>
+        <result column="sigunModDate" property="sigunModDate"/>
+
+        <association property="areaInfo" javaType="pTourApi">
+            <id     column="area_code" property="areaCode"/>
+            <result column="areaNum"   property="areaNum"/>
+            <result column="area_name" property="areaName"/>
+            <result column="areaRegDate"   property="areaRegDate"/>
+            <result column="areaModDate" property="areaModDate"/>
+        </association>
     </resultMap>
 
     <insert id="upsertAreaCode" parameterType="pTourApi">
@@ -39,7 +49,7 @@
                 MDFCN_YMD = now();
     </insert>
 
-    <insert id="upsertSigunguCode">
+    <insert id="upsertSigunguCode" parameterType="pTourApi">
         /* 시군구 코드 업서트 */
         INSERT INTO
             SIGUNGU_CODE
@@ -55,53 +65,48 @@
             #{sigunguName},
             (
                 SELECT
-                    area_code
+                    AREA_CODE.area_code
                 FROM
                     AREA_CODE
                 WHERE
-                    area_code = #{areaCode}
+                    AREA_CODE.area_code = #{areaCode}
                 ),
             now()
             )
         ON DUPLICATE KEY
             UPDATE
                 sigungu_name = #{sigunguName},
-                area_id = (
-                            SELECT
-                                area_code
-                            FROM
-                                AREA_CODE
-                            WHERE
-                                area_code = #{areaCode}
-                            )
+                MDFCN_YMD = now();
     </insert>
 
-    <select id="getAllAreaCodes" resultMap="areaMap">
+    <select id="getAreaCodeList" resultMap="areaMap">
         /* 전체 지역 코드 조회 */
         SELECT
             row_number() over (order by area_code) as areaNum,
             area_code,
             area_name,
-            REG_YMD,
-            MDFCN_YMD
+            REG_YMD as areaRegDate,
+            MDFCN_YMD as areaModDate
         FROM
             AREA_CODE
     </select>
 
-    <select id="getAllSigunguCodes" resultMap="sigunguMap">
+    <select id="getSigunList" resultMap="sigunMap">
         /* 전체 시군 코드 조회 */
         SELECT
-            row_number() over (order by sc.sigungu_code) as sigunNum,
-            sigungu_code,
-            sigungu_name,
-            area_id,
-            sc.REG_YMD,
-            sc.MDFCN_YMD
+            row_number() over (order by AC.area_code, SC.sigungu_code) as sigunNum,
+            SC.sigungu_code,
+            SC.sigungu_name,
+            SC.area_id,
+            AC.area_code,
+            AC.area_name,
+            SC.REG_YMD as sigunRegDate,
+            SC.MDFCN_YMD as sigunModDate
         FROM
-            SIGUNGU_CODE as sc
-            inner join
-            AREA_CODE as ac
+            SIGUNGU_CODE as SC
+            left join
+            AREA_CODE as AC
             on
-            sc.area_id = ac.area_code
+            SC.area_id = AC.area_code
     </select>
 </mapper>

@@ -1,7 +1,11 @@
 package ksmart.ks50team01.platform.trip.service;
 
+import java.net.URI;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -9,9 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriBuilder;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ksmart.ks50team01.platform.trip.dto.PTourApi;
 import ksmart.ks50team01.platform.trip.mapper.PTourApiMapper;
@@ -33,8 +35,6 @@ public class PTourApiServiceImpl implements PTourApiService {
 	// API를 WebClientConfig에서 설정한 baseUrl로 이용하기 위해 DI 주입
 	private final WebClient webClient;
 
-	// JSON 파싱을 위한 ObjectMapper DI 주입
-	private final ObjectMapper objectMapper;
 
 	/**
 	 * 지역 코드를 조회 하거나 지역코드에 해당하는 시군 코드를 Tour API에 요청
@@ -52,38 +52,87 @@ public class PTourApiServiceImpl implements PTourApiService {
 					.path(("/areaCode1"))
 					.queryParam("serviceKey",apiKey)
 					.queryParam("numOfRows",50)
-					.queryParam("pagerNo", 1)
+					.queryParam("pageNo", 1)
 					.queryParam("MobileOS", "ETC")
 					.queryParam("MobileApp", "KSMART50")
 					.queryParam("_type", "json");
-
-				// areaCode 가 존재한다면 그 값을 사용하여 쿼리 파라미터를 추가
-				optionalAreaCode.ifPresent(areaCode -> uriBuilder
-					.queryParam("areaCode", areaCode));
-				log.info("uriBuilder: {}", uriBuilder.toUriString());
-				return builder.build();
-		})
+				return getTourApiUri(optionalAreaCode, uriBuilder, builder);
+			})
 			// 결과 타입을 JSON 으로 받도록 설정
 			.accept(MediaType.APPLICATION_JSON)
 			// 요청을 전송하고 결과를 반환(여기에서 실제 네트워크 요청 이루어짐)
 			.retrieve()
 			// 변환된 데이터를 dto.calss 타입의 객체로 변환
 			.bodyToMono(JsonNode.class)
-			.map(jsonNode -> {
-				// 요청이 "response.body.items.item" 경로로 설정되어 있어 경로에 맞게 데이터를 추출
-				JsonNode itemsNode = jsonNode.path("response")
-					.path("body")
-					.path("items")
-					.path("item");
-
-				// 추출한 데이터를 ObjectMapper로 변환
-				List<PTourApi> pTourApiList = objectMapper.convertValue(itemsNode, new TypeReference<>() {
-				});
-				return pTourApiList;
+			.flatMap(jsonNode -> getRegionListMono(optionalAreaCode, jsonNode))
+			.onErrorResume(error -> {
+				log.error("getAreaData error: {}", error.getMessage());
+				return Mono.error(error);
 			});
 	}
 
-	//public Mono<PTourApi> getAccomodationData(String apiKey, )
+	private static URI getTourApiUri(Optional<String> optionalAreaCode, UriBuilder uriBuilder, UriBuilder builder) {
+		// areaCode 가 존재한다면 그 값을 사용하여 쿼리 파라미터를 추가
+		optionalAreaCode.ifPresent(areaCode ->
+			uriBuilder.queryParam("areaCode", areaCode));
+		log.info("uriBuilder: {}", uriBuilder.toUriString());
+		return builder.build();
+	}
+
+	private Mono<List<PTourApi>> getRegionListMono(Optional<String> optionalAreaCode, JsonNode jsonNode) {
+		if (optionalAreaCode.isPresent()) {
+			// optionalAreaCode가 있는 경우, convertJsonToSigunguData 메서드 호출
+			return convertJsonToSigunguData(jsonNode, optionalAreaCode.get());
+		}else {
+			// optionalAreaCode가 없는 경우, convertJsonToAreaData 메서드 호출
+			return convertJsonToAreaData(jsonNode);
+		}
+	}
+
+	/**
+	 * JSON 데이터를 PTourAPI 객체 리스트로 변환
+	 * @param jsonNode
+	 * @return
+	 */
+	private Mono<List<PTourApi>> convertJsonToAreaData(JsonNode jsonNode) {
+		// 요청이 "response.body.items.item" 경로로 설정되어 있어 경로에 맞게 데이터를 추출
+		JsonNode itemsNode = jsonNode.path("response")
+			.path("body")
+			.path("items")
+			.path("item");
+
+		log.info("convertJsonToAreaData jsonNode: {}", itemsNode);
+
+		// 추출한 데이터를 ObjectMapper로 변환
+		List<PTourApi> pTourApiList = createAreaDataListFromJson(itemsNode);
+		log.info("convertJsonToAreaData pTourApiList: {}", pTourApiList);
+		return Mono.just(pTourApiList);
+	}
+	private List<PTourApi> createAreaDataListFromJson(JsonNode itemsNode) {
+		return itemsNode.isArray() ?
+			StreamSupport.stream(itemsNode.spliterator(),false)
+				.map(item -> {
+					PTourApi pTourApi = new PTourApi();
+					pTourApi.setAreaCode(item.get("code").asText());
+					pTourApi.setAreaName(item.get("name").asText());
+					pTourApi.setAreaRNum(item.get("rnum").asText());
+					return pTourApi;
+				})
+				.collect(Collectors.toList())
+			: Collections.emptyList();
+	}
+
+	// 숙소 정보 조회 메서드 작성중
+	/*public Mono<PTourApi> getAccommodationData(String apiKey){
+		return webClient.get().uri(uriBuilder -> {
+			UriBuilder builder = uriBuilder
+				.path("/api/rest/pacakge")
+				.queryParam("ServiceKey", apiKey)
+				.queryParam()
+
+		})
+	}*/
+	//public Mono<PTourApi> getAccommodationData(String apiKey, )
 
 	/**
 	 * Tour API 에 지역 코드만 요청하는 메서드
@@ -108,21 +157,11 @@ public class PTourApiServiceImpl implements PTourApiService {
 		areaDataMono.subscribe(areaData -> {
 			log.info("Tour API 지역 코드 데이터 조회: {}", areaData);
 
-			// 받아온 데이터 DTO 객체 시군 코드 변환
-			List<PTourApi> areaList = areaData.stream()
-				.map(item -> {
-					PTourApi pTourApi = new PTourApi();
-					pTourApi.setAreaCode(item.getAreaCode());
-					pTourApi.setAreaName(item.getAreaName());
-					return pTourApi;
-				})
-				.toList();
-			log.info("변환된 지역 코드 객체 리스트: {}", areaList);
-
-			// 객체 리스트를 DB에 업서트
-			areaList.forEach(pTourApiMapper::upsertAreaCode);
+			// 받아온 데이터를 DB에 업서트
+			areaData.forEach(pTourApiMapper::upsertAreaCode);
 
 			log.info("=== upsertAreaData Method exit ===");
+
 		});
 	}
 
@@ -135,35 +174,60 @@ public class PTourApiServiceImpl implements PTourApiService {
 		log.info("upsertSigunguData apiKey: {}", apiKey);
 
 		// DB에서 모든 지역 코드 조회
-		List<PTourApi> areaCodeList = pTourApiMapper.getAllAreaCodes();
-		log.info("areaCodeList: {}", areaCodeList);
+		List<PTourApi> areaCodeList = pTourApiMapper.getAreaCodeList();
 
 		areaCodeList.forEach(areaCode -> {
-			log.info("processing areaCode: {}", areaCode);
+			Mono<List<PTourApi>> sigunguDataMono = getAreaData(apiKey, Optional.ofNullable(areaCode.getAreaCode()));
+			sigunguDataMono.subscribe(sigunguData -> {
+				// 받아온 데이터를 DB에 업서트
+				sigunguData.forEach(pTourApiMapper::upsertSigunguCode);
 
-			// 해당 지역 코드로 Tour API 에서 시군구 코드 조회
-			Mono<List<PTourApi>> sigunguDataMono = getAreaData(apiKey,Optional.of(areaCode.getAreaCode()));
-			sigunguDataMono.subscribe(sigunguDataList -> {
-				log.info("sigunguDataList: {}", sigunguDataList);
-
-				// 받아온 데이터를 객체 리스트로 변환
-				List<PTourApi> sigunguList = sigunguDataList.stream()
-					.map(item -> {
-						PTourApi sigunguData = new PTourApi();
-
-						// 시군구 코드 설정
-						sigunguData.setSigunguCode(item.getSigunguCode());
-						sigunguData.setSigunguName(item.getSigunguName());
-
-						sigunguData.setAreaCode(item.getAreaCode());
-						return sigunguData;
-					}).toList();
-				log.info("변환된 시군구 객체 리스트 sigunguList: {}", sigunguList);
-
-				// 변환된 객체 리스트를 DB에 업서트
-				sigunguList.forEach(pTourApiMapper::upsertSigunguCode);
-
+				log.info("=== upsertSigunguData Method exit ===");
 			});
 		});
+	}
+
+	/**
+	 * 지역 코드 데이터를 시군구 코드 데이터로 변환하는 메서드
+	 * @param
+	 * @return
+	 */
+	private Mono<List<PTourApi>> convertJsonToSigunguData(JsonNode jsonNode, String areaCode) {
+		JsonNode itemsNode = jsonNode.path("response")
+			.path("body")
+			.path("items")
+			.path("item");
+
+		log.info("convertJsonToSigunguData jsonNode: {}", itemsNode);
+
+		List<PTourApi> pTourApiList = createSigunguDataListFromJson(itemsNode, areaCode);
+		log.info("convertJsonToSigunguData pTourApiList: {}", pTourApiList);
+		return Mono.just(pTourApiList);
+	}
+
+	private List<PTourApi> createSigunguDataListFromJson(JsonNode itemsNode, String areaCode) {
+		return itemsNode.isArray() ?
+			StreamSupport.stream(itemsNode.spliterator(), false)
+				.map(item -> {
+					PTourApi pTourApi = new PTourApi();
+					pTourApi.setSigunguCode(item.get("code").asText());
+					pTourApi.setSigunguName(item.get("name").asText());
+					pTourApi.setAreaCode(areaCode);
+					return pTourApi;
+				})
+				.collect(Collectors.toList())
+			: Collections.emptyList();
+	}
+
+	@Override
+	public List<PTourApi> getAreaCodeList(){
+		return pTourApiMapper.getAreaCodeList();
+	}
+
+	@Override
+	public List<PTourApi> getSigunguCodeList(){
+
+		pTourApiMapper.getSigunList();
+		return pTourApiMapper.getSigunList();
 	}
 }
