@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ksmart.ks50team01.platform.board.dto.PCategory;
 import ksmart.ks50team01.platform.board.mapper.PCategoryMapper;
+import ksmart.ks50team01.platform.destination.dto.Destination;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -15,6 +16,29 @@ import lombok.RequiredArgsConstructor;
 public class PCategoryService {
 	
 	private final PCategoryMapper pCategoryMapper;
+	
+	/**
+	 * 게시판 종류에 해당하는 카테고리 조회
+	 * @param boardType 게시판 종류
+	 * @return List<PCategory>
+	 */
+	public List<PCategory> getCategoryListByBoardType(String boardType) {
+	    return pCategoryMapper.getCategoryListByBoardType(boardType);
+	}
+	
+	public List<PCategory> getNoticeCateList(){
+		return pCategoryMapper.getNoticeCategoryList();
+	}
+	
+	
+	/**
+	 * 자주찾는질문 카테고리 조회
+	 * @return List<PCategory>
+	 */
+	public List<PCategory> getFaqCategoryList() {
+		List<PCategory> faqCategoryList = pCategoryMapper.getFaqCategoryList();
+		return faqCategoryList;
+	}
 	
 	/**
 	 * 카테고리 수정
@@ -33,14 +57,6 @@ public class PCategoryService {
 		pCategoryMapper.categoryAdd(pCategory);
 	}
 	
-	/**
-	 * 자주찾는질문 카테고리 조회
-	 * @return List<PCategory>
-	 */
-	public List<PCategory> getFaqCategoryList() {
-		List<PCategory> faqCategoryList = pCategoryMapper.getFaqCategoryList();
-		return faqCategoryList;
-	}
 
 
 

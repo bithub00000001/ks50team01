@@ -18,7 +18,7 @@
                     <!-- 첫 번째 페이지 내용 -->
                     <form th:action="@{/trip/details}" method="post" th:object="${uTripOption}">
                         <div class="d-flex justify-content-end">
-                            <button class="btn btn-primary btn-sm me-2" type="button">임시 저장</button>
+                            <button class="btn btn-primary btn-sm me-2" type="button" id="tmpSave" onclick="fristStepSubmit()">임시 저장</button>
                             <button class="btn btn-secondary btn-sm" type="button">목록으로</button>
                         </div>
                         <div class="mb-3">
@@ -139,14 +139,15 @@
                         </div>
                         <!-- 지역 선택 -->
                         <div class="form-group col-lg-6 mb-md-6 mb-lg-0">
-                            <label for="region">지역 선택:</label>
+							<div id="map" style="width:100%;height:350px;"></div>
+                            <!--<label for="region">지역 선택:</label>
                             <select class="select-option" id="region">
-                                <!--/*th:with="regions=${@regionService.getRegions()}"*/-->
+                                /*th:with="regions=${@regionService.getRegions()}"*/
                                 <option value="">지역 선택</option>
                                 <option value="">옵션1</option>
-                                <!--/*th:each="region : ${regions}" th:value="${region}" th:text="${region}"*/-->
+                                /*th:each="region : ${regions}" th:value="${region}" th:text="${region}"*/
                             </select>
-                            <br>
+                            <br>-->
 
                             <!-- 카테고리 탭 -->
                             <div id="destination">
@@ -158,7 +159,8 @@
                                                class="nav-link"
                                                data-bs-toggle="tab"
                                                href="#accommodation"
-                                               id="accommodation-tab" role="tab">숙소
+                                               id="accommodation-tab" role="tab"
+                                               onclick="getData(map[0], 1)">숙소
                                             </a>
                                         </li>
                                         <li class="nav-item" role="presentation">
@@ -166,14 +168,16 @@
                                                data-bs-toggle="tab"
                                                href="#restaurant"
                                                id="restaurant-tab"
-                                               role="tab">음식점
+                                               role="tab"
+                                               onclick="getData(map[0], 2)">음식점
                                             </a>
                                         </li>
                                         <li class="nav-item" role="presentation">
                                             <a aria-controls="tour" aria-selected="false" class="nav-link"
                                                data-bs-toggle="tab"
                                                href="#tour"
-                                               id="tour-tab" role="tab">관광지
+                                               id="tour-tab" role="tab"
+                                               onclick="getData(map[0], 3)">관광지
                                             </a>
                                         </li>
 
@@ -455,11 +459,16 @@
 
     <script th:src="@{/user/plugins/sortable/Sortable.js}"></script>
     <script th:src="@{/user/js/tripPlanner.js}"></script>
+    
+    <!--2024.05.16-->
+    <script th:src="@{/user/js/tripPlan.js}"></script>
+    <script th:src="@{/user/js/tripMap.js}"></script>
+    <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=373ed2ade74fe4dee247e98cc67d8336&libraries=services,clusterer"></script>
 </th:block>
 
 <th:block layout:fragment="customJs">
     <script th:inline="javascript">
-
+		
         // 페이지 로드 시 maxPeople 값을 업데이트
         $(document).ready(function() {
             updateMaxPeople();
@@ -487,8 +496,20 @@
                     $('#numDate').val(''); // 일차 입력 필드를 초기화
                 }
             });
+            
+           
+            /*동적으로 변경되는 UI환경 이슈로 인한 timeout*/
+            setTimeout(() => {
+				var map;
+				<!--지도생성 함수 호출-->
+			    map = new kakao.maps.Map(document.getElementById('map'), { // 지도를 표시할 div
+				    center : new kakao.maps.LatLng(36.2683, 127.6358), // 지도의 중심좌표 
+				    level : 20 // 지도의 확대 레벨 
+				});
+			}, "1000");	
         });
-
+        
+		
         // 실제 회원 데이터 (예시)
         const realMembers = [
             {id: 1, name: '실제 회원 예시 1'},

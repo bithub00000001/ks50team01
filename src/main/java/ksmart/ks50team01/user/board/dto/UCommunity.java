@@ -33,7 +33,10 @@ public class UCommunity {
 	private String CommentRegDate;
 	private String CommentMdfDate;
 	private String CommentDelDate;
-
+	
+	private String postCategory;
+	private String postFile;
+	private int commentnt; // 댓글 수 필드 추가
 	
 	// 추가된 association을 위한 멤버 변수
 	private UCommunity postCate;
@@ -42,10 +45,12 @@ public class UCommunity {
 	private UCommunity Comment;
 	
 	
+	private List<UComment> commentList;
+	
     
     // 추가된 필드: 게시물 상세 정보
-    private String postDetail; // 게시물 상세 정보
-	
+    private String postDetail;
+    
 
 
 }
