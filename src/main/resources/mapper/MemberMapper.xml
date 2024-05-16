@@ -6,7 +6,6 @@
 
 	
 	<update id="updateMember" parameterType="PMember">
-	    /* 회원 수정 */
 	    UPDATE MEMBER_MANAGE
 	    SET
 	        MBR_PW = #{memberPw},

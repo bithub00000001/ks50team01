@@ -50,9 +50,10 @@
 								<div class="col-md-2 col-sm-2 col-xs-0"></div>
 								<label class="control-label col-md-2 col-sm-2 col-xs-12">category</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<select class="form-control text-center searchCate">
-										<option value="restaurantManage">음식점 관리</option>
-										<option value="restaurantMenuManage">음식점 메뉴 관리</option>
+									<select class="form-control text-center">
+										<option>음식점 관리</option>
+										<option>음식점 메뉴 관리</option>
+
 									</select>
 								</div>
 								<div class="col-md-2 col-sm-2 col-xs-0"></div>
@@ -61,11 +62,11 @@
 							<div class="ln_solid"></div>
 							<div class="form-group">
 								<div class="col-md-12 col-sm-12 col-xs-12 text-center">
-									
-										<button class="btn btn-success btn-lg searchBtn" type="button">
+									<a href="@{/platform/destination/tourGoodsManage}">
+										<button class="btn btn-success btn-lg" type="button">
 											<span>검색</span>
 										</button>
-									
+									</a>
 									<button type="reset" class="btn btn-dark btn-lg">초기화</button>
 								</div>
 							</div>
@@ -112,7 +113,7 @@
 									<td th:text="${l.restaurantAuthorityId}"></td>
 									<td th:text="${l.restaurantAddr}"></td>
 									<td th:text="${l.restaurantSite}"></td>
-									<td th:text="${l.restaurantContactNum}"></td>
+									<td th:text="${l.restaurantContectNum}"></td>
 									<td>
 									    <a th:href="@{/platform/destination/restaurantModify(restaurantAuthorityId=${l.restaurantAuthorityId})}">수정</a>
 									</td>
@@ -153,23 +154,5 @@
 	<script type="text/javascript" th:src="@{/platform/js/checkbox/memberDel.js}"></script>
 	</th:block>
 	<!-- custom js file end -->
-	<th:block layout:fragment="customJs">
-	<script>
-		$(document).ready(function(){
-			$('#searchItem').on('keyup', function(){
-				const searchValue = $(this).val().toLowerCase();
-				$('#datatable-responsive tbody tr').filter(function(){
-					$(this).toggle($(this).text().toLowerCase().indexOf(searchValue) > -1);
-				});
-			});
-			
-			$(document).on('click','.searchBtn', function(){
-				const movePage = $('.searchCate :selected').val();
-				
-				if(movePage) location.href = '/platform/destination/' + movePage;
-			});
-		});
-	</script>
-	</th:block>
 
 </html>
