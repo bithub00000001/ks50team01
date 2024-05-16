@@ -1,17 +1,23 @@
 package ksmart.ks50team01.platform.board.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import ksmart.ks50team01.platform.board.dto.PCategory;
 import ksmart.ks50team01.platform.board.service.PCategoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @Controller
 @RequestMapping(value = "/platform/board")
@@ -54,12 +60,26 @@ public class PCategoryController {
 	// 게시판 종류에 해당하는 카테고리 조회
     @GetMapping("/categoryList")
     public String categoryList(String boardType, Model model) {
-    	List<PCategory> categoryList = pCategoryService.getCategoryListByBoardType(boardType);
-    	log.info("categoryList:{}", categoryList);
+    	List<PCategory> categoryList = pCategoryService.getFaqCategoryList();
+    	log.info("controller categoryList:{}", categoryList);
 		model.addAttribute("title", "카테고리 조회");
 		model.addAttribute("categoryList", categoryList);
     	return "platform/board/categoryList";
     }
+    
+    @PostMapping("/{dataTrans}")
+    @ResponseBody
+    public Map<String, Object> postMethodName(@PathVariable String dataTrans) {
+    	Map<String, Object> responseMap = new HashMap<String, Object>();
+    	responseMap.put("dataTrans", dataTrans);
+    	List<?> dataList = null;
+		if("noticeCateList".equals(dataTrans)) {
+			dataList = pCategoryService.getNoticeCateList();
+		}
+		if(dataList != null) responseMap.put("data", dataList);
+		return responseMap;
+    }
+    
 	
 	
 	/**

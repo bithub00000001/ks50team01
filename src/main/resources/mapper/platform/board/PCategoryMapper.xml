@@ -14,24 +14,53 @@
 		<result 	property="faqMdfDate" 		column="MDFCN_YMD"/>
 	</resultMap>
 	
+	<resultMap id="noticeCategoryResultMap" type="PCategory">
+		<id 		property="noticeCateNum" 		column="NTC_CTGRY_NO"/>
+		<result 	property="noticeRegId" 		column="REG_PF_ID"/>
+		<result 	property="noticeCateType" 		column="NTC_CTGRY_TYPE"/>
+		<result 	property="noticeMdfId" 		column="MDFCN_PF_ID"/>
+		<result 	property="noticeActiveYN" 			column="ACT_YN"/>
+		<result 	property="noticeRegDate" 		column="REG_YMD"/>
+		<result 	property="noticeModDate" 		column="MDFCN_YMD"/>
+	</resultMap>
+	
 	
 
-    <!-- 게시판 종류에 해당하는 카테고리 조회 -->
-    <select id="getBoardType" resultType="PCategory">
+    <!-- 게시판 종류에 해당하는 카테고리 조회 --> 
+    <select id="getCategoryListByBoardType" resultMap="faqCategoryResultMap">
+   
         SELECT
-        	* 
+        	FAQ_CTGRY_NO, 
+        	REG_PF_ID, 
+        	FAQ_CTGRY_TYPE, 
+        	MDFCN_PF_ID, 
+        	ACT_YN, 
+        	REG_YMD, 
+        	MDFCN_YMD
         FROM 
-        	category_table 
+        	FAQ_CATEGORY
         WHERE
-        	board_type = #{boardType}
+        	FAQ_CTGRY_NO = #{boardType} 
     </select>
     
-    
-    
+    <select id="getNoticeCategoryList" resultMap="noticeCategoryResultMap">
+     /* 공지사항 카테로리 조회*/
+    	SELECT 
+	    	NTC_CTGRY_NO, 
+	    	REG_PF_ID, 
+	    	NTC_CTGRY_TYPE, 
+	    	MDFCN_PF_ID, 
+	    	ACT_YN, 
+	    	REG_YMD, 
+	    	MDFCN_YMD
+		FROM 
+			NOTICE_CATEGORY
+    </select>
     
 
+
 	<select id="getFaqCategoryList" resultMap="faqCategoryResultMap">
-	 	/* 카테고리 조회 */
+	 	/* faq 카테고리 조회 */
 		SELECT 
 			FAQ_CTGRY_NO, 
 			REG_PF_ID, 

@@ -23,6 +23,7 @@ public interface PCategoryMapper {
 	
 	// 공지사항 카테고리 조회
 	List<PCategory> getNoticeCategoryList();
+
 	
 
 	// 신고 카테고리 조회

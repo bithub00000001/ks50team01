@@ -62,6 +62,8 @@
 			<result 	property="CommentMdfDate" 		column="MDFCN_YMD"/>
 			<result 	property="CommentDelDate" 		column="DEL_YMD"/>
 	</resultMap>
+
+
 	
 	
 
@@ -189,14 +191,16 @@
         	PST_NO = #{postNum}
     </update>
     
-    
-    <select id="getCommentCntByPostNum" resultType="int">
+    <!-- 외않되 ... 
+    <select id="getCommentCntByPostNum" resultMap="postResultMap" resultType="Integer">
         SELECT 
-        	COUNT(*) 
+        	COUNT(PST_CMNT_TOTAL)
         FROM 
-        	POST_COMMENT 
-        WHERE PST_NO = #{postNum};
-    </select>
+        	POST
+        WHERE 
+        	PST_NO = #{postNum};
+        	
+    </select> -->
 
     
 	

@@ -47,11 +47,14 @@ public class UCommunityService {
 	}
 	
 	
-	
+	/** 외않되 ... 
     // 특정 게시물의 댓글 수를 가져오는 메서드 추가
-    public int getCommentCntByPostNum(String postNum) {
-        return uCommunityMapper.getCommentCntByPostNum(postNum);
+    public Integer getCommentCntList(String postNum) {
+        Integer count = uCommunityMapper.getCommentCntByPostNum(postNum);
+        return count != null ? count : 0;
     }
+     */
+    
 
 
 	
@@ -150,7 +153,7 @@ public class UCommunityService {
 
 
 
-
+	/** 
 	// 각 게시물의 댓글 수를 가져오는 메서드 추가
 	public List<Integer> getCommentCntList(List<UCommunity> postList) {
 		List<Integer> commentCntList = new ArrayList<>();
@@ -159,7 +162,7 @@ public class UCommunityService {
 			commentCntList.add(commentCnt);
 		}
 		return commentCntList;
-	}
+	} */
     
 
 
