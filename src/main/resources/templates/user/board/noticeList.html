@@ -13,9 +13,10 @@
 
 
 	<!-- 여기에 메인 컨텐츠가 삽입됩니다. -->
+	<!-- 드롭다운 메뉴 -->
 	<div class="main-wrapper pages">
 		<div class="d-flex align-items-start">
-			<div class="dropdown mt-3">
+			<div class="dropdown">
 				<button class="btn btn-primary dropdown-toggle" type="button"
 					id="dropdownMenuButton" data-bs-toggle="dropdown">공지사항</button>
 				<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -26,7 +27,23 @@
 					<li><a class="dropdown-item" href="javascript:void(0)">이벤트공지</a></li>
 				</ul>
 			</div>
-		</div>
+		</div>  
+
+
+
+		<!-- 드롭다운 메뉴 -->
+		<!-- <div class="dropdown">
+			<button class="btn btn-primary dropdown-toggle" type="button"
+				id="dropdownMenuButton" data-bs-toggle="dropdown">공지사항</button>
+			<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+				<!-- Thymeleaf를 사용하여 백엔드에서 받아온 카테고리 데이터를 반복하여 드롭다운 아이템으로 렌더링 -->
+				<!-- <th:block th:each="l : ${noticeList}">
+					<li><a class="dropdown-item" href="javascript:void(0)"
+						th:text="${l.noticeCate.noticeCateType}"
+						th:attr="data-category=${l.noticeCate.noticeCateType}">카테고리명</a></li>
+				</th:block>
+			</ul>
+		</div> -->
 
 
 		<div class="flex-grow-1 d-flex justify-content-center">
@@ -96,45 +113,27 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td class="noticeNum noticeCenter">1</td>
-								<td><i class="badge rounded-pill bg-primary">긴급공지</i><a
-									href="">웹사이트 서버 점검 공지</a></td>
-								<td class="noticeCenter">관리자</td>
-								<td class="noticeCenter">2024-05-01</td>
-								<td class="noticeCenter">100</td>
+							 
+							<!-- 역순으로 순회 -->
+							<tr th:each="l, i : ${noticeList}" th:order="${-i.count}">
+								<!-- 숫자 형태로 번호 출력 -->
+								<td class="text-center"
+									th:text="${#lists.size(noticeList) - i.count + 1}"></td>
+								<td>
+									<!-- 공지사항 카테고리 뱃지 --> 
+									<i class="badge rounded-pill bg-primary" th:text="${l.noticeCate.noticeCateType}"></i> 
+									<!-- 공지사항 제목 --> 
+									<a th:href="@{/notice/noticeDetail(noticeNum=${l.noticeNum})}"
+									th:text="${l.noticeTitle}"> 
+									</a>
+								</td>
+								<td class="text-center" th:text="${l.noticeRegId}"></td>
+								<td class="text-center"
+									th:text="${#strings.substring(l.noticeRegDate, 0, 10)}"></td>
+								<td class="text-center" th:text="${l.noticeInqCnt}"></td>
 							</tr>
-							<tr>
-								<td class="noticeNum noticeCenter">2</td>
-								<td><i class="badge rounded-pill bg-primary">예정공지</i><a
-									href="">시스템 업그레이드 예정 공지</a></td>
-								<td class="noticeCenter">관리자</td>
-								<td class="noticeCenter">2024-05-02</td>
-								<td class="noticeCenter">300</td>
-							</tr>
-							<tr>
-								<td class="noticeNum noticeCenter">3</td>
-								<td><i class="badge rounded-pill bg-primary">시스템공지</i><a
-									href="">시스템 장애 공지</a></td>
-								<td class="noticeCenter">관리자</td>
-								<td class="noticeCenter">2024-05-03</td>
-								<td class="noticeCenter">500</td>
-							</tr>
-							<tr>
-								<td class="noticeNum noticeCenter">4</td>
-								<td><i class="badge rounded-pill bg-primary">일반공지</i><a
-									href="">고객센터 휴무 공지</a></td>
-								<td class="noticeCenter">관리자</td>
-								<td class="noticeCenter">2024-05-04</td>
-								<td class="noticeCenter">200</td>
-							</tr>
-							<tr>
-								<td class="noticeNum noticeCenter">5</td>
-								<td><i class="badge rounded-pill bg-primary">이벤트공지</i><a href="">이벤트공지</a></td>
-								<td class="noticeCenter">관리자</td>
-								<td class="noticeCenter">2024-05-05</td>
-								<td class="noticeCenter">400</td>
-							</tr>
+
+
 						</tbody>
 					</table>
 				</div>
