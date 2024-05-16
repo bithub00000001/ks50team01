@@ -54,6 +54,7 @@
 							<div class="ln_solid"></div>
 							<div class="form-group">
 								<div class="col-md-12 col-sm-12 col-xs-12 text-center">
+									<button type="reset" class="btn btn-dark btn-lg" onclick="location.href='/platform/ranking/addUserRanking'">등록</button>
 									<button type="reset" class="btn btn-dark btn-lg">초기화</button>
 								</div>
 							</div>
@@ -111,10 +112,10 @@
 
 								<td>
 									<!--/* /member/modifyMember?memberId=id001 */-->
-									<a th:href="@{/platform/ranking/modifyUserRankingList(pRankingNum=${l.userRankingNum})}">수정</a>
+									<a th:href="@{/platform/ranking/modifyUserRanking(userRankingId=${l.userRankingId})}">수정</a>
 								</td>
 								<td>
-									<a th:href="@{/platform/ranking/removeUserRankingList(pRankingNum=${l.userRankingNum})}">삭제</a>					
+									<a th:href="@{/platform/ranking/removeUserRanking(userRankingId=${l.userRankingId})}">삭제</a>					
 								</td>
 							</tr>
 						</tbody>

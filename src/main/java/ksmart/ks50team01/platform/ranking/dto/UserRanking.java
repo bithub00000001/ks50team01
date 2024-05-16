@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class UserRanking {
+	private String userRankingId;
 	private String userRankingNum;
 	private String userRankingRegId;
 	private String partnerBusinessCode;
