@@ -2,11 +2,13 @@ package ksmart.ks50team01.user.board.mapper;
 
 import java.util.List;
 
+import javax.xml.stream.events.Comment;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.web.multipart.MultipartFile;
 
+import ksmart.ks50team01.user.board.dto.UComment;
 import ksmart.ks50team01.user.board.dto.UCommunity;
 
 
