@@ -146,7 +146,7 @@
 									<td th:text="${l.faqRegDate}"></td>
 									<td th:text="${l.faqMdfDate}"></td>
 									<td>
-										<a th:href="@{/platform/board/faqModify}">수정</a>
+										<a th:href="@{/platform/board/faqModify(faqNum=${l.faqNum})}">수정</a>
 									</td>
 									<td>
 										<a href="#">삭제</a>

@@ -48,10 +48,10 @@
                             <div class="col-md-2 col-sm-2 col-xs-0"></div>
                             <label class="control-label col-md-2 col-sm-2 col-xs-12">게시판 종류</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select class="form-control text-center">
+                                <select class="form-control text-center data-select">
                                     <option value="">==== 게시판 종류를 선택해주세요 ====</option>
                                     <option>커뮤니티</option>
-                                    <option>공지사항</option>
+                                    <option value="noticeCateList">공지사항</option>
                                     <option>자주찾는 질문 및 1:1 문의</option>
                                     <option>신고</option>
                                 </select>
@@ -61,17 +61,18 @@
                         <div class="ln_solid"></div>
                         <div class="form-group">
                             <div class="col-md-12 col-sm-12 col-xs-12 text-center">
-                                <button class="btn btn-success btn-lg" type="button">검색</button>
+                                <button class="btn btn-success btn-lg data-trans" type="button">검색</button>
                                 <button type="reset" class="btn btn-dark btn-lg">초기화</button>
                             </div>
                         </div>
+                        <!-- search end -->
 
                         <!-- grid table start -->
                         <div class="row">
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <div class="x_panel">
                                     <div class="x_content">
-                                        <table id="datatable-responsive"
+                                        <table id="dataTbContent"
                                             class="table table-striped table-bordered dt-responsive nowrap"
                                             cellspacing="0" width="100%">
                                             <thead>
@@ -89,10 +90,10 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr th:unless="${faqCategoryList != null}">
+                                                <tr th:unless="${categoryList != null}">
                                                     <td colspan="10" class="text-center">등록된 카테고리가 없습니다.</td>
                                                 </tr>
-                                                <tr th:if="${faqCategoryList != null}" th:each="l : ${faqCategoryList}">
+                                                <tr th:if="${categoryList != null}" th:each="l : ${categoryList}">
                                                     <td><input type="checkbox" id="checkbox_${l.faqCateNum}" name="faqCateType" th:value="${l.faqCateType}"></td>
                                                     <td th:text="${l.faqCateNum}"></td>
                                                     <td th:text="${l.faqRegId}"></td>
@@ -171,6 +172,64 @@
 		        });
 		    });
 			</script>
+			<script>
+		
+    		const table = $('#dataTbContent').dataTable();
+    		
+    		$(document).on('click', '.data-trans', function(){
+    			const dataTrans = String($('.data-select :selected').val()).trim();
+    			if(dataTrans){
+    				const colObj = {  
+    					noticeCateList : [
+    						{'title': '공지사항 카테고리 번호', 'data': 'noticeCateNum'},
+    					    {'title': '등록자 아이디', 'data': 'noticeRegId'},
+    					    {'title': '공지사항 카테고리 유형', 'data': 'noticeCateType'},
+    					    {'title': '수정자 아이디', 'data': 'noticeMdfId'},
+    					    {'title': '활성화 여부', 'data': 'noticeActiveYN'},
+    					    {'title': '등록 일자', 'data': 'noticeRegDate'},
+    					    {'title': '수정 일자', 'data': 'noticeModDate'},
+    					 ]
+    				}
+    				
+    				const colArr = [...colObj[`${dataTrans}`]];
+    				
+    				const request = $.ajax({
+    					url:'/platform/board/' + dataTrans,
+    					method: 'POST',
+    					dataType: 'JSON'
+    				}); 
+    				request.done(function(json){
+    					table.fnDestroy();
+    					$('#dataTbContent').text('');
+    					
+    					const dataTableOption = {
+    						'searching' : true,
+   							'responsive': true,
+       						'destroy':true,
+       						'data' : json.data,
+       						'columns' : colArr,
+       						'columnDefs': [
+       					        {
+       					            targets: colArr.length-1,
+       					            data: 'description',
+       					            render: function (data, type, row, meta) {
+       					            	
+       					            	const button = `<a href="/platform/review/report/approve?reportNum=${data}">수정</a>`;
+       					            	
+       					                return button;
+       					            }
+       					        }
+       					    ]	
+    					}
+    					
+    					if(dataTrans == 'react') delete dataTableOption.columnDefs;
+    					
+    					$('#dataTbContent').dataTable(dataTableOption);
+    				})	
+    			}
+    		});
+    		
+    	</script>
 			
 			
 			
