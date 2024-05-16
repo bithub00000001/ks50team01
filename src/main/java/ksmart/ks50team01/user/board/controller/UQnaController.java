@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import ksmart.ks50team01.platform.board.dto.PQna;
 import ksmart.ks50team01.user.board.dto.UQna;
+import ksmart.ks50team01.user.board.mapper.UQnaMapper;
+import ksmart.ks50team01.user.board.service.UQnaService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -17,6 +19,8 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Slf4j
 public class UQnaController {
+	
+	private final UQnaService uQnaService;
 	
 	// 1:1문의 조회
 	@GetMapping({"/",""})
