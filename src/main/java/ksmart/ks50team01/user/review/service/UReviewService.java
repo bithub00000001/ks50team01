@@ -41,6 +41,7 @@ public class UReviewService {
 		uReviewMapper.reivewWrite(review);
 	}
 	
+	
 	/**
 	 * 공개여부 조회
 	 */

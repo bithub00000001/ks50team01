@@ -54,7 +54,7 @@
 			            </div>
 			            <div class="col-md-8">
 			                <div class="card-body">
-			                    <h5 class="card-title"><textarea name="reviewGoods">상품명</textarea></h5>
+			                    <h5 class="card-title"><input type="text" class="form-control table-input input" name="reviewGoods" value="상품명" /></h5>
 			                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
 			                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
 			                </div>
@@ -69,13 +69,16 @@
 					    <div class="info-section">
 					        <div class="label-cell label">작성자 아이디</div>
 					        <div class="input-cell1">
-					      <span class="label" th:text="${loginId}">작성자 아이디</span>
-					            <!-- <input type="text" class="form-control table-input input" name="reviewId" th:value="${loginId}" readonly> -->
+					            <input type="text" class="form-control table-input input" name="reviewId" value="reviewId" >
 					        </div>
 					        <div class="label-cell label">공개 여부</div>
 					        <div class="label-cell label2">* 공개 여부는 기본적으로 전체공개이며 누적하여 신고를 당할 시 나만공개로 전환됩니다</div>
 					        <div class="input-cell2">
 					            <input type="text" class="form-control table-input input" name="reviewApprove" placeholder="입력">
+					        </div>
+					        <div class="label-cell label">지역</div>
+					        <div class="input-cell1">
+					            <input type="text" class="form-control table-input input" name="districtSubclassCode" value="districtSubclassCode" >
 					        </div>
 					    </div>
 					</div>
@@ -88,11 +91,11 @@
 				        <label for="rating">별점</label>
 				        <div class="separator2"></div> <!-- 굵은 직선 추가 -->
 				        <div class="star-rating">
-				            <input type="radio" id="rating5" name="reviewStar" value="1"><label for="rating5">★</label>
-				            <input type="radio" id="rating4" name="reviewStar" value="2"><label for="rating4">★</label>
-				            <input type="radio" id="rating3" name="reviewStar" value="3"><label for="rating3">★</label>
-				            <input type="radio" id="rating2" name="reviewStar" value="4"><label for="rating2">★</label>
-				            <input type="radio" id="rating1" name="reviewStar" value="5"><label for="rating1">★</label>
+				            <input type="radio" id="rating5" name="reviewStar" value="RAT_CTGRY_01"><label for="rating5">★</label>
+				            <input type="radio" id="rating4" name="reviewStar" value="RAT_CTGRY_02"><label for="rating4">★</label>
+				            <input type="radio" id="rating3" name="reviewStar" value="RAT_CTGRY_03"><label for="rating3">★</label>
+				            <input type="radio" id="rating2" name="reviewStar" value="RAT_CTGRY_04"><label for="rating2">★</label>
+				            <input type="radio" id="rating1" name="reviewStar" value="RAT_CTGRY_05"><label for="rating1">★</label>
 				        </div>
 				        <!-- 추가된 부분 -->
 				        <div class="evaluation">별점을 선택해주세요</div>

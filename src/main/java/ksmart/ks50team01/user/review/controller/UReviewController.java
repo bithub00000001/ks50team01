@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import jakarta.servlet.http.HttpSession;
@@ -25,20 +26,6 @@ public class UReviewController {
 	
 	private final UReviewService uReviewService;
 	
-	/**
-	 * 리뷰 작성 화면
-	 * @return
-	 */
-	
-	  //@GetMapping("/write") public String reviewWrite(Model model) {
-	  
-	  //List<UReview> reviewList = uReviewService.getUReviewList();
-	  //System.out.println("reviewList: "+reviewList);
-	  
-	  //model.addAttribute("title", "리뷰작성");
-	  //model.addAttribute("reviewList", reviewList);
-	  
-	  //return "user/review/reviewWrite"; }
 	 
 	
 	/**
@@ -47,11 +34,15 @@ public class UReviewController {
 	 * @param session
 	 * @return
 	 */
-	@GetMapping("/write")
+	/*@GetMapping("/write")
 	public String reviewWrite(Model model, HttpSession session) {
 
 	    String loginId = (String) session.getAttribute("loginId");
-	    if (loginId != null) {
+	    
+	    model.addAttribute("loginId", loginId);
+        return "user/review/reviewWrite";*/
+        
+	   /*if (loginId != null) {
 	        // 세션에 저장된 로그인 아이디를 모델에 추가하여 HTML 페이지에서 사용할 수 있도록 함
 	        model.addAttribute("loginId", loginId);
 	        return "user/review/reviewWrite";
@@ -59,9 +50,26 @@ public class UReviewController {
 			// 세션에 로그인한 사용자 정보가 없다면 로그인 페이지로 리다이렉트
 			model.addAttribute("title", "리뷰작성");
 			return "redirect:/trip"; // 로그인 페이지 경로로 변경
-		}
-	}
+		}*/
+	/*}*/
 	 
+	/**
+	 * 리뷰 작성 화면
+	 * @return
+	 */
+	
+	@GetMapping("/write") 
+	public String reviewWrite(Model model) {
+		
+		List<UReview> reviewList = uReviewService.getUReviewList();
+		System.out.println("reviewList: "+reviewList);
+		
+		model.addAttribute("title", "리뷰작성");
+		model.addAttribute("reviewList", reviewList);
+		
+		return "user/review/reviewWrite"; 
+	}
+	
 	/**
 	 * 리뷰작성
 	 * @param review
@@ -72,7 +80,7 @@ public class UReviewController {
 		
 		System.out.println("리뷰 작성 화면에서 입력받은 data"+review);
 		
-		//uReviewService.reviewWrite(review);
+		uReviewService.reviewWrite(review); //리뷰 데이터를 db에 저장
 		
 		return "redirect:/user/review/write";
 	}

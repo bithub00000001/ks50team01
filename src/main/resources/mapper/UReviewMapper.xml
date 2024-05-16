@@ -15,9 +15,9 @@
         <result property="reviewDislike" column="DISLIKE_TOTAL"/>
         <result property="reviewApprove" column="RLS_YN_CD"/>
         <result property="reviewNum" column="reviewNum"/>
+        <result property="districtSubclassCode" column="RGN_SCTGRY_CD"/>
         
         <result property="tripLargeCode" column="TRIP_LCTGRY_CD"/>
-        <result property="districtSubclassCode" column="RGN_SCTGRY_CD"/>
         <result property="tripSubclassCode" column="TRIP_SCTGRY_CD"/>
         <result property="paymentCode" column="STLM_CERT_FILE_CD"/>
         <result property="reservationCode" column="BZENTY_RSVT_NO"/>
@@ -45,10 +45,19 @@
     
     <insert id="reivewWrite" parameterType="UReview">
 		/* 리뷰등록 */
-		INSERT INTO PURCHASE_REVIEW
-		(PRCHS_REV_CD, REG_MBR_ID, PRTNR_BPLC_CD, RAT_CTGRY_NO, PRCHS_REV_CN, RLS_YN_CD, REG_YMD)
-		VALUES
-		(#{reviewCode}, #{reviewId}, #{reviewGoods}, #{reviewStar}, #{reviewContent}, #{reviewApprove}, CURDATE());
+    <!-- 리뷰등록 -->
+    INSERT INTO PURCHASE_REVIEW
+    (REG_MBR_ID, PRTNR_BPLC_CD, RAT_CTGRY_NO, PRCHS_REV_CN, RLS_YN_CD, REG_YMD, RGN_SCTGRY_CD)
+    VALUES
+    (
+        #{reviewId},
+        #{reviewGoods},
+        #{reviewStar},
+        #{reviewContent},
+        #{reviewApprove},
+        CURDATE(),
+        #{districtSubclassCode} <!-- 이곳에 필드 값 추가 -->
+    );
 	</insert>
 
     

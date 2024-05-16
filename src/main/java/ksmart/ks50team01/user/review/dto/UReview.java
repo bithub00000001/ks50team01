@@ -16,11 +16,11 @@ public class UReview {
 	private String reviewApproveName; //공개여부이름
 	private int reviewStarPoint; // 별점 내용
 	private String reviewNum; // 리뷰 번호
+	private String districtSubclassCode;//지역 소분류 코드
 	
 	
 
 	private String tripLargeCode;//여행지 대분류 코드
-	private String districtSubclassCode;//지역 소분류 코드
 	private String tripSubclassCode;//여행지 소분류 코드
 	private String paymentCode;//결제 인증 첨부파일 코드
 	private String reservationCode;//예약번호
