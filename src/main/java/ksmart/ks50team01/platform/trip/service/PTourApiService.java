@@ -16,6 +16,8 @@ public interface PTourApiService {
 
 	void upsertSigunguData(String apiKey);
 
+	/*Mono<List<PTourApi>> getTourInfo(String apiKey, Integer contentTypeId, Integer numOfRows, Integer pageNo, String areaCode, Optional<String> optionalSigunguCode);*/
+
 	Mono<List<PTourApi>> getTourInfo(String apiKey, Integer contentTypeId, Integer numOfRows, Integer pageNo, String areaCode, Optional<String> optionalSigunguCode);
 
 	void saveData(List<PTourApi> tourInfoList);
