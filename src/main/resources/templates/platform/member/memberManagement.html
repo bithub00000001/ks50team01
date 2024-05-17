@@ -16,6 +16,17 @@
 				background-color: #f8f8f8 !important;
 				padding-bottom: 8px !important;	
 			}
+
+			.form-control {
+			    border-radius: 0;
+			    width: 40%;
+			    display: unset;
+				text-align: center;
+			}
+			#changeGrade {
+				margin-left: 10px;
+			}
+
 		</style>
 		
 
@@ -35,16 +46,14 @@
 				
 				
 				<form id="modifyForm" th:action="@{/platform/member/memberManagement}" method="post">
-				<div>
-				
-				    선택 멤버를 &nbsp;&nbsp;
-				    <select name="memberGrdNum">
-					    <option value="">====회원등급을 선택해주세요====</option>
-					    <option th:each="grade : ${memberGrade}" th:value="${grade.memberGrdNum}" th:text="${grade.memberLevelName}" th:selected="${memberInfo != null && memberInfo.memberGrdNum == grade.memberGrdNum}"></option>
-					</select>
-				    (으)로 &nbsp;&nbsp;
-				    <button type="button" id="changeGrade" name="memberId" data-action="update">변경</button>		
-				</div>
+				<div class="mb-3">
+						<label for="inputPassword6" class="col-form-label">선택 멤버를</label>
+					</div>
+					    <select name="memberGrdNum" class="form-control form-control-lg">
+						    <option value="">====회원등급을 선택해주세요====</option>
+						    <option th:each="grade : ${memberGrade}" th:value="${grade.memberGrdNum}" th:text="${grade.memberLevelName}" th:selected="${memberInfo != null && memberInfo.memberGrdNum == grade.memberGrdNum}"></option>
+						</select>
+			    	<button type="button" id="changeGrade" name="memberId" data-action="update" class="btn btn-primary">변경</button>	
 				<div class="x_content">
 					<div class="clearfix"></div>
 				</div>

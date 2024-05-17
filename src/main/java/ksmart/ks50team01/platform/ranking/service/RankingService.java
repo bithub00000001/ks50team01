@@ -16,6 +16,10 @@ public class RankingService {
 
 	private final RankingMapper rankingMapper;
 	
+	public void removeRanking(String pRankingId) {
+		rankingMapper.removeRanking(pRankingId);
+	}
+	
 	public int modifyRanking(Ranking ranking) {
 		return rankingMapper.modifyRanking(ranking);
 	}

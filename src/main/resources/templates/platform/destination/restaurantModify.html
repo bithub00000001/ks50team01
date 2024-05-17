@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+                layout:decorate="~{platform/layout/default}">
+
+<th:block layout:fragment="customContent">
+    <div class="col-md-12 col-sm-6 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h3>음석점 수정</h3>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <form id="modifyForm" th:action="@{/platform/destination/restaurantModify}" method="post">
+					 <input type="hidden" name="restaurantInfoCode" th:value="${restaurantInfo.restaurantInfoCode}">
+				
+				    <div class="form-group">
+				        <label for="restaurantName">식당 이름</label>
+				        <input type="text" class="form-control" id="restaurantName" name="restaurantName" th:value="${restaurantInfo.restaurantName}">
+				    </div>
+				
+				    <div class="form-group">
+				        <label for="restaurantAddr">식당 주소</label>
+				        <input type="text" class="form-control" id="restaurantAddr" name="restaurantAddr" th:value="${restaurantInfo.restaurantAddr}">
+				    </div>
+				
+				    <div class="form-group">
+				        <label for="restaurantDaddr">식당 상세주소</label>
+				        <input type="text" class="form-control" id="restaurantDaddr" name="restaurantDaddr" th:value="${restaurantInfo.restaurantDaddr}">
+				    </div>
+				
+				    <div class="form-group">
+				        <label for="restaurantContactNum">식당 연락처</label>
+				        <input type="tel" class="form-control" id="restaurantContactNum" name="restaurantContactNum" th:value="${restaurantInfo.restaurantContactNum}">
+				    </div>
+				
+				    
+				    <div class="form-group">
+				        <label for="restaurantSite">식당 사이트</label>
+				        <input type="text" class="form-control" id="restaurantSite" name="restaurantSite" th:value="${restaurantInfo.restaurantSite}">
+				    </div>
+				    
+				    <div class="form-group">
+				        <label for="restaurantOthers">식당 기타정보</label>
+				        <input type="text" class="form-control" id="restaurantOthers" name="restaurantOthers" th:value="${restaurantInfo.restaurantOthers}">
+				    </div>
+				    
+				    <button type="submit" class="btn btn-primary">저장</button>
+				    <button type="button" class="btn btn-secondary" onclick="location.href='/platform/destination/restaurantManage'">취소</button>
+				</form>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+</html>
