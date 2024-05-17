@@ -20,6 +20,17 @@ import lombok.extern.slf4j.Slf4j;
 public class PNoticeController {
 	
 	private final PNoticeService pNoticeService;
+	
+	
+	// 공지사항 조회 페이지
+	@GetMapping("/noticeList")
+	public String noticeList(Model model) {
+	    List<PNotice> noticeList = pNoticeService.getNoticeList();
+	    log.info("noticeList: {}", noticeList);
+	    model.addAttribute("noticeList", noticeList);
+		model.addAttribute("title", "공지사항 조회");
+		return "platform/board/noticeList";
+	}
 
 	// 공지사항 작성 POST 요청
 	@PostMapping("/noticeWrite")
@@ -50,15 +61,7 @@ public class PNoticeController {
 		return "platform/board/noticeModify";
 	}
 	
-	// 공지사항 조회 페이지
-	@GetMapping("/noticeList")
-	public String noticeList(Model model) {
-	    List<PNotice> noticeList = pNoticeService.getNoticeList();
-	    log.info("noticeList: {}", noticeList);
-	    model.addAttribute("noticeList", noticeList);
-		model.addAttribute("title", "공지사항 조회");
-		return "platform/board/noticeList";
-	}
+
 	
 	
 	

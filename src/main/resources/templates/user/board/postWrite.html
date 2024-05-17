@@ -18,55 +18,66 @@
             <div class="col-12">
                 <h3 class="element-title">게시글 작성</h3>
                 <div class="mb-6">
-                    <form id="postForm" action="/community/postSave" method="POST" enctype="multipart/form-data">
+                    <form id="postForm" action="/community/postWrite" method="POST" enctype="multipart/form-data">
+                          <div class="form-group">
+                            <label for="postRegId" class="col-sm-2 col-form-label">작성자</label>
+                            <input type="text" class="form-control" id="postRegId" name="postRegId" th:value="${session.loginId}" readonly="readonly">
+                        </div>
                         <div class="form-group">
                             <label for="exampleInputText">카테고리</label>
                             <div class="select-default">
-                                <select class="select-option" name="postCategory">
-                                    <option value="여행 정보">여행 정보</option>
-                                    <option value="여행 후기">여행 후기</option>
-                                    <option value="여행 친구 찾기">여행 친구 찾기</option>
-                                    <option value="자유게시판">자유게시판</option>
-                                    <option value="질문게시판">질문게시판</option>
+                                <select class="select-option" id="postCateNum" name="postCateNum" th:value="${postCateNum}">
+                                    <option value="PST_CTGRY_001">여행 정보</option>
+                                    <option value="PST_CTGRY_002">여행 후기</option>
+                                    <option value="PST_CTGRY_003">여행 친구 찾기</option>
+                                    <option value="PST_CTGRY_004">자유게시판</option>
+                                    <option value="PST_CTGRY_005">질문게시판</option>
                                 </select>
                             </div>
-                        </div>
-                        
-                        
+                            
+                            
+<!--  <div class="select-default">                           
+<select class="select-option" id="postCateType" name="postCateNum" th:field="*{postCateNum}">
+    <option th:value="PST_CTGRY_001">여행 정보</option>
+    <option th:value="PST_CTGRY_002">여행 후기</option>
+    <option th:value="PST_CTGRY_003">여행 친구 찾기</option>
+    <option th:value="PST_CTGRY_004">자유게시판</option>
+    <option th:value="PST_CTGRY_005">질문게시판</option>
+</select>
+</div>
+ -->
+ 
 
-                        <div class="form-group">
-                            <label for="inputTitle" class="col-sm-2 col-form-label">제목</label>
-                            <input type="text" class="form-control" id="postTitle"
-                                name="postTitle" placeholder="제목">
-                        </div>
 
+						</div>
                         <div class="form-group">
-                            <label for="exampleFormControlTextarea1">내용</label>
+                            <label for="postTitle" class="col-sm-2 col-form-label">제목</label>
+                            <input type="text" class="form-control" id="postTitle" name="postTitle" placeholder="제목" th:value="${postTitle}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="postContent">내용</label>
                             <textarea class="form-control" id="postContent"
-                                name="postContent" rows="15" placeholder="내용을 입력하세요."></textarea>
+                                name="postContent" rows="15" placeholder="내용을 입력하세요." th:text="${postContent}" required></textarea>
                         </div>
-
+                        
+                        <!-- Elements Modal -->
                         <div class="pt-5 mb-5" id="modal">
                             <div class="row">
                                 <div class="col-md-6 col-lg-4">
-                                    <h3 class="element-title mb-5">첨부 파일</h3>
+                                    <h3 class="element-title mb-5 font-weight-bold">첨부 파일</h3>
+                                    <!-- Button trigger modal -->
                                     <button id="attachBtn" class="btn btn-primary file-upload-btn" type="button">+ 파일 첨부하기 (0/10)</button>
-                                    <input type="file" id="fileInput" style="display: none;"
-                                        accept=".jpg, .jpeg, .gif, .png, .pdf" multiple>
+                                    <input type="file" id="fileInput" style="display: none;" accept=".jpg, .jpeg, .gif, .png, .pdf" multiple>
                                     <div id="fileNames"></div>
                                 </div>
                             </div>
                         </div>
-                        
-                        
 
-                        <div class="d-flex justify-content-end" style="margin-bottom: 50px">
+                        <div class="d-flex justify-content-end mt-10">
                             <!-- 등록 버튼 -->
-                            <button type="submit" id="submitBtn" class="btn btn-primary mr-2">등록</button>
+                            <button type="submit" id="submitBtn" class="btn btn-primary mr-2" onclick="location.href='/user/board/postList'">등록</button>
                             <!-- 취소 버튼 -->
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                            
-                            
+                            <button type="button" class="btn btn-secondary" onclick="location.href='/user/board/postList'" data-bs-dismiss="modal">취소</button>
                         </div>
                     </form>
                 </div>
@@ -115,18 +126,58 @@
                 deleteButton.classList.add('delete-button');
                 deleteButton.addEventListener('click', function() {
                     thumbnailContainer.remove();
+                    updateAttachedFilesCount(); // 파일 삭제 시 카운트 업데이트
                 });
                 thumbnailContainer.appendChild(deleteButton);
 
                 fileNamesContainer.appendChild(thumbnailContainer);
             }
         }
+
+        updateAttachedFilesCount();
     });
+
+    function updateAttachedFilesCount() {
+        const fileNamesContainer = document.getElementById('fileNames');
+        const uploadedFiles = fileNamesContainer.getElementsByClassName('thumbnail-container').length;
+        const remainingSlots = 10 - uploadedFiles;
+        const attachBtn = document.getElementById('attachBtn');
+        attachBtn.textContent = `+ 파일 첨부하기 (${uploadedFiles}/10)`;
+    }
 
     document.getElementById('submitBtn').addEventListener('click', function() {
         document.getElementById('postForm').submit();
     });
+
+    // 페이지 로드 시 초기 파일 개수 설정
+    updateAttachedFilesCount();
+    
+    
+    
+    
+    
+    
+ // 사용자가 카테고리 유형을 선택할 때마다 값을 업데이트하고 서버로 전송
+    document.getElementById('postCateType').addEventListener('change', function() {
+        var selectedValue = this.value;
+        // postCateNum input 요소에 선택된 값을 설정
+        document.getElementById('postCateNum').value = selectedValue;
+    });
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 </script>
+
+
     
 </th:block>
 

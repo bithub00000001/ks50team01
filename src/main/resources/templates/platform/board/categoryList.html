@@ -89,6 +89,10 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                              <!-- Category list will be dynamically loaded here -->
+                                            
+                                            
+                                            
                                             <!--  
                                                 <tr th:unless="${categoryList != null}">
                                                     <td colspan="10" class="text-center">등록된 카테고리가 없습니다.</td>
@@ -173,6 +177,9 @@
 		        });
 		    });
 			</script>
+			
+			
+			
 			<script>
 		
     		const table = $('#dataTbContent').dataTable();
@@ -223,8 +230,8 @@
        					    {'title': '활성화 여부', 'data': 'reportAct'},
        					    {'title': '등록일자', 'data': 'reportRegDate'},
        					    {'title': '수정일자', 'data': 'reportMdfDate'},
-       					 ]
-    				}
+       					 ],
+    				};
     				
     				const colArr = [...colObj[`${dataTrans}`]];
     				
@@ -265,10 +272,8 @@
     		});
     		
     	</script>
-			
-			
-			
-
+    	
+    	
 			
 			
 			
