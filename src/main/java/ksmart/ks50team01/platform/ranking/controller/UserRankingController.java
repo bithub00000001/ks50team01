@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import ksmart.ks50team01.platform.ranking.dto.Ranking;
 import ksmart.ks50team01.platform.ranking.dto.UserRanking;
 import ksmart.ks50team01.platform.ranking.service.UserRankingService;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,25 @@ import lombok.extern.slf4j.Slf4j;
 public class UserRankingController {
 
 	private final UserRankingService userRankingService;
+	
+	@PostMapping("/removeUserRanking")
+	public String remove(@RequestParam(name = "userRankingId") String userRankingId
+						,Model model) {
+		model.addAttribute("title", "플랫폼추천리스트 삭제");
+		model.addAttribute("userRankingId", userRankingId);
+		return "platform/ranking/removeUserRanking";
+	}
+	
+	
+	@GetMapping("/removeUserRanking")
+	public String removeUserRanking(@RequestParam(name="userRankingId") String userRankingId
+			,Model model) {
+		List<UserRanking> userRankingList = userRankingService.getUserRankingList();
+		userRankingService.removeUserRanking(userRankingId);
+		model.addAttribute("removeUserRanking",userRankingId);
+		model.addAttribute("userRankingList", userRankingList);
+		return "redirect:/platform/ranking/userRankingList";
+	}
 	
 	@PostMapping("/modifyUserRanking")
 	public String modify(@ModelAttribute UserRanking userRanking) {
@@ -37,8 +57,8 @@ public class UserRankingController {
 		List<UserRanking> userRankingList = userRankingService.getUserRankingList();
 		
 		model.addAttribute("title", "회원추천리스트 수정");
-		model.addAttribute("UserRanking", userRanking);
-		model.addAttribute("UserRankingList", userRankingList);
+		model.addAttribute("userRanking", userRanking);
+		model.addAttribute("userRankingList", userRankingList);
 		
 		return "platform/ranking/modifyUserRanking";
 	}

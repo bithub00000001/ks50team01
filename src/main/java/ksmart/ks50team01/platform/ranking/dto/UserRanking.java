@@ -11,7 +11,7 @@ public class UserRanking {
 	private String tripLctgryCode;
 	private String rgnSctgryName;
 	private int userRank;
-	private String artclRankigNum;
+	private String artclRankingNum;
 	private String reviewStatsStart;
 	private String reviewStatsEnd;
 	private String platformAdStart;

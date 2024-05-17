@@ -9,9 +9,11 @@ import ksmart.ks50team01.platform.ranking.dto.UserRanking;
 @Mapper
 public interface UserRankingMapper {
 	
-	int modifyUserRanking(UserRanking userRanking);
+	void removeUserRanking(String userRankingId);
 	
 	UserRanking getUserRankingInfoById(String userRankingId);
+	
+	int modifyUserRanking(UserRanking userRanking);
 	
 	int addUserRanking(UserRanking userRanking);
 	
