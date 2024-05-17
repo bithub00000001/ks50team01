@@ -74,17 +74,14 @@
 					<div class="info-section">
 						<div class="label-cell label">작성자 아이디</div>
 						<div class="input-cell1">
-							<input type="text" class="form-control table-input input"
-								name="reviewId" th:value="${session.loginId}"
-								data-review-id="${session.loginId}" />
+							<input type="text" class="form-control table-input input" name="reviewId" th:value="${session.loginId}" data-review-id="${session.loginId}" />
 							<!-- <input type="text" class="form-control table-input input" name="reviewId" value="member002" /> -->
 						</div>
 						<div class="label-cell label">공개 여부</div>
-						<div class="label-cell label2">* 공개 여부는 기본적으로 전체공개이며 누적하여
-							신고를 당할 시 나만공개로 전환됩니다</div>
+						<div class="label-cell label2">* 공개 여부는 기본적으로 "전체공개"이며 누적하여 신고를 당할 시 "나만공개" 로 전환됩니다</div>
 						<div class="input-cell2">
-							<input type="text" class="form-control table-input input"
-								name="reviewApprove" value="DISCLOSURE_002" />
+					        <input type="hidden" id="reviewApproveInput" name="reviewApprove" value="DISCLOSURE_001" />
+					        <span id="displayText">전체공개</span>
 						</div>
 						<div class="label-cell label">지역</div>
 						<div class="input-cell1">
@@ -136,7 +133,7 @@
 				    <div class="separator1"></div> <!-- 굵은 직선 추가 -->
 				    <div class="form-group">
 				        <!-- Thymeleaf를 사용하여 링크의 대상 URL 설정 -->
-				        <a th:href="@{/user/review/list}"><button type="submit" class="btn register-button">등록</button></a>
+				        <button type="submit" class="btn register-button">등록</button>
 				        <a th:href="@{/user/review/list}"><button type="reset" class="btn cancel-button">취소</button></a>
 				    </div>
 				
@@ -151,7 +148,31 @@
 		</section>
 	</th:block>
 
-	<th:block layout:fragment="customJs">	
+	<th:block layout:fragment="customJs">
+	
+	<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		var reviewApproveInput = document.getElementById('reviewApproveInput');
+		var displayText = document.getElementById('displayText');
+
+		// Set the initial display text based on the value
+		if (reviewApproveInput.value === 'DISCLOSURE_001') {
+			displayText.textContent = '전체공개';
+		} else {
+			displayText.textContent = '나만공개';
+		}
+
+		// Optionally, you can add code to update the displayText if the input value changes
+		// For example, if you make the input editable and want to reflect changes
+		reviewApproveInput.addEventListener('input', function() {
+			if (reviewApproveInput.value === 'DISCLOSURE_001') {
+				displayText.textContent = '전체공개';
+			} else {
+				displayText.textContent = '나만공개';
+			}
+		});
+	});
+</script>
 		<script>
 			const stars = document.querySelectorAll('.star-rating input');
 			let previousRating = 0;
@@ -350,6 +371,5 @@
 			    fileCountElement.textContent = '(' + attachedFiles.length + '/' + maxFileCount + ')';
 			}
         </script>
-    </script>
 	</th:block>
 </html>

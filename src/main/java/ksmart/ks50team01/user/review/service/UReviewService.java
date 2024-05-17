@@ -2,12 +2,16 @@ package ksmart.ks50team01.user.review.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import ch.qos.logback.core.util.FileUtil;
 import ksmart.ks50team01.user.review.dto.UOpen;
 import ksmart.ks50team01.user.review.dto.UReview;
 import ksmart.ks50team01.user.review.dto.UReviewComment;
+import ksmart.ks50team01.user.review.dto.UReviewFile;
 import ksmart.ks50team01.user.review.mapper.UReviewMapper;
 import lombok.RequiredArgsConstructor;
 
@@ -17,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 public class UReviewService {
 	
 	private final UReviewMapper uReviewMapper;
+
 	
 	
 	/**
@@ -64,6 +69,37 @@ public class UReviewService {
 	public List<UOpen> getUOpen(){
 		return uReviewMapper.getUOpen();
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	/**

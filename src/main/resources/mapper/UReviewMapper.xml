@@ -71,7 +71,7 @@
         INSERT INTO PURCHASE_REVIEW
         (PRCHS_REV_CD, REG_MBR_ID, PRTNR_BPLC_CD, RAT_CTGRY_NO, PRCHS_REV_CN, RLS_YN_CD, RGN_SCTGRY_CD, REG_YMD)
         VALUES
-        (#{reviewCode}, #{reviewId}, #{reviewGoods}, #{reviewStar}, #{reviewContent}, #{reviewApprove},  #{districtSubclassCode}, CURDATE())
+        (#{reviewCode}, #{reviewId}, #{reviewGoods}, #{reviewStar}, #{reviewContent}, #{reviewApprove},  #{districtSubclassCode}, NOW())
     </insert>
 
     
