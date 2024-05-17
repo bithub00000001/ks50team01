@@ -27,5 +27,18 @@ public class UQnaService {
 		log.info("1:1문의 조회 결과: {}", qnaList);
 		return qnaList;
 	}
+
+	
+	/**
+	 * 1:1문의 상세 조회
+	 * @return UQna
+	 */
+	public UQna getQnaByQnaNum(String qnaNum) {
+		UQna qnaDetail = uQnaMapper.getQnaByQnaNum(qnaNum);
+		log.info("getQnaByQnaNum: {}", qnaDetail);
+		return qnaDetail;
+	}
+
+
 	
 }

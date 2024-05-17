@@ -12,4 +12,7 @@ public interface UQnaMapper {
 	// 1:1문의 조회
 	List<UQna> getQnaList();
 
+	// 1:1문의 상세목록 조회
+	UQna getQnaByQnaNum(String qnaNum);
+
 }

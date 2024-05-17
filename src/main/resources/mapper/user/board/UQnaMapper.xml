@@ -55,4 +55,29 @@
 	</select>
 	
 	
+		<!-- getQnaByQnaNum 쿼리 정의 -->
+	<select id="getQnaByQnaNum" resultMap="qnaResultMap">
+		/* 1:1문의 상세 조회 */
+		SELECT
+			Q.QNA_NO,
+			Q.REG_MBR_BIZ_ID,
+			F.FAQ_CTGRY_TYPE,
+			Q.QNA_PRGRS_CTGRY,
+			Q.QNA_TTL,
+			Q.QNA_CN,
+			Q.ANS_REG_PF_ID,
+			Q.REG_YMD,
+			Q.MDFCN_YMD,
+			Q.RTRCN_YMD
+		FROM
+			QNA_QUESTION AS Q
+			INNER JOIN
+			FAQ_CATEGORY AS F
+			ON
+			Q.FAQ_CTGRY_NO = F.FAQ_CTGRY_NO
+		WHERE
+		    Q.QNA_NO = #{qnaNum};
+	</select>
+	
+	
 </mapper>
