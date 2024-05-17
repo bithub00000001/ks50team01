@@ -3,15 +3,101 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ksmart.ks50team01.platform.ranking.mapper.PlanRankingMapper">
 	
+	<delete id="removePlanRanking" parameterType="String">
+		DELETE
+		FROM
+			MEMBER_TRIP_PLAN_RANKING
+		WHERE 
+			MBR_TRIP_PLN = #{userTripPlanId};
+	
+	</delete>
+	
+	<update id="modifyPlanRanking" parameterType="PlanRanking">
+		UPDATE 
+			MEMBER_TRIP_PLAN_RANKING
+		SET
+			REG_PF_ID = #{pRankingRegId},
+			TRIP_PLN_NO=#{tripPlanNum},
+			RGN_SCTGRY_NM=#{rgnSctgryName},
+			TRIP_PLN_RANK=#{tripPlanRank},
+			REV_STATS_STRT_YMD=#{reviewStatsStart},
+			REV_STATS_END_YMD=#{reviewStatsEnd},
+			PF_PSTG_STRT_YMD=#{platformAdStart},
+			PF_PSTG_END_YMD=#{platformAdEnd},
+			ACT_YN=#{activate}
+		WHERE 
+			MBR_TRIP_PLN=#{userTripPlanId};
+	</update>
+	
+	<select id="getPlanRankingInfoById" resultType="PlanRanking">
+		SELECT 
+			ROW_NUMBER() OVER(ORDER BY MBR_TRIP_PLN) 	AS userTripPlan, 
+			MBR_TRIP_PLN								AS userTripPlanId,
+			REG_PF_ID				 					AS pRankingRegId, 
+			TRIP_PLN_NO 								AS tripPlanNum, 
+			RGN_SCTGRY_NM 								AS rgnSctgryName, 
+			TRIP_PLN_RANK 								AS tripPlanRank, 
+			REV_STATS_STRT_YMD 							AS reviewStatsStart, 
+			REV_STATS_END_YMD 							AS reviewStatsEnd, 
+			PF_PSTG_STRT_YMD 							AS platformAdStart, 
+			PF_PSTG_END_YMD 							AS platformAdEnd, 
+			ACT_YN 										AS activate, 
+			REG_YMD 									AS regDate, 
+			MDFCN_YMD 									AS modifyDate
+		FROM 
+			MEMBER_TRIP_PLAN_RANKING AS p
+		WHERE
+			p.MBR_TRIP_PLN = #{userTripPlan};
+	</select>
+	
+	
+	<insert id="addPlanUserRanking" parameterType="PlanRanking">
+		INSERT INTO 
+			MEMBER_TRIP_PLAN_RANKING
+			(MBR_TRIP_PLN, 
+			REG_PF_ID, 
+			TRIP_PLN_NO, 
+			RGN_SCTGRY_NM, 
+			TRIP_PLN_RANK, 
+			REV_STATS_STRT_YMD, 
+			REV_STATS_END_YMD, 
+			PF_PSTG_STRT_YMD, 
+			PF_PSTG_END_YMD, 
+			ACT_YN, 
+			REG_YMD)
+	VALUES (#{userTripPlanId}, 
+			#{pRankingRegId}, 
+			#{tripPlanNum}, 
+			#{rgnSctgryName}, 
+			#{tripPlanRank}, 
+			#{reviewStatsStart}, 
+			#{reviewStatsEnd}, 
+			#{platformAdStart}, 
+			#{platformAdEnd}, 
+			#{activate}, 
+			NOW());
+	
+	</insert>
+	
+	<select id="planRankingListCheck" parameterType="String" resultType="boolean">
+		SELECT 
+			COUNT(MBR_TRIP_PLN)
+		FROM 
+			MEMBER_TRIP_PLAN_RANKING
+		WHERE 
+			MBR_TRIP_PLN = #{MBR_TRIP_PLN};
+	</select>
+	
 	<select id="getPlanRankingList" resultType="PlanRanking">
 	SELECT 
 		ROW_NUMBER() OVER(ORDER BY MBR_TRIP_PLN) 	AS userTripPlan, 
+		MBR_TRIP_PLN								AS userTripPlanId,
 		REG_PF_ID				 					AS pRankingRegId, 
-	TRIP_PLN_NO 									AS tripPlanNum, 
+		TRIP_PLN_NO 								AS tripPlanNum, 
 		RGN_SCTGRY_NM 								AS rgnSctgryName, 
 		TRIP_PLN_RANK 								AS tripPlanRank, 
 		REV_STATS_STRT_YMD 							AS reviewStatsStart, 
-	REV_STATS_END_YMD 								AS reviewStatsEnd, 
+		REV_STATS_END_YMD 							AS reviewStatsEnd, 
 		PF_PSTG_STRT_YMD 							AS platformAdStart, 
 		PF_PSTG_END_YMD 							AS platformAdEnd, 
 		ACT_YN 										AS activate, 
