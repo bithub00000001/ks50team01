@@ -1,6 +1,5 @@
 package ksmart.ks50team01.platform.trip.service;
 
-import java.nio.channels.MembershipKey;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,7 +17,7 @@ public interface PTourApiService {
 
 	/*Mono<List<PTourApi>> getTourInfo(String apiKey, Integer contentTypeId, Integer numOfRows, Integer pageNo, String areaCode, Optional<String> optionalSigunguCode);*/
 
-	Mono<List<PTourApi>> getTourInfo(String apiKey, Integer contentTypeId, Integer numOfRows, Integer pageNo, String areaCode, Optional<String> optionalSigunguCode);
+	Mono<List<PTourApi>> getTourInfo(String apiKey, int contentTypeId, int numOfRows, int pageNo, String areaCode, Optional<String> optionalSigunguCode);
 
 	void saveData(List<PTourApi> tourInfoList);
 }

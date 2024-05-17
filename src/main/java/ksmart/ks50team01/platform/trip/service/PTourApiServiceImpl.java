@@ -311,7 +311,7 @@ public class PTourApiServiceImpl implements PTourApiService {
 	 * @return List<PTourApi> 객체
 	 */
 	@Override
-	public Mono<List<PTourApi>> getTourInfo(String apiKey, Integer contentTypeId, Integer numOfRows, Integer pageNo, String areaCode, Optional<String> optionalSigunguCode) {
+	public Mono<List<PTourApi>> getTourInfo(String apiKey, int contentTypeId, int numOfRows, int pageNo, String areaCode, Optional<String> optionalSigunguCode) {
 		return webClient.get()
 			.uri(uriBuilder -> buildUri(apiKey, contentTypeId, numOfRows, pageNo, areaCode, optionalSigunguCode))
 			.retrieve()
@@ -334,8 +334,10 @@ public class PTourApiServiceImpl implements PTourApiService {
 	 * @return URI 반환
 	 */
 	private URI buildUri(String apiKey, Integer contentTypeId, Integer numOfRows, Integer pageNo, String areaCode, Optional<String> optionalSigunguCode) {
-		UriComponentsBuilder builder = UriComponentsBuilder
-			.fromPath("/areaBasedList1")
+		UriComponentsBuilder builder = UriComponentsBuilder.newInstance()
+			.scheme("https")
+			.host("apis.data.go.kr")
+			.path("/B551011/KorService1/areaBasedList1")
 			.queryParam("ServiceKey", apiKey)
 			.queryParam("numOfRows", numOfRows)
 			.queryParam("pageNo", pageNo)
@@ -346,6 +348,7 @@ public class PTourApiServiceImpl implements PTourApiService {
 			.queryParam("listYN", "Y")
 			.queryParam("_type", "json");
 		optionalSigunguCode.ifPresent(sigunguCode -> builder.queryParam("sigunguCode", sigunguCode));
+		log.info("url: {}",builder.build().toUri());
 		return builder.build().toUri();
 	}
 

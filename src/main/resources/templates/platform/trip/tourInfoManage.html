@@ -76,7 +76,7 @@
                         <div class="form-group">
                             <br><br>
                             <div class="col-md-12 col-sm-12 col-xs-12 text-center">
-                                <button type="submit" id="update-form" class="btn btn-primary btn-lg">여행 정보 업데이트</button>
+                                <button type="button" id="update-form" class="btn btn-primary btn-lg">여행 정보 업데이트</button>
                             </div>
                         </div>
                         <br><br>
@@ -123,8 +123,8 @@
 
             /*$('#numOfRows, #contentTypeId, #areaCode, #sigunguCode').change(updatePageOptions);*/
 
-            $('#update-form').submit(function(event) {
-                event.preventDefault();
+            $('#update-form').click(function(event) {
+
                 const numOfRows = $('#numOfRows').val();
                 const pageNo = $('#pageNo').val();
                 const contentTypeId = $('#contentTypeId').val();
@@ -136,11 +136,11 @@
                     type: 'POST',
                     contentType: 'application/json', // Content-Type을 application/json으로 설정
                     data: JSON.stringify({
-                        numOfRows: numOfRows,
-                        pageNo: pageNo,
-                        contentTypeId: contentTypeId,
-                        areaCode: areaCode,
-                        sigunguCode: sigunguCode
+                        'numOfRows': numOfRows,
+                        'pageNo': pageNo,
+                        'contentTypeId': contentTypeId,
+                        'areaCode': areaCode,
+                        'sigunguCode': sigunguCode
                     }),
                     success: function(response) {
                         alert(response);
