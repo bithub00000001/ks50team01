@@ -114,10 +114,10 @@
 									<td th:text="${l.restaurantSite}"></td>
 									<td th:text="${l.restaurantContactNum}"></td>
 									<td>
-									    <a th:href="@{/platform/destination/restaurantModify(restaurantAuthorityId=${l.restaurantAuthorityId})}">수정</a>
+									    <a th:href="@{/platform/destination/restaurantModify(restaurantInfoCode=${l.restaurantInfoCode})}">수정</a>
 									</td>
 						            <td>
-						            	<a href="#" th:data-member-id="${l.restaurantAuthorityId}" th:onclick="deleteConfirm(this)">삭제</a>
+						            	<a href="#" th:data-member-id="${l.restaurantInfoCode}" th:onclick="deleteConfirm(this)">삭제</a>
 					            	</td>
 								</tr>
 	

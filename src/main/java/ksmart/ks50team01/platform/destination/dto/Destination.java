@@ -11,8 +11,8 @@ public class Destination {
 	private String tourAddr;
 	private String tourDaddr;
 	private String tourSite;
-	private String tourContectNum;
-	private String tourContectNum2;
+	private String tourContactNum;
+	private String tourContactNum2;
 	private String tourOthers;
 	private String tourRegDate;
 	private String tourFormDate;
@@ -20,6 +20,7 @@ public class Destination {
 	private String tourGoodsList;
 	private String tourGoodsTime;
 	private String RegionSName;
+	private String RegionSCate;
 	private String tourgoodsAuthorityId;
 	private String tourGoodsCode;
 	private String tourGoodsOptionCd;
@@ -51,11 +52,14 @@ public class Destination {
 	private String restaurantInfoCode;
 	private String restaurantAuthorityId;
 	private String restaurantAddr;
+	private String restaurantDaddr;
 	private String restaurantSite;
 	private String restaurantContactNum;
 	private String restaurantRegDate;
 	private String restaurantFormDate;
 	private String restaurantMenu;
+	private String restaurantOthers;
+	
 	
 	
 

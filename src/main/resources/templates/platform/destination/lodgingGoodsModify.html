@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+                layout:decorate="~{platform/layout/default}">
+
+<th:block layout:fragment="customContent">
+    <div class="col-md-12 col-sm-6 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h3>숙소 세부사항 수정</h3>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <form id="modifyForm" th:action="@{/platform/destination/lodgingGoodsModify}" method="post">
+					 <input type="hidden" name="lodgingMenuCode" th:value="${lodgingGoodsInfo.lodgingMenuCode}">
+				
+				    <div class="form-group">
+				        <label for="lodgingName">숙소 이름</label>
+				        <input type="text" class="form-control" id="lodgingName" name="lodgingName" th:value="${lodgingGoodsInfo.lodgingName}">
+				    </div>
+				
+				    <div class="form-group">
+				        <label for="lodgingMenuType">숙소 상품 종류</label>
+				        <input type="text" class="form-control" id="lodgingMenuType" name="lodgingMenuType" th:value="${lodgingGoodsInfo.lodgingMenuType}">
+				    </div>
+				
+				    <div class="form-group">
+				        <label for="lodgingMenuMinPct">숙소 기본 인원 수</label>
+				        <input type="text" class="form-control" id="lodgingMenuMinPct" name="lodgingMenuMinPct" th:value="${lodgingGoodsInfo.lodgingMenuMinPct}">
+				    </div>
+				
+				    <div class="form-group">
+				        <label for="lodgingMenuMaxPct">숙소 최대 인원 수</label>
+				        <input type="tel" class="form-control" id="lodgingMenuMaxPct" name="lodgingMenuMaxPct" th:value="${lodgingGoodsInfo.lodgingMenuMaxPct}">
+				    </div>
+				
+				    <div class="form-group">
+				        <label for="lodgingMenuPrc">숙소 요금</label>
+				        <input type="tel" class="form-control" id="lodgingMenuPrc" name="lodgingMenuPrc" th:value="${lodgingGoodsInfo.lodgingMenuPrc}">
+				    </div>
+				    
+				    <div class="form-group">
+				        <label for="lodgingMenuAddprc">숙소 추가 요금</label>
+				        <input type="text" class="form-control" id="lodgingMenuAddprc" name="lodgingMenuAddprc" th:value="${lodgingGoodsInfo.lodgingMenuAddprc}">
+				    </div>
+				    
+				    <div class="form-group">
+				        <label for="lodgingMenuAddprc">숙소 내 흡연</label>
+				        <input type="text" class="form-control" id="lodgingMenuAddprc" name="lodgingMenuAddprc" th:value="${lodgingGoodsInfo.lodgingMenuAddprc}">
+				    </div>
+				    
+				    <div class="form-group">
+				        <label for="lodgingMenuBkYn">조식 유무</label>
+				        <input type="text" class="form-control" id="lodgingMenuBkYn" name="lodgingMenuBkYn" th:value="${lodgingGoodsInfo.lodgingMenuBkYn}">
+				    </div>
+
+				    
+				    <button type="submit" class="btn btn-primary">저장</button>
+				    <button type="button" class="btn btn-secondary" onclick="location.href='/platform/destination/lodgingGoodsManage'">취소</button>
+				</form>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+</html>

@@ -128,7 +128,7 @@
 									<td th:text="${l.lodgingRegDate}"></td>
 									<td th:text="${l.lodgingFormDate}"></td>
 									<td>
-									    <a th:href="@{/platform/destination/lodgingModify(lodgingInfoCode=${l.lodgingInfoCode})}">수정</a>
+									    <a th:href="@{/platform/destination/lodgingGoodsModify(lodgingMenuCode=${l.lodgingMenuCode})}">수정</a>
 									</td>
 						            <td>
 						            	<a href="#" th:data-member-id="${l.lodgingInfoCode}" th:onclick="deleteConfirm(this)">삭제</a>
