@@ -165,13 +165,12 @@ public class PTripPlanController {
 
 	// 여행지를 api에서 업데이트 처리
 	@PostMapping("/update/tourInfo")
-	public ResponseEntity<String> updateTourInfo(
-		@RequestParam("numOfRows") Integer numOfRows,
-		@RequestParam("pageNo") Integer pageNo,
-		@RequestParam("contentTypeId") Integer contentTypeId,
-		@RequestParam("areaCode") String areaCode,
-		@RequestParam(value = "sigunguCode", required = false) String sigunguCode) {
-
+	public ResponseEntity<String> updateTourInfo(@RequestBody Map<String, Object> requestData) {
+		int numOfRows = Integer.parseInt((String) requestData.get("numOfRows"));
+		int pageNo = Integer.parseInt((String) requestData.get("pageNo"));
+		int contentTypeId = Integer.parseInt((String)requestData.get("contentTypeId"));
+		String areaCode = (String)requestData.get("areaCode");
+		String sigunguCode = requestData.get("sigunguCode") != null ? (String)requestData.get("sigunguCode") : "";
 		try {
 			List<PTourApi> tourInfoList = pTourApiService.getTourInfo(apiKey , contentTypeId, numOfRows, pageNo, areaCode,
 				Optional.ofNullable(sigunguCode)).block();
