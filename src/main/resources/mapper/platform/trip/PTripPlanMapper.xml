@@ -3,6 +3,7 @@
 <mapper namespace="ksmart.ks50team01.platform.trip.mapper.PTripPlanMapper">
 
     <resultMap id="tripPlanMap" type="pTripPlan">
+        <!-- INDIVIDUAL_TRIP_PLAN 테이블 resultMap -->
         <id     column="TRIP_PLN_NO"         property="planId"/>
         <result column="MBR_ID"              property="memberId"/>
         <result column="planNum"             property="planNumber"/>
@@ -20,25 +21,55 @@
         <result column="modDate"             property="modDate"/>
         <result column="SHARED_YN"           property="isShare"/>
     </resultMap>
+
+    <resultMap id="areaMap" type="pTourApi">
+        <!-- AREA_CODE 테이블 resultMap -->
+        <id     column="area_code" property="areaCode"/>
+        <result column="areaNum"   property="areaNum"/>
+        <result column="area_name" property="areaName"/>
+        <result column="areaRegDate"   property="areaRegDate"/>
+        <result column="areaModDate" property="areaModDate"/>
+    </resultMap>
+
+    <resultMap id="sigunMap" type="pTourApi">
+        <!-- SIGUNGU_CODE 테이블 resultMap -->
+        <id     column="sigungu_id"   property="sigunguId"/>
+        <result column="sigungu_code" property="sigunguCode"/>
+        <result column="sigungu_name" property="sigunguName"/>
+        <result column="sigunNum"     property="sigunNum"/>
+        <result column="sigunRegDate" property="sigunRegDate"/>
+        <result column="sigunModDate" property="sigunModDate"/>
+
+
+        <association property="areaInfo" javaType="pTourApi">
+            <id     column="area_code"   property="areaCode"/>
+            <result column="areaNum"     property="areaNum"/>
+            <result column="area_name"   property="areaName"/>
+            <result column="areaRegDate" property="areaRegDate"/>
+            <result column="areaModDate" property="areaModDate"/>
+
+        </association>
+    </resultMap>
+
     <update id="updateTripPlan" parameterType="pTripPlan">
         /* 여행 계획 업데이트 */
         UPDATE
             INDIVIDUAL_TRIP_PLAN
         SET
-            RGN_SCTGRY_CD= #{planRegionSmallCate},
-            TRIP_PLN_BGNG_YMD = #{startDate},
-            TRIP_PLN_END_YMD = #{endDate},
-            TRIP_PLN_DAY = #{planDays},
-            TRIP_PLN_TTL = #{planTitle},
-            TRIP_PLN_NOPE = #{planAttend},
-            AVAILABLE_BUDGET = #{budgetPerAttend},
-            TOTAL_AVAIL_BUDGET = #{totalAvailBudget},
+            RGN_SCTGRY_CD       = #{planRegionSmallCate},
+            TRIP_PLN_BGNG_YMD   = #{startDate},
+            TRIP_PLN_END_YMD    = #{endDate},
+            TRIP_PLN_DAY        = #{planDays},
+            TRIP_PLN_TTL        = #{planTitle},
+            TRIP_PLN_NOPE       = #{planAttend},
+            AVAILABLE_BUDGET    = #{budgetPerAttend},
+            TOTAL_AVAIL_BUDGET  = #{totalAvailBudget},
             TOTAL_PLNNED_BUDGET = #{totalPlanBudget},
-            REMAINING_BUDGET = #{diffBudget},
-            IN_PRGRS = #{planStatus},
-            SHARED_YN = #{isShare},
-            MDFCN_MBR_ID = #{sessionId},
-            MDFCN_YMD = NOW()
+            REMAINING_BUDGET    = #{diffBudget},
+            IN_PRGRS            = #{planStatus},
+            SHARED_YN           = #{isShare},
+            MDFCN_MBR_ID        = #{sessionId},
+            MDFCN_YMD           = NOW()
         WHERE
             TRIP_PLN_NO=#{planId}
     </update>
@@ -46,12 +77,12 @@
     <select id="getPlanList" resultMap="tripPlanMap">
         /* 전체 여행 계획 조회 */
         SELECT
-            row_number() OVER (ORDER BY INDIVIDUAL_TRIP_PLAN.REG_YMD) as planNum,
+            row_number() OVER (ORDER BY INDIVIDUAL_TRIP_PLAN.REG_YMD) AS planNum,
             TRIP_PLN_NO,
             MBR_ID,
             CONCAT_WS(' ',
                       REGION_SMALL_CATEGORY.RGN_LCTGRY_NM,
-                      REGION_SMALL_CATEGORY.RGN_MCTGRY_NM) as planAddr,
+                      REGION_SMALL_CATEGORY.RGN_MCTGRY_NM) AS planAddr,
             TRIP_PLN_BGNG_YMD,
             TRIP_PLN_END_YMD,
             TRIP_PLN_DAY,
@@ -62,8 +93,8 @@
             TOTAL_PLNNED_BUDGET,
             IN_PRGRS,
             SHARED_YN,
-            INDIVIDUAL_TRIP_PLAN.REG_YMD as regDate,
-            INDIVIDUAL_TRIP_PLAN.MDFCN_YMD as modDate
+            INDIVIDUAL_TRIP_PLAN.REG_YMD AS regDate,
+            INDIVIDUAL_TRIP_PLAN.MDFCN_YMD AS modDate
         FROM
             INDIVIDUAL_TRIP_PLAN
         INNER JOIN
@@ -74,11 +105,11 @@
     <select id="getTripPlanById" resultMap="tripPlanMap">
         /* 계획 id에 해당하는 여행 계획 조회 */
         SELECT
-            row_number() OVER (ORDER BY INDIVIDUAL_TRIP_PLAN.REG_YMD) as planNum,
+            row_number() OVER (ORDER BY INDIVIDUAL_TRIP_PLAN.REG_YMD) AS planNum,
             TRIP_PLN_NO,
             MBR_ID,
             CONCAT_WS(' ',REGION_SMALL_CATEGORY.RGN_LCTGRY_NM,
-                      REGION_SMALL_CATEGORY.RGN_MCTGRY_NM) as planAddr,
+                      REGION_SMALL_CATEGORY.RGN_MCTGRY_NM) AS planAddr,
             TRIP_PLN_BGNG_YMD,
             TRIP_PLN_END_YMD,
             TRIP_PLN_DAY,
@@ -100,5 +131,56 @@
                 INDIVIDUAL_TRIP_PLAN.RGN_SCTGRY_CD = REGION_SMALL_CATEGORY.RGN_SCTGRY_CD
         WHERE
             INDIVIDUAL_TRIP_PLAN.TRIP_PLN_NO = #{PlanId}
+    </select>
+
+    <select id="getAreaCodeList" resultMap="areaMap">
+        /* 전체 지역 코드 조회 */
+        SELECT
+            row_number() OVER (ORDER BY area_code) AS areaNum,
+            area_code,
+            area_name,
+            REG_YMD AS areaRegDate,
+            MDFCN_YMD AS areaModDate
+        FROM
+            AREA_CODE
+    </select>
+
+    <select id="getSigunCodeList" resultMap="sigunMap">
+        /* 전체 시군 코드 조회 */
+        SELECT
+            row_number() OVER (ORDER BY AC.area_code, SC.sigungu_code) AS sigunNum,
+            SC.sigungu_code,
+            SC.sigungu_name,
+            SC.area_id,
+            AC.area_code,
+            AC.area_name,
+            SC.REG_YMD AS sigunRegDate,
+            SC.MDFCN_YMD AS sigunModDate
+        FROM
+            SIGUNGU_CODE AS SC
+                left join
+            AREA_CODE AS AC
+            on
+            SC.area_id = AC.area_code
+    </select>
+    <select id="getSigunguCodesByAreaCode" resultMap="sigunMap">
+        /* 지역 코드와 일치하는 시군 코드 조회 */
+        SELECT
+            row_number() OVER (ORDER BY AC.area_code, SC.sigungu_code) AS sigunNum,
+            SC.sigungu_code,
+            SC.sigungu_name,
+            SC.area_id,
+            AC.area_code,
+            AC.area_name,
+            SC.REG_YMD AS sigunRegDate,
+            SC.MDFCN_YMD AS sigunModDate
+        FROM
+            SIGUNGU_CODE AS SC
+                left join
+            AREA_CODE AS AC
+            on
+                SC.area_id = AC.area_code
+        WHERE
+            SC.area_id = #{areaCode}
     </select>
 </mapper>

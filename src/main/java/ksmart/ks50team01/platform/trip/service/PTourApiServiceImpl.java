@@ -1,6 +1,7 @@
 package ksmart.ks50team01.platform.trip.service;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriBuilder;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -30,6 +32,7 @@ public class PTourApiServiceImpl implements PTourApiService {
 
 	private final PTripPlanMapper pTripPlanMapper;
 	private final PTourApiMapper pTourApiMapper;
+	private final PTripPlanService pTripPlanService;
 
 
 	// API를 WebClientConfig에서 설정한 baseUrl로 이용하기 위해 DI 주입
@@ -48,15 +51,14 @@ public class PTourApiServiceImpl implements PTourApiService {
 		log.info("getAreaData 메서드의 apiKey: {}", apiKey);
 		return webClient.get()
 			.uri(uriBuilder -> {
-				UriBuilder builder = uriBuilder
-					.path(("/areaCode1"))
+				uriBuilder.path(("/areaCode1"))
 					.queryParam("serviceKey",apiKey)
 					.queryParam("numOfRows",50)
 					.queryParam("pageNo", 1)
 					.queryParam("MobileOS", "ETC")
-					.queryParam("MobileApp", "KSMART50")
+					.queryParam("MobileApp", "KSMART50Test")
 					.queryParam("_type", "json");
-				return getTourApiUri(optionalAreaCode, uriBuilder, builder);
+				return getTourApiUri(optionalAreaCode, uriBuilder);
 			})
 			// 결과 타입을 JSON 으로 받도록 설정
 			.accept(MediaType.APPLICATION_JSON)
@@ -71,12 +73,17 @@ public class PTourApiServiceImpl implements PTourApiService {
 			});
 	}
 
-	private static URI getTourApiUri(Optional<String> optionalAreaCode, UriBuilder uriBuilder, UriBuilder builder) {
-		// areaCode 가 존재한다면 그 값을 사용하여 쿼리 파라미터를 추가
+	/**
+	 * Optional 지역 코드가 존재한다면 쿼리 파라미터 추가
+	 * @param optionalAreaCode Optional로 지정된 지역 코드
+	 * @param uriBuilder
+	 * @return
+	 */
+	private static URI getTourApiUri(Optional<String> optionalAreaCode, UriBuilder uriBuilder) {
 		optionalAreaCode.ifPresent(areaCode ->
 			uriBuilder.queryParam("areaCode", areaCode));
 		log.info("uriBuilder: {}", uriBuilder.toUriString());
-		return builder.build();
+		return uriBuilder.build();
 	}
 
 	private Mono<List<PTourApi>> getRegionListMono(Optional<String> optionalAreaCode, JsonNode jsonNode) {
@@ -87,6 +94,9 @@ public class PTourApiServiceImpl implements PTourApiService {
 			// optionalAreaCode가 없는 경우, convertJsonToAreaData 메서드 호출
 			return convertJsonToAreaData(jsonNode);
 		}
+		// 함수 표현식으로도 표현 가능
+		/*return optionalAreaCode.map(s -> convertJsonToSigunguData(jsonNode, s))
+			.orElseGet(() -> convertJsonToAreaData(jsonNode));*/
 	}
 
 	/**
@@ -121,18 +131,6 @@ public class PTourApiServiceImpl implements PTourApiService {
 				.collect(Collectors.toList())
 			: Collections.emptyList();
 	}
-
-	// 숙소 정보 조회 메서드 작성중
-	/*public Mono<PTourApi> getAccommodationData(String apiKey){
-		return webClient.get().uri(uriBuilder -> {
-			UriBuilder builder = uriBuilder
-				.path("/api/rest/pacakge")
-				.queryParam("ServiceKey", apiKey)
-				.queryParam()
-
-		})
-	}*/
-	//public Mono<PTourApi> getAccommodationData(String apiKey, )
 
 	/**
 	 * Tour API 에 지역 코드만 요청하는 메서드
@@ -174,7 +172,7 @@ public class PTourApiServiceImpl implements PTourApiService {
 		log.info("upsertSigunguData apiKey: {}", apiKey);
 
 		// DB에서 모든 지역 코드 조회
-		List<PTourApi> areaCodeList = pTourApiMapper.getAreaCodeList();
+		List<PTourApi> areaCodeList = pTripPlanService.getAreaCodeList();
 
 		areaCodeList.forEach(areaCode -> {
 			Mono<List<PTourApi>> sigunguDataMono = getAreaData(apiKey, Optional.ofNullable(areaCode.getAreaCode()));
@@ -189,7 +187,8 @@ public class PTourApiServiceImpl implements PTourApiService {
 
 	/**
 	 * 지역 코드 데이터를 시군구 코드 데이터로 변환하는 메서드
-	 * @param
+	 * @param jsonNode API에서 응답받은 결과를 변환한 JsonNode
+	 * @param areaCode 지역 코드
 	 * @return
 	 */
 	private Mono<List<PTourApi>> convertJsonToSigunguData(JsonNode jsonNode, String areaCode) {
@@ -219,15 +218,208 @@ public class PTourApiServiceImpl implements PTourApiService {
 			: Collections.emptyList();
 	}
 
+	// 숙소 정보 조회 메서드 작성중
+
+	/**
+	 * 원본 메서드
+	 * Tour API 에서 관광타입(12:관광지, 14:문화시설, 15:축제공연행사, 25:여행코스, 28:레포츠, 32:숙박, 38:쇼핑, 39:음식점)을 조회하는 메서드
+	 * @param apiKey 개인 디코딩 키
+	 * @param contentTypeId 관광타입(12:관광지, 14:문화시설, 15:축제공연행사, 25:여행코스, 28:레포츠, 32:숙박, 38:쇼핑, 39:음식점)
+	 * @param numOfRows 한페이지결과수
+	 * @param pageNo 페이지번호
+	 * @param areaCode 지역코드
+	 * @param optionalSigunguCode 시군구코드
+	 * @return
+	 */
+	/*public Mono<List<PTourApi>> getTourInfo(String apiKey, Integer contentTypeId, Integer numOfRows, Integer pageNo, String areaCode, Optional<String> optionalSigunguCode) {
+		return webClient.get()
+			.uri(uriBuilder -> {
+				UriBuilder builder = uriBuilder
+					.path(("/areaBasedList1"))
+					.queryParam("ServiceKey", apiKey)
+					.queryParam("numOfRows", numOfRows)
+					.queryParam("pageNo", pageNo)
+					.queryParam("contentTypeId", contentTypeId)
+					.queryParam("areaCode", areaCode)
+					.queryParam("MobileOS", "ETC")
+					.queryParam("MobileApp", "AppTest")
+					.queryParam("listYN", "Y")
+					.queryParam("_type", "json");
+				optionalSigunguCode.ifPresent(sigunCode -> builder.queryParam("sigunguCode", sigunCode));
+				return builder.build();
+			})
+			.accept(MediaType.APPLICATION_JSON)
+			.retrieve()
+			.bodyToMono(JsonNode.class)
+			.flatMap(jsonNode -> {
+				try {
+					String resultMsg = jsonNode
+						.path("response")
+						.path("header")
+						.path("resultMsg")
+						.asText();
+					if ("OK".equals(resultMsg)) {
+						JsonNode itemNodes = jsonNode
+							.path("response")
+							.path("body")
+							.path("items")
+							.path("item");
+						if (itemNodes.isArray()) {
+							List<PTourApi> tourList = new ArrayList<>();
+							for (JsonNode itemNode : itemNodes) {
+								PTourApi tourApi = new PTourApi();
+								// itemNode의 각 필드 값을 직접 읽어와 PTourApi 객체에 설정
+								tourApi.setDestinationFirstAddress(itemNode.get("addr1").asText());
+								tourApi.setDestinationSecondAddress(itemNode.get("addr2").asText());
+								tourApi.setAreaCode(itemNode.get("areaCode").asText());
+								tourApi.setDestinationContentId(itemNode.get("contentid").asText());
+								tourApi.setDestinationContentTypeId(itemNode.get("contenttypeid").asText());
+								tourApi.setDestinationFirstImageLink(itemNode.get("firstimage").asText());
+								tourApi.setDestinationSecondImageLink(itemNode.get("firstimage2").asText());
+								tourApi.setDestinationLongitude(itemNode.get("mapx").asDouble());
+								tourApi.setDestinationLatitude(itemNode.get("mapy").asDouble());
+								tourApi.setSigunguCode(itemNode.get("sigungucode").asText());
+								tourApi.setDestinationTitle(itemNode.get("title").asText());
+								tourApi.setDestinationTelNum(itemNode.get("tel").asText());
+								tourApi.setDestinationZipcode(itemNode.get("zipcode").asText());
+								// 다른 필드들도 마찬가지로 설정
+								tourList.add(tourApi);
+							}
+							return Mono.just(tourList);
+						} else {
+							return Mono.error(new RuntimeException("Invalid API Response: items is not an array"));
+						}
+					} else {
+						return Mono.error(new RuntimeException("API Response Error: " + resultMsg));
+					}
+				} catch (Exception e) {
+					return Mono.error(new RuntimeException("Error processing API response", e));
+				}
+			});
+	}*/
+
+	// getTourInfo 메서드 리팩토링
+
+	/**
+	 * webClient를 사용하여 외부 API에 Get 요청을 보내고, 응답을 처리해 List<PTourApi> 객체로 반환
+	 * @param apiKey 개인 디코딩 키
+	 *  @param contentTypeId 관광 타입(12:관광지, 14:문화시설, 15:축제공연행사, 25:여행코스, 28:레포츠, 32:숙박, 38:쇼핑, 39:음식점)
+	 * @param numOfRows 한 페이지 결과수
+	 * @param pageNo 페이지번호
+	 * @param areaCode 지역 코드
+	 * @param optionalSigunguCode 시군구 코드, 비어 있어도 메서드가 작동하도록
+	 * @return List<PTourApi> 객체
+	 */
 	@Override
-	public List<PTourApi> getAreaCodeList(){
-		return pTourApiMapper.getAreaCodeList();
+	public Mono<List<PTourApi>> getTourInfo(String apiKey, Integer contentTypeId, Integer numOfRows, Integer pageNo, String areaCode, Optional<String> optionalSigunguCode) {
+		return webClient.get()
+			.uri(uriBuilder -> buildUri(apiKey, contentTypeId, numOfRows, pageNo, areaCode, optionalSigunguCode))
+			.retrieve()
+			.bodyToMono(JsonNode.class)
+			.flatMap(this::processApiResponse)
+			.onErrorResume(error -> {
+				log.error("Error occurred while fetching tour info: {}", error.getMessage());
+				return Mono.error(error);
+			});
+	}
+
+	/**
+	 * API 요청을 위한 URI 생성
+	 * @param apiKey 개인 디코딩 키
+	 * @param contentTypeId 관광타입(12:관광지, 14:문화시설, 15:축제공연행사, 25:여행코스, 28:레포츠, 32:숙박, 38:쇼핑, 39:음식점)
+	 * @param numOfRows 한 페이지 결과수
+	 * @param pageNo 페이지 번호
+	 * @param areaCode 지역 코드
+	 * @param optionalSigunguCode 시군구 코드, 비어 있어도 메서드가 작동하도록
+	 * @return URI 반환
+	 */
+	private URI buildUri(String apiKey, Integer contentTypeId, Integer numOfRows, Integer pageNo, String areaCode, Optional<String> optionalSigunguCode) {
+		UriComponentsBuilder builder = UriComponentsBuilder
+			.fromPath("/areaBasedList1")
+			.queryParam("ServiceKey", apiKey)
+			.queryParam("numOfRows", numOfRows)
+			.queryParam("pageNo", pageNo)
+			.queryParam("contentTypeId", contentTypeId)
+			.queryParam("areaCode", areaCode)
+			.queryParam("MobileOS", "ETC")
+			.queryParam("MobileApp", "AppTest")
+			.queryParam("listYN", "Y")
+			.queryParam("_type", "json");
+		optionalSigunguCode.ifPresent(sigunguCode -> builder.queryParam("sigunguCode", sigunguCode));
+		return builder.build().toUri();
+	}
+
+	/**
+	 * API 응답을 처리해 List<PTourApi> 객체 반환
+	 * @param jsonNode getTourInfo 메서드에서 생성된 JsonNode 객체
+	 * @return List<PTourApi> 객체
+	 */
+	private Mono<List<PTourApi>> processApiResponse(JsonNode jsonNode) {
+		return Mono.justOrEmpty(jsonNode)
+			.flatMap(node -> {
+				String resultMsg = node.path("response").path("header").path("resultMsg").asText();
+				if (!"OK".equals(resultMsg)) {
+					return Mono.error(new RuntimeException("API Response Error: " + resultMsg));
+				}
+
+				JsonNode itemNodes = node.path("response").path("body").path("items").path("item");
+				if (!itemNodes.isArray()) {
+					return Mono.error(new RuntimeException("Invalid API Response: items is not an array"));
+				}
+
+				List<PTourApi> tourList = new ArrayList<>();
+				itemNodes.forEach(itemNode -> tourList.add(mapToPTourApi(itemNode)));
+				return Mono.just(tourList);
+			});
+	}
+
+	/**
+	 * JsonNode 객체를 PTourApi dto 객체로 변환
+	 * @param itemNode itemNodes.forEach 에서 생성된 JsonNode
+	 * @return PTourApi 객체
+	 */
+	private PTourApi mapToPTourApi(JsonNode itemNode) {
+		PTourApi tourApi = new PTourApi();
+		tourApi.setDestinationFirstAddress(getJsonNodeText(itemNode, "addr1"));
+		tourApi.setDestinationSecondAddress(getJsonNodeText(itemNode, "addr2"));
+		tourApi.setAreaCode(getJsonNodeText(itemNode, "areacode"));
+		tourApi.setDestinationContentId(getJsonNodeText(itemNode, "contentid"));
+		tourApi.setDestinationContentTypeId(getJsonNodeText(itemNode, "contenttypeid"));
+		tourApi.setDestinationFirstImageLink(getJsonNodeText(itemNode, "firstimage"));
+		tourApi.setDestinationSecondImageLink(getJsonNodeText(itemNode, "firstimage2"));
+		tourApi.setDestinationLongitude(getJsonNodeDouble(itemNode, "mapx"));
+		tourApi.setDestinationLatitude(getJsonNodeDouble(itemNode, "mapy"));
+		tourApi.setSigunguCode(getJsonNodeText(itemNode, "sigungucode"));
+		tourApi.setDestinationTitle(getJsonNodeText(itemNode, "title"));
+		tourApi.setDestinationTelNum(getJsonNodeText(itemNode, "tel"));
+		tourApi.setDestinationZipcode(getJsonNodeText(itemNode, "zipcode"));
+		return tourApi;
+	}
+
+	/**
+	 * mapToPTourApi 메서드에서 JsonNode에 특정 필드의 텍스트 값을 읽어 오는 메서드
+	 * @param itemNode itemNodes.forEach 에서 생성된 JsonNode
+	 * @param fieldName JSON의 필드 값
+	 * @return 비어 있지 않으면 json의 필드 값을 찾아 반환
+	 */
+	private String getJsonNodeText(JsonNode itemNode, String fieldName) {
+		return itemNode.has(fieldName) ? itemNode.get(fieldName).asText(null) : null;
+	}
+
+	/**
+	 * mapToPTourApi 메서드에서 JsonNode에 특정 필드의 더블 값을 읽어 오는 메서드
+	 * @param itemNode itemNodes.forEach 에서 생성된 JsonNode
+	 * @param fieldName JSON의 필드 값
+	 * @return 비어 있지 않으면 json의 필드 값을 찾아 반환
+	 */
+	private Double getJsonNodeDouble(JsonNode itemNode, String fieldName) {
+		return itemNode.has(fieldName) ? itemNode.get(fieldName).asDouble() : 0.0;
 	}
 
 	@Override
-	public List<PTourApi> getSigunguCodeList(){
-
-		pTourApiMapper.getSigunList();
-		return pTourApiMapper.getSigunList();
+	public void saveData(List<PTourApi> tourInfoList) {
+		for (PTourApi tourInfo : tourInfoList) {
+			pTourApiMapper.insertTourInfo(tourInfo);
+		}
 	}
 }
