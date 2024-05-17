@@ -10,6 +10,7 @@ public class UCommunity {
 	
 	private String postNum;
 	private String postRegId;
+	private String postCateNum;
 	private String postCateType;
 	private String postTitle;
 	private String postContent;

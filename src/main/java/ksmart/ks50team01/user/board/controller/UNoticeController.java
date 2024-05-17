@@ -21,7 +21,7 @@ public class UNoticeController {
 	
 	private final UNoticeService uNoticeService;
 	
-	// 공지사항 조회 페이지
+	// 공지사항 목록 조회
 	@GetMapping({"/",""})
 	public String noticeList(Model model) {
 	    List<UNotice> noticeList = uNoticeService.getNoticeList();
@@ -32,17 +32,24 @@ public class UNoticeController {
 		return "user/board/noticeList";
 	}
 	
-	// 특정 공지사항 상세 조회
+	// 공지사항 상세 조회
 	@GetMapping("/noticeDetail")
 	public String noticeDetail(@RequestParam(name = "noticeNum", required = false) String noticeNum, Model model) {
+		
+		// 상세 페이지에 접속할 때마다 조회수 증가
+		uNoticeService.increaseViewCount(noticeNum);
+		
+		// 게시물 정보를 가져와서 모델에 담아 상세 페이지로 전달
 		UNotice noticeDetail = uNoticeService.getNoticeByNoticeNum(noticeNum);
 	
 	    model.addAttribute("noticeDetail", noticeDetail);
 	    model.addAttribute("noticeTitle", noticeDetail.getNoticeTitle());
 	    model.addAttribute("noticeContent", noticeDetail.getNoticeContent());
+	    model.addAttribute("noticeContent", noticeDetail.getNoticeInqCnt());
 	    model.addAttribute("title", "공지사항 상세");
 	    
 	    log.info("noticeNum: {}", noticeNum);
+	    log.info("noticeDetail: {}", noticeDetail);
 	    log.info("getNoticeByNoticeNum: {}", noticeDetail);
 
 	    return "user/board/noticeDetail";

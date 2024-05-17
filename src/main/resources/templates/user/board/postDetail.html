@@ -21,7 +21,9 @@
 					<div class="post-header">
 						<h2 class="post-title" th:text="*{postTitle}">게시물 제목</h2>
 						<!-- 댓글 수가 0보다 큰 경우에만 댓글 수 뱃지 표시 -->
-						<span th:if="${#lists.size(commentList) > 0}" class="badge bg-primary badge-size" th:text="${#lists.size(commentList)}"></span>
+						<span th:if="${#lists.size(commentList) > 0}"
+							class="badge bg-primary badge-size"
+							th:text="${#lists.size(commentList)}"></span>
 					</div>
 
 					<p class="post-meta">
@@ -37,13 +39,16 @@
 							<div class="btn-group">
 								<!-- 게시물 좋아요 -->
 								<button type="button"
-									class="btn btn-primary btn-lg rounded-pill like-btn"  style="margin-right: 50px;">
-									<i class="fa-regular fa-thumbs-up fa-2x"><span class="like-count">0</span> </i>
+									class="btn btn-primary btn-lg rounded-pill like-btn"
+									style="margin-right: 50px;">
+									<i class="fa-regular fa-thumbs-up fa-2x"><span
+										class="like-count">0</span> </i>
 								</button>
 								<!-- 게시물 싫어요 -->
 								<button type="button"
 									class="btn btn-primary btn-lg rounded-pill dislike-btn">
-									<i class="fa-regular fa-thumbs-down fa-2x"><span class="dislike-count">0</span> </i>
+									<i class="fa-regular fa-thumbs-down fa-2x"><span
+										class="dislike-count">0</span> </i>
 								</button>
 							</div>
 						</div>
@@ -138,27 +143,29 @@
 											data-bs-toggle="modal" data-bs-target="#replyModal">
 											<i class="fa fa-reply"></i> 답글
 										</button>
-										
+
 										<!-- 댓글 싫어요 버튼 -->
 										<button class="btn btn-outline-danger btn-xs dislike-btn">
-											<i class="fa-regular fa-thumbs-down"></i><span class="dislike-count">0</span> 
+											<i class="fa-regular fa-thumbs-down"></i><span
+												class="dislike-count">0</span>
 										</button>
-										
+
 										<!-- 댓글 좋아요 버튼 -->
 										<button class="btn btn-outline-primary btn-xs like-btn">
-											<i class="fa-regular fa-thumbs-up"></i><span class="like-count">0</span>
+											<i class="fa-regular fa-thumbs-up"></i><span
+												class="like-count">0</span>
 										</button>
-										
-										
+
+
 									</div>
 								</div>
 							</li>
 						</ul>
 					</div>
-					
+
 					<!-- 굵은 직선 추가 -->
 					<hr class="my-4">
-					
+
 					<!-- 댓글 작성 폼 -->
 					<div class="comment-form">
 						<h3 class="">댓글 작성</h3>
@@ -180,54 +187,50 @@
 
 
 
-										<!-- Modal -->
-										<div class="modal fade" id="staticBackdrop"
-											data-bs-backdrop="static" data-bs-keyboard="false"
-											tabindex="-1" aria-labelledby="staticBackdropLabel"
-											aria-hidden="true">
-											<div class="modal-dialog">
-												<div class="modal-content">
-													<div class="modal-header">
-														<h5 class="modal-title" id="staticBackdropLabel">신고하기</h5>
-														<button type="button" class="btn-close"
-															data-bs-dismiss="modal" aria-label="Close"></button>
-													</div>
-													<!-- Example single danger button -->
-													<div class="btn-group">
-														<button type="button"
-															class="btn btn-primary dropdown-toggle px-3"
-															data-bs-toggle="dropdown" aria-expanded="false">
-															신고 유형 선택</button>
+	<!-- Modal -->
+	<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
+		data-bs-keyboard="false" tabindex="-1"
+		aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="staticBackdropLabel">신고하기</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<!-- Example single danger button -->
+				<div class="btn-group">
+					<button type="button" class="btn btn-primary dropdown-toggle px-3"
+						data-bs-toggle="dropdown" aria-expanded="false">신고 유형 선택</button>
 
-														<ul class="dropdown-menu">
-															<li><a class="dropdown-item">욕설/인신공격</a></li>
-															<li><a class="dropdown-item">홍보/상업성</a></li>
-															<li><a class="dropdown-item">음란/선정성</a></li>
-															<li><a class="dropdown-item">같은 내용 도배</a></li>
-															<li><a class="dropdown-item">부적절한 콘텐츠</a></li>
-															<li><a class="dropdown-item">스팸 또는 광고</a></li>
-															<li><a class="dropdown-item">개인정보 노출</a></li>
-															<li><a class="dropdown-item">권리침해 신고</a></li>
-															<li><a class="dropdown-item">기타</a></li>
-														</ul>
-													</div>
+					<ul class="dropdown-menu">
+						<li><a class="dropdown-item">욕설/인신공격</a></li>
+						<li><a class="dropdown-item">홍보/상업성</a></li>
+						<li><a class="dropdown-item">음란/선정성</a></li>
+						<li><a class="dropdown-item">같은 내용 도배</a></li>
+						<li><a class="dropdown-item">부적절한 콘텐츠</a></li>
+						<li><a class="dropdown-item">스팸 또는 광고</a></li>
+						<li><a class="dropdown-item">개인정보 노출</a></li>
+						<li><a class="dropdown-item">권리침해 신고</a></li>
+						<li><a class="dropdown-item">기타</a></li>
+					</ul>
+				</div>
 
-													<div class="modal-body">
-														<div class="mb-3">
-															<label for="message-text" class="col-form-label">신고 내용:</label>
-															<textarea class="form-control" id="message-text"
-																maxlength="100"></textarea>
-															<div id="char-count">0/100</div>
-														</div>
-													</div>
-													<div class="modal-footer">
-														<button type="button" class="btn btn-secondary"
-															data-bs-dismiss="modal">취소</button>
-														<button type="button" class="btn btn-primary">신고</button>
-													</div>
-												</div>
-											</div>
-										</div>
+				<div class="modal-body">
+					<div class="mb-3">
+						<label for="message-text" class="col-form-label">신고 내용:</label>
+						<textarea class="form-control" id="message-text" maxlength="100"></textarea>
+						<div id="char-count">0/100</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">취소</button>
+					<button type="button" class="btn btn-primary">신고</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<!-- 답글 모달 창 -->
 	<div class="modal fade" id="replyModal" tabindex="-1" role="dialog"
@@ -237,8 +240,7 @@
 				<div class="modal-header">
 					<h5 class="modal-title" id="replyModalLabel">답글 작성</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal"
-						aria-label="Close">
-					</button>
+						aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
 					<!-- 답글 작성 폼 -->
@@ -261,11 +263,12 @@
 			</div>
 		</div>
 	</div>
-
-
-
 </th:block>
 
+
+<th:block layout:fragment="customJsFIle">
+    <script th:src="@{/user/js/viewCount.js}"></script>
+</th:block>
 
 
 <th:block layout:fragment="customJsFIle">
@@ -467,12 +470,6 @@
     
     
     
-    
-    
-    
-    
-
-
 
 
 	</th:block>

@@ -133,16 +133,17 @@ public class PCategoryController {
     @ResponseBody
     public Map<String, Object> getCategoryList(@PathVariable String dataTrans) {
         Map<String, Object> response = new HashMap<String, Object>();
+        response.put("dataTrans", dataTrans);
         List<PCategory> categoryList = null;
         
         // dataTrans에 따라 적절한 카테고리 목록을 가져옴
-        if ("notice".equals(dataTrans)) {
+        if ("noticeCateList".equals(dataTrans)) {
             categoryList = pCategoryService.getNoticeCategoryList();
-        } else if ("report".equals(dataTrans)) {
+        } else if ("reportCateList".equals(dataTrans)) {
             categoryList = pCategoryService.getReportCategoryList();
-        } else if ("faq".equals(dataTrans)) {
+        } else if ("faqCateList".equals(dataTrans)) {
             categoryList = pCategoryService.getFaqCategoryList();
-        } else if ("community".equals(dataTrans)) {
+        } else if ("communityCateList".equals(dataTrans)) {
             categoryList = pCategoryService.getCommunityCategoryList();
         } else {
             // 유효하지 않은 dataTrans 값이 들어온 경우에 대한 처리

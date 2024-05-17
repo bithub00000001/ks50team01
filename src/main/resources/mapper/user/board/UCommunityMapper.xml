@@ -68,7 +68,7 @@
 	
 
 	<select id="getPostList" resultMap="postResultMap">
-	 	/* 커뮤니티 조회 */
+	 	/* 커뮤니티 게시글 조회 */
 		SELECT 
 			P.PST_NO, 
 			P.REG_MBR_ID, 
@@ -98,29 +98,41 @@
         SELECT DISTINCT 
         	PST_CTGRY_NM
         FROM
-         	POST_CATEGORY
+         	POST_CATEGORY;
     </select>
     
     
-    
-    
-	
+<!-- 	
     <insert id="postSave" parameterType="map">
     	/* 게시글 저장 */
         INSERT INTO 
-        	POST (PST_CTGRY_NO, PST_TTL, PST_CN, POST_FILE)
+        	POST (REG_MBR_ID, PST_CTGRY_NO, PST_TTL, PST_CN)
         VALUES 
-        	(#{postCategory}, #{postTitle}, #{postContent}, #{postFile});
-    </insert>
-    
-   
-    
+        	(#{postRegId}, #{postCateNum}, #{postTitle}, #{postContent});
+    </insert> -->
+        	
+<insert id="insertPost" parameterType="map">
+    <!-- 게시글 저장 -->
+    <selectKey keyProperty="postCateNum" resultType="String" order="BEFORE">
+        SELECT 
+        	PST_CTGRY_NO 
+        FROM 
+        	POST_CATEGORY 
+        WHERE 
+        	PST_CTGRY_NM = #{postCateName}
+    </selectKey>
+    INSERT INTO 
+        POST (REG_MBR_ID, PST_CTGRY_NO, PST_TTL, PST_CN)
+    VALUES 
+        (#{postRegId}, #{postCateNum}, #{postTitle}, #{postContent});
+</insert>
 
+   
     
     
 	<!-- getPostByPostNum 쿼리 정의 -->
 	<select id="getPostByPostNum" resultMap="postResultMap">
-		/* 특정 게시글 상세 조회 */
+		/* 게시글 상세 조회 */
 		SELECT
 			P.PST_NO, 
 			P.REG_MBR_ID, 
@@ -179,7 +191,8 @@
         	PST_NO = #{postNum};
     </select>
 	
-	
+
+
 	
 	<!-- 조회수 증가 -->
     <update id="increaseViewCount" parameterType="String">
@@ -188,7 +201,7 @@
         SET 
         	PST_INQ_CNT = PST_INQ_CNT + 1
         WHERE 
-        	PST_NO = #{postNum}
+        	PST_NO = #{postNum};
     </update>
     
     <!-- 외않되 ... 
