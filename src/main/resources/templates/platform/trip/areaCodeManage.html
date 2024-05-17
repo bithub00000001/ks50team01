@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{platform/layout/default}">
+
+<th:block layout:fragment="customCss">
+    <!-- Datatables -->
+    <link th:href="@{/platform/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/platform/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/platform/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/platform/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/platform/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css}" rel="stylesheet">
+
+    <style type="text/css">
+        .control-label{
+            text-align: center !important;
+            background-color: #f8f8f8 !important;
+            padding-bottom: 8px !important;
+        }
+    </style>
+</th:block>
+
+<th:block layout:fragment="customContent">
+    <!-- search start -->
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>
+                        검색 <small>search form</small>
+                    </h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <br>
+                    <form id="dataTrans" class="form-horizontal form-label-left">
+                        <div class="form-group">
+                            <div class="col-md-1 col-sm-1 col-xs-0"></div>
+                            <label class="control-label col-md-2 col-sm-2 col-xs-12">구분</label>
+                            <div class="col-md-8 col-sm-8 col-xs-12">
+                                <select class="form-control text-center data-select">
+                                    <option value="areaCode">지역 코드 목록</option>
+                                    <option value="sigunguCode">시군구 코드 목록</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="ln_solid"></div>
+                        <div class="form-group">
+                            <div class="col-md-12 col-sm-12 col-xs-12 text-center">
+                                <button class="btn btn-success btn-lg data-trans" type="button">검색</button>
+                                <button class="btn btn-primary btn-lg data-update" type="button">업데이트</button>
+                                <button type="reset" class="btn btn-dark btn-lg">초기화</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- search end -->
+    <!-- grid table start -->
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_content">
+                    <table id="dataTbContent" class="table table-striped table-bordered dt-responsive nowrap"
+                           cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>번호</th>
+                                <th>지역 코드</th>
+                                <th>지역 이름</th>
+                                <th>등록 일자</th>
+                                <th>수정 일자</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:unless="${areaCodeList != null}">
+                                <td colspan="5" class="center-text">등록된 지역 코드가 없습니다.</td>
+                            </tr>
+                            <tr th:if="${areaCodeList != null}" th:each="list: ${areaCodeList}">
+                                <td th:text="${list.areaNum}">번호</td>
+                                <td th:text="${list.areaCode}">지역 코드</td>
+                                <td th:text="${list.areaName}">지역 이름</td>
+                                <td th:text="${list.areaRegDate}">등록 일자</td>
+                                <td th:text="${list.areaModDate}">수정 일자</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_content">
+                    <table id="dataTbContent2" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- grid table end -->
+</th:block>
+
+<th:block layout:fragment="customJsFile">
+    <!-- Datatables -->
+    <script th:src="@{/platform/vendors/datatables.net/js/jquery.dataTables.min.js}"></script>
+    <script th:src="@{/platform/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js}"></script>
+    <script th:src="@{/platform/vendors/datatables.net-buttons/js/dataTables.buttons.min.js}"></script>
+    <script th:src="@{/platform/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js}"></script>
+    <script th:src="@{/platform/vendors/datatables.net-buttons/js/buttons.flash.min.js}"></script>
+    <script th:src="@{/platform/vendors/datatables.net-buttons/js/buttons.html5.min.js}"></script>
+    <script th:src="@{/platform/vendors/datatables.net-buttons/js/buttons.print.min.js}"></script>
+    <script th:src="@{/platform/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js}"></script>
+    <script th:src="@{/platform/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js}"></script>
+    <script th:src="@{/platform/vendors/datatables.net-responsive/js/dataTables.responsive.min.js}"></script>
+    <script th:src="@{/platform/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js}"></script>
+    <script th:src="@{/platform/vendors/datatables.net-scroller/js/dataTables.scroller.min.js}"></script>
+    <script th:src="@{/platform/vendors/jszip/dist/jszip.min.js}"></script>
+    <script th:src="@{/platform/vendors/pdfmake/build/pdfmake.min.js}"></script>
+    <script th:src="@{/platform/vendors/pdfmake/build/vfs_fonts.js}"></script>
+</th:block>
+
+<th:block layout:fragment="customJs">
+    <script th:inline="javascript">
+        const table = $('#dataTbContent').dataTable();
+
+        $(document).on('click', '.data-trans', function(){
+            const dataTrans = String($('.data-select :selected').val()).trim();
+            if(dataTrans){
+                const colObj = {
+                    areaCode : [
+                        {'title': '번호', 'data': 'areaNum'},
+                        {'title': '지역 코드', 'data': 'areaCode'},
+                        {'title': '지역 이름', 'data': 'areaName'},
+                        {'title': '등록 일자', 'data': 'areaRegDate'},
+                        {'title': '수정 일자', 'data': 'areaModDate'}
+                    ],
+                    sigunguCode : [
+                        {'title': '번호', 'data': 'sigunNum'},
+                        {'title': '시군구 코드', 'data': 'sigunguCode'},
+                        {'title': '시군구 이름', 'data': 'sigunguName'},
+                        {'title': '지역 코드', 'data': 'areaInfo.areaCode'},
+                        {'title': '지역 이름', 'data': 'areaInfo.areaName'},
+                        {'title': '등록 일자', 'data': 'sigunRegDate'},
+                        {'title': '수정 일자', 'data': 'sigunModDate'}
+                    ]
+
+                }
+
+                const colArr = [...colObj[`${dataTrans}`]];
+
+                const request = $.ajax({
+                    url:'/platform/plan/' + dataTrans,
+                    method: 'POST',
+                    dataType: 'JSON'
+                });
+                request.done(function(json){
+                    table.fnDestroy();
+                    $('#dataTbContent').text('');
+                    console.log(json);
+
+                    const dataTableOption = {
+                        'searching' : true,
+                        'responsive': true,
+                        'destroy':true,
+                        'data' : json.dataList,
+                        'columns' : colArr
+                    }
+
+                    $('#dataTbContent').dataTable(dataTableOption);
+                })
+            }
+
+
+
+        });
+
+    </script>
+
+    <script th:inline="javascript">
+        $(document).on('click', '.data-update', function() {
+            const dataTrans = String($('.data-select :selected').val()).trim();
+
+            const request = $.ajax({
+                url:'/platform/plan/update/' + dataTrans,
+                method: 'POST', // 또는 GET, PUT 등 HTTP 메서드 선택
+                dataType: 'json',
+                success: function(response) {
+                    // 성공적으로 응답을 받았을 때 실행할 코드
+                    console.log('결과: ', response);
+                },
+                error: function(xhr, status, error) {
+                    // 오류 발생 시 실행할 코드
+                    console.error('Error:', error);
+                }
+            });
+        });
+    </script>
+</th:block>
+</html>

@@ -18,6 +18,7 @@ public class DestinationService {
 	
 	private final DestinationMapper destinationMapper;
 	
+
 	
 	public void updateTour(Destination destination) {
 		log.info("service destination:{}", destination);
@@ -33,6 +34,7 @@ public class DestinationService {
 		
 		return destinationMapper.getTourInfoByName(tourName);
 	}
+
 	/**
 	 * 관광지 정보 리스트
 	 * @return
@@ -53,6 +55,7 @@ public class DestinationService {
 		return destinationMapper.getTourGoodsList();
 	}
 	
+
 	public void updateTourGoods(Destination destination) {
 		destinationMapper.updateTourGoods(destination);
 	}
@@ -75,6 +78,8 @@ public class DestinationService {
 		return destinationMapper.getLodgingInfoById(lodgingInfoCode);
 
 	}
+
+
 	/**
 	 * 숙소 정보
 	 * @return
@@ -136,8 +141,6 @@ public class DestinationService {
 		return restaurantMenuList;
 		
 	}
-
-
 
 	
 	

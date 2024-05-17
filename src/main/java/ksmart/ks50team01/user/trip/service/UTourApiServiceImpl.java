@@ -49,7 +49,8 @@ public class UTourApiServiceImpl implements UTourApiService{
 					.queryParam("MobileApp", "ETCTest")
 					.queryParam("_type", "json");
 					// areaCode가 존재하면 그 값을 사용하여 쿼리 파라미터를 추가
-					optionalAreaCode.ifPresent(areaCode -> uriBuilder.queryParam("areaCode",areaCode));
+					optionalAreaCode.ifPresent(areaCode -> uriBuilder
+						.queryParam("areaCode",areaCode));
 					log.info("uriBuilder:{}",uriBuilder.toUriString());
 					return builder.build();
 			})
@@ -61,7 +62,10 @@ public class UTourApiServiceImpl implements UTourApiService{
 			.bodyToMono(JsonNode.class)
 			.map(jsonNode -> {
 				// "response.body.items.item" 경로에 따라 데이터를 추출하고 변환
-				JsonNode itemsNode = jsonNode.path("response").path("body").path("items").path("item");
+				JsonNode itemsNode = jsonNode.path("response")
+					.path("body")
+					.path("items")
+					.path("item");
 				List<UArea> areaList = objectMapper.convertValue(itemsNode, new TypeReference<>() {
 				});
 				return areaList;
