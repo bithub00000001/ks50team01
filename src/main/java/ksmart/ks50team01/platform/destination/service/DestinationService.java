@@ -18,6 +18,23 @@ public class DestinationService {
 	
 	private final DestinationMapper destinationMapper;
 	
+
+	
+	public void updateTour(Destination destination) {
+		log.info("service destination:{}", destination);
+		destinationMapper.updateTour(destination);
+	}
+	
+	/**
+	 * 여행 정보 id에 해당하는 투어 정보 조회
+	 * @param tourName
+	 * @return
+	 */
+	public Destination getTourInfoByName(String tourName) {
+		
+		return destinationMapper.getTourInfoByName(tourName);
+	}
+
 	/**
 	 * 관광지 정보 리스트
 	 * @return
@@ -38,7 +55,31 @@ public class DestinationService {
 		return destinationMapper.getTourGoodsList();
 	}
 	
+
+	public void updateTourGoods(Destination destination) {
+		destinationMapper.updateTourGoods(destination);
+	}
+	public Destination getTourGoodsInfoById(String tourGoodsOptionCd) {
+		return destinationMapper.getTourGoodsInfoById(tourGoodsOptionCd);
+		
+	}
 	
+	/**
+	 * 숙소 수정
+	 * @param destination
+	 */
+
+	public void updateLodging(Destination destination) {
+		destinationMapper.updateLodging(destination);
+	}
+	
+	public Destination getLodgingInfoById(String lodgingInfoCode) {
+		
+		return destinationMapper.getLodgingInfoById(lodgingInfoCode);
+
+	}
+
+
 	/**
 	 * 숙소 정보
 	 * @return
@@ -48,7 +89,6 @@ public class DestinationService {
 		
 		return destinationMapper.getLodgingInfoList();
 	}
-	
 	/**
 	 * 숙소 옵션 리스트
 	 * @return
@@ -58,6 +98,26 @@ public class DestinationService {
 		
 		return destinationMapper.getLodgingGoodsList();
 	}
+	
+	public void updateLodgingGoods(Destination destination) {
+		destinationMapper.updateLodgingGoods(destination);
+	}
+	
+	public Destination getLodgingGoodsInfoById(String lodgingGoodsName) {
+		return destinationMapper.getLodgingGoodsInfoById(lodgingGoodsName);
+	}
+	
+	/**
+	 * 음식점 수정
+	 * @param destination
+	 */
+	public void updateRestaurant(Destination destination) {
+		destinationMapper.updateRestaurant(destination);
+	}
+	public Destination getRestaurantInfoById(String restaurantInfoCode) {
+		return destinationMapper.getRestaurantInfoById(restaurantInfoCode);
+	}
+	
 	
 	/**
 	 * 음식점 정보
@@ -81,6 +141,7 @@ public class DestinationService {
 		return restaurantMenuList;
 		
 	}
+
 	
 	
 	

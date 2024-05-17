@@ -101,6 +101,7 @@
 									<th>숙소 코드</th>
 									<th>숙소 등록권한 아이디</th>
 									<th>숙소 주소</th>
+									<th>숙소 상세주소</th>
 									<th>숙소 사이트</th>
 									<th>숙소 연락처</th>
 									<th>수정</th>
@@ -113,13 +114,14 @@
 									<td th:text="${l.lodgingInfoCode}"></td>
 									<td th:text="${l.lodgingAuthorityId}"></td>
 									<td th:text="${l.lodgingAddr}"></td>
+									<td th:text="${l.lodgingDaddr}"></td>
 									<td th:text="${l.lodgingSite}"></td>
 									<td th:text="${l.lodgingContectNum}"></td>
 									<td>
 									    <a th:href="@{/platform/destination/lodgingModify(lodgingAuthorityId=${l.lodgingAuthorityId})}">수정</a>
 									</td>
 						            <td>
-						            	<a href="#" th:data-member-id="${l.lodgingAuthorityId}" th:onclick="deleteConfirm(this)">삭제</a>
+						            	<a href="#" th:data-member-id="${l.lodgingInfoCode}" th:onclick="deleteConfirm(this)">삭제</a>
 					            	</td>
 								</tr>
 	

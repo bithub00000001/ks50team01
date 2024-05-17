@@ -150,10 +150,156 @@
 	    <script th:src="@{/platform/vendors/pdfmake/build/vfs_fonts.js}"></script>
 	</th:block>
 
+<<<<<<< HEAD
+	<div class="col-md-12col-sm-6 col-xs-12">
+		<div class="x_panel">
+			<div class="x_title">
+
+				<h3
+					th:text="${tourInfoList != null ? '총 관광지 수 : ' + tourInfoList.size + '개' : '총 관광지 수 : 0개'}"></h3>
+				<div class="clearfix"></div>
+			</div>
+
+			<div class="x_content">
+				<div class="clearfix"></div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12 table">
+					<table id="datatable-responsive"
+						class="table table-striped table-bordered dt-responsive nowrap"
+						cellspacing="0" width="100%">
+						<thead>
+							<tr>
+								<th>관광지 이름</th>
+								<th>관광지 코드</th>
+								<th>관광지 등록권한 아이디</th>
+								<th>관광지 주소</th>
+								<th>관광지 상세주소</th>
+								<th>관광지 사이트</th>
+								<th>관광지 연락처</th>
+								<th>관광지 연락처2</th>
+								<th>기타 정보</th>
+								<th>등록일자</th>
+								<th>수정일자</th>
+								<th>수정</th>
+								<th>삭제</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:if="${tourInfoList != null and tourInfoList.size() > 0}"
+								th:each="l : ${tourInfoList}">
+								<td th:text="${l.tourName}"></td>
+								<td th:text="${l.tourInfoCode}"></td>
+								<td th:text="${l.tourAuthorityId}"></td>
+								<td th:text="${l.tourAddr}"></td>
+								<td th:text="${l.tourDaddr}"></td>
+								<td th:text="${l.tourSite}"></td>
+								<td th:text="${l.tourContactNum}"></td>
+								<td th:text="${l.tourContactNum2}"></td>
+								<td th:text="${l.tourOthers}"></td>
+								<td th:text="${l.tourRegDate}"></td>
+								<td th:text="${l.tourFormDate}"></td>
+								<td>
+									<a th:href="@{/platform/destination/tourModify(tourInfoCode=${l.tourInfoCode})}">수정</a>
+								</td>
+								<td>
+									<a href="#" th:data-member-id="${l.tourInfoCode}" th:onclick="deleteConfirm(this)">삭제</a>
+								</td>
+							</tr>
+
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</th:block>
+<th:block layout:fragment="customJsFile">
+	<!-- Datatables -->
+	<script
+		th:src="@{/platform/vendors/datatables.net/js/jquery.dataTables.min.js}"></script>
+	<script
+		th:src="@{/platform/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js}"></script>
+	<script
+		th:src="@{/platform/vendors/datatables.net-buttons/js/dataTables.buttons.min.js}"></script>
+	<script
+		th:src="@{/platform/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js}"></script>
+	<script
+		th:src="@{/platform/vendors/datatables.net-buttons/js/buttons.flash.min.js}"></script>
+	<script
+		th:src="@{/platform/vendors/datatables.net-buttons/js/buttons.html5.min.js}"></script>
+	<script
+		th:src="@{/platform/vendors/datatables.net-buttons/js/buttons.print.min.js}"></script>
+	<script
+		th:src="@{/platform/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js}"></script>
+	<script
+		th:src="@{/platform/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js}"></script>
+	<script
+		th:src="@{/platform/vendors/datatables.net-responsive/js/dataTables.responsive.min.js}"></script>
+	<script
+		th:src="@{/platform/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js}"></script>
+	<script
+		th:src="@{/platform/vendors/datatables.net-scroller/js/dataTables.scroller.min.js}"></script>
+	<script th:src="@{/platform/vendors/jszip/dist/jszip.min.js}"></script>
+	<script th:src="@{/platform/vendors/pdfmake/build/pdfmake.min.js}"></script>
+	<script th:src="@{/platform/vendors/pdfmake/build/vfs_fonts.js}"></script>
+</th:block>
+
+<!-- custom js file start -->
+<th:block layout:fragment="customJs">
+	<script type="text/javascript"
+		th:src="@{/platform/js/checkbox/memberDel.js}"></script>
+</th:block>
+<!-- custom js file end -->
+<th:block layout:fragment="customJs">
+	<script>
+		$(document)
+				.ready(
+						function() {
+							$('#searchItem')
+									.on(
+											'keyup',
+											function() {
+												const searchValue = $(this)
+														.val().toLowerCase();
+												$(
+														'#datatable-responsive tbody tr')
+														.filter(
+																function() {
+																	$(this)
+																			.toggle(
+																					$(
+																							this)
+																							.text()
+																							.toLowerCase()
+																							.indexOf(
+																									searchValue) > -1);
+																});
+											});
+
+							$(document)
+									.on(
+											'click',
+											'.searchBtn',
+											function() {
+												const movePage = $(
+														'.searchCate :selected')
+														.val();
+
+												if (movePage)
+													location.href = '/platform/destination/'
+															+ movePage;
+											});
+						});
+	</script>
+</th:block>
+=======
 	<!-- custom js file start -->
 	<th:block layout:fragment="customJs">
 	<script type="text/javascript" th:src="@{/platform/js/checkbox/memberDel.js}"></script>
 	</th:block>
 	<!-- custom js file end -->
+>>>>>>> refs/heads/develop
 
 </html>

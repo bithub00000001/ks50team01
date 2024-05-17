@@ -2,111 +2,357 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  
+
 <mapper namespace="ksmart.ks50team01.platform.destination.mapper.DestinationMapper">
-					
-		
 
 	<select id="getTourInfoList" resultType="destination">
-		
+
 		/* 관광지 정보 조회 */
 
-		SELECT
-			TOUR_INFO_CD	AS	tourInfoCode,
-			REG_PF_BIZ_ID	AS	tourAuthorityId,
-			TOUR_NAME		AS	tourName,
-			TOUR_ADDR		AS	tourAddr,
-			TOUR_SITE 		AS 	tourSite,
-			TOUR_CONTATC1	AS	tourContectNum,
-			REG_YMD			AS	tourRegDate,
-			MDFCN_YMD		AS	tourFormDate
-		FROM
-			TOUR_INFO;
-	
+			SELECT
+				TOUR_INFO_CD 	AS 	tourInfoCode,
+				REG_PF_BIZ_ID 	AS 	tourAuthorityId,
+				TOUR_NAME 		AS 	tourName,
+				TOUR_ADDR 		AS 	tourAddr,
+				TOUR_DADDR 		AS 	tourDaddr,
+				TOUR_SITE 		AS	tourSite,
+				TOUR_CONTATC1 	AS	tourContactNum,
+				TOUR_CONTATC2 	AS 	tourContactNum2,
+				TOUR_OTHERS 	AS 	tourOthers,
+				REG_YMD 		AS 	tourRegDate,
+				MDFCN_YMD 		AS 	tourFormDate
+			FROM
+				TOUR_INFO;
+
 	</select>
-	
+
+	<select id="getTourInfoByName" resultType="destination">
+
+			SELECT
+				TOUR_INFO_CD 	AS 	tourInfoCode,
+				REG_PF_BIZ_ID 	AS 	tourAuthorityId,
+				TOUR_NAME 		AS 	tourName,
+				TOUR_ADDR 		AS 	tourAddr,
+				TOUR_DADDR 		AS 	tourDaddr,
+				TOUR_SITE 		AS 	tourSite,
+				TOUR_CONTATC1 	AS 	tourContactNum,
+				TOUR_CONTATC2 	AS 	tourContactNum2,
+				TOUR_OTHERS 	AS 	tourOthers,
+				REG_YMD 		AS 	tourRegDate,
+				MDFCN_YMD 		AS 	tourFormDate
+			FROM
+				TOUR_INFO
+			where
+				TOUR_INFO_CD = #{tourInfoCode}
+
+	</select>
+
+	<update id="updateTour" parameterType="destination">
+		/* 관광지 수정 */
+			UPDATE TOUR_INFO
+			SET
+				TOUR_NAME 		= #{tourName},
+				TOUR_ADDR 		= #{tourAddr},
+				TOUR_DADDR 		= #{tourDaddr},
+				TOUR_CONTATC1 	= #{tourContactNum},
+				TOUR_CONTATC2 	= #{tourContactNum2},
+				TOUR_SITE 		= #{tourSite},
+				TOUR_OTHERS 	= #{tourOthers},
+				MDFCN_YMD 		= NOW()
+			WHERE
+				TOUR_INFO_CD 	= #{tourInfoCode}
+	</update>
+
+
+
 	<select id="getTourGoodsList" resultType="destination">
 		/* 관광지 옵션 조회 */
 			SELECT
-				tg.TOUR_GDS_CTGRY			AS	tourGoodsCate,
-				tgo.TOUR_GDSOPT_LIST		AS	tourGoodsList,
-				tgo.TOUR_GDSOPT_TIME		AS 	tourGoodsTime,
-				tgo.RGN_SCTGRY_NM			AS 	RegionSCate,
-				tg.REG_PF_BIZ_ID			AS 	tourgoodsAuthorityId,
-				tg.TOUR_GDS_CD				AS	tourGoodsCode,
-				tgo.TOUR_GDSOPT_CD			AS  tourGoodsOptionCd,		 	
-				tgo.TOUR_GDSOPT_RMRK		AS  tourOptionRemarks,
-				tg.FAVS_TOTAL				AS  tourTotal,
-				tgo.REG_YMD					AS  tourRegDate,
-				tgo.MDFCN_YMD				AS  tourFormDate	
-				
-				
+				ti.TOUR_NAME 			AS tourName,
+				tg.TOUR_GDS_CTGRY 		AS tourGoodsCate,
+				tgo.TOUR_GDSOPT_LIST 	AS tourGoodsList,
+				tgo.TOUR_GDSOPT_TIME 	AS tourGoodsTime,
+				tgo.RGN_SCTGRY_NM 		AS RegionSCate,
+				tg.REG_PF_BIZ_ID		AS tourgoodsAuthorityId,
+				tg.TOUR_GDS_CD 			AS tourGoodsCode,
+				tgo.TOUR_GDSOPT_CD 		AS tourGoodsOptionCd,
+				tgo.TOUR_GDSOPT_RMRK 	AS tourOptionRemarks,
+				tg.FAVS_TOTAL 			AS tourTotal,
+				tgo.REG_YMD 			AS tourRegDate,
+				tgo.MDFCN_YMD 			AS tourFormDate
+			FROM
+				OUR_GOODS AS tg
+				INNER JOIN
+				TOUR_GOODSOPTION AS tgo
+				ON
+				tg.TOUR_GDS_CD = tgo.TOUR_GDS_CD
+				INNER JOIN
+				TOUR_INFO AS ti
+				ON
+				tg.TOUR_INFO_CD = ti.TOUR_INFO_CD;
+
+	</select>
+
+	<select id="getTourGoodsInfoById" resultType="destination">
+		/* 관광지 세부사항 수정 */
+			SELECT
+				ti.TOUR_NAME 			AS tourName,
+				tg.TOUR_GDS_CTGRY 		AS tourGoodsCate,
+				tgo.TOUR_GDSOPT_LIST 	AS tourGoodsList,
+				tgo.TOUR_GDSOPT_TIME 	AS tourGoodsTime,
+				tgo.RGN_SCTGRY_NM 		AS RegionSCate,
+				tg.REG_PF_BIZ_ID 		AS tourgoodsAuthorityId,
+				tg.TOUR_GDS_CD 			AS tourGoodsCode,
+				tgo.TOUR_GDSOPT_CD 		AS tourGoodsOptionCd,
+				tgo.TOUR_GDSOPT_RMRK 	AS tourOptionRemarks,
+				tg.FAVS_TOTAL 			AS tourTotal,
+				tgo.REG_YMD 			AS tourRegDate,
+				tgo.MDFCN_YMD		 	AS tourFormDate
 			FROM
 				TOUR_GOODS AS tg
 				INNER JOIN
 				TOUR_GOODSOPTION AS tgo
-				ON 
-				tg.TOUR_GDS_CD = tgo.TOUR_GDS_CD;
-	
+				ON
+				tg.TOUR_GDS_CD = tgo.TOUR_GDS_CD
+				INNER JOIN
+				TOUR_INFO AS ti
+				ON
+				tg.TOUR_INFO_CD = ti.TOUR_INFO_CD
+			where
+				tgo.TOUR_GDSOPT_CD = #{tourGoodsOptionCd}
 	</select>
+
+
+	<update id="updateTourGoods" parameterType="destination">
+		/* 관광지세부사항 수정 후 */
+
+			UPDATE TOUR_GOODS
+			SET
+				ti.TOUR_NAME 			AS tourName = #{tourName},
+				tg.TOUR_GDS_CTGRY 		AS tourGoodsCate = #{tourGoodsCate},
+				tgo.TOUR_GDSOPT_LIST 	AS tourGoodsList = #{tourGoodsList},
+				tgo.TOUR_GDSOPT_TIME 	AS tourGoodsTime = #{tourGoodsTime},
+				tgo.RGN_SCTGRY_NM 		AS RegionSCate = #{RegionSCate},
+				tg.REG_PF_BIZ_ID 		AS tourgoodsAuthorityId = #{tourgoodsAuthorityId},
+				tg.TOUR_GDS_CD 			AS tourGoodsCode = #{tourGoodsCode},
+				tgo.TOUR_GDSOPT_CD 		AS tourGoodsOptionCd = #{tourGoodsOptionCd},
+				tgo.TOUR_GDSOPT_RMRK 	AS tourOptionRemarks = #{tourOptionRemarks},
+				tg.FAVS_TOTAL 			AS tourTotal = #{tourTotal},
+				tgo.REG_YMD 			AS tourRegDate = #{tourRegDate},
+				tgo.MDFCN_YMD 			AS tourFormDate = #{tourFormDate}
+			FROM
+				TOUR_GOODS AS tg
+				INNER JOIN
+				TOUR_GOODSOPTION AS tgo
+				ON
+				tg.TOUR_GDS_CD = tgo.TOUR_GDS_CD
+				INNER JOIN
+				TOUR_INFO AS ti
+				ON
+				tg.TOUR_INFO_CD = ti.TOUR_INFO_CD
 	
+			WHERE
+				TOUR_INFO_CD =#{tourInfoCode};
+
+	</update>
+
 	<select id="getLodgingInfoList" resultType="destination">
 		/* 숙소 정보 */
 			SELECT
-				LODGING_INFO_CD		AS	lodgingInfoCode,
-				REG_PF_BIZ_ID		AS 	lodgingAuthorityId,
-				LODGING_NAME		AS 	lodgingName,
-				LODGING_ADDR		AS 	lodgingAddr,
-				LODGING_CONTACT1	AS 	lodgingContectNum,
-				LODGING_SITE		AS 	lodgingSite,
-				REG_YMD				AS 	lodgingRegDate,
-				MDFCN_YMD			AS 	lodgingFormDate
+				LODGING_INFO_CD 	AS lodgingInfoCode,
+				REG_PF_BIZ_ID 		AS lodgingAuthorityId,
+				LODGING_NAME 		AS lodgingName,
+				LODGING_ADDR 		AS lodgingAddr,
+				LODGING_CONTACT1 	AS lodgingContactNum,
+				LODGING_CONTACT2 	AS lodgingContactNum2,
+				LODGING_SITE 		AS lodgingSite,
+				REG_YMD 			AS lodgingRegDate,
+				MDFCN_YMD 			AS lodgingFormDate
 			FROM
 				LODGING_INFO;
 	</select>
+
 	<select id="getLodgingGoodsList" resultType="destination">
 		/* 숙소상품 정보 */
 			SELECT
-				lm.LODGING_MENU_CD AS lodgingMenuCode
+				li.LODGING_NAME 			AS lodgingName,
+				lm.LODGING_MENU_TYPE 		AS lodgingMenuType,
+				li.LODGING_INFO_CD 			AS lodgingInfoCode,
+				lm.LODGING_MENU_CD 			AS lodgingMenuCode,
+				lm.LODGING_MENU_MINCPCT 	AS lodgingMenuMinPct,
+				lm.LODGING_MENU_MAXCPCT 	AS lodgingMenuMaxPct,
+				lm.LODGING_MENU_PRC 		AS lodgingMenuPrc,
+				lm.LODGING_MENU_ADDPRC 		AS lodgingMenuAddprc,
+				lm.LODGING_MENU_SMOKE_YN 	AS lodgingMenuSmokeYn,
+				lm.LODGING_MENU_BK_YN 		AS lodgingMenuBkYn,
+				li.REG_YMD 					AS lodgingRegDate,
+				li.MDFCN_YMD 				AS lodgingFormDate
 			FROM
-				LODGING_MENU AS lm
+				LODGING_INFO AS li
 				INNER JOIN
-				LODGING_INFO li
+				LODGING_MENU AS lm
 				ON
-				lm.LODGING_INFO_CD = li.LODGING_INFO_CD;
-					
+				li.LODGING_INFO_CD = lm.LODGING_INFO_CD;
+
+	</select>
+
+	<select id="getLodgingInfoById" resultType="destination">
+			SELECT
+				LODGING_INFO_CD 	AS lodgingInfoCode,
+				REG_PF_BIZ_ID 		AS lodgingAuthorityId,
+				LODGING_NAME 		AS lodgingName,
+				LODGING_ADDR 		AS lodgingAddr,
+				LODGING_DADDR 		AS lodgingDaddr,
+				LODGING_CONTACT1 	AS lodgingContactNum,
+				LODGING_CONTACT2 	AS lodgingContactNum2,
+				LODGING_SITE 		AS lodgingSite,
+				REG_YMD 			AS lodgingRegDate,
+				MDFCN_YMD 			AS lodgingFormDate
+			FROM
+				LODGING_INFO
+			WHERE
+				LODGING_INFO_CD = #{lodgingInfoCode};
+
+
+	</select>
+
+	<update id="updateLodging" parameterType="destination">
+
+			UPDATE LODGING_INFO
+			SET
+				LODGING_NAME = #{lodgingName},
+				LODGING_ADDR = #{lodgingAddr},
+				LODGING_DADDR = #{lodgingDaddr},
+				LODGING_CONTACT1 = #{lodgingContactNum},
+				LODGING_CONTACT2 = #{lodgingContactNum2},
+				LODGING_SITE = #{lodgingSite},
+				LODGING_ETC = #{lodgingOthers},
+				MDFCN_YMD = NOW()
+			WHERE
+				LODGING_INFO_CD = #{lodgingInfoCode}
+
+	</update>
+
+	<select id="getLodgingGoodsInfoById" resultType="destination">
+		/* 숙소 상세정보 수정 화면 */
+			SELECT
+				li.LODGING_NAME 			AS lodgingName,
+				lm.LODGING_MENU_CD			AS lodgingMenuCode,
+				lm.LODGING_MENU_TYPE 		AS lodgingMenuType,
+				lm.LODGING_MENU_MINCPCT 	AS lodgingMenuMinPct,
+				lm.LODGING_MENU_MAXCPCT 	AS lodgingMenuMaxPct,
+				lm.LODGING_MENU_PRC 		AS lodgingMenuPrc,
+				lm.LODGING_MENU_ADDPRC 		AS lodgingMenuAddprc,
+				lm.LODGING_MENU_SMOKE_YN 	AS lodgingMenuSmokeYn,
+				lm.LODGING_MENU_BK_YN 		AS lodgingMenuBkYn,
+				li.REG_YMD 					AS lodgingRegDate,
+				li.MDFCN_YMD 				AS lodgingFormDate
 	
-	</select>	
-	
-	<select id="getRestaurantInfoList" resultType="destination">
-		/* 식당 정보 */
+			FROM
+				LODGING_INFO AS li
+				INNER JOIN
+				LODGING_MENU AS lm
+				ON
+				li.LODGING_INFO_CD = lm.LODGING_INFO_CD
+			WHERE
+				lm.LODGING_MENU_CD = #{lodgingMenuCode};	
+			
+	</select>
+
+	<update id="updateLodgingGoods" parameterType="destination">
+		/* 숙소 상세정보 수정 후 업데이트 */
+			UPDATE LODGING_MENU
+			SET
+				li.LODGING_NAME 			AS 	lodgingName = #{lodgingName},
+				lm.LODGING_MENU_TYPE 		AS 	lodgingMenuType = #{lodgingMenuType},
+				li.LODGING_INFO_CD 			AS 	lodgingInfoCode = #{lodgingInfoCode} ,
+				lm.LODGING_MENU_CD 			AS 	lodgingMenuCode = #{lodgingMenuCode},
+				lm.LODGING_MENU_MINCPCT 	AS 	lodgingMenuMinPct = #{lodgingMenuMinPct},
+				lm.LODGING_MENU_MAXCPCT 	AS 	lodgingMenuMaxPct = #{lodgingMenuMaxPct},
+				lm.LODGING_MENU_PRC 		AS 	lodgingMenuPrc = #{lodgingMenuPrc},
+				lm.LODGING_MENU_ADDPRC 		AS 	lodgingMenuAddprc = #{lodgingMenuAddprc},
+				lm.LODGING_MENU_SMOKE_YN 	AS 	lodgingMenuSmokeYn = #{lodgingMenuSmokeYn},
+				lm.LODGING_MENU_BK_YN 		AS 	lodgingMenuBkYn = #{lodgingMenuBkYn},
+				li.REG_YMD 					AS 	lodgingRegDate = #{lodgingRegDate},
+				li.MDFCN_YMD 				AS 	lodgingFormDate = #{lodgingFormDate}
+			FROM
+				LODGING_INFO AS li
+				INNER JOIN
+				LODGING_MENU AS lm
+				ON
+				li.LODGING_INFO_CD = lm.LODGING_INFO_CD
+			WHERE
+				lodgingMenuCode = #{lodgingMenuCode};
+
+	</update>
+
+
+	<select id="getRestaurantInfoById" resultType="destination">
 	
 			SELECT
-				RSTRN_INFO_CD	AS 	restaurantInfoCode,
-				REG_PF_BIZ_ID 	AS 	restaurantAuthorityId,
-				RSTRN_NAME		AS	restaurantName,
-				RSTRN_ADDR		AS	restaurantAddr,
-				RSTRN_CONTACT	AS	restaurantContectNum,
-				RSTRN_SITE		AS 	restaurantSite,
-				REG_YMD			AS 	restaurantRegDate,
-				MDFCN_YMD		AS 	restaurantFormDate
+				RSTRN_INFO_CD 	AS restaurantInfoCode,
+				REG_PF_BIZ_ID 	AS restaurantAuthorityId,
+				RSTRN_NAME 		AS restaurantName,
+				RSTRN_ADDR 		AS restaurantAddr,
+				RSTRN_DADDR	 	AS restaurantDaddr,
+				RSTRN_CONTACT 	AS restaurantContactNum,
+				RSTRN_SITE 		AS restaurantSite,
+				REG_YMD 		AS restaurantRegDate,
+				MDFCN_YMD 		AS restaurantFormDate
 			FROM
-				RESTAURANT_INFO;
+				RESTAURANT_INFO
+			WHERE
+				RSTRN_INFO_CD = #{restaurantInfoCode};
+
+	</select>
+
+	<update id="updateRestaurant" parameterType="destination">
+		/* 식당 수정 */
+			UPDATE RESTAURANT_INFO
+			SET
+				RSTRN_NAME = #{restaurantName},
+				RSTRN_ADDR = #{restaurantAddr},
+				RSTRN_DADDR = #{restaurantDaddr},
+				RSTRN_CONTACT = #{restaurantContactNum},
+				RSTRN_SITE = #{restaurantSite},
+				RSTRN_OTHERS = #{restaurantOthers},
+				MDFCN_YMD = NOW()
+			WHERE
+				RSTRN_INFO_CD = #{restaurantInfoCode}
+
+	</update>
+
+
+
+	<select id="getRestaurantInfoList" resultType="destination">
+		/* 식당 정보 */
+
+		SELECT
+		RSTRN_INFO_CD AS restaurantInfoCode,
+		REG_PF_BIZ_ID AS restaurantAuthorityId,
+		RSTRN_NAME AS restaurantName,
+		RSTRN_ADDR AS restaurantAddr,
+		RSTRN_CONTACT AS restaurantContactNum,
+		RSTRN_SITE AS restaurantSite,
+		REG_YMD AS restaurantRegDate,
+		MDFCN_YMD AS restaurantFormDate
+		FROM
+		RESTAURANT_INFO;
 	</select>
 	<select id="getRestaurantMenuList" resultType="destination">
 		/* 식당메뉴 정보 */
 		SELECT
-			ri.RSTRN_NAME 	AS restaurantName,
-			rm.RSTRN_MENU 	AS restaurantMenu
+		ri.RSTRN_NAME AS restaurantName,
+		rm.RSTRN_MENU AS restaurantMenu
 		FROM
-			RESTAURANT_INFO AS ri
-			INNER JOIN
-			RESTAURANT_MENU AS rm
-			ON
-			ri.RSTRN_INFO_CD = rm.RSTRN_INFO_CD;
+		RESTAURANT_INFO AS ri
+		INNER JOIN
+		RESTAURANT_MENU AS rm
+		ON
+		ri.RSTRN_INFO_CD = rm.RSTRN_INFO_CD;
 	</select>
 
-	
+
 
 
 </mapper>  
