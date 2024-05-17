@@ -42,51 +42,62 @@
 		<section class="py-10">
 			<div class="container">
 				<form id="reviewForm" action="/user/review/write" method="POST">
-
-				
-
-
-<div class="container-fluid">
-    <div class="card mb-3">
-        <div class="row g-0">
-            <div class="col-md-4">
-                <img src="/user/img/blog/blog-03.jpg" class="img-fluid rounded-start" alt="...">
-			            </div>
-			            <div class="col-md-8">
-			                <div class="card-body">
-			                    <h5 class="card-title"><input type="text" class="form-control table-input input" name="reviewGoods" value="상품명" /></h5>
-			                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-			                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-			                </div>
-			            </div>
-			        </div>
-			    </div>
-			</div>
-			<div class="separator1"></div> <!-- 굵은 직선 추가 -->
-
-
-					<div class="table-container">
-					    <div class="info-section">
-					        <div class="label-cell label">작성자 아이디</div>
-					        <div class="input-cell1">
-					            <input type="text" class="form-control table-input input" name="reviewId" value="reviewId" >
-					        </div>
-					        <div class="label-cell label">공개 여부</div>
-					        <div class="label-cell label2">* 공개 여부는 기본적으로 전체공개이며 누적하여 신고를 당할 시 나만공개로 전환됩니다</div>
-					        <div class="input-cell2">
-					            <input type="text" class="form-control table-input input" name="reviewApprove" placeholder="입력">
-					        </div>
-					        <div class="label-cell label">지역</div>
-					        <div class="input-cell1">
-					            <input type="text" class="form-control table-input input" name="districtSubclassCode" value="districtSubclassCode" >
-					        </div>
-					    </div>
+				<div class="container-fluid">
+					<div class="card mb-3">
+						<div class="row g-0">
+							<div class="col-md-4">
+								<img src="/user/img/blog/blog-03.jpg"
+									class="img-fluid rounded-start" alt="...">
+							</div>
+							<div class="col-md-8">
+								<div class="card-body">
+									<h5 class="card-title">
+										<input type="text" class="form-control table-input input"
+											name="reviewGoods" value="RSTRN_002" />
+									</h5>
+									<p class="card-text">This is a wider card with supporting
+										text below as a natural lead-in to additional content. This
+										content is a little bit longer.</p>
+									<p class="card-text">
+										<small class="text-muted">Last updated 3 mins ago</small>
+									</p>
+								</div>
+							</div>
+						</div>
 					</div>
+				</div>
+				<div class="separator1"></div>
+				<!-- 굵은 직선 추가 -->
+
+
+				<div class="table-container">
+					<div class="info-section">
+						<div class="label-cell label">작성자 아이디</div>
+						<div class="input-cell1">
+							<input type="text" class="form-control table-input input"
+								name="reviewId" th:value="${session.loginId}"
+								data-review-id="${session.loginId}" />
+							<!-- <input type="text" class="form-control table-input input" name="reviewId" value="member002" /> -->
+						</div>
+						<div class="label-cell label">공개 여부</div>
+						<div class="label-cell label2">* 공개 여부는 기본적으로 전체공개이며 누적하여
+							신고를 당할 시 나만공개로 전환됩니다</div>
+						<div class="input-cell2">
+							<input type="text" class="form-control table-input input"
+								name="reviewApprove" value="DISCLOSURE_002" />
+						</div>
+						<div class="label-cell label">지역</div>
+						<div class="input-cell1">
+							<input type="text" class="form-control table-input input"
+								name="districtSubclassCode" value="RGN_SCTGRY_003" />
+						</div>
+					</div>
+				</div>
 
 
 
-				
-				    <div class="separator1"></div> <!-- 굵은 직선 추가 -->
+
+				<div class="separator1"></div> <!-- 굵은 직선 추가 -->
 				    <div class="star-group_box">
 				        <label for="rating">별점</label>
 				        <div class="separator2"></div> <!-- 굵은 직선 추가 -->
@@ -140,7 +151,7 @@
 		</section>
 	</th:block>
 
-	<th:block layout:fragment="customJs">
+	<th:block layout:fragment="customJs">	
 		<script>
 			const stars = document.querySelectorAll('.star-rating input');
 			let previousRating = 0;

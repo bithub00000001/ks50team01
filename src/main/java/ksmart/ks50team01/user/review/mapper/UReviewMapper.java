@@ -11,8 +11,11 @@ import ksmart.ks50team01.user.review.dto.UReviewComment;
 @Mapper
 public interface UReviewMapper {
 	
+	// 가장 큰 PRCHS_REV_CD 값을 조회하는 메서드 추가
+    String getMaxPrchsRevCd();
+	
 	//리뷰작성
-	int reivewWrite(UReview review);
+	void reviewWrite(UReview review);
 	
 	//리뷰상세페이지
 	UReview getReviewDetail(String reviewId);

@@ -43,11 +43,11 @@
         <result property="districtSubclass" column="RGN_SCTGRY_NM"/>
     </resultMap>
     
-    <insert id="reivewWrite" parameterType="UReview">
-		/* 리뷰등록 */
+    <!-- <insert id="reivewWrite" parameterType="UReview"> -->
+		
     <!-- 리뷰등록 -->
-    INSERT INTO PURCHASE_REVIEW
-    (REG_MBR_ID, PRTNR_BPLC_CD, RAT_CTGRY_NO, PRCHS_REV_CN, RLS_YN_CD, REG_YMD, RGN_SCTGRY_CD)
+     <!-- INSERT INTO PURCHASE_REVIEW
+    (REG_MBR_ID, PRTNR_BPLC_CD, RAT_CTGRY_NO, PRCHS_REV_CN, RLS_YN_CD, RGN_SCTGRY_CD, REG_YMD)
     VALUES
     (
         #{reviewId},
@@ -55,10 +55,24 @@
         #{reviewStar},
         #{reviewContent},
         #{reviewApprove},
+        #{districtSubclassCode} 이곳에 필드 값 추가
         CURDATE(),
-        #{districtSubclassCode} <!-- 이곳에 필드 값 추가 -->
     );
-	</insert>
+	</insert> -->
+	
+	    <!-- 가장 큰 PRCHS_REV_CD 값을 조회하는 쿼리 -->
+    <select id="getMaxPrchsRevCd" resultType="String">
+        SELECT MAX(PRCHS_REV_CD) FROM PURCHASE_REVIEW
+    </select>
+
+    <!-- 리뷰 데이터를 삽입하는 쿼리 -->
+    <insert id="reviewWrite" parameterType="UReview">
+    	/* 리뷰등록 */
+        INSERT INTO PURCHASE_REVIEW
+        (PRCHS_REV_CD, REG_MBR_ID, PRTNR_BPLC_CD, RAT_CTGRY_NO, PRCHS_REV_CN, RLS_YN_CD, RGN_SCTGRY_CD, REG_YMD)
+        VALUES
+        (#{reviewCode}, #{reviewId}, #{reviewGoods}, #{reviewStar}, #{reviewContent}, #{reviewApprove},  #{districtSubclassCode}, CURDATE())
+    </insert>
 
     
 

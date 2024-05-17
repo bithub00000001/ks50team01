@@ -38,7 +38,23 @@ public class UReviewService {
 	 * 리뷰등록
 	 */
 	public void reviewWrite(UReview review) {
-		uReviewMapper.reivewWrite(review);
+        // 가장 큰 PRCHS_REV_CD 값을 조회
+        String maxPrchsRevCd = uReviewMapper.getMaxPrchsRevCd();
+        String newPrchsRevCd;
+
+        if (maxPrchsRevCd != null) {
+            // 숫자 부분만 추출해서 1을 더하고 다시 문자열로 변환
+            int maxNumber = Integer.parseInt(maxPrchsRevCd.substring(10));
+            newPrchsRevCd = "PRCHS_REV_" + String.format("%03d", maxNumber + 1);
+        } else {
+            // 테이블이 비어있는 경우 첫 번째 값 설정
+            newPrchsRevCd = "PRCHS_REV_001";
+        }
+
+        // 새 PRCHS_REV_CD 값을 review 객체에 설정
+        review.setReviewCode(newPrchsRevCd);
+        
+		uReviewMapper.reviewWrite(review);
 	}
 	
 	

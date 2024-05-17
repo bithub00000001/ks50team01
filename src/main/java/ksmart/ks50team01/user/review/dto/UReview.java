@@ -28,4 +28,5 @@ public class UReview {
 	private String goodsInformation;//상품정보
 	private String reportTotal;//신고합계
 	private String reviewModifyDate;//수정일자
+
 }
