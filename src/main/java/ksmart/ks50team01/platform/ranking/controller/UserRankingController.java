@@ -28,7 +28,7 @@ public class UserRankingController {
 	@PostMapping("/removeUserRanking")
 	public String remove(@RequestParam(name = "userRankingId") String userRankingId
 						,Model model) {
-		model.addAttribute("title", "플랫폼추천리스트 삭제");
+		model.addAttribute("title", "회원추천리스트 삭제");
 		model.addAttribute("userRankingId", userRankingId);
 		return "platform/ranking/removeUserRanking";
 	}
