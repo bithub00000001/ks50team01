@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{platform/layout/default}">
+
+<th:block layout:fragment="customCss"></th:block>
+
+<th:block layout:fragment="customContent">
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <br>
+                    <form id="dataTrans" class="form-horizontal form-label-left" th:action="@{/platform/plan/update/tourInfo}" method="post">
+                        <div class="form-group">
+                        <div class="col-md-0 col-sm-0 col-xs-0"></div>
+                        <label for="numOfRows" class="control-label col-md-3 col-sm-3 col-xs-12">업데이트 할 개수:</label>
+                        <div class="col-md-8 col-sm-8 col-xs-12">
+                            <input type="number" id="numOfRows" name="numOfRows" class="form-control text-center" value="50" required>
+                            <br>
+                        </div>
+
+                        <div class="col-md-0 col-sm-0 col-xs-0"></div>
+                        <label for="pageNo" class="control-label col-md-3 col-sm-3 col-xs-12">페이지:</label>
+                        <div class="col-md-8 col-sm-8 col-xs-12">
+                            <select id="pageNo" name="pageNo" class="form-control text-center" required>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                            <br>
+                        </div>
+
+                        <div class="col-md-0 col-sm-0 col-xs-0"></div>
+                        <label for="contentTypeId" class="control-label col-md-3 col-sm-3 col-xs-12">관광지 타입:</label>
+                        <div class="col-md-8 col-sm-8 col-xs-12">
+                            <select id="contentTypeId" name="contentTypeId" class="form-control text-center" required>
+                                <option value="12">관광지</option>
+                                <option value="32">숙소</option>
+                                <option value="39">음식점</option>
+                            </select>
+                            <br>
+                        </div>
+
+
+                        <div class="col-md-0 col-sm-0 col-xs-0"></div>
+                        <label for="areaCode" class="control-label col-md-3 col-sm-3 col-xs-12">지역 코드:</label>
+                        <div class="col-md-8 col-sm-8 col-xs-12">
+                            <select id="areaCode" name="areaCode" class="form-control text-center" required>
+                                <option value="">=== 지역 코드 ===</option>
+                                <th:block th:each="list : ${areaCodeList}">
+                                    <option th:value="${list.areaCode}" th:text="${list.areaName}"></option>
+                                </th:block>
+                            </select>
+                            <br>
+                        </div>
+
+
+                        <div class="col-md-0 col-sm-0 col-xs-0"></div>
+                        <label for="sigunguCode" class="control-label col-md-3 col-sm-3 col-xs-12">시군 코드:</label>
+                        <div class="col-md-8 col-sm-8 col-xs-12">
+                            <select id="sigunguCode" name="sigunguCode" class="form-control text-center" required>
+                                <option value="">=== 시군 코드 ===</option>
+                            </select>
+                        </div>
+
+                        <br>
+
+                    </div>
+                        <div class="form-group">
+                            <br><br>
+                            <div class="col-md-12 col-sm-12 col-xs-12 text-center">
+                                <button type="submit" class="btn btn-primary btn-lg">여행 정보 업데이트</button>
+                            </div>
+                        </div>
+                        <br><br>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</th:block>
+
+<th:block layout:fragment="customJsFile"></th:block>
+
+<th:block layout:fragment="customJs">
+    <script>
+        $(document).ready(function() {
+            /*function updatePageOptions() {
+                var numOfRows = $('#numOfRows').val();
+                var contentTypeId = $('#contentTypeId').val();
+                var areaCode = $('#areaCode').val();
+                var sigunguCode = $('#sigunguCode').val();
+
+                $.ajax({
+                    url: '/api/totalPages',
+                    type: 'GET',
+                    data: {
+                        numOfRows: numOfRows,
+                        contentTypeId: contentTypeId,
+                        areaCode: areaCode,
+                        sigunguCode: sigunguCode
+                    },
+                    success: function(totalPages) {
+                        const pageNoSelect = $('#pageNo');
+                        pageNoSelect.empty();
+                        for (var i = 1; i <= totalPages; i++) {
+                            pageNoSelect.append('<option value="' + i + '">' + i + '</option>');
+                        }
+                    },
+                    error: function(response) {
+                        alert('Failed to fetch total pages');
+                    }
+                });
+            }*/
+
+            /*$('#numOfRows, #contentTypeId, #areaCode, #sigunguCode').change(updatePageOptions);*/
+
+            $('#update-form').submit(function(event) {
+                event.preventDefault();
+                const numOfRows = $('#numOfRows').val();
+                const pageNo = $('#pageNo').val();
+                const contentTypeId = $('#contentTypeId').val();
+                const areaCode = $('#areaCode').val();
+                const sigunguCode = $('#sigunguCode').val();
+
+                $.ajax({
+                    url: '/platform/plan/update/tourInfo',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        numOfRows: numOfRows,
+                        pageNo: pageNo,
+                        contentTypeId: contentTypeId,
+                        areaCode: areaCode,
+                        sigunguCode: sigunguCode
+                    }),
+                    success: function(response) {
+                        alert(response);
+                    },
+                    error: function(response) {
+                        alert('Failed to update data');
+                    }
+                });
+            });
+/*
+            updatePageOptions();  // 초기 페이지 로드 시 페이지 옵션 설정*/
+        });
+    </script>
+    <script th:inline="javascript">
+        $(document).ready(function() {
+            $('#areaCode').change(function() {
+                const $areaCode = $(this).val();
+                $.ajax({
+                    url: '/platform/plan/sigungu-codes',
+                    type: 'GET',
+                    data: { areaCode: $areaCode },
+                    success: function(data) {
+                        $('#sigunguCode').empty();
+                        $.each(data, function(index, item) {
+                            $('#sigunguCode').append('<option value="' + item.sigunguCode + '">' + item.sigunguName + '</option>');
+                        });
+                    },
+                    error: function(xhr) {
+                        console.error('Error fetching sigungu codes:', xhr);
+                    }
+                });
+            });
+        });
+    </script>
+</th:block>
+</html>

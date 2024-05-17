@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ksmart.ks50team01.platform.trip.dto.PTourApi;
 import ksmart.ks50team01.platform.trip.dto.PTripPlan;
 import ksmart.ks50team01.platform.trip.mapper.PTripPlanMapper;
 import lombok.RequiredArgsConstructor;
@@ -58,5 +59,28 @@ public class PTripPlanServiceImpl implements PTripPlanService {
 		pTripPlan.setDiffBudget(totalAvailBudget - totalPlanBudget);
 
 		return pTripPlanMapper.updateTripPlan(pTripPlan);
+	}
+
+	/**
+	 * 지역 코드를 DB에서 불러오기 위해 Mapper와 연결
+	 * @return
+	 */
+	@Override
+	public List<PTourApi> getAreaCodeList(){
+		return pTripPlanMapper.getAreaCodeList();
+	}
+
+	/**
+	 * 시군구 코드를 DB에서 불러오기 위해 Mapper와 연결
+	 * @return
+	 */
+	@Override
+	public List<PTourApi> getSigunguCodeList(){
+		return pTripPlanMapper.getSigunCodeList();
+	}
+
+	@Override
+	public List<PTourApi> getSigunguCodesByAreaCode(String areaCode) {
+		return pTripPlanMapper.getSigunguCodesByAreaCode(areaCode);
 	}
 }
