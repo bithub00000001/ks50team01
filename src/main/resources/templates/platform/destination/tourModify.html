@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+                layout:decorate="~{platform/layout/default}">
+
+<th:block layout:fragment="customContent">
+    <div class="col-md-12 col-sm-6 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h3>관광지 수정</h3>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <form id="modifyForm" th:action="@{/platform/destination/tourModify}" method="post">
+					 <input type="hidden" name="tourInfoCode" th:value="${tourInfo.tourInfoCode}">
+				
+				    <div class="form-group">
+				        <label for="tourName">관광지 이름</label>
+				        <input type="text" class="form-control" id="tourName" name="tourName" th:value="${tourInfo.tourName}">
+				    </div>
+				
+				    <div class="form-group">
+				        <label for="tourAddr">관광지 주소</label>
+				        <input type="text" class="form-control" id="tourAddr" name="tourAddr" th:value="${tourInfo.tourAddr}">
+				    </div>
+				
+				    <div class="form-group">
+				        <label for="tourDaddr">광광지 상세주소</label>
+				        <input type="text" class="form-control" id="tourDaddr" name="tourDaddr" th:value="${tourInfo.tourDaddr}">
+				    </div>
+				
+				    <div class="form-group">
+				        <label for="tourContactNum">관광지 연락처</label>
+				        <input type="tel" class="form-control" id="tourContactNum" name="tourContactNum" th:value="${tourInfo.tourContactNum}">
+				    </div>
+				
+				    <div class="form-group">
+				        <label for="tourContactNum2">관광지 연락처2</label>
+				        <input type="tel" class="form-control" id="tourContactNum2" name="tourContactNum2" th:value="${tourInfo.tourContactNum2}">
+				    </div>
+				    
+				    <div class="form-group">
+				        <label for="tourSite">광광지 사이트</label>
+				        <input type="text" class="form-control" id="tourSite" name="tourSite" th:value="${tourInfo.tourSite}">
+				    </div>
+				    
+				    <div class="form-group">
+				        <label for="tourOthers">광광지 기타정보</label>
+				        <input type="text" class="form-control" id="tourOthers" name="tourOthers" th:value="${tourInfo.tourOthers}">
+				    </div>
+				    
+				    <button type="submit" class="btn btn-primary">저장</button>
+				    <button type="button" class="btn btn-secondary" onclick="location.href='/platform/destination/tourManage'">취소</button>
+				</form>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+</html>

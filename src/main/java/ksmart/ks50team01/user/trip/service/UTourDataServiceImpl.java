@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ksmart.ks50team01.user.trip.dto.UArea;
 import ksmart.ks50team01.user.trip.dto.USigungu;
-import ksmart.ks50team01.user.trip.dto.UTourApi;
 import ksmart.ks50team01.user.trip.mapper.UTourApiMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -78,9 +77,10 @@ public class UTourDataServiceImpl implements UTourDataService {
 				List<USigungu> uSigungus = sigunguDataList.stream()
 					.map(item -> {
 						USigungu uSigungu = new USigungu();
+						// 시군구 코드
 						uSigungu.setCode(item.getCode());
 						uSigungu.setName(item.getName());
-						// 여기에 areaCode를 설정
+						// 여기에 시군구 dto에 areaCode를 설정
 						uSigungu.setAreaCode(Integer.parseInt(area.getCode()));
 						return uSigungu;
 					})

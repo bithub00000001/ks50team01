@@ -46,6 +46,45 @@
 			ON
 			F.FAQ_CTGRY_NO = C.FAQ_CTGRY_NO;
 	</select>
+	
+	
+	<update id="faqModify" parameterType="PFaq">
+	
+		UPDATE 
+			FREQUENTLY_ASKED_QUESTIONS AS F
+		INNER JOIN 
+			FAQ_CATEGORY AS C
+		ON 
+			F.FAQ_CTGRY_NO = C.FAQ_CTGRY_NO
+		SET 
+			C.FAQ_CTGRY_TYPE = #{faqCateType}
+		WHERE 
+			F.FAQ_NO = #{faqNum};
+
+	</update>
+	
+	
+	<select id="getFaqInfoByNum" resultMap="faqResultMap">
+		/* getFaqInfoByNum 자주찾는질문 조회 */
+		SELECT 
+			F.FAQ_NO, 
+			F.REG_PF_ID, 
+			C.FAQ_CTGRY_TYPE,
+			F.FAQ_TTL, 
+			F.FAQ_CN, 
+			F.MDFCN_PF_ID,
+			F.ACT_YN, 
+			F.REG_YMD, 
+			F.MDFCN_YMD
+		FROM 
+			FREQUENTLY_ASKED_QUESTIONS AS F
+			INNER JOIN
+			FAQ_CATEGORY AS C
+			ON
+			F.FAQ_CTGRY_NO = C.FAQ_CTGRY_NO
+		WHERE 
+			F.FAQ_NO = #{faqNum};
+	</select>
 
 	
 </mapper>

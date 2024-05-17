@@ -15,10 +15,15 @@ import lombok.RequiredArgsConstructor;
 public class RankingService {
 
 	private final RankingMapper rankingMapper;
-
-	public Ranking getRankingInfoById(String pRankingNum) {
-		
-		return rankingMapper.getMemberInfoById(pRankingNum);
+	
+	public int modifyRanking(Ranking ranking) {
+		return rankingMapper.modifyRanking(ranking);
+	}
+	
+	
+	public Ranking getRankingInfoById(String pRankingId) {
+		Ranking ranking = rankingMapper.getRankingInfoById(pRankingId);
+		return ranking;
 	}
 	/**
 	 * 플랫폼 추천 리스트 중복체크

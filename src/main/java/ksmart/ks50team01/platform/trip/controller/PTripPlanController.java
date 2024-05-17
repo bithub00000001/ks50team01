@@ -1,16 +1,24 @@
 package ksmart.ks50team01.platform.trip.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import ksmart.ks50team01.platform.reivew.service.PReviewService;
+import ksmart.ks50team01.platform.trip.dto.PTourApi;
 import ksmart.ks50team01.platform.trip.dto.PTripPlan;
+import ksmart.ks50team01.platform.trip.service.PTourApiService;
 import ksmart.ks50team01.platform.trip.service.PTripPlanService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +30,11 @@ import lombok.extern.slf4j.Slf4j;
 public class PTripPlanController {
 
 	private final PTripPlanService pTripPlanService;
+	private final PTourApiService pTourApiService;
+	private final PReviewService pReviewService;
+
+	@Value("${tour.api.key}")
+	private String apiKey;
 
 	// 여행 계획 목록 수정 post 요청
 	@PostMapping("/modify")
@@ -53,4 +66,75 @@ public class PTripPlanController {
 		model.addAttribute("tripPlanList", tripPlanList);
 		return "platform/trip/planList";
 	}
+
+	// 지역 코드, 시군 코드 API 에서 요청 후 DB에 삽입
+	@GetMapping("/code")
+	public String areaCodeManage(Model model) {
+
+		List<PTourApi> areaCodeList = pTourApiService.getAreaCodeList();
+		model.addAttribute("title", "지역 코드 관리");
+		model.addAttribute("areaCodeList", areaCodeList);
+
+		return "platform/trip/areaCodeManage";
+	}
+
+	// dataTables ajax를 위한 refer 페이지
+	@PostMapping("/refer/{dataTrans}")
+	@ResponseBody
+	public Map<String, Object> planCodeManage(@PathVariable String dataTrans) {
+		Map<String, Object> responseMap = new HashMap<>();
+		responseMap.put("dataTrans", dataTrans);
+		List<?> dataList;
+		if ("reportList".equals(dataTrans)) {
+			dataList = pReviewService.getPReviewReports();
+		}else {
+			dataList = pReviewService.getPReviewReact();
+		}
+		if (dataList != null && !dataList.isEmpty()) {
+			responseMap.put("dataList", dataList);
+		}
+		log.info("dataList: {}", dataList);
+		return responseMap;
+	}
+
+	// 지역 코드, 시군구 코드 dataTables ajax
+	@PostMapping(value = "/{dataTrans}")
+	@ResponseBody
+	public Map<String, Object> areaCodeManage(@PathVariable String dataTrans) {
+		Map<String, Object> responseMap = new HashMap<>();
+		responseMap.put("dataTrans", dataTrans);
+		List<?> dataList;
+		if ("areaCode".equals(dataTrans)) {
+			dataList = pTourApiService.getAreaCodeList();
+		}else {
+			dataList = pTourApiService.getSigunguCodeList();
+		}
+		if (dataList != null && !dataList.isEmpty()) {
+			responseMap.put("dataList", dataList);
+		}
+		log.info("areaCode dataList: {}", dataList.size());
+		return responseMap;
+	}
+
+	/**
+	 * 업데이트 버튼을 눌렀을때 지역 코드 혹은 시군 코드를 업서트 하는 메서드
+	 * @param dataTrans
+	 * @return
+	 */
+	@PostMapping(value = "/update/{dataTrans}")
+	@ResponseBody
+	public String yourControllerMethod(@PathVariable String dataTrans) {
+		String status;
+		if ("areaCode".equals(dataTrans)) {
+			pTourApiService.upsertAreaData(apiKey);
+			status = "지역 코드 업서트 성공";
+		}else if ("sigunguCode".equals(dataTrans)) {
+			pTourApiService.upsertSigunguData(apiKey);
+			status = "시군 코드 업서트 성공";
+		}else {
+			status = "연결에 실패했습니다";
+		}
+		return status; // 또는 다른 응답
+	}
+
 }
