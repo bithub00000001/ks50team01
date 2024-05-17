@@ -139,7 +139,6 @@ public class PTripPlanController {
 		if (dataList != null && !dataList.isEmpty()) {
 			responseMap.put("dataList", dataList);
 		}
-		log.info("areaCode dataList: {}", dataList.size());
 		return responseMap;
 	}
 
@@ -166,12 +165,12 @@ public class PTripPlanController {
 
 	// 여행지를 api에서 업데이트 처리
 	@PostMapping("/update/tourInfo")
-	public ResponseEntity<String> updateTourInfo(@RequestBody Map<String, Object> requestData) {
-		Integer numOfRows = (Integer)requestData.get("numOfRows");
-		Integer pageNo = (Integer)requestData.get("pageNo");
-		Integer contentTypeId = (Integer)requestData.get("contentTypeId");
-		String areaCode = (String)requestData.get("areaCode");
-		String sigunguCode = requestData.get("sigunguCode") != null ? (String)requestData.get("sigunguCode") : "";
+	public ResponseEntity<String> updateTourInfo(
+		@RequestParam("numOfRows") Integer numOfRows,
+		@RequestParam("pageNo") Integer pageNo,
+		@RequestParam("contentTypeId") Integer contentTypeId,
+		@RequestParam("areaCode") String areaCode,
+		@RequestParam(value = "sigunguCode", required = false) String sigunguCode) {
 
 		try {
 			List<PTourApi> tourInfoList = pTourApiService.getTourInfo(apiKey , contentTypeId, numOfRows, pageNo, areaCode,
