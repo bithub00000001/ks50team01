@@ -81,7 +81,7 @@
 				tgo.REG_YMD 			AS tourRegDate,
 				tgo.MDFCN_YMD 			AS tourFormDate
 			FROM
-				OUR_GOODS AS tg
+				TOUR_GOODS AS tg
 				INNER JOIN
 				TOUR_GOODSOPTION AS tgo
 				ON
@@ -328,28 +328,35 @@
 		/* 식당 정보 */
 
 		SELECT
-		RSTRN_INFO_CD AS restaurantInfoCode,
-		REG_PF_BIZ_ID AS restaurantAuthorityId,
-		RSTRN_NAME AS restaurantName,
-		RSTRN_ADDR AS restaurantAddr,
-		RSTRN_CONTACT AS restaurantContactNum,
-		RSTRN_SITE AS restaurantSite,
-		REG_YMD AS restaurantRegDate,
-		MDFCN_YMD AS restaurantFormDate
+			RSTRN_INFO_CD 	AS restaurantInfoCode,
+			REG_PF_BIZ_ID 	AS restaurantAuthorityId,
+			RSTRN_NAME 		AS restaurantName,
+			RSTRN_ADDR 		AS restaurantAddr,
+			RSTRN_DADDR 	AS restaurantDaddr,
+			RSTRN_CONTACT 	AS restaurantContactNum,
+			RSTRN_SITE 		AS restaurantSite,
+			REG_YMD 		AS restaurantRegDate,
+			MDFCN_YMD 		AS restaurantFormDate
 		FROM
-		RESTAURANT_INFO;
+			RESTAURANT_INFO;
 	</select>
 	<select id="getRestaurantMenuList" resultType="destination">
 		/* 식당메뉴 정보 */
 		SELECT
-		ri.RSTRN_NAME AS restaurantName,
-		rm.RSTRN_MENU AS restaurantMenu
+			rm.RSTRN_INFO_CD			AS restaurantInfoCode,
+			ri.RSTRN_NAME 				AS restaurantName,
+			rm.RSTRN_MENU_MNG_CD		AS restaurantMenuManageCode,
+			rm.RSTRN_MENU 				AS restaurantMenu,	
+			rm.RSTRN_MENU_PRICE			AS restaurantMenuPrice,
+			rm.REG_PF_BIZ_ID			AS restaurantAuthorityId,
+			rm.REG_YMD					AS restaurantRegDate,
+			rm.MDFCN_YMD				AS restaurantFormDate
 		FROM
-		RESTAURANT_INFO AS ri
-		INNER JOIN
-		RESTAURANT_MENU AS rm
+			RESTAURANT_INFO AS ri
+			INNER JOIN
+			RESTAURANT_MENU AS rm
 		ON
-		ri.RSTRN_INFO_CD = rm.RSTRN_INFO_CD;
+			ri.RSTRN_INFO_CD = rm.RSTRN_INFO_CD;
 	</select>
 
 
