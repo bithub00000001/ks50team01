@@ -8,9 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import ksmart.ks50team01.platform.board.dto.PNotice;
-import ksmart.ks50team01.platform.board.service.PNoticeService;
-import ksmart.ks50team01.user.board.dto.UCommunity;
 import ksmart.ks50team01.user.board.dto.UNotice;
 import ksmart.ks50team01.user.board.service.UNoticeService;
 import lombok.RequiredArgsConstructor;
@@ -46,7 +43,7 @@ public class UNoticeController {
 	    model.addAttribute("title", "공지사항 상세");
 	    
 	    log.info("noticeNum: {}", noticeNum);
-	    log.info("getNoticeByNoticeNum : {}", noticeDetail);
+	    log.info("getNoticeByNoticeNum: {}", noticeDetail);
 
 	    return "user/board/noticeDetail";
 	}

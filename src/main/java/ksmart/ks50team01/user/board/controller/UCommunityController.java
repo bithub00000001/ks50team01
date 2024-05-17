@@ -101,12 +101,12 @@ public class UCommunityController {
 		UCommunity postDetail = uCommunityService.getPostByPostNum(postNum);
 	    List<UCommunity> commentList = uCommunityService.getCommentByPostNum(postNum); // 해당 게시글의 모든 댓글을 가져오는 메서드 호출
 
-	    
 	    model.addAttribute("commentList", commentList);
 	    model.addAttribute("postDetail", postDetail);
 	    model.addAttribute("postTitle", postDetail.getPostTitle());
 	    model.addAttribute("postContent", postDetail.getPostContent());
 	    model.addAttribute("title", "게시글 상세");
+	    
 	    log.info("postNum: {}", postNum);
 	    log.info("getPostByPostNum : {}", postDetail);
 	    log.info("getCommentByPostNum : {}", commentList);
