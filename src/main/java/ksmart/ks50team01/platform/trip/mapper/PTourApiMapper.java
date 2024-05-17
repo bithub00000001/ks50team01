@@ -11,9 +11,9 @@ public interface PTourApiMapper {
 
 	int upsertAreaCode(PTourApi pTourApi);
 
-	List<PTourApi> getAreaCodeList();
 
-	List<PTourApi> getSigunList();
 
 	int upsertSigunguCode(PTourApi pTourApi);
+
+	void insertTourInfo(PTourApi tourInfo);
 }

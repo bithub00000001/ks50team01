@@ -54,6 +54,7 @@
 							<div class="ln_solid"></div>
 							<div class="form-group">
 								<div class="col-md-12 col-sm-12 col-xs-12 text-center">
+									<button type="reset" class="btn btn-dark btn-lg" onclick="location.href='/platform/ranking/addPlanUserRanking'">등록</button>
 									<button type="reset" class="btn btn-dark btn-lg">초기화</button>
 								</div>
 							</div>
@@ -71,9 +72,8 @@
                     <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap"  cellspacing="0" width="100%">
                         <thead>
 							<tr>
-								<th>여행계획추천</th>
+								<th>회원의 여행계획 추천</th>
 								<th>등록플랫폼권한아이디</th>
-								<th>여행계획평가합계</th>
 								<th>개별여행계획번호</th>
 								<th>지역소분류명</th>
 								<th>순위</th>
@@ -105,12 +105,14 @@
 								<td th:text="${l.activate}"></td>
 								<td th:text="${l.regDate}"></td>
 								<td th:text="${l.modifyDate}"></td>
+
+
 								<td>
 									<!--/* /member/modifyMember?memberId=id001 */-->
-									<a th:href="@{/platform/ranking/modifyPlanRankingList(pRankingNum=${l.userRankingNum})}">수정</a>
+									<a th:href="@{/platform/ranking/modifyPlanRanking(userTripPlanId=${l.userTripPlanId})}">수정</a>
 								</td>
 								<td>
-									<a th:href="@{/platform/ranking/removePlanRankingList(pRankingNum=${l.userRankingNum})}">삭제</a>					
+									<a th:href="@{/platform/ranking/removePlanRanking(userTripPlanId=${l.userTripPlanId})}">삭제</a>					
 								</td>
 							</tr>
 						</tbody>

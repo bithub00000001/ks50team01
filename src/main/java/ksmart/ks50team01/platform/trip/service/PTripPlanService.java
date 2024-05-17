@@ -2,6 +2,7 @@ package ksmart.ks50team01.platform.trip.service;
 
 import java.util.List;
 
+import ksmart.ks50team01.platform.trip.dto.PTourApi;
 import ksmart.ks50team01.platform.trip.dto.PTripPlan;
 
 public interface PTripPlanService {
@@ -13,4 +14,10 @@ public interface PTripPlanService {
 
 	// 여행 계획 수정
 	int UpdatePTripPlan(PTripPlan pTripPlan);
+
+	List<PTourApi> getAreaCodeList();
+
+	List<PTourApi> getSigunguCodeList();
+
+	List<PTourApi> getSigunguCodesByAreaCode(String areaCode);
 }

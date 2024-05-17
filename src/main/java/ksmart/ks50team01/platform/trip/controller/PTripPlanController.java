@@ -3,14 +3,18 @@ package ksmart.ks50team01.platform.trip.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -71,12 +75,33 @@ public class PTripPlanController {
 	@GetMapping("/code")
 	public String areaCodeManage(Model model) {
 
-		List<PTourApi> areaCodeList = pTourApiService.getAreaCodeList();
+		List<PTourApi> areaCodeList = pTripPlanService.getAreaCodeList();
 		model.addAttribute("title", "지역 코드 관리");
 		model.addAttribute("areaCodeList", areaCodeList);
 
 		return "platform/trip/areaCodeManage";
 	}
+
+	// Tour API 에서 음식점, 숙소, 관광지를 선택해서 DB에 인서트하는 페이지
+	@GetMapping("/tourInfo")
+	public String tourInfoManage(Model model) {
+		List<?> areaCodeList = pTripPlanService.getAreaCodeList();
+		model.addAttribute("title", "투어 정보 관리");
+		model.addAttribute("areaCodeList", areaCodeList);
+
+		return "platform/trip/tourInfoManage";
+	}
+
+	@GetMapping("/sigungu-codes")
+	@ResponseBody
+	public List<PTourApi> getSigunguCodes(@RequestParam(name = "areaCode") String areaCode) {
+		List<PTourApi> sigunguCodes = pTripPlanService.getSigunguCodesByAreaCode(areaCode);
+		return sigunguCodes;
+	}
+
+
+
+
 
 	// dataTables ajax를 위한 refer 페이지
 	@PostMapping("/refer/{dataTrans}")
@@ -97,6 +122,8 @@ public class PTripPlanController {
 		return responseMap;
 	}
 
+
+
 	// 지역 코드, 시군구 코드 dataTables ajax
 	@PostMapping(value = "/{dataTrans}")
 	@ResponseBody
@@ -105,14 +132,13 @@ public class PTripPlanController {
 		responseMap.put("dataTrans", dataTrans);
 		List<?> dataList;
 		if ("areaCode".equals(dataTrans)) {
-			dataList = pTourApiService.getAreaCodeList();
+			dataList = pTripPlanService.getAreaCodeList();
 		}else {
-			dataList = pTourApiService.getSigunguCodeList();
+			dataList = pTripPlanService.getSigunguCodeList();
 		}
 		if (dataList != null && !dataList.isEmpty()) {
 			responseMap.put("dataList", dataList);
 		}
-		log.info("areaCode dataList: {}", dataList.size());
 		return responseMap;
 	}
 
@@ -135,6 +161,30 @@ public class PTripPlanController {
 			status = "연결에 실패했습니다";
 		}
 		return status; // 또는 다른 응답
+	}
+
+	// 여행지를 api에서 업데이트 처리
+	@PostMapping("/update/tourInfo")
+	public ResponseEntity<String> updateTourInfo(
+		@RequestParam("numOfRows") Integer numOfRows,
+		@RequestParam("pageNo") Integer pageNo,
+		@RequestParam("contentTypeId") Integer contentTypeId,
+		@RequestParam("areaCode") String areaCode,
+		@RequestParam(value = "sigunguCode", required = false) String sigunguCode) {
+
+		try {
+			List<PTourApi> tourInfoList = pTourApiService.getTourInfo(apiKey , contentTypeId, numOfRows, pageNo, areaCode,
+				Optional.ofNullable(sigunguCode)).block();
+
+			if (tourInfoList != null) {
+				pTourApiService.saveData(tourInfoList);
+				return ResponseEntity.ok("데이터 업데이트 성공");
+			} else {
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("데이터 받아오기 실패");
+			}
+		} catch (Exception ex) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("에러: " + ex.getMessage());
+		}
 	}
 
 }
