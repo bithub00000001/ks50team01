@@ -144,12 +144,13 @@
                     <div class="modal-body">
                         <form th:action="@{/login/login}" method="post">
                             <div class="mb-3">
-                                <input type="id" class="form-control bg-smoke" required="" placeholder="아이디" name="id">
+                                 <input type="text" class="form-control bg-smoke" required="" placeholder="아이디" 
+                                	   name="id" value="id003">
                             </div>
 
                             <div class="mb-3">
                                 <input type="password" class="form-control bg-smoke" required="" placeholder="비밀번호"
-                                       name="password">
+                                       name="password" value="pw003">
                             </div>
 
                             <div class="form-check mb-0">
@@ -385,13 +386,13 @@
 		                <div class="d-grid gap-2">
 		                    <button type="button" class="btn btn-primary text-uppercase" data-bs-toggle="modal" data-bs-target="#modifyModal" onclick="getMemberInfo()">회원정보수정</button>
 		                    <button type="button" class="btn btn-primary text-uppercase" th:onclick="'confirmDelete(\'' + ${loginId} + '\');'">회원탈퇴</button>
-		                    <button type="button" class="btn btn-primary text-uppercase" onclick="location.href='/mypage/reservation'">예약내역조회</button>
-		                    <button type="button" class="btn btn-primary text-uppercase" onclick="location.href='/mypage/mypost'">내가쓴 게시글보기</button>
-		                    <button type="button" class="btn btn-primary text-uppercase" onclick="location.href='/mypage/mycomment'">내가쓴 댓글보기</button>
-		                    <button type="button" class="btn btn-primary text-uppercase" onclick="location.href='/mypage/favpost'">즐겨찾기 게시글보기</button>
-		                    <button type="button" class="btn btn-primary text-uppercase" onclick="location.href='/mypage/favproduct'">즐겨찾기 상품보기</button>
-		                    <button type="button" class="btn btn-primary text-uppercase" onclick="location.href='/mypage/faq'">자주찾는 질문보기</button>
-		                    <button type="button" class="btn btn-primary text-uppercase" onclick="location.href='/mypage/inquiry'">1:1 문의하기</button>
+		                    <button type="button" class="btn btn-primary text-uppercase" onclick="location.href='#'">예약내역조회</button>
+		                    <button type="button" class="btn btn-primary text-uppercase" onclick="location.href='#'">내가쓴 게시글보기</button>
+		                    <button type="button" class="btn btn-primary text-uppercase" onclick="location.href='#'">내가쓴 댓글보기</button>
+		                    <button type="button" class="btn btn-primary text-uppercase" onclick="location.href='#'">즐겨찾기 게시글보기</button>
+		                    <button type="button" class="btn btn-primary text-uppercase" onclick="location.href='#'">즐겨찾기 상품보기</button>
+		                    <button type="button" class="btn btn-primary text-uppercase" onclick="location.href='#'">자주찾는 질문보기</button>
+		                    <button type="button" class="btn btn-primary text-uppercase" onclick="location.href='#'">1:1 문의하기</button>
 		                </div>
 		            </div>
 		        </div>
@@ -432,7 +433,7 @@
 		                </form>
 		            </div>
 		            <div class="modal-footer">
-		                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+		               <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#mypageModal">취소</button>
 		                <button type="submit" form="modifyForm" class="btn btn-primary">저장</button>
 		            </div>
 		        </div>
