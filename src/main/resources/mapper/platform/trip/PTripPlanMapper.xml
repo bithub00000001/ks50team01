@@ -47,9 +47,29 @@
             <result column="area_name"   property="areaName"/>
             <result column="areaRegDate" property="areaRegDate"/>
             <result column="areaModDate" property="areaModDate"/>
-
         </association>
     </resultMap>
+
+    <resultMap  id="destinationMap" type="pTourApi">
+        <id          column="destination_id"                property="destinationId"/>
+        <result      column="destinationNum"                property="destinationNum"/>
+        <result      column="destination_title"             property="destinationTitle"/>
+        <result      column="destination_first_address"     property="destinationFirstAddress"/>
+        <result      column="destination_second_address"    property="destinationSecondAddress"/>
+        <result      column="destination_tel"               property="destinationTelNum"/>
+        <result      column="destination_content_id"        property="destinationContentId"/>
+        <result      column="destination_content_type_id"   property="destinationContentTypeId"/>
+        <result      column="destination_first_image_link"  property="destinationFirstImageLink"/>
+        <result      column="destination_second_image_link" property="destinationSecondImageLink"/>
+        <result      column="destination_longitude"         property="destinationLongitude"/>
+        <result      column="destination_latitude"          property="destinationLatitude"/>
+        <result      column="area_code"                     property="areaCode"/>
+        <result      column="sigungu_code"                  property="sigunguCode"/>
+        <result      column="destination_zipcode"           property="destinationZipcode"/>
+        <result      column="REG_YMD"                       property="destinationRegDate"/>
+        <result      column="MDFCN_YMD"                     property="destinationModDate"/>
+    </resultMap>
+
 
     <update id="updateTripPlan" parameterType="pTripPlan">
         /* 여행 계획 업데이트 */
@@ -182,5 +202,51 @@
                 SC.area_id = AC.area_code
         WHERE
             SC.area_id = #{areaCode}
+    </select>
+    <select id="getDestinationList" resultMap="destinationMap">
+        SELECT
+            row_number() OVER (ORDER BY area_code) AS destinationNum,
+            destination_id,
+            destination_title,
+            destination_first_address,
+            destination_second_address,
+            destination_content_id,
+            destination_content_type_id,
+            destination_first_image_link,
+            destination_second_image_link,
+            destination_longitude,
+            destination_latitude,
+            area_code,
+            sigungu_code,
+            destination_tel_num,
+            destination_zipcode,
+            REG_YMD,
+            MDFCN_YMD
+        FROM
+            TOUR_INFO_FROM_API
+    </select>
+    <select id="getDestinationListByContentType" resultMap="destinationMap">
+        SELECT
+            row_number() OVER (ORDER BY area_code) AS destinationNum,
+            destination_id,
+            destination_title,
+            destination_first_address,
+            destination_second_address,
+            destination_content_id,
+            destination_content_type_id,
+            destination_first_image_link,
+            destination_second_image_link,
+            destination_longitude,
+            destination_latitude,
+            area_code,
+            sigungu_code,
+            destination_tel_num,
+            destination_zipcode,
+            REG_YMD,
+            MDFCN_YMD
+        FROM
+            TOUR_INFO_FROM_API
+        where
+            destination_content_type_id = #{contentTypeId}
     </select>
 </mapper>

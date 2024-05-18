@@ -27,6 +27,15 @@ public interface PTripPlanMapper {
 	// 지역 코드와 일치하는 시군 코드 조회
 	List<PTourApi> getSigunguCodesByAreaCode(String areaCode);
 
+	// 여행지 정보 조회 메서드
+	List<PTourApi> getDestinationList();
+
+	// 관광 타입에 따른 여행지 정보 조회 메서드
+	List<PTourApi> getDestinationListByContentType(String contentTypeId);
+
+	// 여행지 세부 정보 조회 메서드
+
+
 	//
 	/*
 	* 여행 계획 업데이트

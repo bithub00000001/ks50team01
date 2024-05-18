@@ -99,6 +99,14 @@ public class PTripPlanController {
 		return sigunguCodes;
 	}
 
+	@GetMapping("/destination")
+	public String destinationInfoManage(Model model) {
+		List<PTourApi> destinationList = pTripPlanService.getDestinationList();
+		model.addAttribute("title", "여행지 정보 조회");
+		model.addAttribute("destinationList", destinationList);
+		return "platform/trip/destinationInfoManage";
+	}
+
 
 
 
@@ -119,6 +127,20 @@ public class PTripPlanController {
 			responseMap.put("dataList", dataList);
 		}
 		log.info("dataList: {}", dataList);
+		return responseMap;
+	}
+
+	// 지역 코드, 시군구 코드 dataTables ajax
+	@PostMapping(value = "/destination/{dataTrans}")
+	@ResponseBody
+	public Map<String, Object> destinationListByTypeId(@PathVariable String dataTrans) {
+		Map<String, Object> responseMap = new HashMap<>();
+		responseMap.put("dataTrans", dataTrans);
+		List<?> dataList;
+		dataList = pTripPlanService.getDestinationListByContentType(dataTrans);
+		if (dataList != null && !dataList.isEmpty()) {
+			responseMap.put("dataList", dataList);
+		}
 		return responseMap;
 	}
 
@@ -176,7 +198,7 @@ public class PTripPlanController {
 				Optional.ofNullable(sigunguCode)).block();
 
 			if (tourInfoList != null) {
-				pTourApiService.saveData(tourInfoList);
+				pTourApiService.upsertTourInfoList(tourInfoList);
 				return ResponseEntity.ok("데이터 업데이트 성공");
 			} else {
 				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("데이터 받아오기 실패");

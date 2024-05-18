@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ksmart.ks50team01.platform.trip.dto.PTourApi;
 import ksmart.ks50team01.platform.trip.dto.PTripPlan;
 import ksmart.ks50team01.platform.trip.mapper.PTripPlanMapper;
+import ksmart.ks50team01.platform.trip.utils.ContentTypeConstants;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -79,8 +80,41 @@ public class PTripPlanServiceImpl implements PTripPlanService {
 		return pTripPlanMapper.getSigunCodeList();
 	}
 
+	/**
+	 * 지역 코드에 해당하는 시군 코드 조회
+	 * @param areaCode
+	 * @return
+	 */
 	@Override
 	public List<PTourApi> getSigunguCodesByAreaCode(String areaCode) {
 		return pTripPlanMapper.getSigunguCodesByAreaCode(areaCode);
+	}
+
+	/**
+	 * 여행지 정보 목록 조회
+	 * @return
+	 */
+	@Override
+	public List<PTourApi> getDestinationList() {
+		List<PTourApi> destinationList = pTripPlanMapper.getDestinationList();
+		destinationList.forEach(info -> {
+			String contentTypeName = ContentTypeConstants.CONTENT_TYPE_MAP.getOrDefault(info.getDestinationContentTypeId(),"");
+			info.setDestinationContentTypeName(contentTypeName);
+		});
+		return destinationList;
+	}
+
+	/**
+	 * 관광 타입에 따른 여행지 정보 목록 조회
+	 *
+	 */
+	@Override
+	public List<PTourApi> getDestinationListByContentType(String contentTypeId) {
+		List<PTourApi> destinationList = pTripPlanMapper.getDestinationListByContentType(contentTypeId);
+		destinationList.forEach(info -> {
+			String contentTypeName = ContentTypeConstants.CONTENT_TYPE_MAP.getOrDefault(info.getDestinationContentTypeId(),"");
+			info.setDestinationContentTypeName(contentTypeName);
+		});
+	return destinationList;
 	}
 }
