@@ -22,6 +22,9 @@ public class PTourApi {
 	private String sigunRegDate;
 	private String sigunModDate;
 
+
+	private String destinationId;
+	private String destinationNum;
 	private String destinationTitle;
 	private String destinationFirstAddress;
 	private String destinationSecondAddress;
@@ -33,8 +36,11 @@ public class PTourApi {
 	private String destinationSecondImageLink;
 	private String destinationContentId;
 	private String destinationContentTypeId;
-	private String destinationContents;
+	private String destinationContentTypeName;
 	private String destinationZipcode;
+	private String destinationRegDate;
+	private String destinationModDate;
+
 
 
 	// 1:N has many 관계
