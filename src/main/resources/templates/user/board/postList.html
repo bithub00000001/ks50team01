@@ -88,28 +88,34 @@
 								<th>조회</th>
 							</tr>
 						</thead>
-						<tbody>
-							<!-- 역순으로 순회 -->
-							<tr th:each="l, i : ${postList}" th:order="${-i.count}">
-								<!-- 숫자 형태로 번호 출력 -->
-								<td class="text-center"
-									th:text="${#lists.size(postList) - i.count + 1}"></td>
-								<td>
-									<span class="badge bg-warning">N</span>
-									<!-- 게시물 카테고리 뱃지 -->
-									<i class="badge rounded-pill bg-primary badge-cate" th:text="${l.postCate.postCateType}"></i>
-									<!-- 게시물 제목 -->
-									<a th:href="@{/community/postDetail(postNum=${l.postNum})}" th:text="${l.postTitle}">
-									<!-- 댓글 수가 0보다 큰 경우에만 뱃지 표시 -->
-									<span th:if="${#lists.size(commentList) > 0}" class="badge bg-primary" th:text="${#lists.size(commentList)}"></span>
-									</a>
-								</td>
-								<td class="text-center" th:text="${l.postRegId}"></td>
-								<td class="text-center"
-									th:text="${#strings.substring(l.postRegDate, 0, 10)}"></td>
-								<td class="text-center" th:text="${l.postInqCnt}"></td>
-							</tr>
-						</tbody>
+
+                <tbody>
+                	<!-- 역순으로 순회 -->
+                    <tr th:each="l, i : ${postList}" th:order="${-i.count}">
+                        <!-- 숫자 형태로 번호 출력 (리스트 크기에서 현재 인덱스를 뺀 값) -->
+                        <td class="text-center" th:text="${#lists.size(postList) - i.index}"></td>
+                        <!-- 숫자 형태로 번호 출력
+						<td class="text-center" th:text="${#lists.size(postList) - i.count + 1}"></td> -->
+                        <td>
+                        	<!-- 신규 게시물 카테고리 뱃지 -->
+                            <span class="badge bg-warning">N</span>
+                            <!-- 게시물 카테고리 뱃지 -->
+                            <i class="badge rounded-pill bg-primary badge-cate" th:text="${l.postCate.postCateType}"></i>
+                            <!-- 게시물 제목 -->
+                            <a th:href="@{/community/postDetail(postNum=${l.postNum})}" th:text="${l.postTitle}">
+                           		<span th:if="${commentCntMap[post.postNum] != null}" class="badge bg-primary" th:text="${commentCntMap[post.postNum]}"></span>
+                            </a>
+                            
+                            
+                            
+                            
+                        </td>
+                        <td class="text-center" th:text="${l.postRegId}"></td>
+                        <td class="text-center" th:text="${#strings.substring(l.postRegDate, 0, 10)}"></td>
+                        <td class="text-center" th:text="${l.postInqCnt}"></td>
+                    </tr>
+                </tbody>
+
 					</table>
 					<div class="row">
 						<div class="col-12" style="text-align: right;">

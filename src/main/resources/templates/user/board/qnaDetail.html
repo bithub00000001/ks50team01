@@ -12,15 +12,17 @@
 </head>
 
 <th:block layout:fragment="customPageSection">
-	<!-- 게시물 내용을 보여주는 컨테이너 -->
+	<!-- 1:1문의 내용을 보여주는 컨테이너 -->
 	<div class="container post-detail-container">
 		<div class="row">
 			<div class="col-lg-8 col-md-10 mx-auto">
 				<div class="qna" th:object="${qnaDetail}">
 					<div class="post-header">
-						<h2 class="qna-title" th:text="*{qnaTitle}">1:1문의 제목</h2>
+						<div class="d-flex align-items-start">
+					        <i class="badge rounded-pill bg-primary badge-cate me-2" th:text="${qnaDetail.faqCateType}"></i>
+							<h2 class="qna-title" th:text="*{qnaTitle}">1:1문의 제목</h2>
+						</div>
 					</div>
-
 					<p class="post-meta">
 						<span th:text="'작성자 : ' + *{qnaRegId}">작성자 아이디</span> <span
 							th:text="'등록일 : ' + *{#strings.substring(qnaRegDate, 0, 10)}">작성일</span>

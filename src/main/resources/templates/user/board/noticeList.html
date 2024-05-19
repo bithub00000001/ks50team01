@@ -112,30 +112,26 @@
 								<th>조회</th>
 							</tr>
 						</thead>
+						
 						<tbody>
-							 
 							<!-- 역순으로 순회 -->
-							<tr th:each="l, i : ${noticeList}" th:order="${-i.count}">
-								<!-- 숫자 형태로 번호 출력 -->
-								<td class="text-center"
-									th:text="${#lists.size(noticeList) - i.count + 1}"></td>
-								<td>
-									<span class="badge bg-warning">N</span>
-									<!-- 공지사항 카테고리 뱃지 --> 
-									<i class="badge rounded-pill bg-primary badge-cate" th:text="${l.noticeCate.noticeCateType}"></i> 
-									<!-- 공지사항 제목 --> 
-									<a th:href="@{/notice/noticeDetail(noticeNum=${l.noticeNum})}"
-									th:text="${l.noticeTitle}"> 
-									</a>
-								</td>
-								<td class="text-center" th:text="${l.noticeRegId}"></td>
-								<td class="text-center"
-									th:text="${#strings.substring(l.noticeRegDate, 0, 10)}"></td>
-								<td class="text-center" th:text="${l.noticeInqCnt}"></td>
-							</tr>
-
-
-						</tbody>
+                            <tr th:each="l, i : ${noticeList}" th:order="${-i.count}">
+                            	<!-- 숫자 형태로 번호 출력 (리스트 크기에서 현재 인덱스를 뺀 값) -->
+                                <td class="text-center" th:text="${#lists.size(noticeList) - i.index}"></td>
+                                <td>
+                                	<!-- 신규 공지사항 카테고리 뱃지 -->
+                                    <span class="badge bg-warning">N</span>
+                                    <!-- 공지사항 카테고리 뱃지 -->
+                                    <i class="badge rounded-pill bg-primary badge-cate" th:text="${l.noticeCate.noticeCateType}"></i>
+                                    <!-- 공지사항 제목 -->
+                                    <a th:href="@{/notice/noticeDetail(noticeNum=${l.noticeNum})}" th:text="${l.noticeTitle}"></a>
+                                </td>
+                                <td class="text-center" th:text="${l.noticeRegId}"></td>
+                                <td class="text-center" th:text="${#strings.substring(l.noticeRegDate, 0, 10)}"></td>
+                                <td class="text-center" th:text="${l.noticeInqCnt}"></td>
+                            </tr>
+                        </tbody>
+						
 					</table>
 				</div>
 			</div>

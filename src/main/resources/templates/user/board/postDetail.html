@@ -19,11 +19,15 @@
 			<div class="col-lg-8 col-md-10 mx-auto">
 				<div class="post" th:object="${postDetail}">
 					<div class="post-header">
-						<h2 class="post-title" th:text="*{postTitle}">게시물 제목</h2>
-						<!-- 댓글 수가 0보다 큰 경우에만 댓글 수 뱃지 표시 -->
-						<span th:if="${#lists.size(commentList) > 0}"
-							class="badge bg-primary badge-size"
-							th:text="${#lists.size(commentList)}"></span>
+						<!-- align-items-start로 변경 -->
+					    <div class="d-flex align-items-start">
+					    	<i class="badge rounded-pill bg-primary badge-cate me-2" th:text="*{postCate.postCateType}"></i>
+							<h2 class="post-title mb-5" th:text="*{postTitle}">게시물 제목</h2>
+							<!-- 댓글 수가 0보다 큰 경우에만 댓글 수 뱃지 표시 -->
+							<span th:if="${#lists.size(commentList) > 0}"
+								class="badge bg-primary badge-size"
+								th:text="${#lists.size(commentList)}"></span>
+						</div>
 					</div>
 
 					<p class="post-meta">

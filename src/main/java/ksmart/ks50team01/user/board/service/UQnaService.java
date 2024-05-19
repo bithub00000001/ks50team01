@@ -24,7 +24,7 @@ public class UQnaService {
 	 */
 	public List<UQna> getQnaList(){
 		List<UQna> qnaList = uQnaMapper.getQnaList();
-		log.info("1:1문의 조회 결과: {}", qnaList);
+		log.info("1:1문의 조회: {}", qnaList);
 		return qnaList;
 	}
 

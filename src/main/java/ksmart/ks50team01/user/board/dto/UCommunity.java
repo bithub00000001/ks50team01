@@ -24,6 +24,8 @@ public class UCommunity {
 	private String postMdfDate;
 	private String postDelDate;
 	
+	private String postCateName;
+	
 	private String CommentNum;
 	private String CommentRegId;
 	private String CommentContent;

@@ -41,6 +41,7 @@ public class UQnaController {
 		model.addAttribute("qnaDetail", qnaDetail);
 		model.addAttribute("qnaTitle", qnaDetail.getQnaTitle());
 		model.addAttribute("qnaContent", qnaDetail.getQnaContent());
+		model.addAttribute("faqCateType", qnaDetail.getFaqCateType());
 		
 		log.info("qnaNum: {}", qnaNum);
 		log.info("getQnaByQnaNum: {}", qnaDetail);

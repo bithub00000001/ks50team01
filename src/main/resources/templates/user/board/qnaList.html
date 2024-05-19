@@ -53,19 +53,16 @@
 							<!-- 역순으로 순회 -->
 							<tr th:each="l, i : ${qnaList}" th:order="${-i.count}">
 								<!-- 숫자 형태로 번호 출력 -->
-								<td class="text-center"
-									th:text="${#lists.size(qnaList) - i.count + 1}"></td>
-								<td><span class="badge bg-warning">N</span> <!-- QNA 카테고리 뱃지 -->
-									<i class="badge rounded-pill bg-primary badge-cate"
-									th:text="${l.faqCate.faqCateType}"></i> <!-- QNA 제목 --> <a
-									th:href="@{/qna/qnaDetail(qnaNum=${l.qnaNum})}"
-									th:text="${l.qnaTitle}"> </a></td>
-								<td class="text-center"
-									th:text="${#strings.substring(l.qnaRegDate, 0, 10)}"></td>
-
+								<td class="text-center" th:text="${#lists.size(qnaList) - i.count + 1}"></td>
+								<td>
+									<span class="badge bg-warning">N</span>
+									<!-- QNA 카테고리 뱃지 -->
+									<i class="badge rounded-pill bg-primary badge-cate" th:text="${l.faqCate.faqCateType}"></i>
+									<!-- QNA 제목 --> 
+									<a th:href="@{/qna/qnaDetail(qnaNum=${l.qnaNum})}" th:text="${l.qnaTitle}"> </a></td>
+								<td class="text-center" th:text="${#strings.substring(l.qnaRegDate, 0, 10)}"></td>
 								<td class="text-center" th:text="${l.qnaProCate}"></td>
 							</tr>
-
 
 
 							<!-- <tr>

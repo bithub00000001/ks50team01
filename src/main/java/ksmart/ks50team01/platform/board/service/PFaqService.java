@@ -1,5 +1,6 @@
 package ksmart.ks50team01.platform.board.service;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -60,4 +61,27 @@ public class PFaqService {
 		}
 		
 	}
+	
+	
+	
+    // 자주 찾는 질문 등록
+    public void faqWrite(String faqNum) {
+        pFaqMapper.faqWrite(faqNum); 
+	
+	
+    }
+	
+	
+	/**
+	 * 자주찾는 질문 삭제
+	 * @return 
+	 */
+    public void faqDelete(String faqNum) {
+    	pFaqMapper.faqDelete(faqNum);
+    }
+	
+	
+
+
+
 }

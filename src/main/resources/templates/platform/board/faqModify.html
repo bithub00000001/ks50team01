@@ -37,14 +37,27 @@
 									placeholder="ex: admin001" readonly="readonly"></td>
 							</tr>
 							<tr>
+							<!-- 
 								<td><label for="faqCateType">카테고리</label></td>
-								<td><select class="form-control" id="faqModify"
-									name="faqModify" th:value="*{faqCateType}">
-										<option value="account-management">계정 관리</option>
-										<option value="usage-inquiry">이용 문의</option>
-										<option value="suggestion">건의 및 제안</option>
-										<option value="payment-refund">결제 및 환불</option>
-								</select></td>
+								<td>
+									<select class="form-control" id="faqCateNum" name="faqCateNum" th:value="*{faqCateType}">
+										<option value="FAQ_CTGRY_001">계정 관리</option>
+										<option value="FAQ_CTGRY_002">이용 문의</option>
+										<option value="FAQ_CTGRY_003">건의 및 제안</option>
+										<option value="FAQ_CTGRY_004">결제 및 환불</option>
+									</select>
+								</td>  -->
+								
+							<td><label for="faqCateType">카테고리</label></td>
+							<td>
+							<select class="form-control" id="faqCateNum" name="faqCateNum" th:field="*{faqCateNum}">
+							    <option value="FAQ_CTGRY_001" th:selected="*{faqCateNum == 'FAQ_CTGRY_001'}">계정 관리</option>
+							    <option value="FAQ_CTGRY_002" th:selected="*{faqCateNum == 'FAQ_CTGRY_002'}">이용 문의</option>
+							    <option value="FAQ_CTGRY_003" th:selected="*{faqCateNum == 'FAQ_CTGRY_003'}">건의 및 제안</option>
+							    <option value="FAQ_CTGRY_004" th:selected="*{faqCateNum == 'FAQ_CTGRY_004'}">결제 및 환불</option>
+							</select>
+							</td>
+							
 							</tr>
 							<tr>
 								<td><label for="faqTitle">제목</label></td>
@@ -54,7 +67,7 @@
 							<tr>
 								<td><label for="faqContent">내용</label></td>
 								<td><textarea class="form-control" id="faqContent"
-										name="faqContent" rows="5" th:value="*{faqContent}"></textarea></td>
+										name="faqContent" rows="5" th:text="*{faqContent}"></textarea></td>
 							</tr>
 							<tr>
 								<td><label for="faqMdfId">수정자</label></td>
@@ -98,4 +111,15 @@
 		</div>
 	</div>
 </th:block>
+
+<th:block layout:fragment="customJsFIle">
+<script>
+    // 카테고리를 선택할 때마다 해당 값을 postCateNum에 설정
+    document.getElementById("postCate").addEventListener("change", function() {
+        var selectedOption = this.options[this.selectedIndex];
+        document.getElementById("postCateNum").value = selectedOption.value;
+    });
+</script>
+</th:block>
+
 </html>

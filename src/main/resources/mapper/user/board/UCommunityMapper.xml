@@ -102,31 +102,56 @@
     </select>
     
     
-<!-- 	
-    <insert id="postSave" parameterType="map">
+    <!-- 게시글 번호로 해당 게시글의 댓글 수를 조회하는 쿼리 -->
+    <select id="getCommentCntByPostNum" resultType="int" parameterType="string">
+        SELECT 
+        	COUNT(*) 
+        FROM 
+        	POST_COMMENT
+        WHERE 
+        	PST_NO = #{postNum};
+    </select>
+    
+    
+	
+    <insert id="insertPost" parameterType="map">
     	/* 게시글 저장 */
         INSERT INTO 
-        	POST (REG_MBR_ID, PST_CTGRY_NO, PST_TTL, PST_CN)
+        	POST (PST_NO, REG_MBR_ID, PST_CTGRY_NO, PST_TTL, PST_CN, REG_YMD)
         VALUES 
-        	(#{postRegId}, #{postCateNum}, #{postTitle}, #{postContent});
-    </insert> -->
-        	
-<insert id="insertPost" parameterType="map">
-    <!-- 게시글 저장 -->
-    <selectKey keyProperty="postCateNum" resultType="String" order="BEFORE">
+        	(#{postNum}, #{postRegId}, #{postCateNum}, #{postTitle}, #{postContent}, NOW());
+    </insert> 
+    
+    
+    
+    <!-- 게시물 번호 가져오기 -->
+    <select id="getPostNo" resultType="int">
         SELECT 
-        	PST_CTGRY_NO 
-        FROM 
-        	POST_CATEGORY 
-        WHERE 
-        	PST_CTGRY_NM = #{postCateName}
-    </selectKey>
-    INSERT INTO 
-        POST (REG_MBR_ID, PST_CTGRY_NO, PST_TTL, PST_CN)
-    VALUES 
-        (#{postRegId}, #{postCateNum}, #{postTitle}, #{postContent});
-</insert>
+        	MAX(PST_NO) + 1 
+        FROM POST
+    </select>
+    
+    
+    <update id="setPostCode" parameterType="Map">
+	    UPDATE 
+	    	POST
+	    SET 
+	    	PST_NO = CONCAT('PST_', LPAD(#{postNum}, 3, '0'))
+	    WHERE PST_NO = #{postNum};
+	</update>
+        	
 
+
+	<!-- <insert id="insertPost" parameterType="map">
+		INSERT INTO 
+			POST (REG_MBR_ID, PST_CTGRY_NO, PST_TTL, PST_CN)
+		SELECT 
+			#{postRegId}, PST_CTGRY_NO, #{postTitle}, #{postContent}
+		FROM 
+			POST_CATEGORY
+		WHERE 
+			PST_CTGRY_NM = #{postCateName};
+	</insert> -->
    
     
     

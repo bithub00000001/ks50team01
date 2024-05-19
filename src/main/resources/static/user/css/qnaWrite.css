@@ -25,3 +25,7 @@
     margin-left: 10px; /* 삭제 버튼과 파일 이름 사이의 간격 */
     cursor: pointer; /* 클릭 가능성을 나타내기 위해 포인터로 변경 */
 }
+
+.cancle-Btn {
+	margin-right: 15px;
+}

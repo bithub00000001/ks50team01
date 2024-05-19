@@ -17,7 +17,7 @@
 		
 		<!-- 1:1 association -->
 		<association property="faqCate" javaType="PFaq">
-			<id 		property="faqCateNum" 		column="FAQ_CTGRY_NO"/>
+			<id 		property="faqCateNum" 		column="FAQ_CTGRY_NO" />
 			<result 	property="faqRegId" 		column="REG_PF_ID"/>
 			<result 	property="faqCateType" 		column="FAQ_CTGRY_TYPE"/>
 			<result 	property="faqMdfId" 		column="MDFCN_PF_ID"/>
@@ -48,20 +48,42 @@
 	</select>
 	
 	
-	<update id="faqModify" parameterType="PFaq">
+	<insert id="faqWrite" parameterType="PFaq">
+	    <!-- 자주 찾는 질문 등록 -->
+	    INSERT INTO 
+	    	FREQUENTLY_ASKED_QUESTIONS (FAQ_CTGRY_NO, FAQ_TTL, FAQ_CN, REG_PF_ID, ACT_YN, REG_YMD)
+	    VALUES 
+	    	(#{faqCateNum}, #{faqTitle}, #{faqContent}, #{faqRegId}, #{faqAct}, NOW());
+	</insert>
 	
-		UPDATE 
-			FREQUENTLY_ASKED_QUESTIONS AS F
-		INNER JOIN 
-			FAQ_CATEGORY AS C
-		ON 
-			F.FAQ_CTGRY_NO = C.FAQ_CTGRY_NO
-		SET 
-			C.FAQ_CTGRY_TYPE = #{faqCateType}
-		WHERE 
-			F.FAQ_NO = #{faqNum};
-
+	
+	<update id="faqModify" parameterType="PFaq">
+	    UPDATE 
+	        FREQUENTLY_ASKED_QUESTIONS
+	    SET
+	        FAQ_CTGRY_NO = #{faqCateNum},
+	        FAQ_TTL = #{faqTitle},
+	        FAQ_CN = #{faqContent},
+	        MDFCN_PF_ID = #{faqMdfId},
+	        ACT_YN = #{faqAct},
+	        MDFCN_YMD = NOW()
+	    WHERE 
+	        FAQ_NO = #{faqNum};
 	</update>
+		
+	<!-- 
+	<update id="faqModify" parameterType="PFaq">
+    UPDATE 
+    	FREQUENTLY_ASKED_QUESTIONS
+    SET 
+    	FAQ_TTL = #{faqTitle},
+        FAQ_CN = #{faqContent},
+        MDFCN_PF_ID = #{faqMdfId},
+        ACT_YN = #{faqAct},
+        MDFCN_YMD = #{faqMdfDate}
+    WHERE 
+    	FAQ_NO = #{faqNum}
+</update>  -->
 	
 	
 	<select id="getFaqInfoByNum" resultMap="faqResultMap">
@@ -85,6 +107,16 @@
 		WHERE 
 			F.FAQ_NO = #{faqNum};
 	</select>
+	
+	
+	
+	<delete id="faqDelete" parameterType="PFaq">
+		/* 자주찾는질문 삭제 */
+	    DELETE FROM 
+	    	FREQUENTLY_ASKED_QUESTIONS 
+	    WHERE 
+	    	FAQ_NO = #{faqNum};
+	</delete>
 
 	
 </mapper>

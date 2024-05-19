@@ -1,5 +1,6 @@
 package ksmart.ks50team01.user.board.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -25,12 +26,18 @@ public class UNoticeController {
 	@GetMapping({"/",""})
 	public String noticeList(Model model) {
 	    List<UNotice> noticeList = uNoticeService.getNoticeList();
+	    noticeList.sort((p1, p2) -> p2.getNoticeRegDate().compareTo(p1.getNoticeRegDate())); // 최신순으로 정렬
+	    
 	    log.info("noticeList: {}", noticeList);
+	    
 	    model.addAttribute("noticeList", noticeList);
-		
+	    model.addAttribute("currentDate", LocalDate.now()); // 현재 날짜 추가
 		model.addAttribute("title", "공지사항");
+		
 		return "user/board/noticeList";
 	}
+	
+	
 	
 	// 공지사항 상세 조회
 	@GetMapping("/noticeDetail")

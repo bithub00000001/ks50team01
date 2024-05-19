@@ -6,29 +6,32 @@
 <head>
 <title>공지사항 상세 페이지</title>
 <th:block layout:fragment="customCss">
-	<link th:href="@{/user/css/postDetail.css}" rel="stylesheet">
+	<link th:href="@{/user/css/noticeDetail.css}" rel="stylesheet">
 </th:block>
 
 </head>
 
 <th:block layout:fragment="customPageSection">
 	<!-- 게시물 내용을 보여주는 컨테이너 -->
-	<div class="container post-detail-container">
+	<div class="container notice-detail-container">
 		<div class="row">
 			<div class="col-lg-8 col-md-10 mx-auto">
 				<div class="notice" th:object="${noticeDetail}">
-					<div class="post-header">
-						<h2 class="notice-title" th:text="*{noticeTitle}">공지사항 제목</h2>
-					</div>
-
+					<div class="notice-header">
+						<!-- align-items-start로 변경 -->
+					    <div class="d-flex align-items-start">
+					        <i class="badge rounded-pill bg-primary badge-cate me-2" th:text="*{noticeCate.noticeCateType}"></i>
+					        <h2 class="notice-title mb-5" th:text="*{noticeTitle}">공지사항 제목</h2>
+					    </div>
+				    </div>
 					<p class="post-meta">
-						<span th:text="'작성자 : ' + *{noticeRegId}">작성자 아이디</span> <span
-							th:text="'등록일 : ' + *{#strings.substring(noticeRegDate, 0, 10)}">작성일</span>
+						<span th:text="'작성자 : ' + *{noticeRegId}">작성자 아이디</span>
+						<span th:text="'등록일 : ' + *{#strings.substring(noticeRegDate, 0, 10)}">작성일</span>
 						<span th:text="'조회수 : ' + *{noticeInqCnt}">0</span>
 					</p>
 					<!-- 굵은 직선 추가 -->
 					<hr class="my-4">
-					<p class="post-content" th:text="*{noticeContent}">공지사항 내용</p>
+					<p class="notice-content" th:text="*{noticeContent}">공지사항 내용</p>
 
 					<!-- 굵은 직선 추가 -->
 					<hr class="my-4">

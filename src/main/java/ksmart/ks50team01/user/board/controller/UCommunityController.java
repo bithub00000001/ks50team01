@@ -1,7 +1,12 @@
 package ksmart.ks50team01.user.board.controller;
 
+import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,14 +36,23 @@ public class UCommunityController {
 		@GetMapping({"/",""})
 		public String postList(Model model) {
 			List<UCommunity> postList = uCommunityService.getPostList();
-			//List<Integer> commentList = uCommunityService.getCommentCntList(postList);
+			postList.sort((p1, p2) -> p2.getPostRegDate().compareTo(p1.getPostRegDate())); // 최신순으로 정렬
+
 			
+		    // 각 게시글에 대한 댓글 수를 가져와서 모델에 추가
+		    Map<String, Integer> commentCntMap = new HashMap<>();
+		    for (UCommunity post : postList) {
+		        int commentCnt = uCommunityService.getCommentCntByPostNum(post.getPostNum());
+		        commentCntMap.put(post.getPostNum(), commentCnt);
+		    }
+		    
 			model.addAttribute("postList", postList); // postList를 모델에 추가
-			//model.addAttribute("commentList", commentList); // commentCntList를 모델에 추가
+			model.addAttribute("currentDate", LocalDate.now()); // 현재 날짜 추가
+			model.addAttribute("commentCntMap", commentCntMap); // 댓글 수 맵을 모델에 추가
 			model.addAttribute("title", "커뮤니티");
 			return "user/board/postList";
 		}
-
+		
 		
 		
 		// 게시글 상세 조회
@@ -83,32 +97,23 @@ public class UCommunityController {
 								@RequestParam("postCateNum") String postCateNum,
 								@RequestParam("postTitle") String postTitle,
 								@RequestParam("postContent") String postContent,
-								@RequestParam(value = "postFile", required = false) MultipartFile postFile,
 								RedirectAttributes redirectAttributes,
 								Model model) {
-			try {
-	
-				// 게시글 데이터를 서비스로 전달 후 DB에 저장
-				uCommunityService.insertPost(postRegId, postCateNum, postTitle, postContent, postFile);
-	
-		        // 리다이렉트 시 데이터를 전달하기 위해 Flash 속성을 사용
-		        redirectAttributes.addFlashAttribute("postRegId", postRegId);
-		        redirectAttributes.addFlashAttribute("postCateNum", postCateNum);
-		        redirectAttributes.addFlashAttribute("postTitle", postTitle);
-		        redirectAttributes.addFlashAttribute("postContent", postContent);
-	
-	
-				redirectAttributes.addFlashAttribute("success", "게시글이 성공적으로 저장되었습니다.");
-				return "redirect:/community";
-			} catch (Exception e) {
-				redirectAttributes.addFlashAttribute("error", "게시글 저장에 실패하였습니다.");
-	
-				return "redirect:/error";
-	
-				// return "error";
-			}
-		}
-	
+	        try {
+	            log.info("postRegId: {}, postCateNum: {}, postTitle: {}, postContent: {}", 
+	                      postRegId, postCateNum, postTitle, postContent);
+
+	            uCommunityService.insertPost(postRegId, postCateNum, postTitle, postContent);
+
+	            redirectAttributes.addFlashAttribute("success", "게시글이 성공적으로 저장되었습니다.");
+	            return "redirect:/community";
+	        } catch (Exception e) {
+	            log.error("게시글 저장 실패", e);
+	            redirectAttributes.addFlashAttribute("error", "게시글 저장에 실패하였습니다.");
+	            return "redirect:/error";
+	            
+	        }
+	    }
 		
 		// 게시글 작성 폼 이동
 		@GetMapping("/postWrite")
@@ -120,22 +125,23 @@ public class UCommunityController {
 			return "user/board/postWrite";
 		}
 	
-
-	
-	
-
-
-	
 		
-		/*	//게시글 조회수 증가
-			@PostMapping("/increaseViewCount")
-			public String increaseViewCount(@RequestParam("postNum")
-			String postNum) {
-				uCommunityService.increaseViewCount(postNum);
-				return "redirect:/postDetail"; // 증가된 조회수를 반영한 게시물 상세 페이지로 리다이렉트
-			}*/
+		
+		@PostMapping("/generateCode")
+		public ResponseEntity<String> generatePostCode() {
+		    try {
+		        // 게시물 서비스를 호출하여 새로운 게시물 코드를 생성합니다.
+		        String postCode = uCommunityService.generatePostCode(0);
+		        return new ResponseEntity<>("게시물 코드가 생성되었습니다: " + postCode, HttpStatus.OK);
+		    } catch (Exception e) {
+		        // 게시물 코드 생성에 실패한 경우 예외를 처리합니다.
+		        return new ResponseEntity<>("게시물 코드 생성에 실패했습니다. 에러 메시지: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		    }
+		}
 	
-		// 답글 저장
+	
+	
+		// 댓글 작성
 		@PostMapping("/replySave")
 		public String replySave(String replyContent) {
 			// 클라이언트로부터 받은 답글을 서비스에 전달하여 저장하고 결과를 반환
