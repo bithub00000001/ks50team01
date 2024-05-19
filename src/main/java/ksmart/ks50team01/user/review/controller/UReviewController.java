@@ -105,25 +105,7 @@ public class UReviewController {
 			return "redirect:/user/review/list";
 		}
 	
-	
 
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		
 		
 		

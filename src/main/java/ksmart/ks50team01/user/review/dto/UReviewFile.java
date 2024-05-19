@@ -11,5 +11,5 @@ public class UReviewFile {
 	private String reviewFilePath;//이미지주소
 	private String reviewFileDate;//작성일자
 	private String reviewFileNewName;//새로운 이미지 이름
-	
+	private int reviewFileSize; //파일 크기
 }

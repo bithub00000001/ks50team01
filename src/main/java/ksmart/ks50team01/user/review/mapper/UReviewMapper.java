@@ -13,16 +13,7 @@ import ksmart.ks50team01.user.review.dto.UReviewFile;
 @Mapper
 public interface UReviewMapper {
 	
-	//파일을 추가하는 기능
-	public int addFile(List<UReviewFile> fileList); 
-	//모든 파일 정보를 가져오는 기능
-	public List<UReviewFile> getFileList();
-	//특정 파일의 정보를 가져오는 기능
-	public UReviewFile getFileInfoByIdx(String fileIdx);
-	
-	
 
-	
 	// 가장 큰 PRCHS_REV_CD 값을 조회하는 메서드 추가
     String getMaxPrchsRevCd();
 	
