@@ -108,13 +108,30 @@ public class PFaqController {
 	// 자주찾는 질문 삭제 POST 요청
 	@PostMapping("/faqDelete")
 	public String faqDelete(@RequestParam String faqNum, Model model) {
-		
+	    
 		pFaqService.faqDelete(faqNum);
 		model.addAttribute("title", "자주찾는 질문 삭제");
 		model.addAttribute("faqNum", faqNum);
 		
 		return "redirect:/platform/board/faqList";
 	}
+	
+	// 자주찾는 질문 삭제
+	@GetMapping("/faqDelete")
+	public String faqDeletePage(@RequestParam String faqNum, Model model) {
+		
+		List<PFaq> faqList = pFaqService.getFaqList();
+		pFaqService.faqDelete(faqNum);
+		
+		model.addAttribute("faqList", faqList);
+		model.addAttribute("faqNum", faqNum);
+		model.addAttribute("title", "자주찾는 질문 삭제");
+		
+		return "redirect:/platform/board/faqList";
+	}
+	
+	
+	
 
 	
 	
