@@ -176,7 +176,7 @@
 										<a th:href="@{/platform/board/faqModify(faqNum=${l.faqNum})}">수정</a>
 									</td>
 									<td>
-										<a th:href="@{/platform/board/faqDelete(faqNum=${l.faqNum})}">삭제</a>
+										<a href="#" th:data-faq-num="${l.faqNum}" th:onclick="confirmDelete(this)">삭제</a>
 									</td>
 								</tr>
 							</tbody>
@@ -210,6 +210,43 @@
 	    <script th:src="@{/platform/vendors/jszip/dist/jszip.min.js}"></script>
 	    <script th:src="@{/platform/vendors/pdfmake/build/pdfmake.min.js}"></script>
 	    <script th:src="@{/platform/vendors/pdfmake/build/vfs_fonts.js}"></script>
+
+
+<!-- 자주찾는 질문 삭제 -->	    
+<script th:inline="javascript">
+    function confirmDelete(element) {
+        var faqNum = element.getAttribute('data-faq-num');
+        var confirmation = confirm("정말로 삭제하시겠습니까?");
+        
+        if (confirmation) {
+            // 확인을 누르면 삭제 동작을 수행하기 위해 POST 요청
+            deleteFaq(faqNum);
+        } else {
+            console.log("삭제 취소됨: " + faqNum);
+        }
+    }
+
+    function deleteFaq(faqNum) {
+        // POST 요청을 보내기 위해 form을 생성
+        var form = document.createElement('form');
+        form.setAttribute('method', 'post');
+        form.setAttribute('action', '/platform/board/faqDelete');
+        form.style.display = 'hidden'; // form을 보이지 않도록 설정
+
+        // faqNum을 form에 추가
+        var input = document.createElement('input');
+        input.setAttribute('type', 'hidden');
+        input.setAttribute('name', 'faqNum');
+        input.setAttribute('value', faqNum);
+        form.appendChild(input);
+
+        // form을 body에 추가하고 submit
+        document.body.appendChild(form);
+        form.submit();
+    }
+</script>
+	    
+	    
 	</th:block>
 	
 	<!-- custom js file start -->

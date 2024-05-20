@@ -1,14 +1,12 @@
 package ksmart.ks50team01.user.board.service;
 
-import java.io.File;
 import java.util.List;
-import java.util.UUID;
-
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import ksmart.ks50team01.user.board.dto.UCategory;
 import ksmart.ks50team01.user.board.dto.UCommunity;
 import ksmart.ks50team01.user.board.mapper.UCommunityMapper;
 import lombok.RequiredArgsConstructor;
@@ -35,8 +33,8 @@ public class UCommunityService {
 	
 	
 	
-	public List<String> getPostCateList(){
-		List<String> postCateList = uCommunityMapper.getPostCateList();
+	public List<UCategory> getPostCateList(){
+		List<UCategory> postCateList = uCommunityMapper.getPostCateList();
 		
 		log.info("게시글 카테고리 조회 결과: {}", postCateList);
 		return postCateList;
@@ -119,25 +117,21 @@ public class UCommunityService {
     
     
     // 게시글 작성
-    public void insertPost(String postRegId, String postCateNum, String postTitle, String postContent) {
+    public void insertPost(UCommunity uCommunity) {
         // 게시물을 데이터베이스에 삽입하기 전에 게시물 코드를 생성합니다.
-        String postCode = generatePostCode(uCommunityMapper.getPostNo());
-        uCommunityMapper.setPostCode(postCode); // 생성된 게시물 코드를 설정합니다.
+        //String postCode = generatePostCode(uCommunityMapper.getPostNo());
+        //uCommunityMapper.setPostCode(postCode); // 생성된 게시물 코드를 설정합니다.
         
-    	
-    	
-    	// 게시글 저장 로직
-        UCommunity post = new UCommunity();
-        post.setPostRegId(postRegId);
-        post.setPostCateNum(postCateNum);
-        post.setPostTitle(postTitle);
-        post.setPostContent(postContent);
-
         // 게시글 DB에 저장
-        uCommunityMapper.insertPost(post);
+        uCommunityMapper.insertPost(uCommunity);
     }
 
 	
+    // 가장 큰 PST_NO_NUMERIC 값을 조회하는 메서드
+    public String getMaxPstNoNumeric() {
+        return uCommunityMapper.getMaxPstNoNumeric();
+    }
+    
 
     // 게시물 코드 생성 메서드
     public String generatePostCode(int postNum) {
@@ -183,6 +177,12 @@ public class UCommunityService {
 
 	public String replySave(String replyContent) {
 		return uCommunityMapper.replySave(replyContent);
+	}
+
+
+
+	public void setPostCode(String postNum) {
+		
 	}
 
 

@@ -2,10 +2,10 @@ package ksmart.ks50team01.user.board.mapper;
 
 import java.util.List;
 
-
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.web.multipart.MultipartFile;
 
+import ksmart.ks50team01.user.board.dto.UCategory;
 import ksmart.ks50team01.user.board.dto.UCommunity;
 
 
@@ -29,11 +29,11 @@ public interface UCommunityMapper {
 	
 	//void insertPost(String postRegId, String postCateNum, String postTitle, String postContent);
 	
-	void insertPost(String postRegId, String postCateNum, String postTitle, String postContent);
+	void insertPost(String pstNoNumeric, String postRegId, String postCateNum, String postTitle, String postContent);
 	
 	
 	//게시글 카테고리 조회
-	List<String> getPostCateList();
+	List<UCategory> getPostCateList();
 	
 	
 	// 댓글 조회
@@ -58,6 +58,8 @@ public interface UCommunityMapper {
 	int getPostNo();
 
 	void setPostCode(String postCode);
+
+	String getMaxPstNoNumeric();
 
 
 	
