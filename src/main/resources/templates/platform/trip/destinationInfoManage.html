@@ -68,12 +68,14 @@
                                 <th>상세 보기</th>
                                 <th>등록 일자</th>
                                 <th>수정 일자</th>
+                                <th>상세정보 업데이트</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr th:unless="${destinationList != null}">
-                                <td colspan="5" class="center-text">등록된 지역 코드가 없습니다.</td>
+                                <td colspan="5" class="center-text">등록된 여행 정보가 없습니다.</td>
                             </tr>
+
                             <tr th:if="${destinationList != null}" th:each="list: ${destinationList}">
                                 <td th:text="${list.destinationNum}">번호</td>
                                 <td th:text="${list.destinationTitle}">제목</td>
@@ -87,9 +89,10 @@
                                 <td th:text="${list.destinationLongitude}">경도</td>
                                 <td th:text="${list.destinationLatitude}">위도</td>
                                 <td th:text="${list.destinationContentId}">컨텐츠 ID</td>
-                                <td><a th:href="@{/platform/plan/destination/detail(contentId=${list.destinationContentId})}">상세보기</a></td>
+                                <td><a th:href="@{/platform/plan/destination/detail(contentId=${list.destinationContentId}, contentTypeId=${list.destinationContentTypeId})}">상세보기</a></td>
                                 <td th:text="${list.destinationRegDate}">등록 일자</td>
                                 <td th:text="${list.destinationModDate}">수정 일자</td>
+                                <td><button type="button" class="btn btn-primary btn-md data-update"  th:data-content-id="${list.destinationContentId}" th:data-content-type-id="${list.destinationContentTypeId}">업데이트</button></td>
                             </tr>
                         </tbody>
                     </table>
@@ -143,7 +146,8 @@
                         {'title': '컨텐츠 ID', 'data': 'destinationContentId'},
                         {'title': '상세 보기', 'data': 'destinationContentId'},
                         {'title': '등록 일자', 'data': 'destinationRegDate'},
-                        {'title': '수정 일자', 'data': 'destinationModDate'}
+                        {'title': '수정 일자', 'data': 'destinationModDate'},
+                        {'title': '상세정보 업데이트', 'data': 'destinationContentTypeId'}
                     ],
                     32 : [
                         {'title': '번호', 'data': 'destinationNum'},
@@ -160,7 +164,8 @@
                         {'title': '컨텐츠 ID', 'data': 'destinationContentId'},
                         {'title': '상세 보기', 'data': 'destinationContentId'},
                         {'title': '등록 일자', 'data': 'destinationRegDate'},
-                        {'title': '수정 일자', 'data': 'destinationModDate'}
+                        {'title': '수정 일자', 'data': 'destinationModDate'},
+                        {'title': '상세정보 업데이트', 'data': 'destinationContentTypeId'}
                     ],
                     39 : [
                         {'title': '번호', 'data': 'destinationNum'},
@@ -177,7 +182,8 @@
                         {'title': '컨텐츠 ID', 'data': 'destinationContentId'},
                         {'title': '상세 보기', 'data': 'destinationContentId'},
                         {'title': '등록 일자', 'data': 'destinationRegDate'},
-                        {'title': '수정 일자', 'data': 'destinationModDate'}
+                        {'title': '수정 일자', 'data': 'destinationModDate'},
+                        {'title': '상세정보 업데이트', 'data': 'destinationContentTypeId'}
                     ]
                 }
 
@@ -204,21 +210,55 @@
                                 targets: colArr.length-3,
                                 data: 'description',
                                 render: function (data, type, row, meta) {
-                                    const button = `<a href="/platform/plan/destination/detail?contentId=${data}">상세보기</a>`;
+                                    const contentId = row['destinationContentId'];  // 'destinationContentId' 컬럼에서 ID를 가져옴
+                                    const contentTypeId = json.dataList[meta.row].destinationContentTypeId;
+                                    const button = `<a href="/platform/plan/destination/detail?contentId=${contentId}&contentTypeId=${contentTypeId}"">상세보기</a>`;
+                                    return button;
+                                }
+                            },
+                            {
+                                targets: colArr.length - 1,
+                                data: 'description',
+                                render: function (data, type, row, meta) {
+                                    const contentId = row['destinationContentId'];  // 'destinationContentId' 컬럼에서 ID를 가져옴
+                                    const contentTypeId = json.dataList[meta.row].destinationContentTypeId;
+                                    const button = `<button type="button" class="btn btn-primary btn-md data-update" data-content-id="${contentId}" data-content-type-id="${contentTypeId}">업데이트</button>`;
                                     return button;
                                 }
                             }
                         ]
                     }
-
                     $('#dataTbContent').dataTable(dataTableOption);
                 })
             }
+        });
+    </script>
 
+    <script th:inline="javascript">
+        $(document).on('click', '.data-update', function () {
+
+            //const contentTypeId = $('.contentTypeId').val().trim();
+            //const contentId = $('.contentId').val().trim();
+            const contentTypeId = this.dataset.contentTypeId.trim();
+            const contentId = this.dataset.contentId.trim();
+
+            const request = $.ajax({
+                url: '/platform/plan/destination/update',
+                method: 'POST', // 또는 GET, PUT 등 HTTP 메서드 선택
+                data : {contentId, contentTypeId},
+                dataType: 'json',
+                success: function (response) {
+                    // 성공적으로 응답을 받았을 때 실행할 코드
+                    console.log('결과: ', response);
+                },
+                error: function (xhr, status, error) {
+                    // 오류 발생 시 실행할 코드
+                    console.error('Error:', error);
+                }
+            });
 
 
         });
-
     </script>
 </th:block>
 </html>

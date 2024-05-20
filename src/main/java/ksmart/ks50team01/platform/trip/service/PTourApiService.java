@@ -25,9 +25,12 @@ public interface PTourApiService {
 	Mono<List<PTourApi>> getTourInfo(String apiKey, int contentTypeId, int numOfRows, int pageNo, String areaCode, Optional<String> optionalSigunguCode);
 
 	// 여행지 상세 정보 Tour API에서 호출
-	Mono<PTourDetail> getTourDetail(String apiKey, String contentId, String contentTypeId, Map<String, String> optionalParams);
+	Mono<PTourDetail> getTourDetail(String apiKey, String contentId, String contentTypeId);
 
 	// 여행지 정보 업서트 메서드
 	void upsertTourInfoList(List<PTourApi> tourInfoList);
+
+	//
+	void upsertTourDetail(PTourDetail tourDetail);
 }
 

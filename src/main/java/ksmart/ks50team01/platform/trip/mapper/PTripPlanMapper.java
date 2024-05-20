@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import ksmart.ks50team01.platform.trip.dto.PTourApi;
+import ksmart.ks50team01.platform.trip.dto.PTourDetail;
 import ksmart.ks50team01.platform.trip.dto.PTripPlan;
 
 @Mapper
@@ -32,6 +33,10 @@ public interface PTripPlanMapper {
 
 	// 관광 타입에 따른 여행지 정보 조회 메서드
 	List<PTourApi> getDestinationListByContentType(String contentTypeId);
+
+	PTourDetail getPTourDetailByContentId(String contentId, String contentTypeId);
+
+	PTourApi getSigunguNameBySigunCode(String sigunguCode);
 
 	// 여행지 세부 정보 조회 메서드
 

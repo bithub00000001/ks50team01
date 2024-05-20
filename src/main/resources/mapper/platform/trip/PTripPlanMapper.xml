@@ -70,6 +70,28 @@
         <result      column="MDFCN_YMD"                     property="destinationModDate"/>
     </resultMap>
 
+    <resultMap id="destinationDetailMap" type="pTourDetail">
+        <id     column="tour_detail_content_id"      property="contentId"/>
+        <result column="tour_detail_content_type_id" property="contentTypeId"/>
+        <result column="tour_detail_title"           property="title"/>
+        <result column="tour_detail_homepage"        property="homepage"/>
+        <result column="tour_detail_first_image"     property="firstImage"/>
+        <result column="tour_detail_second_image"    property="secondImage"/>
+        <result column="area_code"                   property="areaCode"/>
+        <result column="sigungu_code"                property="sigunguCode"/>
+        <result column="tour_detail_first_addr"      property="mainAddr"/>
+        <result column="tour_detail_second_addr"     property="detailAddr"/>
+        <result column="tour_detail_zipcode"         property="zipcode"/>
+        <result column="tour_detail_tel_num"         property="tel"/>
+        <result column="tour_detail_tel_name"        property="telName"/>
+        <result column="tour_detail_longitude"       property="longitude"/>
+        <result column="tour_detail_latitude"        property="latitude"/>
+        <result column="tour_detail_mlevel"          property="mapLevel"/>
+        <result column="tour_detail_overview"        property="overview"/>
+        <result column="REG_YMD"                     property="regDate"/>
+        <result column="MDFCN_YMD"                   property="modDate"/>
+    </resultMap>
+
 
     <update id="updateTripPlan" parameterType="pTripPlan">
         /* 여행 계획 업데이트 */
@@ -248,5 +270,36 @@
             TOUR_INFO_FROM_API
         where
             destination_content_type_id = #{contentTypeId}
+    </select>
+    <select id="getPTourDetailByContentId" resultMap="destinationDetailMap">
+        SELECT
+            tour_detail_content_id,
+            tour_detail_content_type_id,
+            tour_detail_title,
+            tour_detail_homepage,
+            tour_detail_first_image,
+            tour_detail_second_image,
+            area_code,
+            sigungu_code,
+            tour_detail_first_addr,
+            tour_detail_second_addr,
+            tour_detail_zipcode,
+            tour_detail_tel_num,
+            tour_detail_tel_name,
+            tour_detail_longitude,
+            tour_detail_latitude,
+            tour_detail_mlevel,
+            tour_detail_overview,
+            REG_YMD,
+            MDFCN_YMD
+        FROM
+            TOUR_DETAIL_FROM_API
+        WHERE
+            tour_detail_content_id = #{contentId}
+            AND
+            tour_detail_content_type_id = #{contentTypeId}
+    </select>
+    <select id="getSigunguNameBySigunCode" resultType="PTourApi">
+
     </select>
 </mapper>

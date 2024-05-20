@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.springframework.stereotype.Service;
@@ -35,7 +36,16 @@ public class PTourApiServiceImpl implements PTourApiService {
 	private final PTripPlanService pTripPlanService;
 	private final WebClient tourApiWebClient;
 
-	// API 호출 후 응답을 처리하는 일반화된 메서드
+	/**
+	 * Tour API와 상호작용해 데이터를 가져오는 일반화 된 메서드
+	 * @param apiKey 공공데이터포털 디코딩 API 키
+	 * @param path API 엔드 포인트 경로
+	 * @param queryParams 쿼리 파라미터를 Map 형태로 가공
+	 * @param responseClass 응답 데이터를 매핑할 DTO 클래스
+	 * @param optionalAreaCode 선택적으로 전달되는 지역 코드
+	 * @return 응답 데이터를 매핑한 DTO 객체 클래스
+	 * @param <T> DTO 클래스
+	 */
 	private <T> Mono<List<T>> fetchFromApi(String apiKey, String path, Map<String, String> queryParams, Class<T> responseClass, Optional<String> optionalAreaCode) {
 		return tourApiWebClient.get()
 			.uri(uriBuilder -> buildUri(uriBuilder, path, queryParams, apiKey))
@@ -47,7 +57,15 @@ public class PTourApiServiceImpl implements PTourApiService {
 				return Mono.error(error);
 			});
 	}
-	// URI 생성 메서드
+
+	/**
+	 * API 요청을 위한 URI를 생성하는 메서드
+	 * @param uriBuilder URI 빌더
+	 * @param path API 엔드포인트 경로
+	 * @param queryParams 쿼리 파라미터를 Map 형태로 가공
+	 * @param apiKey 공공데이터포털 디코딩 API 키
+	 * @return 생성된 URI
+	 */
 	private URI buildUri(UriBuilder uriBuilder, String path, Map<String, String> queryParams, String apiKey) {
 		UriBuilder builder = uriBuilder
 			.path(path)
@@ -60,8 +78,17 @@ public class PTourApiServiceImpl implements PTourApiService {
 		return builder.build();
 	}
 
-	// API 응답 처리 메서드
-	private <T> Mono<List<T>> processApiResponse(JsonNode jsonNode, Class<T> responseClass, Optional<String> optionalAreaCode, String path) {
+	/**
+	 * API 응답을 처리하는 메서드
+	 * 응답 유효성을 검사하고, 유효한 경우 JSON 데이터를 DTO 객체로 매핑
+	 * @param jsonNode API에서 응답받은 JSON
+	 * @param responseClass 응답 데이터를 매핑할 DTO 클래스
+	 * @param optionalAreaCode 선택적으로 전달되는 지역 코드
+	 * @param path API 엔드포인트 경로
+	 * @return 응답 데이터를 매핑한 DTO 객체 리스트
+	 * @param <T> DTO 클래스
+	 */
+	/*private <T> Mono<List<T>> processApiResponse(JsonNode jsonNode, Class<T> responseClass, Optional<String> optionalAreaCode, String path) {
 		return Mono.justOrEmpty(jsonNode)
 			.flatMap(node -> {
 				String resultMsg = node.path("response").path("header").path("resultMsg").asText();
@@ -75,12 +102,12 @@ public class PTourApiServiceImpl implements PTourApiService {
 				}
 
 				List<T> responseList = new ArrayList<>();
-				itemsNode.forEach(itemNode -> {
+				itemsNode.forEach(item -> {
 					List<T> mappedObjects;
 					if ("/areaCode1".equals(path)) {
-						mappedObjects = mapToAreaDataResponseObject(itemNode, responseClass, optionalAreaCode);
+						mappedObjects = mapToAreaDataResponseObject(item, responseClass, optionalAreaCode);
 					} else {
-						mappedObjects = mapToResponseObject(itemNode, responseClass);
+						mappedObjects = mapToResponseObject(item, responseClass);
 					}
 					if (mappedObjects != null) {
 						responseList.addAll(mappedObjects);
@@ -88,9 +115,81 @@ public class PTourApiServiceImpl implements PTourApiService {
 				});
 				return Mono.just(responseList);
 			});
+	}*/
+	/**
+	 * API 응답을 처리하는 메서드
+	 * 응답 유효성을 검사하고, 유효한 경우 JSON 데이터를 DTO 객체로 매핑
+	 *
+	 * @param jsonNode API 응답 JSON
+	 * @param responseClass 응답 데이터를 매핑할 DTO 클래스
+	 * @param optionalAreaCode 선택적으로 전달되는 지역 코드
+	 * @param path API 엔드포인트 경로
+	 * @return 응답 데이터를 매핑한 DTO 객체 리스트
+	 */
+	private <T> Mono<List<T>> processApiResponse(JsonNode jsonNode, Class<T> responseClass, Optional<String> optionalAreaCode, String path) {
+		return Mono.justOrEmpty(jsonNode)
+			.flatMap(this::validateApiResponse)
+			.flatMap(node -> mapJsonToDto(node, responseClass, optionalAreaCode, path));
 	}
 
+	/**
+	 * API 응답의 유효성을 검사하는 메서드
+	 * 응답 코드가 "OK"가 아닌 경우 예외를 발생
+	 *
+	 * @param jsonNode API 응답 JSON
+	 * @return 유효한 경우 API 응답 JSON
+	 */
+	private Mono<JsonNode> validateApiResponse(JsonNode jsonNode) {
+		String resultMsg = jsonNode.path("response").path("header").path("resultMsg").asText();
+		if (!"OK".equals(resultMsg)) {
+			return Mono.error(new RuntimeException("API Response Error: " + resultMsg));
+		}
+		return Mono.just(jsonNode);
+	}
+
+	/**
+	 * API 응답 JSON을 DTO 객체로 매핑하는 메서드
+	 *
+	 * @param jsonNode API 응답 JSON
+	 * @param responseClass 응답 데이터를 매핑할 DTO 클래스
+	 * @param optionalAreaCode 선택적으로 전달되는 지역 코드
+	 * @param path API 엔드포인트 경로
+	 * @return 응답 데이터를 매핑한 DTO 객체 리스트
+	 */
+	private <T> Mono<List<T>> mapJsonToDto(JsonNode jsonNode, Class<T> responseClass, Optional<String> optionalAreaCode, String path) {
+		JsonNode itemsNode = jsonNode.path("response").path("body").path("items").path("item");
+		if (!itemsNode.isArray()) {
+			return Mono.error(new RuntimeException("Invalid API Response: items is not an array"));
+		}
+
+		List<T> responseList = new ArrayList<>();
+		itemsNode.forEach(item -> {
+			List<T> mappedObjects;
+			if ("/areaCode1".equals(path)) {
+				mappedObjects = mapToAreaDataResponseObject(item, responseClass, optionalAreaCode);
+			} else {
+				mappedObjects = mapToResponseObject(item, responseClass);
+			}
+			if (mappedObjects != null) {
+				responseList.addAll(mappedObjects);
+			}
+		});
+		return Mono.just(responseList);
+	}
+
+
+
 	// "/areaCode1" 경로에서 호출할 데이터 변환 메서드
+
+	/**
+	 * JSON 노드를 지역 데이터 DTO로 매핑하는 메서드
+	 * 현재는 같은 DTO 클래스를 사용중이나 나중에 클래스를 분리할 때도 작동 되도록 제네릭 사용
+	 * @param itemNode JSON 노드
+	 * @param responseClass 응답 데이터를 매핑할 DTO 클래스
+	 * @param optionalAreaCode 선택적으로 전달되는 지역 코드
+	 * @return 매핑된 DTO 객체 리스트
+	 * @param <T> DTO 클래스
+	 */
 	private <T> List<T> mapToAreaDataResponseObject(JsonNode itemNode, Class<T> responseClass, Optional<String> optionalAreaCode) {
 		return optionalAreaCode.map(areaCode -> createSigunguDataListFromJson(itemNode, areaCode).stream()
 			.map(responseClass::cast)
@@ -100,6 +199,14 @@ public class PTourApiServiceImpl implements PTourApiService {
 	}
 
 	// JsonNode를 응답 객체로 변환하는 메서드
+
+	/**
+	 * JSON 노드를 관광 데이터 DTO로 매핑하는 메서드
+	 * @param itemNode JSON 노드
+	 * @param responseClass 응답 데이터를 매핑할 DTO 클래스
+	 * @return 매핑된 DTO 객체 리스트
+	 * @param <T> DTO 클래스 타입
+	 */
 	private <T> List<T> mapToResponseObject(JsonNode itemNode, Class<T> responseClass) {
 		if (responseClass == PTourApi.class) {
 			List<T> result = new ArrayList<>();
@@ -145,10 +252,19 @@ public class PTourApiServiceImpl implements PTourApiService {
 		tourDetail.setContentTypeId(getJsonNodeText(itemNode, "contenttypeid"));
 		tourDetail.setTitle(getJsonNodeText(itemNode, "title"));
 		tourDetail.setTel(getJsonNodeText(itemNode, "tel"));
+		tourDetail.setTelName(getJsonNodeText(itemNode, "telname"));
 		tourDetail.setHomepage(getJsonNodeText(itemNode, "homepage"));
 		tourDetail.setFirstImage(getJsonNodeText(itemNode, "firstimage"));
 		tourDetail.setSecondImage(getJsonNodeText(itemNode, "firstimage2"));
+		tourDetail.setAreaCode(getJsonNodeText(itemNode, "areacode"));
+		tourDetail.setSigunguCode(getJsonNodeText(itemNode, "sigungucode"));
+		tourDetail.setMainAddr(getJsonNodeText(itemNode, "addr1"));
+		tourDetail.setDetailAddr(getJsonNodeText(itemNode, "addr2"));
+		tourDetail.setZipcode(getJsonNodeText(itemNode, "zipcode"));
+		tourDetail.setOverview(getJsonNodeText(itemNode, "overview"));
 		tourDetail.setMapLevel(getJsonNodeText(itemNode, "mlevel"));
+		tourDetail.setLongitude(getJsonNodeDouble(itemNode, "mapx"));
+		tourDetail.setLatitude(getJsonNodeDouble(itemNode, "mapy"));
 		return tourDetail;
 	}
 
@@ -209,7 +325,13 @@ public class PTourApiServiceImpl implements PTourApiService {
 		return Collections.singletonList(pTourApi);
 	}
 
-
+	/**
+	 * 지역 코드 데이터를 가져오는 메서드
+	 * 지역 코드가 없으면 지역 코드, 지역 코드가 있다면 시군 코드
+	 * @param apiKey 공공데이터포털 디코딩 키
+	 * @param optionalAreaCode 선택적으로 전달되는 지역 코드
+	 * @return 지역 코드 데이터를 매핑한 PTourApi DTO 객체 리스트
+	 */
 	@Override
 	public Mono<List<PTourApi>> getAreaData(String apiKey, Optional<String> optionalAreaCode) {
 		Map<String, String> queryParams = new HashMap<>();
@@ -220,11 +342,20 @@ public class PTourApiServiceImpl implements PTourApiService {
 		return fetchFromApi(apiKey, "/areaCode1", queryParams, PTourApi.class, optionalAreaCode);
 	}
 
+	/**
+	 * 지역 코드 데이터를 가져오는 메서드(지역 코드가 없는 경우)
+	 * @param apiKey 공공데이터포털 디코딩 키
+	 * @return 지역 코드 데이터를 매핑한 PTourApi DTO 클래스
+	 */
 	@Override
 	public Mono<List<PTourApi>> getAreaData(String apiKey) {
 		return getAreaData(apiKey, Optional.empty());
 	}
 
+	/**
+	 * 지역 코드 데이터를 DB에 업서트 메서드
+	 * @param apiKey 공공데이터포털 디코딩 키
+	 */
 	@Override
 	public void upsertAreaData(String apiKey) {
 		log.info("upsertAreaData apiKey: {}", apiKey);
@@ -232,13 +363,15 @@ public class PTourApiServiceImpl implements PTourApiService {
 		Mono<List<PTourApi>> areaDataMono = getAreaData(apiKey);
 		areaDataMono.subscribe(areaData -> {
 			log.info("Tour API 지역 코드 데이터 조회: {}", areaData);
-
 			areaData.forEach(pTourApiMapper::upsertAreaCode);
-
 			log.info("=== upsertAreaData Method exit ===");
 		});
 	}
 
+	/**
+	 * 시군구 코드 데이터를 DB에 업서트 메서드
+	 * @param apiKey 공공데이터포털 디코딩 키
+	 */
 	@Override
 	public void upsertSigunguData(String apiKey) {
 		log.info("upsertSigunguData apiKey: {}", apiKey);
@@ -258,6 +391,16 @@ public class PTourApiServiceImpl implements PTourApiService {
 		});
 	}
 
+	/**
+	 * 여행지 정보 데이터를 가져오는 메서드
+	 * @param apiKey 공공데이터포탈 개인 디코딩 키
+	 * @param contentTypeId 컨텐츠 유형 ID
+	 * @param numOfRows 가져올 데이터 수
+	 * @param pageNo 페이지 번호
+	 * @param areaCode 지역 코드
+	 * @param optionalSigunguCode 선택적으로 전달되는 시군구 코드
+	 * @return 여행지 정보 데이터를 매핑한 PTourApi DTO 객체 리스트
+	 */
 	@Override
 	public Mono<List<PTourApi>> getTourInfo(String apiKey, int contentTypeId, int numOfRows, int pageNo,
 		String areaCode, Optional<String> optionalSigunguCode) {
@@ -271,21 +414,44 @@ public class PTourApiServiceImpl implements PTourApiService {
 		return fetchFromApi(apiKey, "/areaBasedList1", queryParams, PTourApi.class, Optional.empty());
 	}
 
+	/**
+	 * 여행지 상세 정보 데이터를 가져오는 메서드
+	 * @param apiKey 공공데이터 디코딩 키
+	 * @param contentId 컨텐츠 ID
+	 * @param contentTypeId 컨텐츠 유형 ID
+	 * @return 여행지 상세 정보 데이터를 매핑한 PTourDetail DTO 객체
+	 */
 	@Override
-	public Mono<PTourDetail> getTourDetail(String apiKey, String contentId, String contentTypeId, Map<String, String> optionalParams) {
-		Map<String, String> queryParams = new HashMap<>(optionalParams);
+	public Mono<PTourDetail> getTourDetail(String apiKey, String contentId, String contentTypeId) {
+		Map<String, String> queryParams = new HashMap<>();
 		queryParams.put("contentId", contentId);
 		queryParams.put("contentTypeId", contentTypeId);
+		queryParams.put("defaultYN","Y");
+		queryParams.put("firstImageYN","Y");
+		queryParams.put("areacodeYN","Y");
+		queryParams.put("addrinfoYN","Y");
+		queryParams.put("mapinfoYN","Y");
+		queryParams.put("overviewYN","Y");
 
 		return fetchFromApi(apiKey, "/detailCommon1", queryParams, PTourDetail.class, Optional.empty())
 			.flatMap(details -> details.isEmpty() ? Mono.empty() : Mono.just(details.get(0)));
 	}
 
+	/**
+	 * 여행지 정보 데이터를 DB에 업서트 메서드
+	 * @param tourInfoList 여행지 정보 데이터 리스트
+	 */
 	@Override
 	public void upsertTourInfoList(List<PTourApi> tourInfoList) {
 		for (PTourApi tourInfo : tourInfoList) {
 			pTourApiMapper.upsertTourInfo(tourInfo);
 		}
 	}
+
+	@Override
+	public void upsertTourDetail(PTourDetail tourDetail) {
+		pTourApiMapper.upsertTourDetail(tourDetail);
+	}
+
 
 }

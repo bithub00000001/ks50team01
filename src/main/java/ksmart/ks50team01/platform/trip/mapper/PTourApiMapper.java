@@ -3,6 +3,7 @@ package ksmart.ks50team01.platform.trip.mapper;
 import org.apache.ibatis.annotations.Mapper;
 
 import ksmart.ks50team01.platform.trip.dto.PTourApi;
+import ksmart.ks50team01.platform.trip.dto.PTourDetail;
 
 @Mapper
 public interface PTourApiMapper {
@@ -14,6 +15,8 @@ public interface PTourApiMapper {
 
 	// 여행지 정보 업서트
 	void upsertTourInfo(PTourApi tourInfo);
+
+	void upsertTourDetail(PTourDetail tourDetail);
 
 	// 여행지 세부 정보 업서트
 }
