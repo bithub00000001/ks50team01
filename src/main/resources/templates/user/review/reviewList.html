@@ -455,90 +455,129 @@
 		});
 		*/
 
-		function displayReviews(reviews) {
-		    let reviewContainer = $('.tab-pane#tourGuide .review-container');
+        $(document).ready(function() {
+            let reviewsData, commentsData;
 
-		    reviews.forEach(function(review) {
-		        let listItem = $('<div>').addClass('review').text(review.reviewContent);
-		        reviewContainer.append(listItem);
-		    });
-		}
-		
-			$(document).ready(function() {
-		    $.ajax({
-		        url: '/user/review/json', // JSON 데이터를 제공하는 엔드포인트 URL
-		        type: 'GET',
-		        dataType: 'json',
-		        success: function(data) {
-		            // 성공적으로 데이터를 받았을 때 처리할 코드
-		            console.log(data); // 받은 데이터를 콘솔에 출력하거나 원하는 처리를 수행
-		            displayReviews(data); // 받은 데이터를 화면에 표시하는 함수 호출
-		        },
-		        error: function(jqXHR, textStatus, errorThrown) {
-		            // 오류가 발생했을 때 처리할 코드
-		            console.error('AJAX 오류 발생:', textStatus, errorThrown);
-		        }
-		    });
-		});
+            // Fetch reviews
+            $.ajax({
+                url: '/user/review/json', // JSON 데이터를 제공하는 엔드포인트 URL
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    reviewsData = data;
+                    if (commentsData) {
+                        displayReviewsAndComments(reviewsData, commentsData);
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error('AJAX 오류 발생:', textStatus, errorThrown);
+                }
+            });
+
+            // Fetch comments
+            $.ajax({
+                url: '/user/review/comment/json', // JSON 데이터를 제공하는 엔드포인트 URL
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    commentsData = data;
+                    if (reviewsData) {
+                        displayReviewsAndComments(reviewsData, commentsData);
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error('AJAX 오류 발생:', textStatus, errorThrown);
+                }
+            });
+        });
+
+        function displayReviewsAndComments(reviews, comments) {
+            let reviewContainer = $('.tab-pane#tourGuide .review-container');
+
+            reviews.forEach(function(review) {
+                let listItem = $('<div>').addClass('review');
+                
+                // 작성자 아이디
+                let reviewId = $('<p>').text(review.reviewId).addClass('review-id');
+                listItem.append(reviewId);
+                
+                // 리뷰 작성일
+                let reviewDateText = '리뷰 작성일: ' + review.reviewDate;
+                let reviewDate = $('<span>').text(reviewDateText).addClass('review-date');
+                listItem.append(reviewDate);
+
+                // 수정일자가 null이 아닌 경우에만 출력
+                if (review.reviewModifyDate !== null) {
+                    let reviewModifyDateText = '(수정된 리뷰 ' + review.reviewModifyDate + ')';
+                    let reviewModifyDate = $('<span>').text(reviewModifyDateText).addClass('review-modify-date');
+                    listItem.append(reviewModifyDate);
+                }
+                
+                // 별점
+                let starsContainer = $('<div>').addClass('stars-container');
+                for (let i = 0; i < 5; i++) {
+                    let starText = review.reviewStarPoint > i ? '★' : '☆';
+                    let starElement = $('<span>').text(starText).addClass(review.reviewStarPoint > i ? 'yellow-star' : '');
+                    starsContainer.append(starElement);
+                }
+                listItem.append(starsContainer);
+                
+                // 리뷰 내용
+                let reviewContent = $('<div>').text(review.reviewContent).addClass('review-content');
+                listItem.append(reviewContent);
+                
+             	// 좋아요 버튼
+                let likeButton = $('<button>').addClass('btn btn-outline-primary btn-sm like-button button-text');
+                if (review.reviewLike && review.reviewLike !== 0) {
+                    likeButton.text('♥ 좋아요 (' + review.reviewLike + ')');
+                } else {
+                    likeButton.text('좋아요(0)');
+                }
+                listItem.append(likeButton);
+
+                // 싫어요 버튼
+                let dislikeButton = $('<button>').addClass('btn btn-outline-primary btn-sm dislike-button button-text');
+                if (review.reviewDislike && review.reviewDislike !== 0) {
+                    dislikeButton.text('✕ 싫어요 (' + review.reviewDislike + ')');
+                } else {
+                    dislikeButton.text('싫어요(0)');
+                }
+                listItem.append(dislikeButton);
+                
+                // 모달을 트리거하는 버튼 생성
+                let reportButton = $('<button>').addClass('btn btn-danger').attr({
+                    'type': 'button',
+                    'data-bs-toggle': 'modal',
+                    'data-bs-target': '#staticBackdrop'
+                }).text('신고하기');
+                listItem.append(reportButton);
+
+                let relatedComments = comments.filter(comment => comment.commentReviewCode === review.reviewCode);
+                if (relatedComments.length > 0) {
+                    let commentSection = $('<div>').addClass('comment-section');
+                    relatedComments.forEach(function(comment) {
+                        let commentWrapper = $('<div>').addClass('comment-wrapper'); // 코멘트와 날짜를 감싸는 div
+                        let commentId = $('<div>').text(comment.commentId).addClass('comment-id');
+                        let commentDate = $('<span>').text(comment.commentDate).addClass('comment-date');
+                        let commentContent = $('<div>').text(comment.commentContent).addClass('comment-content');
+                        
+                        commentWrapper.append(commentId);
+                        commentWrapper.append(commentDate);
+                        commentSection.append(commentWrapper);
+                        commentSection.append(commentContent);
+                    });
+                    listItem.append(commentSection);
+                }
 
 
-			function displayReviews(reviews) {
-			    let reviewContainer = $('.tab-pane#tourGuide .review-container');
-			  
-			    // 받아온 리뷰 데이터를 반복하여 화면에 추가
-			    reviews.forEach(function(review) {
-			        let listItem = $('<div>').addClass('review');
-			        
-			        
-			        // 작성자 아이디
-			        let reviewId = $('<p>').text(review.reviewId).addClass('review-id');
-					listItem.append(reviewId);
-					
-					// 리뷰 작성일
-					let reviewDateText = '리뷰 작성일: ' + review.reviewDate;
-					let reviewDate = $('<span>').text(reviewDateText).addClass('review-date');
-					listItem.append(reviewDate);
 
-					// 수정일자가 null이 아닌 경우에만 출력
-					if (review.reviewModifyDate !== null) {
-					    let reviewModifyDateText = '(수정된 리뷰 ' + review.reviewModifyDate + ')';
-					    let reviewModifyDate = $('<span>').text(reviewModifyDateText).addClass('review-modify-date');
-					    listItem.append(reviewModifyDate);
-					}
-			        
-			        // 별점
-			        let starsContainer = $('<div>').addClass('stars-container');
-			        for (let i = 0; i < 5; i++) {
-			            let starText = review.reviewStarPoint > i ? '★' : '☆'; // 별 텍스트 생성
-			            let starElement = $('<span>').text(starText).addClass(review.reviewStarPoint > i ? 'yellow-star' : ''); // 적절한 클래스 추가
-			            starsContainer.append(starElement);
-			        }
-			        listItem.append(starsContainer);
-			        
-			        
-			     	// 리뷰 내용
-			        let reviewContent = $('<div>').text(review.reviewContent).addClass('review-content');
-			        listItem.append(reviewContent);
-			        
-			     	// 좋아요 버튼
-			        let likeButton = $('<button>').addClass('btn btn-outline-primary btn-sm like-button');
-			        likeButton.text('좋아요 ' + review.reviewLike);
-			        listItem.append(likeButton);
+                // 리뷰와 리뷰 사이에 선을 추가합니다.
+                let separator = $('<div>').addClass('separator3');
+                reviewContainer.append(listItem);
+                reviewContainer.append(separator);
+            });
+        }
 
-			        // 싫어요 버튼
-			        let dislikeButton = $('<button>').addClass('btn btn-outline-primary btn-sm dislike-button');
-			        dislikeButton.text('싫어요 ' + review.reviewDislike);
-			        listItem.append(dislikeButton);
-			        
-			        
-			        // 리뷰와 리뷰 사이에 선을 추가합니다.
-			        let separator = $('<div>').addClass('separator3');
-			        reviewContainer.append(separator);
-			        
-			        // 최종적으로 리뷰를 리뷰 컨테이너에 추가합니다.
-			        reviewContainer.append(listItem);
-			    });
-			}
 		</script>
 		
         

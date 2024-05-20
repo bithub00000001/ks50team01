@@ -21,7 +21,7 @@
 .review-content {
     overflow-wrap: break-word;
     color: black; /* 텍스트 색상을 검은색으로 설정 */
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 .stars-container {
@@ -50,15 +50,58 @@
 
 .like-button {
     display: block; /* 블록 요소로 설정하여 세로 배치 */
-    width: 150px; /* 기본 너비 설정 */
+    width: 120px; /* 기본 너비 설정 */
     margin-right: 100%; /* 버튼 간격 조절 */
     margin-bottom: 5px;
-    font-size: 0.1em;
 }
 
 .dislike-button {
     display: block; /* 블록 요소로 설정하여 세로 배치 */
-    width: 150px; /* 기본 너비 설정 */
+    width: 120px; /* 기본 너비 설정 */
     margin-right: 100%; /* 버튼 간격 조절 */
-    margin-bottom: 5px;
+    margin-bottom: 20px;
+}
+
+.button-text {
+    font-size: 10px !important; /* 원하는 크기로 설정 */
+}
+
+.comment-section {
+    background-color: #F5F5F5; /* 답글 배경 색상 */
+    border-radius: 10px; /* 둥글게 모서리를 주는 CSS 속성 */
+    padding: 10px; /* 상하좌우 여백을 꽉 채우는 CSS 속성 */
+    height: 100%;
+}
+.review {
+    background-color: white; /* 리뷰 배경 색상 */
+    margin: 10px;
+    border-radius: 10px; /* 둥글게 모서리를 주는 CSS 속성 */
+    padding: 10px; /* 상하좌우 여백을 꽉 채우는 CSS 속성 */
+}
+
+.comment-wrapper {
+    display: flex; /* Flexbox 레이아웃 사용 */
+    align-items: center; /* 아이템을 세로로 가운데 정렬 */
+}
+
+/* 답글 아이디 스타일 */
+.comment-id {
+    font-size: 13px; /* 아이디 폰트 크기 */
+}
+
+/* 답글 내용 스타일 */
+.comment-content {
+    font-size: 13px; /* 내용 폰트 크기 */
+    margin-top: 10px;
+}
+
+/* 답글 날짜 스타일 */
+.comment-date {
+	margin-left: 10px; /* 아이디와 날짜 사이 여백 조정 */
+    font-size: 12px; /* 날짜 폰트 크기 */
+    color: #777777; /* 날짜 색상 */
+}
+
+.report-button {
+    float: right;
 }

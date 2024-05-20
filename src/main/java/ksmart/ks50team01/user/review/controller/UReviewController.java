@@ -5,19 +5,17 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import ksmart.ks50team01.user.review.dto.UReview;
-import ksmart.ks50team01.user.review.dto.UReviewFile;
+import ksmart.ks50team01.user.review.dto.UReviewComment;
 import ksmart.ks50team01.user.review.service.UReviewService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -160,8 +158,7 @@ public class UReviewController {
 	
 	
 	
-	
-	
+
 	
 	
 	
@@ -183,6 +180,7 @@ public class UReviewController {
 	    
 	}
 	 */
+	
 	@GetMapping("/json")
 	@ResponseBody //반환값을 HTTP로 직접 전송 json 으로 반환
 	public List<UReview> reviewJsonView(Model model) {
@@ -196,6 +194,28 @@ public class UReviewController {
 		
 		return uReviewList;
 	}
+	
+	
+	/**
+	 * 답글 json
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("/comment/json")
+	@ResponseBody //반환값을 HTTP로 직접 전송 json 으로 반환
+	public List<UReviewComment> reviewCommentJsonView(Model model) {
+		
+		List<UReviewComment> uReviewCommentList = uReviewService.getUReveiwComment();
+		log.info("getUReveiwComment: {}", uReviewCommentList);
+		
+		model.addAttribute("title", "리뷰 답글 목록");
+		model.addAttribute("getUReveiwComment", uReviewCommentList);
+		
+		
+		return uReviewCommentList;
+	}
+	
+	
 	/**
 	 * 리뷰 목록 조회
 	 * @param model
@@ -205,11 +225,13 @@ public class UReviewController {
 	public String reviewList(Model model) {
 		
 		List<UReview> uReviewList = uReviewService.getUReviewList();
+		List<UReviewComment> uReviewCommentList = uReviewService.getUReveiwComment();
 		log.info("uReview: {}", uReviewList);
-		System.out.println("uReviewList"+uReviewList);
+		log.info("uReviewCommentList: {}", uReviewCommentList);
 		
 		model.addAttribute("title", "상품 후기 목록");
 		model.addAttribute("uReviewList", uReviewList);
+		model.addAttribute("uReviewCommentList", uReviewCommentList);
 		
 		return "user/review/reviewList";
 	}
