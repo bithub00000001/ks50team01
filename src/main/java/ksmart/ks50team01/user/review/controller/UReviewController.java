@@ -2,29 +2,42 @@ package ksmart.ks50team01.user.review.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import ksmart.ks50team01.user.review.dto.UReview;
+import ksmart.ks50team01.user.review.dto.UReviewFile;
 import ksmart.ks50team01.user.review.service.UReviewService;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 
 @Controller
 @RequestMapping(value="/user/review")
-@RequiredArgsConstructor
 @Slf4j
 public class UReviewController {
 	
 	private final UReviewService uReviewService;
 	
+	@Value("${files.path}")
+	private String filePath;
 	 
+	private static final Logger log = LoggerFactory.getLogger(UReviewController.class);
+	
+	public UReviewController(UReviewService uReviewService) {
+		this.uReviewService = uReviewService;
+	}
+	
 	
 	/**
 	 * 리뷰작성화면
@@ -95,6 +108,7 @@ public class UReviewController {
 		    return "redirect:/user/review/write";
 		}*/
 	
+	/*
 		@PostMapping("/write")
 		public String reviewWrite(UReview review) {
 			
@@ -104,7 +118,31 @@ public class UReviewController {
 			
 			return "redirect:/user/review/list";
 		}
-	
+		*/
+		@PostMapping("/write")
+		public String reviewWrite(UReview review, HttpServletRequest request, Model model) {
+			
+			System.out.println("리뷰 작성 화면에서 입력받은 data"+review);
+			
+			model.addAttribute("fileList", uReviewService.getFileList());
+			
+			uReviewService.reviewWrite(review); //리뷰 데이터를 db에 저장
+			
+			return "redirect:/user/review/list";
+		}
+		
+		/*
+		@GetMapping("/write")
+		public String fileDelete(@RequestParam(value="fileIdx") String fileIdx) {
+
+			if(fileIdx != null) {
+				UReviewFile fileDto = uReviewService.getFileInfoByIdx(fileIdx);
+				uReviewService.deleteFileByIdx(fileDto);
+			}
+			
+			return "redirect:/user/review/list";
+		}
+	*/
 
 		
 		
@@ -135,21 +173,29 @@ public class UReviewController {
 	 * @param model
 	 * @return
 	 */
-	@GetMapping("/lybalb")
-	@ResponseBody
+	/*
+	@GetMapping("/json")
+    @ResponseBody
+	    public ResponseEntity<List<UReview>> reviewJsonView() {
+	        List<UReview> uReviewList = uReviewService.getUReviewList();
+	        log.info("uReview: {}", uReviewList);
+	        return ResponseEntity.ok(uReviewList);
+	    
+	}
+	 */
+	@GetMapping("/json")
+	@ResponseBody //반환값을 HTTP로 직접 전송 json 으로 반환
 	public List<UReview> reviewJsonView(Model model) {
 		
 		List<UReview> uReviewList = uReviewService.getUReviewList();
 		log.info("uReview: {}", uReviewList);
-		System.out.println("uReviewList"+uReviewList);
 		
 		model.addAttribute("title", "상품 후기 목록");
 		model.addAttribute("uReviewList", uReviewList);
 		
-		/* return "user/review/reviewList"; */
+		
 		return uReviewList;
 	}
-	
 	/**
 	 * 리뷰 목록 조회
 	 * @param model

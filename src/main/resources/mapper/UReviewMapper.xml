@@ -43,6 +43,77 @@
         <result property="districtSubclass" column="RGN_SCTGRY_NM"/>
     </resultMap>
     
+    <resultMap type="UReviewFile" id="fileResultMap">
+    	<result property="reviewFileCode" column="PRCH_REV_FILE_CD"/>
+    	<result property="reviewId" column="REG_MBR_ID"/>
+    	<result property="reviewCode" column="PRCHS_REV_CD"/>
+    	<result property="reviewFileName" column="IMG_NM"/>
+    	<result property="reviewFilePath" column="IMG_PATH_NM"/>
+    	<result property="reviewFileDate" column="REG_YMD"/>
+    	<result property="reviewFileNewName" column="NEW_IMG_NM"/>
+    	<result property="reviewFileSize" column="FILE_SIZE"/>
+    
+    </resultMap>
+    
+    	<select id="getFileInfoByIdx" parameterType="string" resultMap="fileResultMap">
+			SELECT
+				 PRCH_REV_FILE_CD
+				,REG_MBR_ID
+				,PRCHS_REV_CD
+				,IMG_NM
+				,IMG_PATH_NM
+				,REG_YMD
+				,NEW_IMG_NM
+				,FILE_SIZE
+			FROM
+				REVIEW_IMAGE
+			<trim prefix="WHERE" prefixOverrides="AND |OR ">
+				<if test="PRCH_REV_FILE_CD != null and PRCH_REV_FILE_CD != ''">
+					PRCH_REV_FILE_CD = #{reviewFileCode}
+				</if>
+			</trim>
+		</select>
+    
+    	<insert id="addFile" parameterType="list">
+		INSERT INTO REVIEW_IMAGE
+		(
+			 PRCH_REV_FILE_CD
+			,REG_MBR_ID
+			,PRCHS_REV_CD
+			,IMG_NM
+			,IMG_PATH_NM
+			,REG_YMD
+			,NEW_IMG_NM
+			,FILE_SIZE
+		)VALUES
+		<foreach collection="list" item="data" separator=",">
+		( 
+			 #{data.reviewFileCode}
+			,#{data.reviewId}
+			,#{data.reviewCode}
+			,#{data.reviewFileName}
+			,#{data.reviewFilePath}
+			,#{data.reviewFileDate}
+			,#{data.reviewFileNewName}
+			,#{data.reviewFileSize}
+		)
+		</foreach>
+	</insert>
+    
+    	<select id="getFileList" resultMap="fileResultMap">
+		SELECT
+			 PRCH_REV_FILE_CD
+			,REG_MBR_ID
+			,PRCHS_REV_CD
+			,IMG_NM
+			,IMG_PATH_NM
+			,REG_YMD
+			,NEW_IMG_NM
+			,FILE_SIZE
+		FROM
+			REVIEW_IMAGE
+	</select>
+    
     <!-- <insert id="reivewWrite" parameterType="UReview"> -->
 		
     <!-- 리뷰등록 -->

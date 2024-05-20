@@ -31,7 +31,7 @@ public class FileUtil {
 	 */
 	public boolean deleteFileByIdx(UReviewFile fileDto) {
 		boolean isDelete = false;
-		File file = new File(fileRealPath + fileDto.getFilePath());
+		File file = new File(fileRealPath + fileDto.getReviewFilePath());
 		
 		Path path = Paths.get(file.getAbsolutePath());
 		
@@ -143,13 +143,13 @@ public class FileUtil {
 					// 올려진 파일 리스트로 정리(테이블에 삽입할 내용)
 					fileIdx = "file_"+current.format(format)+Long.toString(System.nanoTime());
 					UReviewFile fileDto = new UReviewFile();
-					fileDto.setFileIdx(fileIdx);
-					fileDto.setFileSize(multipartFile.getSize());
-					fileDto.setFileOriginalName(multipartFile.getOriginalFilename());
-					fileDto.setFileNewName(resultFileName);
+					fileDto.setReviewFileCode(fileIdx);
+					fileDto.setReviewFileSize(multipartFile.getSize());
+					fileDto.setReviewFileName(multipartFile.getOriginalFilename());
+					fileDto.setReviewFileNewName(resultFileName);
 					
 											
-					fileDto.setFilePath("resources"+ File.separator + directory + current.format(format)+ File.separator + resultFileName);
+					fileDto.setReviewFilePath("resources"+ File.separator + directory + current.format(format)+ File.separator + resultFileName);
 					
 					fileList.add(fileDto);
 				}
