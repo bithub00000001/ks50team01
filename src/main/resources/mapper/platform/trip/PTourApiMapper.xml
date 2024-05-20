@@ -52,10 +52,9 @@
                 MDFCN_YMD = now();
     </insert>
 
-    <insert id="insertTourInfo" parameterType="pTourApi">
+    <insert id="upsertTourInfo" parameterType="pTourApi">
         /* TOUR API 의 여행지 정보 삽입 */
-        INSERT INTO
-            TOUR_INFO_FROM_API
+        INSERT INTO TOUR_INFO_FROM_API
         (
             destination_first_address,
             destination_second_address,
@@ -89,6 +88,20 @@
                 #{destinationZipcode},
                 now()
             )
+        ON DUPLICATE KEY
+            UPDATE
+                destination_first_address = VALUES(destination_first_address),
+                destination_second_address = VALUES(destination_second_address),
+                area_code = VALUES(area_code),
+                destination_content_type_id = VALUES(destination_content_type_id),
+                destination_first_image_link = VALUES(destination_first_image_link),
+                destination_second_image_link = VALUES(destination_second_image_link),
+                destination_longitude = VALUES(destination_longitude),
+                destination_latitude = VALUES(destination_latitude),
+                sigungu_code = VALUES(sigungu_code),
+                destination_title = VALUES(destination_title),
+                destination_tel_num = VALUES(destination_tel_num),
+                destination_zipcode = VALUES(destination_zipcode)
     </insert>
 
 </mapper>
