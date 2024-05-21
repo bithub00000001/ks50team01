@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{platform/layout/default}">
+
+<th:block layout:fragment="customCss"></th:block>
+
+<th:block layout:fragment="customContent">
+    <div class="col-md-12 col-sm-6 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h3>여행지 정보 확인</h3>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <form id="modifyForm"
+                      th:action="@{/platform/plan/destination/detail}" method="post">
+                    <input type="hidden" name="contentId" th:value="${tourDetail.contentId}">
+                    <input type="hidden" name="contentTypeId" th:value="${tourDetail.contentTypeId}">
+
+                    <div class="form-group">
+                        <label for="contentTypeName">여행지 분류</label>
+                        <input type="text" class="form-control" id="contentTypeName" name="contentTypeName"
+                               th:value="${tourDetail.contentTypeName}" readonly="readonly">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="title">여행지 제목</label>
+                        <input type="text" class="form-control" id="title" name="title"
+                               th:value="${tourDetail.title}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="homepage">여행지 홈페이지 주소</label>
+                        <input type="text" class="form-control" id="homepage" name="homepage"
+                               th:value="${tourDetail.homepage}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="firstImage">여행지 이미지1</label>
+                        <input type="text" class="form-control" id="firstImage" name="firstImage"
+                               th:value="${tourDetail.firstImage}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="secondImage">여행지 이미지2</label>
+                        <input type="text" class="form-control" id="secondImage" name="secondImage"
+                               th:value="${tourDetail.secondImage}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="areaName">지역 이름</label>
+                        <input type="text" class="form-control" id="areaName" name="areaName"
+                               th:value="${tourDetail.areaName}" readonly="readonly">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sigunguName">시군 이름</label>
+                        <input type="text" class="form-control" id="sigunguName" name="sigunguName"
+                               th:value="${tourDetail.sigunguName}" readonly="readonly">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="mainAddr">여행지 주소1</label>
+                        <input type="text" class="form-control" id="mainAddr" name="mainAddr"
+                               th:value="${tourDetail.mainAddr}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="detailAddr">여행지 주소2</label>
+                        <input type="text" class="form-control" id="detailAddr" name="detailAddr"
+                               th:value="${tourDetail.detailAddr}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="zipcode">여행지 우편 번호</label>
+                        <input type="text" class="form-control" id="zipcode" name="zipcode"
+                               th:value="${tourDetail.zipcode}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="telName">여행지 연락처 이름</label>
+                        <input type="text" class="form-control" id="telName" name="telName"
+                               th:value="${tourDetail.telName}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tel">여행지 연락처</label>
+                        <input type="text" class="form-control" id="tel" name="tel"
+                               th:value="${tourDetail.tel}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="longitude">여행지 경도</label>
+                        <input type="text" class="form-control" id="longitude" name="longitude"
+                               th:value="${tourDetail.longitude}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="latitude">여행지 위도</label>
+                        <input type="text" class="form-control" id="latitude" name="latitude"
+                               th:value="${tourDetail.latitude}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="mapLevel">여행지 지도 레벨</label>
+                        <input type="text" class="form-control" id="mapLevel" name="mapLevel"
+                               th:value="${tourDetail.mapLevel}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="overview">여행지 설명</label>
+                        <input type="text" class="form-control" id="overview" name="overview"
+                               th:value="${tourDetail.overview}">
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="regDate">여행지 등록 일자</label>
+                        <input type="datetime-local" class="form-control" id="regDate" name="regDate"
+                               th:value="${#temporals.createDateTime(tourDetail.regDate, 'yyyy-MM-dd HH:mm:ss')}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="modDate">여행지 수정 일자</label>
+                        <input type="datetime-local" class="form-control" id="modDate" name="modDate"
+                               data-datetime="yyyy-MM-dd HH:mm:ss"
+                               th:value="${#temporals.createDateTime(tourDetail.modDate, 'yyyy-MM-dd HH:mm:ss')}">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-md">저장</button>
+                    <button type="button" class="btn btn-primary btn-md data-update">업데이트</button>
+                    <button type="button" class="btn btn-secondary btn-md" id="btn-cancel">취소
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+<th:block layout:fragment="customJsFile"></th:block>
+
+<th:block layout:fragment="customJs">
+    <script th:inline="javascript">
+        $('#btn-cancel').click(function () {
+            window.history.back();
+        })
+    </script>
+</th:block>
+</html>
