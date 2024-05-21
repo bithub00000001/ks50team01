@@ -1,7 +1,9 @@
 package ksmart.ks50team01.platform.trip.service;
 
 import java.util.List;
+import java.util.Objects;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -113,7 +115,7 @@ public class PTripPlanServiceImpl implements PTripPlanService {
 
 	/**
 	 * 관광 타입에 따른 여행지 정보 목록 조회
-	 *
+	 * @param contentTypeId 관광 타입
 	 */
 	@Override
 	public List<PTourApi> getDestinationListByContentType(String contentTypeId) {
@@ -134,9 +136,12 @@ public class PTripPlanServiceImpl implements PTripPlanService {
 	@Override
 	public PTourDetail getPTourDetailByContentId(String contentId, String contentTypeId) {
 		PTourDetail tourDetail = pTripPlanMapper.getPTourDetailByContentId(contentId, contentTypeId);
-		// PTourApi tourInfo = pTripPlanMapper.getSigunguNameBySigunCode(tourDetail.getSigunguCode());
+		PTourApi tourInfo = pTripPlanMapper.getSigunguNameBySigunCode(tourDetail.getAreaCode(), tourDetail.getSigunguCode());
 		String contentTypeName = ContentTypeConstants.CONTENT_TYPE_MAP.getOrDefault(tourDetail.getContentTypeId(),"");
+		tourDetail.setAreaName(tourInfo.getAreaInfo().getAreaName());
+		tourDetail.setSigunguName(tourInfo.getSigunguName());
 		tourDetail.setContentTypeName(contentTypeName);
 		return tourDetail;
 	}
+
 }

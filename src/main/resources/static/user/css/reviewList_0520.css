@@ -1,0 +1,141 @@
+@charset "UTF-8";
+
+/* 선 스타일1 */
+.separator1{
+    border-top: 3px solid #ff9b40; /* 굵은 직선 스타일 설정 */
+    margin: 7px 0; /* 위아래 여백 설정 */
+}
+
+/* 선 스타일2 */
+.separator2 {
+    border-top: 1px solid #ffd0a5; /* 굵은 직선 스타일 설정 */
+    margin-bottom: 10px;
+}
+
+/* 선 스타일3 */
+.separator3 {
+    border-top: 3px solid #ffd0a5; /* 굵은 직선 스타일 설정 */
+    margin-bottom: 10px;
+}
+
+/* 버튼 가로로 정렬 */
+.button-container {
+    display: flex; /* 자식 요소를 가로로 정렬합니다. */
+    align-items: center; /* 세로 방향 가운데 정렬 */
+    margin-bottom: 20px;
+}
+
+/* 작성하기 버튼을 왼쪽으로 정렬 */
+.write-btn-container {
+    margin-left: auto; /* 나머지 요소를 왼쪽으로 밀어서 오른쪽 정렬합니다. */
+}
+
+/* 평점과 리뷰 개수 텍스트를 가운데로 정렬 */
+.review-stats_avg {
+    text-align: center; /* 요소를 가운데 정렬합니다. */
+}
+
+/* 평점 텍스트의 글씨 크기와 두께 그리고 색을 지정 */
+.average-rating-text,
+#average-rating {
+    font-size: 20px; /* 평점의 크기를 15px로 설정합니다. */
+    font-weight: bold; /* 평점을 두껍게 만듭니다. */
+    color: black;
+}
+
+/* 리뷰 개수 텍스트의 글시 크기와 투께 그리고 색을 지정*/
+.total-reviews-text,
+#total-reviews {
+    font-size: 20px; /* 리뷰 개수의 크기를 12px로 설정합니다. */
+    font-weight: bold; /* 리뷰 개수를 두껍게 만듭니다. */
+    color: black;
+}
+
+/* 리뷰의 배경색 지정 */
+.review-details {
+    background-color: #F5F5F5; /* 회색 배경색 */
+    padding: 10px; /* 내부 여백 설정 */
+    margin-bottom: 10px; /* 아래쪽 여백 설정 */
+}
+
+/* 리뷰 별점의 색과 크기 지정*/
+.star {
+    color: orange; /* 별의 채색 색상 */
+    font-size: 20px; /* 별의 크기 */
+}
+
+/* 리뷰 아이디 텍스트 두께 */
+.reviewId-text {
+    font-weight: bold; /* 글씨를 두껍게 설정 */
+    font-size: 15px; /* 평점의 크기를 15px로 설정합니다. */
+	padding-top: 10px;
+}
+
+/* 리뷰 내용 텍스트 스타일*/
+.reviewContent-text {
+	font-size: 15px;
+	padding-bottom: 20px;
+}
+
+/* 리뷰 작성일 텍스트 스타일*/
+.reviewDate-text {
+	font-size: 15px;
+	padding-bottom: 10px;
+	padding-top: 10px;
+}
+
+.like .btn,
+.dislike .btn {
+    /* 원하는 버튼 크기를 지정합니다. */
+    width: 120px; /* 버튼의 너비를 100px로 지정합니다. */
+    font-size: 10px; /* 원하는 폰트 크기를 지정합니다. */
+    font-weight: bold;
+}
+
+.like .btn{
+	margin-bottom: 10px;
+}
+
+.report-btn button {
+    color: white; /* 텍스트를 흰색으로 지정합니다. */
+}
+
+.report-btn {
+    text-align: right; /* 부모 요소를 오른쪽 정렬합니다. */
+}
+
+/* 사용자 정의 스타일링 */
+.custom-select {
+    position: relative;
+    display: inline-block;
+}
+
+.custom-select select {
+    display: inline-block !important;
+    padding: 0.375rem 0.75rem !important;
+    font-size: 1rem !important;
+    font-weight: 400 !important;
+    line-height: 1.5 !important;
+    color: #fff !important; /* 글자색 흰색으로 설정 */
+    background-color: #FFA500 !important; /* 주황색 배경 */
+    border: 1px solid #FFA500 !important; /* 테두리 색상도 주황색으로 설정 */
+    border-radius: 0.25rem !important;
+    cursor: pointer !important;
+}
+
+.custom-select::after {
+    content: '\25BC' !important; /* 화살표 아이콘 */
+    position: absolute !important;
+    top: 50% !important;
+    right: 1rem !important;
+    transform: translateY(-50%) !important;
+    pointer-events: none !important;
+    color: #fff !important; /* 화살표 아이콘의 색상을 흰색으로 설정 */
+}
+
+.custom-select select:focus {
+    outline: none !important;
+    border-color: #80bdff !important;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25) !important;
+}
+

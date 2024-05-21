@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,6 +28,58 @@ public class PReviewController {
 
 	private final PReviewService pReviewService;
 	
+
+
+	/**
+	 * 리뷰 신고 누적 개수
+	 * @return
+	 */
+	@GetMapping("/total/list")
+	public String reviewTotal(Model model) {
+		
+		List<PReviewReport> pReviewTotal = pReviewService.getPReviewReportTotal();
+		log.info("pReviewTotal: {}",pReviewTotal);
+		System.out.println("pReviewTotal"+pReviewTotal);
+		
+		model.addAttribute("title", "리뷰 신고 누적 조회");
+		model.addAttribute("pReviewTotal", pReviewTotal);
+		
+		return "platform/review/reportTotal";
+	}
+	
+	
+	/**
+	 * 신고 승인
+	 */
+	@PostMapping("/report/approve")
+	public String modifyPReviewReport(PReviewReport report) {
+		log.info("신고 승인 : {}", report);
+		pReviewService.modifyPReviewReport(report);
+		
+		return "redirect:/platform/review/report/list";
+	}
+	
+	/**
+	 * 신고 승인 화면
+	 */
+	@GetMapping("/report/approve")
+	public String reportApprove(@RequestParam(value="reportCode", required = false) String reportCode, Model model) {
+		log.info("신고 승인 화면 reportApprove: {}", reportCode);
+		PReviewReport reportInfo = pReviewService.getPReviewReportInfoById(reportCode);
+		
+		if(reportInfo == null) {
+			System.out.println("reportInfo is null");
+		}else {
+			System.out.println("reportInfo : "+reportInfo);
+		}
+		
+		model.addAttribute("title", "신고 승인 화면");
+		model.addAttribute("reportInfo", reportInfo);
+		
+		return "platform/review/reportApprove";
+	}
+	
+	
 	/**
 	 * 리뷰 신고 목록
 	 */
@@ -34,61 +87,42 @@ public class PReviewController {
 	public String reportList(Model model) {
 		
 		List<PReviewReport> pReviewReport = pReviewService.getPReviewReports();
+		log.info("pReviewReport: {}", pReviewReport);
+		System.out.println("pReviewReport: "+pReviewReport);
 		
-		model.addAttribute("title", "상품리뷰전체목록");
+		model.addAttribute("title", "상품리뷰신고목록");
 		model.addAttribute("pReviewReport", pReviewReport);
 		
 		return "platform/review/reportList";
 	}
 	
-	/**
-	 * 리뷰 신고 승인
-	 * @return
-	 */
-	@GetMapping("/report/approve")
-	public String reporApprove() {
-		
-		return "platform/review/reportApprove";
-	}
-	
-	
-	
-	
-	
-	
 	
 	/**
-	 * 리뷰 신고 누적 개수
-	 * @return
+	 * 답글 수정
 	 */
-	@GetMapping("/total/list")
-	public String reviewTotal() {
+	@PostMapping("/comment/open")
+	public String modifyPReivewComment(PReivewComment comment) {
+		log.info("답글 수정: {}", comment);
+		pReviewService.modifyPReivewComment(comment);
 		
-		return "platform/review/reportTotal";
+		return "redirect:/platform/review/comment/list"; 
 	}
-	
-	
-	
-	
-	
-	
 	
 	/**
 	 * 답글 공개 여부 수정 화면
 	 * @return
 	 */
 	@GetMapping("/comment/open")
-	public String commentOpen(@RequestParam("commentCode") String commentCode, Model model) {
-		log.info("답글수정화면 reviewCode : {}", commentCode);
-		PReview commentInfo = pReviewService.getPReviewInfoById(commentCode);
+	public String commentOpen(@RequestParam(value="commentCode") String commentCode, Model model) {
+		log.info("답글수정화면 commentCode : {}", commentCode);
+		PReivewComment commentInfo = pReviewService.getPReivewCommentInfoById(commentCode);
+		List<POpen> pOpenList = pReviewService.getPOpenList();
 		
 		if(commentInfo == null){
 			System.out.println("commentInfo is null");
 		}else{
-			System.out.println("not null");
+			System.out.println("commentInfo: "+commentInfo);
 		}
-		
-		List<POpen> pOpenList = pReviewService.getPOpenList();
 		
 		model.addAttribute("title", "답글수정화면");
 		model.addAttribute("commentInfo", commentInfo);
@@ -96,8 +130,6 @@ public class PReviewController {
 		
 		return "platform/review/commentOpen";
 	}
-	
-	
 	
 	/**
 	 * 답글 목록
@@ -138,29 +170,19 @@ public class PReviewController {
 	
 	
 	/**
-	 * 리뷰 수정 - 회원 수정
-	 * 05.08 작성
+	 * 리뷰 수정
 	 */
-	/*
-	 * @PostMapping("/open") public String modifyPReview(PReview review) {
-	 * log.info("리뷰 수정 : {}", review);
-	 * 
-	 * pReviewService.modifyPReview(review);
-	 * 
-	 * return "redirect:/review/PreviewList"; }
-	 */
-	@PostMapping("/open")
-	public String modifyPReview(@RequestParam("reviewCode") String reviewCode, PReview review) {
-	    log.info("리뷰 수정 : {}", review);
-	    
-	    pReviewService.modifyPReview(review);
-	    
-	    return "redirect:/review/PreviewList";
-	}
-	
+	  @PostMapping("/open") 
+	  public String modifyPReview(PReview review) {
+	  log.info("상품 리뷰 수정 : {}", review);
+
+	  	pReviewService.modifyPReview(review);
+	  
+	  return "redirect:/platform/review/list"; 
+	  }
+	 
 	/**
-	 * 05.08 수정
-	 * 리뷰 공개 여부 수정(수정페이지) - 회원 수정 화면
+	 * 리뷰 공개 여부 수정화면(수정페이지)
 	 * @return
 	 */
 	@GetMapping("/open")
@@ -170,7 +192,14 @@ public class PReviewController {
 		PReview reviewInfo = pReviewService.getPReviewInfoById(reviewCode);
 		List<POpen> pOpenList = pReviewService.getPOpenList();
 		
-		model.addAttribute("title", "상품리뷰리뷰수정");
+		if(reviewInfo == null){
+			System.out.println("reviewInfo is null");
+		}else{
+			System.out.println("reviewInfo: "+reviewInfo);
+		}
+		
+		
+		model.addAttribute("title", "상품 리뷰 공개 여부 수정");
 		model.addAttribute("reviewInfo", reviewInfo);
 		model.addAttribute("pOpenList", pOpenList);
 		
@@ -179,8 +208,7 @@ public class PReviewController {
 	}
 	
 	/**
-	 * 05.08 수정
-	 * 리뷰 전체 목록 - 회원목록조회
+	 * 리뷰 전체 목록
 	 * @return
 	 */
 	@GetMapping("/list")
@@ -190,7 +218,7 @@ public class PReviewController {
 		log.info("pReviewList: {}", pReviewList);
 		System.out.println("pReviewList : " + pReviewList);
 		
-		model.addAttribute("title", "상품리뷰전체목록");
+		model.addAttribute("title", "상품 리뷰 전체 목록");
 		model.addAttribute("pReviewList", pReviewList);
 		
 		return "platform/review/PreviewList";

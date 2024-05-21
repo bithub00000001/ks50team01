@@ -14,6 +14,5 @@ public class ContentTypeConstants {
 		CONTENT_TYPE_MAP.put("32", "숙박");
 		CONTENT_TYPE_MAP.put("38", "쇼핑");
 		CONTENT_TYPE_MAP.put("39", "음식점");
-		// ... 나머지 코드
 	}
 }

@@ -75,91 +75,90 @@
 		<div class="x_panel">
 			<div class="x_title">
 				<h2>
-					리뷰 신고 승인<small>Users</small>
+					상품 리뷰 신고 승인<small>Users</small>
 				</h2>
 				<div class="clearfix"></div>
 			</div>
 			<div class="x_content">
 				<p class="text-muted font-13 m-b-30"> 승인 여부를 선택해주세요
-	<!-- 			<form id="modifyForm" th:action="@{/member/modifyMember}" method="post">	 -->	
-			
-			<table>
+	<form id="modifyForm" th:action="@{/platform/review/report/approve}" method="post">
+			<table th:object="${reportInfo}">
 		        <tbody>
 		            <tr>
 		                <td>
-		                    <label for="memberId">신고 번호</label>
+		                    <label for="reportCode">신고 번호</label>
 		                </td>
 		                <td>
-		                    <input type="text" id="memberId" name="memberId" value="" readonly="readonly" />
+		                    <input type="text" id="reportCode" name="reportCode" th:value="*{reportCode}" readonly="readonly" />
 		                </td>
 		            </tr>
 		            <tr>
 		                <td>
-		                    <label for="memberPw">신고자 아이디</label>
+		                    <label for="reportId">신고자 아이디</label>
 		                </td>
 		                <td>
-		                    <input type="text" id="memberPw" name="memberPw" value="" />
+		                    <input type="text" id="reportId" name="reportId" th:value="*{reportId}" readonly="readonly"/>
 		                </td>
 		            </tr>
 		            <tr>
 		                <td>
-		                    <label for="memberName">신고 카테고리</label>
+		                    <label for="reportCategories">신고 카테고리</label>
 		                </td>
 		                <td>
-		                    <input type="text" id="memberName" name="memberName" value="" />
+		                    <input type="text" id="reportCategories" name="reportCategories" th:value="*{reportCategories}" readonly="readonly"/>
 		                </td>
 		            </tr>
 		            <tr>
 		                <td>
-		                    <label for="memberLevel">신고 리뷰 코드</label>
+		                    <label for="reportReviewCode">신고 리뷰 코드</label>
 		                </td>
 		                <td>
-		                    <input type="text" id="memberAddr" name="memberAddr" value="" />
+		                    <input type="text" id="reportReviewCode" name="reportReviewCode" th:value="*{reportReviewCode}" readonly="readonly"/>
 		                </td>
 		            </tr>
 		            <tr>
 		                <td>
-		                    <label for="memberEmail">신고 내용</label>
+		                    <label for="reportContent">신고 내용</label>
 		                </td>
 		                <td>
-		                    <input type="text" id="memberEmail" name="memberEmail" value="" />
+		                    <input type="text" id="reportContent" name="reportContent" th:value="*{reportContent}" readonly="readonly"/>
 		                </td>
 		            </tr>
 		            <tr>
 		                <td>
-		                    <label for="memberAddr">신고 일자</label>
+		                    <label for="reportDate">신고 일자</label>
 		                </td>
 		                <td>
-		                    <input type="text" id="memberAddr" name="memberAddr" value="" />
+		                    <input type="text" id="reportDate" name="reportDate" th:value="*{reportDate}" readonly="readonly"/>
 		                </td>
 		            </tr>
 		            <tr>
 		                <td>
-		                    <label for="memberAddr">신고 승인 여부</label>
+		                    <label for="reportApproveId">신고 승인자</label>
 		                </td>
 		                <td>
-		                    <select id="memberLevel" name="memberLevel">
-		                        <option value="">====승인여부를 선택해주세요====</option>
-		                        <!-- <option value="1">Y</option>
-									 <option value="2">N</option> -->
-		                    </select>
+		                    <input type="text" id="reportApproveId" name="reportApproveId" th:value="*{reportApproveId}" readonly="readonly"/>
 		                </td>
 		            </tr>
 		            <tr>
 		                <td>
-		                    <label for="memberAddr">신고 승인자</label>
+		                    <label for="reportApproveDate">신고 승인 일자</label>
 		                </td>
 		                <td>
-		                    <input type="text" id="memberAddr" name="memberAddr" value="" />
+		                    <input type="text" id="reportApproveDate" name="reportApproveDate" th:value="*{reportApproveDate}" readonly="readonly"/>
 		                </td>
 		            </tr>
 		            <tr>
-		                <td>
-		                    <label for="memberAddr">신고 승인 일자</label>
-		                </td>
-		                <td>
-		                    <input type="text" id="memberAddr" name="memberAddr" value=""/>
-		                </td>
+                <td>
+                    <label for="reportApprove">신고 승인 여부</label>
+                </td>
+                <td>
+                    <select id="reportApprove" name="reportApprove">
+                        <option value="">승인 여부를 선택하세요</option>
+                        <option th:value="Y" th:selected="*{reportApprove == 'Y'}">승인</option>
+                        <option th:value="N" th:selected="*{reportApprove == 'N'}">미승인</option>
+                    </select>
+                </td>
 		            </tr>
 		        </tbody>
 		        <tfoot>
@@ -171,7 +170,7 @@
 		            </tr>
 		        </tfoot>    
 		    </table>
-			<!--  </form> -->
+			</form>
 				
 			</div>
 		</div>
