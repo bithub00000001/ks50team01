@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ksmart.ks50team01.user.board.dto.UCategory;
 import ksmart.ks50team01.user.board.dto.UQna;
 import ksmart.ks50team01.user.board.mapper.UQnaMapper;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +38,21 @@ public class UQnaService {
 		UQna qnaDetail = uQnaMapper.getQnaByQnaNum(qnaNum);
 		log.info("getQnaByQnaNum: {}", qnaDetail);
 		return qnaDetail;
+	}
+
+	// qna 등록
+	public void insertQna(UQna uQna) {
+		// qna DB에 저장
+		uQnaMapper.insertQna(uQna);
+		
+	}
+
+
+	public List<UCategory> getQnaCateList() {
+		List<UCategory> qnaCateList = uQnaMapper.getQnaCateList();
+		
+		log.info("QNA 카테고리 조회 결과: {}", qnaCateList);
+		return qnaCateList;
 	}
 
 

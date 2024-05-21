@@ -49,7 +49,7 @@
 	
 	
 	<insert id="faqWrite" parameterType="PFaq">
-	    <!-- 자주 찾는 질문 등록 -->
+	    /* 자주찾는질문 등록 */
 	    INSERT INTO 
 	    	FREQUENTLY_ASKED_QUESTIONS (FAQ_CTGRY_NO, FAQ_TTL, FAQ_CN, REG_PF_ID, ACT_YN, REG_YMD)
 	    VALUES 
@@ -58,6 +58,7 @@
 	
 	
 	<update id="faqModify" parameterType="PFaq">
+		/* 자주찾는질문 수정 */
 	    UPDATE 
 	        FREQUENTLY_ASKED_QUESTIONS
 	    SET
@@ -70,20 +71,7 @@
 	    WHERE 
 	        FAQ_NO = #{faqNum};
 	</update>
-		
-	<!-- 
-	<update id="faqModify" parameterType="PFaq">
-    UPDATE 
-    	FREQUENTLY_ASKED_QUESTIONS
-    SET 
-    	FAQ_TTL = #{faqTitle},
-        FAQ_CN = #{faqContent},
-        MDFCN_PF_ID = #{faqMdfId},
-        ACT_YN = #{faqAct},
-        MDFCN_YMD = #{faqMdfDate}
-    WHERE 
-    	FAQ_NO = #{faqNum}
-</update>  -->
+
 	
 	
 	<select id="getFaqInfoByNum" resultMap="faqResultMap">

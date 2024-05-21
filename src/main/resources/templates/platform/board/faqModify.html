@@ -33,8 +33,7 @@
 							<tr>
 								<td><label for="faqRegId">작성자</label></td>
 								<td colspan="2"><input type="text" id="faqRegId"
-									name="faqRegId" th:value="*{faqRegId}"
-									placeholder="ex: admin001" readonly="readonly"></td>
+									name="faqRegId" th:value="*{faqRegId}" readonly="readonly"></td>
 							</tr>
 							<tr>
 							<!-- 
@@ -72,8 +71,7 @@
 							<tr>
 								<td><label for="faqMdfId">수정자</label></td>
 								<td colspan="2"><input type="text" id="faqMdfId"
-									name="faqMdfId" th:value="*{faqMdfId}"
-									placeholder="ex: admin001"></td>
+									name="faqMdfId" th:value="${session.loginId}" readonly="readonly"></td>
 							</tr>
 							<tr>
 								<td><label for="faqAct">활성화 여부</label></td>
@@ -85,15 +83,11 @@
 							</tr>
 							<tr>
 								<td><label for="faqRegDate">등록일</label></td>
-								<td colspan="2"><input type="text" id="faqRegDate"
-									name="faqRegDate" th:value="*{faqRegDate}"
-									placeholder="ex: 0000-00-00" /></td>
+								<td colspan="2"><input type="text" id="faqRegDate" name="faqRegDate" th:value="*{faqRegDate}" readonly="readonly" /></td>
 							</tr>
 							<tr>
 								<td><label for="faqMdfDate">수정일</label></td>
-								<td colspan="2"><input type="text" id="faqMdfDate"
-									name="faqMdfDate" th:value="*{faqMdfDate}"
-									placeholder="ex: 0000-00-00" /></td>
+								<td colspan="2"><input type="text" id="faqMdfDate" name="faqMdfDate" th:value="${currentDate}" readonly="readonly" /></td>
 							</tr>
 						</tbody>
 						<tfoot>

@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.web.multipart.MultipartFile;
 
 import ksmart.ks50team01.user.board.dto.UCategory;
+import ksmart.ks50team01.user.board.dto.UComment;
 import ksmart.ks50team01.user.board.dto.UCommunity;
 
 
@@ -27,9 +28,7 @@ public interface UCommunityMapper {
 	// 게시글 번호로 해당 게시글의 댓글 수를 조회
 	public int getCommentCntByPostNum(String postNum);
 	
-	//void insertPost(String postRegId, String postCateNum, String postTitle, String postContent);
-	
-	void insertPost(String pstNoNumeric, String postRegId, String postCateNum, String postTitle, String postContent);
+
 	
 	
 	//게시글 카테고리 조회
@@ -37,7 +36,7 @@ public interface UCommunityMapper {
 	
 	
 	// 댓글 조회
-	List<UCommunity> getCommentByPostNum(String postNum);
+	List<UComment> getCommentByPostNum(String postNum);
 	
 	// 게시글 수정
 	void postUpdate(String postCategory, String postTitle, String postContent, MultipartFile postFile);
@@ -54,12 +53,8 @@ public interface UCommunityMapper {
 	// 게시글 DB에 저장
 	void insertPost(UCommunity post);
 
-	// 게시글 코드 
-	int getPostNo();
 
-	void setPostCode(String postCode);
 
-	String getMaxPstNoNumeric();
 
 
 	

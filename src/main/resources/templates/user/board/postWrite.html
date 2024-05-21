@@ -3,186 +3,167 @@
                 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
                 layout:decorate="~{user/layout/default}">
                 
-<head>
-    <title>게시글 작성</title>
+	<head>
+	    <title>게시글 작성</title>
+	</head>
+	
     <th:block layout:fragment="customCss">
         <link th:href="@{/user/css/postWrite.css}" rel="stylesheet">
+        
+        <!-- GOOGLE FONT -->
+    	<link href='https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700' rel='stylesheet'>
     </th:block>
 
-</head>
-
-<th:block layout:fragment="customPageSection">
-    <!-- Elements Forms -->
-    <section class="py-10">
-        <div class="row">
-            <div class="col-12">
-                <h3 class="element-title">게시글 작성</h3>
-                <div class="mb-6">
-                    <form id="postForm" th:action="@{/community/postWrite}" method="POST" enctype="multipart/form-data">
-                          <div class="form-group">
-                            <label for="postRegId" class="col-sm-2 col-form-label">작성자</label>
-                            <input type="text" class="form-control" id="postRegId" name="postRegId" th:value="${session.loginId}" readonly="readonly">
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputText">카테고리</label>
-                            <div class="select-default">
-                                <select class="select-option" id="postCateNum" name="category.postCategoryNum">
-                                	<option th:each="pc : ${postCateList}" th:value="${pc.postCategoryNum}" th:text="${pc.postCategoryName}"></option>
-                                	<!--/*  
-                                    <option value="PST_CTGRY_001">여행 정보</option>
-                                    <option value="PST_CTGRY_002">여행 후기</option>
-                                    <option value="PST_CTGRY_003">여행 친구 찾기</option>
-                                    <option value="PST_CTGRY_004">자유게시판</option>
-                                    <option value="PST_CTGRY_005">질문게시판</option>
-                                    */-->
-                                </select>
-                            </div>
+	<th:block layout:fragment="customPageSection">
+	    <!-- Elements Forms -->
+	    <section class="py-10">
+	        <div class="row">
+	            <div class="col-12">
+	                <h3 class="element-title">게시글 작성</h3>
+	                <div class="mb-6">
+	                    <form id="postForm" th:action="@{/community/postWrite}" method="POST" enctype="multipart/form-data">
+	                          <div class="form-group">
+	                            <label for="postRegId" class="col-sm-2 col-form-label">작성자</label>
+	                            <input type="text" class="form-control" id="postRegId" name="postRegId" th:value="${session.loginId}" readonly="readonly">
+	                        </div>
+	                        <div class="form-group">
+	                            <label for="exampleInputText">카테고리</label>
+	                            <div class="select-default">
+	                                <select class="select-option" id="postCateNum" name="category.postCategoryNum">
+	                                	<option th:each="pc : ${postCateList}" th:value="${pc.postCategoryNum}" th:text="${pc.postCategoryName}"></option>
+	                                	<!--/*  
+	                                    <option value="PST_CTGRY_001">여행 정보</option>
+	                                    <option value="PST_CTGRY_002">여행 후기</option>
+	                                    <option value="PST_CTGRY_003">여행 친구 찾기</option>
+	                                    <option value="PST_CTGRY_004">자유게시판</option>
+	                                    <option value="PST_CTGRY_005">질문게시판</option>
+	                                    */-->
+	                                </select>
+	                            </div>
+	                        </div>
                             
-                            
-<!--  <div class="select-default">                           
-<select class="select-option" id="postCateType" name="postCateNum" th:field="*{postCateNum}">
-    <option th:value="PST_CTGRY_001">여행 정보</option>
-    <option th:value="PST_CTGRY_002">여행 후기</option>
-    <option th:value="PST_CTGRY_003">여행 친구 찾기</option>
-    <option th:value="PST_CTGRY_004">자유게시판</option>
-    <option th:value="PST_CTGRY_005">질문게시판</option>
-</select>
-</div>
- -->
- 
+	                        <div class="form-group">
+	                            <label for="postTitle" class="col-sm-2 col-form-label">제목</label>
+	                            <input type="text" class="form-control" id="postTitle" name="postTitle" placeholder="제목" required>
+	                        </div>
+	                        <div class="form-group">
+	                            <label for="postContent">내용</label>
+	                            <textarea class="form-control" id="postContent" name="postContent" rows="15" placeholder="내용을 입력하세요." required></textarea>
+	                        </div>
+	                        
+	                        <!-- Elements Modal -->
+	                        <div class="pt-5 mb-5" id="modal">
+	                            <div class="row">
+	                                <div class="col-md-6 col-lg-4">
+	                                    <h3 class="element-title mb-5 font-weight-bold">첨부 파일</h3>
+	                                    <!-- Button trigger modal -->
+	                                    <button id="attachBtn" class="btn btn-primary file-upload-btn" type="button">+ 파일 첨부하기 (0/10)</button>
+	                                    <input type="file" name="postFile" id="fileInput" style="display: none;" accept=".jpg, .jpeg, .gif, .png, .pdf" multiple>
+	                                    <div id="fileNames"></div>
+	                                </div>
+	                            </div>
+	                        </div>
+	
+	                        <div class="d-flex justify-content-end mt-10">
+	                            <!-- 취소 버튼 -->
+	                            <button type="button" id="cancle-Btn" class="btn btn-secondary cancle-Btn" data-bs-dismiss="modal">취소</button>
+	                            <!-- 등록 버튼 -->
+	                            <button type="submit" id="submit-Btn" class="btn btn-primary submit-Btn">등록</button>
+	                        </div>
+	                    </form>
+	                </div>
+	            </div>
+	        </div>
+	    </section>
+	</th:block>
 
-
-						</div>
-                        <div class="form-group">
-                            <label for="postTitle" class="col-sm-2 col-form-label">제목</label>
-                            <input type="text" class="form-control" id="postTitle" name="postTitle" placeholder="제목" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="postContent">내용</label>
-                            <textarea class="form-control" id="postContent"
-                                name="postContent" rows="15" placeholder="내용을 입력하세요." required></textarea>
-                        </div>
-                        
-                        <!-- Elements Modal -->
-                        <div class="pt-5 mb-5" id="modal">
-                            <div class="row">
-                                <div class="col-md-6 col-lg-4">
-                                    <h3 class="element-title mb-5 font-weight-bold">첨부 파일</h3>
-                                    <!-- Button trigger modal -->
-                                    <button id="attachBtn" class="btn btn-primary file-upload-btn" type="button">+ 파일 첨부하기 (0/10)</button>
-                                    <input type="file" name="postFile" id="fileInput" style="display: none;" accept=".jpg, .jpeg, .gif, .png, .pdf" multiple>
-                                    <div id="fileNames"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="d-flex justify-content-end mt-10">
-                            <!-- 취소 버튼 -->
-                            <button type="button" id="cancle-Btn" class="btn btn-secondary cancle-Btn" data-bs-dismiss="modal">취소</button>
-                            <!-- 등록 버튼 -->
-                            <button type="submit" id="submit-Btn" class="btn btn-primary submit-Btn">등록</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-</th:block>
-
-<th:block layout:fragment="customJsFIle">
-<script>
-    document.getElementById('attachBtn').addEventListener('click', function() {
-        document.getElementById('fileInput').click();
-    });
-
-    document.getElementById('fileInput').addEventListener('change', function() {
-        const files = this.files;
-        const fileNamesContainer = document.getElementById('fileNames');
-        const uploadedFiles = fileNamesContainer.getElementsByClassName('thumbnail-container').length;
-        const remainingSlots = 10 - uploadedFiles;
-        
-        if (files.length > remainingSlots) {
-            alert('최대 10개의 파일만 업로드할 수 있습니다.');
-            return;
-        }
-
-        if (files.length > 0) {
-            for (let i = 0; i < files.length; i++) {
-                const file = files[i];
-                const fileName = file.name;
-
-                const thumbnailContainer = document.createElement('div');
-                thumbnailContainer.classList.add('thumbnail-container');
-
-                const thumbnail = document.createElement('img');
-                thumbnail.src = URL.createObjectURL(file);
-                thumbnail.alt = file.name;
-                thumbnail.classList.add('thumbnail');
-                thumbnailContainer.appendChild(thumbnail);
-
-                const fileNameText = document.createElement('div');
-                fileNameText.textContent = fileName;
-                thumbnailContainer.appendChild(fileNameText);
-
-                const deleteButton = document.createElement('button');
-                deleteButton.textContent = 'x';
-                deleteButton.classList.add('delete-button');
-                deleteButton.addEventListener('click', function() {
-                    thumbnailContainer.remove();
-                    updateAttachedFilesCount(); // 파일 삭제 시 카운트 업데이트
-                });
-                thumbnailContainer.appendChild(deleteButton);
-
-                fileNamesContainer.appendChild(thumbnailContainer);
-            }
-        }
-
-        updateAttachedFilesCount();
-    });
-
-    function updateAttachedFilesCount() {
-        const fileNamesContainer = document.getElementById('fileNames');
-        const uploadedFiles = fileNamesContainer.getElementsByClassName('thumbnail-container').length;
-        const remainingSlots = 10 - uploadedFiles;
-        const attachBtn = document.getElementById('attachBtn');
-        attachBtn.textContent = `+ 파일 첨부하기 (${uploadedFiles}/10)`;
-    }
-	/*
-    document.getElementById('submitBtn').addEventListener('click', function() {
-        document.getElementById('postForm').submit();
-    });
-	*/
-    // 페이지 로드 시 초기 파일 개수 설정
-    updateAttachedFilesCount();
-    
-    
-    
-    
-    
-    
- // 사용자가 카테고리 유형을 선택할 때마다 값을 업데이트하고 서버로 전송
- /*
-    document.getElementById('postCateType').addEventListener('change', function() {
-        var selectedValue = this.value;
-        // postCateNum input 요소에 선택된 값을 설정
-        document.getElementById('postCateNum').value = selectedValue;
-    });
-	*/
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</script>
-
+	<th:block layout:fragment="customJsFIle">
+	<script>
+	    document.getElementById('attachBtn').addEventListener('click', function() {
+	        document.getElementById('fileInput').click();
+	    });
+	
+	    document.getElementById('fileInput').addEventListener('change', function() {
+	        const files = this.files;
+	        const fileNamesContainer = document.getElementById('fileNames');
+	        const uploadedFiles = fileNamesContainer.getElementsByClassName('thumbnail-container').length;
+	        const remainingSlots = 10 - uploadedFiles;
+	        
+	        if (files.length > remainingSlots) {
+	            alert('최대 10개의 파일만 업로드할 수 있습니다.');
+	            return;
+	        }
+	
+	        if (files.length > 0) {
+	            for (let i = 0; i < files.length; i++) {
+	                const file = files[i];
+	                const fileName = file.name;
+	
+	                const thumbnailContainer = document.createElement('div');
+	                thumbnailContainer.classList.add('thumbnail-container');
+	
+	                const thumbnail = document.createElement('img');
+	                thumbnail.src = URL.createObjectURL(file);
+	                thumbnail.alt = file.name;
+	                thumbnail.classList.add('thumbnail');
+	                thumbnailContainer.appendChild(thumbnail);
+	
+	                const fileNameText = document.createElement('div');
+	                fileNameText.textContent = fileName;
+	                thumbnailContainer.appendChild(fileNameText);
+	
+	                const deleteButton = document.createElement('button');
+	                deleteButton.textContent = 'x';
+	                deleteButton.classList.add('delete-button');
+	                deleteButton.addEventListener('click', function() {
+	                    thumbnailContainer.remove();
+	                    updateAttachedFilesCount(); // 파일 삭제 시 카운트 업데이트
+	                });
+	                thumbnailContainer.appendChild(deleteButton);
+	
+	                fileNamesContainer.appendChild(thumbnailContainer);
+	            }
+	        }
+	
+	        updateAttachedFilesCount();
+	    });
+	
+	    function updateAttachedFilesCount() {
+	        const fileNamesContainer = document.getElementById('fileNames');
+	        const uploadedFiles = fileNamesContainer.getElementsByClassName('thumbnail-container').length;
+	        const remainingSlots = 10 - uploadedFiles;
+	        const attachBtn = document.getElementById('attachBtn');
+	        attachBtn.textContent = `+ 파일 첨부하기 (${uploadedFiles}/10)`;
+	    }
+		/*
+	    document.getElementById('submitBtn').addEventListener('click', function() {
+	        document.getElementById('postForm').submit();
+	    });
+		*/
+	    // 페이지 로드 시 초기 파일 개수 설정
+	    updateAttachedFilesCount();
+	    
+	    
+	    
+	    
+	    
+	    
+	 // 사용자가 카테고리 유형을 선택할 때마다 값을 업데이트하고 서버로 전송
+	 /*
+	    document.getElementById('postCateType').addEventListener('change', function() {
+	        var selectedValue = this.value;
+	        // postCateNum input 요소에 선택된 값을 설정
+	        document.getElementById('postCateNum').value = selectedValue;
+	    });
+		*/
+	    
+	    
+	    
+	    
+	</script>
+	
 
     
-</th:block>
+	</th:block>
 
 </html>

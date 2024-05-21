@@ -22,6 +22,7 @@ public class UCommunity {
 	private String postRegDate;
 	private String postMdfDate;
 	private String postDelDate;
+	private boolean isNew;
 	
 	private UCategory category;
 	

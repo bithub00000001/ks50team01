@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import ksmart.ks50team01.user.board.dto.UCategory;
+import ksmart.ks50team01.user.board.dto.UComment;
 import ksmart.ks50team01.user.board.dto.UCommunity;
 import ksmart.ks50team01.user.board.mapper.UCommunityMapper;
 import lombok.RequiredArgsConstructor;
@@ -63,7 +64,7 @@ public class UCommunityService {
     
     
     // 게시글 번호에 해당하는 모든 댓글을 가져오는 메서드 호출
-    public List<UCommunity> getCommentByPostNum(String postNum) {
+    public List<UComment> getCommentByPostNum(String postNum) {
         return uCommunityMapper.getCommentByPostNum(postNum); 
     }
     
@@ -118,30 +119,15 @@ public class UCommunityService {
     
     // 게시글 작성
     public void insertPost(UCommunity uCommunity) {
-        // 게시물을 데이터베이스에 삽입하기 전에 게시물 코드를 생성합니다.
-        //String postCode = generatePostCode(uCommunityMapper.getPostNo());
-        //uCommunityMapper.setPostCode(postCode); // 생성된 게시물 코드를 설정합니다.
         
         // 게시글 DB에 저장
         uCommunityMapper.insertPost(uCommunity);
     }
 
 	
-    // 가장 큰 PST_NO_NUMERIC 값을 조회하는 메서드
-    public String getMaxPstNoNumeric() {
-        return uCommunityMapper.getMaxPstNoNumeric();
-    }
-    
 
-    // 게시물 코드 생성 메서드
-    public String generatePostCode(int postNum) {
-        // 게시물 번호를 기반으로 게시물 코드를 생성합니다.
-        return "PST_" + String.format("%03d", postNum); // 예: PST_001, PST_002 등
-    }
 
-   
-    
-    
+
 
     
     

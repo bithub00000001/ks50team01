@@ -8,13 +8,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ksmart.ks50team01.user.board.dto.UCategory;
+import ksmart.ks50team01.user.board.dto.UComment;
 import ksmart.ks50team01.user.board.dto.UCommunity;
 import ksmart.ks50team01.user.board.service.UCommunityService;
 import lombok.RequiredArgsConstructor;
@@ -65,10 +65,11 @@ public class UCommunityController {
 		model.addAttribute("postDetail", postDetail);
 		
 		// 해당 게시글의 모든 댓글 가져오기
-		List<UCommunity> commentList = uCommunityService.getCommentByPostNum(postNum);
+		List<UComment> commentList = uCommunityService.getCommentByPostNum(postNum);
 		
 
 		model.addAttribute("commentList", commentList);
+		model.addAttribute("postDetail", postDetail);
 		model.addAttribute("postTitle", postDetail.getPostTitle());
 		model.addAttribute("postContent", postDetail.getPostContent());
 		model.addAttribute("postInqCnt", postDetail.getPostInqCnt());
@@ -94,10 +95,11 @@ public class UCommunityController {
 	public String postWrite(UCommunity uCommunity,
 							RedirectAttributes redirectAttributes,
 							Model model) {
-		log.info("게시글등록:{}", uCommunity);
-		// 게시글 등록
+		log.info("게시글 등록:{}", uCommunity);
+		
         uCommunityService.insertPost(uCommunity);
         redirectAttributes.addFlashAttribute("success", "게시글이 성공적으로 저장되었습니다.");
+        
         return "redirect:/community";
 	}
 	
@@ -146,23 +148,13 @@ public class UCommunityController {
 	public String postWrite(Model model) {
 		List<UCategory> postCateList = uCommunityService.getPostCateList();
 		log.info("postCateList: {}", postCateList);
+		
 		model.addAttribute("title", "게시글 작성");
 		model.addAttribute("postCateList", postCateList);
+		
 		return "user/board/postWrite";
 	}
 	
-	// 게시글 코드 생성 메서드
-	@PostMapping("/generateCode")
-	public ResponseEntity<String> generatePostCode() {
-	    try {
-	        // 게시물 서비스를 호출하여 새로운 게시물 코드를 생성합니다.
-	        String postCode = uCommunityService.generatePostCode(0);
-	        return new ResponseEntity<>("게시물 코드가 생성되었습니다: " + postCode, HttpStatus.OK);
-	    } catch (Exception e) {
-	        // 게시물 코드 생성에 실패한 경우 예외를 처리합니다.
-	        return new ResponseEntity<>("게시물 코드 생성에 실패했습니다. 에러 메시지: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-	    }
-	}
 
 	// 댓글 작성
 	@PostMapping("/replySave")

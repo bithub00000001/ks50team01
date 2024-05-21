@@ -48,8 +48,8 @@ public class PFaqService {
 
 
 	/**
-	 * 주어진 PFaq 객체의 정보를 수정합니다.
-	 * @param pFaq 수정할 PFaq 객체
+	 * 자주찾는 질문 수정
+	 * @param faqNum
 	 * @return 수정된 행의 수
 	 */
 	public int faqModify(PFaq pFaq) {

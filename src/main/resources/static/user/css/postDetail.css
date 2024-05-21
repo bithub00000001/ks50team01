@@ -3,7 +3,7 @@
 /* 게시글 제목 스타일 */
 .post-title {
     color: #333;
-    font-size: 25px;
+    font-size: 20px;
     font-weight: bold;
     margin-bottom: 20px;
 }
@@ -18,7 +18,7 @@
     min-height: 550px;
     overflow-y: auto; /* 세로 스크롤만 표시됩니다. */
     font-family: 'Arial', sans-serif; /* 글꼴 설정 */
-    font-size: 18px; 
+    font-size: 17px; 
     color: #333; /* 텍스트 색상 설정 */
     padding-top: 30px;
     line-height: 1.6; /* 행간 설정 */
@@ -44,7 +44,7 @@
 }
 
 .comment-author {
-    font-size: 18px; /* 적절한 크기로 조정하세요 */
+    font-size: 17px; /* 적절한 크기로 조정하세요 */
     padding-left: 20px;
 }
 
@@ -55,8 +55,8 @@
 
 
 .comment-content {
-    font-size: 16px; /* 적절한 크기로 조정하세요 */
-    padding-left: 60px; /* 적절한 여백 값으로 조정하세요 */
+    font-size: 15px; /* 적절한 크기로 조정하세요 */
+    padding-left: 65px; /* 적절한 여백 값으로 조정하세요 */
 }
 
 
@@ -147,7 +147,7 @@
 
 
 /* 댓글 수 뱃지 크기 */
-.badge-size {
+.comment-badge {
     font-size: 12px; /* 크기 조절 */
 }
 

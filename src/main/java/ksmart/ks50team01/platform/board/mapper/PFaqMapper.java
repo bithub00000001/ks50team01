@@ -19,7 +19,7 @@ public interface PFaqMapper {
     // 
     PFaq getFaqInfoByNum(String faqNum);
 
-    // 수정
+    // 자주찾는 질문 수정
 	int faqModify(PFaq pFaq);
 	
 	

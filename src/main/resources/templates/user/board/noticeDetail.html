@@ -2,107 +2,106 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
 				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 				layout:decorate="~{user/layout/default}">
+	
+	<head>
+	<title>공지사항 상세 페이지</title>
+	</head>
 
-<head>
-<title>공지사항 상세 페이지</title>
-<th:block layout:fragment="customCss">
-	<link th:href="@{/user/css/noticeDetail.css}" rel="stylesheet">
-</th:block>
-
-</head>
-
-<th:block layout:fragment="customPageSection">
-	<!-- 게시물 내용을 보여주는 컨테이너 -->
-	<div class="container notice-detail-container">
-		<div class="row">
-			<div class="col-lg-8 col-md-10 mx-auto">
-				<div class="notice" th:object="${noticeDetail}">
-					<div class="notice-header">
-						<!-- align-items-start로 변경 -->
-					    <div class="d-flex align-items-start">
-					        <i class="badge rounded-pill bg-primary badge-cate me-2" th:text="*{noticeCate.noticeCateType}"></i>
-					        <h2 class="notice-title mb-5" th:text="*{noticeTitle}">공지사항 제목</h2>
+	<th:block layout:fragment="customCss">
+		<link th:href="@{/user/css/noticeDetail.css}" rel="stylesheet">
+		
+    	<!-- GOOGLE FONT -->
+    	<link href='https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700' rel='stylesheet'>
+	</th:block>
+	
+	<th:block layout:fragment="customPageSection">
+		<!-- 게시물 내용을 보여주는 컨테이너 -->
+		<div class="container notice-detail-container">
+			<div class="row">
+				<div class="col-lg-8 col-md-10 mx-auto">
+					<div class="notice" th:object="${noticeDetail}">
+						<div class="notice-header">
+							<!-- align-items-start로 변경 -->
+						    <div class="d-flex align-items-start">
+						        <i class="badge rounded-pill bg-primary badge-cate me-2" th:text="*{noticeCate.noticeCateType}"></i>
+						        <h2 class="notice-title mb-5" th:text="*{noticeTitle}">공지사항 제목</h2>
+						    </div>
 					    </div>
-				    </div>
-					<p class="post-meta">
-						<span th:text="'작성자 : ' + *{noticeRegId}">작성자 아이디</span>
-						<span th:text="'등록일 : ' + *{#strings.substring(noticeRegDate, 0, 10)}">작성일</span>
-						<span th:text="'조회수 : ' + *{noticeInqCnt}">0</span>
-					</p>
-					<!-- 굵은 직선 추가 -->
-					<hr class="my-4">
-					<p class="notice-content" th:text="*{noticeContent}">공지사항 내용</p>
-
-					<!-- 굵은 직선 추가 -->
-					<hr class="my-4">
-					<div class="list-btn">
-						<button type="button" class="btn btn-dark list-btn">목록</button>
+						<p class="post-meta">
+							<span th:text="'작성자 : ' + *{noticeRegId}">작성자 아이디</span>
+							<span th:text="'등록일 : ' + *{#strings.substring(noticeRegDate, 0, 10)}">작성일</span>
+							<span th:text="'조회수 : ' + *{noticeInqCnt}">0</span>
+						</p>
+						<!-- 굵은 직선 추가 -->
+						<hr class="my-4">
+						<p class="notice-content" th:text="*{noticeContent}">공지사항 내용</p>
+	
+						<!-- 굵은 직선 추가 -->
+						<hr class="my-4">
+						<div class="list-btn">
+							<button type="button" class="btn btn-dark list-btn">목록</button>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-</th:block>
+	</th:block>
 
 
 
-<th:block layout:fragment="customJsFIle">
-    <script th:src="@{/user/js/viewCount.js}"></script>
-</th:block>
+	<th:block layout:fragment="customJsFIle">
+	    <script th:src="@{/user/js/viewCount.js}"></script>
+	</th:block>
 
 
 
-<th:block layout:fragment="customJs">
-	<script>
-			// 뒤로 가기 함수
-			function goBack() {
-				window.history.back();
-			}
-		</script>
-	<script src="https://kit.fontawesome.com/8374b337d7.js" crossorigin="anonymous"></script>
-
-	<script>
-			function toggleDropdownMenu() {
-				const dropdownMenu = document.getElementById('dropdown-menu');
-				dropdownMenu.classList.toggle('show');
-			}
-
-			function editComment() {
-				// 수정 버튼을 클릭했을 때 수행할 작업을 구현합니다.
-				// 이 함수는 실제로 수정 기능을 수행해야 합니다.
-			}
-
-			function deleteComment() {
-				// 삭제 버튼을 클릭했을 때 수행할 작업을 구현합니다.
-				// 이 함수는 실제로 삭제 기능을 수행해야 합니다.
-			}
-
-			// 클릭 이벤트가 발생한 곳이 아닌 다른 곳을 클릭하면 드롭다운 메뉴를 닫습니다.
-			document.addEventListener('click', function(event) {
-				const dropdownMenu = document.getElementById('dropdown-menu');
-				if (!event.target.matches('.fa-solid.fa-ellipsis-vertical')) {
-					dropdownMenu.classList.remove('show');
+	<th:block layout:fragment="customJs">
+		<script>
+				// 뒤로 가기 함수
+				function goBack() {
+					window.history.back();
 				}
-			});
-		</script>
-
-
-
-	<script>
-			document.addEventListener("DOMContentLoaded", function() {
-				const listButton = document.querySelector('.list-btn'); // 목록 버튼 가져오기
-
-				// 목록 버튼 클릭 시
-				listButton.addEventListener('click', function() {
-					// 게시물 리스트 페이지로 이동
-					window.location.href = "/notice";
+			</script>
+		<script src="https://kit.fontawesome.com/8374b337d7.js" crossorigin="anonymous"></script>
+	
+		<script>
+				function toggleDropdownMenu() {
+					const dropdownMenu = document.getElementById('dropdown-menu');
+					dropdownMenu.classList.toggle('show');
+				}
+	
+				function editComment() {
+					// 수정 버튼을 클릭했을 때 수행할 작업을 구현합니다.
+					// 이 함수는 실제로 수정 기능을 수행해야 합니다.
+				}
+	
+				function deleteComment() {
+					// 삭제 버튼을 클릭했을 때 수행할 작업을 구현합니다.
+					// 이 함수는 실제로 삭제 기능을 수행해야 합니다.
+				}
+	
+				// 클릭 이벤트가 발생한 곳이 아닌 다른 곳을 클릭하면 드롭다운 메뉴를 닫습니다.
+				document.addEventListener('click', function(event) {
+					const dropdownMenu = document.getElementById('dropdown-menu');
+					if (!event.target.matches('.fa-solid.fa-ellipsis-vertical')) {
+						dropdownMenu.classList.remove('show');
+					}
 				});
-			});
-		</script>
+			</script>
 
 
+	
+		<script>
+				document.addEventListener("DOMContentLoaded", function() {
+					const listButton = document.querySelector('.list-btn'); // 목록 버튼 가져오기
+	
+					// 목록 버튼 클릭 시
+					listButton.addEventListener('click', function() {
+						// 게시물 리스트 페이지로 이동
+						window.location.href = "/notice";
+					});
+				});
+			</script>
 
-
-</th:block>
-</body>
+	</th:block>
 </html>

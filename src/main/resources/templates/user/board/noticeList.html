@@ -3,10 +3,18 @@
                 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
                 layout:decorate="~{user/layout/default}">
                 
-<head>
-	<title>공지사항</title>
+	<head>
+		<title>공지사항</title>
+	</head>
+
+	<th:block layout:fragment="customCss">
 		<link rel="stylesheet" th:href="@{/user/css/list-style.css}">
-</head>
+		
+		<!-- GOOGLE FONT -->
+    	<link href='https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700' rel='stylesheet'>
+	</th:block>
+
+
 
 <th:block layout:fragment="customPageSection">
 	<!-- list-style -->

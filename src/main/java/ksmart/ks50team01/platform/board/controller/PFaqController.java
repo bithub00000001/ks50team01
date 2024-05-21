@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -31,9 +32,9 @@ public class PFaqController {
 	
 	// 자주찾는 질문 수정 POST 요청
 	@PostMapping("/faqModify")
-	public String faqModify(@RequestParam(value = "faqNum") String faqNum, Model model) {
+	public String faqModify(PFaq pFaq, Model model) {
 		model.addAttribute("title", "자주찾는 질문 수정 페이지");
-		model.addAttribute("faqNum", faqNum);
+		model.addAttribute("pFaq", pFaq);
 		return "redirect:/platform/board/faqList";
 	}
 	
@@ -42,11 +43,19 @@ public class PFaqController {
 	
 	// 자주찾는 질문 수정 페이지
 	@GetMapping("/faqModify")
-	public String faqModifyPage(@RequestParam(value = "faqNum") String faqNum, Model model) {
+	public String faqModify(@RequestParam(value = "faqNum") String faqNum, Model model) {
 		PFaq faqInfo = pFaqService.getFaqInfoByNum(faqNum);
 		List<PFaq> faqList = pFaqService.getFaqList();
 		
+	    // 현재 날짜를 포맷에 맞게 설정
+	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	    String currentDate = LocalDate.now().format(formatter);
+	    
+	    
+		
 		log.info("faqInfo : {}", faqInfo);
+		// 모델에 현재 날짜 추가
+		model.addAttribute("currentDate", currentDate);
 		model.addAttribute("faqNum", faqNum);
 		model.addAttribute("faqInfo", faqInfo);
 		model.addAttribute("faqList", faqList);
@@ -80,7 +89,7 @@ public class PFaqController {
 	
 	// 자주찾는 질문 작성 POST 요청
 	@PostMapping("/faqWrite")
-	public String faqWrite(PFaq PFaq, Model model) {
+	public String faqWrite(PFaq pFaq, Model model) {
 		model.addAttribute("title", "자주찾는 질문 작성 페이지");
 		return "redirect:/platform/board/faqList";
 	}

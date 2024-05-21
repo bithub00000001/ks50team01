@@ -17,16 +17,17 @@
 		<result property="postRegDate" column="REG_YMD" />
 		<result property="postMdfDate" column="MDFCN_YMD" />
 		<result property="postDelDate" column="DEL_YMD" />
+		<result property="isNew" column="POST_NEW" />
 		
 		<!-- 1:1 association -->
-		<association 	property="category" 			javaType="UCategory">
+		<association 	property="category" 				javaType="UCategory">
 			<id 		property="postCategoryNum" 			column="PST_CTGRY_NO"/>
 			<result 	property="postCategoryRegId" 		column="REG_PF_ID"/>
 			<result 	property="postCategoryName" 		column="PST_CTGRY_NM"/>
-			<result 	property="postCategoryModifyId" 	column="MDFCN_PF_ID"/>
-			<result 	property="postCateActiveYN" 		column="ACT_YN"/>
+			<result 	property="postCategoryMdfId" 		column="MDFCN_PF_ID"/>
+			<result 	property="postCateActive" 			column="ACT_YN"/>
 			<result 	property="postCategoryRegDate" 		column="REG_YMD"/>
-			<result 	property="postCategoryModifyDate" 	column="MDFCN_YMD"/>
+			<result 	property="postCategoryMdfDate" 		column="MDFCN_YMD"/>
 		</association>
 		
 		
@@ -47,7 +48,7 @@
 		
 	</resultMap>
 	
-	<resultMap type="UCommunity" id="postCommentMap">
+	<resultMap type="UComment" id="postCommentMap">
 			<id 		property="CommentNum" 			column="PST_CMNT_NO"/>
 			<result 	property="CommentRegId" 		column="REG_MBR_ID"/>
 			<result 	property="postNum" 				column="PST_NO"/>
@@ -65,15 +66,16 @@
 		<id 		property="postCategoryNum" 			column="PST_CTGRY_NO"/>
 		<result 	property="postCategoryRegId" 		column="REG_PF_ID"/>
 		<result 	property="postCategoryName" 		column="PST_CTGRY_NM"/>
-		<result 	property="postCategoryModifyId" 	column="MDFCN_PF_ID"/>
-		<result 	property="postCateActiveYN" 		column="ACT_YN"/>
+		<result 	property="postCategoryMdfId" 		column="MDFCN_PF_ID"/>
+		<result 	property="postCateActive" 			column="ACT_YN"/>
 		<result 	property="postCategoryRegDate" 		column="REG_YMD"/>
-		<result 	property="postCategoryModifyDate" 	column="MDFCN_YMD"/>
+		<result 	property="postCategoryMdfDate" 		column="MDFCN_YMD"/>
 	</resultMap>
 
 	
 	<select id="getPostList" resultMap="postResultMap">
 		/* 커뮤니티 게시글 조회 */
+		<![CDATA[
 	 	SELECT
 			ROW_NUMBER() OVER(ORDER BY CAST(SUBSTRING_INDEX(P.PST_NO, 'PST_', -1) AS UNSIGNED)) AS ROW_NUM,
 			P.PST_NO, 
@@ -90,7 +92,8 @@
 			P.REG_YMD, 
 			P.MDFCN_YMD, 
 			P.DEL_YMD,
-			COUNT(PC.PST_CMNT_NO) AS PST_CMNT_TOTAL
+			COUNT(PC.PST_CMNT_NO) AS PST_CMNT_TOTAL,
+			IF(DATEDIFF(NOW(), P.REG_YMD) < 7, TRUE, FALSE) AS POST_NEW
 		FROM 
 			POST AS P
 			INNER JOIN
@@ -102,8 +105,12 @@
 			ON 
 			P.PST_NO = PC.PST_NO
 		GROUP BY P.PST_NO
-		ORDER BY CAST(SUBSTRING_INDEX(P.PST_NO, 'PST_', -1) AS UNSIGNED) DESC;
+		ORDER BY P.REG_YMD DESC;
+		]]>
 	</select>
+	
+	
+	
 	<!-- 
 	<select id="getPostList" resultMap="postResultMap">
 	 	/* 커뮤니티 게시글 조회 */
@@ -166,10 +173,6 @@
     
 
 
-    <!-- 가장 큰 PST_NO_NUMERIC 값을 조회하는 메서드 -->
-    <select id="getMaxPstNoNumeric" resultType="String">
-        SELECT MAX(PST_NO_NUMERIC) FROM POST
-    </select>
     
     
         <!-- 게시글 등록 메서드 -->
@@ -238,8 +241,8 @@
 			C.PST_CTGRY_NM,
 			P.PST_TTL, 
 			P.PST_CN, 
-			P.PST_INQ_CNT, 
-			P.PST_CMNT_TOTAL, 
+			COUNT(M.PST_CMNT_NO) OVER () AS PST_CMNT_TOTAL,
+			P.PST_INQ_CNT,  
 			P.PST_LIKE_TOTAL, 
 			P.PST_DISLIKE_TOTAL, 
 			P.PST_REPT_TOTAL, 
@@ -263,7 +266,7 @@
 			POST_CATEGORY AS C
 			ON
 			P.PST_CTGRY_NO = C.PST_CTGRY_NO
-			left JOIN
+			LEFT JOIN
 			POST_COMMENT AS M
 			ON
 			P.PST_NO = M.PST_NO
