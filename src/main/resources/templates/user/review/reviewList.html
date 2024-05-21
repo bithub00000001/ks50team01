@@ -367,7 +367,34 @@
 								<!-- 리뷰 리스트 start -->
 								<div class="tab-pane" id="tourGuide" role="tabpanel" aria-labelledby="tourGuide-tab">
 								    <div class="row">
-								        <div class="review-container text-container">
+										<div class="center"> <!-- 가운데 정렬을 적용합니다. -->
+										    <div id="averageStarPoint">평균 별점: </div>
+										    <div id="averageRatingStarsContainer" class="rating-stars-avg"></div>
+										    <span id="averageRatingText" class="rating-text"></span> <!-- 리뷰 평점 텍스트의 크기를 조절합니다. -->
+										</div>
+										<div class="center-cnt">
+										    <span id="reviewCount" class="review-cnt-text">리뷰 개수: </span>
+										</div>
+							    		<div class="separator1"></div> <!-- 굵은 직선 추가 -->
+										<div class="separator2"></div> <!-- 굵은 직선 추가 -->
+
+<div class="button-container d-flex justify-content-between">
+    <div class="recommend-dropdown">
+        <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">추천순</button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <li><a class="dropdown-item" href="#">최신순</a></li>
+            <li><a class="dropdown-item" href="#">좋아요순</a></li>
+            <li><a class="dropdown-item" href="#">오래된순</a></li>
+        </ul>
+    </div>
+
+    <div class="write-btn-container ml-auto">
+        <!-- ml-auto 클래스를 추가하여 버튼을 오른쪽으로 정렬합니다 -->
+        <a th:href="@{/user/review/write}"><button type="button" class="btn btn-outline-primary btn-sm">작성하기</button></a>
+    </div>
+</div>
+
+									<div class="review-container text-container">
 								            <!-- 이 곳에 리뷰가 표시될 것입니다 -->
 								        </div>
 								    </div>
@@ -383,7 +410,7 @@
 						</div>
 					</div>
 				</div>
-			
+			</div>
 			
 			
 			
@@ -465,6 +492,28 @@
                 dataType: 'json',
                 success: function(data) {
                     reviewsData = data;
+                    $('#reviewCount').text('리뷰 개수: ' + reviewsData.length); // 리뷰 개수를 업데이트
+                    
+                    if (reviewsData.length > 0) {
+                        let totalStarPoints = 0;
+
+                        // 각 리뷰의 별점을 더합니다.
+                        reviewsData.forEach(function(review) {
+                            totalStarPoints += review.reviewStarPoint;
+                        });
+
+                        // 평균 별점을 계산합니다.
+                        let averageStarPoint = totalStarPoints / reviewsData.length;
+                        console.log('평균 별점:', averageStarPoint);
+
+                     // HTML에 평균 별점을 표시합니다.
+                        $('#averageStarPoint').text('평균 별점: ' + averageStarPoint.toFixed(2)); // 소수점 두 자리까지 표시
+                        
+                        // 별 모양으로 평균 별점을 표시합니다.
+                        displayRatingWithColor(averageStarPoint, 'averageStarPoint');
+                        
+                    }
+                    
                     if (commentsData) {
                         displayReviewsAndComments(reviewsData, commentsData);
                     }
@@ -489,7 +538,55 @@
                     console.error('AJAX 오류 발생:', textStatus, errorThrown);
                 }
             });
+            
+            // 리뷰 파일
+            $.ajax({
+                url: '/user/review/file/json', // JSON 데이터를 제공하는 엔드포인트 URL
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    // 성공 시 데이터 처리
+                    console.log('데이터 가져오기 성공:', data);
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    // 오류 발생 시 오류 메시지 출력
+                    console.error('AJAX 오류 발생:', textStatus, errorThrown);
+                }
+            });
         });
+		
+		// 별점을 표시하는 함수
+		function displayRatingWithColor(rating, containerId) {
+		    const ratingStarsContainer = document.getElementById(containerId);
+		    ratingStarsContainer.innerHTML = ''; // 기존의 내용을 지웁니다.
+
+		    const integerPart = Math.floor(rating); // 정수 부분
+		    const decimalPart = rating - integerPart; // 소수 부분
+
+		    for (let i = 0; i < 5; i++) {
+		        const star = document.createElement('span');
+		        star.textContent = '★'; // 텍스트로 별 모양을 추가합니다.
+		        star.classList.add('rating-stars-avg'); // 별 모양 요소에 클래스를 추가합니다.
+		        if (i < integerPart) {
+		            star.style.color = 'orange'; // 정수 부분은 모두 주황색으로 채색합니다.
+		        } else if (i === integerPart && decimalPart > 0) {
+		            // 소수 부분이 있는 경우 해당 별의 일부만 채색합니다.
+		            const gradient = `linear-gradient(to right, orange ${decimalPart * 100}%, gray ${decimalPart * 100}%)`;
+		            star.style.backgroundImage = gradient;
+		            star.style.webkitBackgroundClip = 'text'; // 텍스트만 그라데이션을 적용합니다.
+		            star.style.color = 'transparent';
+		        } else {
+		            star.style.color = 'gray'; // 나머지 별은 회색으로 채색합니다.
+		        }
+		        ratingStarsContainer.appendChild(star);
+		    }
+
+		    // 평균 별점 텍스트를 추가합니다.
+		    const averageRatingText = document.getElementById('averageRatingText');
+		    averageRatingText.textContent = `${rating.toFixed(1)}`;
+		}
+
+		
 
         function displayReviewsAndComments(reviews, comments) {
             let reviewContainer = $('.tab-pane#tourGuide .review-container');
@@ -502,7 +599,7 @@
                 listItem.append(reviewId);
                 
                 // 리뷰 작성일
-                let reviewDateText = '리뷰 작성일: ' + review.reviewDate;
+                let reviewDateText = review.reviewDate;
                 let reviewDate = $('<span>').text(reviewDateText).addClass('review-date');
                 listItem.append(reviewDate);
 
@@ -526,6 +623,9 @@
                 let reviewContent = $('<div>').text(review.reviewContent).addClass('review-content');
                 listItem.append(reviewContent);
                 
+                
+                
+                
              	// 좋아요 버튼
                 let likeButton = $('<button>').addClass('btn btn-outline-primary btn-sm like-button button-text');
                 if (review.reviewLike && review.reviewLike !== 0) {
@@ -544,8 +644,8 @@
                 }
                 listItem.append(dislikeButton);
                 
-                // 모달을 트리거하는 버튼 생성
-                let reportButton = $('<button>').addClass('btn btn-danger').attr({
+            	 // 모달을 트리거하는 버튼 생성
+                let reportButton = $('<button>').addClass('btn btn-outline-danger btn-sm report-button').attr({
                     'type': 'button',
                     'data-bs-toggle': 'modal',
                     'data-bs-target': '#staticBackdrop'
@@ -576,10 +676,10 @@
                 reviewContainer.append(listItem);
                 reviewContainer.append(separator);
             });
+            
         }
 
 		</script>
-		
-        
+
 	</th:block>
 </html>

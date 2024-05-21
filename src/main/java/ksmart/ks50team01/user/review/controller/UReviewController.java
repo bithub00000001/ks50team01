@@ -1,5 +1,6 @@
 package ksmart.ks50team01.user.review.controller;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -10,12 +11,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import ksmart.ks50team01.user.review.dto.UReview;
 import ksmart.ks50team01.user.review.dto.UReviewComment;
+import ksmart.ks50team01.user.review.dto.UReviewFile;
 import ksmart.ks50team01.user.review.service.UReviewService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -117,14 +121,31 @@ public class UReviewController {
 			return "redirect:/user/review/list";
 		}
 		*/
+	/*
 		@PostMapping("/write")
 		public String reviewWrite(UReview review, HttpServletRequest request, Model model) {
 			
-			System.out.println("리뷰 작성 화면에서 입력받은 data"+review);
-			
-			model.addAttribute("fileList", uReviewService.getFileList());
+			log.info("리뷰 작성 화면에서 입력받은 data: {}",review);
 			
 			uReviewService.reviewWrite(review); //리뷰 데이터를 db에 저장
+			
+			return "redirect:/user/review/list";
+		}
+		*/
+		
+		@PostMapping("/write")
+		public String reviewWrite(UReview review, HttpServletRequest request, Model model, @RequestParam(required = false) MultipartFile[] uploadfile) {
+			
+			log.info("리뷰 작성 화면에서 입력받은 data: {}",review);
+			log.info("입력받은 file data: {}",Arrays.toString(uploadfile));
+			/*
+			if (uploadfile != null && uploadfile.length > 0) {
+				uReviewService.fileUpload(uploadfile);
+			} else {
+				log.info("파일이 첨부되지 않았습니다.");
+			}
+			*/
+			uReviewService.reviewWrite(review, uploadfile); //리뷰 데이터를 db에 저장
 			
 			return "redirect:/user/review/list";
 		}
@@ -160,9 +181,22 @@ public class UReviewController {
 	
 
 	
-	
-	
-	
+	/**
+	 * 파일 json
+	 */
+	@GetMapping("/file/json")
+	@ResponseBody
+	public List<UReviewFile> reviewFileJsonView(Model model){
+		
+		List<UReviewFile> uReviewFileList = uReviewService.getFileList();
+		log.info("uReviewFileList: {}", uReviewFileList);
+		
+		model.addAttribute("title","리뷰 파일 목록");
+		model.addAttribute("uReviewFileList",uReviewFileList);
+		
+		return uReviewFileList;
+	}
+
 	
 	
 	/**

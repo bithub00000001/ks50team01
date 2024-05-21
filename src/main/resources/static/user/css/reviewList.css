@@ -53,6 +53,7 @@
     width: 120px; /* 기본 너비 설정 */
     margin-right: 100%; /* 버튼 간격 조절 */
     margin-bottom: 5px;
+    margin-top: 30px;
 }
 
 .dislike-button {
@@ -102,6 +103,34 @@
     color: #777777; /* 날짜 색상 */
 }
 
-.report-button {
-    float: right;
+.report-button{
+	/* color: white !important; */
+	margin-bottom: 30px;
+	font-size: 10px !important; /* 버튼의 글씨 크기를 10px로 설정합니다. */
+	margin-left: 90%;
+}
+
+/* 가운데 정렬을 위한 스타일 */
+.center {
+    text-align: center;
+    margin-bottom: 10px;
+}
+.center-cnt{
+	text-align: center;
+	margin-bottom: 30px;
+}
+
+/* 평균 별점 별 모양의 크기를 조절합니다. */
+.rating-stars-avg {
+    font-size: 40px;
+}
+
+/* 평균 별점 텍스트의 크기를 조절합니다. */
+.rating-text {
+    font-size: 24px;
+}
+
+/* 리뷰 개수 텍스트의 크기를 조절합니다. */
+#reviewCount {
+    font-size: 16px;
 }

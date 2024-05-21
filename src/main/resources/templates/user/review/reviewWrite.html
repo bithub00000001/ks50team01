@@ -122,9 +122,9 @@
 				    
 				    <div class="photo-upload-section">
 					      <span class="attachment-text">사진첨부</span>
-					      <input type="file" id="photo" name="photo" accept="image/*,video/*" multiple style="display: none;">
+					      <input type="file" id="photo" name="uploadfile" accept="image/*,video/*" multiple style="display: none;">
 					      <span id="fileCount">(0/10)</span>
-					      <label for="photo" class="file-upload-btn">첨부하기</label>
+					      <label for="photo" class="file-upload-btn" >첨부하기</label>
 				  	</div>
 				
 				  
@@ -133,7 +133,7 @@
 				    <div class="separator1"></div> <!-- 굵은 직선 추가 -->
 				    <div class="form-group">
 				        <!-- Thymeleaf를 사용하여 링크의 대상 URL 설정 -->
-				        <button type="submit" class="btn register-button">등록</button>
+				         <button type="button" class="btn register-button" onclick="submitReview()">등록</button>
 				        <a th:href="@{/user/review/list}"><button type="reset" class="btn cancel-button">취소</button></a>
 				    </div>
 				
@@ -152,8 +152,8 @@
 	
 	<script>
 	document.addEventListener('DOMContentLoaded', function() {
-		var reviewApproveInput = document.getElementById('reviewApproveInput');
-		var displayText = document.getElementById('displayText');
+		let reviewApproveInput = document.getElementById('reviewApproveInput');
+		let displayText = document.getElementById('displayText');
 
 		// Set the initial display text based on the value
 		if (reviewApproveInput.value === 'DISCLOSURE_001') {
@@ -371,5 +371,36 @@
 			    fileCountElement.textContent = '(' + attachedFiles.length + '/' + maxFileCount + ')';
 			}
         </script>
+        
+        <script>
+     // 리뷰 등록 버튼 클릭 시 호출되는 함수
+        function submitReview() {
+            // 리뷰 내용을 가져옵니다.
+            let reviewContent = document.getElementById('review').value.trim();
+
+            // 리뷰 내용이 10자 이상인지 확인합니다.
+            if (reviewContent.length < 10) {
+                // 팝업 창을 띄웁니다.
+                alert('리뷰 내용을 10자 이상 입력해주세요.');
+                return false; // 리뷰 등록을 중단합니다.
+            }
+
+            // 리뷰 내용이 비어 있는지 확인합니다.
+            if (reviewContent === "") {
+                alert('리뷰 내용을 입력해주세요.');
+                return false; // 리뷰 등록을 중단합니다.
+            }
+            
+            // 별점을 선택하지 않았을 경우 팝업 창을 띄웁니다.
+            let selectedRating = document.querySelector('.star-rating input:checked');
+            if (!selectedRating) {
+                alert('별점을 선택해주세요.');
+                return false; // 리뷰 등록을 중단합니다.
+            }
+
+            // 10자 이상인 경우, 리뷰를 제출합니다.
+            document.getElementById('reviewForm').submit();
+        }
+</script>
 	</th:block>
 </html>

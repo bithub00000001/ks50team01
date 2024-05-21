@@ -141,7 +141,7 @@ public class FileUtil {
 					}
 			    	
 					// 올려진 파일 리스트로 정리(테이블에 삽입할 내용)
-					fileIdx = "file_"+current.format(format)+Long.toString(System.nanoTime());
+					fileIdx = "PRCH_REV_FILE_"+current.format(format)+Long.toString(System.nanoTime());
 					UReviewFile fileDto = new UReviewFile();
 					fileDto.setReviewFileCode(fileIdx);
 					fileDto.setReviewFileSize(multipartFile.getSize());

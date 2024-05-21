@@ -55,6 +55,7 @@
     
     </resultMap>
     
+    
     	<select id="getFileInfoByIdx" parameterType="string" resultMap="fileResultMap">
 			SELECT
 				 PRCH_REV_FILE_CD
@@ -74,31 +75,32 @@
 			</trim>
 		</select>
     
-    	<insert id="addFile" parameterType="list">
-		INSERT INTO REVIEW_IMAGE
-		(
-			 PRCH_REV_FILE_CD
-			,REG_MBR_ID
-			,PRCHS_REV_CD
-			,IMG_NM
-			,IMG_PATH_NM
-			,REG_YMD
-			,NEW_IMG_NM
-			,FILE_SIZE
-		)VALUES
-		<foreach collection="list" item="data" separator=",">
-		( 
-			 #{data.reviewFileCode}
-			,#{data.reviewId}
-			,#{data.reviewCode}
-			,#{data.reviewFileName}
-			,#{data.reviewFilePath}
-			,#{data.reviewFileDate}
-			,#{data.reviewFileNewName}
-			,#{data.reviewFileSize}
-		)
-		</foreach>
-	</insert>
+		<insert id="addFile" parameterType="list">
+		    INSERT INTO REVIEW_IMAGE
+		    (
+		         PRCH_REV_FILE_CD
+		        ,REG_MBR_ID
+		        ,PRCHS_REV_CD
+		        ,IMG_NM
+		        ,IMG_PATH_NM
+		        ,REG_YMD
+		        ,NEW_IMG_NM
+		        ,FILE_SIZE
+		    )
+		    VALUES
+		    <foreach collection="list" item="data" separator=",">
+		        (
+		             #{data.reviewFileCode}
+		            ,#{data.reviewId}
+		            ,#{data.reviewCode}
+		            ,#{data.reviewFileName}
+		            ,#{data.reviewFilePath}
+		            ,NOW()
+		            ,#{data.reviewFileNewName}
+		            ,#{data.reviewFileSize}
+		        )
+		    </foreach>
+		</insert>
     
     	<select id="getFileList" resultMap="fileResultMap">
 		SELECT

@@ -13,10 +13,12 @@ import ksmart.ks50team01.user.review.dto.UReviewFile;
 import ksmart.ks50team01.user.review.mapper.UReviewMapper;
 import ksmart.ks50team01.user.review.util.FileUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class UReviewService {
 	
 	private final UReviewMapper uReviewMapper;
@@ -38,10 +40,70 @@ public class UReviewService {
 		
 		List<UReviewFile> fileList= fileUtil.parseFileInfo(uploadfile);
 		
+		// 파일리스트가 비어있지 않은지 확인
+		if (fileList == null || fileList.isEmpty()) {
+			throw new IllegalArgumentException("파일 리스트가 비어 있습니다.");
+		}
+		
+		// 각 파일이 올바르게 파싱되었는지 확인
+		for (UReviewFile file : fileList) {
+			System.out.println("파일 정보 확인: " + file.toString()); // 파일 정보 출력
+			
+			// 파일 정보가 null인 경우를 확인
+			if (file.getReviewFileCode() == null) {
+				System.out.println("파일 코드가 null입니다.");
+			}
+			if (file.getReviewId() == null) {
+				System.out.println("리뷰 ID가 null입니다.");
+			}
+			if (file.getReviewCode() == null) {
+				System.out.println("리뷰 코드가 null입니다.");
+			}
+			if (file.getReviewFileName() == null) {
+				System.out.println("파일 이름이 null입니다.");
+			}
+			if (file.getReviewFilePath() == null) {
+				System.out.println("파일 경로가 null입니다.");
+			}
+			if (file.getReviewFileDate() == null) {
+				System.out.println("파일 날짜가 null입니다.");
+			}
+			if (file.getReviewFileNewName() == null) {
+				System.out.println("새로운 파일 이름이 null입니다.");
+			}
+			if (file.getReviewFileSize() == 0) {
+				System.out.println("파일 크기가 0입니다.");
+			}
+			
+			// 파일 정보가 null이거나 비어 있는 경우 해당 파일 정보와 함께 예외를 던집니다.
+			if (file.getReviewFileCode() == null || file.getReviewId() == null || 
+					file.getReviewCode() == null || file.getReviewFileName() == null || 
+					file.getReviewFilePath() == null || file.getReviewFileDate() == null || 
+					file.getReviewFileNewName() == null || file.getReviewFileSize() == 0) {
+				throw new IllegalArgumentException("파일 정보가 올바르지 않습니다: " + file.toString());
+			}
+		}
+		
+		
+		
+		// 파일리스트 db저장
+		uReviewMapper.addFile(fileList);
+		
+	}
+	/*
+	public void fileUpload(MultipartFile[] uploadfile) {
+		
+		List<UReviewFile> fileList= fileUtil.parseFileInfo(uploadfile);
+		
 		// 파일리스트 db저장
 		if(fileList != null) uReviewMapper.addFile(fileList);
 		
 	}
+	*/
+	
+
+	 
+	 
 	
 	/**
 	 * 파일목록
@@ -91,7 +153,7 @@ public class UReviewService {
 	/**
 	 * 리뷰등록
 	 */
-	public void reviewWrite(UReview review) {
+	public void reviewWrite(UReview review, MultipartFile[] uploadfile) {
         // 가장 큰 PRCHS_REV_CD 값을 조회
         String maxPrchsRevCd = uReviewMapper.getMaxPrchsRevCd();
         String newPrchsRevCd;
@@ -107,8 +169,20 @@ public class UReviewService {
 
         // 새 PRCHS_REV_CD 값을 review 객체에 설정
         review.setReviewCode(newPrchsRevCd);
-        
+       
 		uReviewMapper.reviewWrite(review);
+	
+		List<UReviewFile> reviewFileList = fileUtil.parseFileInfo(uploadfile);
+		if(reviewFileList != null && reviewFileList.size() > 0) {
+			reviewFileList.forEach( file -> {
+				file.setReviewId(review.getReviewId());
+				file.setReviewCode(newPrchsRevCd);
+			});
+			log.info("최종 fileList:{}", reviewFileList);
+			uReviewMapper.addFile(reviewFileList);
+		}
+		
+		
 	}
 	
 	
