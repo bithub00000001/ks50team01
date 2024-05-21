@@ -46,5 +46,6 @@ public class UPlatformRankigController {
 		model.addAttribute("title", "다른회원의 여행계획 추천");
 		return "user/platformranking/planRankingList";
 	}
+
 }
 

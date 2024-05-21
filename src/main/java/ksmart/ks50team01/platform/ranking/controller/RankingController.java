@@ -11,9 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
 import ksmart.ks50team01.platform.ranking.dto.Ranking;
 import ksmart.ks50team01.platform.ranking.service.RankingService;
+import ksmart.ks50team01.platform.trip.dto.PTourApi;
+import ksmart.ks50team01.platform.trip.service.PTripPlanService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 public class RankingController {
 
 	private final RankingService rankingService;
-	
+	private final PTripPlanService pTripPlanService;
 	
 	@PostMapping("/removeRanking")
 	public String remove(@RequestParam(name = "pRankingId") String pRankingId
@@ -112,6 +113,14 @@ public class RankingController {
 		model.addAttribute("title", "플랫폼 추천 관리");
 		model.addAttribute("rankingList", rankingList);
 		return "platform/ranking/rankingList";
+	}
+	@GetMapping("/rankingApiList")
+	public String rankingListApi(Model model) {
+		
+		List<PTourApi> destinationList = pTripPlanService.getDestinationList();
+		model.addAttribute("title", "API리스트");
+		model.addAttribute("destinationList", destinationList);
+		return "platform/ranking/rankingApiList";
 	}
 	
 }
