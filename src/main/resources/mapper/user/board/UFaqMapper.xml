@@ -46,6 +46,9 @@
 			ON
 			F.FAQ_CTGRY_NO = C.FAQ_CTGRY_NO;
 	</select>
+	
+	
+	
 
 	
 </mapper>
