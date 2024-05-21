@@ -36,7 +36,7 @@ public interface PTripPlanMapper {
 
 	PTourDetail getPTourDetailByContentId(String contentId, String contentTypeId);
 
-	PTourApi getSigunguNameBySigunCode(String sigunguCode);
+	PTourApi getSigunguNameBySigunCode(String areaCode, String sigunguCode);
 
 	// 여행지 세부 정보 조회 메서드
 

@@ -34,5 +34,7 @@ public interface PTripPlanService {
 	// 컨텐츠 아이디와 일치하는 여행지 세부 정보 조회
 	PTourDetail getPTourDetailByContentId(String contentId, String contentTypeId);
 
+	//
+
 	// 여행지 세부 정보 조회
 }
