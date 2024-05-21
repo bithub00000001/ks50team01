@@ -22,93 +22,6 @@
 
 	<th:block layout:fragment="customContent">
 		<!-- search start -->
-		<div class="row">
-			<div class="col-md-12 col-sm-12 col-xs-12">
-				<div class="x_panel">
-					<div class="x_title">
-						<h2>
-							검색 <small>search form</small>
-						</h2>
-						<ul class="nav navbar-right panel_toolbox">
-							<li>
-								<a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-							</li>
-							<li class="dropdown"><a href="#" class="dropdown-toggle"
-								data-toggle="dropdown" role="button" aria-expanded="false"><i
-									class="fa fa-wrench"></i></a>
-								<ul class="dropdown-menu" role="menu">
-									<li><a href="#">Settings 1</a></li>
-									<li><a href="#">Settings 2</a></li>
-								</ul></li>
-							<li><a class="close-link"><i class="fa fa-close"></i></a></li>
-						</ul>
-						<div class="clearfix"></div>
-					</div>
-					<div class="x_content">
-						<br />
-						<form id="demo-form2" class="form-horizontal form-label-left">
-							<div class="form-group">
-								<div class="col-md-2 col-sm-2 col-xs-0"></div>
-								<label class="control-label col-md-1 col-sm-1 col-xs-12" for="first-name">검색1</label>
-								<div class="col-md-3 col-sm-3 col-xs-12 form-element">
-									<input type="text" id="first-name" class="form-control col-md-4 col-xs-12">
-								</div>
-								<label class="control-label col-md-1 col-sm-1 col-xs-12" for="middle-name" >검색2</label>
-								<div class="col-md-3 col-sm-3 col-xs-12 form-element">
-									<input id="middle-name" class="form-control col-md-7 col-xs-12" type="text" name="middle-name">
-								</div>
-								<div class="col-md-2 col-sm-2 col-xs-0"></div>
-							</div>
-							<div class="form-group">
-								<div class="col-md-2 col-sm-2 col-xs-0"></div>
-								<label for="middle-name" class="control-label col-md-2 col-sm-2 col-xs-12">검색2</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input id="middle-name" class="form-control col-md-7 col-xs-12" type="text" name="middle-name">
-								</div>
-								<div class="col-md-2 col-sm-2 col-xs-0"></div>
-							</div>
-							<div class="form-group">
-								<div class="col-md-2 col-sm-2 col-xs-0"></div>
-								<label class="control-label col-md-2 col-sm-2 col-xs-12">Choice1</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<select class="form-control text-center">
-										<option>Choose option</option>
-										<option>Option one</option>
-										<option>Option two</option>
-										<option>Option three</option>
-										<option>Option four</option>
-									</select>
-								</div>
-								<div class="col-md-2 col-sm-2 col-xs-0"></div>
-							</div>
-							<div class="form-group">
-								<div class="col-md-2 col-sm-2 col-xs-0"></div>
-								<label class="control-label col-md-2 col-sm-2 col-xs-12">Choice2</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<div class="radio">
-										<label class="align-item-center">
-											<input type="radio" value="option1" id="optionsRadios1" name="optionsRadios" checked="checked"> Option one. only select one option
-										</label>
-										<label>
-											<input type="radio" value="option2" id="optionsRadios2" name="optionsRadios"> Option two. only select one option
-										</label>
-									</div>
-								</div>
-								<div class="col-md-2 col-sm-2 col-xs-0"></div>
-							</div>
-							<div class="ln_solid"></div>
-							<div class="form-group">
-								<div class="col-md-12 col-sm-12 col-xs-12 text-center">
-									<button class="btn btn-success btn-lg" type="button">검색</button>
-									<button type="reset" class="btn btn-dark btn-lg">초기화</button>
-								</div>
-							</div>
-	
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
 		<!-- search end -->
 		<!-- grid table start -->
 		<div class="row">
@@ -119,25 +32,20 @@
 							<thead>
 								<tr>
 									<th>리뷰 번호</th>
-									<th>작성자 아이디</th>
-									<th>리뷰 상품</th>
-									<th>신고 카테고리</th>
-									<th>횟수</th>
-									<th>총합 횟수</th>
+									<th>신고 당한 횟수</th>
+									<th>공개 여부</th>
+									<th>공개 여부 이름</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:unless="${memberList != null}">
-									<td colspan="6"  class="center-text">신고된 리뷰가 없습니다.</td>
+								<tr th:unless="${pReviewTotal != null}">
+									<td colspan="2"  class="center-text">신고된 리뷰가 없습니다.</td>
 								</tr>
-								<tr th:if="${memberList != null}" th:each="l : ${memberList}">
-									<td th:text="${}"></td>
-									<td th:text="${}"></td>
-									<td th:text="${}"></td>
-									<td th:text="${}"></td>
-									<td th:text="${}"></td>
-									<td th:text="${}"></td>
-		
+								<tr th:if="${pReviewTotal != null}" th:each="l : ${pReviewTotal}">
+									<td th:text="${l.reportReviewCode}"></td>
+									<td th:text="${l.reportTotal}"></td>
+									<td th:text="${l.PReviewInfo.reviewApprove}"></td>
+									<td th:text="${l.PReviewInfo.reviewApproveName}"></td>
 								</tr>
 							</tbody>
 						</table>

@@ -1,9 +1,9 @@
-package ksmart.ks50team01.platform.reivew.dto;
+package ksmart.ks50team01.user.review.dto;
 
 import lombok.Data;
 
 @Data
-public class PReivewComment {
+public class UReviewComment {
 	private String commentCode;//답글 코드
 	private String commentId;//작성자 아이디
 	private String commentReviewCode;//상품 리뷰 코드
@@ -16,7 +16,4 @@ public class PReivewComment {
 	
 	private String tripLargeCode; //여행지 대분류 코드
 	private String districtSubclass; //지역 소분류명
-	
-	private PReviewBusiness ReviewBusinessInfo;
-	
 }

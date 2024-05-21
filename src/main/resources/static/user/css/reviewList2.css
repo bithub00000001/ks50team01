@@ -1,0 +1,220 @@
+@charset "UTF-8";
+.separator1{
+    border-top: 3px solid #ff9b40; /* 굵은 직선 스타일 설정 */
+    margin: 7px 0; /* 위아래 여백 설정 */
+}
+
+.separator2 {
+    border-top: 1px solid #ffd0a5; /* 굵은 직선 스타일 설정 */
+    margin-bottom: 10px;
+}
+
+
+.button-container {
+    display: flex; /* 자식 요소를 가로로 정렬합니다. */
+    align-items: center; /* 세로 방향 가운데 정렬 */
+    margin-bottom: 20px;
+}
+
+.write-btn-container {
+    margin-left: auto; /* 나머지 요소를 왼쪽으로 밀어서 오른쪽 정렬합니다. */
+}
+
+/* 평균 */
+.review-stats_avg {
+    text-align: center; /* 요소를 가운데 정렬합니다. */
+}
+
+.average-rating-text,
+#average-rating {
+    font-size: 20px; /* 평점의 크기를 15px로 설정합니다. */
+    font-weight: bold; /* 평점을 두껍게 만듭니다. */
+    color: black;
+}
+
+.total-reviews-text,
+#total-reviews {
+    font-size: 20px; /* 리뷰 개수의 크기를 12px로 설정합니다. */
+    font-weight: bold; /* 리뷰 개수를 두껍게 만듭니다. */
+    color: black;
+}
+
+
+.rating-stars-avg {
+    font-size: 40px; /* 별 모양의 크기 조정 */
+    margin-bottom: 10px;
+}
+
+.rating-stars-avg span {
+    display: inline-block; /* 각 별 모양이 인라인 요소로 표시되도록 설정 */
+}
+
+
+/* 리뷰 본문 */
+.review {
+    padding-bottom: 20px; /* 각 리뷰 사이의 간격 설정 */
+    margin-bottom: 20px; /* 각 리뷰 아래의 여백 설정 */
+    min-height: 100px; /* 리뷰 아이템의 최소 높이를 설정하여 선의 길이를 고정 */
+    padding-left: 20px; /* 왼쪽 여백을 설정 */
+    padding-right: 20px; /* 오른쪽 여백을 설정 */
+    padding-top: 20px;
+    border-bottom: 3px solid #ffd0a5;
+}
+
+.review-content img {
+	margin-bottom: 200px; /* 이미지 하단에 여백 추가 */
+}
+
+.rating {
+	color: #ff9b40; /* 별점의 색을 노란색으로 설정 */
+	font-size: 24px; /* 별의 크기를 조정합니다. */
+	margin-bottom: 5px;
+}
+
+.review-content img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px; /* 이미지 사이 여백을 조절할 수 있습니다. */
+}
+
+.review-content .image-container {
+    display: flex;
+    flex-wrap: wrap; /* 이미지가 공간을 벗어나면 줄바꿈되도록 합니다. */
+    justify-content: flex-start; /* 왼쪽 정렬 */
+    gap: 10px; /* 이미지 사이 간격 조절 */
+    margin-bottom: 30px;
+}
+
+.review-content .image-container img {
+    flex: 0 0 calc(33.333% - 10px); /* 각 이미지가 컨테이너의 1/3 크기가 되도록 설정합니다. */
+    max-width: calc(33.333% - 10px); /* 반응형으로 이미지 크기를 조절합니다. */
+    height: auto;
+}
+
+.like-btn {
+    padding: 10px 20px;
+    background-color: white; /* 주황색 배경색 */
+    color: #696969; /* 흰색 글자색 */
+    border: 2px solid #ffd0a5; /* 주황색 테두리 */
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s; /* 호버 효과를 위한 transition 속성 추가 */
+    width: 150px; /* 버튼의 너비를 고정 */
+    height: 40px; /* 버튼의 높이를 고정 */
+    overflow: hidden; /* 텍스트가 버튼을 벗어나지 않도록 설정 */
+}
+
+.dislike-btn {
+    padding: 10px 20px;
+    background-color: white; /* 주황색 배경색 */
+    color: #696969; /* 흰색 글자색 */
+    border: 2px solid #ffd0a5; /* 주황색 테두리 */
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s; /* 호버 효과를 위한 transition 속성 추가 */
+    width: 150px; /* 버튼의 너비를 고정 */
+    height: 40px; /* 버튼의 높이를 고정 */
+    overflow: hidden; /* 텍스트가 버튼을 벗어나지 않도록 설정 */
+}
+
+.like-btn:hover,
+.dislike-btn:hover {
+    background-color: #ff7c00; /* 더 진한 주황색 배경색 */
+    border-color: #ff7c00; /* 더 진한 주황색 테두리 */
+    color: white;
+}
+
+.report-btn {
+    padding: 10px 20px;
+    background-color: #ff9b40; /* 주황색 배경색 */
+    color: #fff; /* 흰색 글자색 */
+    border: 2px solid #ff9b40; /* 주황색 테두리 */
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: background-color 0.3s, border-color 0.3s; /* 호버 효과를 위한 transition 속성 추가 */
+}
+
+.report-btn:hover {
+    background-color: #ff7c00; /* 더 진한 주황색 배경색 */
+    border-color: #ff7c00; /* 더 진한 주황색 테두리 */
+}
+
+.separator1{
+    border-top: 3px solid #ff9b40; /* 굵은 직선 스타일 설정 */
+    margin: 7px 0; /* 위아래 여백 설정 */
+}
+
+.separator2 {
+    border-top: 1px solid #ffd0a5; /* 굵은 직선 스타일 설정 */
+    margin-bottom: 10px;
+}
+
+.user-id {
+	margin-left: 2px;
+    font-size: 1.2em; /* 원하는 크기로 조절하세요 */
+    font-weight: bold; /* 글씨를 굵게 설정합니다 */
+    margin-bottom: 5px;
+}
+
+.date,
+.modified-date{
+	margin-left: 2px;
+    font-size: 1.2em; /* 원하는 크기로 조절하세요 */
+    /*font-weight: bold;  글씨를 굵게 설정합니다 */
+}
+
+.review-content p {
+    font-size: 18px; /* 원하는 크기로 조절하세요 */
+    color: #696969; /* 원하는 색상으로 조절하세요 */
+    line-height: 1.5; /* 줄간격 설정, 기본값은 1 */
+}
+
+.reply-form {
+    background-color: white; /* 답글 폼 배경색 */
+    padding: 10px; /* 답글 폼 여백 */
+    margin: 10px auto; /* 상단 및 하단 여백은 10px이고, 좌우 여백은 자동으로 설정하여 가운데 정렬 */
+    border-radius: 5px; /* 답글 폼 모서리 둥글게 */
+    width: 100%; /* 폼의 너비를 조절하세요 */
+}
+
+.reply-form textarea {
+    width: 100%;
+    height: 150px;
+    padding: 1%;
+    border-radius: 5px;
+    box-sizing: border-box;
+    resize: none;
+    overflow-y: auto; /* 텍스트 내용이 넘칠 경우 스크롤바 표시 */
+}
+
+.review {
+    background-color: #F5F5F5; /* 리뷰 배경색 */
+}
+
+.comments-container {
+    background-color: #DCDCDC; /* 댓글 컨테이너 배경색 */
+    padding: 20px;
+}
+
+.report-btn-container .btn {
+    color: white; /* 버튼 텍스트를 흰색으로 설정합니다. */
+}
+
+.comment .content {
+	margin-top: 10px;
+    font-size: 18px; /* 원하는 크기로 조절하세요 */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
