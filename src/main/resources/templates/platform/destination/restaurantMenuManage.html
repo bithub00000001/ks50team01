@@ -120,7 +120,7 @@
 									<td th:text="${l.restaurantRegDate}"></td>
 									<td th:text="${l.restaurantFormDate}"></td>
 									<td>
-									    <a th:href="@{/platform/destination/restaurantModify(restaurantMenuManageCode=${l.restaurantMenuManageCode})}">수정</a>
+									    <a th:href="@{/platform/destination/restaurantMenuModify(restaurantMenuManageCode=${l.restaurantMenuManageCode})}">수정</a>
 									</td>
 						            <td>
 						            	<a href="#" th:data-member-id="${l.restaurantMenuManageCode}" th:onclick="deleteConfirm(this)">삭제</a>

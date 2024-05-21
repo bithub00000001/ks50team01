@@ -22,17 +22,26 @@ public class PTourApi {
 	private String sigunRegDate;
 	private String sigunModDate;
 
+
+	private String destinationId;
+	private String destinationNum;
 	private String destinationTitle;
 	private String destinationFirstAddress;
 	private String destinationSecondAddress;
 
-	private Double destinationLatitude;
-	private Double destinationLongitude;
+	private Double destinationLongitude; // 경도(x좌표)
+	private Double destinationLatitude; // 위도(y좌표)
 	private String destinationTelNum;
 	private String destinationFirstImageLink;
 	private String destinationSecondImageLink;
 	private String destinationContentId;
-	private String destinationContents;
+	private String destinationContentTypeId;
+	private String destinationContentTypeName;
+	private String destinationZipcode;
+	private String destinationRegDate;
+	private String destinationModDate;
+
+
 
 	// 1:N has many 관계
 	private List<PTourApi> areaList;

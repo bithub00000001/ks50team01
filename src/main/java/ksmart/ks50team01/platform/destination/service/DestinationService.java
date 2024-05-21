@@ -137,6 +137,13 @@ public class DestinationService {
 		
 	}
 
+	public void updateRestaurantMenu(Destination destination) {
+		destinationMapper.updateRestaurantMenu(destination);
+	}
+	public Destination getRestaurantMenuInfoById(String restaurantMenuManageCode) {
+		return destinationMapper.getRestaurantMenuInfoById(restaurantMenuManageCode);
+	}
+
 
 
 	

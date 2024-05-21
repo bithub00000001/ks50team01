@@ -4,13 +4,14 @@ import lombok.Data;
 
 @Data
 public class UserRanking {
+	private String userRankingId;
 	private String userRankingNum;
 	private String userRankingRegId;
 	private String partnerBusinessCode;
 	private String tripLctgryCode;
 	private String rgnSctgryName;
 	private int userRank;
-	private String artclRankigNum;
+	private String artclRankingNum;
 	private String reviewStatsStart;
 	private String reviewStatsEnd;
 	private String platformAdStart;
