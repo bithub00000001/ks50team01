@@ -8,8 +8,11 @@ public class PTourDetail {
 	private String detailNum;
 	private String contentId;
 	private String contentTypeId;
+	private String contentTypeName;
 	private String areaCode;
+	private String areaName;
 	private String sigunguCode;
+	private String sigunguName;
 	private String title;
 	private String tel;
 	private String telName;

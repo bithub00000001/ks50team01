@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ksmart.ks50team01.platform.trip.dto.PTourApi;
+import ksmart.ks50team01.platform.trip.dto.PTourDetail;
 import ksmart.ks50team01.platform.trip.dto.PTripPlan;
 import ksmart.ks50team01.platform.trip.mapper.PTripPlanMapper;
 import ksmart.ks50team01.platform.trip.utils.ContentTypeConstants;
@@ -20,39 +21,49 @@ public class PTripPlanServiceImpl implements PTripPlanService {
 
 	private final PTripPlanMapper pTripPlanMapper;
 
+	/**
+	 * 여행 계획 목록 조회 메서드
+	 */
 	@Override
-	public List<PTripPlan> getAllPTripPlan() {
+	public List<PTripPlan> getPTripPlanList() {
 		List<PTripPlan> tripPlanList = pTripPlanMapper.getPlanList();
-		tripPlanList.forEach(plan -> {
-			String sharedString = "";
-			if (plan.isShared()) {
-				sharedString = "공유 안함";
-			}else {
-				sharedString = "공유 중";
-			}
-			plan.setIsShareString(sharedString);
-			Integer totalAvailBudget = plan.getTotalAvailBudget();
-			Integer totalPlanBudget = plan.getTotalPlanBudget();
-			plan.setDiffBudget(totalAvailBudget - totalPlanBudget);
-		});
+		tripPlanList.forEach(this::setSharedString);
 		log.info("tripPlanList: {}", tripPlanList);
 		return tripPlanList;
 	}
 
+	/**
+	 * 여행 계획 ID와 일치하는 1개의 여행 계획 조회 메서드
+	 * @param planId 여행 계획 ID(PK)
+	 */
 	@Override
 	public PTripPlan getPTripPlanById(String planId) {
 		PTripPlan pTripPlan = pTripPlanMapper.getTripPlanById(planId);
-		if (!pTripPlan.isShared()){
-			pTripPlan.setIsShareString("공유 안함");
-		}else {
-			pTripPlan.setIsShareString("공유 중");
-		}
-		Integer totalAvailBudget = pTripPlan.getTotalAvailBudget();
-		Integer totalPlanBudget = pTripPlan.getTotalPlanBudget();
-		pTripPlan.setDiffBudget(totalAvailBudget - totalPlanBudget);
+		setSharedString(pTripPlan);
 		return pTripPlan;
 	}
 
+	/**
+	 * 여행 계획 공유 여부 문자열 삽입 메서드
+	 * @param pTripPlan PTripPlan DTO 객체
+	 */
+	private void setSharedString(PTripPlan pTripPlan) {
+		String sharedString;
+		if (pTripPlan.isShared()) {
+			sharedString = "공유 안함";
+		}else {
+			sharedString = "공유 중";
+		}
+		pTripPlan.setIsShareString(sharedString);
+		Integer totalAvailBudget = pTripPlan.getTotalAvailBudget();
+		Integer totalPlanBudget = pTripPlan.getTotalPlanBudget();
+		pTripPlan.setDiffBudget(totalAvailBudget - totalPlanBudget);
+	}
+
+	/**
+	 * 1개의 여행 계획 업데이트 메서드
+	 * @param pTripPlan 여행 계획 DTO 객체
+	 */
 	@Override
 	public int UpdatePTripPlan(PTripPlan pTripPlan) {
 		Integer totalAvailBudget = pTripPlan.getTotalAvailBudget();
@@ -63,8 +74,7 @@ public class PTripPlanServiceImpl implements PTripPlanService {
 	}
 
 	/**
-	 * 지역 코드를 DB에서 불러오기 위해 Mapper와 연결
-	 * @return
+	 * 지역 코드 목록 조회 메서드
 	 */
 	@Override
 	public List<PTourApi> getAreaCodeList(){
@@ -72,8 +82,7 @@ public class PTripPlanServiceImpl implements PTripPlanService {
 	}
 
 	/**
-	 * 시군구 코드를 DB에서 불러오기 위해 Mapper와 연결
-	 * @return
+	 * 시군구 코드 목록 조회 메서드
 	 */
 	@Override
 	public List<PTourApi> getSigunguCodeList(){
@@ -82,8 +91,7 @@ public class PTripPlanServiceImpl implements PTripPlanService {
 
 	/**
 	 * 지역 코드에 해당하는 시군 코드 조회
-	 * @param areaCode
-	 * @return
+	 * @param areaCode 지역 코드
 	 */
 	@Override
 	public List<PTourApi> getSigunguCodesByAreaCode(String areaCode) {
@@ -92,7 +100,6 @@ public class PTripPlanServiceImpl implements PTripPlanService {
 
 	/**
 	 * 여행지 정보 목록 조회
-	 * @return
 	 */
 	@Override
 	public List<PTourApi> getDestinationList() {
@@ -116,5 +123,20 @@ public class PTripPlanServiceImpl implements PTripPlanService {
 			info.setDestinationContentTypeName(contentTypeName);
 		});
 	return destinationList;
+	}
+
+	/**
+	 * 관광 타입과 컨텐츠 ID와 일치하는 여행지 세부 정보 조회
+	 *
+	 * @param contentId 컨텐츠 아이디(PK)
+	 * @param contentTypeId 관광 타입
+	 */
+	@Override
+	public PTourDetail getPTourDetailByContentId(String contentId, String contentTypeId) {
+		PTourDetail tourDetail = pTripPlanMapper.getPTourDetailByContentId(contentId, contentTypeId);
+		// PTourApi tourInfo = pTripPlanMapper.getSigunguNameBySigunCode(tourDetail.getSigunguCode());
+		String contentTypeName = ContentTypeConstants.CONTENT_TYPE_MAP.getOrDefault(tourDetail.getContentTypeId(),"");
+		tourDetail.setContentTypeName(contentTypeName);
+		return tourDetail;
 	}
 }

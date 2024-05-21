@@ -90,18 +90,82 @@
             )
         ON DUPLICATE KEY
             UPDATE
-                destination_first_address = VALUES(destination_first_address),
-                destination_second_address = VALUES(destination_second_address),
-                area_code = VALUES(area_code),
-                destination_content_type_id = VALUES(destination_content_type_id),
-                destination_first_image_link = VALUES(destination_first_image_link),
+                destination_first_address     = VALUES(destination_first_address),
+                destination_second_address    = VALUES(destination_second_address),
+                area_code                     = VALUES(area_code),
+                destination_content_type_id   = VALUES(destination_content_type_id),
+                destination_first_image_link  = VALUES(destination_first_image_link),
                 destination_second_image_link = VALUES(destination_second_image_link),
-                destination_longitude = VALUES(destination_longitude),
-                destination_latitude = VALUES(destination_latitude),
-                sigungu_code = VALUES(sigungu_code),
-                destination_title = VALUES(destination_title),
-                destination_tel_num = VALUES(destination_tel_num),
-                destination_zipcode = VALUES(destination_zipcode)
+                destination_longitude         = VALUES(destination_longitude),
+                destination_latitude          = VALUES(destination_latitude),
+                sigungu_code                  = VALUES(sigungu_code),
+                destination_title             = VALUES(destination_title),
+                destination_tel_num           = VALUES(destination_tel_num),
+                destination_zipcode           = VALUES(destination_zipcode),
+                MDFCN_YMD                     = now()
     </insert>
-
+    <insert id="upsertTourDetail" parameterType="pTourDetail">
+        /* TOUR API 의 여행지 정보 삽입 */
+        INSERT INTO TOUR_DETAIL_FROM_API
+        (
+            tour_detail_content_id,
+            tour_detail_content_type_id,
+            tour_detail_title,
+            tour_detail_homepage,
+            tour_detail_first_image,
+            tour_detail_second_image,
+            area_code,
+            sigungu_code,
+            tour_detail_first_addr,
+            tour_detail_second_addr,
+            tour_detail_zipcode,
+            tour_detail_tel_num,
+            tour_detail_tel_name,
+            tour_detail_longitude,
+            tour_detail_latitude,
+            tour_detail_mlevel,
+            tour_detail_overview,
+            REG_YMD
+        )
+        VALUES
+            (
+                #{contentId},
+                #{contentTypeId},
+                #{title},
+                #{homepage},
+                #{firstImage},
+                #{secondImage},
+                #{areaCode},
+                #{sigunguCode},
+                #{mainAddr},
+                #{detailAddr},
+                #{zipcode},
+                #{tel},
+                #{telName},
+                #{longitude},
+                #{latitude},
+                #{mapLevel},
+                #{overview},
+                now()
+            )
+        ON DUPLICATE KEY
+            UPDATE
+                tour_detail_content_type_id = VALUES(tour_detail_content_type_id),
+                tour_detail_title           = VALUES(tour_detail_title),
+                tour_detail_homepage        = VALUES(tour_detail_homepage),
+                tour_detail_first_image     = VALUES(tour_detail_first_image),
+                tour_detail_second_image    = VALUES(tour_detail_second_image),
+                area_code                   = VALUES(area_code),
+                sigungu_code                = VALUES(sigungu_code),
+                tour_detail_first_addr      = VALUES(tour_detail_first_addr),
+                tour_detail_second_addr     = VALUES(tour_detail_second_addr),
+                tour_detail_zipcode         = VALUES(tour_detail_zipcode),
+                tour_detail_tel_num         = VALUES(tour_detail_tel_num),
+                tour_detail_tel_name        = VALUES(tour_detail_tel_name),
+                tour_detail_longitude       = VALUES(tour_detail_longitude),
+                tour_detail_latitude        = VALUES(tour_detail_latitude),
+                tour_detail_mlevel          = VALUES(tour_detail_mlevel),
+                tour_detail_overview        = VALUES(tour_detail_overview),
+                MDFCN_YMD                   = NOW();
+    </insert>
 </mapper>

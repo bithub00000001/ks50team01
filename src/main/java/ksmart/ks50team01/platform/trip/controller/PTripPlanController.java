@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import ksmart.ks50team01.platform.reivew.service.PReviewService;
 import ksmart.ks50team01.platform.trip.dto.PTourApi;
+import ksmart.ks50team01.platform.trip.dto.PTourDetail;
 import ksmart.ks50team01.platform.trip.dto.PTripPlan;
 import ksmart.ks50team01.platform.trip.service.PTourApiService;
 import ksmart.ks50team01.platform.trip.service.PTripPlanService;
@@ -64,7 +65,7 @@ public class PTripPlanController {
 	// 여행 계획 목록 조회 페이지
 	@GetMapping("/list")
 	public String planList(Model model) {
-		List<PTripPlan> tripPlanList = pTripPlanService.getAllPTripPlan();
+		List<PTripPlan> tripPlanList = pTripPlanService.getPTripPlanList();
 		log.info("tripPlanList: {}", tripPlanList);
 		model.addAttribute("title", "여행 계획 리스트 조회");
 		model.addAttribute("tripPlanList", tripPlanList);
@@ -95,8 +96,7 @@ public class PTripPlanController {
 	@GetMapping("/sigungu-codes")
 	@ResponseBody
 	public List<PTourApi> getSigunguCodes(@RequestParam(name = "areaCode") String areaCode) {
-		List<PTourApi> sigunguCodes = pTripPlanService.getSigunguCodesByAreaCode(areaCode);
-		return sigunguCodes;
+		return pTripPlanService.getSigunguCodesByAreaCode(areaCode);
 	}
 
 	@GetMapping("/destination")
@@ -108,7 +108,35 @@ public class PTripPlanController {
 	}
 
 
+	@GetMapping("/destination/detail")
+	public String destinationDetailInfo(
+		@RequestParam(name = "contentId") String contentId,
+		@RequestParam(name = "contentTypeId") String contentTypeId,
+		Model model) {
+		PTourDetail tourDetail = pTripPlanService.getPTourDetailByContentId(contentId, contentTypeId);
 
+		model.addAttribute("title", "여행지 정보 확인");
+		model.addAttribute("tourDetail", tourDetail);
+		return "platform/trip/destinationDetailInfo";
+	}
+
+	@PostMapping("/destination/update")
+	public ResponseEntity<String> updateTourDetail(String contentId, String contentTypeId) {
+		log.info("contentId:{}, contentTypeId:{}", contentId, contentTypeId);
+		try {
+			PTourDetail tourDetail = pTourApiService.getTourDetail(apiKey,contentId,contentTypeId).block();
+
+			if (tourDetail != null) {
+				pTourApiService.upsertTourDetail(tourDetail);
+				return ResponseEntity.ok("데이터 업데이트 성공");
+			} else {
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("데이터 받아오기 실패");
+			}
+		} catch (Exception ex) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("에러: " + ex.getMessage());
+		}
+
+	}
 
 
 	// dataTables ajax를 위한 refer 페이지
@@ -166,8 +194,8 @@ public class PTripPlanController {
 
 	/**
 	 * 업데이트 버튼을 눌렀을때 지역 코드 혹은 시군 코드를 업서트 하는 메서드
-	 * @param dataTrans
-	 * @return
+	 * @param dataTrans select 의 value
+	 * @return 업서트 상태 반환
 	 */
 	@PostMapping(value = "/update/{dataTrans}")
 	@ResponseBody
