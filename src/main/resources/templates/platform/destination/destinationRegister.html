@@ -1,10 +1,79 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
-                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-                layout:decorate="~{platform/layout/default}">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{platform/layout/default}">
+	<head>
+	<!-- Datatables -->
+	<link th:href="@{/platform/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css}" rel="stylesheet">
+	<link th:href="@{/platform/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css}" rel="stylesheet">
+	<link th:href="@{/platform/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css}" rel="stylesheet">
+	<link th:href="@{/platform/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css}" rel="stylesheet">
+	<link th:href="@{/platform/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css}" rel="stylesheet">
 
-<th:block layout:fragment="customContent">
-	<h2 th:text="title"></h2>
-	업로드용샘플
-</th:block>
-</html>
+		<style type="text/css">
+			.control-label {
+				text-align: center !important;
+				background-color: #f8f8f8 !important;
+				padding-bottom: 8px !important;
+			}
+		</style>
+
+		</head>
+
+		<th:block layout:fragment="customContent">
+		<!-- search start -->
+		<div class="row">
+			<div class="col-md-12 col-sm-12 col-xs-12">
+				<div class="x_panel">
+					<div class="x_title">
+						<h2>
+							검색 <small>search form</small>
+						</h2>
+						<ul class="nav navbar-right panel_toolbox">
+							<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+							</li>
+							<li class="dropdown"><a href="#" class="dropdown-toggle"
+								data-toggle="dropdown" role="button" aria-expanded="false"><i
+									class="fa fa-wrench"></i></a>
+								<ul class="dropdown-menu" role="menu">
+									<li><a href="#">Settings 1</a></li>
+									<li><a href="#">Settings 2</a></li>
+								</ul></li>
+							<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+						</ul>
+						<div class="clearfix"></div>
+					</div>
+					<div class="x_content">
+						<br />
+						<form id="demo-form2" class="form-horizontal form-label-left">
+							<div class="form-group">
+								<div class="col-md-2 col-sm-2 col-xs-0"></div>
+								<label class="control-label col-md-2 col-sm-2 col-xs-12">Choice1</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<select class="form-control text-center">
+										<option>선택하세요</option>
+										<option>관광지</option>
+										<option>숙소</option>
+										<option>음식점</option>
+									</select>
+								</div>
+								<div class="col-md-2 col-sm-2 col-xs-0"></div>
+							</div>
+							
+							<div class="ln_solid"></div>
+							<div class="form-group">
+								<div class="col-md-12 col-sm-12 col-xs-12 text-center">
+						
+									<button type="reset" class="btn btn-success btn-lg" onclick="location.href='/platform/destination/addTour'">등록</button>
+									<button type="reset" class="btn btn-dark btn-lg">초기화</button>
+								</div>
+							</div>
+	
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- search end -->
+	</th:block>	
+</html>	
