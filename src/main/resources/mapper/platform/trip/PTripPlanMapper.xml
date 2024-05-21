@@ -40,7 +40,6 @@
         <result column="sigunRegDate" property="sigunRegDate"/>
         <result column="sigunModDate" property="sigunModDate"/>
 
-
         <association property="areaInfo" javaType="pTourApi">
             <id     column="area_code"   property="areaCode"/>
             <result column="areaNum"     property="areaNum"/>
@@ -51,6 +50,7 @@
     </resultMap>
 
     <resultMap  id="destinationMap" type="pTourApi">
+        <!-- TOUR_INFO_FROM_API 테이블 resultMap-->
         <id          column="destination_id"                property="destinationId"/>
         <result      column="destinationNum"                property="destinationNum"/>
         <result      column="destination_title"             property="destinationTitle"/>
@@ -71,6 +71,7 @@
     </resultMap>
 
     <resultMap id="destinationDetailMap" type="pTourDetail">
+        <!-- TOUR_DETAIL_FROM_API 테이블 resultMap -->
         <id     column="tour_detail_content_id"      property="contentId"/>
         <result column="tour_detail_content_type_id" property="contentTypeId"/>
         <result column="tour_detail_title"           property="title"/>
@@ -167,7 +168,7 @@
             INDIVIDUAL_TRIP_PLAN.MDFCN_YMD
         FROM
             INDIVIDUAL_TRIP_PLAN
-                INNER JOIN
+            INNER JOIN
             REGION_SMALL_CATEGORY
             ON
                 INDIVIDUAL_TRIP_PLAN.RGN_SCTGRY_CD = REGION_SMALL_CATEGORY.RGN_SCTGRY_CD
@@ -226,6 +227,7 @@
             SC.area_id = #{areaCode}
     </select>
     <select id="getDestinationList" resultMap="destinationMap">
+        /* 전체 여행지 목록 조회 */
         SELECT
             row_number() OVER (ORDER BY area_code) AS destinationNum,
             destination_id,
@@ -248,6 +250,7 @@
             TOUR_INFO_FROM_API
     </select>
     <select id="getDestinationListByContentType" resultMap="destinationMap">
+        /* 컨텐츠 타입과 일치하는 여행지 정보 목록 조회 */
         SELECT
             row_number() OVER (ORDER BY area_code) AS destinationNum,
             destination_id,
@@ -272,6 +275,7 @@
             destination_content_type_id = #{contentTypeId}
     </select>
     <select id="getPTourDetailByContentId" resultMap="destinationDetailMap">
+        /* 컨텐츠 아이디, 컨텐츠 타입과 일치하는 여행지 상세 정보 조회 */
         SELECT
             tour_detail_content_id,
             tour_detail_content_type_id,
@@ -299,7 +303,25 @@
             AND
             tour_detail_content_type_id = #{contentTypeId}
     </select>
-    <select id="getSigunguNameBySigunCode" resultType="PTourApi">
-
+    <select id="getSigunguNameBySigunCode" resultMap="sigunMap">
+        /* 시군 코드와 일치하는 지역 코드 이름, 시군 코드 이름 조회 */
+        SELECT
+            SC.sigungu_code,
+            SC.sigungu_name,
+            SC.area_id,
+            AC.area_code,
+            AC.area_name,
+            SC.REG_YMD AS sigunRegDate,
+            SC.MDFCN_YMD AS sigunModDate
+        FROM
+            SIGUNGU_CODE AS SC
+            left join
+            AREA_CODE AS AC
+            on
+            SC.area_id = AC.area_code
+        where
+            AC.area_code = #{areaCode}
+            and
+            SC.sigungu_code = #{sigunguCode}
     </select>
 </mapper>

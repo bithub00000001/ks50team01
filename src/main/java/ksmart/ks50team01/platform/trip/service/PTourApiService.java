@@ -1,7 +1,6 @@
 package ksmart.ks50team01.platform.trip.service;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import ksmart.ks50team01.platform.trip.dto.PTourApi;
@@ -30,7 +29,12 @@ public interface PTourApiService {
 	// 여행지 정보 업서트 메서드
 	void upsertTourInfoList(List<PTourApi> tourInfoList);
 
-	//
+	// 1개의 여행지 상세 정보 업서트 메서드
 	void upsertTourDetail(PTourDetail tourDetail);
+
+	// 전체 여행지 상세 정보 업서트 메서드
+	void upsertAllTourDetail(List<PTourDetail> tourDetailList);
+
+	List<PTourDetail> fetchTourDetailList(String apiKey, List<PTourApi> tourInfoList);
 }
 

@@ -125,7 +125,6 @@ public class PTripPlanController {
 		log.info("contentId:{}, contentTypeId:{}", contentId, contentTypeId);
 		try {
 			PTourDetail tourDetail = pTourApiService.getTourDetail(apiKey,contentId,contentTypeId).block();
-
 			if (tourDetail != null) {
 				pTourApiService.upsertTourDetail(tourDetail);
 				return ResponseEntity.ok("데이터 업데이트 성공");
@@ -199,7 +198,7 @@ public class PTripPlanController {
 	 */
 	@PostMapping(value = "/update/{dataTrans}")
 	@ResponseBody
-	public String yourControllerMethod(@PathVariable String dataTrans) {
+	public String upsertAreaOrSigunCode(@PathVariable String dataTrans) {
 		String status;
 		if ("areaCode".equals(dataTrans)) {
 			pTourApiService.upsertAreaData(apiKey);
@@ -213,6 +212,26 @@ public class PTripPlanController {
 		return status; // 또는 다른 응답
 	}
 
+	// 전체 업데이트 버튼을 누르면 여행지 상세 정보와 일치하는 전체 여행지 상세 정보 업서트 메서드
+	@PostMapping(value = "/destination/list-update")
+	@ResponseBody
+	public ResponseEntity<String> upsertAllTourDetail() {
+		try {
+			List<PTourApi> tourInfoList = pTripPlanService.getDestinationList();
+			List<PTourDetail> tourDetailList = pTourApiService.fetchTourDetailList(apiKey, tourInfoList);
+			if (tourDetailList.isEmpty()) {
+				log.warn("Tour detail list is empty");
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("데이터 받아오기 실패");
+			}
+			pTourApiService.upsertAllTourDetail(tourDetailList);
+			log.info("Tour detail list updated successfully");
+			return ResponseEntity.ok("데이터 업데이트 성공");
+		} catch (Exception ex) {
+			log.error("Error occurred while updating tour detail list", ex);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("에러: " + ex.getMessage());
+		}
+	}
+
 	// 여행지를 api에서 업데이트 처리
 	@PostMapping("/update/tourInfo")
 	public ResponseEntity<String> updateTourInfo(@RequestBody Map<String, Object> requestData) {
@@ -224,7 +243,6 @@ public class PTripPlanController {
 		try {
 			List<PTourApi> tourInfoList = pTourApiService.getTourInfo(apiKey , contentTypeId, numOfRows, pageNo, areaCode,
 				Optional.ofNullable(sigunguCode)).block();
-
 			if (tourInfoList != null) {
 				pTourApiService.upsertTourInfoList(tourInfoList);
 				return ResponseEntity.ok("데이터 업데이트 성공");

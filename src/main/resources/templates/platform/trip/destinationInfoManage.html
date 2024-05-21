@@ -46,6 +46,7 @@
                         <div class="form-group">
                             <div class="col-md-12 col-sm-12 col-xs-12 text-center">
                                 <button class="btn btn-success btn-lg data-trans" type="button">검색</button>
+                                <button type="button" class="btn btn-primary btn-lg data-list-update">전체 업데이트</button>
                                 <button type="reset" class="btn btn-dark btn-lg">초기화</button>
                             </div>
                         </div>
@@ -236,9 +237,6 @@
 
     <script th:inline="javascript">
         $(document).on('click', '.data-update', function () {
-
-            //const contentTypeId = $('.contentTypeId').val().trim();
-            //const contentId = $('.contentId').val().trim();
             const contentTypeId = this.dataset.contentTypeId.trim();
             const contentId = this.dataset.contentId.trim();
 
@@ -256,8 +254,23 @@
                     console.error('Error:', error);
                 }
             });
-
-
+        });
+    </script>
+    <script th:inline="javascript">
+        $(document).on('click', '.data-list-update', function () {
+            const request = $.ajax({
+                url: '/platform/plan/destination/list-update',
+                method: 'POST',
+                dataType: 'json',
+                success: function (response) {
+                    // 성공적으로 응답을 받았을 때 실행할 코드
+                    console.log('결과: ', response);
+                },
+                error: function (xhr, status, error) {
+                    // 오류 발생 시 실행할 코드
+                    console.error('Error:', error);
+                }
+            });
         });
     </script>
 </th:block>
