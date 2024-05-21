@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class PlanRanking {
-
+	private String userTripPlanId;
 	private String userTripPlan;
 	private String pRankingRegId;
 	private String tripPlanNum;

@@ -21,7 +21,17 @@
 		<result property="activate" column="ACT_YN"/>
 	</resultMap>
 	
+	<delete id="removeRanking" parameterType="String">
+		/*플랫폼 추천리스트 삭제*/
+		DELETE
+		FROM
+			PLATFORM_PARTNERSHIP
+		WHERE 
+			PF_MNGR_RANK=#{pRankingId};
+	</delete>
+	
 	<update id="modifyRanking" parameterType="Ranking">
+		/* 플랫폼 추천리스트 수정*/
 		UPDATE 
 			PLATFORM_PARTNERSHIP
 		SET
@@ -44,6 +54,7 @@
 	</update>
 	
 	<select id="getRankingInfoById" resultType="Ranking">
+		/*플랫폼추천리스트 정보 가져오기*/
 		SELECT 
 			ROW_NUMBER() OVER(ORDER BY PF_MNGR_RANK)	AS pRankingNum,
 			PF_MNGR_RANK								AS pRankingId,
@@ -100,7 +111,7 @@
 			ACT_YN, 
 			REG_YMD)
 		VALUES (
-			#{pRankingNum}, 
+			#{pRankingId}, 
 			#{pRankingRegId}, 
 			#{partnerBusinessCode}, 
 			#{tripLctgryCode}, 

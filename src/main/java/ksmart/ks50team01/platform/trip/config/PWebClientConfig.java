@@ -8,6 +8,15 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class PWebClientConfig {
 	@Bean
 	public WebClient tourApiWebClient() {
-		return WebClient.builder().baseUrl("https://apis.data.go.kr/B551011/KorService1").build();
+		return WebClient.builder()
+			.baseUrl("https://apis.data.go.kr/B551011/KorService1")
+			.build();
+	}
+
+	@Bean
+	public WebClient anotherApiWebClient() {
+		return WebClient.builder()
+			.baseUrl("https://another.api.url")
+			.build();
 	}
 }

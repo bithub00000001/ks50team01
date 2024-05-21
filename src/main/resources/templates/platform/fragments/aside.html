@@ -63,6 +63,11 @@
                    		</a>
                         <ul class="nav child_menu">
                             <li><a th:href="@{/platform/plan/list}">여행 계획 목록 조회</a></li>
+                            <li><a th:href="@{/platform/plan/code}">지역 코드 관리 & 업데이트(API)</a></li>
+                            <li><a th:href="@{/platform/plan/tourInfo}">여행지 정보 업데이트(API)</a></li>
+                            <li><a th:href="@{#}">여행지 상세 정보 업데이트(API)</a></li>
+                            <li><a th:href="@{/platform/plan/destination}">여행지 정보 관리</a></li>
+                            <li><a th:href="@{#}">여행지 상세 정보 관리</a></li>
                             <li><a href="#">?필요한가</a></li>
                         </ul>
                     </li>
@@ -103,8 +108,8 @@
                    		</a>
                         <ul class="nav child_menu">
                             <li><a th:href="@{/platform/ranking/rankingList}">?플랫폼 추천 관리</a></li>
-                            <li><a href="#">?회원 추천 관리</a></li>
-                            <li><a href="#">?여행계획 추천 관리</a></li>
+                            <li><a th:href="@{/platform/ranking/userRankingList}">?회원 추천 관리</a></li>
+                            <li><a th:href="@{/platform/ranking/planRankingList}">?여행계획 추천 관리</a></li>
                         </ul>
                     </li>
 					<li>
