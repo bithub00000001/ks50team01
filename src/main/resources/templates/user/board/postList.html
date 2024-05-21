@@ -93,7 +93,7 @@
                 	<tr th:each="l, i : ${postList}">
                 		<td class="text-center" th:text="${l.postRowNum}"></td>
                 		<td>
-                			<!-- 신규 게시물 카테고리 뱃지 -->
+                			<!-- 신규 게시물 뱃지 -->
                             <span class="badge bg-warning">N</span>
                             <!-- 게시물 카테고리 뱃지 -->
                             <i class="badge rounded-pill bg-primary badge-cate" th:text="${l.category.postCategoryName}"></i>
@@ -113,7 +113,7 @@
                         <!-- 숫자 형태로 번호 출력
 						<td class="text-center" th:text="${#lists.size(postList) - i.count + 1}"></td>
                         <td>
-                        	<!-- 신규 게시물 카테고리 뱃지 
+                        	<!-- 신규 게시물 뱃지 
                             <span class="badge bg-warning">N</span>
                             <!-- 게시물 카테고리 뱃지
                             <i class="badge rounded-pill bg-primary badge-cate" th:text="${l.postCate.postCateType}"></i>

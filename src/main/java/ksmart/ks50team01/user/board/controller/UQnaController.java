@@ -42,12 +42,16 @@ public class UQnaController {
 		model.addAttribute("qnaTitle", qnaDetail.getQnaTitle());
 		model.addAttribute("qnaContent", qnaDetail.getQnaContent());
 		model.addAttribute("faqCateType", qnaDetail.getFaqCateType());
+		model.addAttribute("getQnaAnswer", qnaDetail.getQnaAnswer());
 		
 		log.info("qnaNum: {}", qnaNum);
 		log.info("getQnaByQnaNum: {}", qnaDetail);
 		model.addAttribute("title", "1:1문의 상세 페이지");
 		return "user/board/qnaDetail";
 	}
+	
+	
+
 	
 	// 1:1문의 작성
 	@GetMapping("/qnaWrite")

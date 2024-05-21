@@ -8,6 +8,7 @@ public class PNotice {
 	private String noticeNum;
 	private String noticeRegId;
 	private String noticeCateType;
+	private String noticeCateNum;
 	private String noticeTitle;
 	private String noticeContent;
 	private int noticeInqCnt;
