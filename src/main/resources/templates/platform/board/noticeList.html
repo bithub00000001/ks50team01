@@ -162,7 +162,7 @@
 								<td th:text="${l.noticeAct}"></td>
 								<td th:text="${l.noticeRegDate}"></td>
 								<td th:text="${l.noticeMdfDate}"></td>
-								<td><a th:href="@{/platform/board/noticeModify}">수정</a></td>
+								<td><a th:href="@{/platform/board/noticeModify(noticeNum=${noticeNum})}">수정</a></td>
 								<td><a href="#">삭제</a></td>
 							</tr>
 						</tbody>

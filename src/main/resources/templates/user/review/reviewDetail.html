@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+                layout:decorate="~{user/layout/default}">
+
+	<head>
+		<title>리뷰 작성하기</title>
+		
+    	
+	    <link th:href="@{/user/plugins/owl-carousel/owl.carousel.min.css}" rel="stylesheet" media="screen">
+		<link th:href="@{/user/plugins/owl-carousel/owl.theme.default.min.css}" rel="stylesheet" media="screen">
+	</head>
+
+	<th:block layout:fragment="customCss">
+		<link th:href="@{/user/css/reivewDetail.css}" rel="stylesheet">
+	</th:block>
+	
+
+	<th:block layout:fragment="customPageTitle">
+		<!-- 컨트롤러로 title 변수로 model.att... 지정 가능  -->
+		<!-- 
+		<section class="page-title">
+			<div class="page-title-img bg-img bg-overlay-darken" style="background-image: url(/user/img/pages/page-title-bg3.jpg);">
+				<div class="container">
+					<div class="row align-items-center justify-content-center" style="height: 200px;">
+						<div class="col-lg-6">
+							<div class="page-title-content">
+								<div class="title-border">
+									<h2 class="text-uppercase text-white font-weight-bold">상품 후기 작성</h2>
+								</div>
+								<p class="text-white mb-0"></p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		-->
+	</th:block>
+
+	<th:block layout:fragment="customPageSection">
+		<section class="py-10">
+			<div class="review-detail">
+    <h2>Review Detail</h2>
+    <form id="modifyForm" action="#" method="post">
+        <table>
+            <tbody>
+                <tr>
+                    <td><label for="reviewId">작성자 아이디</label></td>
+                    <td><input type="text" id="reviewId" name="reviewId" value="" readonly="readonly" /></td>
+                </tr>
+                <tr>
+                    <td><label for="reviewContent">작성일자</label></td>
+                    <td><input type="text" id="reviewContent" name="reviewContent" value="" readonly="readonly" /></td>
+                </tr>
+                <tr>
+                    <td><label for="reviewDate">공개여부</label></td>
+                    <td><input type="text" id="reviewDate" name="reviewDate" value="" readonly="readonly" /></td>
+                </tr>
+                <tr>
+                    <td><label for="reviewCode">리뷰 상품</label></td>
+                    <td><input type="text" id="reviewCode" name="reviewCode" value="" readonly="readonly" /></td>
+                </tr>
+                <tr>
+                    <td><label for="reviewGoods">별점</label></td>
+                    <td><input type="text" id="reviewGoods" name="reviewGoods" value="" readonly="readonly" /></td>
+                </tr>
+                <tr>
+                    <td><label for="reviewStar">리뷰 내용</label></td>
+                    <td><input type="text" id="reviewStar" name="reviewStar" value="" readonly="readonly" /></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="2">
+                        <button type="submit" id="modifyPReviewBtn">확인</button>
+                        <button type="reset" id="resetBtn">취소</button>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </form>
+</div>
+		</section>
+	</th:block>
+
+	<th:block layout:fragment="customJs">
+
+	</th:block>
+</html>

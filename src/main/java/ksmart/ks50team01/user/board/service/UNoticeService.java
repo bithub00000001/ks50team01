@@ -18,6 +18,16 @@ public class UNoticeService {
 	
 	private final UNoticeMapper uNoticeMapper;
 	
+	
+	/**
+	 * 공지사항 조회
+	 * @return List<UNotice>
+	 */
+	public List<UNotice> getNoticeList(){
+		return uNoticeMapper.getNoticeList();
+	}
+	
+	
 	/**
 	 * 공지사항 상세 조회
 	 * @return UNotice
@@ -28,14 +38,11 @@ public class UNoticeService {
 		return noticeDetail;
 	}
 	
-	
-	
-	/**
-	 * 공지사항 조회
-	 * @return List<UNotice>
-	 */
-	public List<UNotice> getNoticeList(){
-		return uNoticeMapper.getNoticeList();
+
+	// 조회수 증가
+	public int increaseViewCount(String noticeNum) {
+		return uNoticeMapper.increaseViewCount(noticeNum);
+		
 	}
 	
 	

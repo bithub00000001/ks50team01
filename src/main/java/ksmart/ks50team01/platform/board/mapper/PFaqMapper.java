@@ -19,14 +19,17 @@ public interface PFaqMapper {
     // 
     PFaq getFaqInfoByNum(String faqNum);
 
-    // 수정
+    // 자주찾는 질문 수정
 	int faqModify(PFaq pFaq);
 	
 	
-	// 자주찾는 질문 추가
-	void faqInsert(PFaq faq);
+	// 자주찾는 질문 등록
+	void faqWrite(String faqNum);
+	
+	
 	// 자주찾는 질문 삭제
 	void faqDelete(String faqNum);
+
 	
     
 }

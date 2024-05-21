@@ -2,80 +2,90 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
                 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
                 layout:decorate="~{user/layout/default}">
-                
-<head>
-	<title>1:1문의</title>
+	                
+	<head>
+		<title>1:1문의</title>
+	</head>
+
+	<th:block layout:fragment="customCss">
 		<link rel="stylesheet" th:href="@{/user/css/list-style.css}">
-</head>
+		
+		<!-- GOOGLE FONT -->
+    	<link href='https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700' rel='stylesheet'>
+	</th:block>
 
-<th:block layout:fragment="customCss"></th:block>
+	<th:block layout:fragment="customPageSection">
+		<!-- 여기에 메인 컨텐츠가 삽입됩니다. -->
+		<div class="main-wrapper pages">
+		<!-- body -->
+		<div class="row">
+			<div class="d-flex align-items-start">
+				<div class="dropdown mb-5">
+					<button class="btn btn-primary dropdown-toggle" type="button"
+						id="dropdownMenuButton" data-bs-toggle="dropdown">1:1문의</button>
+					<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+						<li><a class="dropdown-item" href="javascript:void(0)">계정
+								관리</a></li>
+						<li><a class="dropdown-item" href="javascript:void(0)">이용
+								문의</a></li>
+						<li><a class="dropdown-item" href="javascript:void(0)">건의
+								/ 제안</a></li>
+						<li><a class="dropdown-item" href="javascript:void(0)">결제
+								/ 환불</a></li>
+					</ul>
+				</div>
+			</div>
 
-<th:block layout:fragment="customPageSection">
-	<!-- 여기에 메인 컨텐츠가 삽입됩니다. -->
-	<div class="main-wrapper pages">
+			<div class="col-sm-12">
+				<div class="table-responsive overflow-hidden">
 
-	<!-- body -->
-	<div class="row">
-		<div class="d-flex align-items-start">
-		<div class="dropdown mb-5">
-			<button class="btn btn-primary dropdown-toggle" type="button"
-				id="dropdownMenuButton" data-bs-toggle="dropdown">1:1문의</button>
-			<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-				<li><a class="dropdown-item" href="javascript:void(0)">계정 관리</a></li>
-				<li><a class="dropdown-item" href="javascript:void(0)">이용 문의</a></li>
-				<li><a class="dropdown-item" href="javascript:void(0)">건의 / 제안</a></li>
-				<li><a class="dropdown-item" href="javascript:void(0)">결제 / 환불</a></li>
-			</ul>
-		</div>
-	</div>
-	
-	
-	<div class="col-sm-12">
-		<div class="table-responsive overflow-hidden">
-
-			<table class="table table-hover table-bordered">
-				<colgroup>
-					<col class="col-sm-1" />
-					<col class="col-sm-7" />
-					<col class="col-sm-2" />
-					<col class="col-sm-2" />
-				</colgroup>
-				<thead>
-					<tr class="active" style="text-align: center">
-						<th>번호</th>
-						<th>제목</th>
-						<th>날짜</th>
-						<th>진행상황</th>
-					</tr>
-				</thead>
-				<tbody>
-
-							<!-- 역순으로 순회 -->
-							<tr th:each="l, i : ${qnaList}" th:order="${-i.count}">
-								<!-- 숫자 형태로 번호 출력 -->
-								<td class="text-center"
-									th:text="${#lists.size(qnaList) - i.count + 1}"></td>
-								<td><span class="badge bg-warning">N</span>
-									<!-- QNA 카테고리 뱃지 --> 
-									<i class="badge rounded-pill bg-primary badge-cate"
-									th:text="${l.faqCate.faqCateType}"></i> 
-									<!-- QNA 제목 -->
-									<a th:href="@{/qna/qnaDetail(qnaNum=${l.qnaNum})}"
-									th:text="${l.qnaTitle}"> </a></td>
+					<table class="table table-hover table-bordered">
+						<colgroup>
+							<col class="col-sm-1" />
+							<col class="col-sm-7" />
+							<col class="col-sm-2" />
+							<col class="col-sm-2" />
+						</colgroup>
+						<thead>
+							<tr class="active" style="text-align: center">
+								<th>번호</th>
+								<th>제목</th>
+								<th>날짜</th>
+								<th>진행상황</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="l, i : ${qnaList}">
+								<td class="text-center" th:text="${l.qnaRowNum}"></td>
+									<td>
+									<!-- 신규 QNA 뱃지 -->
+									<th:block th:if="${l.isNew}">
+          								<span class="badge bg-warning">N</span>
+        							</th:block>
+									<!-- QNA 카테고리 뱃지 -->
+									<i class="badge rounded-pill bg-primary badge-cate" th:text="${l.category.qnaCategoryName}"></i> 
+									<!-- QNA 제목 --> 
+									<a th:href="@{/qna/qnaDetail(qnaNum=${l.qnaNum})}" th:text="${l.qnaTitle}"> </a> 
+									<!-- 답변 완료 뱃지 --> 
+									<i class="badge rounded-pill bg-success badge-cate"	th:if="${l.qnaProCate == '답변완료'}" th:text="'답변 완료'"></i></td>
 								<td class="text-center"
 									th:text="${#strings.substring(l.qnaRegDate, 0, 10)}"></td>
-									
-									<!-- qna 진행상황  -->
-									
-									
-									
-									
-									
+								<td class="text-center" th:text="${l.qnaProCate}"></td>
 							</tr>
+						</tbody>
+					</table>
+					<div class="row">
+						<div class="col-12" style="text-align: right;">
+							<!-- 글쓰기 버튼을 클릭하면 /qna/qnaWrite 페이지로 이동 -->
+							<a th:href="@{/qna/qnaWrite}"><button type="button"class="btn btn-outline-primary btn-sm">글쓰기</button></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
 
-
-							<!-- <tr>
+		<!-- <tr>
 						<td class="noticeNum noticeCenter" style="text-align: center">1</td>
 						<td><i class="badge rounded-pill bg-primary noticeCenter"
 							style="text-align: center">계정 관리</i><a href="">회원탈퇴는 어떻게 하나요?</a></td>
@@ -104,18 +114,7 @@
 						<td class="noticeCenter" style="text-align: center">검토중</td>
 					</tr>  -->
 					
-				</tbody>
-			</table>
-			<div class="row">
-				<div class="col-12"
-					style="text-align: right;">
-					<!-- 글쓰기 버튼을 클릭하면 /qna/qnaWrite 페이지로 이동 -->
-					<a th:href="@{/qna/qnaWrite}"><button type="button" class="btn btn-outline-primary btn-sm">글쓰기</button></a>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
+	
 
 		<!-- 페이징 -->
 		<section class="pt-5 pt-md-7">
@@ -181,7 +180,6 @@
         });
 
 		</script>
-	
 	
 	</th:block>
 </html>
