@@ -1,10 +1,14 @@
 package ksmart.ks50team01.user.platform.ranking.controller;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import ksmart.ks50team01.platform.ranking.dto.Ranking;
+import ksmart.ks50team01.platform.ranking.service.RankingService;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -12,6 +16,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UPlatformRankigController {
 
+	private final RankingService rankingServeice;
+	
 	@GetMapping
 	public String platformRanking(Model model) {
 		
@@ -22,7 +28,10 @@ public class UPlatformRankigController {
 	@GetMapping("/rankingList")
 	public String platformRankingList(Model model) {
 		
+		List<Ranking> rankingList = rankingServeice.getRankingList();
+		
 		model.addAttribute("title", "플랫폼 추천 순위");
+		model.addAttribute("rankingList", rankingList);
 		return "user/platformranking/rankingList";
 	}
 	@GetMapping("/userRankingList")
