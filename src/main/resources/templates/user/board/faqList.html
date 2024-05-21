@@ -3,22 +3,30 @@
                 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
                 layout:decorate="~{user/layout/default}">
 
-<head>
-	<title>자주찾는 질문</title>
-	<style>
-	table thead tr {
-		height: 50px !important;
-		font-size: 18px;
-		font-weight: 900;
-	}
+	<head>
+		<title>자주찾는 질문</title>
+		<style>
+		table thead tr {
+			height: 50px !important;
+			font-size: 18px;
+			font-weight: 900;
+		}
+		
+		table tbody tr {
+			height: 50px !important;
+			font-size: 18px;
+		}
+		</style>
+		
+	</head>
 	
-	table tbody tr {
-		height: 50px !important;
-		font-size: 18px;
-	}
-	</style>
-	
-</head>
+	<th:block layout:fragment="customCss">
+		<link rel="stylesheet" th:href="@{/user/css/list-style.css}">
+		
+		<!-- GOOGLE FONT -->
+    	<link href='https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700' rel='stylesheet'>
+	</th:block>
+
 
 
 

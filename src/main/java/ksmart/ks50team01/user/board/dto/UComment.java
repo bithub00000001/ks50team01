@@ -15,6 +15,5 @@ public class UComment {
 	private String CommentRegDate;
 	private String CommentMdfDate;
 	private String CommentDelDate;
-	
 
 }

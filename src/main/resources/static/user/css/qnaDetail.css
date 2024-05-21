@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 /* 게시글 제목 스타일 */
-.post-title {
+.qna-title {
     color: #333;
     font-size: 20px;
     font-weight: bold;
@@ -13,9 +13,9 @@
 }
 
 /* 게시글 내용 스타일 */
-.post-content {
+.qna-content {
     /* 최소 높이를 설정하고, 내용이 더 길어지면 스크롤이 생성되도록 합니다. */
-    min-height: 550px;
+    min-height: 150px;
     overflow-y: auto; /* 세로 스크롤만 표시됩니다. */
     font-family: 'Arial', sans-serif; /* 글꼴 설정 */
     font-size: 17px; 
@@ -54,7 +54,7 @@
 }
 
 
-.comment-content {
+.answer-content {
     font-size: 15px; /* 적절한 크기로 조정하세요 */
     padding-left: 65px; /* 적절한 여백 값으로 조정하세요 */
 }
@@ -147,7 +147,7 @@
 
 
 /* 댓글 수 뱃지 크기 */
-.comment-badge {
+.badge-size {
     font-size: 12px; /* 크기 조절 */
 }
 

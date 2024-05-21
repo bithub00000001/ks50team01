@@ -50,10 +50,10 @@
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <select class="form-control text-center data-select">
                                     <option value="">==== 게시판 종류를 선택해주세요 ====</option>
-                                    <option>커뮤니티</option>
+                                    <option value="communityCateList">커뮤니티</option>
                                     <option value="noticeCateList">공지사항</option>
-                                    <option>자주찾는 질문 및 1:1 문의</option>
-                                    <option>신고</option>
+                                    <option value="faqCateList">자주찾는 질문 및 1:1 문의</option>
+                                    <option value="reportCateList">신고</option>
                                 </select>
                             </div>
                             <div class="col-md-2 col-sm-2 col-xs-0"></div>
@@ -73,8 +73,7 @@
                                 <div class="x_panel">
                                     <div class="x_content">
                                         <table id="dataTbContent"
-                                            class="table table-striped table-bordered dt-responsive nowrap"
-                                            cellspacing="0" width="100%">
+                                            class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                                             <thead>
                                                 <tr>
                                                     <th><input type="checkbox" id="checkAll" name="checkAll"></th>
@@ -90,6 +89,11 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                              <!-- Category list will be dynamically loaded here -->
+                                            
+                                            
+                                            
+                                            <!--  
                                                 <tr th:unless="${categoryList != null}">
                                                     <td colspan="10" class="text-center">등록된 카테고리가 없습니다.</td>
                                                 </tr>
@@ -110,6 +114,7 @@
                                                             th:onclick="deleteConfirm(this)">삭제</a>
                                                     </td>
                                                 </tr>
+                                                -->
                                             </tbody>
                                         </table>
                                         <div class="text-left">
@@ -172,6 +177,9 @@
 		        });
 		    });
 			</script>
+			
+			
+			
 			<script>
 		
     		const table = $('#dataTbContent').dataTable();
@@ -180,16 +188,50 @@
     			const dataTrans = String($('.data-select :selected').val()).trim();
     			if(dataTrans){
     				const colObj = {  
+    						
+                         communityCateList : [
+       						{'title': '커뮤니티 카테고리 번호', 'data': 'postCateNum'},
+       					    {'title': '등록자 아이디', 'data': 'postCateRegId'},
+       					    {'title': '커뮤니티 카테고리 유형', 'data': 'postCateType'},
+       					    {'title': '수정자 아이디', 'data': 'postCateMdfId'},
+       					    {'title': '활성화 여부', 'data': 'postAct'},
+       					    {'title': '등록일자', 'data': 'postRegDate'},
+       					    {'title': '수정일자', 'data': 'postMdfDate'},
+       					 ],
+    						
+    						
+    						
     					noticeCateList : [
     						{'title': '공지사항 카테고리 번호', 'data': 'noticeCateNum'},
     					    {'title': '등록자 아이디', 'data': 'noticeRegId'},
     					    {'title': '공지사항 카테고리 유형', 'data': 'noticeCateType'},
     					    {'title': '수정자 아이디', 'data': 'noticeMdfId'},
-    					    {'title': '활성화 여부', 'data': 'noticeActiveYN'},
-    					    {'title': '등록 일자', 'data': 'noticeRegDate'},
-    					    {'title': '수정 일자', 'data': 'noticeModDate'},
-    					 ]
-    				}
+    					    {'title': '활성화 여부', 'data': 'noticeAct'},
+    					    {'title': '등록일자', 'data': 'noticeRegDate'},
+    					    {'title': '수정일자', 'data': 'noticeMdfDate'},
+    					 ],
+       					    
+       					faqCateList : [
+     						{'title': '자주찾는질문 및 1:1문의 카테고리 번호', 'data': 'faqCateNum'},
+     					    {'title': '등록자 아이디', 'data': 'faqRegId'},
+     					    {'title': '자주찾는질문 및 1:1문의 카테고리 유형', 'data': 'faqCateType'},
+     					    {'title': '수정자 아이디', 'data': 'faqMdfId'},
+     					    {'title': '활성화 여부', 'data': 'faqAct'},
+     					    {'title': '등록일자', 'data': 'faqRegDate'},
+     					    {'title': '수정일자', 'data': 'faqMdfDate'},
+     					 ],
+    					    
+    					    
+    					reportCateList : [
+       						{'title': '신고 카테고리 번호', 'data': 'reportCateNum'},
+       					    {'title': '등록자 아이디', 'data': 'reportRegId'},
+       					    {'title': '신고 카테고리 유형', 'data': 'reportCateType'},
+       					    {'title': '수정자 아이디', 'data': 'reportMdfId'},
+       					    {'title': '활성화 여부', 'data': 'reportAct'},
+       					    {'title': '등록일자', 'data': 'reportRegDate'},
+       					    {'title': '수정일자', 'data': 'reportMdfDate'},
+       					 ],
+    				};
     				
     				const colArr = [...colObj[`${dataTrans}`]];
     				
@@ -230,10 +272,8 @@
     		});
     		
     	</script>
-			
-			
-			
-
+    	
+    	
 			
 			
 			

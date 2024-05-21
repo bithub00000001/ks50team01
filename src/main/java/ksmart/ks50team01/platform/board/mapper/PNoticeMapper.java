@@ -21,4 +21,6 @@ public interface PNoticeMapper {
 	// 공지사항 목록조회
 	List<PNotice> getNoticeList();
 
+	PNotice getNoticeByNum(String noticeNum);
+
 }

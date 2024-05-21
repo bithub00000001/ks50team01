@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ksmart.ks50team01.platform.board.mapper.PFaqMapper;
 import ksmart.ks50team01.user.board.dto.UFaq;
 import ksmart.ks50team01.user.board.mapper.UFaqMapper;
 import lombok.RequiredArgsConstructor;

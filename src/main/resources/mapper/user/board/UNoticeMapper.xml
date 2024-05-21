@@ -52,7 +52,7 @@
 	
 	<!-- getNoticeByNoticeNum 쿼리 정의 -->
 	<select id="getNoticeByNoticeNum" resultMap="noticeResultMap">
-		/* 특정 공지사항 상세 조회 */
+		/* 공지사항 상세 조회 */
 		SELECT
 		    N.NTC_NO,
 		    N.REG_PF_ID,
@@ -73,6 +73,23 @@
 		WHERE
 		    N.NTC_NO = #{noticeNum};
 	</select>
+	
+	<!-- 조회수 증가 -->
+    <update id="increaseViewCount" parameterType="String">
+        UPDATE 
+        	NOTICE
+        SET 
+        	NTC_INQ_CNT = NTC_INQ_CNT + 1
+        WHERE 
+        	NTC_NO = #{noticeNum};
+    </update>
+    
+    
+    
+    
+
+    
+    
 	
 	
 	

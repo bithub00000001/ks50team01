@@ -1,0 +1,57 @@
+@charset "UTF-8";
+
+
+/* 공지사항 제목 스타일 */
+.notice-title {
+    color: #333;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    
+}
+
+.badge-cate {
+    font-size: 1.2rem; /* 원하는 크기로 조정 */
+}
+
+/* 공지사항 내용 스타일 */
+.notice-content {
+    /* 최소 높이를 설정하고, 내용이 더 길어지면 스크롤이 생성되도록 합니다. */
+    min-height: 450px;
+    overflow-y: auto; /* 세로 스크롤만 표시됩니다. */
+    font-family: 'Arial', sans-serif; /* 글꼴 설정 */
+    font-size: 17px; 
+    color: #333; /* 텍스트 색상 설정 */
+    padding-top: 30px;
+    line-height: 1.6; /* 행간 설정 */
+    margin-top: 20px; /* 위 여백 설정 */
+    margin-bottom: 30px; /* 아래 여백 설정 */
+}
+
+
+/* 작성자, 작성일, 조회수 스타일 */
+.post-meta {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+
+
+.post-meta span:nth-child(1),
+.post-meta span:nth-child(2) {
+    display: block;
+}
+
+.post-meta span:nth-child(3) {
+    display: block;
+    text-align:right;
+}
+
+
+/* 목록 버튼 스타일 */
+.list-btn {
+    text-align: right;
+    margin-top: 20px; /* 위쪽 여백 설정 */
+}
+

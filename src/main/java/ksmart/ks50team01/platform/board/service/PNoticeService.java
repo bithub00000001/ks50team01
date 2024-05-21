@@ -50,4 +50,9 @@ public class PNoticeService {
 	public List<PNotice> getNoticeList(){
 		return pNoticeMapper.getNoticeList();
 	}
+
+
+	public PNotice getNoticeByNum(String noticeNum) {
+		return pNoticeMapper.getNoticeByNum(noticeNum);
+	}
 }
