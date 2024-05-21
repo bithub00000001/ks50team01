@@ -2,7 +2,17 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
 		     	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 		      	layout:decorate="~{platform/layout/default}">
-		      	
+		
+<th:block layout:fragment="customCss">
+    <!-- Datatables CSS START -->
+    <link th:href="@{/platform/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/platform/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/platform/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/platform/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/platform/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css}" rel="stylesheet">
+    <!-- Datatables CSS END -->
+</th:block>      	
+
 <th:block layout:fragment="customContent">
     <div class="col-md-12 col-sm-6 col-xs-12">
         <div class="x_panel">
@@ -12,68 +22,74 @@
             </div>
             <div class="x_content">
                 <form id="writeForm" th:action="@{/platform/board/noticeWrite}" method="post">
-                    <div class="form-group">
-                        <label for="noticeCateType">공지사항 유형</label>
-                        <select class="form-control" id="noticeCateType" name="noticeCateType" th:value="${noticeCateType}">
-                            <option value="general">일반 공지</option>
-                            <option value="urgent">긴급 공지</option>
-                            <option value="schedule">예정 공지</option>
-                            <option value="system">시스템 공지</option>
-                            <option value="system">이벤트 공지</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="noticeTitle">공지사항 제목</label>
-                        <input type="text" class="form-control" id="noticeTitle" name="noticeTitle" th:value="${noticeTitle}">
-                    </div>
-                
-                    <div class="form-group">
-                        <label for="noticeContent">자주찾는 질문 답변</label>
-                        <textarea class="form-control" id="noticeContent" name="noticeContent" rows="6" th:text="${noticeContent}"></textarea>
-                    </div>
-                    
-                    <!-- Elements Modal -->
-					<div class="pt-5 mb-5" id="modal">
-						<div class="row">
-							<div class="col-md-6 col-lg-4">
-								<label class="element-title mb-5 font-weight-bold">첨부 파일</label>
-								<!-- Button trigger modal -->
-								<div>
-									<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">+ 파일 첨부하기 (0/10)</button>
-								</div>
+                   <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+						<tbody>
+							<tr>
+								<td><label for="noticeRegId">작성자</label></td>
+								<td colspan="2"><input type="text" id="noticeRegId" name="noticeRegId" th:value="${session.loginId}" readonly="readonly"></td>
+							</tr>
 
-								<!-- Modal -->
-								<div class="modal fade mb-8" id="exampleModal" tabindex="-1"
-									role="dialog" aria-labelledby="exampleModalLabel"
-									aria-hidden="true">
-									<div class="modal-dialog" role="document">
-										<div class="modal-content">
-											<div class="modal-header">
-												<h5 class="modal-title">파일 첨부하기</h5>
-												<button type="button" class="btn-close"
-													data-bs-dismiss="modal" aria-label="Close"></button>
-											</div>
-											<div class="modal-body">
-												<p>jpg, jpeg, gif, png, pdf만 첨부 가능하며 20MB까지 등록 가능합니다.</p>
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-secondary"
-													data-bs-dismiss="modal">닫기</button>
-												<button type="button" class="btn btn-primary">파일
-													첨부하기</button>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-                
-                    <button type="submit" class="btn btn-primary">확인</button>
-                    <button type="button" class="btn btn-secondary" onclick="location.href='/platform/board/noticeList'">취소</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</th:block>
+							<tr>
+								<td><label for="noticeCateType">공지사항 유형</label></td>
+								<td><div class="select-default">
+										<select class="select-option" id="noticeCateNum"
+											name="category.noticeCategoryNum">
+											<option th:each="nc : ${noticeCateList}"
+												th:value="${nc.noticeCategoryNum}"
+												th:text="${nc.noticeCategoryName}"></option>
+										</select></div>
+								</td>
+							</tr>
+
+							<tr>
+								<td><label for="noticeTitle">제목</label></td>
+								<td><input type="text" class="form-control" id="noticeTitle"
+									name="noticeTitle" th:value="*{noticeTitle}"></td>
+							</tr>
+
+							<tr>
+								<td><label for="noticeContent">내용</label></td>
+								<td><textarea class="form-control" id="noticeContent"
+										name="noticeContent" rows="5" th:text="*{noticeContent}"></textarea></td>
+							</tr>
+							<tr>
+								<td><label for="noticeAct">활성화 여부</label></td>
+								<td><select class="form-control" id="noticeAct" name="noticeAct"
+									th:value="*{noticeAct}">
+										<option value="Y">Y</option>
+										<option value="N">N</option>
+								</select></td>
+							</tr>
+							<tr>
+								<td><label for="noticeRegDate">등록일</label></td>
+								<td colspan="2"><input type="text" id="noticeRegDate"
+									name="noticeRegDate" th:value="${currentDate}" readonly="readonly" /></td>
+							</tr>
+							
+							
+							
+							
+							
+							<!-- 첨부파일 -->
+							
+							
+							
+							
+							</tbody>
+							<tfoot>
+								<tr>
+									<td colspan="3">
+										<button type="submit" class="btn btn-primary">등록</button>
+										<button type="button" class="btn btn-secondary"
+											onclick="location.href='/platform/board/noticeList'">취소</button>
+									</td>
+								</tr>
+							</tfoot>
+						</table>
+					</form>
+				</div>
+			</div>
+		</div>
+	</th:block>
+
 </html>

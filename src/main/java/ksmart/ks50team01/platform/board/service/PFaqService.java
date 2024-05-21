@@ -74,7 +74,6 @@ public class PFaqService {
 	
 	/**
 	 * 자주찾는 질문 삭제
-	 * @return 
 	 */
     public void faqDelete(String faqNum) {
     	pFaqMapper.faqDelete(faqNum);

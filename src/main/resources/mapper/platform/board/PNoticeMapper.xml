@@ -17,15 +17,26 @@
 		<result property="noticeMdfDate" 	column="MDFCN_YMD" />
 		
 		<!-- 1:1 association -->
-		<association property="noticeCate" javaType="PNotice">
-			<id 		property="noticeCateNum" 		column="NTC_CTGRY_NO"/>
-			<result 	property="noticeRegId" 			column="REG_PF_ID"/>
-			<result 	property="noticeCateType" 		column="NTC_CTGRY_TYPE"/>
-			<result 	property="noticeMdfId" 			column="MDFCN_PF_ID"/>
-			<result 	property="noticeAct" 			column="ACT_YN"/>
-			<result 	property="noticeRegDate" 		column="REG_YMD"/>
-			<result 	property="noticeMdfDate" 		column="MDFCN_YMD"/>
+		<association property="category" javaType="PCategory">
+			<id 		property="noticeCategoryNum" 		column="NTC_CTGRY_NO"/>
+			<result 	property="noticeCategoryRegId" 		column="REG_PF_ID"/>
+			<result 	property="noticeCategoryName" 		column="NTC_CTGRY_TYPE"/>
+			<result 	property="noticeCategoryMdfId" 		column="MDFCN_PF_ID"/>
+			<result 	property="noticeCateActive" 		column="ACT_YN"/>
+			<result 	property="noticeCategoryRegDate" 	column="REG_YMD"/>
+			<result 	property="noticeCategoryMdfDate" 	column="MDFCN_YMD"/>
 		</association> 
+	</resultMap>
+	
+	
+	<resultMap type="PCategory" id="categoryResultMap">
+		<id 		property="noticeCategoryNum" 		column="NTC_CTGRY_NO"/>
+		<result 	property="noticeCategoryRegId" 		column="REG_PF_ID"/>
+		<result 	property="noticeCategoryName" 		column="NTC_CTGRY_TYPE"/>
+		<result 	property="noticeCategoryMdfId" 		column="MDFCN_PF_ID"/>
+		<result 	property="noticeCateActive" 		column="ACT_YN"/>
+		<result 	property="noticeCategoryRegDate" 	column="REG_YMD"/>
+		<result 	property="noticeCategoryMdfDate" 	column="MDFCN_YMD"/>
 	</resultMap>
 
 	<select id="getNoticeList" resultMap="noticeResultMap">
@@ -70,7 +81,53 @@
         WHERE 
         	NTC_NO = #{noticeNum};
     </select>
+    
+    
+    
+    <select id="getNoticeCateList" resultMap="categoryResultMap">
+        /* 공지사항 카테고리 리스트 조회 */
+        SELECT
+            NTC_CTGRY_NO,
+            NTC_CTGRY_TYPE
+        FROM
+            NOTICE_CATEGORY
+    	WHERE 
+			ACT_YN = 'Y';
+    </select>
 
+    
+    <!-- 공지사항 번호 자동증가 -->
+    <insert id="insertNotice" parameterType="UNotice">
+    	<selectKey keyProperty="noticeNum" resultType="String" order="BEFORE">
+    		/* 공지사항 등록 */
+    		SELECT
+				CONCAT(
+							'NTC_', 
+							MAX(CAST(SUBSTRING_INDEX(N.NTC_NO, 'NTC_', -1) AS UNSIGNED)) + 1
+						) AS noticeNum
+			FROM
+				NOTICE AS N
+    	</selectKey>
+        INSERT INTO NOTICE (NTC_NO, REG_PF_ID, NTC_CTGRY_NO, NTC_TTL, NTC_CN, NTC_INQ_CNT, ACT_YN, REG_YMD)
+        VALUES (#{noticeNum}, #{noticeRegId}, #{category.noticeCategoryNum}, #{noticeTitle}, #{noticeContent}, #{noticeInqCnt}, #{noticeAct}, NOW());
+    </insert>
+    
+    
+
+    
+    
+    
+    
+    
+
+
+	<delete id="noticeDelete" parameterType="PNotice">
+		/* 공지사항 삭제 */
+	    DELETE FROM 
+	    	NOTICE 
+	    WHERE 
+	    	NTC_NO = #{noticeNum};
+	</delete>
 
     
 	

@@ -22,44 +22,111 @@
 		
 		
 		<!-- 1:1 association -->
-		<association 	property="postCate" 			javaType="PCommunity">
-			<id 		property="postCateNum" 			column="PST_CTGRY_NO"/>
-			<result 	property="postCateRegId" 		column="REG_PF_ID"/>
-			<result 	property="postCateType" 		column="PST_CTGRY_NM"/>
-			<result 	property="postCateMdfId" 		column="MDFCN_PF_ID"/>
-			<result 	property="postAct" 				column="ACT_YN"/>
-			<result 	property="postRegDate" 			column="REG_YMD"/>
-			<result 	property="postMdfDate" 			column="MDFCN_YMD"/>
-			<!-- postAct , postRegDate, postMdfDate => postCateAct postCateRegDate postCateMdfDate로 하면 오류나는 이유가 뭘까 ...?  -->
+		<association 	property="category" 					javaType="PCategory">
+			<id 		property="postCategoryNum" 				column="PST_CTGRY_NO"/>	
+			<result 	property="postCategoryRegId" 			column="REG_PF_ID"/>	
+			<result 	property="postCategoryName" 			column="PST_CTGRY_NM"/>
+			<result 	property="postCategoryMdfId" 			column="MDFCN_PF_ID"/>
+			<result 	property="postCateActive" 				column="ACT_YN"/>
+			<result 	property="postCategoryRegDate" 			column="REG_YMD"/>
+			<result 	property="postCategoryMdfDate" 			column="MDFCN_YMD"/>
 		</association>
 		
+		<!-- 1:N collection -->
+		<collection  	property="commentList" 			ofType="PComment">
+			<id 		property="CommentNum" 			column="PST_CMNT_NO"/>
+			<result 	property="CommentRegId" 		column="REG_MBR_ID"/>
+			<result 	property="CommentContent" 		column="PST_CMNT_CN"/>
+			<result 	property="CommentlikeTotal" 	column="PST_CMNT_LIKE_TOTAL"/>
+			<result 	property="CommentDislikeTotal" 	column="PST_CMNT_DISLIKE_TOTAL"/>
+			<result 	property="CommentReportTotal" 	column="PST_CMNT_REPT_TOTAL"/>
+			<result 	property="CommentAct" 			column="ACT_YN"/>
+			<result 	property="CommentRegDate" 		column="REG_YMD"/>
+			<result 	property="CommentMdfDate" 		column="MDFCN_YMD"/>
+			<result 	property="CommentDelDate" 		column="DEL_YMD"/>
+		</collection>
+		
 	</resultMap>
+	
+	<resultMap type="PComment" id="postCommentMap">
+			<id 		property="CommentNum" 			column="PST_CMNT_NO"/>
+			<result 	property="CommentRegId" 		column="REG_MBR_ID"/>
+			<result 	property="postNum" 				column="PST_NO"/>
+			<result 	property="CommentContent" 		column="PST_CMNT_CN"/>
+			<result 	property="CommentlikeTotal" 	column="PST_CMNT_LIKE_TOTAL"/>
+			<result 	property="CommentDislikeTotal" 	column="PST_CMNT_DISLIKE_TOTAL"/>
+			<result 	property="CommentReportTotal" 	column="PST_CMNT_REPT_TOTAL"/>
+			<result 	property="CommentAct" 			column="ACT_YN"/>
+			<result 	property="CommentRegDate" 		column="REG_YMD"/>
+			<result 	property="CommentMdfDate" 		column="MDFCN_YMD"/>
+			<result 	property="CommentDelDate" 		column="DEL_YMD"/>
+	</resultMap>
+
+	<resultMap type="PCategory" id="categoryResultMap">
+		<id 		property="postCategoryNum" 			column="PST_CTGRY_NO"/>
+		<result 	property="postCategoryRegId" 		column="REG_PF_ID"/>
+		<result 	property="postCategoryName" 		column="PST_CTGRY_NM"/>
+		<result 	property="postCategoryMdfId" 		column="MDFCN_PF_ID"/>
+		<result 	property="postCateActive" 			column="ACT_YN"/>
+		<result 	property="postCategoryRegDate" 		column="REG_YMD"/>
+		<result 	property="postCategoryMdfDate" 		column="MDFCN_YMD"/>
+	</resultMap>
+	
+	
 
 	<select id="getCommunityList" resultMap="postResultMap">
 	 	/* 커뮤니티 조회 */
-		SELECT 
+	 	SELECT
+			ROW_NUMBER() OVER(ORDER BY CAST(SUBSTRING_INDEX(P.PST_NO, 'PST_', -1) AS UNSIGNED)) AS ROW_NUM,
 			P.PST_NO, 
-			P.REG_MBR_ID, 
+			P.REG_MBR_ID,
+			C.PST_CTGRY_NO, 
 			C.PST_CTGRY_NM,
 			P.PST_TTL, 
 			P.PST_CN, 
 			P.PST_INQ_CNT, 
-			P.PST_CMNT_TOTAL, 
 			P.PST_LIKE_TOTAL, 
 			P.PST_DISLIKE_TOTAL, 
 			P.PST_REPT_TOTAL, 
 			P.ACT_YN, 
 			P.REG_YMD, 
 			P.MDFCN_YMD, 
-			P.DEL_YMD
+			P.DEL_YMD,
+			COUNT(PC.PST_CMNT_NO) AS PST_CMNT_TOTAL
 		FROM 
 			POST AS P
 			INNER JOIN
 			POST_CATEGORY AS C
 			ON
-			P.PST_CTGRY_NO = C.PST_CTGRY_NO;
+			P.PST_CTGRY_NO = C.PST_CTGRY_NO
+			LEFT JOIN 
+			POST_COMMENT AS PC
+			ON 
+			P.PST_NO = PC.PST_NO
+		GROUP BY P.PST_NO
+		ORDER BY P.REG_YMD DESC;
 	</select>
 	
+	<!-- 
+	<update id="deactivatePost">
+		/ * 선택한 게시물의 활성화 여부를 N으로 변경 * /
+	    UPDATE 
+	    	POST
+	    SET 
+	    	ACT_YN = 'N'
+	    WHERE 
+	    	PST_NO IN
+	    <foreach item="postNum" collection="list" open="(" separator="," close=")">
+	        #{postNum};
+    	</foreach>
+	</update>  -->
+	
+	
+	<update id="deactivatePost">
+        UPDATE POST
+        SET ACT_YN = 'N'
+        WHERE PST_NO = #{postNum};
+    </update>
 
     
 	

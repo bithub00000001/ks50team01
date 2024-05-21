@@ -154,7 +154,7 @@
 								<td><input type="checkbox" id="checkbox_${l.noticeNum}" name="noticeNum" th:value="${l.noticeNum}"></td>
 								<td th:text="${l.noticeNum}"></td>
 								<td th:text="${l.noticeRegId}"></td>
-								<td th:text="${l.noticeCate.noticeCateType}"></td>
+								<td th:text="${l.category.noticeCategoryName}"></td>
 								<td th:text="${l.noticeTitle}"></td>
 								<td th:text="${l.noticeContent}"></td>
 								<td th:text="${l.noticeInqCnt}"></td>
@@ -163,12 +163,12 @@
 								<td th:text="${l.noticeRegDate}"></td>
 								<td th:text="${l.noticeMdfDate}"></td>
 								<td><a th:href="@{/platform/board/noticeModify(noticeNum=${noticeNum})}">수정</a></td>
-								<td><a href="#">삭제</a></td>
+								<td><a href="#" th:data-faq-num="${l.noticeNum}" th:onclick="confirmDelete(this)">삭제</a></td>
 							</tr>
 						</tbody>
 					</table>
 					<div class="text-left">
-						<a th:href="@{/platform/board/noticeWrite}" class="btn btn-primary">추가</a>
+						<a th:href="@{/platform/board/noticeWrite}" class="btn btn-primary">등록</a>
 						<button type="button" class="btn btn-danger" id="deleteSelected">선택 삭제</button>
 					</div>
 				</div>
@@ -254,7 +254,39 @@
 	    });
 	</script>
     
-    
+<!-- 공지사항 삭제 -->	    
+<script th:inline="javascript">
+    function confirmDelete(element) {
+        var noticeNum = element.getAttribute('data-faq-num');
+        var confirmation = confirm("정말로 삭제하시겠습니까?");
+        
+        if (confirmation) {
+            // 확인을 누르면 삭제 동작을 수행하기 위해 POST 요청
+            noticeDelete(noticeNum);
+        } else {
+            console.log("삭제 취소: " + noticeNum);
+        }
+    }
+
+    function noticeDelete(noticeNum) {
+        // POST 요청을 보내기 위해 form을 생성
+        var form = document.createElement('form');
+        form.setAttribute('method', 'post');
+        form.setAttribute('action', '/platform/board/noticeDelete');
+        form.style.display = 'hidden'; // form을 보이지 않도록 설정
+
+        // noticeNum을 form에 추가
+        var input = document.createElement('input');
+        input.setAttribute('type', 'hidden');
+        input.setAttribute('name', 'noticeNum');
+        input.setAttribute('value', noticeNum);
+        form.appendChild(input);
+
+        // form을 body에 추가하고 submit
+        document.body.appendChild(form);
+        form.submit();
+    }
+</script>
     
     
 

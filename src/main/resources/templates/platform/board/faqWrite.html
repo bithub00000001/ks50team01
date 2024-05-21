@@ -30,19 +30,20 @@
 								<td colspan="2"><input type="text" id="faqRegId"
 									name="faqRegId" th:value="${session.loginId}" readonly="readonly"></td>
 							</tr>
+
 							<tr>
-						
 								<td><label for="faqCateType">카테고리</label></td>
-								<td>
-									<select class="form-control" id="faqCateNum" name="faqCateNum" th:value="*{faqCateType}">
-										<option value="FAQ_CTGRY_001">계정 관리</option>
-										<option value="FAQ_CTGRY_002">이용 문의</option>
-										<option value="FAQ_CTGRY_003">건의 및 제안</option>
-										<option value="FAQ_CTGRY_004">결제 및 환불</option>
-									</select>
-								</td>  
-							
+								<td><div class="select-default">
+										<select class="select-option" id=faqCateNum"
+											name="category.faqCategoryNum">
+											<option th:each="fc : ${fqaCateList}"
+												th:value="${fc.faqCategoryNum}"
+												th:text="${fc.faqCategoryName}"></option>
+										</select>
+									</div></td>
 							</tr>
+
+
 							<tr>
 								<td><label for="faqTitle">제목</label></td>
 								<td><input type="text" class="form-control" id="faqTitle"
@@ -57,8 +58,8 @@
 								<td><label for="faqAct">활성화 여부</label></td>
 								<td><select class="form-control" id="faqAct" name="faqAct"
 									th:value="*{faqAct}">
-										<option value="yes">Y</option>
-										<option value="no">N</option>
+										<option value="Y">Y</option>
+										<option value="N">N</option>
 								</select></td>
 							</tr>
 							

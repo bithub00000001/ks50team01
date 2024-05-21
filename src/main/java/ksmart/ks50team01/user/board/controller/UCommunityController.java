@@ -103,45 +103,7 @@ public class UCommunityController {
         return "redirect:/community";
 	}
 	
-	/*
-	@PostMapping("/postWrite")
-	public String postWrite(@RequestParam(value = "postRegId") String postRegId,
-							@RequestParam(value = "postCateNum") String postCateNum,
-							@RequestParam(value = "postTitle") String postTitle,
-							@RequestParam(value = "postContent") String postContent,
-							RedirectAttributes redirectAttributes,
-							Model model) {
-        try {
-            log.info("postRegId: {}, postCateNum: {}, postTitle: {}, postContent: {}", 
-                      postRegId, postCateNum, postTitle, postContent);
 
-            
-            // 가장 큰 PST_NO_NUMERIC 값을 조회하여 새로운 PST_NO_NUMERIC 값 생성
-            String maxPstNoNumeric = uCommunityService.getMaxPstNoNumeric();
-            String newPstNoNumeric;
-
-            if (maxPstNoNumeric != null) {
-                // 숫자 부분만 추출해서 1을 더하고 다시 문자열로 변환
-                int maxNumber = Integer.parseInt(maxPstNoNumeric);
-                newPstNoNumeric = String.format("%03d", maxNumber + 1);
-            } else {
-                // 테이블이 비어있는 경우 첫 번째 값 설정
-                newPstNoNumeric = "001";
-            }
-
-            String newPstNo = "PST_" + newPstNoNumeric;
-
-            // 게시글 등록
-            uCommunityService.insertPost(newPstNo, postRegId, postCateNum, postTitle, postContent);
-            redirectAttributes.addFlashAttribute("success", "게시글이 성공적으로 저장되었습니다.");
-            return "redirect:/community";
-        } catch (Exception e) {
-            log.error("게시글 저장 실패", e);
-            redirectAttributes.addFlashAttribute("error", "게시글 저장에 실패하였습니다.");
-            return "redirect:/error";
-        }
-    }
-	*/
 
 	// 게시글 작성 폼 이동
 	@GetMapping("/postWrite")
