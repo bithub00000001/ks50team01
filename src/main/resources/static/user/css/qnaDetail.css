@@ -15,7 +15,7 @@
 /* 게시글 내용 스타일 */
 .post-content {
     /* 최소 높이를 설정하고, 내용이 더 길어지면 스크롤이 생성되도록 합니다. */
-    min-height: 550px;
+    min-height: 150px;
     overflow-y: auto; /* 세로 스크롤만 표시됩니다. */
     font-family: 'Arial', sans-serif; /* 글꼴 설정 */
     font-size: 18px; 
@@ -54,7 +54,7 @@
 }
 
 
-.comment-content {
+.answer-content {
     font-size: 16px; /* 적절한 크기로 조정하세요 */
     padding-left: 60px; /* 적절한 여백 값으로 조정하세요 */
 }

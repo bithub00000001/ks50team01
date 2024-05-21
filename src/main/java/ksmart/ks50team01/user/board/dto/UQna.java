@@ -18,5 +18,8 @@ public class UQna {
 	// 추가된 association을 위한 멤버 변수
 	private UFaq faqCate;
 	
+	private UQnaAnswer qnaAnswer;
+	
+	
 
 }

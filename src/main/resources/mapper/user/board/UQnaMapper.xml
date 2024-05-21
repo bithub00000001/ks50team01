@@ -28,6 +28,20 @@
 			<result 	property="faqMdfDate" 		column="MDFCN_YMD"/>
 		</association>
 		
+		<!-- 1:1 association -->
+		<association property="qnaAnswer" javaType="UQnaAnswer">
+			<id 		property="answerNum" 		column="ANS_NO"/>
+			<result 	property="answerRegId" 		column="REG_PF_ID"/>
+			<result 	property="qnaNum" 		column="QNA_NO"/>
+			<result 	property="answerContent" 		column="ANS_CN"/>
+			<result 	property="answerMdfId" 			column="MDFCN_PF_ID"/>
+			<result 	property="answerRegDate" 		column="REG_YMD"/>
+			<result 	property="answerMdfDate" 		column="MDFCN_YMD"/>
+		</association>
+		
+		
+		
+		
 	
 	</resultMap>
 	
@@ -57,27 +71,33 @@
 	
 		<!-- getQnaByQnaNum 쿼리 정의 -->
 	<select id="getQnaByQnaNum" resultMap="qnaResultMap">
-		/* 1:1문의 상세 조회 */
-		SELECT
-			Q.QNA_NO,
-			Q.REG_MBR_BIZ_ID,
-			F.FAQ_CTGRY_TYPE,
-			Q.QNA_PRGRS_CTGRY,
-			Q.QNA_TTL,
-			Q.QNA_CN,
-			Q.ANS_REG_PF_ID,
-			Q.REG_YMD,
-			Q.MDFCN_YMD,
-			Q.RTRCN_YMD
-		FROM
-			QNA_QUESTION AS Q
-			INNER JOIN
-			FAQ_CATEGORY AS F
-			ON
-			Q.FAQ_CTGRY_NO = F.FAQ_CTGRY_NO
-		WHERE
-		    Q.QNA_NO = #{qnaNum};
+	    /* 1:1문의 상세 조회 */
+	    SELECT
+	        Q.QNA_NO,
+	        Q.REG_MBR_BIZ_ID,
+	        F.FAQ_CTGRY_TYPE,
+	        Q.QNA_PRGRS_CTGRY,
+	        Q.QNA_TTL,
+	        Q.QNA_CN,
+	        Q.ANS_REG_PF_ID,
+	        Q.REG_YMD,
+	        Q.MDFCN_YMD,
+	        Q.RTRCN_YMD,
+	        A.ANS_NO,
+	        A.REG_PF_ID,
+	        A.QNA_NO,
+	        A.ANS_CN,
+	        A.MDFCN_PF_ID,
+	        A.REG_YMD,
+	        A.MDFCN_YMD
+	    FROM
+	        QNA_QUESTION AS Q
+	        INNER JOIN FAQ_CATEGORY AS F ON Q.FAQ_CTGRY_NO = F.FAQ_CTGRY_NO
+	        LEFT JOIN QNA_ANSWER AS A ON Q.QNA_NO = A.QNA_NO
+	    WHERE
+	        Q.QNA_NO = #{qnaNum};
 	</select>
+	
 	
 	
 </mapper>

@@ -83,6 +83,13 @@
         WHERE 
         	NTC_NO = #{noticeNum};
     </update>
+    
+    
+    
+    
+
+    
+    
 	
 	
 	

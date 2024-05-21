@@ -59,7 +59,11 @@
 									<!-- QNA 카테고리 뱃지 -->
 									<i class="badge rounded-pill bg-primary badge-cate" th:text="${l.faqCate.faqCateType}"></i>
 									<!-- QNA 제목 --> 
-									<a th:href="@{/qna/qnaDetail(qnaNum=${l.qnaNum})}" th:text="${l.qnaTitle}"> </a></td>
+									<a th:href="@{/qna/qnaDetail(qnaNum=${l.qnaNum})}" th:text="${l.qnaTitle}"> </a>
+									<!-- 답변 완료 뱃지 -->
+       								<i class="badge rounded-pill bg-success badge-cate" th:if="${l.qnaAnswer != null}" th:text="'답변 완료'"></i>
+								</td>
+								
 								<td class="text-center" th:text="${#strings.substring(l.qnaRegDate, 0, 10)}"></td>
 								<td class="text-center" th:text="${l.qnaProCate}"></td>
 							</tr>

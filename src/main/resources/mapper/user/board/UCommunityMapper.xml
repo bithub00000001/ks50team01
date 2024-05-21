@@ -289,8 +289,7 @@
         WHERE
         	PST_NO = #{postNum};
     </select>
-	
-
+    
 
 	
 	<!-- 조회수 증가 -->
@@ -303,16 +302,7 @@
         	PST_NO = #{postNum};
     </update>
     
-    <!-- 외않되 ... 
-    <select id="getCommentCntByPostNum" resultMap="postResultMap" resultType="Integer">
-        SELECT 
-        	COUNT(PST_CMNT_TOTAL)
-        FROM 
-        	POST
-        WHERE 
-        	PST_NO = #{postNum};
-        	
-    </select> -->
+
 
     
 	
