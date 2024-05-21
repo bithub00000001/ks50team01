@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+
 import ksmart.ks50team01.platform.ranking.dto.Ranking;
 import ksmart.ks50team01.platform.ranking.service.RankingService;
 import lombok.RequiredArgsConstructor;
@@ -24,12 +25,40 @@ public class RankingController {
 
 	private final RankingService rankingService;
 	
+	
+	@PostMapping("/removeRanking")
+	public String remove(@RequestParam(name = "pRankingId") String pRankingId
+						,Model model) {
+		model.addAttribute("title", "플랫폼추천리스트 삭제");
+		model.addAttribute("pRankingId", pRankingId);
+		return "platform/ranking/removeRanking";
+	}
+	
+	@GetMapping("/removeRanking")
+	public String removeRanking(@RequestParam(name="pRankingId") String pRankingId
+								,Model model) {
+		List<Ranking> rankingList = rankingService.getRankingList();
+		rankingService.removeRanking(pRankingId);
+		model.addAttribute("removeRanking",pRankingId);
+		model.addAttribute("rankingList", rankingList);
+		return "redirect:/platform/ranking/rankingList";
+	}
+	/**
+	 * 플랫폼추천리스트 수정
+	 * @param ranking
+	 * @return
+	 */
 	@PostMapping("/modifyRanking")
 	public String modify(@ModelAttribute Ranking ranking) {
 		rankingService.modifyRanking(ranking);
 		return "redirect:/platform/ranking/rankingList";
 	}
-	
+	/**
+	 * 플랫폼추천리스트 정보 가져오기
+	 * @param pRankingId
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/modifyRanking")
 	public String modifyRanking(@RequestParam(name="pRankingId") String pRankingId
 							  ,Model model) {

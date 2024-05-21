@@ -26,7 +26,6 @@ public class DestinationManageController {
 	
 	private final DestinationService destinationService;
 	
-
 	@PostMapping("/destination/tourGoodsModify")
 	public String tourGoodsModifyProcess(Destination destination) {
 		destinationService.updateTourGoods(destination);
@@ -63,7 +62,7 @@ public class DestinationManageController {
 		
 		return "/platform/destination/tourModify";
 	}
-
+	
 	
 	@GetMapping("/destination/tourManage")
 	public String tourManage(Model model) {
@@ -85,7 +84,6 @@ public class DestinationManageController {
 		return "/platform/destination/tourGoodsManage";
 	}
 	
-
 	@PostMapping("/destination/lodgingModify")
 	public String lodgingModifyProcess(Destination destination) {
 		
