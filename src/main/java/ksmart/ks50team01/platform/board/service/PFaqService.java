@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ksmart.ks50team01.platform.board.dto.PCategory;
 import ksmart.ks50team01.platform.board.dto.PFaq;
 import ksmart.ks50team01.platform.board.mapper.PFaqMapper;
 import lombok.RequiredArgsConstructor;
@@ -29,36 +30,21 @@ public class PFaqService {
 
 	
 	/**
-	 * 주어진 번호에 해당하는 자주 찾는 질문 조회
-	 * @param faqNum 조회할 자주 찾는 질문 번호
+	 * 주어진 번호에 해당하는 자주찾는질문 조회
+	 * @param faqNum 조회할 자주찾는질문 번호
 	 * @return 조회된 PFaq 객체, 없을 경우 null
 	 */
 		public PFaq getFaqInfoByNum(String faqNum) {
-			PFaq faqInfo;
-			try {
-				faqInfo = pFaqMapper.getFaqInfoByNum(faqNum);
-			} catch (Exception e) {
-				log.error("FAQ 정보를 조회하는 동안 예외 발생: {}", e.getMessage());
-				// 예외 처리 로직 추가: 예외에 따른 대응 또는 기본값 설정 등
-				faqInfo = null; // 예외 발생 시 기본값으로 null 설정
-			}
-			log.info("getFaqInfoByNum - faqNum: {}", faqNum);
-			return faqInfo;
+			return pFaqMapper.getFaqInfoByNum(faqNum);
 		}
 
 
 	/**
 	 * 자주찾는 질문 수정
-	 * @param faqNum
-	 * @return 수정된 행의 수
+	 * @param pFaq
 	 */
-	public int faqModify(PFaq pFaq) {
-		try {
-			return pFaqMapper.faqModify(pFaq);
-		} catch (Exception e) {
-			log.error("FAQ 정보를 수정하는 동안 예외 발생: {}", e.getMessage());
-			return -1;
-		}
+	public void faqModify(PFaq pFaq) {
+		pFaqMapper.faqModify(pFaq);
 		
 	}
 	
@@ -73,12 +59,30 @@ public class PFaqService {
 	
 	
 	/**
-	 * 자주찾는 질문 삭제
-	 * @return 
+	 * 자주찾는질문 삭제
 	 */
     public void faqDelete(String faqNum) {
     	pFaqMapper.faqDelete(faqNum);
     }
+
+
+	/**
+	 * 자주찾는질문 카테고리 조회
+	 * @return List<PCategory>
+	 */
+	public List<PCategory> getfaqCateList() {
+		List<PCategory> faqCateList = pFaqMapper.getfaqCateList();
+		
+		log.info("자주찾는질문 카테고리 조회 결과: {}", faqCateList);
+		return faqCateList;
+	}
+
+
+	// db에 저장
+	public void insertFaq(PFaq pFaq) {
+		pFaqMapper.insertFaq(pFaq);
+		
+	}
 	
 	
 
