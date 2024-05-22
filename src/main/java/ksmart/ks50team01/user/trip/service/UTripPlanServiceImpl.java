@@ -2,38 +2,51 @@ package ksmart.ks50team01.user.trip.service;
 
 import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import ksmart.ks50team01.user.trip.dto.UTripOption;
+import ksmart.ks50team01.user.trip.enums.UTripContent;
+import ksmart.ks50team01.user.trip.mapper.UTripPlanMapper;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Transactional
 @Slf4j
+@RequiredArgsConstructor
 public class UTripPlanServiceImpl implements UTripPlanService{
 
+	private final UTripPlanMapper utripPlanMapper;
+
+
+	/**
+	 * 데이트 레인지를 받아 출발 날짜와 도착 날짜로 분리하는 메서드(현재는 출발 날짜와 도착 날짜를 클라이언트에서 처리함)
+	 * @param uTripOption 여행 옵션 DTO
+	 * @return 출발 날짜와 도착 날짜, 일수를 입력받은 여행 옵션 DTO
+	 * @throws DateTimeParseException
+	 */
 	@Override
 	public UTripOption parseDateRange(UTripOption uTripOption) throws DateTimeParseException {
-		/*String dateRange = uTripOption.getDateRange();
-		if (dateRange != null && !dateRange.isEmpty()){
-			String[] dates = dateRange.split("-");
-			LocalDate startDate = LocalDate.parse(dates[0]);
-			LocalDate endDate = LocalDate.parse(dates[1]);
-
-			uTripOption.setStartDate(startDate);
-			uTripOption.setEndDate(endDate);
-			log.info("Start date: {}", startDate);
-			log.info("End date: {}" , endDate);
-
-			uTripOption = calculateNumDate(uTripOption);
-		}*/
 		uTripOption = calculateNumDate(uTripOption);
 		log.info("parseDateRange method called: {}", uTripOption);
 		return uTripOption;
 	}
 
+	/**
+	 * 데이트 레인지가 존재하면 출발 날짜와 도착 날짜 사이의 일수를 계산하는 메서드
+	 * @param uTripOption 여행 옵션 DTO
+	 * @return 일수를 계산에 입력받은 여행 옵션 DTO
+	 */
 	@Override
 	public UTripOption calculateNumDate(UTripOption uTripOption) {
 		if (uTripOption.getStartDate() != null && uTripOption.getEndDate() != null){
@@ -44,6 +57,11 @@ public class UTripPlanServiceImpl implements UTripPlanService{
 		return uTripOption;
 	}
 
+	/**
+	 * 출발 날짜와 도착 날짜를 입력 받아 몇박 몇일 혹은 미정을 반환 메서드
+	 * @param uTripOption 여행 옵션 DTO
+	 * @return TripDuration에 일정을 입력 받은 여행 옵션 DTO
+	 */
 	@Override
 	public UTripOption calculateTripDuration(UTripOption uTripOption) {
 		if (uTripOption.getStartDate() != null && uTripOption.getEndDate() != null) {
@@ -55,5 +73,15 @@ public class UTripPlanServiceImpl implements UTripPlanService{
 		}
 		log.info("calculateTripDuration method called: {}", uTripOption);
 		return uTripOption;
+	}
+
+	@Override
+	public Map<String, Object> getTourInfoObject(String content) throws JsonProcessingException {
+		List<String> concatObject = utripPlanMapper.getTourInfoObject(UTripContent.getUTripContentByLength(content), content);
+		ObjectMapper objectMapper = new ObjectMapper();
+		List<Map<String, Object>> contentList = objectMapper.readValue(concatObject.toString(),new TypeReference<List<Map<String, Object>>>(){});
+		Map<String, Object> paraMap = new HashMap<>();
+		paraMap.put("positions", contentList);
+		return paraMap;
 	}
 }
