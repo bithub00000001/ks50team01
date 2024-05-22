@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ksmart.ks50team01.platform.ranking.dto.Ranking;
 import ksmart.ks50team01.platform.ranking.dto.RankingApi;
 import ksmart.ks50team01.platform.ranking.mapper.RankingMapper;
+
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -43,6 +44,10 @@ public class RankingService {
 		return rankingMapper.rankingApiListCheck(pfRankInfoId);
 	}
 	
+	public RankingApi getDestinationContentId(String destinationCId) {
+		RankingApi rankingApi = rankingMapper.getDestinationContentId(destinationCId);
+		return rankingApi;
+	}
 	/**
 	 * 플랫폼 추천 리스트 등록
 	 * @param ranking

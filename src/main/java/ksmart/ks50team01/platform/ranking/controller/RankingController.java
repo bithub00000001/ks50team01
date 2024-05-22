@@ -87,7 +87,7 @@ public class RankingController {
 	@PostMapping("/rankingApiListCheck")
 	@ResponseBody
 	public boolean rankingApiListCheck(@RequestParam(value="pfRankInfoId") String pfRankInfoId) {
-		boolean isPfRankInfoId = rankingService.rankingListCheck(pfRankInfoId);
+		boolean isPfRankInfoId = rankingService.rankingApiListCheck(pfRankInfoId);
 		return isPfRankInfoId;
 	}
 	
@@ -99,16 +99,8 @@ public class RankingController {
 	@PostMapping("/addRanking")
 	public String addRanking(Ranking ranking) {
 		rankingService.addRanking(ranking);
-		System.out.println("회원가입 화면에서 입력받은 data: " + ranking);
 		return "redirect:/platform/ranking/rankingList";
 	}
-	
-	@PostMapping("/addApiRanking")
-	public String addApiRanking(RankingApi rankingApi) {
-		rankingService.addApiRanking(rankingApi);
-		return "redirect:/platform/ranking/rankingInfoList";
-	}
-	
 	@GetMapping("/addRanking")
 	public String addRanking(Model model) {
 		List<Ranking> rankingList = rankingService.getRankingList();
@@ -117,12 +109,22 @@ public class RankingController {
 		model.addAttribute("rankingList", rankingList);
 		return "platform/ranking/addRanking";
 	}
+	
+	@PostMapping("/addApiRanking")
+	public String addApiRanking(RankingApi rankingApi) {
+		rankingService.addApiRanking(rankingApi);
+		return "redirect:/platform/ranking/rankingInfoList";
+	}
+	
 	@GetMapping("/addApiRanking")
-		public String addApiRanking(Model model) {
-		
+		public String addApiRanking(@RequestParam(value="destinationCId") String destinationCId, Model model) {
+		List<Ranking> rankingList = rankingService.getRankingList();
 		List<RankingApi> rankingApiList = rankingService.getRankingInfoList();
+		RankingApi rankingApi = rankingService.getDestinationContentId(destinationCId);
 		model.addAttribute("title", "플랫폼추천 관계리스트 등록");
 		model.addAttribute("rankingApiList", rankingApiList);
+		model.addAttribute("rankingList", rankingList);
+		model.addAttribute("rankingApi", rankingApi);
 		return "platform/ranking/addApiRanking";
 	}
 	
