@@ -176,8 +176,7 @@ $(document).on('click', '.btn-delete', function() {
 });
 
 
-// 새로운 일차 추가 버튼 클릭 이벤트
-$('.add-day').click(function () {
+function addTabFunction() {
     let dayCount = $("#myDayTab .nav-item:not(.add-day)").length + 1;
     let newTabId = "day" + dayCount + "-tab";
 
@@ -212,6 +211,11 @@ $('.add-day').click(function () {
 
     // 새로 생성한 탭 활성화
     newTab.find('.nav-link').tab('show');
+}
+
+// 새로운 일차 추가 버튼 클릭 이벤트
+$('.add-day').click(function () {
+    addTabFunction();
 });
 
 /*

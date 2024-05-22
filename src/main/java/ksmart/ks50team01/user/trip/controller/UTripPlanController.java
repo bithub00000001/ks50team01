@@ -1,6 +1,8 @@
 package ksmart.ks50team01.user.trip.controller;
 
 import java.time.format.DateTimeParseException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -8,9 +10,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 import ksmart.ks50team01.user.trip.dto.UTripOption;
 import ksmart.ks50team01.user.trip.service.UTourDataService;
@@ -55,6 +61,20 @@ public class UTripPlanController {
             () -> model.addAttribute("uTripOption", new UTripOption())
         );
         return "user/trip/tripPlan";
+    }
+
+    @GetMapping("/clusterer/{contentTypeId}")
+    @ResponseBody
+    public Map<String, Object> getClusterer(@PathVariable(value = "contentTypeId") String contentTypeId) throws
+        JsonProcessingException {
+        return uTripPlanService.getTourInfoObject(contentTypeId);
+    }
+
+    @GetMapping("/detailContentId/{contentId}")
+    @ResponseBody
+    public Map<String, Object> getDetailContentId(@PathVariable(value = "contentId") String contentId) throws
+        JsonProcessingException {
+        return uTripPlanService.getTourInfoObject(contentId);
     }
 
     @PostMapping("/detail")
