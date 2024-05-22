@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import ksmart.ks50team01.platform.ranking.dto.Ranking;
+import ksmart.ks50team01.platform.ranking.dto.RankingApi;
 import ksmart.ks50team01.platform.ranking.service.RankingService;
 import ksmart.ks50team01.platform.trip.dto.PTourApi;
 import ksmart.ks50team01.platform.trip.service.PTripPlanService;
@@ -83,6 +84,12 @@ public class RankingController {
 		boolean isPRankingNum = rankingService.rankingListCheck(pRankingId);
 		return  isPRankingNum;
 	}
+	@PostMapping("/rankingApiListCheck")
+	@ResponseBody
+	public boolean rankingApiListCheck(@RequestParam(value="pfRankInfoId") String pfRankInfoId) {
+		boolean isPfRankInfoId = rankingService.rankingListCheck(pfRankInfoId);
+		return isPfRankInfoId;
+	}
 	
 	/**
 	 * 플랫폼 추천 리스트 등록
@@ -96,6 +103,12 @@ public class RankingController {
 		return "redirect:/platform/ranking/rankingList";
 	}
 	
+	@PostMapping("/addApiRanking")
+	public String addApiRanking(RankingApi rankingApi) {
+		rankingService.addApiRanking(rankingApi);
+		return "redirect:/platform/ranking/rankingInfoList";
+	}
+	
 	@GetMapping("/addRanking")
 	public String addRanking(Model model) {
 		List<Ranking> rankingList = rankingService.getRankingList();
@@ -103,6 +116,14 @@ public class RankingController {
 		model.addAttribute("title", "플랫폼 추천리스트 등록");
 		model.addAttribute("rankingList", rankingList);
 		return "platform/ranking/addRanking";
+	}
+	@GetMapping("/addApiRanking")
+		public String addApiRanking(Model model) {
+		
+		List<RankingApi> rankingApiList = rankingService.getRankingInfoList();
+		model.addAttribute("title", "플랫폼추천 관계리스트 등록");
+		model.addAttribute("rankingApiList", rankingApiList);
+		return "platform/ranking/addApiRanking";
 	}
 	
 	@GetMapping("/rankingList")
@@ -121,6 +142,13 @@ public class RankingController {
 		model.addAttribute("title", "API리스트");
 		model.addAttribute("destinationList", destinationList);
 		return "platform/ranking/rankingApiList";
+	}
+	@GetMapping("/rankingInfoList")
+	public String getRankingInfoList(Model model) {
+		List<RankingApi> rankingApiList = rankingService.getRankingInfoList();
+		model.addAttribute("title", "플랫폼추천 관계리스트");
+		model.addAttribute("rankingApiList", rankingApiList);
+		return "platform/ranking/rankingInfoList";
 	}
 	
 }

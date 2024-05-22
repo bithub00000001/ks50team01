@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ksmart.ks50team01.platform.ranking.dto.Ranking;
+import ksmart.ks50team01.platform.ranking.dto.RankingApi;
 import ksmart.ks50team01.platform.ranking.mapper.RankingMapper;
 import lombok.RequiredArgsConstructor;
 
@@ -38,12 +39,20 @@ public class RankingService {
 		return rankingMapper.rankingListCheck(pRankingNum);
 	}
 	
+	public boolean rankingApiListCheck(String pfRankInfoId) {
+		return rankingMapper.rankingApiListCheck(pfRankInfoId);
+	}
+	
 	/**
 	 * 플랫폼 추천 리스트 등록
 	 * @param ranking
 	 */
 	public int addRanking(Ranking ranking) {
 		return rankingMapper.addRanking(ranking);
+	}
+	
+	public int addApiRanking(RankingApi rankingApi) {
+		return rankingMapper.addApiRanking(rankingApi);
 	}
 	
 	/**
@@ -55,5 +64,11 @@ public class RankingService {
 		List<Ranking> rankingList = rankingMapper.getRankingList();
 		
 		return rankingList;
+	}
+	public List<RankingApi> getRankingInfoList(){
+		
+		List<RankingApi> rankingApiList = rankingMapper.getRankingInfoList();
+		
+		return rankingApiList;
 	}
 }

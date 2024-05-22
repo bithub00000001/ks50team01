@@ -92,6 +92,33 @@
 			PF_MNGR_RANK = #{PF_MNGR_RANK};
 	</select>
 	
+	<select id="rankingApiListCheck" parameterType="String" resultType="boolean">
+		SELECT 
+			COUNT(PF_MNGR_RANK_INFO)
+		FROM 
+			PLATFORM_PARTNERSHIP_INFO
+		WHERE 
+			PF_MNGR_RANK_INFO = #{PF_MNGR_RANK_INFO};
+	
+	</select>
+	
+	<insert id="addApiRanking" parameterType="RankingApi">
+		INSERT INTO 
+			PLATFORM_PARTNERSHIP_INFO
+			(PF_MNGR_RANK_INFO, 
+			REG_PF_ID, 
+			PF_MNGR_RANK, 
+			destination_content_id, 
+			RECOMMENDATION_DETAILS)
+		VALUES 
+			(#{pfRankInfoId}, 
+			#{pRankingRegId}, 
+			#{pRankingId}, 
+			#{destinationCId}, 
+			#{recommenDetails})
+		
+	</insert>
+	
 	<insert id="addRanking" parameterType="Ranking">
 		/* 플랫폼 추천 리스트 추가 */
 		INSERT INTO 
@@ -158,5 +185,16 @@
 		FROM 
 			PLATFORM_PARTNERSHIP;
 	</select>
-
+	
+	<select id="getRankingInfoList" resultType="RankingApi">
+		SELECT 
+			PF_MNGR_RANK_INFO 				AS pfRankInfoId, 
+			REG_PF_ID 						AS pRankingRegId, 
+			PF_MNGR_RANK 					AS pRankingId, 
+			destination_content_id 			AS destinationCId, 
+			RECOMMENDATION_DETAILS 			AS recommenDetails
+		FROM 
+			PLATFORM_PARTNERSHIP_INFO;
+		
+	</select>
 </mapper>

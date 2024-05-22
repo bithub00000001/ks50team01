@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import ksmart.ks50team01.platform.ranking.dto.Ranking;
+import ksmart.ks50team01.platform.ranking.dto.RankingApi;
 
 @Mapper
 public interface RankingMapper {
@@ -17,8 +18,14 @@ public interface RankingMapper {
 	int modifyRanking(Ranking ranking);
 	
 	boolean rankingListCheck(String pRankingNum);
+	
+	boolean rankingApiListCheck(String pfRankInfoId);
 		
 	int addRanking(Ranking ranking);
+	
+	int addApiRanking(RankingApi rankingApi);
+	
+	List<RankingApi> getRankingInfoList();
 	
 	List<Ranking> getRankingList();
 }

@@ -68,7 +68,7 @@
                                 <th>상세 보기</th>
                                 <th>등록 일자</th>
                                 <th>수정 일자</th>
-                                <th>상세정보 업데이트</th>
+                                <th>등록</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -91,8 +91,8 @@
                                 <td th:text="${list.destinationContentId}">컨텐츠 ID</td>
                                 <td><a th:href="@{/platform/plan/destination/detail(contentId=${list.destinationContentId}, contentTypeId=${list.destinationContentTypeId})}">상세보기</a></td>
                                 <td th:text="${list.destinationRegDate}">등록 일자</td>
-                                <td th:text="${list.destinationModDate}">수정 일자</td>
-                                <td><button type="button" class="btn btn-primary btn-md data-update"  th:data-content-id="${list.destinationContentId}" th:data-content-type-id="${list.destinationContentTypeId}">업데이트</button></td>
+                                <td th:text="${list.destinationModDate}">수정 일자</td>     
+                                <td><button type="button" class="btn btn-primary btn-md" onclick="location.href='/platform/ranking/addApiRanking'">등록</button></td>
                             </tr>
                         </tbody>
                     </table>
@@ -147,7 +147,7 @@
                         {'title': '상세 보기', 'data': 'destinationContentId'},
                         {'title': '등록 일자', 'data': 'destinationRegDate'},
                         {'title': '수정 일자', 'data': 'destinationModDate'},
-                        {'title': '상세정보 업데이트', 'data': 'destinationContentTypeId'}
+                    
                     ],
                     32 : [
                         {'title': '번호', 'data': 'destinationNum'},
@@ -165,7 +165,7 @@
                         {'title': '상세 보기', 'data': 'destinationContentId'},
                         {'title': '등록 일자', 'data': 'destinationRegDate'},
                         {'title': '수정 일자', 'data': 'destinationModDate'},
-                        {'title': '상세정보 업데이트', 'data': 'destinationContentTypeId'}
+                   
                     ],
                     39 : [
                         {'title': '번호', 'data': 'destinationNum'},
@@ -183,7 +183,7 @@
                         {'title': '상세 보기', 'data': 'destinationContentId'},
                         {'title': '등록 일자', 'data': 'destinationRegDate'},
                         {'title': '수정 일자', 'data': 'destinationModDate'},
-                        {'title': '상세정보 업데이트', 'data': 'destinationContentTypeId'}
+
                     ]
                 }
 
@@ -215,17 +215,8 @@
                                     const button = `<a href="/platform/plan/destination/detail?contentId=${contentId}&contentTypeId=${contentTypeId}"">상세보기</a>`;
                                     return button;
                                 }
-                            },
-                            {
-                                targets: colArr.length - 1,
-                                data: 'description',
-                                render: function (data, type, row, meta) {
-                                    const contentId = row['destinationContentId'];  // 'destinationContentId' 컬럼에서 ID를 가져옴
-                                    const contentTypeId = json.dataList[meta.row].destinationContentTypeId;
-                                    const button = `<button type="button" class="btn btn-primary btn-md data-update" data-content-id="${contentId}" data-content-type-id="${contentTypeId}">업데이트</button>`;
-                                    return button;
-                                }
                             }
+                           
                         ]
                     }
                     $('#dataTbContent').dataTable(dataTableOption);
