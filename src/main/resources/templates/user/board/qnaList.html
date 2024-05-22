@@ -58,7 +58,7 @@
 							<tr th:each="l, i : ${qnaList}">
 								<td class="text-center" th:text="${l.qnaRowNum}"></td>
 									<td>
-									<!-- 신규 QNA 뱃지 -->
+									<!-- 신규 QNA 뱃지 (3일 이내의 문의 내역)-->
 									<th:block th:if="${l.isNew}">
           								<span class="badge bg-warning">N</span>
         							</th:block>

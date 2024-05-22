@@ -1,13 +1,24 @@
 package ksmart.ks50team01.user.destination.controller;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import ksmart.ks50team01.platform.trip.dto.PTourApi;
+import ksmart.ks50team01.platform.trip.service.PTripPlanService;
+import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequestMapping(value = "/user")
-public class destinationController {
+@RequiredArgsConstructor
+public class UDestinationController {
+	
+	private final PTripPlanService pTripPlanService;
 	
 	@GetMapping("/destination/lodgingCheck")
 	public String lodgingCheck(Model model) {
@@ -43,8 +54,9 @@ public class destinationController {
 	
 	@GetMapping("/destination/tourCheck")
 	public String tourCheck(Model model) {
+		List<?> areaCodeList = pTripPlanService.getAreaCodeList();
 		model.addAttribute("title", "관광지 조회");
-		
+		model.addAttribute("areaCodeList", areaCodeList);
 		return "/user/destination/tourCheck";
 	}
 	
@@ -55,6 +67,16 @@ public class destinationController {
 		
 		return "/user/destination/tourCheckDetails";
 	}
+	
+
+	
+	@GetMapping("/sigungu-codes")
+	@ResponseBody
+	public List<PTourApi> tourCheckApi(@RequestParam(name = "areaCode") String areaCode) {
+		return pTripPlanService.getSigunguCodesByAreaCode(areaCode);
+	}
+
+	
 	
 	/*
 	 * @GetMapping("/destination/regionalCheck") public String regionalCheck(Model

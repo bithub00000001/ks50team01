@@ -54,7 +54,7 @@ public class UQnaController {
 	}
 	
 	
-	// 1:1문의 작성
+	// 1:1문의 작성 POST 요청
 	@PostMapping("/qnaWrite")
 	public String qnaWrite(UQna uQna,
 						   RedirectAttributes redirectAttributes,
