@@ -21,9 +21,19 @@ public class PCategoryService {
 	 * @param boardType 게시판 종류
 	 * @return List<PCategory>
 	 */
-	public List<PCategory> getCategoryListByBoardType(String boardType) {
-		List<PCategory> categorListByBoardType = pCategoryMapper.getCategoryListByBoardType(boardType);
-	    return categorListByBoardType;
+
+	//public List<PCategory> getCategoryListByBoardType(String boardType) {
+		//List<PCategory> categorListByBoardType = pCategoryMapper.getCategoryListByBoardType(boardType);
+	    //return categorListByBoardType;
+	//}
+	
+	/**
+	 * 커뮤니티 카테고리 조회
+	 * @return List<PCategory>
+	 */
+	public List<PCategory> getCommunityCategoryList() {
+		List<PCategory> communityCateList = pCategoryMapper.getCommunityCategoryList();
+		return communityCateList;
 	}
 	
 	/**
@@ -31,8 +41,8 @@ public class PCategoryService {
 	 * @return List<PCategory>
 	 */
 	public List<PCategory> getNoticeCategoryList(){
-		List<PCategory> noticeCategoryList = pCategoryMapper.getNoticeCategoryList();
-		return noticeCategoryList;
+		List<PCategory> noticeCateList = pCategoryMapper.getNoticeCategoryList();
+		return noticeCateList;
 	}
 	
 	
@@ -41,26 +51,18 @@ public class PCategoryService {
 	 * @return List<PCategory>
 	 */
 	public List<PCategory> getFaqCategoryList() {
-		List<PCategory> faqCategoryList = pCategoryMapper.getFaqCategoryList();
-		return faqCategoryList;
+		List<PCategory> faqCateList = pCategoryMapper.getFaqCategoryList();
+		return faqCateList;
 	}
 	
-	/**
-	 * 커뮤니티 카테고리 조회
-	 * @return List<PCategory>
-	 */
-	public List<PCategory> getCommunityCategoryList() {
-		List<PCategory> communityCategoryList = pCategoryMapper.getCommunityCategoryList();
-		return communityCategoryList;
-	}
-	
+
 	/**
 	 * 신고 카테고리 조회
 	 * @return List<PCategory>
 	 */
 	public List<PCategory> getReportCategoryList() {
-		List<PCategory>reportCategoryList = pCategoryMapper.getReportCategoryList();
-		return reportCategoryList;
+		List<PCategory> reportCateList = pCategoryMapper.getReportCategoryList();
+		return reportCateList;
 	}
 	
 

@@ -28,6 +28,7 @@ public class PCategoryController {
 	
 	private final PCategoryService pCategoryService;
 	
+	/*
 	// 게시판 종류에 해당하는 카테고리 조회
 	@GetMapping("/categoryList")
 	public String categoryList(String boardType, Model model) {
@@ -37,84 +38,10 @@ public class PCategoryController {
 		model.addAttribute("categoryList", categoryList);
 		return "platform/board/categoryList";
 	}
-	
-
-	
-	
-	/*
-    @GetMapping("/notice")
-    @ResponseBody
-    public Map<String, Object> getNoticeCategory() {
-        Map<String, Object> response = new HashMap<>();
-        List<PCategory> noticeCategory = pCategoryService.getNoticeCategoryList();
-        response.put("noticeCategory", noticeCategory);
-        return response;
-    }
-    
-
-    
-
-    @GetMapping("/report")
-    @ResponseBody
-    public Map<String, Object> getReportCategory() {
-        Map<String, Object> response = new HashMap<>();
-        List<PCategory> reportCategory = pCategoryService.getReportCategoryList();
-        response.put("reportCategory", reportCategory);
-        return response;
-    }
-
-    @GetMapping("/faq")
-    @ResponseBody
-    public Map<String, Object> getFaqCategory() {
-        Map<String, Object> response = new HashMap<>();
-        List<PCategory> faqCategory = pCategoryService.getFaqCategoryList();
-        response.put("faqCategory", faqCategory);
-        return response;
-    }
-
-    @GetMapping("/community")
-    @ResponseBody
-    public Map<String, Object> getCommunityCategory() {
-        Map<String, Object> response = new HashMap<>();
-        List<PCategory> communityCategory = pCategoryService.getCommunityCategoryList();
-        response.put("communityCategory", communityCategory);
-        return response;
-    }*/
+	*/
 	
 	
 	
-	
-	// 카테고리 추가 post 요청
-	@PostMapping("/categoryAdd")
-	public String categoryAdd(PCategory pCategory, Model model) {
-		pCategoryService.categoryAdd(pCategory);
-		model.addAttribute("title", "카테고리 추가 페이지");
-		return "redirect:/platform/board/categoryList";
-	}
-	
-	// 카테고리 추가 페이지
-	@GetMapping("/categoryAdd")
-	public String categoryAdd(Model model) {
-		model.addAttribute("title", "카테고리 추가");
-		return "platform/board/categoryAdd";
-	}
-	
-	// 카테고리 수정 post 요청
-	@PostMapping("/categoryModify")
-	public String categoryModify(PCategory pCategory, Model model) {
-		pCategoryService.categoryModify(pCategory);
-		model.addAttribute("title", "카테고리 수정 페이지");
-		return "redirect:/platform/board/categoryList";
-	}
-	
-	// 카테고리 수정 페이지
-	@GetMapping("/categoryModify")
-	public String categoryModify(Model model) {
-		model.addAttribute("title", "카테고리 수정");
-		return "platform/board/categoryModify";
-	}
-	
-    
     /*
     @PostMapping("/{dataTrans}")
     @ResponseBody
@@ -156,6 +83,84 @@ public class PCategoryController {
         
         return response;
     }
+
+	
+	
+	
+    @GetMapping("/noticeCateList")
+    @ResponseBody
+    public Map<String, Object> getNoticeCategoryList() {
+        Map<String, Object> response = new HashMap<>();
+        List<PCategory> noticeCateList = pCategoryService.getNoticeCategoryList();
+        response.put("noticeCateList", noticeCateList);
+        return response;
+    }
+    
+
+    
+
+    @GetMapping("/reportCateList")
+    @ResponseBody
+    public Map<String, Object> getReportCategoryList() {
+        Map<String, Object> response = new HashMap<>();
+        List<PCategory> reportCateList = pCategoryService.getReportCategoryList();
+        response.put("reportCateList", reportCateList);
+        return response;
+    }
+
+    @GetMapping("/faqCateList")
+    @ResponseBody
+    public Map<String, Object> getFaqCategoryList() {
+        Map<String, Object> response = new HashMap<>();
+        List<PCategory> faqCateList = pCategoryService.getFaqCategoryList();
+        response.put("faqCateList", faqCateList);
+        return response;
+    }
+
+    @GetMapping("/communityCateList")
+    @ResponseBody
+    public Map<String, Object> getCommunityCategoryList() {
+        Map<String, Object> response = new HashMap<>();
+        List<PCategory> communityCateList = pCategoryService.getCommunityCategoryList();
+        response.put("communityCateList", communityCateList);
+        return response;
+    }
+	
+	
+	
+	
+	// 카테고리 추가 post 요청
+	@PostMapping("/categoryAdd")
+	public String categoryAdd(PCategory pCategory, Model model) {
+		pCategoryService.categoryAdd(pCategory);
+		model.addAttribute("title", "카테고리 추가 페이지");
+		return "redirect:/platform/board/categoryList";
+	}
+	
+	// 카테고리 추가 페이지
+	@GetMapping("/categoryAdd")
+	public String categoryAdd(Model model) {
+		model.addAttribute("title", "카테고리 추가");
+		return "platform/board/categoryAdd";
+	}
+	
+	// 카테고리 수정 post 요청
+	@PostMapping("/categoryModify")
+	public String categoryModify(PCategory pCategory, Model model) {
+		pCategoryService.categoryModify(pCategory);
+		model.addAttribute("title", "카테고리 수정 페이지");
+		return "redirect:/platform/board/categoryList";
+	}
+	
+	// 카테고리 수정 페이지
+	@GetMapping("/categoryModify")
+	public String categoryModify(Model model) {
+		model.addAttribute("title", "카테고리 수정");
+		return "platform/board/categoryModify";
+	}
+	
+    
+
     
 
     
