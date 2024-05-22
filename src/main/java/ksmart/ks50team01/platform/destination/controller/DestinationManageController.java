@@ -26,7 +26,48 @@ public class DestinationManageController {
 	
 	private final DestinationService destinationService;
 	
+	@PostMapping("/removeTour")
+	public String remove(@RequestParam(value = "tourInfoCode") String tourInfoCode) {
+		destinationService.removeTour(tourInfoCode);
+		
+		//model.addAttribute("title", "관광지 목록 삭제");
+		//model.addAttribute("tourInfoCode", tourInfoCode);
+		
+		return "redirect:/platform/destination/tourManage";
+	}
 	
+	@GetMapping("/removeTour")
+	public String removeTourProcess(@RequestParam(value = "tourInfoCode") String tourInfoCode, Model model) {
+		List<Destination> tourList = destinationService.getTourInfoList();
+		destinationService.removeTour(tourInfoCode);
+		
+		model.addAttribute("tourList", tourList);
+		model.addAttribute("tourInfoCode", tourInfoCode);
+		model.addAttribute("title", "관광지 목록 삭제");
+		
+		return "redirect:/platform/destination/tourManage";
+	}
+	
+	/**
+	 * 관광상품 등록
+	 * @param destination
+	 * @return
+	 */
+	@PostMapping("/destination/addTourGoods")
+	public String addTourGoods(Destination destination) {
+		return "redirect:/platform/destination/tourGoodsManage";
+	}
+	
+	@GetMapping("/destination/addTourGoods")
+	public String addTourGoods(Model model) {
+		model.addAttribute("title", "관광지 세부항목 등록");
+		return "/platform/destination/addTourGoods";
+	}
+	/**
+	 * 관광지 등록
+	 * @param destination
+	 * @return
+	 */
 	@PostMapping("/destination/addTour")
 	public String addTour(Destination destination) {
 		return "redirect:/platform/destination/tourManage";
