@@ -8,6 +8,9 @@ import ksmart.ks50team01.platform.destination.dto.Destination;
 
 @Mapper
 public interface DestinationMapper {
+	
+	// 관광지 삭제
+	void removeTour(String tourInfoId);
 	//관광지 추가
 	
 	

@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import ksmart.ks50team01.platform.board.dto.PCategory;
 import ksmart.ks50team01.platform.board.dto.PFaq;
 import ksmart.ks50team01.platform.board.service.PFaqService;
 import lombok.RequiredArgsConstructor;
@@ -30,37 +31,31 @@ public class PFaqController {
 	
 	private final PFaqService pFaqService;
 	
-	// 자주찾는 질문 수정 POST 요청
+	// 자주찾는질문 수정 POST 요청
 	@PostMapping("/faqModify")
 	public String faqModify(PFaq pFaq, Model model) {
-		model.addAttribute("title", "자주찾는 질문 수정 페이지");
-		model.addAttribute("pFaq", pFaq);
+		
+		log.info("자주찾는질문 수정: {}", pFaq);
+		pFaqService.faqModify(pFaq);
+		
+		model.addAttribute("title", "자주찾는질문 수정");
+		
 		return "redirect:/platform/board/faqList";
 	}
 	
 
 	
 	
-	// 자주찾는 질문 수정 페이지
+	// 자주찾는질문 수정 페이지
 	@GetMapping("/faqModify")
 	public String faqModify(@RequestParam(value = "faqNum") String faqNum, Model model) {
 		PFaq faqInfo = pFaqService.getFaqInfoByNum(faqNum);
-		List<PFaq> faqList = pFaqService.getFaqList();
 		
-	    // 현재 날짜를 포맷에 맞게 설정
-	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-	    String currentDate = LocalDate.now().format(formatter);
-	    
-	    
 		
 		log.info("faqInfo : {}", faqInfo);
-		// 모델에 현재 날짜 추가
-		model.addAttribute("currentDate", currentDate);
-		model.addAttribute("faqNum", faqNum);
+		
 		model.addAttribute("faqInfo", faqInfo);
-		model.addAttribute("faqList", faqList);
-		//model.addAttribute("faqContent", faqInfo.getFaqContent()); // faqContent를 모델에 추가
-		model.addAttribute("title", "자주찾는 질문 수정");
+		model.addAttribute("title", "자주찾는질문 수정 페이지");
 		
 		return "platform/board/faqModify";
 	}
@@ -72,7 +67,7 @@ public class PFaqController {
 	
 
 	
-	// 자주찾는 질문 조회 페이지
+	// 자주찾는질문 조회 페이지
 	@GetMapping("/faqList")
 	public String faqList(Model model) {
 		List<PFaq> faqList = pFaqService.getFaqList();
@@ -87,17 +82,22 @@ public class PFaqController {
 	
 	
 	
-	// 자주찾는 질문 작성 POST 요청
+	// 자주찾는질문 작성 POST 요청
 	@PostMapping("/faqWrite")
 	public String faqWrite(PFaq pFaq, Model model) {
-		model.addAttribute("title", "자주찾는 질문 작성 페이지");
+		pFaqService.insertFaq(pFaq);
+		
+		model.addAttribute("title", "자주찾는질문 작성");
+		
 		return "redirect:/platform/board/faqList";
 	}
 
-	// 자주찾는 질문 작성 페이지
+	// 자주찾는질문 작성 페이지
 	@GetMapping("/faqWrite")
-	public String faqWritePage(PFaq PFaq, Model model) {
-		List<PFaq> faqList = pFaqService.getFaqList();
+	public String faqWrite(Model model) {
+		List<PCategory> faqCateList = pFaqService.getfaqCateList();
+		log.info("자주찾는질문 카테고리 조회 결과: {}", faqCateList);
+		
 	    // 현재 날짜를 포맷에 맞게 설정
 	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 	    String currentDate = LocalDate.now().format(formatter);
@@ -105,8 +105,8 @@ public class PFaqController {
 	    
 	    // 모델에 현재 날짜 추가
 	    model.addAttribute("currentDate", currentDate);
-	    model.addAttribute("faqList", faqList);
-		model.addAttribute("title", "자주찾는 질문 작성");
+	    model.addAttribute("faqCateList", faqCateList);
+		model.addAttribute("title", "자주찾는질문 작성 페이지");
 		
 		return "platform/board/faqWrite";
 	}
@@ -119,7 +119,7 @@ public class PFaqController {
 	public String faqDelete(@RequestParam String faqNum, Model model) {
 	    
 		pFaqService.faqDelete(faqNum);
-		model.addAttribute("title", "자주찾는 질문 삭제");
+		model.addAttribute("title", "자주찾는질문 삭제");
 		model.addAttribute("faqNum", faqNum);
 		
 		return "redirect:/platform/board/faqList";
@@ -134,7 +134,7 @@ public class PFaqController {
 		
 		model.addAttribute("faqList", faqList);
 		model.addAttribute("faqNum", faqNum);
-		model.addAttribute("title", "자주찾는 질문 삭제");
+		model.addAttribute("title", "자주찾는질문 삭제");
 		
 		return "redirect:/platform/board/faqList";
 	}

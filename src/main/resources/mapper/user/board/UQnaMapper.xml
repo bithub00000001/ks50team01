@@ -53,10 +53,6 @@
 	</resultMap>
 		
 		
-		
-		
-	
-	
 	
 
 	<select id="getQnaList" resultMap="qnaResultMap">
@@ -74,7 +70,7 @@
 	            Q.REG_YMD,
 	            Q.MDFCN_YMD,
 	            Q.RTRCN_YMD,
-	            CASE WHEN DATEDIFF(NOW(), Q.REG_YMD) < 7 THEN TRUE ELSE FALSE END AS QNA_NEW
+	            CASE WHEN DATEDIFF(NOW(), Q.REG_YMD) < 3 THEN TRUE ELSE FALSE END AS QNA_NEW
 	        FROM
 	            QNA_QUESTION AS Q
 	            INNER JOIN
@@ -119,7 +115,6 @@
 	
 	
 	
-	<!-- 1:1문의 카테고리 리스트 조회 -->
     <select id="getQnaCateList" resultMap="categoryResultMap">
     	/* 1:1문의 카테고리 리스트 조회 */
         SELECT 

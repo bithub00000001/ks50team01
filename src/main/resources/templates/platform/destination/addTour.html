@@ -14,9 +14,10 @@
                 <form id="addForm" th:action="@{/platform/destination/tourManage}" method="post">
 				
 				    <div class="form-group">
-				        <label for="memberPw">관광지 이름</label>
-				        <input type="text" class="form-control" id="memberPw" name="memberPw" th:value="${''}">
+				        <label for="tourName">관광지 이름</label>
+				        <input type="text" class="form-control" id="tourName" name="tourName" th:value="${''}">
 				    </div>
+
 
 				
 				    <button type="submit" class="btn btn-primary">저장</button>

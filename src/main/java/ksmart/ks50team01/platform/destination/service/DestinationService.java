@@ -18,6 +18,10 @@ public class DestinationService {
 	
 	private final DestinationMapper destinationMapper;
 	
+	public void removeTour(String tourInfoCode) {
+		destinationMapper.removeTour(tourInfoCode);
+		
+	}
 	
 	public void updateTour(Destination destination) {
 		log.info("service destination:{}", destination);

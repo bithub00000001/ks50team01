@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import ksmart.ks50team01.user.board.dto.UCommunity;
 import ksmart.ks50team01.user.board.dto.UNotice;
 
 

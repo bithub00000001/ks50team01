@@ -122,15 +122,15 @@
 						</thead>
 						
 						<tbody>
-							<!-- 역순으로 순회 -->
-                            <tr th:each="l, i : ${noticeList}" th:order="${-i.count}">
-                            	<!-- 숫자 형태로 번호 출력 (리스트 크기에서 현재 인덱스를 뺀 값) -->
-                                <td class="text-center" th:text="${#lists.size(noticeList) - i.index}"></td>
+                            <tr th:each="l, i : ${noticeList}">
+                                <td class="text-center" th:text="${l.noticeRowNum}"></td>
                                 <td>
-                                	<!-- 신규 공지사항 뱃지 -->
-                                    <span class="badge bg-warning">N</span>
+                                	<!-- 신규 공지사항 뱃지 (30일 이내)-->
+                                	<th:block th:if="${l.isNew}">
+          								<span class="badge bg-warning">N</span>
+        							</th:block>
                                     <!-- 공지사항 카테고리 뱃지 -->
-                                    <i class="badge rounded-pill bg-primary badge-cate" th:text="${l.noticeCate.noticeCateType}"></i>
+                                    <i class="badge rounded-pill bg-primary badge-cate" th:text="${l.category.noticeCategoryName}"></i>
                                     <!-- 공지사항 제목 -->
                                     <a th:href="@{/notice/noticeDetail(noticeNum=${l.noticeNum})}" th:text="${l.noticeTitle}"></a>
                                 </td>
@@ -185,48 +185,50 @@
 
 
 <th:block layout:fragment="customJs">
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // 최신순과 조회순 버튼 요소 가져오기
-            const newestBtn = document.getElementById('overView-tab');
-            const mostViewedBtn = document.getElementById('tourGuide-tab');
+		<script>
+			document.addEventListener("DOMContentLoaded", function() {
+				// 최신순과 조회순 버튼 요소 가져오기
+				const newestBtn = document.getElementById('overView-tab');
+				const mostViewedBtn = document.getElementById('tourGuide-tab');
 
-            // 테이블의 tbody 요소 가져오기
-            const tbody = document.querySelector('tbody');
+				// 테이블의 tbody 요소 가져오기
+				const tbody = document.querySelector('tbody');
 
-            // 최신순 버튼 클릭 시
-            newestBtn.addEventListener('click', function() {
-                sortTable(3, 'desc'); // 등록일을 기준으로 내림차순 정렬
-            });
+				// 최신순 버튼 클릭 시
+				newestBtn.addEventListener('click', function() {
+					sortTable(3, 'desc'); // 등록일을 기준으로 내림차순 정렬
+				});
 
-            // 조회순 버튼 클릭 시
-            mostViewedBtn.addEventListener('click', function() {
-                sortTable(4, 'desc'); // 조회수를 기준으로 내림차순 정렬
-            });
+				// 조회순 버튼 클릭 시
+				mostViewedBtn.addEventListener('click', function() {
+					sortTable(4, 'desc'); // 조회수를 기준으로 내림차순 정렬
+				});
 
-            // 테이블 정렬 함수
-            function sortTable(columnIndex, order) {
-                const rows = Array.from(tbody.querySelectorAll('tr'));
+				// 테이블 정렬 함수
+				function sortTable(columnIndex, order) {
+					const rows = Array.from(tbody.querySelectorAll('tr'));
 
-                // 정렬할 때 기준이 되는 값 추출
-                const getValue = (row) => row.cells[columnIndex].textContent.trim();
+					// 정렬할 때 기준이 되는 값 추출
+					const getValue = (row) => {
+						const cellValue = row.cells[columnIndex].textContent.trim();
+						return columnIndex === 3 ? new Date(cellValue) : parseInt(cellValue, 10);
+					};
 
-                // 정렬하기
-                rows.sort((a, b) => {
-                    const aValue = getValue(a);
-                    const bValue = getValue(b);
-                    if (order === 'asc') {
-                        return aValue.localeCompare(bValue);
-                    } else {
-                        return bValue.localeCompare(aValue);
-                    }
-                });
+					// 정렬하기
+					rows.sort((a, b) => {
+						const aValue = getValue(a);
+						const bValue = getValue(b);
+						if (order === 'asc') {
+							return aValue > bValue ? 1 : -1;
+						} else {
+							return aValue < bValue ? 1 : -1;
+						}
+					});
 
-                // 정렬된 순서대로 다시 테이블에 추가
-                rows.forEach(row => tbody.appendChild(row));
-            }
-        });
-        
+					// 정렬된 순서대로 다시 테이블에 추가
+					rows.forEach(row => tbody.appendChild(row));
+				}
+			});
         
 
      
