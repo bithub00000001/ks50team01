@@ -6,8 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import ksmart.ks50team01.platform.board.dto.PFaq;
-import ksmart.ks50team01.platform.board.service.PFaqService;
 import ksmart.ks50team01.user.board.dto.UFaq;
 import ksmart.ks50team01.user.board.service.UFaqService;
 import lombok.RequiredArgsConstructor;

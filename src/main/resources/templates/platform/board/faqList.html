@@ -77,21 +77,6 @@
 								</div>
 								<div class="col-md-2 col-sm-2 col-xs-0"></div>
 							</div>
-							<div class="form-group">
-								<div class="col-md-2 col-sm-2 col-xs-0"></div>
-								<label class="control-label col-md-2 col-sm-2 col-xs-12">정렬
-									기준</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<div class="radio">
-										<label class="align-item-center"><input type="radio"
-											value="option1" id="optionsRadios1" name="optionsRadios"
-											checked="checked">최신순</label> <label><input
-											type="radio" value="option2" id="optionsRadios2"
-											name="optionsRadios">조회순</label>
-									</div>
-								</div>
-								<div class="col-md-2 col-sm-2 col-xs-0"></div>
-							</div>
 							<div class="ln_solid"></div>
 							<div class="form-group">
 								<div class="col-md-12 col-sm-12 col-xs-12 text-center">
@@ -99,13 +84,39 @@
 									<button type="reset" class="btn btn-dark btn-lg">초기화</button>
 								</div>
 							</div>
-	
 						</form>
 					</div>
 				</div>
 			</div>
 		</div>
 		<!-- search end -->
+		
+		
+								<form id="demo-form2" class="form-horizontal form-label-left">
+							<div class="form-group">
+								<div class="col-md-12 col-sm-12 col-xs-12"></div>
+								<label for="searchItem" class="control-label col-md-2 col-sm-2 col-xs-12">검색</label>
+								<div class="col-md-10 col-sm-10 col-xs-12">
+									<input id="searchItem" class="form-control col-md-7 col-xs-12" type="text" name="middle-name">
+								</div>
+								<div class="col-md-2 col-sm-2 col-xs-0"></div>
+							</div>
+							
+							
+							<div class="ln_solid"></div>
+							<div class="form-group">
+								<div class="col-md-12 col-sm-12 col-xs-12 text-center">
+									<button type="reset" class="btn btn-dark btn-lg" onclick="location.href='/platform/ranking/addRanking'">등록</button>
+									<button type="reset" class="btn btn-dark btn-lg">초기화</button>
+								</div>
+							</div>
+	
+						</form>
+		
+		
+		
+		
+		
 		<!-- grid table start -->
 		<div class="row">
 			<div class="col-md-12 col-sm-12 col-xs-12">
@@ -138,7 +149,7 @@
 									<td><input type="checkbox" id="checkbox_${l.faqNum}" name="faqNum" th:value="${l.faqNum}"></td>
 									<td th:text="${l.faqNum}"></td>
 									<td th:text="${l.faqRegId}"></td>
-									<td th:text="${l.faqCate.faqCateType}"></td>
+									<td th:text="${l.category.faqCategoryName}"></td>
 									<td th:text="${l.faqTitle}"></td>
 									<td th:text="${l.faqContent}"></td>
 									<td th:text="${l.faqMdfId}"></td>
@@ -149,7 +160,7 @@
 										<a th:href="@{/platform/board/faqModify(faqNum=${l.faqNum})}">수정</a>
 									</td>
 									<td>
-										<a href="#">삭제</a>
+										<a href="#" th:data-faq-num="${l.faqNum}" th:onclick="confirmDelete(this)">삭제</a>
 									</td>
 								</tr>
 							</tbody>
@@ -183,6 +194,43 @@
 	    <script th:src="@{/platform/vendors/jszip/dist/jszip.min.js}"></script>
 	    <script th:src="@{/platform/vendors/pdfmake/build/pdfmake.min.js}"></script>
 	    <script th:src="@{/platform/vendors/pdfmake/build/vfs_fonts.js}"></script>
+
+
+<!-- 자주찾는 질문 삭제 -->	    
+<script th:inline="javascript">
+    function confirmDelete(element) {
+        var faqNum = element.getAttribute('data-faq-num');
+        var confirmation = confirm("정말로 삭제하시겠습니까?");
+        
+        if (confirmation) {
+            // 확인을 누르면 삭제 동작을 수행하기 위해 POST 요청
+            faqDelete(faqNum);
+        } else {
+            console.log("삭제 취소: " + faqNum);
+        }
+    }
+
+    function faqDelete(faqNum) {
+        // POST 요청을 보내기 위해 form을 생성
+        var form = document.createElement('form');
+        form.setAttribute('method', 'post');
+        form.setAttribute('action', '/platform/board/faqDelete');
+        form.style.display = 'hidden'; // form을 보이지 않도록 설정
+
+        // faqNum을 form에 추가
+        var input = document.createElement('input');
+        input.setAttribute('type', 'hidden');
+        input.setAttribute('name', 'faqNum');
+        input.setAttribute('value', faqNum);
+        form.appendChild(input);
+
+        // form을 body에 추가하고 submit
+        document.body.appendChild(form);
+        form.submit();
+    }
+</script>
+	    
+	    
 	</th:block>
 	
 	<!-- custom js file start -->
@@ -197,6 +245,19 @@
 	            checkbox.checked = document.getElementById('checkAll').checked;
 	        });
 	    });
+	</script>
+	
+	
+	
+	<script>
+	$(document).ready(function(){
+		$('#searchItem').on('keyup', function(){
+			const searchValue = $(this).val().toLowerCase();
+			$('#datatable-responsive tbody tr').filter(function(){
+				$(this).toggle($(this).text().toLowerCase().indexOf(searchValue) > -1);
+			});
+		});
+	});
 	</script>
 	
 	

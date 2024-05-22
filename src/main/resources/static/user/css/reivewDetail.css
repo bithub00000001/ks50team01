@@ -1,0 +1,63 @@
+@charset "UTF-8";
+.review-detail {
+            width: 50%;
+            background-color: #fff;
+            border: 2px solid #FFA500; /* Orange border */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 0 auto;
+        }
+
+        .review-detail h2 {
+            text-align: center;
+            color: #FFA500; /* Orange color */
+        }
+
+        .review-detail table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .review-detail th, .review-detail td {
+            padding: 10px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        .review-detail th {
+            background-color: #FFA500; /* Orange background for headers */
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .review-detail td label {
+            font-weight: bold;
+            color: #FFA500; /* Orange color */
+        }
+
+        .review-detail td input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .review-detail tfoot td {
+            text-align: center;
+        }
+
+        .review-detail tfoot button {
+            background-color: #FFA500; /* Orange background */
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 16px;
+        }
+
+        .review-detail tfoot button:hover {
+            background-color: #cc8400; /* Darker orange for hover effect */
+        }

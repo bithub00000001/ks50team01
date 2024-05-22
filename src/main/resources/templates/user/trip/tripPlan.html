@@ -427,7 +427,7 @@
 
                                     <div class="col-lg-4 mb-6 mb-lg-0">
                                         <!-- 지도 및 거리/금액 정보 -->
-                                        <div id="map"></div>
+                                        <div id="tourMap"></div>
                                         <div>총 거리: <span id="totalDistance"> 10cm</span></div>
                                         <div>총 금액: <span id="totalCost"> 10원</span></div>
 
@@ -461,9 +461,9 @@
     <script th:src="@{/user/js/tripPlanner.js}"></script>
     
     <!--2024.05.16-->
+    <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=373ed2ade74fe4dee247e98cc67d8336&libraries=clusterer"></script>
     <script th:src="@{/user/js/tripPlan.js}"></script>
     <script th:src="@{/user/js/tripMap.js}"></script>
-    <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=373ed2ade74fe4dee247e98cc67d8336&libraries=services,clusterer"></script>
 </th:block>
 
 <th:block layout:fragment="customJs">
@@ -496,17 +496,18 @@
                     $('#numDate').val(''); // 일차 입력 필드를 초기화
                 }
             });
-            
-           
+
+
             /*동적으로 변경되는 UI환경 이슈로 인한 timeout*/
             setTimeout(() => {
 				var map;
 				<!--지도생성 함수 호출-->
 			    map = new kakao.maps.Map(document.getElementById('map'), { // 지도를 표시할 div
-				    center : new kakao.maps.LatLng(36.2683, 127.6358), // 지도의 중심좌표 
-				    level : 20 // 지도의 확대 레벨 
+				    center : new kakao.maps.LatLng(36.2683, 127.6358), // 지도의 중심좌표
+				    level : 20 // 지도의 확대 레벨
 				});
-			}, "1000");	
+
+			}, 1000);
         });
         
 		
@@ -748,6 +749,10 @@
         $('.accordion-button').on('click', function () {
             // 특정 탭에 'active' 클래스 추가
             $('#day1-tab').addClass('active');
+            const  map = new kakao.maps.Map(document.getElementById('map'), { // 지도를 표시할 div
+                center : new kakao.maps.LatLng(36.2683, 127.6358), // 지도의 중심좌표
+                level : 20 // 지도의 확대 레벨
+            });
         });
     </script>
 </th:block>

@@ -2,37 +2,53 @@
 <!DOCTYPE mapper	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ksmart.ks50team01.user.board.mapper.UCommunityMapper">
 
-		<resultMap id="postResultMap" type="UCommunity">
+	<resultMap id="postResultMap" type="UCommunity">
 		<id property="postNum" column="PST_NO" />
+		<result property="postRowNum" column="ROW_NUM" />
 		<result property="postRegId" column="REG_MBR_ID" />
-		<result property="postCateNum" column="PST_CTGRY_NO" />
 		<result property="postTitle" column="PST_TTL" />
 		<result property="postContent" column="PST_CN" />
 		<result property="postInqCnt" column="PST_INQ_CNT" />
 		<result property="commentTotal" column="PST_CMNT_TOTAL" />
-		<result property="postlikeTotal" column="PST_LIKE_TOTAL" />
-		<result property="postdislikeTotal" column="PST_DISLIKE_TOTAL" />
-		<result property="postreportTotal" column="PST_REPT_TOTAL" />
+		<result property="postLikeTotal" column="PST_LIKE_TOTAL" />
+		<result property="postDislikeTotal" column="PST_DISLIKE_TOTAL" />
+		<result property="postReportTotal" column="PST_REPT_TOTAL" />
 		<result property="postAct" column="ACT_YN" />
 		<result property="postRegDate" column="REG_YMD" />
 		<result property="postMdfDate" column="MDFCN_YMD" />
 		<result property="postDelDate" column="DEL_YMD" />
+		<result property="isNew" column="POST_NEW" />
 		
 		<!-- 1:1 association -->
-		<association 	property="postCate" 			javaType="UCommunity">
-			<id 		property="postCateNum" 			column="PST_CTGRY_NO"/>
-			<result 	property="postCateRegId" 		column="REG_PF_ID"/>
-			<result 	property="postCateType" 		column="PST_CTGRY_NM"/>
-			<result 	property="postCateMdfId" 		column="MDFCN_PF_ID"/>
-			<result 	property="postAct" 				column="ACT_YN"/>
-			<result 	property="postRegDate" 			column="REG_YMD"/>
-			<result 	property="postMdfDate" 			column="MDFCN_YMD"/>
-			<!-- postAct , postRegDate, postMdfDate => postCateAct postCateRegDate postCateMdfDate로 하면 오류나는 이유가 뭘까 ...?  -->
+		<association 	property="category" 				javaType="UCategory">
+			<id 		property="postCategoryNum" 			column="PST_CTGRY_NO"/>
+			<result 	property="postCategoryRegId" 		column="REG_PF_ID"/>
+			<result 	property="postCategoryName" 		column="PST_CTGRY_NM"/>
+			<result 	property="postCategoryMdfId" 		column="MDFCN_PF_ID"/>
+			<result 	property="postCateActive" 			column="ACT_YN"/>
+			<result 	property="postCategoryRegDate" 		column="REG_YMD"/>
+			<result 	property="postCategoryMdfDate" 		column="MDFCN_YMD"/>
 		</association>
 		
 		
-		<!-- 1:1 association -->
-		<association 	property="Comment" 				javaType="UCommunity">
+		<!-- 1:N collection -->
+		<collection  	property="commentList" 			ofType="UComment">
+			<id 		property="CommentNum" 			column="PST_CMNT_NO"/>
+			<result 	property="CommentRegId" 		column="REG_MBR_ID"/>
+			<result 	property="CommentContent" 		column="PST_CMNT_CN"/>
+			<result 	property="CommentlikeTotal" 	column="PST_CMNT_LIKE_TOTAL"/>
+			<result 	property="CommentDislikeTotal" 	column="PST_CMNT_DISLIKE_TOTAL"/>
+			<result 	property="CommentReportTotal" 	column="PST_CMNT_REPT_TOTAL"/>
+			<result 	property="CommentAct" 			column="ACT_YN"/>
+			<result 	property="CommentRegDate" 		column="REG_YMD"/>
+			<result 	property="CommentMdfDate" 		column="MDFCN_YMD"/>
+			<result 	property="CommentDelDate" 		column="DEL_YMD"/>
+		</collection>
+		
+		
+	</resultMap>
+	
+	<resultMap type="UComment" id="postCommentMap">
 			<id 		property="CommentNum" 			column="PST_CMNT_NO"/>
 			<result 	property="CommentRegId" 		column="REG_MBR_ID"/>
 			<result 	property="postNum" 				column="PST_NO"/>
@@ -44,31 +60,60 @@
 			<result 	property="CommentRegDate" 		column="REG_YMD"/>
 			<result 	property="CommentMdfDate" 		column="MDFCN_YMD"/>
 			<result 	property="CommentDelDate" 		column="DEL_YMD"/>
-		</association>
-		
-		
-	</resultMap>
-	
-	<resultMap type="UCommunity" id="postCommentMap">
-			<id 		property="CommentNum" 			column="PST_CMNT_NO"/>
-			<result 	property="CommentRegId" 		column="REG_MBR_ID"/>
-			<result 	property="postNum" 				column="PST_NO"/>
-			<result 	property="CommentContent" 		column="PST_CMNT_CN"/>
-			<result 	property="CommentlikeTotal" 	column="PST_CMNT_LIKE_TOTAL"/>
-			<result 	property="CommentDislikeTotal" 	column="PST_CMNT_DISLIKE_TOTAL"/>
-			<result 	property="CommentReportTotal" 	column="PST_CMNT_REPT_TOTAL"/>
-			<result 	property="CommentAct" 			column="ACT_YN"/>
-			<result 	property="CommentRegDate" 		column="REG_YMD"/>
-			<result 	property="CommentMdfDate" 		column="MDFCN_YMD"/>
-			<result 	property="CommentDelDate" 		column="DEL_YMD"/>
 	</resultMap>
 
+	<resultMap type="UCategory" id="categoryResultMap">
+		<id 		property="postCategoryNum" 			column="PST_CTGRY_NO"/>
+		<result 	property="postCategoryRegId" 		column="REG_PF_ID"/>
+		<result 	property="postCategoryName" 		column="PST_CTGRY_NM"/>
+		<result 	property="postCategoryMdfId" 		column="MDFCN_PF_ID"/>
+		<result 	property="postCateActive" 			column="ACT_YN"/>
+		<result 	property="postCategoryRegDate" 		column="REG_YMD"/>
+		<result 	property="postCategoryMdfDate" 		column="MDFCN_YMD"/>
+	</resultMap>
 
 	
-	
-
 	<select id="getPostList" resultMap="postResultMap">
-	 	/* 커뮤니티 조회 */
+		/* 커뮤니티 게시글 조회 */
+		<![CDATA[
+	 	SELECT
+			ROW_NUMBER() OVER(ORDER BY CAST(SUBSTRING_INDEX(P.PST_NO, 'PST_', -1) AS UNSIGNED)) AS ROW_NUM,
+			P.PST_NO, 
+			P.REG_MBR_ID,
+			C.PST_CTGRY_NO, 
+			C.PST_CTGRY_NM,
+			P.PST_TTL, 
+			P.PST_CN, 
+			P.PST_INQ_CNT, 
+			P.PST_LIKE_TOTAL, 
+			P.PST_DISLIKE_TOTAL, 
+			P.PST_REPT_TOTAL, 
+			P.ACT_YN, 
+			P.REG_YMD, 
+			P.MDFCN_YMD, 
+			P.DEL_YMD,
+			COUNT(PC.PST_CMNT_NO) AS PST_CMNT_TOTAL,
+			IF(DATEDIFF(NOW(), P.REG_YMD) < 7, TRUE, FALSE) AS POST_NEW
+		FROM 
+			POST AS P
+			INNER JOIN
+			POST_CATEGORY AS C
+			ON
+			P.PST_CTGRY_NO = C.PST_CTGRY_NO
+			LEFT JOIN 
+			POST_COMMENT AS PC
+			ON 
+			P.PST_NO = PC.PST_NO
+		GROUP BY P.PST_NO
+		ORDER BY P.REG_YMD DESC;
+		]]>
+	</select>
+	
+	
+	
+	<!-- 
+	<select id="getPostList" resultMap="postResultMap">
+	 	/* 커뮤니티 게시글 조회 */
 		SELECT 
 			P.PST_NO, 
 			P.REG_MBR_ID, 
@@ -91,44 +136,113 @@
 			ON
 			P.PST_CTGRY_NO = C.PST_CTGRY_NO;
     </select>
-    
+     -->
     
    	<!-- 게시글 카테고리 리스트 조회 -->
-    <select id="getPostCateList" resultType="String">
-        SELECT DISTINCT 
-        	PST_CTGRY_NM
-        FROM
-         	POST_CATEGORY
+    <select id="getPostCateList" resultMap="categoryResultMap">
+    	/* 게시글 카테고리 리스트 조회 */
+        SELECT 
+			PST_CTGRY_NO,
+			PST_CTGRY_NM
+		FROM 
+			POST_CATEGORY AS PC
+		WHERE 
+			PC.ACT_YN = 'Y';
+    </select>
+    
+    
+    <!-- 게시글 번호로 해당 게시글의 댓글 수를 조회하는 쿼리 -->
+    <select id="getCommentCntByPostNum" resultType="int" parameterType="string">
+        SELECT 
+        	COUNT(*) 
+        FROM 
+        	POST_COMMENT
+        WHERE 
+        	PST_NO = #{postNum};
+    </select>
+    
+    
+	
+<!-- <insert id="insertPost" parameterType="map">
+    INSERT INTO 
+        POST (PST_NO, REG_MBR_ID, PST_CTGRY_NO, PST_TTL, PST_CN, REG_YMD, PST_NO_NUMERIC)
+    VALUES 
+        (CONCAT('PST_', LPAD(#{pstNoNumeric}, 3, '0')), #{postRegId}, #{postCateNum}, #{postTitle}, #{postContent}, NOW(), #{pstNoNumeric});
+</insert>  -->
+     
+    
+
+
+    
+    
+        <!-- 게시글 등록 메서드 -->
+    <insert id="insertPost" parameterType="UCommunity">
+    	<selectKey keyProperty="postNum" resultType="String" order="BEFORE">
+    		/* 게시글 번호 자동증가 */
+    		SELECT
+				CONCAT(
+							'PST_', 
+							MAX(CAST(SUBSTRING_INDEX(P.PST_NO, 'PST_', -1) AS UNSIGNED)) + 1
+						) AS postNum
+			FROM
+				POST AS P
+    	</selectKey>
+        INSERT INTO POST (PST_NO, REG_MBR_ID, PST_CTGRY_NO, PST_TTL, PST_CN, REG_YMD)
+        VALUES (#{postNum}, #{postRegId}, #{category.postCategoryNum}, #{postTitle}, #{postContent}, NOW())
+    </insert>
+
+
+    
+    
+<!-- 	<insert id="insertPost" parameterType="map">
+		INSERT INTO 
+			POST (REG_MBR_ID, PST_CTGRY_NO, PST_TTL, PST_CN)
+		SELECT 
+			#{postRegId}, PST_CTGRY_NO, #{postTitle}, #{postContent}
+		FROM 
+			POST_CATEGORY
+		WHERE 
+			PST_CTGRY_NM = #{postCateName};
+	</insert> -->
+   
+    
+    
+    
+    
+    
+    <!-- 게시물 번호 가져오기 -->
+    <select id="getPostNo" resultType="int">
+        SELECT 
+        	MAX(PST_NO) + 1 
+        FROM POST
     </select>
     
     
     
-    
-	
-    <insert id="postSave" parameterType="map">
-    	/* 게시글 저장 */
-        INSERT INTO 
-        	POST (PST_CTGRY_NO, PST_TTL, PST_CN, POST_FILE)
-        VALUES 
-        	(#{postCategory}, #{postTitle}, #{postContent}, #{postFile});
-    </insert>
-    
-   
-    
+ 	<update id="setPostCode" parameterType="Map">
+	    UPDATE 
+	    	POST
+	    SET 
+	    	PST_NO = CONCAT('PST_', (#{postNum}, 3, '0'))
+	    WHERE 
+	    	PST_NO = #{postNum};
+	</update>   
+        	
+
 
     
     
 	<!-- getPostByPostNum 쿼리 정의 -->
 	<select id="getPostByPostNum" resultMap="postResultMap">
-		/* 특정 게시글 상세 조회 */
+		/* 게시글 상세 조회 */
 		SELECT
 			P.PST_NO, 
 			P.REG_MBR_ID, 
 			C.PST_CTGRY_NM,
 			P.PST_TTL, 
 			P.PST_CN, 
-			P.PST_INQ_CNT, 
-			P.PST_CMNT_TOTAL, 
+			COUNT(M.PST_CMNT_NO) OVER () AS PST_CMNT_TOTAL,
+			P.PST_INQ_CNT,  
 			P.PST_LIKE_TOTAL, 
 			P.PST_DISLIKE_TOTAL, 
 			P.PST_REPT_TOTAL, 
@@ -152,7 +266,7 @@
 			POST_CATEGORY AS C
 			ON
 			P.PST_CTGRY_NO = C.PST_CTGRY_NO
-			left JOIN
+			LEFT JOIN
 			POST_COMMENT AS M
 			ON
 			P.PST_NO = M.PST_NO
@@ -178,8 +292,8 @@
         WHERE
         	PST_NO = #{postNum};
     </select>
-	
-	
+    
+
 	
 	<!-- 조회수 증가 -->
     <update id="increaseViewCount" parameterType="String">
@@ -188,19 +302,10 @@
         SET 
         	PST_INQ_CNT = PST_INQ_CNT + 1
         WHERE 
-        	PST_NO = #{postNum}
+        	PST_NO = #{postNum};
     </update>
     
-    <!-- 외않되 ... 
-    <select id="getCommentCntByPostNum" resultMap="postResultMap" resultType="Integer">
-        SELECT 
-        	COUNT(PST_CMNT_TOTAL)
-        FROM 
-        	POST
-        WHERE 
-        	PST_NO = #{postNum};
-        	
-    </select> -->
+
 
     
 	

@@ -154,7 +154,7 @@
 								<td><input type="checkbox" id="checkbox_${l.noticeNum}" name="noticeNum" th:value="${l.noticeNum}"></td>
 								<td th:text="${l.noticeNum}"></td>
 								<td th:text="${l.noticeRegId}"></td>
-								<td th:text="${l.noticeCate.noticeCateType}"></td>
+								<td th:text="${l.category.noticeCategoryName}"></td>
 								<td th:text="${l.noticeTitle}"></td>
 								<td th:text="${l.noticeContent}"></td>
 								<td th:text="${l.noticeInqCnt}"></td>
@@ -162,13 +162,13 @@
 								<td th:text="${l.noticeAct}"></td>
 								<td th:text="${l.noticeRegDate}"></td>
 								<td th:text="${l.noticeMdfDate}"></td>
-								<td><a th:href="@{/platform/board/noticeModify}">수정</a></td>
-								<td><a href="#">삭제</a></td>
+								<td><a th:href="@{/platform/board/noticeModify(noticeNum=${l.noticeNum})}">수정</a></td>
+								<td><a href="#" th:data-faq-num="${l.noticeNum}" th:onclick="confirmDelete(this)">삭제</a></td>
 							</tr>
 						</tbody>
 					</table>
 					<div class="text-left">
-						<a th:href="@{/platform/board/noticeWrite}" class="btn btn-primary">추가</a>
+						<a th:href="@{/platform/board/noticeWrite}" class="btn btn-primary">등록</a>
 						<button type="button" class="btn btn-danger" id="deleteSelected">선택 삭제</button>
 					</div>
 				</div>
@@ -201,6 +201,9 @@
 	<script type="text/javascript" th:src="@{/platform/js/checkbox/categoryDel.js}"></script>
 	<script type="text/javascript" th:src="@{/platform/js/checkbox/selectedDel.js}"></script>
   	<script th:inline="javascript">
+
+    
+    
     document.addEventListener("DOMContentLoaded", function() {
         // 최신순과 조회순 버튼 요소 가져오기
         const newestBtn = document.getElementById('optionsRadios1');
@@ -211,29 +214,32 @@
 
         // 최신순 버튼 클릭 시
         newestBtn.addEventListener('click', function() {
-            sortTable(8, 'desc'); // 등록일을 기준으로 내림차순 정렬
+            sortTable(9, 'desc'); // 등록일을 기준으로 내림차순 정렬
         });
 
         // 조회순 버튼 클릭 시
         mostViewedBtn.addEventListener('click', function() {
-            sortTable(5, 'desc'); // 조회수를 기준으로 내림차순 정렬
+            sortTable(6, 'desc'); // 조회수를 기준으로 내림차순 정렬
         });
 
         // 테이블 정렬 함수
         function sortTable(columnIndex, order) {
-            const rows = Array.from(tbody.querySelectorAll('tr:not(:first-child)'));
+            const rows = Array.from(tbody.querySelectorAll('tr')).filter(row => row.querySelector('td'));
 
             // 정렬할 때 기준이 되는 값 추출
-            const getValue = (row) => row.cells[columnIndex].textContent.trim();
+            const getValue = (row) => {
+                const cellValue = row.cells[columnIndex].textContent.trim();
+                return columnIndex === 9 ? new Date(cellValue) : parseInt(cellValue, 10);
+            };
 
             // 정렬하기
             rows.sort((a, b) => {
                 const aValue = getValue(a);
                 const bValue = getValue(b);
                 if (order === 'asc') {
-                    return aValue.localeCompare(bValue);
+                    return aValue > bValue ? 1 : -1;
                 } else {
-                    return bValue.localeCompare(aValue);
+                    return aValue < bValue ? 1 : -1;
                 }
             });
 
@@ -241,11 +247,13 @@
             rows.forEach(row => tbody.appendChild(row));
         }
     });
-    </script> 
     
     
     
-   	<script>
+    
+    
+    
+    
 	    document.getElementById('checkAll').addEventListener('change', function() {
 	        var checkboxes = document.querySelectorAll('[id^=checkbox_]');
 	        checkboxes.forEach(function(checkbox) {
@@ -254,7 +262,39 @@
 	    });
 	</script>
     
-    
+<!-- 공지사항 삭제 -->	    
+<script th:inline="javascript">
+    function confirmDelete(element) {
+        var noticeNum = element.getAttribute('data-faq-num');
+        var confirmation = confirm("정말로 삭제하시겠습니까?");
+        
+        if (confirmation) {
+            // 확인을 누르면 삭제 동작을 수행하기 위해 POST 요청
+            noticeDelete(noticeNum);
+        } else {
+            console.log("삭제 취소: " + noticeNum);
+        }
+    }
+
+    function noticeDelete(noticeNum) {
+        // POST 요청을 보내기 위해 form을 생성
+        var form = document.createElement('form');
+        form.setAttribute('method', 'post');
+        form.setAttribute('action', '/platform/board/noticeDelete');
+        form.style.display = 'hidden'; // form을 보이지 않도록 설정
+
+        // noticeNum을 form에 추가
+        var input = document.createElement('input');
+        input.setAttribute('type', 'hidden');
+        input.setAttribute('name', 'noticeNum');
+        input.setAttribute('value', noticeNum);
+        form.appendChild(input);
+
+        // form을 body에 추가하고 submit
+        document.body.appendChild(form);
+        form.submit();
+    }
+</script>
     
     
 

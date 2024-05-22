@@ -32,6 +32,25 @@ public class PCommunityService {
 	    }
 	}
 	
+	// 게시뮬 비활성화 
+	public void deactivatePost(PCommunity pcommunity) {
+		pCommunityMapper.deactivatePost(pcommunity);
+		
+	}
+
+	
+	public void deactivatePost(String postNum) {
+		pCommunityMapper.deactivatePost(postNum);
+		
+	}
+	
+    public void deactivatePost(List<String> postNums) {
+        for (String postNum : postNums) {
+            pCommunityMapper.deactivatePost(postNum);
+        }
+    }
+
+	
 	
 	/**
 	 * 커뮤니티 조회
@@ -61,6 +80,14 @@ public class PCommunityService {
 	public List<PCommunity> getCommentList(){
 		return pCommunityMapper.getCommentList();
 	}
+
+
+
+
+
+
+
+	
 	
 
 }

@@ -2,100 +2,94 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
 				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 				layout:decorate="~{platform/layout/default}">
+	
+	<th:block layout:fragment="customCss">
+	    <!-- Datatables CSS START -->
+	    <link th:href="@{/platform/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css}" rel="stylesheet">
+	    <link th:href="@{/platform/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css}" rel="stylesheet">
+	    <link th:href="@{/platform/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css}" rel="stylesheet">
+	    <link th:href="@{/platform/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css}" rel="stylesheet">
+	    <link th:href="@{/platform/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css}" rel="stylesheet">
+	    <!-- Datatables CSS END -->
+	</th:block>
 
-<th:block layout:fragment="customCss">
-    <!-- Datatables CSS START -->
-    <link th:href="@{/platform/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css}" rel="stylesheet">
-    <link th:href="@{/platform/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css}" rel="stylesheet">
-    <link th:href="@{/platform/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css}" rel="stylesheet">
-    <link th:href="@{/platform/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css}" rel="stylesheet">
-    <link th:href="@{/platform/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css}" rel="stylesheet">
-    <!-- Datatables CSS END -->
-</th:block>
 
-
-<th:block layout:fragment="customContent">
-	<div class="col-md-12 col-sm-6 col-xs-12">
-		<div class="x_panel">
-			<div class="x_title">
-				<h3>자주찾는 질문 수정</h3>
-				<div class="clearfix"></div>
-			</div>
-			<div class="x_content">
-				<form id="modifyForm" th:object="${faqInfo}" th:action="@{/platform/board/faqModify}" method="post">
-					<table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
-						<tbody>
-							<tr>
-								<td><label for="faqNum">번호</label></td>
-								<td><input type="text" id="faqNum" name="faqNum"
-									th:value="*{faqNum}" readonly="readonly" /></td>
-							</tr>
-							<tr>
-								<td><label for="faqRegId">작성자</label></td>
-								<td colspan="2"><input type="text" id="faqRegId"
-									name="faqRegId" th:value="*{faqRegId}"
-									placeholder="ex: admin001" readonly="readonly"></td>
-							</tr>
-							<tr>
-								<td><label for="faqCateType">카테고리</label></td>
-								<td><select class="form-control" id="faqModify"
-									name="faqModify" th:value="*{faqCateType}">
-										<option value="account-management">계정 관리</option>
-										<option value="usage-inquiry">이용 문의</option>
-										<option value="suggestion">건의 및 제안</option>
-										<option value="payment-refund">결제 및 환불</option>
-								</select></td>
-							</tr>
-							<tr>
-								<td><label for="faqTitle">제목</label></td>
-								<td><input type="text" class="form-control" id="faqTitle"
-									name="faqTitle" th:value="*{faqTitle}"></td>
-							</tr>
-							<tr>
-								<td><label for="faqContent">내용</label></td>
-								<td><textarea class="form-control" id="faqContent"
-										name="faqContent" rows="5" th:value="*{faqContent}"></textarea></td>
-							</tr>
-							<tr>
-								<td><label for="faqMdfId">수정자</label></td>
-								<td colspan="2"><input type="text" id="faqMdfId"
-									name="faqMdfId" th:value="*{faqMdfId}"
-									placeholder="ex: admin001"></td>
-							</tr>
-							<tr>
-								<td><label for="faqAct">활성화 여부</label></td>
-								<td><select class="form-control" id="faqAct" name="faqAct"
-									th:value="*{faqAct}">
-										<option value="yes">Y</option>
-										<option value="no">N</option>
-								</select></td>
-							</tr>
-							<tr>
-								<td><label for="faqRegDate">등록일</label></td>
-								<td colspan="2"><input type="text" id="faqRegDate"
-									name="faqRegDate" th:value="*{faqRegDate}"
-									placeholder="ex: 0000-00-00" /></td>
-							</tr>
-							<tr>
-								<td><label for="faqRegDate">수정일</label></td>
-								<td colspan="2"><input type="text" id="faqMdfDate"
-									name="faqMdfDate" th:value="*{faqMdfDate}"
-									placeholder="ex: 0000-00-00" /></td>
-							</tr>
-						</tbody>
-						<tfoot>
-							<tr>
-								<td colspan="3">
-									<button type="submit" class="btn btn-primary">수정</button>
-									<button type="button" class="btn btn-secondary"
-										onclick="location.href='/platform/board/faqList'">취소</button>
-								</td>
-							</tr>
-						</tfoot>
-					</table>
-				</form>
+	<th:block layout:fragment="customContent">
+		<div class="col-md-12 col-sm-6 col-xs-12">
+			<div class="x_panel">
+				<div class="x_title">
+					<h3>자주찾는 질문 수정</h3>
+					<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+					<form id="modifyForm" th:object="${faqInfo}" th:action="@{/platform/board/faqModify}" method="post">
+						<table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+							<tbody>
+								<tr>
+									<td><label for="faqNum">번호</label></td>
+									<td><input type="text" id="faqNum" name="faqNum" th:field="*{faqNum}" readonly="readonly" /></td>
+								</tr>
+								<tr>
+									<td><label for="faqRegId">작성자</label></td>
+									<td colspan="2"><input type="text" id="faqRegId" name="faqRegId" th:field="*{faqRegId}" readonly="readonly"></td>
+								</tr>
+								<tr>
+									<td><label for="faqCateType">자주찾는질문 유형</label></td>
+									<td>
+										<select class="form-control" id="faqCateNum" name="faqCateNum">
+								    		<option value="FAQ_CTGRY_1" th:selected="${faqInfo.category.faqCategoryNum == 'FAQ_CTGRY_1'}">계정 관리</option>
+						    				<option value="FAQ_CTGRY_2" th:selected="${faqInfo.category.faqCategoryNum == 'FAQ_CTGRY_2'}">이용 문의</option>
+								  		 	<option value="FAQ_CTGRY_3" th:selected="${faqInfo.category.faqCategoryNum == 'FAQ_CTGRY_3'}">건의 및 제안</option>
+								    		<option value="FAQ_CTGRY_4" th:selected="${faqInfo.category.faqCategoryNum == 'FAQ_CTGRY_4'}">결제 및 환불</option>
+										</select>
+									</td>
+								</tr>
+								
+								<tr>
+									<td><label for="faqTitle">제목</label></td>
+									<td><input type="text" class="form-control" id="faqTitle" name="faqTitle" th:field="*{faqTitle}"></td>
+								</tr>
+								<tr>
+									<td><label for="faqContent">내용</label></td>
+									<td><textarea class="form-control" id="faqContent" name="faqContent" rows="5" th:field="*{faqContent}"></textarea></td>
+								</tr>
+								<tr>
+									<td><label for="faqMdfId">수정자</label></td>
+									<td colspan="2"><input type="text" id="faqMdfId" name="faqMdfId" th:value="${session.loginId}" readonly="readonly"></td>
+								</tr>
+								<tr>
+									<td><label for="faqAct">활성화 여부</label></td>
+									<td><select class="form-control" id="faqAct" name="faqAct" th:field="*{faqAct}">
+											<option value="Y">Y</option>
+											<option value="N">N</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td><label for="faqRegDate">등록일</label></td>
+									<td colspan="2"><input type="text" id="faqRegDate" name="faqRegDate" th:field="*{faqRegDate}" readonly="readonly" /></td>
+								</tr>
+								<tr>
+									<td><label for="faqMdfDate">수정일</label></td>
+									<td colspan="2"><input type="text" id="faqMdfDate" name="faqMdfDate" th:field="*{faqMdfDate}" readonly="readonly" /></td>
+								</tr>
+							</tbody>
+							<tfoot>
+								<tr>
+									<td colspan="3">
+										<button type="submit" class="btn btn-primary">수정</button>
+										<button type="button" class="btn btn-secondary" onclick="location.href='/platform/board/faqList'">취소</button>
+									</td>
+								</tr>
+							</tfoot>
+						</table>
+					</form>
+				</div>
 			</div>
 		</div>
-	</div>
-</th:block>
+	</th:block>
+
+	<th:block layout:fragment="customJsFIle">
+	</th:block>
+
 </html>

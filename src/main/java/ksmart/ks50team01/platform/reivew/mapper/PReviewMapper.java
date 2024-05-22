@@ -7,32 +7,45 @@ import org.apache.ibatis.annotations.Mapper;
 import ksmart.ks50team01.platform.reivew.dto.POpen;
 import ksmart.ks50team01.platform.reivew.dto.PReivewComment;
 import ksmart.ks50team01.platform.reivew.dto.PReview;
+import ksmart.ks50team01.platform.reivew.dto.PReviewBusiness;
 import ksmart.ks50team01.platform.reivew.dto.PReviewReact;
 import ksmart.ks50team01.platform.reivew.dto.PReviewReport;
+import ksmart.ks50team01.platform.reivew.dto.PReviewReportCategory;
 
 @Mapper
 public interface PReviewMapper {
 	
 	
+	//신고합계조회
+	List<PReviewReport> getPReviewReportTotal();
 	
 
+	// 신고정보수정
+	int modifyPReviewReport(PReviewReport report);
+	//신고정보조회
+	PReviewReport getPReviewReportInfoById(String reportCode);
+	
 	//신고목록조회
 	List<PReviewReport> getPReviewReport();
-
 	
 	
+	//댓글정보수정
+	int modifyPReivewComment(PReivewComment comment);
 	
 	//댓글정보조회
 	PReivewComment getPReivewCommentInfoById(String commentCode);
+	
 	//댓글목록조회
 	List<PReivewComment> getPReivewComment();
 	
-	
+	//신고카테고리
+	List<PReviewReportCategory> getPReviewReportCategory();
 	
 	//좋아요싫어요기록목록조회
 	List<PReviewReact> getPReviewReact();
 	
-	
+	//상품정보
+	List<PReviewBusiness> getPReviewBusiness();
 	
 	//리뷰정보수정 05.08
 	int modifyPReview(PReview review);
