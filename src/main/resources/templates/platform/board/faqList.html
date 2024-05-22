@@ -77,21 +77,6 @@
 								</div>
 								<div class="col-md-2 col-sm-2 col-xs-0"></div>
 							</div>
-							<div class="form-group">
-								<div class="col-md-2 col-sm-2 col-xs-0"></div>
-								<label class="control-label col-md-2 col-sm-2 col-xs-12">정렬
-									기준</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<div class="radio">
-										<label class="align-item-center"><input type="radio"
-											value="option1" id="optionsRadios1" name="optionsRadios"
-											checked="checked">최신순</label> <label><input
-											type="radio" value="option2" id="optionsRadios2"
-											name="optionsRadios">조회순</label>
-									</div>
-								</div>
-								<div class="col-md-2 col-sm-2 col-xs-0"></div>
-							</div>
 							<div class="ln_solid"></div>
 							<div class="form-group">
 								<div class="col-md-12 col-sm-12 col-xs-12 text-center">
@@ -99,7 +84,6 @@
 									<button type="reset" class="btn btn-dark btn-lg">초기화</button>
 								</div>
 							</div>
-	
 						</form>
 					</div>
 				</div>
@@ -165,7 +149,7 @@
 									<td><input type="checkbox" id="checkbox_${l.faqNum}" name="faqNum" th:value="${l.faqNum}"></td>
 									<td th:text="${l.faqNum}"></td>
 									<td th:text="${l.faqRegId}"></td>
-									<td th:text="${l.faqCate.faqCateType}"></td>
+									<td th:text="${l.category.faqCategoryName}"></td>
 									<td th:text="${l.faqTitle}"></td>
 									<td th:text="${l.faqContent}"></td>
 									<td th:text="${l.faqMdfId}"></td>

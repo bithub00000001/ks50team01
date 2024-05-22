@@ -8,6 +8,7 @@ import lombok.Data;
 public class PNotice {
 	
 	private String noticeNum;
+	private int noticeRowNum;
 	private String noticeRegId;
 	private String noticeCateNum;
 	private String noticeTitle;
@@ -20,6 +21,7 @@ public class PNotice {
 	
 	private PCategory category;
 	private List<PNotice> noticeList;
+	//private PNotice noticeInfo;
 	
 	
 

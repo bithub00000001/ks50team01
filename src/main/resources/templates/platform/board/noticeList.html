@@ -162,7 +162,7 @@
 								<td th:text="${l.noticeAct}"></td>
 								<td th:text="${l.noticeRegDate}"></td>
 								<td th:text="${l.noticeMdfDate}"></td>
-								<td><a th:href="@{/platform/board/noticeModify(noticeNum=${noticeNum})}">수정</a></td>
+								<td><a th:href="@{/platform/board/noticeModify(noticeNum=${l.noticeNum})}">수정</a></td>
 								<td><a href="#" th:data-faq-num="${l.noticeNum}" th:onclick="confirmDelete(this)">삭제</a></td>
 							</tr>
 						</tbody>
@@ -201,6 +201,9 @@
 	<script type="text/javascript" th:src="@{/platform/js/checkbox/categoryDel.js}"></script>
 	<script type="text/javascript" th:src="@{/platform/js/checkbox/selectedDel.js}"></script>
   	<script th:inline="javascript">
+
+    
+    
     document.addEventListener("DOMContentLoaded", function() {
         // 최신순과 조회순 버튼 요소 가져오기
         const newestBtn = document.getElementById('optionsRadios1');
@@ -211,29 +214,32 @@
 
         // 최신순 버튼 클릭 시
         newestBtn.addEventListener('click', function() {
-            sortTable(8, 'desc'); // 등록일을 기준으로 내림차순 정렬
+            sortTable(9, 'desc'); // 등록일을 기준으로 내림차순 정렬
         });
 
         // 조회순 버튼 클릭 시
         mostViewedBtn.addEventListener('click', function() {
-            sortTable(5, 'desc'); // 조회수를 기준으로 내림차순 정렬
+            sortTable(6, 'desc'); // 조회수를 기준으로 내림차순 정렬
         });
 
         // 테이블 정렬 함수
         function sortTable(columnIndex, order) {
-            const rows = Array.from(tbody.querySelectorAll('tr:not(:first-child)'));
+            const rows = Array.from(tbody.querySelectorAll('tr')).filter(row => row.querySelector('td'));
 
             // 정렬할 때 기준이 되는 값 추출
-            const getValue = (row) => row.cells[columnIndex].textContent.trim();
+            const getValue = (row) => {
+                const cellValue = row.cells[columnIndex].textContent.trim();
+                return columnIndex === 9 ? new Date(cellValue) : parseInt(cellValue, 10);
+            };
 
             // 정렬하기
             rows.sort((a, b) => {
                 const aValue = getValue(a);
                 const bValue = getValue(b);
                 if (order === 'asc') {
-                    return aValue.localeCompare(bValue);
+                    return aValue > bValue ? 1 : -1;
                 } else {
-                    return bValue.localeCompare(aValue);
+                    return aValue < bValue ? 1 : -1;
                 }
             });
 
@@ -241,11 +247,13 @@
             rows.forEach(row => tbody.appendChild(row));
         }
     });
-    </script> 
     
     
     
-   	<script>
+    
+    
+    
+    
 	    document.getElementById('checkAll').addEventListener('change', function() {
 	        var checkboxes = document.querySelectorAll('[id^=checkbox_]');
 	        checkboxes.forEach(function(checkbox) {

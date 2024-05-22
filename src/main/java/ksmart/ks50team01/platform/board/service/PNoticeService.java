@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ksmart.ks50team01.platform.board.dto.PCategory;
 import ksmart.ks50team01.platform.board.dto.PNotice;
 import ksmart.ks50team01.platform.board.mapper.PNoticeMapper;
-import ksmart.ks50team01.user.board.dto.UNotice;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -42,16 +41,18 @@ public class PNoticeService {
 
 	
 	/**
-	 * 공지사항 조회
+	 * 주어진 번호에 해당하는 공지사항 조회
 	 * @param noticeNum
 	 */
-	public PNotice getNoticeByNum(String noticeNum) {
-		return pNoticeMapper.getNoticeByNum(noticeNum);
+	public PNotice getNoticeInfoByNum(String noticeNum) {
+		return pNoticeMapper.getNoticeInfoByNum(noticeNum);
 	}
+	
+
 
 	// db에 저장
-	public void insertNotice(UNotice uNotice) {
-		pNoticeMapper .insertNotice(uNotice);
+	public void insertNotice(PNotice pNotice) {
+		pNoticeMapper.insertNotice(pNotice);
 		
 	}
 	
@@ -81,6 +82,7 @@ public class PNoticeService {
 	public void noticeDelete(String noticeNum) {
 		pNoticeMapper.noticeDelete(noticeNum);
 	}
+
 
 
 

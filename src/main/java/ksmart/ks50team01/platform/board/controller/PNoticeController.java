@@ -10,15 +10,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ksmart.ks50team01.platform.board.dto.PCategory;
-import ksmart.ks50team01.platform.board.dto.PFaq;
 import ksmart.ks50team01.platform.board.dto.PNotice;
 import ksmart.ks50team01.platform.board.service.PNoticeService;
-import ksmart.ks50team01.user.board.dto.UCategory;
-import ksmart.ks50team01.user.board.dto.UCommunity;
-import ksmart.ks50team01.user.board.dto.UNotice;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -45,16 +40,17 @@ public class PNoticeController {
 
 	// 공지사항 작성 POST 요청
 	@PostMapping("/noticeWrite")
-	public String noticeWrite(UNotice uNotice,
-							  RedirectAttributes redirectAttributes,
-							  Model model) {
-	    pNoticeService.insertNotice(uNotice);
+	public String noticeWrite(PNotice pNotice, Model model) {
+	    pNoticeService.insertNotice(pNotice);
+	    
+	    model.addAttribute("title", "공지사항 작성");
+	    
 	    return "redirect:/platform/board/noticeList";
 	}
 	
 	// 공지사항 작성 폼 이동
 	@GetMapping("/noticeWrite")
-	public String noticeWritePage(Model model) {
+	public String noticeWrite(Model model) {
 		List<PCategory> noticeCateList = pNoticeService.getNoticeCateList();
 		log.info("noticeCateList: {}", noticeCateList);
 		
@@ -65,33 +61,39 @@ public class PNoticeController {
 	    // 모델에 현재 날짜 추가
 	    model.addAttribute("currentDate", currentDate);
 		model.addAttribute("noticeCateList", noticeCateList);
-		model.addAttribute("title", "공지사항 작성");
+		model.addAttribute("title", "공지사항 작성 페이지");
+		
 		return "platform/board/noticeWrite";
 	}
 	
 	// 공지사항 수정 POST 요청
 		@PostMapping("/noticeModify")
 		public String noticeModify(PNotice pNotice, Model model) {
-			log.info("noticeModify: {}", pNotice);
+			
+			log.info("공지사항 수정: {}", pNotice);
 			pNoticeService.noticeModify(pNotice);
-			model.addAttribute("title", "공지사항 수정 페이지");
+			
+			model.addAttribute("title", "공지사항 수정");
+			
 			return "redirect:/platform/board/noticeList";
 		}
 	
 	// 공지사항 수정 페이지
 	@GetMapping("/noticeModify")
 	public String noticeModify(@RequestParam(value = "noticeNum") String noticeNum, Model model) {
-		PNotice pNotice = pNoticeService.getNoticeByNum(noticeNum);
+		PNotice noticeInfo = pNoticeService.getNoticeInfoByNum(noticeNum);
 		
-		model.addAttribute("pNotice", pNotice);
-		model.addAttribute("title", "공지사항 수정");
+		log.info("faqInfo : {}", noticeInfo);
+		
+		model.addAttribute("noticeInfo : {}", noticeInfo);
+		model.addAttribute("title", "공지사항 수정 페이지");
 		
 		return "platform/board/noticeModify";
 	}
 	
 	// 공지사항 삭제 POST 요청
 	@PostMapping("/noticeDelete")
-	public String noticeDelete(@RequestParam String noticeNum, Model model) {
+	public String noticeDelete(@RequestParam(value="noticeNum") String noticeNum, Model model) {
 		pNoticeService.noticeDelete(noticeNum);
 		
 		model.addAttribute("title", "공지사항 삭제");
@@ -102,7 +104,7 @@ public class PNoticeController {
 	
 	// 공지사항 삭제
 	@GetMapping("/noticeDelete")
-	public String noticeDeletePage(@RequestParam String noticeNum, Model model) {
+	public String noticeDeletePage(@RequestParam(value="noticeNum") String noticeNum, Model model) {
 		
 		List<PNotice> noticeList = pNoticeService.getNoticeList();
 		pNoticeService.noticeDelete(noticeNum);

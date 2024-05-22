@@ -6,6 +6,7 @@
 	
 	<resultMap id="noticeResultMap" type="PNotice">
 		<id property="noticeNum"		 	column="NTC_NO" />
+		<result property="noticeRowNum" 	column="ROW_NUM" />
 		<result property="noticeRegId" 		column="REG_PF_ID" />
 		<result property="noticeCateNum"	column="NTC_CTGRY_NO" />
 		<result property="noticeTitle" 		column="NTC_TTL" />
@@ -39,9 +40,11 @@
 		<result 	property="noticeCategoryMdfDate" 	column="MDFCN_YMD"/>
 	</resultMap>
 
+
 	<select id="getNoticeList" resultMap="noticeResultMap">
 	 	/* 공지사항 조회 */
 		SELECT
+			ROW_NUMBER() OVER (ORDER BY CAST(SUBSTRING_INDEX(N.NTC_NO, 'NTC_', -1) AS UNSIGNED)) AS ROW_NUM,
             N.NTC_NO,
             N.REG_PF_ID,
             C.NTC_CTGRY_TYPE,
@@ -57,10 +60,12 @@
 			INNER JOIN
 			NOTICE_CATEGORY AS C
 			ON
-			N.NTC_CTGRY_NO = C.NTC_CTGRY_NO;
+			N.NTC_CTGRY_NO = C.NTC_CTGRY_NO
+		GROUP BY N.NTC_NO
+	    ORDER BY N.REG_YMD DESC;
 	</select>
 	
-	 <select id="getNoticeByNum" resultMap="noticeResultMap">
+	 <select id="getNoticeInfoByNum" resultMap="noticeResultMap">
         SELECT
             N.NTC_NO,
             N.REG_PF_ID,
@@ -113,7 +118,26 @@
     </insert>
     
     
-
+    
+    
+    
+    
+    <!-- 공지사항 수정 -->
+	<update id="noticeModify" parameterType="PNotice">
+		/* 공지사항 수정 */
+	    UPDATE 
+	    	NOTICE
+	    SET 
+	    	NTC_CTGRY_NO = #{noticeCateNum},
+	        NTC_TTL = #{noticeTitle},
+	        NTC_CN = #{noticeContent},
+	        MDFCN_PF_ID = #{noticeMdfId},
+	        ACT_YN = #{noticeAct},
+	        MDFCN_YMD = NOW()
+	    WHERE
+	        NTC_NO = #{noticeNum};
+	</update>
+	    
     
     
     

@@ -6,13 +6,12 @@ import org.apache.ibatis.annotations.Mapper;
 
 import ksmart.ks50team01.platform.board.dto.PCategory;
 import ksmart.ks50team01.platform.board.dto.PNotice;
-import ksmart.ks50team01.user.board.dto.UNotice;
 
 @Mapper
 public interface PNoticeMapper {
 	
 	// 공지사항 수정
-	String noticeModify(PNotice pNotice);
+	void noticeModify(PNotice pNotice);
 	
 	// 공지사항 삭제
 	void noticeDelete(String noticeNum);
@@ -23,13 +22,14 @@ public interface PNoticeMapper {
 	// 공지사항 목록조회
 	List<PNotice> getNoticeList();
 
-	PNotice getNoticeByNum(String noticeNum);
+	PNotice getNoticeInfoByNum(String noticeNum);
 
 	// 공지사항 카테고리 조회
 	List<PCategory> getNoticeCateList();
 
 	// 공지사항 DB에 저장
-	void insertNotice(UNotice uNotice);
+	void insertNotice(PNotice pNotice);
+
 
 	
 

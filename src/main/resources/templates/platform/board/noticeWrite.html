@@ -31,13 +31,12 @@
 
 							<tr>
 								<td><label for="noticeCateType">공지사항 유형</label></td>
-								<td><div class="select-default">
-										<select class="select-option" id="noticeCateNum"
-											name="category.noticeCategoryNum">
-											<option th:each="nc : ${noticeCateList}"
-												th:value="${nc.noticeCategoryNum}"
-												th:text="${nc.noticeCategoryName}"></option>
-										</select></div>
+								<td>
+									<div class="select-default">
+										<select class="select-option" id="noticeCateNum" name="category.noticeCategoryNum">
+											<option th:each="nc : ${noticeCateList}" th:value="${nc.noticeCategoryNum}" th:text="${nc.noticeCategoryName}"></option>
+										</select>
+									</div>
 								</td>
 							</tr>
 
