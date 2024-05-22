@@ -1,5 +1,10 @@
 package ksmart.ks50team01.user.trip.service;
 
+import java.util.Map;
+import java.util.Objects;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 import ksmart.ks50team01.user.trip.dto.UTripOption;
 
 public interface UTripPlanService {
@@ -11,4 +16,8 @@ public interface UTripPlanService {
 
 	// 출발 날짜와 도착 날짜를 입력 받아 몇박 몇일 혹은 미정을 반환
 	UTripOption calculateTripDuration(UTripOption uTripOption);
+
+	Map<String, Object> getTourInfoObject(String content) throws JsonProcessingException;
+
+	//
 }
