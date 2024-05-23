@@ -16,10 +16,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.servlet.http.HttpSession;
 import ksmart.ks50team01.user.member.mypage.dto.Mypage;
+import ksmart.ks50team01.user.member.mypage.dto.Post;
 import ksmart.ks50team01.user.member.mypage.service.MypageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
 
 @Controller
 @RequestMapping("/mypage")
@@ -27,47 +27,70 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class MemberMypageController {
 
-    public final MypageService mypageService;
-    
+	public final MypageService mypageService;
 
-    @PostMapping("/mypageManage")
-    @ResponseBody
-    public String memberModifyProcess(@ModelAttribute Mypage mypage) {
-        int updatedCount = mypageService.updateMember(mypage);
+	@PostMapping("/mypageManage")
+	@ResponseBody
+	public String memberModifyProcess(@ModelAttribute Mypage mypage) {
+		int updatedCount = mypageService.updateMember(mypage);
 
-        if (updatedCount > 0) {
-            return "success";
-        } else {
-            return "fail";
-        }
-    }
-    
-    @PostMapping("/delMember")
-    @ResponseBody
-    public String delMember(HttpSession session) {
-        String loginId = (String) session.getAttribute("loginId");
-        mypageService.delMember(loginId);
-        session.invalidate();
-        return "success";
-    }
-    
-    @GetMapping("/logout")
-    public String logout(HttpSession session) {
-        session.invalidate(); // 세션 무효화
-        return "redirect:/trip";
-    }
+		if (updatedCount > 0) {
+			return "success";
+		} else {
+			return "fail";
+		}
+	}
 
-    @GetMapping("/mypage")
-    public String mypage(Model model, HttpSession session) {
-        String loginId = (String) session.getAttribute("loginId");
-        model.addAttribute("loginId", loginId);
-        return "user/mypage/main";
-    }
+	@PostMapping("/delMember")
+	@ResponseBody
+	public String delMember(HttpSession session) {
+		String loginId = (String) session.getAttribute("loginId");
+		mypageService.delMember(loginId);
+		session.invalidate();
+		return "success";
+	}
 
-    @GetMapping("/mypageManage")
-    @ResponseBody
-    public Mypage memberModify(@SessionAttribute("loginId") String loginId) {
-        Mypage memberInfo = mypageService.getMemberInfoById(loginId);
-        return memberInfo;
-    }
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		session.invalidate(); // 세션 무효화
+		return "redirect:/trip";
+	}
+
+	@GetMapping("/mypage")
+	public String mypage(Model model, HttpSession session) {
+		String loginId = (String) session.getAttribute("loginId");
+
+		if (loginId != null) {
+			List<Post> myPosts = mypageService.getPostsByMemberId(loginId);
+			log.info("myposts: {}", myPosts);
+			model.addAttribute("myPosts", myPosts);
+			model.addAttribute("loginId", loginId);
+		}
+
+		return "user/mypage/main";
+	}
+
+	@GetMapping("/mypage2")
+	@ResponseBody
+	public List<Post> memberPost(@SessionAttribute("loginId") String loginId) {
+	    List<Post> memberPost = mypageService.getPostsByMemberId(loginId);
+	    log.info("memberPost: {}", memberPost);
+	    return memberPost;
+	}
+	
+	@GetMapping("/postCmt")
+	@ResponseBody
+	public List<Post> membeCmtrPost(@SessionAttribute("loginId") String loginId) {
+		List<Post> membeCmtrPost = mypageService.getPostsCmtByMemberId(loginId);
+		log.info("membeCmtrPost: {}", membeCmtrPost);
+		return membeCmtrPost;
+	}
+	
+
+	@GetMapping("/mypageManage")
+	@ResponseBody
+	public Mypage memberModify(@SessionAttribute("loginId") String loginId) {
+		Mypage memberInfo = mypageService.getMemberInfoById(loginId);
+		return memberInfo;
+	}
 }
