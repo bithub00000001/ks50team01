@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import ksmart.ks50team01.platform.destination.dto.Destination;
 import ksmart.ks50team01.platform.destination.service.DestinationService;
@@ -25,9 +26,32 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class DestinationManageController {
 	
 	private final DestinationService destinationService;
+	@PostMapping("removeTourGoods")
+	public String removeTourGoods(@RequestParam(value = "tourGoodsOptionCd") String tourGoodsOptionCd) {
+		
+		destinationService.removeTourGoods(tourGoodsOptionCd);
+		
+		return "redirect:/platform/destination/tourGoodsManage";
+	}
+	@GetMapping("/removeTourGoods")
+	public String removeTourGoodsProcess(@RequestParam(value = "tourGoodsOptionCd") String tourGoodsOptionCd, Model model) {
+		List<Destination> tourGoodsList =  destinationService.getTourGoodsList();
+		destinationService.removeTourGoods(tourGoodsOptionCd);
+		
+		model.addAttribute("tourGoodsList", tourGoodsList);
+		model.addAttribute("tourGoodsOptionCd", tourGoodsOptionCd);
+		model.addAttribute("title", "관광지 상세정보 삭제");
+		
+		return "redirect:/platform/destination/tourGoodsManage";
+	}
 	
+	/**
+	 * 관광지 목록 삭제
+	 * @param tourInfoCode
+	 * @return
+	 */
 	@PostMapping("/removeTour")
-	public String remove(@RequestParam(value = "tourInfoCode") String tourInfoCode) {
+	public String removeTour(@RequestParam(value = "tourInfoCode") String tourInfoCode) {
 		destinationService.removeTour(tourInfoCode);
 		
 		//model.addAttribute("title", "관광지 목록 삭제");
@@ -63,6 +87,14 @@ public class DestinationManageController {
 		model.addAttribute("title", "관광지 세부항목 등록");
 		return "/platform/destination/addTourGoods";
 	}
+	@GetMapping("/destination/addTourCheckList")
+	@ResponseBody
+	public boolean addTourCheckList(@RequestParam(value = "tourName") String tourName) {
+		log.info("tourName: {}",tourName);
+		boolean isTourName = destinationService.addTourCheckList(tourName);
+		return isTourName;
+	}
+	
 	/**
 	 * 관광지 등록
 	 * @param destination
