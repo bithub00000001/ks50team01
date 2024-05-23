@@ -26,6 +26,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class DestinationManageController {
 	
 	private final DestinationService destinationService;
+	
+	/**
+	 * 관광지 상세정보 삭제
+	 * @param tourGoodsOptionCd
+	 * @return
+	 */
 	@PostMapping("removeTourGoods")
 	public String removeTourGoods(@RequestParam(value = "tourGoodsOptionCd") String tourGoodsOptionCd) {
 		
@@ -59,7 +65,6 @@ public class DestinationManageController {
 		
 		return "redirect:/platform/destination/tourManage";
 	}
-	
 	@GetMapping("/removeTour")
 	public String removeTourProcess(@RequestParam(value = "tourInfoCode") String tourInfoCode, Model model) {
 		List<Destination> tourList = destinationService.getTourInfoList();
@@ -73,10 +78,12 @@ public class DestinationManageController {
 	}
 	
 	/**
-	 * 관광상품 등록
+	 * 관광지 상품 등록
 	 * @param destination
 	 * @return
 	 */
+	
+	
 	@PostMapping("/destination/addTourGoods")
 	public String addTourGoods(Destination destination) {
 		return "redirect:/platform/destination/tourGoodsManage";
@@ -87,6 +94,13 @@ public class DestinationManageController {
 		model.addAttribute("title", "관광지 세부항목 등록");
 		return "/platform/destination/addTourGoods";
 	}
+	
+	
+	/**
+	 * 관광지 등록
+	 * @param destination
+	 * @return
+	 */
 	@GetMapping("/destination/addTourCheckList")
 	@ResponseBody
 	public boolean addTourCheckList(@RequestParam(value = "tourName") String tourName) {
@@ -95,11 +109,6 @@ public class DestinationManageController {
 		return isTourName;
 	}
 	
-	/**
-	 * 관광지 등록
-	 * @param destination
-	 * @return
-	 */
 	@PostMapping("/destination/addTour")
 	public String addTour(Destination destination) {
 		return "redirect:/platform/destination/tourManage";
