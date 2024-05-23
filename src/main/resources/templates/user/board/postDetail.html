@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{user/layout/default}">
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+				layout:decorate="~{user/layout/default}">
 
 	<head>
 		<title>게시글 상세 페이지</title>
@@ -43,28 +43,19 @@
 						<!-- 굵은 직선 추가 -->
 						<hr class="my-4">
 						<p class="post-content" th:text="*{postContent}">게시물 내용</p>
-						<div class="row mt-3">
-							<div class="col-md-6 offset-md-3 text-center">
-								<div class="btn-group">
-									<!-- 게시물 좋아요 -->
-									<button type="button"
-										class="btn btn-primary btn-lg rounded-pill like-btn"
-										style="margin-right: 50px;">
-										<i class="fa-regular fa-thumbs-up fa-2x"><span
-											class="like-count">0</span> </i>
-									</button>
-									<!-- 게시물 싫어요 -->
-									<button type="button"
-										class="btn btn-primary btn-lg rounded-pill dislike-btn">
-										<i class="fa-regular fa-thumbs-down fa-2x"><span
-											class="dislike-count">0</span> </i>
-									</button>
-								</div>
-							</div>
-						</div>
+
 <!-- 						<div class="separator1"></div> 굵은 직선 추가
 						<div class="separator2"></div> 굵은 직선 추가 -->
-						<hr class="my-4">
+		
+				<div class="d-flex justify-content-end mt-10">
+					<a th:href="@{/community/postModify(postNum=${postDetail.postNum})}" class="btn btn-light-gray btn-sm update-Btn">수정</a>
+					<a href="#" th:data-post-num="${postDetail.postNum}" class="btn btn-off-white btn-sm delete-Btn" th:onclick="confirmDelete(this)">삭제</a>
+				</div>	
+
+
+
+
+					<hr class="my-4">
 					</div>
 					<div class="comments">
 						<!-- 댓글 수 표시 -->
@@ -79,39 +70,23 @@
 										<div class="comment-meta">
 											<div class="col-10 d-flex align-items-center">
 												<!-- 작성자 아이콘 -->
-												<i class="fa fa-user-circle fa-3x text-primary"
-													aria-hidden="true"></i> <span class="comment-author"
-													th:text="${l.commentRegId}">댓글 작성자 아이디</span> <span
-													class="comment-date m-2"
-													th:text="${#strings.substring(l.commentRegDate, 0, 10)}">댓글
-													작성일</span>
+												<i class="fa fa-user-circle fa-3x text-primary" aria-hidden="true"></i> 
+												<span class="comment-author" th:text="${l.commentRegId}">댓글 작성자 아이디</span> 
+												<span class="comment-date m-2" th:text="${#strings.substring(l.commentRegDate, 0, 10)}">댓글 작성일</span>
 												<!-- 신고 버튼  -->
-												<button type="button" class="btn  btn-lg report-btn"
-													data-bs-toggle="modal" data-bs-target="#staticBackdrop">🚨
-												</button>
+												<button type="button" class="btn btn-lg report-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">🚨</button>
 											</div>
-											<!-- 추천 비추천 버튼, 삭제 버튼 
-												<i class="fa-regular fa-thumbs-down fa-2x"></i> 
-												<i class="fa-regular fa-thumbs-up fa-2x"></i> 
-												<i class="fa-solid fa-trash-can fa-2x"></i>
-												<i class="fa-regular fa-trash-can"></i> -->
-	
-	
+											
 											<!-- 신고 버튼 모달 -->
 											<div class="col-2">
-	
 												<div class="dropdown float-end">
-													<button class="btn btn-xs dropdown-toggle" type="button"
-														id="dropdownMenuButton1" data-bs-toggle="dropdown"
-														aria-expanded="true"></button>
-													<ul class="dropdown-menu P-0"
-														aria-labelledby="dropdownMenuButton1">
-														<li><a class="dropdown-item small" href="#"
-															onclick="editComment()"><i
-																class="fa-solid fa-eraser fa-2x edit-button"></i> 수정</a></li>
-														<li><a class="dropdown-item small" href="#"
-															onclick="deleteComment()"><i
-																class="fa-solid fa-trash-can fa-2x delete-button"></i> 삭제</a></li>
+													<button class="btn btn-xs dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="true"></button>
+													<ul class="dropdown-menu P-0" aria-labelledby="dropdownMenuButton1">
+														<li>
+															<a class="dropdown-item small" href="#" onclick="editComment()">
+																<i class="fa-solid fa-eraser fa-2x edit-button"></i> 수정</a></li>
+														<li><a class="dropdown-item small" href="#" onclick="deleteComment()">
+														<i class="fa-solid fa-trash-can fa-2x delete-button"></i> 삭제</a></li>
 													</ul>
 												</div>
 											</div>
@@ -143,9 +118,8 @@
 											</div> -->
 	
 										</div>
-	
-										<p class="comment-content" th:text="${l.commentContent}">댓글
-											내용</p>
+										<!-- 댓글 리스트 출력 -->
+										<p class="comment-content" id="commentList" th:text="${l.commentContent}">댓글 내용</p>
 	
 										<div class="comment-actions">
 											<!-- 답글 달기 버튼 -->
@@ -177,23 +151,21 @@
 						<!-- 댓글 작성 폼 -->
 						<div class="comment-form">
 							<h4 class="">댓글 작성</h4>
-							<form th:action="@{/comment}" method="post">
-								<textarea class="form-control mb-3" name="comment" rows="5"
-									placeholder="댓글을 입력하세요."></textarea>
-								<input type="hidden" name="postId"
-									th:value="${postDetail.postNum}">
-								<button type="submit" class="btn btn-primary">등록</button>
+							<form th:action="@{/comment/save}" method="post">
+								<input type="hidden" id="commentRegId" name="commentRegId" th:value="${commentRegId}">
+								<textarea class="form-control mb-3" id="commentContent" name="commentContent" rows="5" placeholder="댓글을 입력하세요." required="required"></textarea>
+								<input type="hidden" id="postNum" name="postNum" th:value="${postDetail.postNum}">
+								<button type="button" class="btn btn-secondary btn-sm cancle-Btn">취소</button>
+								<button type="submit" class="btn btn-primary btn-sm submit-Btn" onclick="commentWrite()">등록</button>
 							</form>
 						</div>
 						<div class="list-btn">
-							<button type="button" class="btn btn-dark list-btn">목록</button>
+							<button type="button" class="btn btn-dark list-Btn" onclick="location.href='/community'">목록</button>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	
-	
 	
 		<!-- Modal -->
 		<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
@@ -203,14 +175,11 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<h5 class="modal-title" id="staticBackdropLabel">신고하기</h5>
-						<button type="button" class="btn-close" data-bs-dismiss="modal"
-							aria-label="Close"></button>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
 					<!-- Example single danger button -->
 					<div class="btn-group">
-						<button type="button" class="btn btn-primary dropdown-toggle px-3"
-							data-bs-toggle="dropdown" aria-expanded="false">신고 유형 선택</button>
-	
+						<button type="button" class="btn btn-primary dropdown-toggle px-3" data-bs-toggle="dropdown" aria-expanded="false">신고 유형 선택</button>
 						<ul class="dropdown-menu">
 							<li><a class="dropdown-item">욕설/인신공격</a></li>
 							<li><a class="dropdown-item">홍보/상업성</a></li>
@@ -232,8 +201,7 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary"
-							data-bs-dismiss="modal">취소</button>
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
 						<button type="button" class="btn btn-primary">신고</button>
 					</div>
 				</div>
@@ -250,17 +218,15 @@
 						<button type="button" class="btn-close" data-bs-dismiss="modal"
 							aria-label="Close"></button>
 					</div>
+					
 					<div class="modal-body">
 						<!-- 답글 작성 폼 -->
-	
 						<form>
 							<div class="form-group">
 								<label for="replyContent">답글 내용</label>
-								<textarea class="form-control" id="replyContent" rows="5"
-									placeholder="답글을 입력하세요"></textarea>
+								<textarea class="form-control" id="replyContent" rows="5" placeholder="답글을 입력하세요"></textarea>
 							</div>
 						</form>
-	
 	
 					</div>
 					<div class="modal-footer">
@@ -281,6 +247,42 @@
 
 
 	<th:block layout:fragment="customJs">
+		<script th:inline="javascript">
+		const commentWrite = () => {
+		    const commentRegId = document.getElementById("commentRegId").value;
+		    const commentContent = document.getElementById("commentContent").value;
+		    const postNum = document.getElementById("postNum").value;
+		    
+		    console.log("작성자 : ", commentRegId);
+		    console.log("내용 : ", commentContent);
+		    console.log("게시글 번호 : ", postNum);
+		    
+		    $.ajax({
+		        url: "/comment/save", // 서버 요청 주소
+		        type: "POST",
+		        dataType: "json",
+		        contentType: "application/json; charset=utf-8",
+		        data: JSON.stringify({
+		            "commentRegId": commentRegId,
+		            "commentContent": commentContent,
+		            "postNum": postNum
+		        }),
+		        success: function(res) {
+		            console.log("요청 성공", res);
+		            // 댓글 작성 후 댓글 목록을 갱신하는 로직 추가 가능
+		        },
+		        error: function(err) {
+		            console.log("요청 실패", err);
+		        }
+		    });
+		}
+			
+			
+
+	
+		</script>
+	
+	
 		<script>
 		    document.addEventListener('DOMContentLoaded', function () {
 		        let dropdownButton = document.querySelector('.modal-dialog .dropdown-toggle');
@@ -304,10 +306,6 @@
 		        });
 		    });
 		
-			// 뒤로 가기 함수
-			function goBack() {
-				window.history.back();
-			}
 		
 			function toggleDropdownMenu() {
 				const dropdownMenu = document.getElementById('dropdown-menu');
@@ -331,102 +329,9 @@
 					dropdownMenu.classList.remove('show');
 				}
 			});
-		
-			document.addEventListener("DOMContentLoaded", function() {
-				const listButton = document.querySelector('.list-btn'); // 목록 버튼 가져오기
 
-				// 목록 버튼 클릭 시
-				listButton.addEventListener('click', function() {
-					// 게시물 리스트 페이지로 이동
-					window.location.href = "/community";
-				});
-			});
 		
-		    // edit comment 버튼 클릭 이벤트 처리
-		    document.addEventListener('click', function(event) {
-		        if (event.target.classList.contains('edit-button')) {
-		            const comment = event.target.closest('.comment');
-		            const commentContent = comment.querySelector('.comment-content').textContent;
-		            const editForm = comment.querySelector('.comment-edit-form');
-		            const editTextArea = editForm.querySelector('textarea');
-		            
-		            // 수정할 댓글 내용을 입력 필드에 채움
-		            editTextArea.value = commentContent;
-		
-		            // 편집 폼을 보여줌
-		            editForm.style.display = 'block';
-		        }
-		    });
 
-		    // 수정된 댓글을 서버에 보내고 업데이트
-		    document.addEventListener('click', function(event) {
-		        if (event.target.classList.contains('btn-primary') && event.target.parentNode.classList.contains('comment-edit-form')) {
-		            const editedContent = event.target.parentNode.querySelector('textarea').value;
-		            const comment = event.target.closest('.comment');
-		            const commentId = comment.dataset.commentId; // 댓글 ID를 가져옴
-		
-		            // 수정된 내용을 서버에 보냄 (AJAX 요청)
-		            fetch('/edit-comment', {
-		                method: 'POST',
-		                headers: {
-		                    'Content-Type': 'application/json'
-		                },
-		                body: JSON.stringify({ commentId: commentId, editedContent: editedContent })
-		            })
-		            .then(response => {
-		                if (!response.ok) {
-		                    throw new Error('Network response was not ok');
-		                }
-		                // 성공적으로 수정되면 화면을 새로 고쳐서 수정된 내용을 반영
-		                location.reload();
-		            })
-		            .catch(error => {
-		                console.error('Error:', error);
-		                alert('댓글을 수정하는 데 문제가 발생했습니다.');
-		            });
-		        }
-		    });
-
-		    document.addEventListener("DOMContentLoaded", function() {
-		        const saveReplyButton = document.getElementById('saveReplyButton'); // 저장 버튼 가져오기
-		        const replyContentInput = document.getElementById('replyContent'); // 답글 내용 입력 필드 가져오기
-		
-		        // 저장 버튼 클릭 시
-		        saveReplyButton.addEventListener('click', function() {
-		            // 입력된 답글 내용 가져오기
-		            const replyContent = replyContentInput.value.trim();
-		
-		            // 답글 내용이 비어 있는지 확인
-		            if (replyContent === '') {
-		                alert('답글 내용을 입력해주세요.');
-		                return; // 답글 내용이 비어있으면 함수 종료
-		            }
-		
-		            // AJAX를 사용하여 서버에 답글 저장 요청 보내기
-		            // 예시로 fetch API를 사용하겠습니다.
-		            fetch('/replySave', {
-		                method: 'POST', // POST 방식으로 요청
-		                headers: {
-		                    'Content-Type': 'application/json' // 요청의 Content-Type 설정
-		                },
-		                body: JSON.stringify({ // 요청 본문에 답글 내용을 JSON 형식으로 포함
-		                    content: replyContent
-		                })
-		            })
-		            .then(response => {
-		                if (!response.ok) { // 응답이 성공적이지 않은 경우
-		                    throw new Error('Network response was not ok');
-		                }
-		                // 성공적으로 요청이 완료된 경우
-		                alert('답글이 성공적으로 저장되었습니다.');
-		                // 여기에 저장 후 추가적으로 수행할 작업을 추가할 수 있습니다.
-		            })
-		            .catch(error => {
-		                console.error('Error:', error); // 에러 발생 시 콘솔에 에러 출력
-		                alert('답글 저장에 실패했습니다. 잠시 후 다시 시도해주세요.');
-		            });
-		        });
-		    });
     
     
 		    // 게시물, 댓글 좋아요 싫어요 버튼 클릭 시 숫자 증가
@@ -442,7 +347,167 @@
 		            });
 		        });
 		    });
+		    
+		    
+			// 대댓글 작성창
+			function reCommentForm(event) {
+				var reCommentForm = event.target.closest(".commentList").nextElementSibling;
+				while (reCommentForm) {
+					if (reCommentForm.classList.contains("reCommentForm")) {
+						break;
+					}
+					reCommentForm = reCommentForm.nextElementSibling;
+				}
+				if (reCommentForm) {
+					reCommentForm.style.display = reCommentForm.style.display === "none" ? "block"
+							: "none";
+				}
+			}
+
+			// 대댓글 작성 ajax 
+			function insertReComment(event) {
+				var commentStep = parseInt($(event.target).closest('.reCommentForm').find('#commentStep').val());
+				
+		/* 		alert("그룹" + $('#pgroup').val())
+				alert("스텝" + commentStep)
+				alert("뎁스" + $('#reDepth').val())
+				alert("내용" + $(event.target).closest('.reCommentForm').find('#reComment').val())		
+		 */
+				var bDto = {
+					pgroup : $('#pgroup').val(),
+					step : commentStep,
+					depth : $("#reDepth").val(),
+					content : $(event.target).closest('.reCommentForm').find(	'#reComment').val()
+				};
+
+				$.ajax({
+					url : "/board/addC.do",
+					data : bDto,
+					type : 'POST',
+					success : function(result) {
+						getCommentList();
+						$("#reComment").val("");
+					}
+				})
+
+			}
+
+			// 댓글 삭제 
+			function deleteComment(event) {
+				var postno = $(event.target).closest('.ms-3').find('#commentNo').text();
+				var url = '/board/ajaxdelete.do?postno=' + postno;
+
+				$.ajax({
+					url : url,
+					type : 'POST',
+					success : function(result) {
+						getCommentList();
+						$("#comment").val("");
+					},
+					error : function() {
+						alert('댓글 삭제 실패');
+					}
+				});
+			}
+			// 댓글 수정 
+			function modifyComment(event) {
+				var postno = $(event.target).closest('.modifyCForm').find('.commentNo')
+						.text();
+				var content = $(event.target).closest('.modifyCForm').find(
+						'#modifyarea').text();
+				var bDto = {
+					depth : $(event.target).closest('.modifyCForm').find('#hDepth')
+							.val(),
+					pgroup : $(event.target).closest('.modifyCForm').find('#hPgroup')
+							.val(),
+					content : $(event.target).closest('.modifyCForm').find(
+							'#modifyarea').val(),
+					postno : $(event.target).closest('.modifyCForm').find('#hPostno')
+							.val()
+				};
+				$.ajax({
+					url : '/board/ajaxupdate.do?postno=' + postno,
+					type : 'POST',
+					data : bDto,
+					success : function(result) {
+						getCommentList();
+						$("#modifyarea").val("");
+					},
+					error : function() {
+						alert('댓글 수정 실패');
+					}
+				});
+			}
+
+			// 댓글 수정 창
+			function modifyCommentForm(event) {
+				var modifyCForm = event.target.closest(".commentList").nextElementSibling;
+				while (modifyCForm) {
+					if (modifyCForm.classList.contains("modifyCForm")) {
+						break;
+					}
+					modifyCForm = modifyCForm.nextElementSibling;
+				}
+				if (modifyCForm) {
+					modifyCForm.style.display = modifyCForm.style.display === "none" ? "block"
+							: "none";
+				}
+			}
+			function cancelModifyC(event) {
+				var modifyCForm = event.target.closest(".modifyCForm");
+				modifyCForm.style.display = "none";
+			}
+		    
 		</script>
+		
+		
+			
+			
+
+			
+			
+			
+<!-- 게시글 삭제 -->	    
+<script th:inline="javascript">
+    function confirmDelete(element) {
+        var postNum = element.getAttribute('data-post-num');
+        var confirmation = confirm("정말 삭제하시겠습니까?");
+        
+        if (confirmation) {
+            // 확인을 누르면 삭제 동작을 수행하기 위해 POST 요청
+            postDelete(postNum);
+        } else {
+            console.log("삭제 취소: " + postNum);
+        }
+    }
+
+    function postDelete(postNum) {
+        // POST 요청을 보내기 위해 form을 생성
+        var form = document.createElement('form');
+        form.setAttribute('method', 'post');
+        form.setAttribute('action', '/community/postDelete');
+        form.style.display = 'none'; // form을 보이지 않도록 설정
+
+        // postNum을 form에 추가
+        var input = document.createElement('input');
+        input.setAttribute('type', 'hidden');
+        input.setAttribute('name', 'postNum');
+        input.setAttribute('value', postNum);
+        form.appendChild(input);
+
+        // form을 body에 추가하고 submit
+        document.body.appendChild(form);
+        form.submit();
+    }
+</script>
+
+
+	
+
+		
+		
+		
+		
 
 	</th:block>
 	

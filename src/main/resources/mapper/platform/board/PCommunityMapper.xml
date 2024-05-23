@@ -34,32 +34,32 @@
 		
 		<!-- 1:N collection -->
 		<collection  	property="commentList" 			ofType="PComment">
-			<id 		property="CommentNum" 			column="PST_CMNT_NO"/>
-			<result 	property="CommentRegId" 		column="REG_MBR_ID"/>
-			<result 	property="CommentContent" 		column="PST_CMNT_CN"/>
-			<result 	property="CommentlikeTotal" 	column="PST_CMNT_LIKE_TOTAL"/>
-			<result 	property="CommentDislikeTotal" 	column="PST_CMNT_DISLIKE_TOTAL"/>
-			<result 	property="CommentReportTotal" 	column="PST_CMNT_REPT_TOTAL"/>
-			<result 	property="CommentAct" 			column="ACT_YN"/>
-			<result 	property="CommentRegDate" 		column="REG_YMD"/>
-			<result 	property="CommentMdfDate" 		column="MDFCN_YMD"/>
-			<result 	property="CommentDelDate" 		column="DEL_YMD"/>
+			<id 		property="commentNum" 			column="PST_CMNT_NO"/>
+			<result 	property="commentRegId" 		column="REG_MBR_ID"/>
+			<result 	property="commentContent" 		column="PST_CMNT_CN"/>
+			<result 	property="commentlikeTotal" 	column="PST_CMNT_LIKE_TOTAL"/>
+			<result 	property="commentDislikeTotal" 	column="PST_CMNT_DISLIKE_TOTAL"/>
+			<result 	property="commentReportTotal" 	column="PST_CMNT_REPT_TOTAL"/>
+			<result 	property="commentAct" 			column="ACT_YN"/>
+			<result 	property="commentRegDate" 		column="REG_YMD"/>
+			<result 	property="commentMdfDate" 		column="MDFCN_YMD"/>
+			<result 	property="commentDelDate" 		column="DEL_YMD"/>
 		</collection>
 		
 	</resultMap>
 	
 	<resultMap type="PComment" id="postCommentMap">
-			<id 		property="CommentNum" 			column="PST_CMNT_NO"/>
-			<result 	property="CommentRegId" 		column="REG_MBR_ID"/>
+			<id 		property="commentNum" 			column="PST_CMNT_NO"/>
+			<result 	property="commentRegId" 		column="REG_MBR_ID"/>
 			<result 	property="postNum" 				column="PST_NO"/>
-			<result 	property="CommentContent" 		column="PST_CMNT_CN"/>
-			<result 	property="CommentlikeTotal" 	column="PST_CMNT_LIKE_TOTAL"/>
-			<result 	property="CommentDislikeTotal" 	column="PST_CMNT_DISLIKE_TOTAL"/>
-			<result 	property="CommentReportTotal" 	column="PST_CMNT_REPT_TOTAL"/>
-			<result 	property="CommentAct" 			column="ACT_YN"/>
-			<result 	property="CommentRegDate" 		column="REG_YMD"/>
-			<result 	property="CommentMdfDate" 		column="MDFCN_YMD"/>
-			<result 	property="CommentDelDate" 		column="DEL_YMD"/>
+			<result 	property="commentContent" 		column="PST_CMNT_CN"/>
+			<result 	property="commentlikeTotal" 	column="PST_CMNT_LIKE_TOTAL"/>
+			<result 	property="commentDislikeTotal" 	column="PST_CMNT_DISLIKE_TOTAL"/>
+			<result 	property="commentReportTotal" 	column="PST_CMNT_REPT_TOTAL"/>
+			<result 	property="commentAct" 			column="ACT_YN"/>
+			<result 	property="commentRegDate" 		column="REG_YMD"/>
+			<result 	property="commentMdfDate" 		column="MDFCN_YMD"/>
+			<result 	property="commentDelDate" 		column="DEL_YMD"/>
 	</resultMap>
 
 	<resultMap type="PCategory" id="categoryResultMap">

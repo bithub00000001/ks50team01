@@ -1,22 +1,27 @@
 package ksmart.ks50team01.user.board.controller;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import ksmart.ks50team01.user.board.dto.UCategory;
 import ksmart.ks50team01.user.board.dto.UComment;
 import ksmart.ks50team01.user.board.dto.UCommunity;
+import ksmart.ks50team01.user.board.dto.UPostFile;
 import ksmart.ks50team01.user.board.service.UCommunityService;
+import ksmart.ks50team01.user.review.dto.UReviewFile;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -32,20 +37,8 @@ public class UCommunityController {
 	@GetMapping({"/",""})
 	public String postList(Model model) {
 		List<UCommunity> postList = uCommunityService.getPostList();
-		//postList.sort((p1, p2) -> p2.getPostRegDate().compareTo(p1.getPostRegDate())); // 최신순으로 정렬
 
-		
-	    // 각 게시글에 대한 댓글 수를 가져와서 모델에 추가
-		/*
-	    Map<String, Integer> commentCntMap = new HashMap<>();
-	    for (UCommunity post : postList) {
-	        int commentCnt = uCommunityService.getCommentCntByPostNum(post.getPostNum());
-	        commentCntMap.put(post.getPostNum(), commentCnt);
-	    }
-	    */
 		model.addAttribute("postList", postList); // postList를 모델에 추가
-		model.addAttribute("currentDate", LocalDate.now()); // 현재 날짜 추가
-		//model.addAttribute("commentCntMap", commentCntMap); // 댓글 수 맵을 모델에 추가
 		model.addAttribute("title", "커뮤니티");
 		return "user/board/postList";
 	}
@@ -56,23 +49,17 @@ public class UCommunityController {
 	@GetMapping("/postDetail")
 	public String postDetail(@RequestParam(name = "postNum", required = false) String postNum, Model model) {
 		
-		// 상세 페이지에 접속할 때마다 조회수 증가
-		uCommunityService.increaseViewCount(postNum);
-		
-		
 		// 게시물 정보를 가져와서 모델에 담아 상세 페이지로 전달
 		UCommunity postDetail = uCommunityService.getPostByPostNum(postNum);
-		model.addAttribute("postDetail", postDetail);
 		
 		// 해당 게시글의 모든 댓글 가져오기
 		List<UComment> commentList = uCommunityService.getCommentByPostNum(postNum);
 		
+		// 상세 페이지에 접속할 때마다 조회수 증가
+		uCommunityService.increaseViewCount(postNum);
 
-		model.addAttribute("commentList", commentList);
 		model.addAttribute("postDetail", postDetail);
-		model.addAttribute("postTitle", postDetail.getPostTitle());
-		model.addAttribute("postContent", postDetail.getPostContent());
-		model.addAttribute("postInqCnt", postDetail.getPostInqCnt());
+		model.addAttribute("commentList", commentList);
 		model.addAttribute("title", "게시글 상세");
 
 		log.info("postNum: {}", postNum);
@@ -81,41 +68,120 @@ public class UCommunityController {
 
 		return "user/board/postDetail";
 	}
-	
 
-	// 게시글 리스트의 카테고리 리스트를 모델에 추가하는 어노테이션
-	/*
-	@ModelAttribute("postCateList")
-	public List<String> postCateList() {
-		return uCommunityService.getPostCateList();
-	}
-	 */
+	
 	// 게시글 등록
 	@PostMapping("/postWrite")
-	public String postWrite(UCommunity uCommunity,
-							RedirectAttributes redirectAttributes,
-							Model model) {
+	public String postWrite(UCommunity uCommunity, HttpServletRequest request, Model model, @RequestParam(required = false) MultipartFile[] uploadfile) {
+		uCommunityService.insertPost(uCommunity);
+
 		log.info("게시글 등록:{}", uCommunity);
+		log.info("입력받은 file data: {}",Arrays.toString(uploadfile));
 		
-        uCommunityService.insertPost(uCommunity);
-        redirectAttributes.addFlashAttribute("success", "게시글이 성공적으로 저장되었습니다.");
-        
+		model.addAttribute("title", "게시글 작성");
+		
         return "redirect:/community";
 	}
 	
-
+	
 
 	// 게시글 작성 폼 이동
 	@GetMapping("/postWrite")
-	public String postWrite(Model model) {
+	public String postWrite(Model model, HttpSession session) {
+		String loginId = (String) session.getAttribute("loginId");
+		if (loginId == null) {
+			model.addAttribute("loginRequired", true);
+			return "redirect:/trip"; // 로그인 페이지 경로로 변경
+		}
+		
 		List<UCategory> postCateList = uCommunityService.getPostCateList();
 		log.info("postCateList: {}", postCateList);
 		
-		model.addAttribute("title", "게시글 작성");
+		model.addAttribute("title", "게시글 작성 페이지");
 		model.addAttribute("postCateList", postCateList);
 		
 		return "user/board/postWrite";
 	}
+	
+	/**
+	 * 파일 json
+	 */
+	@GetMapping("/file/json")
+	@ResponseBody
+	public List<UPostFile> postFileJsonView(Model model) {
+		
+		List<UPostFile> postFileList = uCommunityService.getFileList();
+		log.info("postFileList: {}", postFileList);
+		
+		model.addAttribute("title", "게시글 파일 목록");
+		model.addAttribute("postFileList", postFileList);
+		
+	return postFileList;
+		
+	}
+	
+	
+	
+
+	
+	// 게시글 수정 POST 요청
+	@PostMapping("/postModify")
+	public String postModify(UCommunity uCommunity, Model model) {
+		
+		log.info("게시글 수정", uCommunity);
+		
+		uCommunityService.postModify(uCommunity);
+		
+	   
+		// 수정된 게시글의 상세 페이지로 이동
+		return "redirect:/community/postDetail?postNum=" + uCommunity.getPostNum();
+	}
+
+	// 게시글 수정 페이지
+	@GetMapping("/postModify")
+	public String postModify(@RequestParam(value = "postNum") String postNum, Model model) {
+		UCommunity postInfo = uCommunityService.getPostInfoByNum(postNum);
+		
+		log.info("postInfo :{}", postInfo);
+		
+		model.addAttribute("postInfo", postInfo);
+		model.addAttribute("title", "게시글 수정 페이지");
+		
+		return "user/board/postModify";
+	}
+	
+	// 게시글 삭제 POST 요청
+	@PostMapping("/postDelete")
+	public String postDelete(@RequestParam (value = "postNum") String postNum, Model model) {
+		
+		uCommunityService.postDelete(postNum);
+		
+		model.addAttribute("postNum", postNum);
+		model.addAttribute("title", "게시글 삭제");
+		
+		return "redirect:/community";
+		
+	}
+	
+
+	
+    /*
+	// 게시글 삭제
+	@GetMapping("/postDelete")
+	public String postDeletePage(@RequestParam (value = "postNum") String postNum, Model model) {
+		
+		List<UCommunity> postList = uCommunityService.getPostList();
+		uCommunityService.postDelete(postNum);
+
+		model.addAttribute("postList", postList);
+		model.addAttribute("postNum", postNum);
+		model.addAttribute("title", "게시글 삭제");
+		
+		return "redirect:/community";
+	} */
+	
+	
+	
 	
 
 	// 댓글 작성

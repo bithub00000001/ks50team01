@@ -13,7 +13,6 @@
 	    <!-- Datatables CSS END -->
 	</th:block>
 
-
 	<th:block layout:fragment="customContent">
 		<div class="col-md-12 col-sm-6 col-xs-12">
 			<div class="x_panel">
@@ -37,21 +36,21 @@
 									<td><label for="faqCateType">자주찾는질문 유형</label></td>
 									<td>
 										<select class="form-control" id="faqCateNum" name="faqCateNum">
-								    		<option value="FAQ_CTGRY_1" th:selected="${faqInfo.category.faqCategoryNum == 'FAQ_CTGRY_1'}">계정 관리</option>
-						    				<option value="FAQ_CTGRY_2" th:selected="${faqInfo.category.faqCategoryNum == 'FAQ_CTGRY_2'}">이용 문의</option>
-								  		 	<option value="FAQ_CTGRY_3" th:selected="${faqInfo.category.faqCategoryNum == 'FAQ_CTGRY_3'}">건의 및 제안</option>
-								    		<option value="FAQ_CTGRY_4" th:selected="${faqInfo.category.faqCategoryNum == 'FAQ_CTGRY_4'}">결제 및 환불</option>
+								    		<option value="FAQ_CTGRY_1" th:selected="${faqInfo.category.faqCategoryNum == 'FAQ_CTGRY_1'}" selected>계정 관리</option>
+						    				<option value="FAQ_CTGRY_2" th:selected="${faqInfo.category.faqCategoryNum == 'FAQ_CTGRY_2'}" selected>이용 문의</option>
+								  		 	<option value="FAQ_CTGRY_3" th:selected="${faqInfo.category.faqCategoryNum == 'FAQ_CTGRY_3'}" selected>건의 및 제안</option>
+								    		<option value="FAQ_CTGRY_4" th:selected="${faqInfo.category.faqCategoryNum == 'FAQ_CTGRY_4'}" selected>결제 및 환불</option>
 										</select>
 									</td>
 								</tr>
 								
 								<tr>
 									<td><label for="faqTitle">제목</label></td>
-									<td><input type="text" class="form-control" id="faqTitle" name="faqTitle" th:field="*{faqTitle}"></td>
+									<td><input type="text" class="form-control" id="faqTitle" name="faqTitle" th:field="*{faqTitle}" required="required"></td>
 								</tr>
 								<tr>
 									<td><label for="faqContent">내용</label></td>
-									<td><textarea class="form-control" id="faqContent" name="faqContent" rows="5" th:field="*{faqContent}"></textarea></td>
+									<td><textarea class="form-control" id="faqContent" name="faqContent" rows="5" th:field="*{faqContent}" required="required"></textarea></td>
 								</tr>
 								<tr>
 									<td><label for="faqMdfId">수정자</label></td>
