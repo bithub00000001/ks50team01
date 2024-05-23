@@ -8,7 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import ksmart.ks50team01.platform.ranking.dto.Ranking;
+import ksmart.ks50team01.platform.ranking.dto.RankingApi;
 import ksmart.ks50team01.platform.ranking.service.RankingService;
+import ksmart.ks50team01.platform.trip.dto.PTourApi;
+import ksmart.ks50team01.platform.trip.service.PTripPlanService;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -17,7 +20,8 @@ import lombok.RequiredArgsConstructor;
 public class UPlatformRankigController {
 
 	private final RankingService rankingServeice;
-	
+	private final PTripPlanService pTripPlanService;
+
 	@GetMapping
 	public String platformRanking(Model model) {
 		
@@ -29,9 +33,10 @@ public class UPlatformRankigController {
 	public String platformRankingList(Model model) {
 		
 		List<Ranking> rankingList = rankingServeice.getRankingList();
-		
+		List<RankingApi> rankingApiList = rankingServeice.getRankingInfoList();
 		model.addAttribute("title", "플랫폼 추천 순위");
 		model.addAttribute("rankingList", rankingList);
+		model.addAttribute("rankingApiList", rankingApiList);
 		return "user/platformranking/rankingList";
 	}
 	@GetMapping("/userRankingList")

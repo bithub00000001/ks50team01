@@ -10,4 +10,5 @@ public class RankingApi {
 	private String pRankingId;
 	private String destinationCId;
 	private String recommenDetails;
+	private String autoIncrementId;
 }

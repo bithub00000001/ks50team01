@@ -75,7 +75,6 @@
 								<th>플랫폼관리자제휴추천아이디</th>
 								<th>API컨텐츠아이디</th>
 								<th>추천내용</th>
-								<th>수정</th>
                             	<th>삭제</th>
 							</tr>
 						</thead>
@@ -90,11 +89,7 @@
 								<td th:text="${l.destinationCId}"></td>
 								<td th:text="${l.recommenDetails}"></td>
 								<td>
-									<!--/* /member/modifyMember?memberId=id001 */-->
-									<a th:href="@{/platform/ranking/modifyInfoRanking(pfRankInfoId=${l.pfRankInfoId})}">수정</a>
-								</td>
-								<td>
-									<a th:href="@{/platform/ranking/removeInfoRanking(pfRankInfoId=${l.pfRankInfoId})}">삭제</a>					
+									<a th:href="@{/platform/ranking/removeRankingInfo(pfRankInfoId=${l.pfRankInfoId})}">삭제</a>					
 								</td>
 							</tr>
 						</tbody>

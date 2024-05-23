@@ -92,7 +92,7 @@
                                 <td><a th:href="@{/platform/plan/destination/detail(contentId=${list.destinationContentId}, contentTypeId=${list.destinationContentTypeId})}">상세보기</a></td>
                                 <td th:text="${list.destinationRegDate}">등록 일자</td>
                                 <td th:text="${list.destinationModDate}">수정 일자</td>     
-                                <td><button type="button" class="btn btn-primary btn-md" onclick="location.href='/platform/ranking/addApiRanking'">등록</button></td>
+                                <td><a class="btn btn-primary btn-md" th:href="@{/platform/ranking/addApiRanking(contentId=${list.destinationContentId})}">등록</a></td>
                             </tr>
                         </tbody>
                     </table>
@@ -147,7 +147,6 @@
                         {'title': '상세 보기', 'data': 'destinationContentId'},
                         {'title': '등록 일자', 'data': 'destinationRegDate'},
                         {'title': '수정 일자', 'data': 'destinationModDate'},
-                    
                     ],
                     32 : [
                         {'title': '번호', 'data': 'destinationNum'},

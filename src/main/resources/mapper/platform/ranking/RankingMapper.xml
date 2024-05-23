@@ -21,6 +21,15 @@
 		<result property="activate" column="ACT_YN"/>
 	</resultMap>
 	
+	<delete id="removeRankingInfo" parameterType="String">
+		DELETE
+		FROM
+			PLATFORM_PARTNERSHIP_INFO
+		WHERE 
+			PF_MNGR_RANK_INFO=#{pfRankInfoId};
+	</delete>
+	
+	
 	<delete id="removeRanking" parameterType="String">
 		/*플랫폼 추천리스트 삭제*/
 		DELETE
@@ -106,12 +115,22 @@
 			destination_content_id AS destinationCId
 		FROM
 			TOUR_INFO_FROM_API AS t
-		WEHER
+		where
 			t.destination_content_id = #{destinationCId};
 	
 	</select>
 	
 	<insert id="addApiRanking" parameterType="RankingApi">
+		<selectKey keyProperty="autoIncrementId" resultType="string" order="BEFORE">
+			SELECT
+				(CASE
+					WHEN COUNT(PF_MNGR_RANK_INFO) = 0 
+        				THEN 'pmr_01'
+						ELSE CONCAT('pmr_', MAX(CAST(SUBSTRING_INDEX(PF_MNGR_RANK_INFO,'_', - 1)AS UNSIGNED)) + 1)
+				END)
+					FROM 
+						PLATFORM_PARTNERSHIP_INFO AS p
+		</selectKey>
 		INSERT INTO 
 			PLATFORM_PARTNERSHIP_INFO
 			(PF_MNGR_RANK_INFO, 
@@ -120,12 +139,11 @@
 			destination_content_id, 
 			RECOMMENDATION_DETAILS)
 		VALUES 
-			(#{pfRankInfoId}, 
+			(#{autoIncrementId},
 			#{pRankingRegId}, 
 			#{pRankingId}, 
 			#{destinationCId}, 
-			#{recommenDetails});
-		
+			#{recommenDetails})
 	</insert>
 	
 	<insert id="addRanking" parameterType="Ranking">

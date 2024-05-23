@@ -11,6 +11,7 @@ import ksmart.ks50team01.platform.ranking.dto.RankingApi;
 @Mapper
 public interface RankingMapper {
 	
+	void removeRankingInfo(String pfRankInfoId);
 	
 	void removeRanking(String pRankingId);
 	

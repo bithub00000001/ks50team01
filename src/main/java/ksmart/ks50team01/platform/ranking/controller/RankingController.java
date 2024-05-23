@@ -28,6 +28,26 @@ public class RankingController {
 	private final RankingService rankingService;
 	private final PTripPlanService pTripPlanService;
 	
+	
+	@PostMapping("/removeRankingInfo")
+	public String removeInfo(@RequestParam(name = "pfRankInfoId") String pfRankInfoId
+						,Model model) {
+		model.addAttribute("title", "플랫폼추천 관계리스트 삭제");
+		model.addAttribute("pfRankInfoId", pfRankInfoId);
+		return "platform/ranking/removeRankingInfo";
+	}
+	
+	@GetMapping("/removeRankingInfo")
+	public String removeRankingInfo(@RequestParam(value="pfRankInfoId") String pfRankInfoId, Model model) {
+		
+		List<RankingApi> rankingApiList = rankingService.getRankingInfoList();
+		rankingService.removeRankingInfo(pfRankInfoId);
+		model.addAttribute("removeRankingInfo",pfRankInfoId);
+		model.addAttribute("rankingApiList", rankingApiList);
+		
+		return "redirect:/platform/ranking/rankingInfoList";
+	}
+	
 	@PostMapping("/removeRanking")
 	public String remove(@RequestParam(name = "pRankingId") String pRankingId
 						,Model model) {
@@ -117,10 +137,10 @@ public class RankingController {
 	}
 	
 	@GetMapping("/addApiRanking")
-		public String addApiRanking(@RequestParam(value="destinationCId") String destinationCId, Model model) {
+		public String addApiRanking(@RequestParam(value="contentId") String contentId, Model model) {
 		List<Ranking> rankingList = rankingService.getRankingList();
 		List<RankingApi> rankingApiList = rankingService.getRankingInfoList();
-		RankingApi rankingApi = rankingService.getDestinationContentId(destinationCId);
+		RankingApi rankingApi = rankingService.getDestinationContentId(contentId);
 		model.addAttribute("title", "플랫폼추천 관계리스트 등록");
 		model.addAttribute("rankingApiList", rankingApiList);
 		model.addAttribute("rankingList", rankingList);
@@ -147,9 +167,11 @@ public class RankingController {
 	}
 	@GetMapping("/rankingInfoList")
 	public String getRankingInfoList(Model model) {
+		List<PTourApi> pTourApiList = pTripPlanService.getDestinationList();
 		List<RankingApi> rankingApiList = rankingService.getRankingInfoList();
 		model.addAttribute("title", "플랫폼추천 관계리스트");
 		model.addAttribute("rankingApiList", rankingApiList);
+		model.addAttribute("pTourApiList", pTourApiList);
 		return "platform/ranking/rankingInfoList";
 	}
 	
