@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ksmart.ks50team01.user.member.mypage.dto.Mypage;
+import ksmart.ks50team01.user.member.mypage.dto.Post;
 import ksmart.ks50team01.user.member.mypage.mapper.MypageMapper;
 import lombok.RequiredArgsConstructor;
 
@@ -42,6 +43,16 @@ public class MypageService {
 	    }
 	    
 	    return memberInfo;
+	}
+	
+	public List<Post> getPostsByMemberId(String memberId) {
+		List<Post> posts = mypageMapper.getPostsByMemberId(memberId);
+	    return posts;
+	}
+	
+	public List<Post> getPostsCmtByMemberId(String memberId) {
+		List<Post> posts = mypageMapper.getPostsCmtByMemberId(memberId);
+		return posts;
 	}
 	
 	public List<Mypage> getMemberGrade() {

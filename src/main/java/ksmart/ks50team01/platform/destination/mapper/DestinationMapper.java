@@ -8,6 +8,13 @@ import ksmart.ks50team01.platform.destination.dto.Destination;
 
 @Mapper
 public interface DestinationMapper {
+	
+	boolean addTourCheckList(String tourName);
+	//관광지 상세목록 
+	void removeTourGoods(String tourGoodsOptionCd);
+	
+	// 관광지 삭제
+	void removeTour(String tourInfoId);
 	//관광지 추가
 	
 	
@@ -54,6 +61,11 @@ public interface DestinationMapper {
 	//식당 상세정보 수정
 	int updateRestaurantMenu(Destination destination);
 	Destination getRestaurantMenuInfoById(String restaurantMenuManageCode);
+
+
+
+
+	
 
 
 	

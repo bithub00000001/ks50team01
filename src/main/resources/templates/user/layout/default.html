@@ -1,548 +1,670 @@
 <!DOCTYPE html>
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <!-- ===========================================
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<!-- ===========================================
         ———	CITE META INFO START
         ========================================== -->
-        <meta charset="utf-8">
-        <meta content="IE=edge" http-equiv="X-UA-Compatible">
-        <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
-        <title>여행 계획</title>
-        <!-- ===========================================
+<meta charset="utf-8">
+<meta content="IE=edge" http-equiv="X-UA-Compatible">
+<meta content="width=device-width, initial-scale=1, maximum-scale=1"
+	name="viewport">
+<title>여행 계획</title>
+<!-- ===========================================
         ———	CITE META INFO END
         ========================================== -->
 
-        <!-- ===========================================
+<!-- ===========================================
         ———	COMMON PLUGINS CSS STYLE START
         ========================================== -->
-        <link rel='stylesheet' th:href="@{/user/plugins/fontawesome-5.15.2/css/all.min.css}">
-        <link rel='stylesheet' th:href="@{/user/plugins/fontawesome-5.15.2/css/fontawesome.min.css}">
-        <link rel="stylesheet" th:href="@{/user/plugins/animate/animate.css}">
-        <link rel="stylesheet" th:href="@{/user/plugins/menuzord/css/menuzord.css}">
-        <link rel="stylesheet" th:href="@{/user/plugins/menuzord/css/menuzord-animations.css}">
-        <link rel='stylesheet' th:href="@{/user/plugins/fancybox/jquery.fancybox.min.css}">
-        <link rel='stylesheet' th:href="@{/user/plugins/selectric/selectric.css}">
-        <!-- ===========================================
+<link rel='stylesheet'
+	th:href="@{/user/plugins/fontawesome-5.15.2/css/all.min.css}">
+<link rel='stylesheet'
+	th:href="@{/user/plugins/fontawesome-5.15.2/css/fontawesome.min.css}">
+<link rel="stylesheet" th:href="@{/user/plugins/animate/animate.css}">
+<link rel="stylesheet"
+	th:href="@{/user/plugins/menuzord/css/menuzord.css}">
+<link rel="stylesheet"
+	th:href="@{/user/plugins/menuzord/css/menuzord-animations.css}">
+<link rel='stylesheet'
+	th:href="@{/user/plugins/fancybox/jquery.fancybox.min.css}">
+<link rel='stylesheet'
+	th:href="@{/user/plugins/selectric/selectric.css}">
+<!-- ===========================================
         ———	COMMON PLUGINS CSS STYLE END
         ========================================== -->
 
-        <!-- ===========================================
+<!-- ===========================================
         ———	CUSTOM PLUGINS CSS STYLE START
         ========================================== -->
-        <th:block layout:fragment="customCss"></th:block>
-        <!-- ===========================================
+<th:block layout:fragment="customCss"></th:block>
+<!-- ===========================================
         ———	CUSTOM PLUGINS CSS STYLE END
         ========================================== -->
 
-        <!-- ===========================================
+<!-- ===========================================
         ———	TEMPLATE CSS STYLE START
         ========================================== -->
-        <link id="option_style" rel="stylesheet" th:href="@{/user/css/star.css}">
-        <!-- ===========================================
+<link id="option_style" rel="stylesheet" th:href="@{/user/css/star.css}">
+<!-- ===========================================
         ———	TEMPLATE CSS STYLE END
         ========================================== -->
 
-        <!-- ===========================================
+<!-- ===========================================
         ———	CITE FAVICON START
         ========================================== -->
-        <link href="/user/img/favicon.png" rel="shortcut icon" type="image/png"/>
-        <!-- ===========================================
+<link href="/user/img/favicon.png" rel="shortcut icon" type="image/png" />
+<!-- ===========================================
         ———	CITE FAVICON END
         ========================================== -->
-    </head>
-    <body class="up-scroll" data-bs-offset="100" data-bs-spy="scroll" data-bs-target=".element-right-sidebar" id="body">
+</head>
+<body class="up-scroll" data-bs-offset="100" data-bs-spy="scroll"
+	data-bs-target=".element-right-sidebar" id="body">
 
-        <!-- ===========================================
+	<!-- ===========================================
         ———	HEADER NAVIGATION START
         ========================================== -->
-        <header th:replace="~{user/fragments/header :: headerFragment}"></header>
-        <!-- ===========================================
+	<header th:replace="~{user/fragments/header :: headerFragment}"></header>
+	<!-- ===========================================
         ———	HEADER NAVIGATION END
         ========================================== -->
 
-        <div class="main-wrapper">
-            <!-- ====================================
+	<div class="main-wrapper">
+		<!-- ====================================
             ———	PAGE TITLE START
             ===================================== -->
-            <th:block th:if="${not isMainPage}">
-                <th:block th:replace="~{user/fragments/banner :: bannerFragment}"></th:block>
-            </th:block>
-            <!--/*<th:block layout:fragment="customPageTitle"></th:block>*/-->
-            <!-- ====================================
+		<th:block th:if="${not isMainPage}">
+			<th:block th:replace="~{user/fragments/banner :: bannerFragment}"></th:block>
+		</th:block>
+		<!--/*<th:block layout:fragment="customPageTitle"></th:block>*/-->
+		<!-- ====================================
             ———	PAGE TITLE END
             ===================================== -->
-            <section>
-                <div class="container">
-                    <!-- Elements Breadcrumb -->
-                    <div class="pt-5 mb-5" id="breadcrumb">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="mb-12">
-                                    <!-- ====================================
+		<section>
+			<div class="container">
+				<!-- Elements Breadcrumb -->
+				<div class="pt-5 mb-5" id="breadcrumb">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="mb-12">
+								<!-- ====================================
                                     ———	Dynamic Breadcrumb START
                                     ===================================== -->
-                                    <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);"  aria-label="breadcrumb">
-                                        <ol class="breadcrumb">
-                                            <li th:each="item, iterStat : ${breadcrumb}"
-                                                th:classappend="${iterStat.last} ? 'breadcrumb-item active' : 'breadcrumb-item'">
-                                                <th:block th:if="${iterStat.last}" th:text="${item.name}" aria-current="page"></th:block>
-                                                <a th:if="!${iterStat.last}" th:href="${item.url}" th:text="${item.name}">Item</a>
-                                            </li>
-                                        </ol>
-                                    </nav>
-                                    <!-- ====================================
+								<nav
+									style="--bs-breadcrumb-divider: url(&amp; #34; data: image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&amp;#34;);"
+									aria-label="breadcrumb">
+									<ol class="breadcrumb">
+										<li th:each="item, iterStat : ${breadcrumb}"
+											th:classappend="${iterStat.last} ? 'breadcrumb-item active' : 'breadcrumb-item'">
+											<th:block th:if="${iterStat.last}" th:text="${item.name}"
+												aria-current="page"></th:block> <a th:if="!${iterStat.last}"
+											th:href="${item.url}" th:text="${item.name}">Item</a>
+										</li>
+									</ol>
+								</nav>
+								<!-- ====================================
                                     ———	Dynamic Breadcrumb END
                                     ===================================== -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
 
-            <!-- ====================================
+		<!-- ====================================
             ———	PAGE SECTION START
             ===================================== -->
-            <section class="pb-10">
-                <div class="container">
-                    <div class="mb-6">
-                        <div class="row">
-            <th:block layout:fragment="customPageSection">
+		<section class="pb-10">
+			<div class="container">
+				<div class="mb-6">
+					<div class="row">
+						<th:block layout:fragment="customPageSection">
 
-            </th:block>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <!-- ====================================
+						</th:block>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- ====================================
             ———	PAGE SECTION END
             ===================================== -->
-        </div>
+	</div>
 
-        <!-- ====================================
+	<!-- ====================================
         ———	FOOTER CONTENT START
         ===================================== -->
-        <div th:replace="~{user/fragments/footer :: footerFragment}"></div>
-        <!-- ====================================
+	<div th:replace="~{user/fragments/footer :: footerFragment}"></div>
+	<!-- ====================================
         ———	FOOTER CONTENT END
         ===================================== -->
 
 
-        <!-- ====================================
+	<!-- ====================================
         ——— MODAL SECTION
         ===================================== -->
-        <!-- Login Modal -->
-        <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-label="loginModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header rounded">
-                        <h3 class="modal-title text-uppercase font-weight-bold">로그인</h3>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
+	<!-- Login Modal -->
+	<div class="modal fade" id="login" tabindex="-1" role="dialog"
+		aria-label="loginModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-sm modal-dialog-centered"
+			role="document">
+			<div class="modal-content">
+				<div class="modal-header rounded">
+					<h3 class="modal-title text-uppercase font-weight-bold">로그인</h3>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
 
-                    <div class="modal-body">
-                        <form th:action="@{/login/login}" method="post">
-                            <div class="mb-3">
-                                 <input type="text" class="form-control bg-smoke" required="" placeholder="아이디" 
-                                	   name="id" value="id003">
-                            </div>
+				<div class="modal-body">
+					<form th:action="@{/login/login}" method="post">
+						<div class="mb-3">
+							<input type="text" class="form-control bg-smoke" required=""
+								placeholder="아이디" name="id" value="id003">
+						</div>
 
-                            <div class="mb-3">
-                                <input type="password" class="form-control bg-smoke" required="" placeholder="비밀번호"
-                                       name="password" value="pw003">
-                            </div>
+						<div class="mb-3">
+							<input type="password" class="form-control bg-smoke" required=""
+								placeholder="비밀번호" name="password" value="pw003">
+						</div>
 
-                            <div class="form-check mb-0">
-                                <input type="checkbox" class="form-check-input" id="exampleCheck5">
-                                <label class="form-check-label text-gray-color mb-3" for="exampleCheck5">
-                                    로그인 상태 유지
-                                </label>
-                            </div>
-                            <div class="mb-3" style="display: flex;">
-                                <div style="float: left; width: 33%; text-align:center;">
-                                    <a data-bs-target="#findId" data-bs-toggle="modal" href="#">아이디 찾기</a>
-                                </div>
-                                <div style="float: left; width: 33%; text-align:center;">
-                                    <a data-bs-target="#findPw" data-bs-toggle="modal" href="#">비밀번호 찾기</a>
-                                </div>
-                                <div style="float: left; width: 33%; text-align:center;">
-                                    <a data-bs-target="#joinSelect" data-bs-toggle="modal" href="#">회원가입</a>
-                                </div>
-                            </div>
+						<div class="form-check mb-0">
+							<input type="checkbox" class="form-check-input"
+								id="exampleCheck5"> <label
+								class="form-check-label text-gray-color mb-3"
+								for="exampleCheck5"> 로그인 상태 유지 </label>
+						</div>
+						<div class="mb-3" style="display: flex;">
+							<div style="float: left; width: 33%; text-align: center;">
+								<a data-bs-target="#findId" data-bs-toggle="modal" href="#">아이디
+									찾기</a>
+							</div>
+							<div style="float: left; width: 33%; text-align: center;">
+								<a data-bs-target="#findPw" data-bs-toggle="modal" href="#">비밀번호
+									찾기</a>
+							</div>
+							<div style="float: left; width: 33%; text-align: center;">
+								<a data-bs-target="#joinSelect" data-bs-toggle="modal" href="#">회원가입</a>
+							</div>
+						</div>
 
-                            <div class="d-grid">
-                                <button type="submit" class="btn btn-primary text-uppercase">로그인</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <!-- findId Modal -->
-        <div class="modal fade" id="findId" tabindex="-1" role="dialog" aria-label="loginModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header rounded">
-                        <h3 class="modal-title text-uppercase font-weight-bold">아이디 찾기</h3>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-
-                    <div class="modal-body">
-                        <form th:action="@{/login/findId}" method="post">
-                            <div class="mb-3">
-                                <input type="text" class="form-control bg-smoke" required="" placeholder="이름을 입력하세요" name="name">
-                            </div>
-
-                            <div class="mb-3">
-                                <input type="text" class="form-control bg-smoke" required="" placeholder="전화번호를 입력하세요(- 포함)"
-                                       name="phone">
-                            </div>
-
-
-
-                            <div class="d-grid">
-                                <button type="submit" class="btn btn-primary text-uppercase">아이디 찾기</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        
-        <!-- findPw Modal -->
-        <div class="modal fade" id="findPw" tabindex="-1" role="dialog" aria-label="loginModalLabel" aria-hidden="true">
-		    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
-		        <div class="modal-content">
-		            <div class="modal-header rounded">
-		                <h3 class="modal-title text-uppercase font-weight-bold">비밀번호 찾기</h3>
-		                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-		            </div>
-		
-		            <div class="modal-body">
-		                <form th:action="@{/login/findPw}" method="post">
-		                    <div class="mb-3">
-		                        <input type="text" class="form-control bg-smoke" required="" placeholder="아이디를 입력하세요" name="id">
-		                    </div>
-		
-		                    <div class="mb-3">
-		                        <input type="email" class="form-control bg-smoke" required="" placeholder="이메일을 입력하세요" name="email">
-		                    </div>
-		
-		                    <div class="d-grid">
-		                        <button type="submit" class="btn btn-primary text-uppercase">비밀번호 찾기</button>
-		                    </div>
-		                </form>
-		            </div>
-		        </div>
-		    </div>
+						<div class="d-grid">
+							<button type="submit" class="btn btn-primary text-uppercase">로그인</button>
+						</div>
+					</form>
+				</div>
+			</div>
 		</div>
-        
-        
-        <!-- join Modal -->
-        <div class="modal fade" id="join" tabindex="-1" role="dialog" aria-label="loginModalLabel" aria-hidden="true">
-		    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
-		        <div class="modal-content">
-		            <div class="modal-header rounded">
-		                <h3 class="modal-title text-uppercase font-weight-bold">회원가입</h3>
-		                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-		            </div>
-		
-		            <div class="modal-body">
-		                <form th:action="@{/login/join}" method="post">
-		                    <div class="mb-3">
-		                        <input type="text" class="form-control bg-smoke" required="" placeholder="아이디" name="id">
-		                    </div>
-		
-		                    <div class="mb-3">
-		                        <input type="password" class="form-control bg-smoke" required="" placeholder="비밀번호" name="password">
-		                    </div>
-		
-		                    <div class="mb-3">
-		                        <input type="text" class="form-control bg-smoke" required="" placeholder="이름" name="name">
-		                    </div>
-		
-		                    <div class="mb-3">
-		                        <input type="text" class="form-control bg-smoke" required="" placeholder="닉네임" name="nickname">
-		                    </div>
-		
-		                    <div class="mb-3">
-		                        <input type="email" class="form-control bg-smoke" required="" placeholder="이메일" name="email">
-		                    </div>
-		
-		                    <div class="mb-3">
-		                        <input type="text" class="form-control bg-smoke" required="" placeholder="전화번호(- 포함)" name="phone">
-		                    </div>
-		
-		                    <div class="d-grid">
-		                        <button type="submit" class="btn btn-primary text-uppercase">회원가입</button>
-		                    </div>
-		                </form>
-		            </div>
-		        </div>
-		    </div>
-		</div>
-		
-		
-		<!-- business join Modal -->
-        <div class="modal fade" id="bsnsJoin" tabindex="-1" role="dialog" aria-label="loginModalLabel" aria-hidden="true">
-		    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
-		        <div class="modal-content">
-		            <div class="modal-header rounded">
-		                <h3 class="modal-title text-uppercase font-weight-bold">기업회원 회원가입</h3>
-		                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-		            </div>
-		
-		            <div class="modal-body">
-		                <form th:action="@{/login/bsnsJoin}" method="post">
-		                    <div class="mb-3">
-		                        <input type="text" class="form-control bg-smoke" required="" placeholder="아이디" name="id">
-		                    </div>
-		
-		                    <div class="mb-3">
-		                        <input type="password" class="form-control bg-smoke" required="" placeholder="비밀번호" name="password">
-		                    </div>
-		
-		                    <div class="mb-3">
-		                        <input type="text" class="form-control bg-smoke" required="" placeholder="이름" name="name">
-		                    </div>
-		
-		                    <div class="mb-3">
-		                        <input type="text" class="form-control bg-smoke" required="" placeholder="닉네임" name="nickname">
-		                    </div>
-		
-		                    <div class="mb-3">
-		                        <input type="email" class="form-control bg-smoke" required="" placeholder="이메일" name="email">
-		                    </div>
-		
-		                    <div class="mb-3">
-		                        <input type="text" class="form-control bg-smoke" required="" placeholder="전화번호(- 포함)" name="phone">
-		                    </div>
-		                    
-		                    <div class="mb-3">
-		                        <input type="text" class="form-control bg-smoke" required="" placeholder="사업자번호" name="bsnsNum">
-		                    </div>
-		                    
-		                    <div class="mb-3">
-		                        <input type="text" class="form-control bg-smoke" required="" placeholder="주소" name="address">
-		                    </div>
-		                    
-		                    <div class="mb-3">
-		                        <select name="brand" class="form-control bg-smoke">
-					    			<option value="" >====제휴브랜드를선택해주세요 (없을시 선택 x)====</option>
-					    			<option value="">한국관광공사</option>
-					    			<option value="">전주시청 관광담당자</option>
-					    			<option value="">배달의 민족</option>
-					    			<option value="">요기요</option>
-					    			<option value="">여기어때</option>
-					    			<option value="">부킹닷컴</option>
-					    			<option value="">야놀자</option>
-				    			</select>
-		                    </div>
-		
-		                    <div class="d-grid">
-		                        <button type="submit" class="btn btn-primary text-uppercase">회원가입</button>
-		                    </div>
-		                </form>
-		            </div>
-		        </div>
-		    </div>
-		</div>
-		
-		
-		<!-- JoinSelect Modal -->
-		<div class="modal fade" id="joinSelect" tabindex="-1" role="dialog" aria-label="mypageModalLabel" aria-hidden="true">
-		    <div class="modal-dialog modal-dialog-centered" role="document">
-		        <div class="modal-content">
-		            <div class="modal-header rounded">
-		                <h3 class="modal-title text-uppercase font-weight-bold">회원가입</h3>
-		                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-		            </div>
-		
-		            <div class="modal-body">
-		                <div class="d-grid gap-2">
-		                    <button type="button" class="btn btn-primary text-uppercase" data-bs-toggle="modal" data-bs-target="#join">개인회원</button>
-		                    <button type="button" class="btn btn-primary text-uppercase" data-bs-toggle="modal" data-bs-target="#bsnsJoin">기업회원</button>
-		                </div>
-		            </div>
-		        </div>
-		    </div>
-		</div>
-		
-		
-		<!-- Mypage Modal -->
-		<div class="modal fade" id="mypageModal" tabindex="-1" role="dialog" aria-label="mypageModalLabel" aria-hidden="true">
-		    <div class="modal-dialog modal-dialog-centered" role="document">
-		        <div class="modal-content">
-		            <div class="modal-header rounded">
-		                <h3 class="modal-title text-uppercase font-weight-bold">마이페이지</h3>
-		                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-		            </div>
-		
-		            <div class="modal-body">
-		                <div class="d-grid gap-2">
-		                    <button type="button" class="btn btn-primary text-uppercase" data-bs-toggle="modal" data-bs-target="#modifyModal" onclick="getMemberInfo()">회원정보수정</button>
-		                    <button type="button" class="btn btn-primary text-uppercase" th:onclick="'confirmDelete(\'' + ${loginId} + '\');'">회원탈퇴</button>
-		                    <button type="button" class="btn btn-primary text-uppercase" onclick="location.href='#'">예약내역조회</button>
-		                    <button type="button" class="btn btn-primary text-uppercase" onclick="location.href='#'">내가쓴 게시글보기</button>
-		                    <button type="button" class="btn btn-primary text-uppercase" onclick="location.href='#'">내가쓴 댓글보기</button>
-		                    <button type="button" class="btn btn-primary text-uppercase" onclick="location.href='#'">즐겨찾기 게시글보기</button>
-		                    <button type="button" class="btn btn-primary text-uppercase" onclick="location.href='#'">즐겨찾기 상품보기</button>
-		                    <button type="button" class="btn btn-primary text-uppercase" onclick="location.href='#'">자주찾는 질문보기</button>
-		                    <button type="button" class="btn btn-primary text-uppercase" onclick="location.href='#'">1:1 문의하기</button>
-		                </div>
-		            </div>
-		        </div>
-		    </div>
-		</div>
-		
-		<!-- 회원정보수정 Modal -->
-		<div class="modal fade" id="modifyModal" tabindex="-1" role="dialog" aria-labelledby="modifyModalLabel" aria-hidden="true">
-		    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-		        <div class="modal-content">
-		            <div class="modal-header">
-		                <h5 class="modal-title" id="modifyModalLabel">회원정보수정</h5>
-		                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-		            </div>
-		            <div class="modal-body">
-		                <form id="modifyForm" th:action="@{/mypage/mypageManage}" method="post" onsubmit="return submitForm(this)">
-		                    <input type="hidden" name="memberId" th:value="${session.loginId}">
-		                    <div class="form-group">
-		                        <label for="memberPw">회원비밀번호</label>
-		                        <input type="text" class="form-control" id="memberPw" name="memberPw">
-		                    </div>
-		                    <div class="form-group">
-		                        <label for="memberName">회원이름</label>
-		                        <input type="text" class="form-control" id="memberName" name="memberName">
-		                    </div>
-		                    <div class="form-group">
-		                        <label for="memberNickname">회원닉네임</label>
-		                        <input type="text" class="form-control" id="memberNickname" name="memberNickname">
-		                    </div>
-		                    <div class="form-group">
-		                        <label for="memberEmail">회원이메일</label>
-		                        <input type="email" class="form-control" id="memberEmail" name="memberEmail">
-		                    </div>
-		                    <div class="form-group">
-		                        <label for="memberTelNum">회원연락처</label>
-		                        <input type="tel" class="form-control" id="memberTelNum" name="memberTelNum">
-		                    </div>
-		                </form>
-		            </div>
-		            <div class="modal-footer">
-		               <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#mypageModal">취소</button>
-		                <button type="submit" form="modifyForm" class="btn btn-primary">저장</button>
-		            </div>
-		        </div>
-		    </div>
-		</div>
+	</div>
 
 
-        <!-- ===========================================
+	<!-- findId Modal -->
+	<div class="modal fade" id="findId" tabindex="-1" role="dialog"
+		aria-label="loginModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-sm modal-dialog-centered"
+			role="document">
+			<div class="modal-content">
+				<div class="modal-header rounded">
+					<h3 class="modal-title text-uppercase font-weight-bold">아이디 찾기</h3>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+
+				<div class="modal-body">
+					<form th:action="@{/login/findId}" method="post">
+						<div class="mb-3">
+							<input type="text" class="form-control bg-smoke" required=""
+								placeholder="이름을 입력하세요" name="name">
+						</div>
+
+						<div class="mb-3">
+							<input type="text" class="form-control bg-smoke" required=""
+								placeholder="전화번호를 입력하세요(- 포함)" name="phone">
+						</div>
+
+
+
+						<div class="d-grid">
+							<button type="submit" class="btn btn-primary text-uppercase">아이디
+								찾기</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- findPw Modal -->
+	<div class="modal fade" id="findPw" tabindex="-1" role="dialog"
+		aria-label="loginModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-sm modal-dialog-centered"
+			role="document">
+			<div class="modal-content">
+				<div class="modal-header rounded">
+					<h3 class="modal-title text-uppercase font-weight-bold">비밀번호
+						찾기</h3>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+
+				<div class="modal-body">
+					<form th:action="@{/login/findPw}" method="post">
+						<div class="mb-3">
+							<input type="text" class="form-control bg-smoke" required=""
+								placeholder="아이디를 입력하세요" name="id">
+						</div>
+
+						<div class="mb-3">
+							<input type="email" class="form-control bg-smoke" required=""
+								placeholder="이메일을 입력하세요" name="email">
+						</div>
+
+						<div class="d-grid">
+							<button type="submit" class="btn btn-primary text-uppercase">비밀번호
+								찾기</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- join Modal -->
+	<div class="modal fade" id="join" tabindex="-1" role="dialog"
+		aria-label="loginModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-sm modal-dialog-centered"
+			role="document">
+			<div class="modal-content">
+				<div class="modal-header rounded">
+					<h3 class="modal-title text-uppercase font-weight-bold">회원가입</h3>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+
+				<div class="modal-body">
+					<form th:action="@{/login/join}" method="post">
+						<div class="mb-3">
+							<input type="text" class="form-control bg-smoke" required=""
+								placeholder="아이디" name="id">
+						</div>
+
+						<div class="mb-3">
+							<input type="password" class="form-control bg-smoke" required=""
+								placeholder="비밀번호" name="password">
+						</div>
+
+						<div class="mb-3">
+							<input type="text" class="form-control bg-smoke" required=""
+								placeholder="이름" name="name">
+						</div>
+
+						<div class="mb-3">
+							<input type="text" class="form-control bg-smoke" required=""
+								placeholder="닉네임" name="nickname">
+						</div>
+
+						<div class="mb-3">
+							<input type="email" class="form-control bg-smoke" required=""
+								placeholder="이메일" name="email">
+						</div>
+
+						<div class="mb-3">
+							<input type="text" class="form-control bg-smoke" required=""
+								placeholder="전화번호(- 포함)" name="phone">
+						</div>
+
+						<div class="d-grid">
+							<button type="submit" class="btn btn-primary text-uppercase">회원가입</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- business join Modal -->
+	<div class="modal fade" id="bsnsJoin" tabindex="-1" role="dialog"
+		aria-label="loginModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-sm modal-dialog-centered"
+			role="document">
+			<div class="modal-content">
+				<div class="modal-header rounded">
+					<h3 class="modal-title text-uppercase font-weight-bold">기업회원
+						회원가입</h3>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+
+				<div class="modal-body">
+					<form th:action="@{/login/bsnsJoin}" method="post">
+						<div class="mb-3">
+							<input type="text" class="form-control bg-smoke" required=""
+								placeholder="아이디" name="id">
+						</div>
+
+						<div class="mb-3">
+							<input type="password" class="form-control bg-smoke" required=""
+								placeholder="비밀번호" name="password">
+						</div>
+
+						<div class="mb-3">
+							<input type="text" class="form-control bg-smoke" required=""
+								placeholder="이름" name="name">
+						</div>
+
+						<div class="mb-3">
+							<input type="text" class="form-control bg-smoke" required=""
+								placeholder="닉네임" name="nickname">
+						</div>
+
+						<div class="mb-3">
+							<input type="email" class="form-control bg-smoke" required=""
+								placeholder="이메일" name="email">
+						</div>
+
+						<div class="mb-3">
+							<input type="text" class="form-control bg-smoke" required=""
+								placeholder="전화번호(- 포함)" name="phone">
+						</div>
+
+						<div class="mb-3">
+							<input type="text" class="form-control bg-smoke" required=""
+								placeholder="사업자번호" name="bsnsNum">
+						</div>
+
+						<div class="mb-3">
+							<input type="text" class="form-control bg-smoke" required=""
+								placeholder="주소" name="address">
+						</div>
+
+						<div class="mb-3">
+							<select name="brand" class="form-control bg-smoke">
+								<option value="">====제휴브랜드를선택해주세요 (없을시 선택 x)====</option>
+								<option value="">한국관광공사</option>
+								<option value="">전주시청 관광담당자</option>
+								<option value="">배달의 민족</option>
+								<option value="">요기요</option>
+								<option value="">여기어때</option>
+								<option value="">부킹닷컴</option>
+								<option value="">야놀자</option>
+							</select>
+						</div>
+
+						<div class="d-grid">
+							<button type="submit" class="btn btn-primary text-uppercase">회원가입</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- JoinSelect Modal -->
+	<div class="modal fade" id="joinSelect" tabindex="-1" role="dialog"
+		aria-label="mypageModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header rounded">
+					<h3 class="modal-title text-uppercase font-weight-bold">회원가입</h3>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+
+				<div class="modal-body">
+					<div class="d-grid gap-2">
+						<button type="button" class="btn btn-primary text-uppercase"
+							data-bs-toggle="modal" data-bs-target="#join">개인회원</button>
+						<button type="button" class="btn btn-primary text-uppercase"
+							data-bs-toggle="modal" data-bs-target="#bsnsJoin">기업회원</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- Mypage Modal -->
+	<div class="modal fade" id="mypageModal" tabindex="-1" role="dialog"
+		aria-label="mypageModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header rounded">
+					<h3 class="modal-title text-uppercase font-weight-bold">마이페이지</h3>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+
+				<div class="modal-body">
+					<div class="d-grid gap-2">
+						<button type="button" class="btn btn-primary"
+							data-bs-toggle="modal" data-bs-target="#modifyModal"
+							onclick="getMemberInfo()">회원정보수정</button>
+						<button type="button" class="btn btn-primary"
+							th:attr="onclick='confirmDelete(\'' + ${loginId} + '\');'">회원탈퇴</button>
+						<a href="#" class="btn btn-primary">예약내역조회</a> 
+						<button type="button" class="btn btn-primary"
+							data-bs-toggle="modal" data-bs-target="#myPostModal"
+							onclick="getMemberPost()">내가쓴 게시글보기</button> 
+						<button type="button" class="btn btn-primary"
+						data-bs-toggle="modal" data-bs-target="#myCommentModal"
+						onclick="getMemberCmtPost()">내가쓴 댓글보기</button> 
+						<a href="#" class="btn btn-primary">즐겨찾기 게시글보기</a> 
+						<a href="#" class="btn btn-primary">즐겨찾기 상품보기</a> 
+						<a th:href="@{/faq}" class="btn btn-primary">자주찾는 질문보기</a> 
+						<a th:href="@{/qna}" class="btn btn-primary">1:1 문의하기</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 회원정보수정 Modal -->
+	<div class="modal fade" id="modifyModal" tabindex="-1" role="dialog"
+		aria-labelledby="modifyModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg modal-dialog-centered"
+			role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="modifyModalLabel">회원정보수정</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<form id="modifyForm" th:action="@{/mypage/mypageManage}"
+						method="post" onsubmit="return submitForm(this)">
+						<input type="hidden" name="memberId" th:value="${session.loginId}">
+						<div class="form-group">
+							<label for="memberPw">회원비밀번호</label> <input type="text"
+								class="form-control" id="memberPw" name="memberPw">
+						</div>
+						<div class="form-group">
+							<label for="memberName">회원이름</label> <input type="text"
+								class="form-control" id="memberName" name="memberName">
+						</div>
+						<div class="form-group">
+							<label for="memberNickname">회원닉네임</label> <input type="text"
+								class="form-control" id="memberNickname" name="memberNickname">
+						</div>
+						<div class="form-group">
+							<label for="memberEmail">회원이메일</label> <input type="email"
+								class="form-control" id="memberEmail" name="memberEmail">
+						</div>
+						<div class="form-group">
+							<label for="memberTelNum">회원연락처</label> <input type="tel"
+								class="form-control" id="memberTelNum" name="memberTelNum">
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-bs-toggle="modal" data-bs-target="#mypageModal">취소</button>
+					<button type="submit" form="modifyForm" class="btn btn-primary">저장</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- 내가 작성한 글 보기 Modal -->
+	<div class="modal fade" id="myPostModal" tabindex="-1" aria-labelledby="myPostModalLabel" aria-hidden="true">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <h5 class="modal-title" id="myPostModalLabel">내가 작성한 게시글</h5>
+	                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	            </div>
+	            <div class="modal-body">
+	                <table class="table">
+	                    <thead>
+	                        <tr>
+	                            <th>제목</th>
+	                            <th>바로가기</th>
+	                        </tr>
+	                    </thead>
+	                    <tbody id="postTableBody">
+	                        <tr>
+	                            <td colspan="2">작성한 게시글이 없습니다.</td>
+	                        </tr>
+	                    </tbody>
+	                </table>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	
+	<!-- 내가 작성한 댓글 보기 Modal -->
+	<div class="modal fade" id="myCommentModal" tabindex="-1" aria-labelledby="myCommentModalLabel" aria-hidden="true">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <h5 class="modal-title" id="myCommentModalLabel">내가 작성한 댓글</h5>
+	                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	            </div>
+	            <div class="modal-body">
+	                <table class="table">
+	                    <thead>
+	                        <tr>
+	                            <th>댓글 내용</th>
+	                            <th>바로가기</th>
+	                        </tr>
+	                    </thead>
+	                    <tbody id="commentTableBody">
+	                        <tr>
+	                            <td colspan="2">작성한 댓글이 없습니다.</td>
+	                        </tr>
+	                    </tbody>
+	                </table>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+
+
+
+	<!-- ===========================================
         ———	COMMON JAVASCRIPT RESOUCES START
         ========================================== -->
-        <script th:src="@{/user/plugins/jquery/jquery-3.4.1.min.js}"></script>
-        <script th:src="@{/user/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
-        <script th:src="@{/user/plugins/menuzord/js/menuzord.js}"></script>
-        <script th:src="@{/user/plugins/fancybox/jquery.fancybox.min.js}"></script>
-        <script th:src="@{/user/plugins/selectric/jquery.selectric.min.js}"></script>
-        <script th:src="@{/user/plugins/lazyestload/lazyestload.js}"></script>
-        <script th:src="@{/user/plugins/velocity/velocity.min.js}"></script>
-        <script th:src="@{/user/plugins/smoothscroll/SmoothScroll.js}"></script>
-        <!-- ===========================================
+	<script th:src="@{/user/plugins/jquery/jquery-3.4.1.min.js}"></script>
+	<script th:src="@{/user/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+	<script th:src="@{/user/plugins/menuzord/js/menuzord.js}"></script>
+	<script th:src="@{/user/plugins/fancybox/jquery.fancybox.min.js}"></script>
+	<script th:src="@{/user/plugins/selectric/jquery.selectric.min.js}"></script>
+	<script th:src="@{/user/plugins/lazyestload/lazyestload.js}"></script>
+	<script th:src="@{/user/plugins/velocity/velocity.min.js}"></script>
+	<script th:src="@{/user/plugins/smoothscroll/SmoothScroll.js}"></script>
+	<!-- ===========================================
         ———	COMMON JAVASCRIPT RESOUCES END
         ========================================== -->
 
 
-        <!-- ===========================================
+	<!-- ===========================================
         ———	CUSTOM JAVASCRIPT RESOUCES START
         ========================================== -->
-        <th:block layout:fragment="customJsFIle"></th:block>
-        <!-- ===========================================
+	<th:block layout:fragment="customJsFIle"></th:block>
+	<!-- ===========================================
         ———	CUSTOM JAVASCRIPT RESOUCES END
         ========================================== -->
 
-        <script th:src="@{/user/js/star.js}"></script>
-        <script th:src="@{/user/js/mypage.js}"></script>
+	<script th:src="@{/user/js/star.js}"></script>
+	<script th:src="@{/user/js/mypage.js}"></script>
 
-        <!--/* 스크립트는 우선 맨 아래로 옮기긴 했는데 나중에 js파일로 분리해주세요 그리고 CDATA부분은 xml에서 사용되는 주석 처리 방법 아닌지?*/-->
-        
-        
-        <script th:inline="javascript">
-        
-            const loginError = /*[[${loginError}]]*/ false;
-            if (loginError) {
-                alert("아이디 혹은 비밀번호가 틀렸습니다.");
-                setTimeout(function(){
-                	$('#login').modal('show');
-                }, 30);
-            }
-        </script>
-        <script th:inline="javascript">
-            const memberId = /*[[${memberId}]]*/ null;
-            const message = /*[[${message}]]*/ null;
+	<!--/* 스크립트는 우선 맨 아래로 옮기긴 했는데 나중에 js파일로 분리해주세요 그리고 CDATA부분은 xml에서 사용되는 주석 처리 방법 아닌지?*/-->
 
-            if (memberId != null) {
-                alert("회원님의 아이디는 " + memberId + " 입니다.");
-            } else if (message != null) {
-                alert(message);
-            }
-        </script>
-        <script th:inline="javascript">
-		    const joinMessage = /*[[${joinMessage}]]*/ null;
-		    if (joinMessage != null) {
-		        alert(joinMessage);
-		    }
-		</script>
-        <script th:inline="javascript">
-            /*document.addEventListener("DOMContentLoaded", function (){
-                // 현재 페이지의 URL
-                const currentPath = window.location.pathname;
-                // 모든 메뉴의 링크 찾기
-                const menuLinks = document.querySelectorAll('.menuzord-menu a')
-                // 각 링크에 대해 실행
-                menuLinks.forEach(link => {
-                    // href 속성값 가져오기
-                    const linkHref = link.getAttribute('href');
-                    const linkPath = new URL(link.href).pathname;
-                    // 현재 페이지의 경로와 링크의 경로가 일치하는 경우
-                        if (currentPath === linkPath && linkHref !== '#'){
-                            // 해당 링크를 포함하는 li에 active 클래스 추가
-                            link.parentElement.classList.add('active');
-                        }
-                });
-            });*/
 
-            $(document).ready(function () {
-                // 현재 페이지의 URL
-                const currentPath = window.location.pathname;
+	<script th:inline="javascript">
+		const loginError = /*[[${loginError}]]*/false;
+		if (loginError) {
+			alert("아이디 혹은 비밀번호가 틀렸습니다.");
+			setTimeout(function() {
+				$('#login').modal('show');
+			}, 30);
+		}
+	</script>
+	<script th:inline="javascript">
+		const memberId = /*[[${memberId}]]*/null;
+		const message = /*[[${message}]]*/null;
 
-                // 모든 메뉴 링크 찾기
-                const $menuLinks = $('.menuzord-menu a');
+		if (memberId != null) {
+			alert("회원님의 아이디는 " + memberId + " 입니다.");
+		} else if (message != null) {
+			alert(message);
+		}
+	</script>
+	<script th:inline="javascript">
+		const joinMessage = /*[[${joinMessage}]]*/null;
+		if (joinMessage != null) {
+			alert(joinMessage);
+		}
+	</script>
+	<script th:inline="javascript">
+		/*document.addEventListener("DOMContentLoaded", function (){
+		    // 현재 페이지의 URL
+		    const currentPath = window.location.pathname;
+		    // 모든 메뉴의 링크 찾기
+		    const menuLinks = document.querySelectorAll('.menuzord-menu a')
+		    // 각 링크에 대해 실행
+		    menuLinks.forEach(link => {
+		        // href 속성값 가져오기
+		        const linkHref = link.getAttribute('href');
+		        const linkPath = new URL(link.href).pathname;
+		        // 현재 페이지의 경로와 링크의 경로가 일치하는 경우
+		            if (currentPath === linkPath && linkHref !== '#'){
+		                // 해당 링크를 포함하는 li에 active 클래스 추가
+		                link.parentElement.classList.add('active');
+		            }
+		    });
+		});*/
 
-                $menuLinks.each(function () {
-                    const $linkHref = $(this).attr('href');
-                    // 링크 전체 경로 구성
-                    const linkPath = new URL($linkHref, window.location).pathname;
+		$(document).ready(function() {
+			// 현재 페이지의 URL
+			const currentPath = window.location.pathname;
 
-                    // 현재 페이지의 경로와 링크가 일치
-                    if (currentPath === linkPath && $linkHref !== '#') {
-                        // 현재 링크에 맞는 a태그 상위의 li태그에 active 추가
-                        $(this).parents('li').addClass('active');
-                    }
-                });
-            });
-        </script>
+			// 모든 메뉴 링크 찾기
+			const $menuLinks = $('.menuzord-menu a');
 
-        <!-- ===========================================
+			$menuLinks.each(function() {
+				const $linkHref = $(this).attr('href');
+				// 링크 전체 경로 구성
+				const linkPath = new URL($linkHref, window.location).pathname;
+
+				// 현재 페이지의 경로와 링크가 일치
+				if (currentPath === linkPath && $linkHref !== '#') {
+					// 현재 링크에 맞는 a태그 상위의 li태그에 active 추가
+					$(this).parents('li').addClass('active');
+				}
+			});
+		});
+	</script>
+
+	<!-- ===========================================
         ———	CUSTOM JAVASCRIPT SCRIPT START
         ========================================== -->
-        <th:block layout:fragment="customJs"></th:block>
-        <!-- ===========================================
+	<th:block layout:fragment="customJs"></th:block>
+	<!-- ===========================================
         ———	CUSTOM JAVASCRIPT SCRIPT END
         ========================================== -->
-    </body>
+</body>
 </html>
