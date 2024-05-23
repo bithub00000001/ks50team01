@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import ksmart.ks50team01.user.board.dto.UCategory;
 import ksmart.ks50team01.user.board.dto.UComment;
 import ksmart.ks50team01.user.board.dto.UCommunity;
+import ksmart.ks50team01.user.board.dto.UPostFile;
 import ksmart.ks50team01.user.board.mapper.UCommunityMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -169,6 +170,44 @@ public class UCommunityService {
 
 	public void setPostCode(String postNum) {
 		
+	}
+
+
+	/**
+	 * 게시글 수정
+	 * @param uCommunity
+	 */
+	public void postModify(UCommunity uCommunity) {
+		uCommunityMapper.postModify(uCommunity);
+	}
+
+
+	/**
+	 * 주어진 번호에 해당하는 게시글 정보 조회
+	 * @param postNum 조회할 게시글 번호
+	 * @return 조회된 uCommunity 객체, 없을 경우 null
+	 */
+	public UCommunity getPostInfoByNum(String postNum) {
+		return uCommunityMapper.getPostInfoByNum(postNum);
+	}
+
+
+	/**
+	 * 게시글 삭제
+	 */
+	public void postDelete(String postNum) {
+		uCommunityMapper.postDelete(postNum);
+		
+	}
+
+
+	/**
+	 * 파일목록
+	 * @return
+	 */
+	public List<UPostFile> getFileList() {
+		List<UPostFile> postFileList = uCommunityMapper.getFileList();
+		return postFileList;
 	}
 
 

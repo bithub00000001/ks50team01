@@ -5,15 +5,16 @@ import lombok.Data;
 
 @Data
 public class UComment {
-	private String CommentNum;
-	private String CommentRegId;
-	private String CommentContent;
-	private int CommentlikeTotal;
-	private int CommentDislikeTotal;
-	private int CommentReportTotal;
-	private String CommentAct;
-	private String CommentRegDate;
-	private String CommentMdfDate;
-	private String CommentDelDate;
+	private String commentNum;
+	private String postNum;
+	private String commentRegId;
+	private String commentContent;
+	private int commentlikeTotal;
+	private int commentDislikeTotal;
+	private int commentReportTotal;
+	private String commentAct;
+	private String commentRegDate;
+	private String commentMdfDate;
+	private String commentDelDate;
 
 }

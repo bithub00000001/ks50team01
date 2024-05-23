@@ -30,7 +30,7 @@ public class PFaqService {
 
 	
 	/**
-	 * 주어진 번호에 해당하는 자주찾는질문 조회
+	 * 주어진 번호에 해당하는 자주찾는질문 정보 조회
 	 * @param faqNum 조회할 자주찾는질문 번호
 	 * @return 조회된 PFaq 객체, 없을 경우 null
 	 */

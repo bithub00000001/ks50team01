@@ -11,6 +11,7 @@ public class UCommunity {
 	private String postNum;
 	private int postRowNum;
 	private String postRegId;
+	private String postCateNum;
 	private String postTitle;
 	private String postContent;
 	private int postInqCnt;
@@ -27,6 +28,7 @@ public class UCommunity {
 	private UCategory category;
 	
 	private List<UComment> commentList;
+	
 	
 	//private String postCateName;
 	/*
