@@ -18,7 +18,6 @@
 				padding-bottom: 8px !important;	
 			}
 		</style>
-
 	</head>
 
 	<th:block layout:fragment="customContent">
@@ -126,7 +125,6 @@
                             </div>
                         </div>
                         <!-- grid table end -->
-
                     </form>
                 </div>
             </div>
@@ -154,8 +152,6 @@
 	    <script th:src="@{/platform/vendors/jszip/dist/jszip.min.js}"></script>
 	    <script th:src="@{/platform/vendors/pdfmake/build/pdfmake.min.js}"></script>
 	    <script th:src="@{/platform/vendors/pdfmake/build/vfs_fonts.js}"></script>
-	
-	
 	</th:block>
 	
 
@@ -190,46 +186,46 @@
     				const colObj = {  
     						
                          communityCateList : [
-       						{'title': '커뮤니티 카테고리 번호', 'data': 'postCateNum'},
-       					    {'title': '등록자 아이디', 'data': 'postCateRegId'},
-       					    {'title': '커뮤니티 카테고리 유형', 'data': 'postCateType'},
-       					    {'title': '수정자 아이디', 'data': 'postCateMdfId'},
-       					    {'title': '활성화 여부', 'data': 'postAct'},
-       					    {'title': '등록일자', 'data': 'postRegDate'},
-       					    {'title': '수정일자', 'data': 'postMdfDate'},
+       						{'title': '커뮤니티 카테고리 번호', 'data': 'postCategoryNum'},
+       					    {'title': '등록자 아이디', 'data': 'postCategoryRegId'},
+       					    {'title': '커뮤니티 카테고리 유형', 'data': 'postCategoryName'},
+       					    {'title': '수정자 아이디', 'data': 'postCategoryMdfId'},
+       					    {'title': '활성화 여부', 'data': 'postCateActive'},
+       					    {'title': '등록일자', 'data': 'postCategoryRegDate'},
+       					    {'title': '수정일자', 'data': 'postCategoryMdfDate'},
        					 ],
     						
     						
     						
     					noticeCateList : [
-    						{'title': '공지사항 카테고리 번호', 'data': 'noticeCateNum'},
-    					    {'title': '등록자 아이디', 'data': 'noticeRegId'},
-    					    {'title': '공지사항 카테고리 유형', 'data': 'noticeCateType'},
-    					    {'title': '수정자 아이디', 'data': 'noticeMdfId'},
-    					    {'title': '활성화 여부', 'data': 'noticeAct'},
-    					    {'title': '등록일자', 'data': 'noticeRegDate'},
-    					    {'title': '수정일자', 'data': 'noticeMdfDate'},
+    						{'title': '공지사항 카테고리 번호', 'data': 'noticeCategoryNum'},
+    					    {'title': '등록자 아이디', 'data': 'noticeCategoryRegId'},
+    					    {'title': '공지사항 카테고리 유형', 'data': 'noticeCategoryName'},
+    					    {'title': '수정자 아이디', 'data': 'noticeCategoryMdfId'},
+    					    {'title': '활성화 여부', 'data': 'noticeCateActive'},
+    					    {'title': '등록일자', 'data': 'noticeCategoryRegDate'},
+    					    {'title': '수정일자', 'data': 'noticeCategoryMdfDate'},
     					 ],
        					    
        					faqCateList : [
-     						{'title': '자주찾는질문 및 1:1문의 카테고리 번호', 'data': 'faqCateNum'},
-     					    {'title': '등록자 아이디', 'data': 'faqRegId'},
-     					    {'title': '자주찾는질문 및 1:1문의 카테고리 유형', 'data': 'faqCateType'},
-     					    {'title': '수정자 아이디', 'data': 'faqMdfId'},
-     					    {'title': '활성화 여부', 'data': 'faqAct'},
-     					    {'title': '등록일자', 'data': 'faqRegDate'},
-     					    {'title': '수정일자', 'data': 'faqMdfDate'},
+     						{'title': '자주찾는질문 및 1:1문의 카테고리 번호', 'data': 'faqCategoryNum'},
+     					    {'title': '등록자 아이디', 'data': 'faqCategoryRegId'},
+     					    {'title': '자주찾는질문 및 1:1문의 카테고리 유형', 'data': 'faqCategoryName'},
+     					    {'title': '수정자 아이디', 'data': 'faqCategoryMdfId'},
+     					    {'title': '활성화 여부', 'data': 'faqCateActive'},
+     					    {'title': '등록일자', 'data': 'faqCategoryRegDate'},
+     					    {'title': '수정일자', 'data': 'faqCategoryMdfDate'},
      					 ],
     					    
     					    
     					reportCateList : [
-       						{'title': '신고 카테고리 번호', 'data': 'reportCateNum'},
-       					    {'title': '등록자 아이디', 'data': 'reportRegId'},
-       					    {'title': '신고 카테고리 유형', 'data': 'reportCateType'},
-       					    {'title': '수정자 아이디', 'data': 'reportMdfId'},
-       					    {'title': '활성화 여부', 'data': 'reportAct'},
-       					    {'title': '등록일자', 'data': 'reportRegDate'},
-       					    {'title': '수정일자', 'data': 'reportMdfDate'},
+       						{'title': '신고 카테고리 번호', 'data': 'reportCategoryNum'},
+       					    {'title': '등록자 아이디', 'data': 'reportCategoryRegId'},
+       					    {'title': '신고 카테고리 유형', 'data': 'reportCategoryName'},
+       					    {'title': '수정자 아이디', 'data': 'reportCategoryMdfId'},
+       					    {'title': '활성화 여부', 'data': 'reportCateActive'},
+       					    {'title': '등록일자', 'data': 'reportCategoryRegDate'},
+       					    {'title': '수정일자', 'data': 'reportCategoryMdfDate'},
        					 ],
     				};
     				

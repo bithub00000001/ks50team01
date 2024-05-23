@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class PQna {
 	private String qnaNum;
+	private int qnaRowNum;
 	private String qnaRegId;
 	private String faqCateType;
 	private String qnaProCate;
@@ -14,6 +15,9 @@ public class PQna {
 	private String qnaRegDate;
 	private String qnaMdfDate;
 	private String qnartnDate;
+	
+	private PCategory category;
+	
 	
 	// 추가된 association을 위한 멤버 변수
 	private PFaq faqCate;
