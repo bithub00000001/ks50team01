@@ -1,20 +1,15 @@
 package ksmart.ks50team01.user.board.service;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
-
-import javax.xml.stream.events.Comment;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import ksmart.ks50team01.user.board.dto.UCategory;
 import ksmart.ks50team01.user.board.dto.UComment;
 import ksmart.ks50team01.user.board.dto.UCommunity;
 import ksmart.ks50team01.user.board.mapper.UCommunityMapper;
-import ksmart.ks50team01.user.board.mapper.UNoticeMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -39,41 +34,18 @@ public class UCommunityService {
 	
 	
 	
-	public List<String> getPostCateList(){
-		List<String> postCateList = uCommunityMapper.getPostCateList();
+	public List<UCategory> getPostCateList(){
+		List<UCategory> postCateList = uCommunityMapper.getPostCateList();
 		
 		log.info("게시글 카테고리 조회 결과: {}", postCateList);
 		return postCateList;
 	}
 	
 	
-	/** 외않되 ... 
-    // 특정 게시물의 댓글 수를 가져오는 메서드 추가
-    public Integer getCommentCntList(String postNum) {
-        Integer count = uCommunityMapper.getCommentCntByPostNum(postNum);
-        return count != null ? count : 0;
-    }
-     */
-    
-
-
 	
 	
-
-
-
-    // 게시글 추가
-    private void insertPost(String postCategory, String postTitle, String postContent, MultipartFile postFile) {
-        uCommunityMapper.insertPost(postCategory, postTitle, postContent, postFile);
-    }
-
-	
-	
-	
-	
-
     /**
-     * 특정 게시글 상세 조회
+     * 게시글 상세 조회
      * @param postNum 조회할 게시글 ID
      * @return UCommunity
      */
@@ -85,9 +57,78 @@ public class UCommunityService {
     
     
     
-    public List<UCommunity> getCommentByPostNum(String postNum) {
-        return uCommunityMapper.getCommentByPostNum(postNum); // 게시글 번호에 해당하는 모든 댓글을 가져오는 메서드 호출
+	// 조회수 증가
+    public int increaseViewCount(String postNum) {
+        return uCommunityMapper.increaseViewCount(postNum);
     }
+    
+    
+    // 게시글 번호에 해당하는 모든 댓글을 가져오는 메서드 호출
+    public List<UComment> getCommentByPostNum(String postNum) {
+        return uCommunityMapper.getCommentByPostNum(postNum); 
+    }
+    
+    // 특정 게시물의 총 댓글 수
+	public int getCommentCntByPostNum(String postNum) {
+	    int commentCnt = uCommunityMapper.getCommentCntByPostNum(postNum);
+	    return commentCnt;
+	}
+
+ 
+
+
+	
+	
+
+
+	
+	
+    /**
+     * 게시글 작성
+     * @param uCommunity
+     */
+	/**
+	 
+    public void insertPost(String postRegId, String postCateNum, String postTitle, String postContent, MultipartFile postFile) throws Exception {
+        String fileName = null;
+        if (postFile != null && !postFile.isEmpty()) {
+        	// 저장할 경로 지정
+            String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/user/files";
+            // 랜덤으로 파일이름 생성
+            UUID uuid = UUID.randomUUID();
+            fileName = uuid + "_" + postFile.getOriginalFilename();
+            File saveFile = new File(projectPath, fileName);
+            postFile.transferTo(saveFile);
+            log.info("File saved to: {}", saveFile.getAbsolutePath());
+        }
+
+        // 게시글 저장 로직
+        UCommunity post = new UCommunity();
+        post.setPostRegId(postRegId);
+        post.setPostCateNum(postCateNum);
+        post.setPostTitle(postTitle);
+        post.setPostContent(postContent);
+        post.setPostFile(fileName);
+
+        // 게시글 DB에 저장
+        uCommunityMapper.insertPost(post);
+    } */
+
+    
+    
+    
+    // 게시글 작성
+    public void insertPost(UCommunity uCommunity) {
+        
+        // 게시글 DB에 저장
+        uCommunityMapper.insertPost(uCommunity);
+    }
+
+	
+
+
+
+
     
     
     
@@ -113,32 +154,7 @@ public class UCommunityService {
 
     
     
-	/**
-	 * 게시글 작성
-	 * @param uCommunity
-	 */
-	public void postSave(String postCategory, String postTitle, String postContent, MultipartFile postFile) throws Exception {
-		
-		// 저장할 경로 지정
-		String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/files";
-		
-		// 랜덤으로 파일이름 생성
-		UUID uuid = UUID.randomUUID();
-		String fileName = uuid + "_" + postFile.getOriginalFilename();
-		
-		File saveFile = new File(projectPath, fileName);
-		
-		// 파일 저장
-		postFile.transferTo(saveFile);
-		
-		// DB에 저장
-		uCommunityMapper.postSave(postCategory, postTitle, postContent, postFile);
-	}
-	
-	// 조회수 증가
-    public void increaseViewCount(String postNum) {
-        uCommunityMapper.increaseViewCount(postNum);
-    }
+
 
 
 
@@ -151,19 +167,16 @@ public class UCommunityService {
 
 
 
+	public void setPostCode(String postNum) {
+		
+	}
 
 
-	/** 
-	// 각 게시물의 댓글 수를 가져오는 메서드 추가
-	public List<Integer> getCommentCntList(List<UCommunity> postList) {
-		List<Integer> commentCntList = new ArrayList<>();
-		for (UCommunity post : postList) {
-			int commentCnt = uCommunityMapper.getCommentCntByPostNum(post.getPostNum());
-			commentCntList.add(commentCnt);
-		}
-		return commentCntList;
-	} */
-    
+
+
+
+
+
 
 
 }

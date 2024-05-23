@@ -46,6 +46,7 @@
                         <div class="form-group">
                             <div class="col-md-12 col-sm-12 col-xs-12 text-center">
                                 <button class="btn btn-success btn-lg data-trans" type="button">검색</button>
+                                <button type="button" class="btn btn-primary btn-lg data-list-update">전체 업데이트</button>
                                 <button type="reset" class="btn btn-dark btn-lg">초기화</button>
                             </div>
                         </div>
@@ -130,7 +131,25 @@
         $(document).on('click', '.data-trans', function(){
             const dataTrans = String($('.data-select :selected').val()).trim();
             if(dataTrans){
-                const colObj = {
+                const commonArray = [
+                    {'title': '번호', 'data': 'destinationNum'},
+                    {'title': '제목', 'data': 'destinationTitle'},
+                    {'title': '관광 타입', 'data': 'destinationContentTypeName'},
+                    {'title': '주소 1', 'data': 'destinationFirstAddress'},
+                    {'title': '주소 2', 'data': 'destinationSecondAddress'},
+                    {'title': '우편 번호', 'data': 'destinationZipcode'},
+                    {'title': '연락처', 'data': 'destinationTelNum'},
+                    {'title': '이미지 링크 1', 'data': 'destinationFirstImageLink'},
+                    {'title': '이미지 링크 2', 'data': 'destinationSecondImageLink'},
+                    {'title': '경도', 'data': 'destinationLongitude'},
+                    {'title': '위도', 'data': 'destinationLatitude'},
+                    {'title': '컨텐츠 ID', 'data': 'destinationContentId'},
+                    {'title': '상세 보기', 'data': 'destinationContentId'},
+                    {'title': '등록 일자', 'data': 'destinationRegDate'},
+                    {'title': '수정 일자', 'data': 'destinationModDate'},
+                    {'title': '상세정보 업데이트', 'data': 'destinationContentTypeId'}
+                ]
+                /*const colObj = {
                     12 : [
                         {'title': '번호', 'data': 'destinationNum'},
                         {'title': '제목', 'data': 'destinationTitle'},
@@ -187,7 +206,7 @@
                     ]
                 }
 
-                const colArr = [...colObj[`${dataTrans}`]];
+                const colArr = [...colObj[`${dataTrans}`]];*/
 
                 const request = $.ajax({
                     url:'/platform/plan/destination/' + dataTrans,
@@ -204,10 +223,10 @@
                         'responsive': true,
                         'destroy':true,
                         'data' : json.dataList,
-                        'columns' : colArr,
+                        'columns' : commonArray,
                         'columnDefs': [
                             {
-                                targets: colArr.length-3,
+                                targets: commonArray.length-3,
                                 data: 'description',
                                 render: function (data, type, row, meta) {
                                     const contentId = row['destinationContentId'];  // 'destinationContentId' 컬럼에서 ID를 가져옴
@@ -217,7 +236,7 @@
                                 }
                             },
                             {
-                                targets: colArr.length - 1,
+                                targets: commonArray.length - 1,
                                 data: 'description',
                                 render: function (data, type, row, meta) {
                                     const contentId = row['destinationContentId'];  // 'destinationContentId' 컬럼에서 ID를 가져옴
@@ -236,9 +255,6 @@
 
     <script th:inline="javascript">
         $(document).on('click', '.data-update', function () {
-
-            //const contentTypeId = $('.contentTypeId').val().trim();
-            //const contentId = $('.contentId').val().trim();
             const contentTypeId = this.dataset.contentTypeId.trim();
             const contentId = this.dataset.contentId.trim();
 
@@ -256,8 +272,23 @@
                     console.error('Error:', error);
                 }
             });
-
-
+        });
+    </script>
+    <script th:inline="javascript">
+        $(document).on('click', '.data-list-update', function () {
+            const request = $.ajax({
+                url: '/platform/plan/destination/list-update',
+                method: 'POST',
+                dataType: 'json',
+                success: function (response) {
+                    // 성공적으로 응답을 받았을 때 실행할 코드
+                    console.log('결과: ', response);
+                },
+                error: function (xhr, status, error) {
+                    // 오류 발생 시 실행할 코드
+                    console.error('Error:', error);
+                }
+            });
         });
     </script>
 </th:block>

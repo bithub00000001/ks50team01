@@ -1,5 +1,7 @@
 package ksmart.ks50team01.platform.board.dto;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -7,6 +9,7 @@ public class PFaq {
 	
 	private String faqNum;
 	private String faqRegId;
+	private String faqCateNum;
 	private String faqCateType;
 	private String faqTitle;
 	private String faqContent;
@@ -15,8 +18,9 @@ public class PFaq {
 	private String faqRegDate;
 	private String faqMdfDate;
 	
-	// 추가된 association을 위한 멤버 변수
-	private PFaq faqCate;
+	private PCategory category;
+	private List<PFaq> faqList;
+	//private PFaq faqInfo;
 	
 	
 }

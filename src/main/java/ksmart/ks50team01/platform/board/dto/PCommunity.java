@@ -1,5 +1,7 @@
 package ksmart.ks50team01.platform.board.dto;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -8,6 +10,7 @@ public class PCommunity {
 	private String postNum;
 	private String postRegId;
 	private String postCateType;
+	private String postCateNum;
 	private String postTitle;
 	private String postContent;
 	private int postInqCnt;
@@ -20,8 +23,8 @@ public class PCommunity {
 	private String postMdfDate;
 	private String postDelDate;
 	
-	// 추가된 association을 위한 멤버 변수
-	private PCommunity postCate;
+	private PCategory category;
 	
+	private List<PComment> commentList;
 
 }

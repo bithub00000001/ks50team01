@@ -3,6 +3,7 @@ package ksmart.ks50team01.platform.board.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import ksmart.ks50team01.platform.board.dto.PCommunity;
 
@@ -21,6 +22,12 @@ public interface PCommunityMapper {
 
 
 	PCommunity getPostByNum(String postNum);
+
+	// 게시글 비활성화
+	void deactivatePost(PCommunity pcommunity);
+
+	void deactivatePost(@Param("postNum") String postNum); 
+	
 	
 }
 	

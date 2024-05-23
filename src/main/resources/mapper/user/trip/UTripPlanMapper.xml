@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ksmart.ks50team01.user.trip.mapper.UTripPlanMapper">
+
+
+    <select id="getTourInfoObject" resultType="String" parameterType="string">
+        /* 여행지 정보를 컬럼 이름과 값으로 찾은 후 JSON 객체로 반환 */
+        SELECT CONCAT_WS('\\\\',
+                         JSON_OBJECT(
+                                 'name', tour_detail_title,
+                                 'lat', tour_detail_latitude,
+                                 'lng', tour_detail_longitude,
+                                 'contentTypeId', tour_detail_content_type_id,
+                                 'contentId', tour_detail_content_id,
+                                 'overview', tour_detail_overview,
+                                 'imageLink', tour_detail_first_image,
+                                 'telName', tour_detail_tel_name,
+                                 'telNum', tour_detail_tel_num,
+                                 'addr', CONCAT(tour_detail_first_addr, tour_detail_second_addr)
+                         )
+               )
+        FROM
+            TOUR_DETAIL_FROM_API
+        WHERE
+            ${colName} = #{content};
+    </select>
+</mapper>

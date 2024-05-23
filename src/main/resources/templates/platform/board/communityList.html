@@ -151,7 +151,7 @@
                             <td><input type="checkbox" id="checkbox_${l.postNum}" name="postNum" th:value="${l.postNum}"></td>
                             <td th:text="${l.postNum}"></td>
                             <td th:text="${l.postRegId}"></td>
-                            <td th:text="${l.postCate.postCateType}"></td>
+                            <td th:text="${l.category.postCategoryName}"></td>
                             <td th:text="${l.postTitle}"></td>
                             <td th:text="${l.postContent}"></td>
                             <td th:text="${l.postInqCnt}"></td>
@@ -198,7 +198,7 @@
 <!-- custom js file start -->
 <th:block layout:fragment="customJs">
     <script type="text/javascript" th:src="@{/platform/js/checkbox/categoryDel.js}"></script>
-    <script type="text/javascript" th:src="@{/platform/js/checkbox/disabled.js}"></script>
+    <script type="text/javascript" th:src="@{/platform/js/checkbox/selectedDisabled.js}"></script>
 
     <script>
         document.getElementById('checkAll').addEventListener('change', function() {
@@ -208,6 +208,19 @@
             });
         });
     </script>
+    
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
 
     <script>
         $(document).ready(function(){
@@ -229,25 +242,7 @@
 
 
 
-    <script>
-        // 체크박스와 버튼 요소 가져오기
-        const checkbox = document.getElementById('checkbox');
-        const button = document.getElementById('disabled');
 
-        // 체크박스의 변경 이벤트 핸들러 추가
-        checkbox.addEventListener('change', function() {
-            if (checkbox.checked) { // 체크박스가 선택되어 있는 경우
-                button.removeAttribute('disabled'); // 버튼 활성화
-            } else { // 체크박스가 선택되어 있지 않은 경우
-                button.setAttribute('disabled', true); // 버튼 비활성화
-            }
-        });
-
-        // 버튼 클릭 이벤트 핸들러 추가
-        button.addEventListener('click', function() {
-            alert('Button clicked!');
-        });
-    </script>
 
 
 </th:block>

@@ -1,7 +1,14 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{user/layout/default}">
-<th:block layout:fragment="customCss"></th:block>
+<th:block layout:fragment="customCss">
+    <style>
+        #map{
+            width: 100%;
+            height: 350px;
+        }
+    </style>
+</th:block>
 
 <th:block layout:fragment="customPageSection">
     <div class="accordion" id="tripPlannerAccordion">
@@ -160,7 +167,7 @@
                                                data-bs-toggle="tab"
                                                href="#accommodation"
                                                id="accommodation-tab" role="tab"
-                                               onclick="getData(map[0], 1)">숙소
+                                               onclick="getData(map[0], 32)">숙소
                                             </a>
                                         </li>
                                         <li class="nav-item" role="presentation">
@@ -169,7 +176,7 @@
                                                href="#restaurant"
                                                id="restaurant-tab"
                                                role="tab"
-                                               onclick="getData(map[0], 2)">음식점
+                                               onclick="getData(map[0], 39)">음식점
                                             </a>
                                         </li>
                                         <li class="nav-item" role="presentation">
@@ -177,7 +184,7 @@
                                                data-bs-toggle="tab"
                                                href="#tour"
                                                id="tour-tab" role="tab"
-                                               onclick="getData(map[0], 3)">관광지
+                                               onclick="getData(map[0], 12)">관광지
                                             </a>
                                         </li>
 
@@ -201,8 +208,8 @@
                                             <p>추가 사항: <input type="text" class="additional-input"
                                                              value="호텔 A 추가 사항">
                                             </p>
-                                            <button class="btn btn-outline-primary btn-addPlan btn-sm">담기
-                                            </button>
+                                            <button class="btn btn-outline-facebook btn-sm detail-modal" data-bs-toggle="modal" data-detail-content-id="1009026">상세보기</button>
+                                            <button class="btn btn-outline-primary btn-addPlan btn-sm">담기</button>
                                         </li>
                                         <li class="list-group-item" data-id="accommodation2">
                                             <h5>펜션 B</h5>
@@ -427,7 +434,7 @@
 
                                     <div class="col-lg-4 mb-6 mb-lg-0">
                                         <!-- 지도 및 거리/금액 정보 -->
-                                        <div id="map"></div>
+                                        <div id="tourMap"></div>
                                         <div>총 거리: <span id="totalDistance"> 10cm</span></div>
                                         <div>총 금액: <span id="totalCost"> 10원</span></div>
 
@@ -441,6 +448,26 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal mb-8" id="overviewModal" tabindex="-1" role="dialog" aria-labelledby="overviewModal"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">모달 타이틀</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="">
+                    <p>오버뷰 설명</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
                 </div>
             </div>
         </div>
@@ -461,14 +488,13 @@
     <script th:src="@{/user/js/tripPlanner.js}"></script>
     
     <!--2024.05.16-->
+    <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=373ed2ade74fe4dee247e98cc67d8336&libraries=clusterer"></script>
     <script th:src="@{/user/js/tripPlan.js}"></script>
     <script th:src="@{/user/js/tripMap.js}"></script>
-    <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=373ed2ade74fe4dee247e98cc67d8336&libraries=services,clusterer"></script>
 </th:block>
 
 <th:block layout:fragment="customJs">
     <script th:inline="javascript">
-		
         // 페이지 로드 시 maxPeople 값을 업데이트
         $(document).ready(function() {
             updateMaxPeople();
@@ -496,20 +522,52 @@
                     $('#numDate').val(''); // 일차 입력 필드를 초기화
                 }
             });
-            
-           
-            /*동적으로 변경되는 UI환경 이슈로 인한 timeout*/
-            setTimeout(() => {
-				var map;
-				<!--지도생성 함수 호출-->
-			    map = new kakao.maps.Map(document.getElementById('map'), { // 지도를 표시할 div
-				    center : new kakao.maps.LatLng(36.2683, 127.6358), // 지도의 중심좌표 
-				    level : 20 // 지도의 확대 레벨 
-				});
-			}, "1000");	
+
+            $(document).on('click', '.detail-modal', function () {
+                const contentId = this.dataset.detailContentId;
+                clearModalContent();
+                $.get(`/trip/detailContentId/${contentId}`, function (data) {
+                    console.log(data.positions[0]);
+                    fillModalContent(data);
+                });
+                $('#overviewModal').modal('show');
+
+            });
         });
-        
-		
+
+        // 모달 내용 초기화 함수
+        function clearModalContent() {
+            $('#overviewModal .modal-title').text('');
+            $('#overviewModal .modal-body p').text('');
+        }
+
+        // JSON 데이터로 모달 내용 채우기 함수
+        function fillModalContent(data) {
+            // 이미지 태그 생성
+            /*const imageUrl = data.positions[0].imageLink; // data에서 이미지 URL 가져오기
+            const imageElement = $('<img>').attr('src', imageUrl).attr('alt', data.positions[0].name).css({
+                width: '100%', // 필요에 따라 스타일 설정
+                height: 'auto'
+            });*/
+
+            // 모달 타이틀 설정
+            $('#overviewModal .modal-title').text(data.positions[0].name);
+
+            // 모달 바디의 첫 번째 위치에 이미지 추가
+            // $('#overviewModal .modal-body').prepend(imageElement);
+
+            // 모달 바디의 p 요소에 텍스트 설정
+            $('#overviewModal .modal-body p').text(data.positions[0].overview);
+        }
+
+        const kakaoMap = (() => {
+            const map = new kakao.maps.Map(document.getElementById('map'), { // 지도를 표시할 div
+                center: new kakao.maps.LatLng(36.2683, 127.6358), // 지도의 중심좌표
+                level: 20 // 지도의 확대 레벨
+            });
+            return map;
+        })();
+
         // 실제 회원 데이터 (예시)
         const realMembers = [
             {id: 1, name: '실제 회원 예시 1'},
@@ -712,7 +770,7 @@
                 removeButton.className = 'btn btn-outline-danger btn-sm';
                 removeButton.textContent = '제거';
                 removeButton.onclick = function() {
-                  invitedMembersList.removeChild(listItem);
+                    invitedMembersList.removeChild(listItem);
                 };
 
                 listItem.appendChild(removeButton);
@@ -733,6 +791,25 @@
                 // 이를 통해 전체 멤버 수를 화면에 표시합니다.
                 totalMemberCount.text((invitedMembers.length + virtualMembers.length).toString());
             }
+
+        $('.accordion-button').on('click', function () {
+            // 특정 탭에 'active' 클래스 추가
+            $('#day1-tab').addClass('active');
+            const $mapContainer = document.getElementById('map').parentNode;
+            console.log($mapContainer)
+            document.getElementById('map').remove();
+            const $newMap = document.createElement('div');
+            $newMap.id = 'map';
+            console.log($newMap)
+            $mapContainer.prepend($newMap);
+            setTimeout(function(){
+                const map = new kakao.maps.Map($newMap, { // 지도를 표시할 div
+                    center: new kakao.maps.LatLng(36.2683, 127.6358), // 지도의 중심좌표
+                    level: 20 // 지도의 확대 레벨
+                });
+            },50);
+
+        });
     </script>
 
     <script th:inline="javascript">
@@ -745,10 +822,24 @@
             }, 50);
         });*/
         // Accordion 버튼에 대한 클릭 이벤트 설정
+        /*
         $('.accordion-button').on('click', function () {
             // 특정 탭에 'active' 클래스 추가
             $('#day1-tab').addClass('active');
-        });
+            const option = {
+                center : new kakao.maps.LatLng(36.2683, 127.6358), // 지도의 중심좌표
+                level : 20 // 지도의 확대 레벨
+            }
+            console.log(kakaoMap);
+            //map.setCenter(new kakao.maps.LatLng(36.2683, 127.6358));
+            //map.relayout();
+            /*
+            const  map = new kakao.maps.Map(document.getElementById('map'), { // 지도를 표시할 div
+                center : new kakao.maps.LatLng(36.2683, 127.6358), // 지도의 중심좌표
+                level : 20 // 지도의 확대 레벨
+            });
+
+        }); */
     </script>
 </th:block>
 </html>

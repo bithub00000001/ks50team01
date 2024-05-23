@@ -1,10 +1,13 @@
 package ksmart.ks50team01.user.board.dto;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
 public class UQna {
 	private String qnaNum;
+	private int qnaRowNum;
 	private String qnaRegId;
 	private String faqCateType;
 	private String qnaProCate;
@@ -14,9 +17,16 @@ public class UQna {
 	private String qnaRegDate;
 	private String qnaMdfDate;
 	private String qnartnDate;
+	private boolean isNew;
 	
-	// 추가된 association을 위한 멤버 변수
-	private UFaq faqCate;
+	private UCategory category;
+	
+	private List<UQna> qnaList;
+	
+
+	
+	private UQnaAnswer qnaAnswer;
+	
 	
 
 }

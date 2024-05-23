@@ -18,6 +18,10 @@ public class DestinationService {
 	
 	private final DestinationMapper destinationMapper;
 	
+	public void removeTour(String tourInfoCode) {
+		destinationMapper.removeTour(tourInfoCode);
+		
+	}
 	
 	public void updateTour(Destination destination) {
 		log.info("service destination:{}", destination);
@@ -135,6 +139,13 @@ public class DestinationService {
 		
 		return restaurantMenuList;
 		
+	}
+
+	public void updateRestaurantMenu(Destination destination) {
+		destinationMapper.updateRestaurantMenu(destination);
+	}
+	public Destination getRestaurantMenuInfoById(String restaurantMenuManageCode) {
+		return destinationMapper.getRestaurantMenuInfoById(restaurantMenuManageCode);
 	}
 
 

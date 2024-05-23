@@ -4,7 +4,17 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="ksmart.ks50team01.platform.destination.mapper.DestinationMapper">
-
+	
+	<delete id="removeTour" parameterType="String">
+		/* 관광지 삭제 */
+		DELETE
+		FROM
+			TOUR_INFO
+		WHERE
+			TOUR_INFO_CD = #{tourInfoCode};
+	
+	</delete>
+	
 	<select id="getTourInfoList" resultType="destination">
 
 		/* 관광지 정보 조회 */
@@ -126,32 +136,28 @@
 	<update id="updateTourGoods" parameterType="destination">
 		/* 관광지세부사항 수정 후 */
 
-			UPDATE TOUR_GOODS
-			SET
-				ti.TOUR_NAME 			AS tourName = #{tourName},
-				tg.TOUR_GDS_CTGRY 		AS tourGoodsCate = #{tourGoodsCate},
-				tgo.TOUR_GDSOPT_LIST 	AS tourGoodsList = #{tourGoodsList},
-				tgo.TOUR_GDSOPT_TIME 	AS tourGoodsTime = #{tourGoodsTime},
-				tgo.RGN_SCTGRY_NM 		AS RegionSCate = #{RegionSCate},
-				tg.REG_PF_BIZ_ID 		AS tourgoodsAuthorityId = #{tourgoodsAuthorityId},
-				tg.TOUR_GDS_CD 			AS tourGoodsCode = #{tourGoodsCode},
-				tgo.TOUR_GDSOPT_CD 		AS tourGoodsOptionCd = #{tourGoodsOptionCd},
-				tgo.TOUR_GDSOPT_RMRK 	AS tourOptionRemarks = #{tourOptionRemarks},
-				tg.FAVS_TOTAL 			AS tourTotal = #{tourTotal},
-				tgo.REG_YMD 			AS tourRegDate = #{tourRegDate},
-				tgo.MDFCN_YMD 			AS tourFormDate = #{tourFormDate}
-			FROM
-				TOUR_GOODS AS tg
-				INNER JOIN
+			UPDATE 
+				TOUR_INFO AS ti,
+				TOUR_GOODS AS tg,
 				TOUR_GOODSOPTION AS tgo
-				ON
-				tg.TOUR_GDS_CD = tgo.TOUR_GDS_CD
-				INNER JOIN
-				TOUR_INFO AS ti
-				ON
-				tg.TOUR_INFO_CD = ti.TOUR_INFO_CD
-	
+			SET
+				ti.TOUR_NAME			= #{tourName},
+				tg.TOUR_GDS_CTGRY 		= #{tourGoodsCate},
+				tgo.TOUR_GDSOPT_LIST	= #{tourGoodsList},
+				tgo.TOUR_GDSOPT_TIME	= #{tourGoodsTime},
+				tgo.RGN_SCTGRY_NM		= #{RegionSCate},
+				tg.REG_PF_BIZ_ID		= #{tourgoodsAuthorityId},
+				tg.TOUR_GDS_CD			= #{tourGoodsCode},
+				tgo.TOUR_GDSOPT_CD		= #{tourGoodsOptionCd},
+				tgo.TOUR_GDSOPT_RMRK	= #{tourOptionRemarks},
+				tg.FAVS_TOTAL			= #{tourTotal},
+				tgo.REG_YMD				= #{tourRegDate},
+				tgo.MDFCN_YMD			= #{tourFormDate}
 			WHERE
+				ti.TOUR_INFO_CD = tg.TOUR_INFO_CD
+			and
+				tg.TOUR_GDS_CD = tgo.TOUR_GDS_CD
+			and
 				TOUR_INFO_CD =#{tourInfoCode};
 
 	</update>
@@ -220,14 +226,14 @@
 
 			UPDATE LODGING_INFO
 			SET
-				LODGING_NAME = #{lodgingName},
-				LODGING_ADDR = #{lodgingAddr},
-				LODGING_DADDR = #{lodgingDaddr},
-				LODGING_CONTACT1 = #{lodgingContactNum},
-				LODGING_CONTACT2 = #{lodgingContactNum2},
-				LODGING_SITE = #{lodgingSite},
-				LODGING_ETC = #{lodgingOthers},
-				MDFCN_YMD = NOW()
+				LODGING_NAME 		= #{lodgingName},
+				LODGING_ADDR 		= #{lodgingAddr},
+				LODGING_DADDR 		= #{lodgingDaddr},
+				LODGING_CONTACT1 	= #{lodgingContactNum},
+				LODGING_CONTACT2 	= #{lodgingContactNum2},
+				LODGING_SITE 		= #{lodgingSite},
+				LODGING_ETC 		= #{lodgingOthers},
+				MDFCN_YMD			= NOW()
 			WHERE
 				LODGING_INFO_CD = #{lodgingInfoCode}
 
@@ -261,33 +267,33 @@
 
 	<update id="updateLodgingGoods" parameterType="destination">
 		/* 숙소 상세정보 수정 후 업데이트 */
-			UPDATE LODGING_MENU
-			SET
-				li.LODGING_NAME 			AS 	lodgingName = #{lodgingName},
-				lm.LODGING_MENU_TYPE 		AS 	lodgingMenuType = #{lodgingMenuType},
-				li.LODGING_INFO_CD 			AS 	lodgingInfoCode = #{lodgingInfoCode} ,
-				lm.LODGING_MENU_CD 			AS 	lodgingMenuCode = #{lodgingMenuCode},
-				lm.LODGING_MENU_MINCPCT 	AS 	lodgingMenuMinPct = #{lodgingMenuMinPct},
-				lm.LODGING_MENU_MAXCPCT 	AS 	lodgingMenuMaxPct = #{lodgingMenuMaxPct},
-				lm.LODGING_MENU_PRC 		AS 	lodgingMenuPrc = #{lodgingMenuPrc},
-				lm.LODGING_MENU_ADDPRC 		AS 	lodgingMenuAddprc = #{lodgingMenuAddprc},
-				lm.LODGING_MENU_SMOKE_YN 	AS 	lodgingMenuSmokeYn = #{lodgingMenuSmokeYn},
-				lm.LODGING_MENU_BK_YN 		AS 	lodgingMenuBkYn = #{lodgingMenuBkYn},
-				li.REG_YMD 					AS 	lodgingRegDate = #{lodgingRegDate},
-				li.MDFCN_YMD 				AS 	lodgingFormDate = #{lodgingFormDate}
-			FROM
-				LODGING_INFO AS li
-				INNER JOIN
+			UPDATE 
+				LODGING_INFO AS li,
 				LODGING_MENU AS lm
-				ON
-				li.LODGING_INFO_CD = lm.LODGING_INFO_CD
+			SET
+				li.LODGING_NAME				= #{lodgingName},
+				lm.LODGING_MENU_TYPE		= #{lodgingMenuType},
+				li.LODGING_INFO_CD			= #{lodgingInfoCode} ,
+				lm.LODGING_MENU_CD			= #{lodgingMenuCode},
+				lm.LODGING_MENU_MINCPCT		= #{lodgingMenuMinPct},
+				lm.LODGING_MENU_MAXCPCT 	= #{lodgingMenuMaxPct},
+				lm.LODGING_MENU_PRC			= #{lodgingMenuPrc},
+				lm.LODGING_MENU_ADDPRC  	= #{lodgingMenuAddprc},
+				lm.LODGING_MENU_SMOKE_YN	= #{lodgingMenuSmokeYn},
+				lm.LODGING_MENU_BK_YN		= #{lodgingMenuBkYn},
+				li.REG_YMD 					= #{lodgingRegDate},
+				li.MDFCN_YMD 				= #{lodgingFormDate}
+
 			WHERE
+				li.LODGING_INFO_CD = lm.LODGING_INFO_CD
+			and
 				lodgingMenuCode = #{lodgingMenuCode};
 
 	</update>
 
 
 	<select id="getRestaurantInfoById" resultType="destination">
+		/*  */
 	
 			SELECT
 				RSTRN_INFO_CD 	AS restaurantInfoCode,
@@ -310,13 +316,13 @@
 		/* 식당 수정 */
 			UPDATE RESTAURANT_INFO
 			SET
-				RSTRN_NAME = #{restaurantName},
-				RSTRN_ADDR = #{restaurantAddr},
-				RSTRN_DADDR = #{restaurantDaddr},
-				RSTRN_CONTACT = #{restaurantContactNum},
-				RSTRN_SITE = #{restaurantSite},
-				RSTRN_OTHERS = #{restaurantOthers},
-				MDFCN_YMD = NOW()
+				RSTRN_NAME		= #{restaurantName},
+				RSTRN_ADDR		= #{restaurantAddr},
+				RSTRN_DADDR		= #{restaurantDaddr},
+				RSTRN_CONTACT	= #{restaurantContactNum},
+				RSTRN_SITE		= #{restaurantSite},
+				RSTRN_OTHERS	= #{restaurantOthers},
+				MDFCN_YMD		= NOW()
 			WHERE
 				RSTRN_INFO_CD = #{restaurantInfoCode}
 
@@ -327,39 +333,70 @@
 	<select id="getRestaurantInfoList" resultType="destination">
 		/* 식당 정보 */
 
-		SELECT
-			RSTRN_INFO_CD 	AS restaurantInfoCode,
-			REG_PF_BIZ_ID 	AS restaurantAuthorityId,
-			RSTRN_NAME 		AS restaurantName,
-			RSTRN_ADDR 		AS restaurantAddr,
-			RSTRN_DADDR 	AS restaurantDaddr,
-			RSTRN_CONTACT 	AS restaurantContactNum,
-			RSTRN_SITE 		AS restaurantSite,
-			REG_YMD 		AS restaurantRegDate,
-			MDFCN_YMD 		AS restaurantFormDate
-		FROM
-			RESTAURANT_INFO;
+			SELECT
+				RSTRN_INFO_CD 	AS restaurantInfoCode,
+				REG_PF_BIZ_ID 	AS restaurantAuthorityId,
+				RSTRN_NAME 		AS restaurantName,
+				RSTRN_ADDR 		AS restaurantAddr,
+				RSTRN_DADDR 	AS restaurantDaddr,
+				RSTRN_CONTACT 	AS restaurantContactNum,
+				RSTRN_SITE 		AS restaurantSite,
+				REG_YMD 		AS restaurantRegDate,
+				MDFCN_YMD 		AS restaurantFormDate
+			FROM
+				RESTAURANT_INFO;
 	</select>
 	<select id="getRestaurantMenuList" resultType="destination">
 		/* 식당메뉴 정보 */
-		SELECT
-			rm.RSTRN_INFO_CD			AS restaurantInfoCode,
-			ri.RSTRN_NAME 				AS restaurantName,
-			rm.RSTRN_MENU_MNG_CD		AS restaurantMenuManageCode,
-			rm.RSTRN_MENU 				AS restaurantMenu,	
-			rm.RSTRN_MENU_PRICE			AS restaurantMenuPrice,
-			rm.REG_PF_BIZ_ID			AS restaurantAuthorityId,
-			rm.REG_YMD					AS restaurantRegDate,
-			rm.MDFCN_YMD				AS restaurantFormDate
-		FROM
-			RESTAURANT_INFO AS ri
-			INNER JOIN
-			RESTAURANT_MENU AS rm
-		ON
-			ri.RSTRN_INFO_CD = rm.RSTRN_INFO_CD;
+			SELECT
+				rm.RSTRN_INFO_CD			AS restaurantInfoCode,
+				ri.RSTRN_NAME 				AS restaurantName,
+				rm.RSTRN_MENU_MNG_CD		AS restaurantMenuManageCode,
+				rm.RSTRN_MENU 				AS restaurantMenu,	
+				rm.RSTRN_MENU_PRICE			AS restaurantMenuPrice,
+				rm.REG_PF_BIZ_ID			AS restaurantAuthorityId,
+				rm.REG_YMD					AS restaurantRegDate,
+				rm.MDFCN_YMD				AS restaurantFormDate
+			FROM
+				RESTAURANT_INFO AS ri
+				INNER JOIN
+				RESTAURANT_MENU AS rm
+			ON
+				ri.RSTRN_INFO_CD = rm.RSTRN_INFO_CD;
 	</select>
-
-
-
-
+	<select id="getRestaurantMenuInfoById" resultType="destination">
+		/*  */
+			SELECT
+				rm.RSTRN_INFO_CD			AS restaurantInfoCode,
+				ri.RSTRN_NAME 				AS restaurantName,
+				rm.RSTRN_MENU_MNG_CD		AS restaurantMenuManageCode,
+				rm.RSTRN_MENU 				AS restaurantMenu,	
+				rm.RSTRN_MENU_PRICE			AS restaurantMenuPrice,
+				rm.REG_PF_BIZ_ID			AS restaurantAuthorityId,
+				rm.REG_YMD					AS restaurantRegDate,
+				rm.MDFCN_YMD				AS restaurantFormDate
+			FROM
+				RESTAURANT_INFO AS ri
+				INNER JOIN
+				RESTAURANT_MENU AS rm
+			ON
+				ri.RSTRN_INFO_CD = rm.RSTRN_INFO_CD
+			WHERE
+				RSTRN_MENU_MNG_CD = #{restaurantMenuManageCode};	
+	</select>
+	<update id="updateRestaurantMenu" parameterType="destination">
+		/*  */
+			UPDATE 
+				RESTAURANT_INFO AS ri, 
+				RESTAURANT_MENU AS rm
+			SET 
+				ri.RSTRN_NAME		= #{restaurantName},
+				rm.RSTRN_MENU		= #{restaurantMenu},	
+				rm.RSTRN_MENU_PRICE = #{restaurantMenuPrice}
+			
+			WHERE
+				ri.RSTRN_INFO_CD = rm.RSTRN_INFO_CD
+			and
+				RSTRN_MENU_MNG_CD = #{restaurantMenuManageCode};
+	</update>
 </mapper>  

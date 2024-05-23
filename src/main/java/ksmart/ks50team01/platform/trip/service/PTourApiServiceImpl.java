@@ -6,9 +6,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -448,10 +447,35 @@ public class PTourApiServiceImpl implements PTourApiService {
 		}
 	}
 
+	/**
+	 * 여행지 정보와 일치하는 여행지 상세 정보를 DB에 업서트
+	 * @param tourDetail
+	 */
 	@Override
 	public void upsertTourDetail(PTourDetail tourDetail) {
 		pTourApiMapper.upsertTourDetail(tourDetail);
 	}
 
+	/**
+	 * 여행지 정보 전체 리스트의 상세 정보를 DB에 업서트
+	 * @param tourDetailList
+	 */
+	@Override
+	public void upsertAllTourDetail(List<PTourDetail> tourDetailList) {
+		for (PTourDetail tourDetail : tourDetailList) {
+			pTourApiMapper.upsertTourDetail(tourDetail);
+		}
+	}
+
+	@Override
+	public List<PTourDetail> fetchTourDetailList(String apiKey, List<PTourApi> tourInfoList) {
+		return tourInfoList
+			.stream()
+			.map(tourInfo ->
+				getTourDetail(apiKey, tourInfo.getDestinationContentId(), tourInfo.getDestinationContentTypeId())
+					.block())
+			.filter(Objects::nonNull)
+			.toList();
+	}
 
 }
