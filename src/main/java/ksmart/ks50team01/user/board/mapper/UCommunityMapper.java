@@ -27,7 +27,6 @@ public interface UCommunityMapper {
 	// 게시글 번호로 해당 게시글의 댓글 수를 조회
 	public int getCommentCntByPostNum(String postNum);
 	
-
 	
 	
 	//게시글 카테고리 조회
@@ -37,11 +36,6 @@ public interface UCommunityMapper {
 	// 댓글 조회
 	List<UComment> getCommentByPostNum(String postNum);
 	
-	// 게시글 수정
-	void postUpdate(String postCategory, String postTitle, String postContent, MultipartFile postFile);
-
-	// 게시글 삭제
-	void deletePost(String postNum);
 
 
 

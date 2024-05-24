@@ -36,8 +36,13 @@
 						<!-- 굵은 직선 추가 -->
 						<hr class="my-4">
 						<p class="qna-content" th:text="*{qnaContent}">1:1문의 내용</p>
-	
-						<!-- 굵은 직선 추가 -->
+
+					<div class="d-flex justify-content-end mt-10">
+						<a th:href="@{/qna/qnaModify(qnaNum=${qnaDetail.qnaNum})}" class="btn btn-light-gray btn-sm update-Btn">수정</a>
+						<a href="#"th:data-post-num="${qnaDetail.qnaNum}" class="btn btn-off-white btn-sm delete-Btn" th:onclick="confirmDelete(this)">삭제</a>
+					</div>
+
+					<!-- 굵은 직선 추가 -->
 						<hr class="my-4">
 						
 						

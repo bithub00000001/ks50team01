@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ksmart.ks50team01.user.board.dto.UCategory;
 import ksmart.ks50team01.user.board.dto.UQna;
@@ -56,13 +55,10 @@ public class UQnaController {
 	
 	// 1:1문의 작성 POST 요청
 	@PostMapping("/qnaWrite")
-	public String qnaWrite(UQna uQna,
-						   RedirectAttributes redirectAttributes,
-						   Model model)	{
+	public String qnaWrite(UQna uQna, Model model)	{
 		log.info("QNA 등록:{}", uQna);
 		
 		uQnaService.insertQna(uQna);
-		redirectAttributes.addFlashAttribute("success", "1:1문의가 성공적으로 저장되었습니다.");
 		return "redirect:/qna";
 	}
 	
@@ -81,5 +77,45 @@ public class UQnaController {
 		return "user/board/qnaWrite";
 		
 	}
+	
+	// 1:1문의 수정 POST 요청
+	@PostMapping("/qnaModify")
+	public String qnaModify(UQna uQna, Model model) {
+		
+		log.info("1:1문의 수정", uQna);
+		
+		uQnaService.qnaModify(uQna);
+		
+		// 수정된 1:1문의 상세 페이지로 이동
+		return "redirect:/qna/qnaDetail?qnaNum=" + uQna.getQnaNum();
+		
+	}
+	
+	// 1:1문의 수정 페이지
+	@GetMapping("/qnaModify")
+	public String qnaModify(@RequestParam(value = "qnaNum") String qnaNum, Model model) {
+		UQna qnaInfo = uQnaService.getQnaInfoByNum(qnaNum);
+		
+		log.info("qnaInfo :{}", qnaInfo);
+		
+		model.addAttribute("qnaInfo", qnaInfo);
+		model.addAttribute("title", "1:1문의 수정 페이지");
+		
+		return "user/board/qnaModify";
+	}
+	
+	// 1:1문의 삭제 POST 요청
+	@PostMapping("/qnaDelete")
+	public String qnaDelete(@RequestParam (value = "qnaNum") String qnaNum, Model model) {
+		
+		uQnaService.qnaDelete(qnaNum);
+		
+		model.addAttribute("qnaNum", qnaNum);
+		model.addAttribute("title", "1:1문의 삭제");
+		
+		return "redirect:/qna";
+		
+	}
+		
 
 }

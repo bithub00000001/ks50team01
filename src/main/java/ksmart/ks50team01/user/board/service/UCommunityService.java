@@ -75,6 +75,59 @@ public class UCommunityService {
 	    return commentCnt;
 	}
 
+	
+	
+	
+	/**
+	 * 게시글 작성
+	 * @param uCommunity
+	 */
+    public void insertPost(UCommunity uCommunity) {
+        
+        // 게시글 DB에 저장
+        uCommunityMapper.insertPost(uCommunity);
+    }
+
+	
+
+
+	/**
+	 * 게시글 수정
+	 * @param uCommunity
+	 */
+	public void postModify(UCommunity uCommunity) {
+		uCommunityMapper.postModify(uCommunity);
+	}
+
+
+	/**
+	 * 주어진 번호에 해당하는 게시글 정보 조회
+	 * @param postNum 조회할 게시글 번호
+	 * @return 조회된 uCommunity 객체, 없을 경우 null
+	 */
+	public UCommunity getPostInfoByNum(String postNum) {
+		return uCommunityMapper.getPostInfoByNum(postNum);
+	}
+
+
+	/**
+	 * 게시글 삭제
+	 */
+	public void postDelete(String postNum) {
+		uCommunityMapper.postDelete(postNum);
+		
+	}
+
+
+	/**
+	 * 파일목록
+	 * @return
+	 */
+	public List<UPostFile> getFileList() {
+		List<UPostFile> postFileList = uCommunityMapper.getFileList();
+		return postFileList;
+	}
+
  
 
 
@@ -115,50 +168,12 @@ public class UCommunityService {
         uCommunityMapper.insertPost(post);
     } */
 
-    
-    
-    
-    // 게시글 작성
-    public void insertPost(UCommunity uCommunity) {
-        
-        // 게시글 DB에 저장
-        uCommunityMapper.insertPost(uCommunity);
-    }
-
+	
+	
 	
 
-
-
-
-    
-    
-    
-    /**
-     * 게시글 수정
-     * @param uCommunity 수정된 게시글 정보
-     */
-    public void postUpdate(String postCategory, String postTitle, String postContent, MultipartFile postFile) {
-        uCommunityMapper.postUpdate(postCategory, postTitle, postContent, postFile);
-    }
-    
-    
-    
-
-    /**
-     * 게시글 삭제
-     * @param postNum 삭제할 게시글 번호
-     */
-    public void deletePost(String postNum) {
-        uCommunityMapper.deletePost(postNum);
-    }
-
-
-    
-    
-
-
-
-
+	
+	
 
 
 
@@ -170,44 +185,6 @@ public class UCommunityService {
 
 	public void setPostCode(String postNum) {
 		
-	}
-
-
-	/**
-	 * 게시글 수정
-	 * @param uCommunity
-	 */
-	public void postModify(UCommunity uCommunity) {
-		uCommunityMapper.postModify(uCommunity);
-	}
-
-
-	/**
-	 * 주어진 번호에 해당하는 게시글 정보 조회
-	 * @param postNum 조회할 게시글 번호
-	 * @return 조회된 uCommunity 객체, 없을 경우 null
-	 */
-	public UCommunity getPostInfoByNum(String postNum) {
-		return uCommunityMapper.getPostInfoByNum(postNum);
-	}
-
-
-	/**
-	 * 게시글 삭제
-	 */
-	public void postDelete(String postNum) {
-		uCommunityMapper.postDelete(postNum);
-		
-	}
-
-
-	/**
-	 * 파일목록
-	 * @return
-	 */
-	public List<UPostFile> getFileList() {
-		List<UPostFile> postFileList = uCommunityMapper.getFileList();
-		return postFileList;
 	}
 
 

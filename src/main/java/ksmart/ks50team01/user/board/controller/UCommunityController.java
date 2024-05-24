@@ -49,14 +49,15 @@ public class UCommunityController {
 	@GetMapping("/postDetail")
 	public String postDetail(@RequestParam(name = "postNum", required = false) String postNum, Model model) {
 		
+		// 상세 페이지에 접속할 때마다 조회수 증가
+		uCommunityService.increaseViewCount(postNum);
+		
 		// 게시물 정보를 가져와서 모델에 담아 상세 페이지로 전달
 		UCommunity postDetail = uCommunityService.getPostByPostNum(postNum);
 		
 		// 해당 게시글의 모든 댓글 가져오기
 		List<UComment> commentList = uCommunityService.getCommentByPostNum(postNum);
 		
-		// 상세 페이지에 접속할 때마다 조회수 증가
-		uCommunityService.increaseViewCount(postNum);
 
 		model.addAttribute("postDetail", postDetail);
 		model.addAttribute("commentList", commentList);
