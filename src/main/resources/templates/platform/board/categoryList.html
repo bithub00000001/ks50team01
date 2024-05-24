@@ -176,7 +176,7 @@
 			
 			
 			
-			<script>
+			<!--  <script>
 		
     		const table = $('#dataTbContent').dataTable();
     		
@@ -267,11 +267,98 @@
     			}
     		});
     		
-    	</script>
+    	</script>  -->
     	
     	
+    	
+    	
+    	
+    	
+    	
+<script>    	
+    	
+$(document).ready(function() {
+    const table = $('#dataTbContent').dataTable();
+
+    $(document).on('click', '.data-trans', function() {
+        const dataTrans = String($('.data-select :selected').val()).trim();
+        if (dataTrans) {
+            const colObj = {  
+                communityCateList: [
+                    {'title': '커뮤니티 카테고리 번호', 'data': 'postCategoryNum'},
+                    {'title': '등록자 아이디', 'data': 'postCategoryRegId'},
+                    {'title': '커뮤니티 카테고리 유형', 'data': 'postCategoryName'},
+                    {'title': '수정자 아이디', 'data': 'postCategoryMdfId'},
+                    {'title': '활성화 여부', 'data': 'postCateActive'},
+                    {'title': '등록일자', 'data': 'postCategoryRegDate'},
+                    {'title': '수정일자', 'data': 'postCategoryMdfDate'}
+                ],
+                noticeCateList: [
+                    {'title': '공지사항 카테고리 번호', 'data': 'noticeCategoryNum'},
+                    {'title': '등록자 아이디', 'data': 'noticeCategoryRegId'},
+                    {'title': '공지사항 카테고리 유형', 'data': 'noticeCategoryName'},
+                    {'title': '수정자 아이디', 'data': 'noticeCategoryMdfId'},
+                    {'title': '활성화 여부', 'data': 'noticeCateActive'},
+                    {'title': '등록일자', 'data': 'noticeCategoryRegDate'},
+                    {'title': '수정일자', 'data': 'noticeCategoryMdfDate'}
+                ],
+                faqCateList: [
+                    {'title': '자주찾는질문 및 1:1문의 카테고리 번호', 'data': 'faqCategoryNum'},
+                    {'title': '등록자 아이디', 'data': 'faqCategoryRegId'},
+                    {'title': '자주찾는질문 및 1:1문의 카테고리 유형', 'data': 'faqCategoryName'},
+                    {'title': '수정자 아이디', 'data': 'faqCategoryMdfId'},
+                    {'title': '활성화 여부', 'data': 'faqCateActive'},
+                    {'title': '등록일자', 'data': 'faqCategoryRegDate'},
+                    {'title': '수정일자', 'data': 'faqCategoryMdfDate'}
+                ],
+                reportCateList: [
+                    {'title': '신고 카테고리 번호', 'data': 'reportCategoryNum'},
+                    {'title': '등록자 아이디', 'data': 'reportCategoryRegId'},
+                    {'title': '신고 카테고리 유형', 'data': 'reportCategoryName'},
+                    {'title': '수정자 아이디', 'data': 'reportCategoryMdfId'},
+                    {'title': '활성화 여부', 'data': 'reportCateActive'},
+                    {'title': '등록일자', 'data': 'reportCategoryRegDate'},
+                    {'title': '수정일자', 'data': 'reportCategoryMdfDate'}
+                ]
+            };
+
+            const colArr = colObj[dataTrans] || [];
+
+            $.ajax({
+                url: '/platform/board' + dataTrans,
+                method: 'GET',
+                dataType: 'json',
+                success: function(json) {
+                    table.fnDestroy();
+                    $('#dataTbContent').empty();
+
+                    const dataTableOption = {
+                        'searching': true,
+                        'responsive': true,
+                        'destroy': true,
+                        'data': json.categoryList,
+                        'columns': colArr,
+                        'columnDefs': [{
+                            targets: colArr.length - 1,
+                            data: null,
+                            render: function(data, type, row, meta) {
+                                const button = `<a href="#">수정</a>`;
+                                return button;
+                            }
+                        }]
+                    };
+
+                    $('#dataTbContent').dataTable(dataTableOption);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching data: ', error);
+                }
+            });
+        }
+    });
+});
 			
-			
+</script>			
 			
 			
 			
