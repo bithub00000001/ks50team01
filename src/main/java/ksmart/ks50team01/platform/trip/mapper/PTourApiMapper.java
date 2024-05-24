@@ -1,19 +1,22 @@
 package ksmart.ks50team01.platform.trip.mapper;
 
-import java.util.List;
-
 import org.apache.ibatis.annotations.Mapper;
 
 import ksmart.ks50team01.platform.trip.dto.PTourApi;
+import ksmart.ks50team01.platform.trip.dto.PTourDetail;
 
 @Mapper
 public interface PTourApiMapper {
-
+	// 지역 코드 업서트
 	int upsertAreaCode(PTourApi pTourApi);
 
-	List<PTourApi> getAllAreaCodes();
-
-	List<PTourApi> getAllSigunguCodes();
-
+	// 시군 코드 업서트
 	int upsertSigunguCode(PTourApi pTourApi);
+
+	// 여행지 정보 업서트
+	void upsertTourInfo(PTourApi tourInfo);
+
+	void upsertTourDetail(PTourDetail tourDetail);
+
+	// 여행지 세부 정보 업서트
 }

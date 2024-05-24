@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+                layout:decorate="~{platform/layout/default}">
+
+<th:block layout:fragment="customContent">
+    <div class="col-md-12 col-sm-6 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h3>관광지 수정</h3>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <form id="modifyForm" th:action="@{/platform/destination/tourModify}" method="post">
+					 <input type="hidden" name="tourGoodsOptionCd" th:value="${tourGoodsInfo.tourGoodsOptionCd}">
+				
+				    <div class="form-group">
+				        <label for="tourName">관광지 이름</label>
+				        <input type="text" class="form-control" id="tourName" name="tourName" th:value="${tourGoodsInfo.tourName}" readonly="readonly">
+				    </div>
+				
+				    <div class="form-group">
+				        <label for="tourGoodsCate">관광지 옵션카테고리</label>
+				        <input type="text" class="form-control" id="tourGoodsCate" name="tourGoodsCate" th:value="${tourGoodsInfo.tourGoodsCate}">
+				    </div>
+				
+				    <div class="form-group">
+				        <label for="tourGoodsList">관광지 옵션목록</label>
+				        <input type="text" class="form-control" id="tourGoodsList" name="tourGoodsList" th:value="${tourGoodsInfo.tourGoodsList}">
+				    </div>
+				
+				    <div class="form-group">
+				        <label for="tourGoodsTime">관광옵션 소요시간</label>
+				        <input type="tel" class="form-control" id="tourGoodsTime" name="tourGoodsTime" th:value="${tourGoodsInfo.tourGoodsTime}">
+				    </div>
+				
+				    <div class="form-group">
+				        <label for="tourOptionRemarks">관광상품 비고</label>
+				        <input type="tel" class="form-control" id="tourOptionRemarks" name="tourOptionRemarks" th:value="${tourGoodsInfo.tourOptionRemarks}">
+				    </div>
+				    
+				    <div class="form-group">
+				        <label for="tourTotal">관광상품 비용</label>
+				        <input type="text" class="form-control" id="tourTotal" name="tourTotal" th:value="${tourGoodsInfo.tourTotal}">
+				    </div>
+
+				    
+				    <button type="submit" class="btn btn-primary">저장</button>
+				    <button type="button" class="btn btn-secondary" onclick="location.href='/platform/destination/tourGoodsManage'">취소</button>
+				</form>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+</html>

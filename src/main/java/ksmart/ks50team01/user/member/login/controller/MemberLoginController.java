@@ -86,11 +86,10 @@ public class MemberLoginController {
 	}
 	
 	@GetMapping("/logout")
-    public String logout(HttpSession session, HttpServletRequest request) {
+	public String logout(HttpSession session) {
         session.invalidate(); // 세션 무효화
         
-        String referer = request.getHeader("Referer");
-	    return "redirect:" + referer;
+	    return "redirect:/";
     }
 	
 	@PostMapping("/login")

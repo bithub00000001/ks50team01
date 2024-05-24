@@ -3,30 +3,55 @@
                 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
                 layout:decorate="~{user/layout/default}">
                 
-<head>
-	<title>공지사항</title>
+	<head>
+		<title>공지사항</title>
+	</head>
+
+	<th:block layout:fragment="customCss">
 		<link rel="stylesheet" th:href="@{/user/css/list-style.css}">
-</head>
+		
+		<!-- GOOGLE FONT -->
+    	<link href='https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700' rel='stylesheet'>
+	</th:block>
+
+
 
 <th:block layout:fragment="customPageSection">
 	<!-- list-style -->
 
 
 	<!-- 여기에 메인 컨텐츠가 삽입됩니다. -->
+	<!-- 드롭다운 메뉴 -->
 	<div class="main-wrapper pages">
 		<div class="d-flex align-items-start">
-			<div class="dropdown mt-3">
+			<div class="dropdown">
 				<button class="btn btn-primary dropdown-toggle" type="button"
 					id="dropdownMenuButton" data-bs-toggle="dropdown">공지사항</button>
 				<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-					<li><a class="dropdown-item" href="javascript:void(0)">일반공지</a></li>
-					<li><a class="dropdown-item" href="javascript:void(0)">긴급공지</a></li>
-					<li><a class="dropdown-item" href="javascript:void(0)">예정공지</a></li>
-					<li><a class="dropdown-item" href="javascript:void(0)">시스템공지</a></li>
-					<li><a class="dropdown-item" href="javascript:void(0)">이벤트공지</a></li>
+					<li><a class="dropdown-item" href="javascript:void(0)">일반 공지</a></li>
+					<li><a class="dropdown-item" href="javascript:void(0)">긴급 공지</a></li>
+					<li><a class="dropdown-item" href="javascript:void(0)">예정 공지</a></li>
+					<li><a class="dropdown-item" href="javascript:void(0)">시스템 공지</a></li>
+					<li><a class="dropdown-item" href="javascript:void(0)">이벤트 공지</a></li>
 				</ul>
 			</div>
-		</div>
+		</div>  
+
+
+
+		<!-- 드롭다운 메뉴 -->
+		<!-- <div class="dropdown">
+			<button class="btn btn-primary dropdown-toggle" type="button"
+				id="dropdownMenuButton" data-bs-toggle="dropdown">공지사항</button>
+			<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+				<!-- Thymeleaf를 사용하여 백엔드에서 받아온 카테고리 데이터를 반복하여 드롭다운 아이템으로 렌더링 -->
+				<!-- <th:block th:each="l : ${noticeList}">
+					<li><a class="dropdown-item" href="javascript:void(0)"
+						th:text="${l.noticeCate.noticeCateType}"
+						th:attr="data-category=${l.noticeCate.noticeCateType}">카테고리명</a></li>
+				</th:block>
+			</ul>
+		</div> -->
 
 
 		<div class="flex-grow-1 d-flex justify-content-center">
@@ -95,47 +120,26 @@
 								<th>조회</th>
 							</tr>
 						</thead>
+						
 						<tbody>
-							<tr>
-								<td class="noticeNum noticeCenter">1</td>
-								<td><i class="badge rounded-pill bg-primary">긴급공지</i><a
-									href="">웹사이트 서버 점검 공지</a></td>
-								<td class="noticeCenter">관리자</td>
-								<td class="noticeCenter">2024-05-01</td>
-								<td class="noticeCenter">100</td>
-							</tr>
-							<tr>
-								<td class="noticeNum noticeCenter">2</td>
-								<td><i class="badge rounded-pill bg-primary">예정공지</i><a
-									href="">시스템 업그레이드 예정 공지</a></td>
-								<td class="noticeCenter">관리자</td>
-								<td class="noticeCenter">2024-05-02</td>
-								<td class="noticeCenter">300</td>
-							</tr>
-							<tr>
-								<td class="noticeNum noticeCenter">3</td>
-								<td><i class="badge rounded-pill bg-primary">시스템공지</i><a
-									href="">시스템 장애 공지</a></td>
-								<td class="noticeCenter">관리자</td>
-								<td class="noticeCenter">2024-05-03</td>
-								<td class="noticeCenter">500</td>
-							</tr>
-							<tr>
-								<td class="noticeNum noticeCenter">4</td>
-								<td><i class="badge rounded-pill bg-primary">일반공지</i><a
-									href="">고객센터 휴무 공지</a></td>
-								<td class="noticeCenter">관리자</td>
-								<td class="noticeCenter">2024-05-04</td>
-								<td class="noticeCenter">200</td>
-							</tr>
-							<tr>
-								<td class="noticeNum noticeCenter">5</td>
-								<td><i class="badge rounded-pill bg-primary">이벤트공지</i><a href="">이벤트공지</a></td>
-								<td class="noticeCenter">관리자</td>
-								<td class="noticeCenter">2024-05-05</td>
-								<td class="noticeCenter">400</td>
-							</tr>
-						</tbody>
+                            <tr th:each="l, i : ${noticeList}">
+                                <td class="text-center" th:text="${l.noticeRowNum}"></td>
+                                <td>
+                                	<!-- 신규 공지사항 뱃지 (30일 이내)-->
+                                	<th:block th:if="${l.isNew}">
+          								<span class="badge bg-warning">N</span>
+        							</th:block>
+                                    <!-- 공지사항 카테고리 뱃지 -->
+                                    <i class="badge rounded-pill bg-primary badge-cate" th:text="${l.category.noticeCategoryName}"></i>
+                                    <!-- 공지사항 제목 -->
+                                    <a th:href="@{/notice/noticeDetail(noticeNum=${l.noticeNum})}" th:text="${l.noticeTitle}"></a>
+                                </td>
+                                <td class="text-center" th:text="${l.noticeRegId}"></td>
+                                <td class="text-center" th:text="${#strings.substring(l.noticeRegDate, 0, 10)}"></td>
+                                <td class="text-center" th:text="${l.noticeInqCnt}"></td>
+                            </tr>
+                        </tbody>
+						
 					</table>
 				</div>
 			</div>
@@ -181,71 +185,82 @@
 
 
 <th:block layout:fragment="customJs">
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // 최신순과 조회순 버튼 요소 가져오기
-            const newestBtn = document.getElementById('overView-tab');
-            const mostViewedBtn = document.getElementById('tourGuide-tab');
+		<script>
+			document.addEventListener("DOMContentLoaded", function() {
+				// 최신순과 조회순 버튼 요소 가져오기
+				const newestBtn = document.getElementById('overView-tab');
+				const mostViewedBtn = document.getElementById('tourGuide-tab');
 
-            // 테이블의 tbody 요소 가져오기
-            const tbody = document.querySelector('tbody');
+				// 테이블의 tbody 요소 가져오기
+				const tbody = document.querySelector('tbody');
 
-            // 최신순 버튼 클릭 시
-            newestBtn.addEventListener('click', function() {
-                sortTable(3, 'desc'); // 등록일을 기준으로 내림차순 정렬
-            });
+				// 최신순 버튼 클릭 시
+				newestBtn.addEventListener('click', function() {
+					sortTable(3, 'desc'); // 등록일을 기준으로 내림차순 정렬
+				});
 
-            // 조회순 버튼 클릭 시
-            mostViewedBtn.addEventListener('click', function() {
-                sortTable(4, 'desc'); // 조회수를 기준으로 내림차순 정렬
-            });
+				// 조회순 버튼 클릭 시
+				mostViewedBtn.addEventListener('click', function() {
+					sortTable(4, 'desc'); // 조회수를 기준으로 내림차순 정렬
+				});
 
-            // 테이블 정렬 함수
-            function sortTable(columnIndex, order) {
-                const rows = Array.from(tbody.querySelectorAll('tr'));
+				// 테이블 정렬 함수
+				function sortTable(columnIndex, order) {
+					const rows = Array.from(tbody.querySelectorAll('tr'));
 
-                // 정렬할 때 기준이 되는 값 추출
-                const getValue = (row) => row.cells[columnIndex].textContent.trim();
+					// 정렬할 때 기준이 되는 값 추출
+					const getValue = (row) => {
+						const cellValue = row.cells[columnIndex].textContent.trim();
+						return columnIndex === 3 ? new Date(cellValue) : parseInt(cellValue, 10);
+					};
 
-                // 정렬하기
-                rows.sort((a, b) => {
-                    const aValue = getValue(a);
-                    const bValue = getValue(b);
-                    if (order === 'asc') {
-                        return aValue.localeCompare(bValue);
-                    } else {
-                        return bValue.localeCompare(aValue);
-                    }
-                });
+					// 정렬하기
+					rows.sort((a, b) => {
+						const aValue = getValue(a);
+						const bValue = getValue(b);
+						if (order === 'asc') {
+							return aValue > bValue ? 1 : -1;
+						} else {
+							return aValue < bValue ? 1 : -1;
+						}
+					});
 
-                // 정렬된 순서대로 다시 테이블에 추가
-                rows.forEach(row => tbody.appendChild(row));
-            }
-        });
+					// 정렬된 순서대로 다시 테이블에 추가
+					rows.forEach(row => tbody.appendChild(row));
+				}
+			});
         
-        
-     // 선택된 드롭다운 메뉴에 해당하는 공지사항 조회
-        document.addEventListener("DOMContentLoaded", function() {
-            const menuItems = document.querySelectorAll('.dropdown-item');
 
-            menuItems.forEach(item => {
-                item.addEventListener('click', function() {
-                    const selectedMenu = this.textContent;
-                    const tbody = document.querySelector('tbody');
-                    const rows = tbody.querySelectorAll('tr');
-
-                    rows.forEach(row => row.style.display = 'none');
-
-                    rows.forEach(row => {
-                        const title = row.querySelector('td:nth-child(2)').textContent;
-                        if (title.includes(selectedMenu)) {
-                            row.style.display = '';
-                        }
-                    });
-                });
-            });
-        });
      
+     
+     
+     // 드롭다운 메뉴 선택 시 해당하는 공지사항만 보이게 하는 함수
+        function filterNotices(category) {
+            const tbody = document.querySelector('tbody');
+            const rows = tbody.querySelectorAll('tr');
+
+            rows.forEach(row => {
+                const categoryBadge = row.querySelector('.badge-cate'); // 각 행의 게시물 카테고리 뱃지
+                const categoryText = categoryBadge.textContent; // 뱃지에 표시된 카테고리 텍스트
+                const display = category === '전체' || categoryText === category ? '' : 'none'; // 선택된 카테고리와 일치하는 행이면 보이게 함, 아니면 숨김
+
+                row.style.display = display;
+            });
+        }
+
+        // 페이지 로드 시 실행되는 함수
+        document.addEventListener("DOMContentLoaded", function() {
+            const dropdownItems = document.querySelectorAll('.dropdown-item');
+
+            dropdownItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const selectedCategory = this.textContent.trim(); // 선택된 드롭다운 메뉴의 텍스트
+
+                    // 선택된 카테고리에 해당하는 게시물만 보이게 함
+                    filterNotices(selectedCategory);
+                });
+            });
+        });
      
      
      

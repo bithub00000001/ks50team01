@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+                layout:decorate="~{platform/layout/default}">
+
+<th:block layout:fragment="customContent">
+    <div class="col-md-12 col-sm-6 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h3>음식점 세부정보 수정</h3>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <form id="modifyForm" th:action="@{/platform/destination/restaurantMenuModify}" method="post">
+					 <input type="hidden" name="restaurantMenuManageCode" th:value="${restaurantMenuInfo.restaurantMenuManageCode}">
+				
+				    <div class="form-group">
+				        <label for="restaurantName">음식점 이름</label>
+				        <input type="text" class="form-control" id="restaurantName" name="restaurantName" th:value="${restaurantMenuInfo.restaurantName}">
+				    </div>
+				
+				    <div class="form-group">
+				        <label for="restaurantMenu">음식점 메뉴</label>
+				        <input type="text" class="form-control" id="restaurantMenu" name="restaurantMenu" th:value="${restaurantMenuInfo.restaurantMenu}">
+				    </div>
+				
+				    <div class="form-group">
+				        <label for="restaurantMenuPrice">메뉴 가격</label>
+				        <input type="text" class="form-control" id="restaurantMenuPrice" name="restaurantMenuPrice" th:value="${restaurantMenuInfo.restaurantMenuPrice}">
+				    </div>
+				    
+				    <button type="submit" class="btn btn-primary">저장</button>
+				    <button type="button" class="btn btn-secondary" onclick="location.href='/platform/destination/restaurantMenuManage'">취소</button>
+				</form>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+</html>

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ksmart.ks50team01.user.board.mapper.UQnaMapper">
+	
+	<resultMap id="qnaResultMap" type="UQna">
+		<id property="qnaNum" column="QNA_NO" />
+		<result property="qnaRowNum" column="ROW_NUM" />
+		<result property="qnaRegId" column="REG_MBR_BIZ_ID" />
+		<result property="faqCateNum" column="FAQ_CTGRY_NO" />
+		<result property="qnaProNum" column="QNA_PRGRS_NO" />
+		<result property="qnaProCate" column="QNA_PRGRS_CTGRY" />
+		<result property="qnaTitle" column="QNA_TTL" />
+		<result property="qnaContent" column="QNA_CN" />
+		<result property="ansRegId" column="ANS_REG_PF_ID" />
+		<result property="qnaRegDate" column="REG_YMD" />
+		<result property="qnaMdfDate" column="MDFCN_YMD" />
+		<result property="qnartnDate" column="RTRCN_YMD" />
+		<result property="isNew" 	column="QNA_NEW" />
+	
+		<!-- 1:1 association -->
+		<association 	property="category" 				javaType="UCategory">
+			<id 		property="qnaCategoryNum" 			column="FAQ_CTGRY_NO"/>
+			<result 	property="qnaCategoryRegId" 		column="REG_PF_ID"/>
+			<result 	property="qnaCategoryName" 			column="FAQ_CTGRY_TYPE"/>
+			<result 	property="qnaCategoryMdfId" 		column="MDFCN_PF_ID"/>
+			<result 	property="qnaCateActive" 			column="ACT_YN"/>
+			<result 	property="qnaCategoryRegDate" 		column="REG_YMD"/>
+			<result 	property="qnaCategoryMdfDate" 		column="MDFCN_YMD"/>
+		</association>
+		
+		<!-- 1:1 association -->
+		<association property="qnaAnswer" javaType="UQnaAnswer">
+			<id 		property="answerNum" 		column="ANS_NO"/>
+			<result 	property="answerRegId" 		column="REG_PF_ID"/>
+			<result 	property="qnaNum" 		column="QNA_NO"/>
+			<result 	property="answerContent" 		column="ANS_CN"/>
+			<result 	property="answerMdfId" 			column="MDFCN_PF_ID"/>
+			<result 	property="answerRegDate" 		column="REG_YMD"/>
+			<result 	property="answerMdfDate" 		column="MDFCN_YMD"/>
+		</association>
+	</resultMap>
+		
+	<resultMap type="UCategory" id="categoryResultMap">
+		<id 		property="qnaCategoryNum" 			column="FAQ_CTGRY_NO"/>
+		<result 	property="qnaCategoryRegId" 		column="REG_PF_ID"/>
+		<result 	property="qnaCategoryName" 			column="FAQ_CTGRY_TYPE"/>
+		<result 	property="qnaCategoryMdfId" 		column="MDFCN_PF_ID"/>
+		<result 	property="qnaCateActive" 			column="ACT_YN"/>
+		<result 	property="qnaCategoryRegDate" 		column="REG_YMD"/>
+		<result 	property="qnaCategoryMdfDate" 		column="MDFCN_YMD"/>
+	</resultMap>
+		
+		
+	
+
+	<select id="getQnaList" resultMap="qnaResultMap">
+	    <![CDATA[
+	        /* 1:1문의 조회 */		
+	        SELECT
+	            ROW_NUMBER() OVER(ORDER BY CAST(SUBSTRING_INDEX(Q.QNA_NO, 'QNA_', -1) AS UNSIGNED)) AS ROW_NUM,
+	            Q.QNA_NO,
+	            Q.REG_MBR_BIZ_ID,
+	            F.FAQ_CTGRY_TYPE,
+	            Q.QNA_PRGRS_CTGRY,
+	            Q.QNA_TTL,
+	            Q.QNA_CN,
+	            Q.ANS_REG_PF_ID,
+	            Q.REG_YMD,
+	            Q.MDFCN_YMD,
+	            Q.RTRCN_YMD,
+	            CASE WHEN DATEDIFF(NOW(), Q.REG_YMD) < 3 THEN TRUE ELSE FALSE END AS QNA_NEW
+	        FROM
+	            QNA_QUESTION AS Q
+	            INNER JOIN
+	            FAQ_CATEGORY AS F
+	            ON
+	            Q.FAQ_CTGRY_NO = F.FAQ_CTGRY_NO
+	        GROUP BY Q.QNA_NO
+	        ORDER BY Q.REG_YMD DESC;
+	    ]]>
+	</select>
+
+	
+	
+	<!-- getQnaByQnaNum 쿼리 정의 -->
+	<select id="getQnaByQnaNum" resultMap="qnaResultMap">
+	    /* 1:1문의 상세 조회 */
+	    SELECT
+	        Q.QNA_NO,
+	        Q.REG_MBR_BIZ_ID,
+	        F.FAQ_CTGRY_TYPE,
+	        Q.QNA_PRGRS_CTGRY,
+	        Q.QNA_TTL,
+	        Q.QNA_CN,
+	        Q.ANS_REG_PF_ID,
+	        Q.REG_YMD,
+	        Q.MDFCN_YMD,
+	        Q.RTRCN_YMD,
+	        A.ANS_NO,
+	        A.REG_PF_ID,
+	        A.QNA_NO,
+	        A.ANS_CN,
+	        A.MDFCN_PF_ID,
+	        A.REG_YMD,
+	        A.MDFCN_YMD
+	    FROM
+	        QNA_QUESTION AS Q
+	        INNER JOIN FAQ_CATEGORY AS F ON Q.FAQ_CTGRY_NO = F.FAQ_CTGRY_NO
+	        LEFT JOIN QNA_ANSWER AS A ON Q.QNA_NO = A.QNA_NO
+	    WHERE
+	        Q.QNA_NO = #{qnaNum};
+	</select>
+	
+	
+	
+    <select id="getQnaCateList" resultMap="categoryResultMap">
+    	/* 1:1문의 카테고리 리스트 조회 */
+        SELECT 
+			FAQ_CTGRY_NO,
+			FAQ_CTGRY_TYPE
+		FROM 
+			FAQ_CATEGORY AS FC
+		WHERE 
+			FC.ACT_YN = 'Y';
+    </select>
+    
+    
+    <!-- QNA 등록 -->
+    <insert id="insertQna" parameterType="UQna">
+    	<selectKey keyProperty="qnaNum" resultType="String" order="BEFORE">
+    		/* QNA 번호 자동증가 */
+    		SELECT
+				CONCAT(
+							'QNA_', 
+							MAX(CAST(SUBSTRING_INDEX(Q.QNA_NO, 'QNA_', -1) AS UNSIGNED)) + 1
+						) AS qnaNum
+			FROM
+				QNA_QUESTION AS Q
+    	</selectKey>
+        INSERT INTO QNA_QUESTION (QNA_NO, REG_MBR_BIZ_ID, FAQ_CTGRY_NO, QNA_TTL, QNA_CN, REG_YMD)
+        VALUES (#{qnaNum}, #{qnaRegId}, #{category.qnaCategoryNum}, #{qnaTitle}, #{qnaContent}, NOW());
+    </insert>
+    
+
+    
+    
+	
+	
+	
+</mapper>

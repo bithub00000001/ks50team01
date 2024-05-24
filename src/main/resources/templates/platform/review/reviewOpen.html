@@ -132,18 +132,26 @@
 			            </tr>
 			            <tr>
 			                <td>
-			                    <label for="reviewApprove">공개여부</label>
+			                    <label for="reviewDate">저장된 공개 여부</label>
 			                </td>
 			                <td>
-							<select id="reviewApprove" name="reviewApprove">
-							    <option value="">====공개여부를 선택해주세요====</option>
-							    <th:block th:if="${pOpenList != null}" th:each="l : ${pOpenList}">
-							       <option th:value="${l.pOpenCode}" th:selected="${l.pOpenCode == reviewApprove}">
-							            [[${l.pOpenContent}]]
-							        </option>
+							    <span th:text="*{reviewApprove}"></span>
+							</td>
+			            </tr>
+			            <tr>
+			                <td>
+			                    <label for="reviewApprove">수정할 공개 여부</label>
+			                </td>
+			                <td>
+			                
+                				<select id="reviewApproveSelect" name="reviewApprove" onchange="updateReviewApprove()">
+							    <option value="">공개여부를 선택해주세요</option>
+
+		 						    <th:block th:if="${pOpenList != null}" th:each="l : ${pOpenList}">
+									       <option th:value="${l.pOpenCode}" th:selected="${l.pOpenCode == reviewApprove}">
+									            [[${l.pOpenContent}]]
+									        </option>
 									</th:block>
-											<!-- <option value="1">Y</option>
-										 <option value="2">N</option> -->
 			                    </select>
 			                </td>
 			            </tr>
@@ -151,7 +159,7 @@
 			        <tfoot>
 			            <tr>
 			                <td colspan="2">
-			                    <button type="submit" id="modifyMemberBtn">확인</button>
+			                    <button type="submit" id="modifyPReviewBtn">확인</button>
 			                    <button type="reset" id="resetBtn">취소</button>
 			                </td>
 			            </tr>
@@ -165,7 +173,13 @@
 </th:block>
 
 <th:block layout:fragment="customJsFile">
-
+<script>
+        function updateReviewApprove() {
+            var selectElement = document.getElementById("reviewApproveSelect");
+            var pElement = document.getElementById("reviewApproveInput");
+            pElement.innerHTML = selectElement.value;
+        }
+</script>
 
 </th:block>
 </html>

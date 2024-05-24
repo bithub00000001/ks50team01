@@ -117,10 +117,10 @@
 								<td th:text="${l.modifyDate}"></td>
 								<td>
 									<!--/* /member/modifyMember?memberId=id001 */-->
-									<a th:href="@{/platform/ranking/modifyRanking(pRankingNum=${l.pRankingNum})}">수정</a>
+									<a th:href="@{/platform/ranking/modifyRanking(pRankingId=${l.pRankingId})}">수정</a>
 								</td>
 								<td>
-									<a th:href="@{/platform/ranking/removeRanking(pRankingNum=${l.pRankingNum})}">삭제</a>					
+									<a th:href="@{/platform/ranking/removeRanking(pRankingId=${l.pRankingId})}">삭제</a>					
 								</td>
 							</tr>
 						</tbody>

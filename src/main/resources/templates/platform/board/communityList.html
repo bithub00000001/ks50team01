@@ -22,198 +22,231 @@
 	</head>
 
 	<th:block layout:fragment="customContent">
-		<!-- search start -->
-		<div class="row">
-			<div class="col-md-12 col-sm-12 col-xs-12">
-				<div class="x_panel">
-					<div class="x_title">
-						<h2>
-							검색 <small>search form</small>
-						</h2>
-						<ul class="nav navbar-right panel_toolbox">
-							<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-							</li>
-							<li class="dropdown"><a href="#" class="dropdown-toggle"
-								data-toggle="dropdown" role="button" aria-expanded="false"><i
-									class="fa fa-wrench"></i></a>
-								<ul class="dropdown-menu" role="menu">
-									<li><a href="#">Settings 1</a></li>
-									<li><a href="#">Settings 2</a></li>
-								</ul></li>
-							<li><a class="close-link"><i class="fa fa-close"></i></a></li>
-						</ul>
-						<div class="clearfix"></div>
-					</div>
-					<div class="x_content">
-						<br />
-						<form id="demo-form2" class="form-horizontal form-label-left">
-							<div class="form-group">
-								<div class="col-md-2 col-sm-2 col-xs-0"></div>
-								<label class="control-label col-md-1 col-sm-1 col-xs-12"
-									for="first-name">제목</label>
-								<div class="col-md-3 col-sm-3 col-xs-12 form-element">
-									<input type="text" id="first-name"
-										class="form-control col-md-4 col-xs-12">
-								</div>
-								<label class="control-label col-md-1 col-sm-1 col-xs-12"
-									for="middle-name">내용</label>
-								<div class="col-md-3 col-sm-3 col-xs-12 form-element">
-									<input id="middle-name" class="form-control col-md-7 col-xs-12"
-										type="text" name="middle-name">
-								</div>
-								<div class="col-md-2 col-sm-2 col-xs-0"></div>
-							</div>
-							<div class="form-group">
-								<div class="col-md-2 col-sm-2 col-xs-0"></div>
-								<label for="middle-name"
-									class="control-label col-md-2 col-sm-2 col-xs-12">작성자</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input id="middle-name" class="form-control col-md-7 col-xs-12"
-										type="text" name="middle-name">
-								</div>
-								<div class="col-md-2 col-sm-2 col-xs-0"></div>
-							</div>
-							<div class="form-group">
-								<div class="col-md-2 col-sm-2 col-xs-0"></div>
-								<label class="control-label col-md-2 col-sm-2 col-xs-12">카테고리 유형</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<select class="form-control text-center">
-										<option>여행 정보</option>
-										<option>여행 후기</option>
-										<option>여행 친구 찾기</option>
-										<option>자유 게시판</option>
-										<option>질문 게시판</option>
-									</select>
-								</div>
-								<div class="col-md-2 col-sm-2 col-xs-0"></div>
-							</div>
-							<div class="form-group">
-								<div class="col-md-2 col-sm-2 col-xs-0"></div>
-								<label class="control-label col-md-2 col-sm-2 col-xs-12">정렬
-									기준</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<div class="radio">
-										<label class="align-item-center"><input type="radio" value="option1" id="optionsRadios1" name="optionsRadios" checked="checked">최신순</label> 
-										<label><input type="radio" value="option2" id="optionsRadios2" name="optionsRadios">조회순</label>
-										<label><input type="radio" value="option3" id="optionsRadios3" name="optionsRadios">인기순</label>
-										<label><input type="radio" value="option4" id="optionsRadios4" name="optionsRadios">댓글순</label>
-									</div>
-								</div>
-								<div class="col-md-2 col-sm-2 col-xs-0"></div>
-							</div>
-							<div class="ln_solid"></div>
-							<div class="form-group">
-								<div class="col-md-12 col-sm-12 col-xs-12 text-center">
-									<button class="btn btn-success btn-lg" type="button">검색</button>
-									<button type="reset" class="btn btn-dark btn-lg">초기화</button>
-								</div>
-							</div>
-	
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- search end -->
-			
-		<!-- grid table start -->
-		<div class="row">
-			<div class="col-md-12 col-sm-12 col-xs-12">
-				<div class="x_panel">
-					<div class="x_content">
-						<table id="datatable-responsive"
-							class="table table-striped table-bordered dt-responsive nowrap"
-							cellspacing="0" width="100%">
-							<thead>
-								<tr>
-									<th><input type="checkbox" id="checkAll" name="checkAll"></th>
-									<th>번호</th>
-									<th>작성자</th>
-									<th>카테고리</th>
-									<th>제목</th>
-									<th>내용</th>
-									<th>조회수</th>
-									<th>댓글수</th>
-									<th>좋아요수</th>
-									<th>싫어요수</th>
-									<th>신고수</th>
-									<th>활성화여부</th>
-									<th>등록일</th>
-									<th>수정일</th>
-									<th>삭제일</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr th:unless="${communityList != null}">
-									<td colspan="15" class="text-center" >등록된 게시글이 없습니다.</td>
-								</tr>
-								<tr th:if="${communityList != null}" th:each="l : ${communityList}">
-									<td><input type="checkbox" id="checkbox_${l.postNum}" name="postNum" th:value="${l.postNum}"></td>
-									<td th:text="${l.postNum}"></td>
-									<td th:text="${l.postRegId}"></td>
-									<td th:text="${l.postCate.postCateType}"></td>
-									<td th:text="${l.postTitle}"></td>
-									<td th:text="${l.postContent}"></td>
-									<td th:text="${l.postInqCnt}"></td>
-									<td th:text="${l.commentTotal}"></td>
-									<td th:text="${l.likeTotal}"></td>
-									<td th:text="${l.dislikeTotal}"></td>
-									<td th:text="${l.reportTotal}"></td>
-									<td th:text="${l.postAct}"></td>
-									<td th:text="${l.postRegDate}"></td>
-									<td th:text="${l.postMdfDate}"></td>
-									<td th:text="${l.postDelDate}"></td>
-								</tr>
-							</tbody>
-						</table>
-						<div class="text-left">
-							<button type="button" class="btn btn-danger" id="disabled">비활성화</button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- grid table end -->
-	</th:block>
-	</th:block>
-	<th:block layout:fragment="customJsFile">
-		<!-- Datatables -->
-	    <script th:src="@{/platform/vendors/datatables.net/js/jquery.dataTables.min.js}"></script>
-	    <script th:src="@{/platform/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js}"></script>
-	    <script th:src="@{/platform/vendors/datatables.net-buttons/js/dataTables.buttons.min.js}"></script>
-	    <script th:src="@{/platform/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js}"></script>
-	    <script th:src="@{/platform/vendors/datatables.net-buttons/js/buttons.flash.min.js}"></script>
-	    <script th:src="@{/platform/vendors/datatables.net-buttons/js/buttons.html5.min.js}"></script>
-	    <script th:src="@{/platform/vendors/datatables.net-buttons/js/buttons.print.min.js}"></script>
-	    <script th:src="@{/platform/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js}"></script>
-	    <script th:src="@{/platform/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js}"></script>
-	    <script th:src="@{/platform/vendors/datatables.net-responsive/js/dataTables.responsive.min.js}"></script>
-	    <script th:src="@{/platform/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js}"></script>
-	    <script th:src="@{/platform/vendors/datatables.net-scroller/js/dataTables.scroller.min.js}"></script>
-	    <script th:src="@{/platform/vendors/jszip/dist/jszip.min.js}"></script>
-	    <script th:src="@{/platform/vendors/pdfmake/build/pdfmake.min.js}"></script>
-	    <script th:src="@{/platform/vendors/pdfmake/build/vfs_fonts.js}"></script>
-	</th:block>
-	
-	
-	
-	<!-- custom js file start -->
-	<th:block layout:fragment="customJs">
-	<script type="text/javascript" th:src="@{/platform/js/checkbox/categoryDel.js}"></script>
-	<script type="text/javascript" th:src="@{/platform/js/checkbox/disabled.js}"></script>
-	
-	<script>
-	    document.getElementById('checkAll').addEventListener('change', function() {
-	        var checkboxes = document.querySelectorAll('[id^=checkbox_]');
-	        checkboxes.forEach(function(checkbox) {
-	            checkbox.checked = document.getElementById('checkAll').checked;
-	        });
-	    });
-	</script>
-	
-	
-	</th:block>
-	<!-- custom js file end -->
-	
-	
+    <!-- search start -->
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>
+                        검색 <small>search form</small>
+                    </h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li class="dropdown"><a href="#" class="dropdown-toggle"
+                                                data-toggle="dropdown" role="button" aria-expanded="false"><i
+                                class="fa fa-wrench"></i></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#">Settings 1</a></li>
+                                <li><a href="#">Settings 2</a></li>
+                            </ul></li>
+                        <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <br />
+                    <form id="demo-form2" class="form-horizontal form-label-left">
+                        <div class="form-group">
+                            <div class="col-md-2 col-sm-2 col-xs-0"></div>
+                            <label class="control-label col-md-1 col-sm-1 col-xs-12"
+                                   for="first-name">제목</label>
+                            <div class="col-md-3 col-sm-3 col-xs-12 form-element">
+                                <input type="text" id="searchItem"
+                                       class="form-control col-md-4 col-xs-12">
+                            </div>
+                            <label class="control-label col-md-1 col-sm-1 col-xs-12"
+                                   for="middle-name">내용</label>
+                            <div class="col-md-3 col-sm-3 col-xs-12 form-element">
+                                <input id="middle-name" class="form-control col-md-7 col-xs-12"
+                                       type="text" name="middle-name">
+                            </div>
+                            <div class="col-md-2 col-sm-2 col-xs-0"></div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-2 col-sm-2 col-xs-0"></div>
+                            <label for="middle-name"
+                                   class="control-label col-md-2 col-sm-2 col-xs-12">작성자</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="middle-name" class="form-control col-md-7 col-xs-12"
+                                       type="text" name="middle-name">
+                            </div>
+                            <div class="col-md-2 col-sm-2 col-xs-0"></div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-2 col-sm-2 col-xs-0"></div>
+                            <label class="control-label col-md-2 col-sm-2 col-xs-12">카테고리 유형</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <select id="searchCate" class="form-control text-center">
+                                    <option>여행 정보</option>
+                                    <option>여행 후기</option>
+                                    <option>여행 친구 찾기</option>
+                                    <option>자유 게시판</option>
+                                    <option>질문 게시판</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2 col-sm-2 col-xs-0"></div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-2 col-sm-2 col-xs-0"></div>
+                            <label class="control-label col-md-2 col-sm-2 col-xs-12">정렬
+                                기준</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <div class="radio">
+                                    <label class="align-item-center"><input type="radio" value="option1" id="optionsRadios1" name="optionsRadios" checked="checked">최신순</label>
+                                    <label><input type="radio" value="option2" id="optionsRadios2" name="optionsRadios">조회순</label>
+                                    <label><input type="radio" value="option3" id="optionsRadios3" name="optionsRadios">인기순</label>
+                                    <label><input type="radio" value="option4" id="optionsRadios4" name="optionsRadios">댓글순</label>
+                                </div>
+                            </div>
+                            <div class="col-md-2 col-sm-2 col-xs-0"></div>
+                        </div>
+                        <div class="ln_solid"></div>
+                        <div class="form-group">
+                            <div class="col-md-12 col-sm-12 col-xs-12 text-center">
+                                <button class="btn btn-success btn-lg searchBtn" type="button">검색</button>
+                                <button type="reset" class="btn btn-dark btn-lg">초기화</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- search end -->
+
+    <!-- grid table start -->
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_content">
+                    <table id="datatable-responsive"
+                           class="table table-striped table-bordered dt-responsive nowrap"
+                           cellspacing="0" width="100%">
+                        <thead>
+                        <tr>
+                            <th><input type="checkbox" id="checkAll" name="checkAll"></th>
+                            <th>번호</th>
+                            <th>작성자</th>
+                            <th>카테고리</th>
+                            <th>제목</th>
+                            <th>내용</th>
+                            <th>조회수</th>
+                            <th>댓글수</th>
+                            <th>좋아요수</th>
+                            <th>싫어요수</th>
+                            <th>신고수</th>
+                            <th>활성화여부</th>
+                            <th>등록일</th>
+                            <th>수정일</th>
+                            <th>삭제일</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:unless="${communityList != null}">
+                            <td colspan="15" class="text-center">등록된 게시글이 없습니다.</td>
+                        </tr>
+                        <tr th:if="${communityList != null}" th:each="l : ${communityList}">
+                            <td><input type="checkbox" id="checkbox_${l.postNum}" name="postNum" th:value="${l.postNum}"></td>
+                            <td th:text="${l.postNum}"></td>
+                            <td th:text="${l.postRegId}"></td>
+                            <td th:text="${l.category.postCategoryName}"></td>
+                            <td th:text="${l.postTitle}"></td>
+                            <td th:text="${l.postContent}"></td>
+                            <td th:text="${l.postInqCnt}"></td>
+                            <td th:text="${l.commentTotal}"></td>
+                            <td th:text="${l.likeTotal}"></td>
+                            <td th:text="${l.dislikeTotal}"></td>
+                            <td th:text="${l.reportTotal}"></td>
+                            <td th:text="${l.postAct}"></td>
+                            <td th:text="${l.postRegDate}"></td>
+                            <td th:text="${l.postMdfDate}"></td>
+                            <td th:text="${l.postDelDate}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="text-left">
+                        <button type="button" class="btn btn-danger" id="disabled">비활성화</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- grid table end -->
+</th:block>
+
+<th:block layout:fragment="customJsFile">
+    <!-- Datatables -->
+    <script th:src="@{/platform/vendors/datatables.net/js/jquery.dataTables.min.js}"></script>
+    <script th:src="@{/platform/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js}"></script>
+    <script th:src="@{/platform/vendors/datatables.net-buttons/js/dataTables.buttons.min.js}"></script>
+    <script th:src="@{/platform/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js}"></script>
+    <script th:src="@{/platform/vendors/datatables.net-buttons/js/buttons.flash.min.js}"></script>
+    <script th:src="@{/platform/vendors/datatables.net-buttons/js/buttons.html5.min.js}"></script>
+    <script th:src="@{/platform/vendors/datatables.net-buttons/js/buttons.print.min.js}"></script>
+    <script th:src="@{/platform/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js}"></script>
+    <script th:src="@{/platform/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js}"></script>
+    <script th:src="@{/platform/vendors/datatables.net-responsive/js/dataTables.responsive.min.js}"></script>
+    <script th:src="@{/platform/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js}"></script>
+    <script th:src="@{/platform/vendors/datatables.net-scroller/js/dataTables.scroller.min.js}"></script>
+    <script th:src="@{/platform/vendors/jszip/dist/jszip.min.js}"></script>
+    <script th:src="@{/platform/vendors/pdfmake/build/pdfmake.min.js}"></script>
+    <script th:src="@{/platform/vendors/pdfmake/build/vfs_fonts.js}"></script>
+</th:block>
+
+<!-- custom js file start -->
+<th:block layout:fragment="customJs">
+    <script type="text/javascript" th:src="@{/platform/js/checkbox/categoryDel.js}"></script>
+    <script type="text/javascript" th:src="@{/platform/js/checkbox/selectedDisabled.js}"></script>
+
+    <script>
+        document.getElementById('checkAll').addEventListener('change', function() {
+            var checkboxes = document.querySelectorAll('[id^=checkbox_]');
+            checkboxes.forEach(function(checkbox) {
+                checkbox.checked = document.getElementById('checkAll').checked;
+            });
+        });
+    </script>
+    
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+
+    <script>
+        $(document).ready(function(){
+            $('#searchItem').on('keyup', function(){
+                const searchValue = $(this).val().toLowerCase();
+                $('#datatable-responsive tbody tr').filter(function(){
+                    $(this).toggle($(this).text().toLowerCase().indexOf(searchValue) > -1);
+                });
+            });
+
+            $(document).on('click','.searchBtn', function(){
+                const movePage = $('#searchCate').val();
+
+                if(movePage) location.href = '/platform/board/' + movePage;
+            });
+        });
+    </script>
+
+
+
+
+
+
+
+</th:block>
+<!-- custom js file end -->
+
+
 </html>

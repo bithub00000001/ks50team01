@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ksmart.ks50team01.user.review.mapper.UReviewMapper">
+    <resultMap type="UReview" id="UReviewResultMap">
+        <id property="reviewCode" column="PRCHS_REV_CD"/>
+        <result property="reviewCode" column="PRCHS_REV_CD"/>
+        <result property="reviewId" column="REG_MBR_ID"/>
+        <result property="reviewGoods" column="PRTNR_BPLC_CD"/>
+        <result property="reviewStar" column="RAT_CTGRY_NO"/>
+        <result property="reviewContent" column="PRCHS_REV_CN"/>
+        <result property="reviewDate" column="REG_YMD"/>
+        <result property="reviewLike" column="LIKE_TOTAL"/>
+        <result property="reviewDislike" column="DISLIKE_TOTAL"/>
+        <result property="reviewApprove" column="RLS_YN_CD"/>
+        <result property="reviewNum" column="reviewNum"/>
+        <result property="districtSubclassCode" column="RGN_SCTGRY_CD"/>
+        
+        <result property="tripLargeCode" column="TRIP_LCTGRY_CD"/>
+        <result property="tripSubclassCode" column="TRIP_SCTGRY_CD"/>
+        <result property="paymentCode" column="STLM_CERT_FILE_CD"/>
+        <result property="reservationCode" column="BZENTY_RSVT_NO"/>
+        <result property="goodsOption" column="PRCHS_GDSOPT_CD"/>
+        <result property="goodsInformation" column="PRCHS_CD"/>
+        <result property="reportTotal" column="REPT_TOTAL"/>
+        <result property="reviewModifyDate" column="MDFCN_YMD"/>
+        
+        
+        
+    </resultMap>
+
+    <resultMap type="UReviewComment" id="UCommentResultMap">
+        <id property="commentCode" column="REV_CMNT_CD"/>
+        <result property="commentCode" column="REV_CMNT_CD"/>
+        <result property="commentId" column="REG_BIZ_ID"/>
+        <result property="commentReviewCode" column="PRCHS_REV_CD"/>
+        <result property="commentApprove" column="RLS_YN_CD"/>
+        <result property="businessCode" column="PRTNR_BPLC_CD"/>
+        <result property="commentContent" column="REV_CMNT_CN"/>
+        <result property="commentDate" column="REG_YMD"/>
+        <result property="tripLargeCode" column="TRIP_LCTGRY_CD"/>
+        <result property="districtSubclass" column="RGN_SCTGRY_NM"/>
+    </resultMap>
+    
+    <resultMap type="UReviewFile" id="fileResultMap">
+    	<result property="reviewFileCode" column="PRCH_REV_FILE_CD"/>
+    	<result property="reviewId" column="REG_MBR_ID"/>
+    	<result property="reviewCode" column="PRCHS_REV_CD"/>
+    	<result property="reviewFileName" column="IMG_NM"/>
+    	<result property="reviewFilePath" column="IMG_PATH_NM"/>
+    	<result property="reviewFileDate" column="REG_YMD"/>
+    	<result property="reviewFileNewName" column="NEW_IMG_NM"/>
+    	<result property="reviewFileSize" column="FILE_SIZE"/>
+    
+    </resultMap>
+    
+    
+    	<select id="getFileInfoByIdx" parameterType="string" resultMap="fileResultMap">
+			SELECT
+				 PRCH_REV_FILE_CD
+				,REG_MBR_ID
+				,PRCHS_REV_CD
+				,IMG_NM
+				,IMG_PATH_NM
+				,REG_YMD
+				,NEW_IMG_NM
+				,FILE_SIZE
+			FROM
+				REVIEW_IMAGE
+			<trim prefix="WHERE" prefixOverrides="AND |OR ">
+				<if test="PRCH_REV_FILE_CD != null and PRCH_REV_FILE_CD != ''">
+					PRCH_REV_FILE_CD = #{reviewFileCode}
+				</if>
+			</trim>
+		</select>
+    
+		<insert id="addFile" parameterType="list">
+		    INSERT INTO REVIEW_IMAGE
+		    (
+		         PRCH_REV_FILE_CD
+		        ,REG_MBR_ID
+		        ,PRCHS_REV_CD
+		        ,IMG_NM
+		        ,IMG_PATH_NM
+		        ,REG_YMD
+		        ,NEW_IMG_NM
+		        ,FILE_SIZE
+		    )
+		    VALUES
+		    <foreach collection="list" item="data" separator=",">
+		        (
+		             #{data.reviewFileCode}
+		            ,#{data.reviewId}
+		            ,#{data.reviewCode}
+		            ,#{data.reviewFileName}
+		            ,#{data.reviewFilePath}
+		            ,NOW()
+		            ,#{data.reviewFileNewName}
+		            ,#{data.reviewFileSize}
+		        )
+		    </foreach>
+		</insert>
+    
+    	<select id="getFileList" resultMap="fileResultMap">
+		SELECT
+			 PRCH_REV_FILE_CD
+			,REG_MBR_ID
+			,PRCHS_REV_CD
+			,IMG_NM
+			,IMG_PATH_NM
+			,REG_YMD
+			,NEW_IMG_NM
+			,FILE_SIZE
+		FROM
+			REVIEW_IMAGE
+	</select>
+    
+    <!-- <insert id="reivewWrite" parameterType="UReview"> -->
+		
+    <!-- 리뷰등록 -->
+     <!-- INSERT INTO PURCHASE_REVIEW
+    (REG_MBR_ID, PRTNR_BPLC_CD, RAT_CTGRY_NO, PRCHS_REV_CN, RLS_YN_CD, RGN_SCTGRY_CD, REG_YMD)
+    VALUES
+    (
+        #{reviewId},
+        #{reviewGoods},
+        #{reviewStar},
+        #{reviewContent},
+        #{reviewApprove},
+        #{districtSubclassCode} 이곳에 필드 값 추가
+        CURDATE(),
+    );
+	</insert> -->
+	
+	    <!-- 가장 큰 PRCHS_REV_CD 값을 조회하는 쿼리 -->
+    <select id="getMaxPrchsRevCd" resultType="String">
+        SELECT MAX(PRCHS_REV_CD) FROM PURCHASE_REVIEW
+    </select>
+
+    <!-- 리뷰 데이터를 삽입하는 쿼리 -->
+    <insert id="reviewWrite" parameterType="UReview">
+    	/* 리뷰등록 */
+        INSERT INTO PURCHASE_REVIEW
+        (PRCHS_REV_CD, REG_MBR_ID, PRTNR_BPLC_CD, RAT_CTGRY_NO, PRCHS_REV_CN, RLS_YN_CD, RGN_SCTGRY_CD, REG_YMD)
+        VALUES
+        (#{reviewCode}, #{reviewId}, #{reviewGoods}, #{reviewStar}, #{reviewContent}, #{reviewApprove},  #{districtSubclassCode}, NOW())
+    </insert>
+
+    
+
+    
+    
+    
+
+    <select id="getUReview" resultMap="UReviewResultMap">
+    /*리뷰 목록 리스트*/
+        SELECT 
+            ROW_NUMBER() OVER(ORDER BY PRCHS_REV_CD) AS reviewNum,
+            PRCHS_REV_CD, 
+            REG_MBR_ID, 
+            RLS_YN_CD, 
+            RAT_CTGRY_NO, 
+            PRTNR_BPLC_CD, 
+            PRCHS_REV_CN, 
+            LIKE_TOTAL, 
+            DISLIKE_TOTAL,
+            REG_YMD,
+            RGN_SCTGRY_CD, 
+            TRIP_LCTGRY_CD, 
+            TRIP_SCTGRY_CD, 
+            STLM_CERT_FILE_CD, 
+            BZENTY_RSVT_NO, 
+            PRCHS_CD, 
+            PRCHS_GDSOPT_CD, 
+            MDFCN_YMD,
+            REPT_TOTAL
+        FROM 
+            PURCHASE_REVIEW
+    </select>
+
+    <select id="getUReviewComment" resultMap="UCommentResultMap">
+    /* 답글 목록 리스트 */
+        SELECT
+            ROW_NUMBER() OVER(ORDER BY REV_CMNT_CD) AS commentNum,
+            REV_CMNT_CD, 
+            REG_BIZ_ID, 
+            PRCHS_REV_CD, 
+            RLS_YN_CD, 
+            PRTNR_BPLC_CD, 
+            REV_CMNT_CN, 
+            REG_YMD,
+            TRIP_LCTGRY_CD,
+            RGN_SCTGRY_NM
+        FROM 
+            REVIEW_COMMENT    
+    </select>
+</mapper>

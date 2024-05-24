@@ -4,7 +4,7 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ksmart.ks50team01.platform.board.mapper.PFaqMapper">
 	
-	<resultMap id="faqResultMap" type="PFaq">
+	<resultMap id="faqResultMap" 		type="PFaq">
 		<id property="faqNum" 			column="FAQ_NO" />
 		<result property="faqRegId" 	column="REG_PF_ID" />
 		<result property="faqCateNum" 	column="FAQ_CTGRY_NO" />
@@ -16,16 +16,27 @@
 		<result property="faqMdfDate" 	column="MDFCN_YMD" />
 		
 		<!-- 1:1 association -->
-		<association property="faqCate" javaType="PFaq">
-			<id 		property="faqCateNum" 		column="FAQ_CTGRY_NO"/>
-			<result 	property="faqRegId" 		column="REG_PF_ID"/>
-			<result 	property="faqCateType" 		column="FAQ_CTGRY_TYPE"/>
-			<result 	property="faqMdfId" 		column="MDFCN_PF_ID"/>
-			<result 	property="faqAct" 			column="ACT_YN"/>
-			<result 	property="faqRegDate" 		column="REG_YMD"/>
-			<result 	property="faqMdfDate" 		column="MDFCN_YMD"/>
+		<association property="category" 					javaType="PCategory">
+			<id 		property="faqCategoryNum" 			column="FAQ_CTGRY_NO" />
+			<result 	property="faqCategoryRegId" 		column="REG_PF_ID"/>
+			<result 	property="faqCategoryName" 			column="FAQ_CTGRY_TYPE"/>
+			<result 	property="faqCategoryMdfId" 		column="MDFCN_PF_ID"/>
+			<result 	property="faqCateActive" 			column="ACT_YN"/>
+			<result 	property="faqCategoryRegDate" 		column="REG_YMD"/>
+			<result 	property="faqCategoryMdfDate" 		column="MDFCN_YMD"/>
 		</association> 
 	</resultMap>
+	
+	<resultMap type="PCategory" id="categoryResultMap">
+		<id 		property="faqCategoryNum" 			column="FAQ_CTGRY_NO" />
+		<result 	property="faqCategoryRegId" 		column="REG_PF_ID"/>
+		<result 	property="faqCategoryName" 			column="FAQ_CTGRY_TYPE"/>
+		<result 	property="faqCategoryMdfId" 		column="MDFCN_PF_ID"/>
+		<result 	property="faqCateActive" 			column="ACT_YN"/>
+		<result 	property="faqCategoryRegDate" 		column="REG_YMD"/>
+		<result 	property="faqCategoryMdfDate" 		column="MDFCN_YMD"/>
+	</resultMap>
+
 
 	<select id="getFaqList" resultMap="faqResultMap">
 	 	/* 자주찾는질문 조회 */
@@ -46,6 +57,100 @@
 			ON
 			F.FAQ_CTGRY_NO = C.FAQ_CTGRY_NO;
 	</select>
+	
+	
+	<select id="getfaqCateList" resultMap="categoryResultMap">
+        /* 자주찾는질문 카테고리 리스트 조회 */
+        SELECT
+            FAQ_CTGRY_NO,
+            FAQ_CTGRY_TYPE
+        FROM
+            FAQ_CATEGORY
+    	WHERE 
+			ACT_YN = 'Y';
+    </select>
+    
+    
+    
+    
+    <!-- 자주찾는질문 번호 자동증가 -->
+    <insert id="insertFaq" parameterType="PFaq">
+    	<selectKey keyProperty="noticeNum" resultType="String" order="BEFORE">
+    		/* 공지사항 등록 */
+    		SELECT
+				CONCAT(
+							'NTC_', 
+							MAX(CAST(SUBSTRING_INDEX(N.NTC_NO, 'NTC_', -1) AS UNSIGNED)) + 1
+						) AS noticeNum
+			FROM
+				NOTICE AS N
+    	</selectKey>
+        INSERT INTO NOTICE (NTC_NO, REG_PF_ID, NTC_CTGRY_NO, NTC_TTL, NTC_CN, NTC_INQ_CNT, ACT_YN, REG_YMD)
+        VALUES (#{noticeNum}, #{noticeRegId}, #{category.noticeCategoryNum}, #{noticeTitle}, #{noticeContent}, #{noticeInqCnt}, #{noticeAct}, NOW());
+    </insert>
+	
+	
+	
+	
+	
+	
+	<insert id="faqWrite" parameterType="PFaq">
+	    /* 자주찾는질문 등록 */
+	    INSERT INTO 
+	    	FREQUENTLY_ASKED_QUESTIONS (FAQ_CTGRY_NO, FAQ_TTL, FAQ_CN, REG_PF_ID, ACT_YN, REG_YMD)
+	    VALUES 
+	    	(#{faqCateNum}, #{faqTitle}, #{faqContent}, #{faqRegId}, #{faqAct}, NOW());
+	</insert>
+	
+	
+	<update id="faqModify" parameterType="PFaq">
+		/* 자주찾는질문 수정 */
+	    UPDATE 
+	        FREQUENTLY_ASKED_QUESTIONS
+	    SET
+	        FAQ_CTGRY_NO = #{faqCateNum},
+	        FAQ_TTL = #{faqTitle},
+	        FAQ_CN = #{faqContent},
+	        MDFCN_PF_ID = #{faqMdfId},
+	        ACT_YN = #{faqAct},
+	        MDFCN_YMD = NOW()
+	    WHERE 
+	        FAQ_NO = #{faqNum};
+	</update>
+
+	
+	
+	<select id="getFaqInfoByNum" resultMap="faqResultMap">
+		/* getFaqInfoByNum 자주찾는질문 조회 */
+		SELECT 
+			F.FAQ_NO, 
+			F.REG_PF_ID, 
+			C.FAQ_CTGRY_TYPE,
+			F.FAQ_TTL, 
+			F.FAQ_CN, 
+			F.MDFCN_PF_ID,
+			F.ACT_YN, 
+			F.REG_YMD, 
+			F.MDFCN_YMD
+		FROM 
+			FREQUENTLY_ASKED_QUESTIONS AS F
+			INNER JOIN
+			FAQ_CATEGORY AS C
+			ON
+			F.FAQ_CTGRY_NO = C.FAQ_CTGRY_NO
+		WHERE 
+			F.FAQ_NO = #{faqNum};
+	</select>
+	
+	
+	
+	<delete id="faqDelete" parameterType="PFaq">
+		/* 자주찾는질문 삭제 */
+	    DELETE FROM 
+	    	FREQUENTLY_ASKED_QUESTIONS 
+	    WHERE 
+	    	FAQ_NO = #{faqNum};
+	</delete>
 
 	
 </mapper>

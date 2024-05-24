@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ksmart.ks50team01.user.board.mapper.UNoticeMapper">
+
+
+	<resultMap id="noticeResultMap" type="UNotice">
+		<id property="noticeNum"		 	column="NTC_NO" />
+		<result property="noticeRowNum" 	column="ROW_NUM" />
+		<result property="noticeRegId" 		column="REG_PF_ID" />
+		<result property="noticeCateNum"	column="NTC_CTGRY_NO" />
+		<result property="noticeTitle" 		column="NTC_TTL" />
+		<result property="noticeContent" 	column="NTC_CN" />
+		<result property="noticeInqCnt" 	column="NTC_INQ_CNT" />
+		<result property="noticeMdfId" 		column="MDFCN_PF_ID" />
+		<result property="noticeAct" 		column="ACT_YN" />
+		<result property="noticeRegDate" 	column="REG_YMD" />
+		<result property="noticeMdfDate" 	column="MDFCN_YMD" />
+		<result property="isNew" 			column="NOTICE_NEW" />
+		
+		<!-- 1:1 association -->
+		<association property="category" javaType="Ucategory">
+			<id 		property="noticeCategoryNum" 		column="NTC_CTGRY_NO"/>
+			<result 	property="noticeCategoryRegId" 		column="REG_PF_ID"/>
+			<result 	property="noticeCategoryName" 		column="NTC_CTGRY_TYPE"/>
+			<result 	property="noticeCategoryMdfId" 		column="MDFCN_PF_ID"/>
+			<result 	property="noticeCateActive" 		column="ACT_YN"/>
+			<result 	property="noticeCategoryRegDate" 	column="REG_YMD"/>
+			<result 	property="noticeCategoryMdfDate" 	column="MDFCN_YMD"/>
+		</association> 
+	</resultMap>
+
+
+	<select id="getNoticeList" resultMap="noticeResultMap">
+		<![CDATA[
+		 	/* 공지사항 조회 */
+			SELECT
+				ROW_NUMBER() OVER (ORDER BY CAST(SUBSTRING_INDEX(N.NTC_NO, 'NTC_', -1) AS UNSIGNED)) AS ROW_NUM,
+	            N.NTC_NO,
+	            N.REG_PF_ID,
+	            C.NTC_CTGRY_TYPE,
+	            N.NTC_TTL,
+	            N.NTC_CN,
+	            N.NTC_INQ_CNT,
+	            N.MDFCN_PF_ID,
+	            N.ACT_YN, 
+	            N.REG_YMD,
+	            N.MDFCN_YMD,
+	            CASE WHEN DATEDIFF(NOW(), N.REG_YMD) < 30 THEN TRUE ELSE FALSE END AS NOTICE_NEW
+			FROM 
+				NOTICE AS N
+				INNER JOIN
+				NOTICE_CATEGORY AS C
+				ON
+				N.NTC_CTGRY_NO = C.NTC_CTGRY_NO
+		   GROUP BY N.NTC_NO
+	       ORDER BY N.REG_YMD DESC;
+	    ]]>
+	</select>
+	
+	
+	<!-- getNoticeByNoticeNum 쿼리 정의 -->
+	<select id="getNoticeByNoticeNum" resultMap="noticeResultMap">
+		/* 공지사항 상세 조회 */
+		SELECT
+		    N.NTC_NO,
+		    N.REG_PF_ID,
+		    C.NTC_CTGRY_TYPE,
+		    N.NTC_TTL,
+		    N.NTC_CN,
+		    N.NTC_INQ_CNT,
+		    N.MDFCN_PF_ID,
+		    N.ACT_YN, 
+		    N.REG_YMD,
+		    N.MDFCN_YMD
+		FROM
+		    NOTICE AS N
+		    INNER JOIN
+		    NOTICE_CATEGORY AS C
+		    ON
+		    N.NTC_CTGRY_NO = C.NTC_CTGRY_NO
+		WHERE
+		    N.NTC_NO = #{noticeNum};
+	</select>
+	
+	<!-- 조회수 증가 -->
+    <update id="increaseViewCount" parameterType="String">
+        UPDATE 
+        	NOTICE
+        SET 
+        	NTC_INQ_CNT = NTC_INQ_CNT + 1
+        WHERE 
+        	NTC_NO = #{noticeNum};
+    </update>
+    
+    
+    
+    
+
+    
+    
+	
+	
+	
+</mapper>	

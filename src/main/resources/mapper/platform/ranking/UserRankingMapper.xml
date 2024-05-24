@@ -1,0 +1,126 @@
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ksmart.ks50team01.platform.ranking.mapper.UserRankingMapper">
+	
+	<delete id="removeUserRanking" parameterType="String">
+		/*회원 추천리스트 삭제*/
+		DELETE
+		FROM
+			MEMBER_RECOMMENDATION_RANKING
+		WHERE 
+			MBR_ARTCL_RANK = #{userRankingId};
+	</delete>
+	
+	<update id="modifyUserRanking" parameterType="UserRanking">
+	UPDATE 
+		MEMBER_RECOMMENDATION_RANKING
+	SET
+		REG_PF_ID = #{userRankingRegId},
+		PRTNR_BPLC_CD = #{partnerBusinessCode},
+		TRIP_LCTGRY_CD = #{tripLctgryCode},
+		RGN_SCTGRY_NM = #{rgnSctgryName},
+		TOT_RANK = #{userRank},
+		ARTCL_RANK_TOP_FIVE = #{artclRankingNum},
+		REV_STATS_STRT_YMD = #{reviewStatsStart},
+		REV_STATS_END_YMD = #{reviewStatsEnd},
+		PF_PSTG_STRT_YMD = #{platformAdStart},
+		PF_PSTG_END_YMD = #{platformAdEnd},
+		ACT_YN = #{activate}
+	WHERE 
+		MBR_ARTCL_RANK = #{userRankingId};
+	</update>
+	
+	<select id="getUserRankingInfoById" resultType="UserRanking">
+	SELECT 
+		ROW_NUMBER() OVER(ORDER BY MBR_ARTCL_RANK) 		AS userRankingNum,
+		MBR_ARTCL_RANK									AS userRankingId,
+		REG_PF_ID 										AS userRankingRegId,
+		PRTNR_BPLC_CD 									AS partnerBusinessCode,
+		TRIP_LCTGRY_CD 									AS tripLctgryCode,
+		RGN_SCTGRY_NM 									AS rgnSctgryName, 
+		TOT_RANK 										AS userRank, 
+		ARTCL_RANK_TOP_FIVE								AS artclRankingNum, 
+		REV_STATS_STRT_YMD 								AS reviewStatsStart, 
+		REV_STATS_END_YMD 								AS reviewStatsEnd, 
+		PF_PSTG_STRT_YMD 								AS platformAdStart,
+		PF_PSTG_END_YMD 								AS platformAdEnd, 
+		ACT_YN 											AS activate,
+		REG_YMD											AS regDate, 	
+		MDFCN_YMD 										AS modifyDate
+	
+	FROM
+		MEMBER_RECOMMENDATION_RANKING AS m
+	WHERE
+		m.MBR_ARTCL_RANK = #{userRankingNum};
+		
+	</select>
+	
+	
+	<insert id="addUserRanking" parameterType="UserRanking">
+		INSERT INTO 
+			MEMBER_RECOMMENDATION_RANKING
+			(MBR_ARTCL_RANK,
+			 REG_PF_ID, 
+			 PRTNR_BPLC_CD, 
+			 TRIP_LCTGRY_CD, 
+			 RGN_SCTGRY_NM, 
+			 TOT_RANK, 
+			 ARTCL_RANK_TOP_FIVE, 
+			 REV_STATS_STRT_YMD, 
+			 REV_STATS_END_YMD, 
+			 PF_PSTG_STRT_YMD, 
+			 PF_PSTG_END_YMD, 
+			 ACT_YN, 
+			 REG_YMD)
+		VALUES 
+			(#{userRankingId}, 
+			#{userRankingRegId}, 
+			#{partnerBusinessCode}, 
+			#{tripLctgryCode}, 
+			#{rgnSctgryName}, 
+			#{userRank}, 
+			#{artclRankingNum}, 
+			#{reviewStatsStart}, 
+			#{reviewStatsEnd}, 
+			#{platformAdStart}, 
+			#{platformAdEnd}, 
+			#{activate},  
+			NOW())
+	
+	</insert>
+	
+	<select id="userRankingListCheck" parameterType="String" resultType="boolean">
+		/* 중복플랫폼리스트 체크 */
+		SELECT 
+			COUNT(MBR_ARTCL_RANK)
+		FROM 
+			MEMBER_RECOMMENDATION_RANKING
+		WHERE 
+			MBR_ARTCL_RANK = #{MBR_ARTCL_RANK};
+	</select>
+
+	<select id="getUserRankingList" resultType="UserRanking">
+		/* 회원추천 조회 */
+	SELECT 
+		ROW_NUMBER() OVER(ORDER BY MBR_ARTCL_RANK) 		AS userRankingNum,
+		MBR_ARTCL_RANK									AS userRankingId,
+		REG_PF_ID 										AS userRankingRegId,
+		PRTNR_BPLC_CD 									AS partnerBusinessCode,
+		TRIP_LCTGRY_CD 									AS tripLctgryCode,
+		RGN_SCTGRY_NM 									AS rgnSctgryName, 
+		TOT_RANK 										AS userRank, 
+		ARTCL_RANK_TOP_FIVE								AS artclRankingNum, 
+		REV_STATS_STRT_YMD 								AS reviewStatsStart, 
+		REV_STATS_END_YMD 								AS reviewStatsEnd, 
+		PF_PSTG_STRT_YMD 								AS platformAdStart,
+		PF_PSTG_END_YMD 								AS platformAdEnd, 
+		ACT_YN 											AS activate,
+		REG_YMD											AS regDate, 	
+		MDFCN_YMD 										AS modifyDate
+	
+	FROM
+		MEMBER_RECOMMENDATION_RANKING;
+	</select>
+
+</mapper>

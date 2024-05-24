@@ -1,63 +1,453 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
-                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-                layout:decorate="~{user/layout/default}">
-                db
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{user/layout/default}">
+
 	<head>
-	    <title>게시글 상세 페이지</title>
-	    <th:block layout:fragment="customCss">
-	        <link th:href="@{/user/css/postWrite.css}" rel="stylesheet">
-	    </th:block>
-	
+		<title>게시글 상세 페이지</title>
 	</head>
+	
+	<th:block layout:fragment="customCss">
+		<link th:href="@{/user/css/postDetail.css}" rel="stylesheet">
+		<link th:href="@{/user/css/report.css}" rel="stylesheet">
+		
+    	<!-- GOOGLE FONT -->
+    	<link href='https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700' rel='stylesheet'>
+	</th:block>
 
 	<th:block layout:fragment="customPageSection">
-<!-- 게시물 내용을 보여주는 컨테이너 -->
-<div class="container post-detail-container">
-    <div class="row">
-        <div class="col-lg-8 col-md-10 mx-auto">
-            <div class="post" th:object="${postDetail}">
-                <h2 class="post-title" th:text="*{postTitle}">게시물 제목</h2>
-                <p class="post-meta">작성자: <span th:text="*{postRegId}">작성자 아이디</span> | 등록일: <span th:text="${postDetail.postRegDate}">작성일</span></p>
-                <p class="post-content" th:text="*{postContent}">게시물 내용이 여기에 표시됩니다.</p>
-            </div>
-            <div class="comments">
-                <h3 class="">댓글 목록</h3>
-                <div class="comment-list">
-                    <ul style="padding-left: 0rem;">
-                    <!-- 댓글 목록 표시 -->
-				    <li th:each="l : ${commentList}" class="list-group">
-				        <div class="comment list-group-item">
-				            <div class="comment-meta">
-				                <span class="comment-author" th:text="${l.commentRegId}">댓글 작성자 아이디</span>
-				                <span class="comment-date" th:text="${l.commentRegDate}">댓글 작성일</span>
-				            </div>
-				            <p class="comment-content" th:text="${l.commentContent}">댓글 내용</p>
-				        </div>
-				    </li>
-				</ul>
+		<!-- 게시물 내용을 보여주는 컨테이너 -->
+		<div class="container post-detail-container">
+			<div class="row">
+				<div class="col-lg-8 col-md-10 mx-auto">
+					<div class="post" th:object="${postDetail}">
+						<div class="post-header">
+							<!-- align-items-start로 변경 -->
+						    <div class="d-flex align-items-start">
+						    	<!-- 게시글 카테고리 뱃지 -->
+						    	<i class="badge rounded-pill bg-primary badge-cate me-2" th:text="*{category.postCategoryName}"></i>
+								<!-- 게시글 제목 --> 
+								<h2 class="post-title mb-5" th:text="*{postTitle}">게시물 제목</h2>
+								<!-- 댓글 수가 0보다 큰 경우에만 댓글 수 뱃지 표시 -->
+								<span th:if="${#lists.size(commentList) > 0}"
+									class="badge bg-info comment-badge"
+									th:text="${#lists.size(commentList)}"></span>
+							</div>
+						</div>
+	
+						<p class="post-meta">
+							<span th:text="'작성자 : ' + *{postRegId}">작성자 아이디</span> <span
+								th:text="'등록일 : ' + *{#strings.substring(postRegDate, 0, 10)}">작성일</span>
+							<span th:text="'조회수 : ' + *{postInqCnt}">0</span>
+						</p>
+						<!-- 굵은 직선 추가 -->
+						<hr class="my-4">
+						<p class="post-content" th:text="*{postContent}">게시물 내용</p>
+						<div class="row mt-3">
+							<div class="col-md-6 offset-md-3 text-center">
+								<div class="btn-group">
+									<!-- 게시물 좋아요 -->
+									<button type="button"
+										class="btn btn-primary btn-lg rounded-pill like-btn"
+										style="margin-right: 50px;">
+										<i class="fa-regular fa-thumbs-up fa-2x"><span
+											class="like-count">0</span> </i>
+									</button>
+									<!-- 게시물 싫어요 -->
+									<button type="button"
+										class="btn btn-primary btn-lg rounded-pill dislike-btn">
+										<i class="fa-regular fa-thumbs-down fa-2x"><span
+											class="dislike-count">0</span> </i>
+									</button>
+								</div>
+							</div>
+						</div>
+						<div class="separator1"></div> <!-- 굵은 직선 추가 -->
+						<div class="separator2"></div> <!-- 굵은 직선 추가 -->
+						<!-- <hr class="my-4"> -->
+						<!-- 굵은 직선 추가 -->
+					</div>
+					<div class="comments">
+						<!-- 댓글 수 표시 -->
+						<h4 class="comment-count"
+							th:text="${#lists.size(commentList)} + '개의 댓글'"></h4>
+						<!-- 댓글 목록 -->
+						<div class="comment-list">
+							<ul style="padding-left: 0rem;">
+								<!-- 댓글 출력 및 답글 달기 -->
+								<li th:each="l : ${commentList}" class="list-group">
+									<div class="comment list-group-item">
+										<div class="comment-meta">
+											<div class="col-10 d-flex align-items-center">
+												<!-- 작성자 아이콘 -->
+												<i class="fa fa-user-circle fa-3x text-primary"
+													aria-hidden="true"></i> <span class="comment-author"
+													th:text="${l.commentRegId}">댓글 작성자 아이디</span> <span
+													class="comment-date m-2"
+													th:text="${#strings.substring(l.commentRegDate, 0, 10)}">댓글
+													작성일</span>
+												<!-- 신고 버튼  -->
+												<button type="button" class="btn  btn-lg report-btn"
+													data-bs-toggle="modal" data-bs-target="#staticBackdrop">🚨
+												</button>
+											</div>
+											<!-- 추천 비추천 버튼, 삭제 버튼 
+												<i class="fa-regular fa-thumbs-down fa-2x"></i> 
+												<i class="fa-regular fa-thumbs-up fa-2x"></i> 
+												<i class="fa-solid fa-trash-can fa-2x"></i>
+												<i class="fa-regular fa-trash-can"></i> -->
+	
+	
+											<!-- 신고 버튼 모달 -->
+											<div class="col-2">
+	
+												<div class="dropdown float-end">
+													<button class="btn btn-xs dropdown-toggle" type="button"
+														id="dropdownMenuButton1" data-bs-toggle="dropdown"
+														aria-expanded="true"></button>
+													<ul class="dropdown-menu P-0"
+														aria-labelledby="dropdownMenuButton1">
+														<li><a class="dropdown-item small" href="#"
+															onclick="editComment()"><i
+																class="fa-solid fa-eraser fa-2x edit-button"></i> 수정</a></li>
+														<li><a class="dropdown-item small" href="#"
+															onclick="deleteComment()"><i
+																class="fa-solid fa-trash-can fa-2x delete-button"></i> 삭제</a></li>
+													</ul>
+												</div>
+											</div>
+											<!-- Button trigger modal -->
+	
+	
+	
+	
+											<!-- 댓글 수정 및 삭제 아이콘 
+											<div class="modify-btn delete-btn">
+												<i class="fa-solid fa-eraser fa-2x"></i>
+												사각형 닫기 아이콘
+												<i class="fa-solid fa-square-xmark fa-2x"></i>
+												원형 닫기 아이콘
+												<i class="fa-solid fa-circle-xmark fa-2x"></i>
+											</div> -->
+	
+	
+											<!-- 댓글 수정, 댓글 삭제 드롭다운
+											<div class="dropdown">
+												<i class="fa-solid fa-ellipsis-vertical fa-2x"
+													onclick="toggleDropdownMenu()"></i>
+												<div id="dropdown-menu" class="dropdown-menu">
+													<i class="dropdown-item1 fa-solid fa-eraser fa-2x edit-button" onclick="editComment()"></i>
+													<i class="dropdown-item2 fa-solid fa-square-xmark fa-2x delete-button" onclick="deleteComment()"></i>
+													<i class="dropdown-item3 fa-solid fa-trash-can fa-2x delete-button" onclick="deleteComment()"></i>
+													<i class="dropdown-item4 fa-regular fa-trash-can fa-2x delete-button" onclick="deleteComment()"></i>
+												</div>
+											</div> -->
+	
+										</div>
+	
+										<p class="comment-content" th:text="${l.commentContent}">댓글
+											내용</p>
+	
+										<div class="comment-actions">
+											<!-- 답글 달기 버튼 -->
+											<button class="btn btn-primary rounded-pill btn-xs reply-btn"
+												data-bs-toggle="modal" data-bs-target="#replyModal">
+												<i class="fa fa-reply"></i> 답글
+											</button>
+	
+											<!-- 댓글 싫어요 버튼 -->
+											<button class="btn btn-outline-danger btn-xs dislike-btn">
+												<i class="fa-regular fa-thumbs-down"></i><span
+													class="dislike-count">0</span>
+											</button>
+	
+											<!-- 댓글 좋아요 버튼 -->
+											<button class="btn btn-outline-primary btn-xs like-btn">
+												<i class="fa-regular fa-thumbs-up"></i><span
+													class="like-count">0</span>
+											</button>
+	
+	
+										</div>
+									</div>
+								</li>
+							</ul>
+						</div>
+<!-- 	
+						굵은 직선 추가
+						<hr class="my-4"> -->
+						<div class="separator3"></div> <!-- 굵은 직선 추가 -->
+	
+						<!-- 댓글 작성 폼 -->
+						<div class="comment-form">
+							<h4 class="">댓글 작성</h4>
+							<form th:action="@{/comment}" method="post">
+								<textarea class="form-control mb-3" name="comment" rows="5"
+									placeholder="댓글을 입력하세요."></textarea>
+								<input type="hidden" name="postId"
+									th:value="${postDetail.postNum}">
+								<button type="submit" class="btn btn-primary">등록</button>
+							</form>
+						</div>
+						<div class="list-btn">
+							<button type="button" class="btn btn-dark list-btn">목록</button>
+						</div>
+					</div>
 				</div>
-            <div class="comment-form">
-                <h3 class="">댓글 작성</h3>
-                <form th:action="@{/comment}" method="post">
-                    <textarea class="form-control mb-3" name="comment" rows="4" placeholder="댓글을 입력하세요"></textarea>
-                    <input type="hidden" name="postId" th:value="${postDetail.postNum}">
-                    <button type="submit" class="btn btn-primary">댓글 남기기</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-</th:block>
+			</div>
+		</div>
+	
+	
+	
+		<!-- Modal -->
+		<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
+			data-bs-keyboard="false" tabindex="-1"
+			aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="staticBackdropLabel">신고하기</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"
+							aria-label="Close"></button>
+					</div>
+					<!-- Example single danger button -->
+					<div class="btn-group">
+						<button type="button" class="btn btn-primary dropdown-toggle px-3"
+							data-bs-toggle="dropdown" aria-expanded="false">신고 유형 선택</button>
+	
+						<ul class="dropdown-menu">
+							<li><a class="dropdown-item">욕설/인신공격</a></li>
+							<li><a class="dropdown-item">홍보/상업성</a></li>
+							<li><a class="dropdown-item">음란/선정성</a></li>
+							<li><a class="dropdown-item">같은 내용 도배</a></li>
+							<li><a class="dropdown-item">부적절한 콘텐츠</a></li>
+							<li><a class="dropdown-item">스팸 또는 광고</a></li>
+							<li><a class="dropdown-item">개인정보 노출</a></li>
+							<li><a class="dropdown-item">권리침해 신고</a></li>
+							<li><a class="dropdown-item">기타</a></li>
+						</ul>
+					</div>
+	
+					<div class="modal-body">
+						<div class="mb-3">
+							<label for="message-text" class="col-form-label">신고 내용:</label>
+							<textarea class="form-control" id="message-text" maxlength="100"></textarea>
+							<div id="char-count">0/100</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-bs-dismiss="modal">취소</button>
+						<button type="button" class="btn btn-primary">신고</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	
+		<!-- 답글 모달 창 -->
+		<div class="modal fade" id="replyModal" tabindex="-1" role="dialog"
+			aria-labelledby="replyModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="replyModalLabel">답글 작성</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"
+							aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<!-- 답글 작성 폼 -->
+	
+						<form>
+							<div class="form-group">
+								<label for="replyContent">답글 내용</label>
+								<textarea class="form-control" id="replyContent" rows="5"
+									placeholder="답글을 입력하세요"></textarea>
+							</div>
+						</form>
+	
+	
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-bs-dismiss="modal">닫기</button>
+						<button type="button" class="btn btn-primary" id="saveReplyButton">저장</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</th:block>
 
-<th:block layout:fragment="customJs">
-    <script>
-        // 뒤로 가기 함수
-        function goBack() {
-            window.history.back();
-        }
-    </script>
-</th:block>
-</body>
+
+	<th:block layout:fragment="customJsFIle">
+	    <script th:src="@{/user/js/viewCount.js}"></script>
+	    <script src="https://kit.fontawesome.com/8374b337d7.js" crossorigin="anonymous"></script>
+	</th:block>
+
+
+	<th:block layout:fragment="customJs">
+		<script>
+		    document.addEventListener('DOMContentLoaded', function () {
+		        let dropdownButton = document.querySelector('.modal-dialog .dropdown-toggle');
+		        let dropdownMenuItems = document.querySelectorAll('.modal-dialog .dropdown-menu .dropdown-item');
+	
+		        dropdownMenuItems.forEach(function (item) {
+		            item.addEventListener('click', function () {
+		                let selectedText = item.textContent;
+		                if (dropdownButton.textContent !== selectedText) {
+		                    dropdownButton.textContent = selectedText;
+		                }
+		            });
+		        });
+	
+		        dropdownButton.addEventListener('click', function () {
+		            if (dropdownButton.textContent === "신고 유형 선택") {
+		                return;
+		            } else {
+		                dropdownButton.textContent = "신고 유형 선택";
+		            }
+		        });
+		    });
+		
+			// 뒤로 가기 함수
+			function goBack() {
+				window.history.back();
+			}
+		
+			function toggleDropdownMenu() {
+				const dropdownMenu = document.getElementById('dropdown-menu');
+				dropdownMenu.classList.toggle('show');
+			}
+
+			function editComment() {
+				// 수정 버튼을 클릭했을 때 수행할 작업을 구현합니다.
+				// 이 함수는 실제로 수정 기능을 수행해야 합니다.
+			}
+
+			function deleteComment() {
+				// 삭제 버튼을 클릭했을 때 수행할 작업을 구현합니다.
+				// 이 함수는 실제로 삭제 기능을 수행해야 합니다.
+			}
+
+			// 클릭 이벤트가 발생한 곳이 아닌 다른 곳을 클릭하면 드롭다운 메뉴를 닫습니다.
+			document.addEventListener('click', function(event) {
+				const dropdownMenu = document.getElementById('dropdown-menu');
+				if (!event.target.matches('.fa-solid.fa-ellipsis-vertical')) {
+					dropdownMenu.classList.remove('show');
+				}
+			});
+		
+			document.addEventListener("DOMContentLoaded", function() {
+				const listButton = document.querySelector('.list-btn'); // 목록 버튼 가져오기
+
+				// 목록 버튼 클릭 시
+				listButton.addEventListener('click', function() {
+					// 게시물 리스트 페이지로 이동
+					window.location.href = "/community";
+				});
+			});
+		
+		    // edit comment 버튼 클릭 이벤트 처리
+		    document.addEventListener('click', function(event) {
+		        if (event.target.classList.contains('edit-button')) {
+		            const comment = event.target.closest('.comment');
+		            const commentContent = comment.querySelector('.comment-content').textContent;
+		            const editForm = comment.querySelector('.comment-edit-form');
+		            const editTextArea = editForm.querySelector('textarea');
+		            
+		            // 수정할 댓글 내용을 입력 필드에 채움
+		            editTextArea.value = commentContent;
+		
+		            // 편집 폼을 보여줌
+		            editForm.style.display = 'block';
+		        }
+		    });
+
+		    // 수정된 댓글을 서버에 보내고 업데이트
+		    document.addEventListener('click', function(event) {
+		        if (event.target.classList.contains('btn-primary') && event.target.parentNode.classList.contains('comment-edit-form')) {
+		            const editedContent = event.target.parentNode.querySelector('textarea').value;
+		            const comment = event.target.closest('.comment');
+		            const commentId = comment.dataset.commentId; // 댓글 ID를 가져옴
+		
+		            // 수정된 내용을 서버에 보냄 (AJAX 요청)
+		            fetch('/edit-comment', {
+		                method: 'POST',
+		                headers: {
+		                    'Content-Type': 'application/json'
+		                },
+		                body: JSON.stringify({ commentId: commentId, editedContent: editedContent })
+		            })
+		            .then(response => {
+		                if (!response.ok) {
+		                    throw new Error('Network response was not ok');
+		                }
+		                // 성공적으로 수정되면 화면을 새로 고쳐서 수정된 내용을 반영
+		                location.reload();
+		            })
+		            .catch(error => {
+		                console.error('Error:', error);
+		                alert('댓글을 수정하는 데 문제가 발생했습니다.');
+		            });
+		        }
+		    });
+
+		    document.addEventListener("DOMContentLoaded", function() {
+		        const saveReplyButton = document.getElementById('saveReplyButton'); // 저장 버튼 가져오기
+		        const replyContentInput = document.getElementById('replyContent'); // 답글 내용 입력 필드 가져오기
+		
+		        // 저장 버튼 클릭 시
+		        saveReplyButton.addEventListener('click', function() {
+		            // 입력된 답글 내용 가져오기
+		            const replyContent = replyContentInput.value.trim();
+		
+		            // 답글 내용이 비어 있는지 확인
+		            if (replyContent === '') {
+		                alert('답글 내용을 입력해주세요.');
+		                return; // 답글 내용이 비어있으면 함수 종료
+		            }
+		
+		            // AJAX를 사용하여 서버에 답글 저장 요청 보내기
+		            // 예시로 fetch API를 사용하겠습니다.
+		            fetch('/replySave', {
+		                method: 'POST', // POST 방식으로 요청
+		                headers: {
+		                    'Content-Type': 'application/json' // 요청의 Content-Type 설정
+		                },
+		                body: JSON.stringify({ // 요청 본문에 답글 내용을 JSON 형식으로 포함
+		                    content: replyContent
+		                })
+		            })
+		            .then(response => {
+		                if (!response.ok) { // 응답이 성공적이지 않은 경우
+		                    throw new Error('Network response was not ok');
+		                }
+		                // 성공적으로 요청이 완료된 경우
+		                alert('답글이 성공적으로 저장되었습니다.');
+		                // 여기에 저장 후 추가적으로 수행할 작업을 추가할 수 있습니다.
+		            })
+		            .catch(error => {
+		                console.error('Error:', error); // 에러 발생 시 콘솔에 에러 출력
+		                alert('답글 저장에 실패했습니다. 잠시 후 다시 시도해주세요.');
+		            });
+		        });
+		    });
+    
+    
+		    // 게시물, 댓글 좋아요 싫어요 버튼 클릭 시 숫자 증가
+		    document.addEventListener("DOMContentLoaded", function() {
+		        const buttons = document.querySelectorAll('.like-btn, .dislike-btn');
+		
+		        buttons.forEach(function(button) {
+		            button.addEventListener('click', function(event) {
+		                const countElement = this.querySelector('.like-count') || this.querySelector('.dislike-count');
+		                let count = parseInt(countElement.textContent);
+		                count++;
+		                countElement.textContent = count;
+		            });
+		        });
+		    });
+		</script>
+
+	</th:block>
+	
 </html>

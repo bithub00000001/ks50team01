@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{platform/layout/default}">
+<th:block layout:fragment="customCss">
+    <!-- Datatables CSS START -->
+    <link th:href="@{/platform/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/platform/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/platform/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/platform/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/platform/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css}" rel="stylesheet">
+    <!-- Datatables CSS END -->
+</th:block>
+
+	
+<th:block layout:fragment="customContent">
+
+	<div class="x_content">
+		<div class="clearfix"></div>
+	</div>
+	<div class="row">
+		<div class="col-xs-12 table">
+			<h1 th:text="${title}"></h1>
+			<form th:action="@{/platform/destination/addTour}" method="post">
+				<table id="datatable-responsive"
+					class="table table-striped table-bordered dt-responsive nowrap"
+					cellspacing="0" width="100%">
+					<tbody>
+						<tr>
+							<td><label for="tourName">관광지 이름</label></td>
+							<td><input type="text" id="tourName" name="tourName" placeholder="관광지를 입력해주세요" />
+								<button type="button" id="nameCheck">중복 관광지 체크</button>
+							</td>
+						</tr>
+						<tr>
+							<td><label for="tourAuthorityId">등록플랫폼권한아이디</label></td>
+							<td colspan="2"><input type="text" id="tourAuthorityId" name="tourAuthorityId" placeholder="ex: admin001" disabled="disabled"></td>
+						</tr>
+						<tr>
+							<td><label for="tourAddr">관광지 주소</label></td>
+							<td colspan="2"><input type="text" id="tourAddr" name="tourAddr" placeholder="관광지 주소를 입력해주세요" disabled="disabled" /></td>
+						</tr>
+						<tr>
+							<td><label for="tourDaddr">여행지대분류코드</label></td>
+							<td colspan="2"><input type="text" id="tourDaddr" name="tourDaddr" placeholder="관광지 상세주소를 입력해주세요" disabled="disabled" /></td>
+						</tr>
+						<tr>
+							<td><label for="tourSite">사업자상호</label></td>
+							<td colspan="2"><input type="text" id="tourSite" name="tourSite" placeholder="관광지 사이트를 입력해주세요" disabled="disabled" /></td>
+						</tr>
+						<tr>
+							<td><label for="tourContactNum">관광지 연락처1</label></td>
+							<td colspan="2"><input type="text" id="tourContactNum" name="tourContactNum" placeholder="관광지 연락처를 입력해주세요" disabled="disabled" /></td>
+						</tr>
+						<tr>
+							<td><label for="tourContactNum2">관광지 연락처2</label></td>
+							<td colspan="2"><input type="text" id="tourContactNum2" name="tourContactNum2" placeholder="제휴브랜드명을 입력해주세요" disabled="disabled" /></td>
+						</tr>
+						
+					<tfoot>
+						<tr>
+							<td colspan="3">
+								<button type="button" class="btn btn-primary" id="addMemberBtn" disabled="disabled">등록</button>
+								<button type="reset" class="btn btn-success" id="resetBtn" disabled="disabled">초기화</button>
+								<button type="button" class="btn btn-secondary" id="btn-cancel">취소</button>
+							</td>
+						</tr>
+					</tfoot>
+				</table>
+			</form>
+		</div>
+	</div>
+</th:block>
+
+</th:block>
+
+
+</html>
+<th:block layout:fragment="customJsFile">
+	<!-- Datatables JS START -->
+	<script th:src="@{/platform/vendors/datatables.net/js/jquery.dataTables.min.js}"></script>
+	<script th:src="@{/platform/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js}"></script>
+	<script th:src="@{/platform/vendors/datatables.net-buttons/js/dataTables.buttons.min.js}"></script>
+	<script th:src="@{/platform/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js}"></script>
+	<script th:src="@{/platform/vendors/datatables.net-buttons/js/buttons.flash.min.js}"></script>
+	<script th:src="@{/platform/vendors/datatables.net-buttons/js/buttons.html5.min.js}"></script>
+	<script th:src="@{/platform/vendors/datatables.net-buttons/js/buttons.print.min.js}"></script>
+	<script th:src="@{/platform/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js}"></script>
+	<script th:src="@{/platform/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js}"></script>
+	<script th:src="@{/platform/vendors/datatables.net-responsive/js/dataTables.responsive.min.js}"></script>
+	<script th:src="@{/platform/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js}"></script>
+	<script th:src="@{/platform/vendors/datatables.net-scroller/js/dataTables.scroller.min.js}"></script>
+	<script th:src="@{/platform/vendors/jszip/dist/jszip.min.js}"></script>
+	<script th:src="@{/platform/vendors/pdfmake/build/pdfmake.min.js}"></script>
+	<script th:src="@{/platform/vendors/pdfmake/build/vfs_fonts.js}"></script>
+	<!-- Datatables JS END -->
+	
+	  <th:block layout:fragment="customJs">
+		<script>		
+			$('#nameCheck').click(function(){
+				const tourName = $('#tourName').val();
+				//const $memberId = $('#memberId')[0];
+				//console.log({$memberId});
+				//console.log(typeof memberId);
+				if(tourName == ''){
+					alert('관광지 이름을 입력해주세요');
+					$('#tourName').focus();
+					return ;
+				}
+				const request = $.ajax({
+					method : 'GET',
+					url : '/platform/destination/addTourCheckList',
+					data : {'tourName' : tourName},
+					dataType : 'json'
+				});
+				request.done(function(res){
+					console.log(res);
+					console.log(typeof res);
+					const isTourName = res;
+					$('form input').not('#tourName').prop('disabled', isTourName);
+					$('form select').prop('disabled', isTourName);
+					$('form button').not('#nameCheck').prop('disabled', isTourName);
+					if(isTourName){
+						alert('등록 할 수 없는 이름입니다.');
+						$('form input').val('');
+						$('form select').val('');
+						$('#tourName').focus();
+					}
+				});
+				request.fail(function(jqXHR, textStatus, error){
+					console.log(error);
+				});
+			});
+			$('#tourName').change(function(){
+				$('form input').not('#tourName').prop('disabled', true);
+				$('form select').prop('disabled', true);
+				$('form button').not('#nameCheck').prop('disabled', true);
+			}); 
+						
+			$('#addMemberBtn').click(function(){
+				const tourName = $('tourName').val();
+				const tourInfoCode = $('tourInfoCode').val();
+				const tourAuthorityId = $('tourAuthorityId').val();
+				const tourAddr = $('tourAddr').val();
+				const tourDaddr = $('tourDaddr').val();
+				const tourSite = $('tourSite').val();
+				const tourContactNum = $('tourContactNum').val();
+				const tourContactNum2 = $('tourContactNum2').val();
+				const tourOthers = $('tourOthers').val();
+				
+				let isSubmit = true;
+				$('form input, form select').each(function(idx, element){
+					const id = element.id;
+					const value = $(element).val();
+					if(value == ''){
+						const cate = $(`label[for="${id}"]`).text();
+						alert(`${cate} 필수 입력항목입니다.`);
+						$(element).focus();
+						isSubmit = false;
+						return false;
+					}
+				});
+				if(isSubmit) $('form').submit();
+			});
+		</script>
+		   <script th:inline="javascript">
+		        $('#btn-cancel').click(function () {
+		            window.history.back();
+		        })
+   			</script>
+				
+</th:block>
+</html>

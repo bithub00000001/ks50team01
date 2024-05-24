@@ -20,7 +20,59 @@
 	
 	</head>
 	<th:block layout:fragment="customContent">
-	
+	<!-- search start -->
+	<div class="row">
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<div class="x_panel">
+				<div class="x_title">
+					<h2>
+						검색 <small>search form</small>
+					</h2>
+					<ul class="nav navbar-right panel_toolbox">
+						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+						</li>
+						<li class="dropdown"><a href="#" class="dropdown-toggle"
+							data-toggle="dropdown" role="button" aria-expanded="false"><i
+								class="fa fa-wrench"></i></a>
+							<ul class="dropdown-menu" role="menu">
+								<li><a href="#">Settings 1</a></li>
+								<li><a href="#">Settings 2</a></li>
+							</ul></li>
+						<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+					</ul>
+					<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+					<br />
+					<form id="demo-form2" class="form-horizontal form-label-left">
+
+						<div class="form-group">
+							<div class="col-md-2 col-sm-2 col-xs-0"></div>
+							<label class="control-label col-md-2 col-sm-2 col-xs-12">category</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<select class="form-control text-center searchCate">
+									<option value="tourManage">관광지 관리</option>
+									<option value="tourGoodsManage" selected>관광지 상품 관리</option>
+
+								</select>
+							</div>
+							<div class="col-md-2 col-sm-2 col-xs-0"></div>
+						</div>
+
+						<div class="ln_solid"></div>
+						<div class="form-group">
+							<div class="col-md-12 col-sm-12 col-xs-12 text-center">
+								<button class="btn btn-success btn-lg searchBtn" type="button">검색</button>
+								<button type="button" class="btn btn-dark btn-lg regBtn">등록</button>
+							</div>
+						</div>
+
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- search end -->
 		<div class="col-md-12col-sm-6 col-xs-12">
 			<div class="x_panel">
 				<div class="x_title">
@@ -39,6 +91,7 @@
 							cellspacing="0" width="100%">
 							<thead>
 								<tr>
+									<th>관광지 이름</th>
 									<th>관광옵션 카테고리</th>
 									<th>관광옵션 목록</th>
 									<th>관광옵션 소요시간</th>
@@ -48,12 +101,15 @@
 									<th>관광상품 옵션코드</th>
 									<th>관광상품 비고</th>
 									<th>관광상품 비용</th>
+									<th>등록일자</th>
+									<th>수정일자</th>
 									<th>수정</th>
 									<th>삭제</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr th:if="${tourGoodsList != null and tourGoodsList.size() > 0}" th:each="l : ${tourGoodsList}">
+									<td th:text="${l.tourName}"></td>
 									<td th:text="${l.tourGoodsCate}"></td>
 									<td th:text="${l.tourGoodsList}"></td>
 									<td th:text="${l.tourGoodsTime}"></td>
@@ -63,11 +119,13 @@
 									<td th:text="${l.tourGoodsOptionCd}"></td>
 									<td th:text="${l.tourOptionRemarks}"></td>
 									<td th:text="${l.tourTotal}"></td>
+									<td th:text="${l.tourOthers}"></td>
+									<td th:text="${l.tourRegDate}"></td>
 									<td>
-									    <a th:href="@{/platform/destination/tourGoodsModify(tourgoodsAuthorityId=${l.tourgoodsAuthorityId})}">수정</a>
+									    <a th:href="@{/platform/destination/tourGoodsModify(tourGoodsOptionCd=${l.tourGoodsOptionCd})}">수정</a>
 									</td>
 						            <td>
-						            	<a href="#" th:data-member-id="${l.tourgoodsAuthorityId}" th:onclick="deleteConfirm(this)">삭제</a>
+						            	<a href="#" th:data-tourGoodsInfo-code="${l.tourGoodsOptionCd}" th:onclick="deleteConfirm(this)">삭제</a>
 					            	</td>
 								</tr>
 	
@@ -105,8 +163,65 @@
 
 	<!-- custom js file start -->
 	<th:block layout:fragment="customJs">
-	<script type="text/javascript" th:src="@{/platform/js/checkbox/memberDel.js}"></script>
+		<script>
+			$(document).ready(function(){
+				$('#searchItem').on('keyup', function(){
+					const searchValue = $(this).val().toLowerCase();
+					$('#datatable-responsive tbody tr').filter(function(){
+						$(this).toggle($(this).text().toLowerCase().indexOf(searchValue) > -1);
+					});
+				});
+				
+				$(document).on('click','.searchBtn', function(){
+					const movePage = $('.searchCate :selected').val();
+					
+					if(movePage) location.href = '/platform/destination/' + movePage;
+				});
+				
+				$(document).on('click', '.regBtn', function(){
+					const movePage = $('.searchCate :selected').val();
+					
+					if(movePage){
+						if(movePage === 'tourManage') {
+							location.href = '/platform/destination/addTour';
+						}else if(movePage === 'tourGoodsManage') {
+							location.href = '/platform/destination/addTourGoods';
+						}
+					}
+			    });
+			});
+		</script>
 	</th:block>
+	<th:block>
+		<script th:inline="javascript">
+			    function deleteConfirm(element) {
+			        var tourGoodsOptionCd = element.getAttribute('data-tourGoodsInfo-code');
+			        var confirmation = confirm("정말로 삭제하시겠습니까?");
+			        
+			        if (confirmation) {
+			            // 확인을 누르면 삭제 동작을 수행하기 위해 POST 요청
+			            //removeTour(tourInfoCode);
+			            const $deleteForm = $('<form></form>', {
+			            	action : '/platform/removeTourGoods'
+			            });
+			            const $tourInfoCode = $('<input />', {
+			            	type: 'hidden',
+			            	name: 'tourGoodsOptionCd',
+			            	value: tourGoodsOptionCd
+			            });
+			            $deleteForm.append($tourGoodsOptionCd);
+			            $('body').append($deleteForm);
+			            $deleteForm.submit();
+			        } else {
+			            console.log("삭제 취소: " + tourGoodsOptionCd);
+			        }
+			    }
+
+			    
+		
+		</script>
+	</th:block>
+	
 	<!-- custom js file end -->>
 
 </html>

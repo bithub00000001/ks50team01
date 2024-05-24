@@ -5,10 +5,12 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 
 import ksmart.ks50team01.platform.ranking.dto.Ranking;
 import ksmart.ks50team01.platform.ranking.service.RankingService;
@@ -23,15 +25,48 @@ public class RankingController {
 
 	private final RankingService rankingService;
 	
+	
+	@PostMapping("/removeRanking")
+	public String remove(@RequestParam(name = "pRankingId") String pRankingId
+						,Model model) {
+		model.addAttribute("title", "플랫폼추천리스트 삭제");
+		model.addAttribute("pRankingId", pRankingId);
+		return "platform/ranking/removeRanking";
+	}
+	
+	@GetMapping("/removeRanking")
+	public String removeRanking(@RequestParam(name="pRankingId") String pRankingId
+								,Model model) {
+		List<Ranking> rankingList = rankingService.getRankingList();
+		rankingService.removeRanking(pRankingId);
+		model.addAttribute("removeRanking",pRankingId);
+		model.addAttribute("rankingList", rankingList);
+		return "redirect:/platform/ranking/rankingList";
+	}
+	/**
+	 * 플랫폼추천리스트 수정
+	 * @param ranking
+	 * @return
+	 */
+	@PostMapping("/modifyRanking")
+	public String modify(@ModelAttribute Ranking ranking) {
+		rankingService.modifyRanking(ranking);
+		return "redirect:/platform/ranking/rankingList";
+	}
+	/**
+	 * 플랫폼추천리스트 정보 가져오기
+	 * @param pRankingId
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/modifyRanking")
-	public String modifyRanking(@RequestParam(value="pRankingNum") String pRankingNum
+	public String modifyRanking(@RequestParam(name="pRankingId") String pRankingId
 							  ,Model model) {
-		log.info("수정화면 pRankingNum : {}", pRankingNum);
-		Ranking rankingInfo = rankingService.getRankingInfoById(pRankingNum);
+		Ranking ranking = rankingService.getRankingInfoById(pRankingId);
 		List<Ranking> rankingList = rankingService.getRankingList();
 		
-		model.addAttribute("title", "회원수정");
-		model.addAttribute("rankingInfo", rankingInfo);
+		model.addAttribute("title", "플랫폼리스트 수정");
+		model.addAttribute("ranking", ranking);
 		model.addAttribute("rankingList", rankingList);
 		
 		return "platform/ranking/modifyRanking";
@@ -43,8 +78,8 @@ public class RankingController {
 	 */
 	@PostMapping("/rankingListCheck")
 	@ResponseBody
-	public boolean rankingListCheck(@RequestParam(value="pRankingNum") String pRankingNum) {
-		boolean isPRankingNum = rankingService.rankingListCheck(pRankingNum);
+	public boolean rankingListCheck(@RequestParam(value="pRankingId") String pRankingId) {
+		boolean isPRankingNum = rankingService.rankingListCheck(pRankingId);
 		return  isPRankingNum;
 	}
 	

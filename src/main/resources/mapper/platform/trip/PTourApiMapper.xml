@@ -2,23 +2,6 @@
 <!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ksmart.ks50team01.platform.trip.mapper.PTourApiMapper">
 
-    <resultMap id="areaMap" type="pTourApi">
-        <id     column="area_code" property="areaCode"/>
-        <result column="areaNum" property="areaNum"/>
-        <result column="area_name" property="areaName"/>
-        <result column="REG_YMD"   property="regDate"/>
-        <result column="MDFCN_YMD" property="modDate"/>
-
-    </resultMap>
-
-    <resultMap id="sigunguMap" type="pTourApi">
-        <id     column="sigungu_code" property="sigunguCode"/>
-        <result column="sigungu_name" property="sigunguName"/>
-        <result column="area_id"      property="areaCode"/>
-        <result column="REG_YMD"      property="regDate"/>
-        <result column="MDFCN_YMD"    property="modDate"/>
-    </resultMap>
-
     <insert id="upsertAreaCode" parameterType="pTourApi">
         /* 지역 코드 업서트 */
         INSERT INTO
@@ -39,7 +22,7 @@
                 MDFCN_YMD = now();
     </insert>
 
-    <insert id="upsertSigunguCode">
+    <insert id="upsertSigunguCode" parameterType="pTourApi">
         /* 시군구 코드 업서트 */
         INSERT INTO
             SIGUNGU_CODE
@@ -55,53 +38,134 @@
             #{sigunguName},
             (
                 SELECT
-                    area_code
+                    AREA_CODE.area_code
                 FROM
                     AREA_CODE
                 WHERE
-                    area_code = #{areaCode}
+                    AREA_CODE.area_code = #{areaCode}
                 ),
             now()
             )
         ON DUPLICATE KEY
             UPDATE
                 sigungu_name = #{sigunguName},
-                area_id = (
-                            SELECT
-                                area_code
-                            FROM
-                                AREA_CODE
-                            WHERE
-                                area_code = #{areaCode}
-                            )
+                MDFCN_YMD = now();
     </insert>
 
-    <select id="getAllAreaCodes" resultMap="areaMap">
-        /* 전체 지역 코드 조회 */
-        SELECT
-            row_number() over (order by area_code) as areaNum,
+    <insert id="upsertTourInfo" parameterType="pTourApi">
+        /* TOUR API 의 여행지 정보 삽입 */
+        INSERT INTO TOUR_INFO_FROM_API
+        (
+            destination_first_address,
+            destination_second_address,
             area_code,
-            area_name,
-            REG_YMD,
-            MDFCN_YMD
-        FROM
-            AREA_CODE
-    </select>
-
-    <select id="getAllSigunguCodes" resultMap="sigunguMap">
-        /* 전체 시군 코드 조회 */
-        SELECT
-            row_number() over (order by sc.sigungu_code) as sigunNum,
+            destination_content_id,
+            destination_content_type_id,
+            destination_first_image_link,
+            destination_second_image_link,
+            destination_longitude,
+            destination_latitude,
             sigungu_code,
-            sigungu_name,
-            area_id,
-            sc.REG_YMD,
-            sc.MDFCN_YMD
-        FROM
-            SIGUNGU_CODE as sc
-            inner join
-            AREA_CODE as ac
-            on
-            sc.area_id = ac.area_code
-    </select>
+            destination_title,
+            destination_tel_num,
+            destination_zipcode,
+            REG_YMD
+        )
+        VALUES
+            (
+                #{destinationFirstAddress},
+                #{destinationSecondAddress},
+                #{areaCode},
+                #{destinationContentId},
+                #{destinationContentTypeId},
+                #{destinationFirstImageLink},
+                #{destinationSecondImageLink},
+                #{destinationLongitude},
+                #{destinationLatitude},
+                #{sigunguCode},
+                #{destinationTitle},
+                #{destinationTelNum},
+                #{destinationZipcode},
+                now()
+            )
+        ON DUPLICATE KEY
+            UPDATE
+                destination_first_address     = VALUES(destination_first_address),
+                destination_second_address    = VALUES(destination_second_address),
+                area_code                     = VALUES(area_code),
+                destination_content_type_id   = VALUES(destination_content_type_id),
+                destination_first_image_link  = VALUES(destination_first_image_link),
+                destination_second_image_link = VALUES(destination_second_image_link),
+                destination_longitude         = VALUES(destination_longitude),
+                destination_latitude          = VALUES(destination_latitude),
+                sigungu_code                  = VALUES(sigungu_code),
+                destination_title             = VALUES(destination_title),
+                destination_tel_num           = VALUES(destination_tel_num),
+                destination_zipcode           = VALUES(destination_zipcode),
+                MDFCN_YMD                     = now()
+    </insert>
+    <insert id="upsertTourDetail" parameterType="pTourDetail">
+        /* TOUR API 의 여행지 정보 삽입 */
+        INSERT INTO TOUR_DETAIL_FROM_API
+        (
+            tour_detail_content_id,
+            tour_detail_content_type_id,
+            tour_detail_title,
+            tour_detail_homepage,
+            tour_detail_first_image,
+            tour_detail_second_image,
+            area_code,
+            sigungu_code,
+            tour_detail_first_addr,
+            tour_detail_second_addr,
+            tour_detail_zipcode,
+            tour_detail_tel_num,
+            tour_detail_tel_name,
+            tour_detail_longitude,
+            tour_detail_latitude,
+            tour_detail_mlevel,
+            tour_detail_overview,
+            REG_YMD
+        )
+        VALUES
+            (
+                #{contentId},
+                #{contentTypeId},
+                #{title},
+                #{homepage},
+                #{firstImage},
+                #{secondImage},
+                #{areaCode},
+                #{sigunguCode},
+                #{mainAddr},
+                #{detailAddr},
+                #{zipcode},
+                #{tel},
+                #{telName},
+                #{longitude},
+                #{latitude},
+                #{mapLevel},
+                #{overview},
+                now()
+            )
+        ON DUPLICATE KEY
+            UPDATE
+                tour_detail_content_type_id = VALUES(tour_detail_content_type_id),
+                tour_detail_title           = VALUES(tour_detail_title),
+                tour_detail_homepage        = VALUES(tour_detail_homepage),
+                tour_detail_first_image     = VALUES(tour_detail_first_image),
+                tour_detail_second_image    = VALUES(tour_detail_second_image),
+                area_code                   = VALUES(area_code),
+                sigungu_code                = VALUES(sigungu_code),
+                tour_detail_first_addr      = VALUES(tour_detail_first_addr),
+                tour_detail_second_addr     = VALUES(tour_detail_second_addr),
+                tour_detail_zipcode         = VALUES(tour_detail_zipcode),
+                tour_detail_tel_num         = VALUES(tour_detail_tel_num),
+                tour_detail_tel_name        = VALUES(tour_detail_tel_name),
+                tour_detail_longitude       = VALUES(tour_detail_longitude),
+                tour_detail_latitude        = VALUES(tour_detail_latitude),
+                tour_detail_mlevel          = VALUES(tour_detail_mlevel),
+                tour_detail_overview        = VALUES(tour_detail_overview),
+                MDFCN_YMD                   = NOW();
+    </insert>
 </mapper>

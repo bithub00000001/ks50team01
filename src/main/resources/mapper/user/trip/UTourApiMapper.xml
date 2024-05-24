@@ -27,15 +27,16 @@
         /* 시군구 코드를 업서트 */
         INSERT INTO
             sigungu (code, name, area_id)
-        VALUES
-            (#{code},
-            #{name},
-            (SELECT
-                id
-            FROM
-                area
-            WHERE
-                code = #{areaCode}))
+        VALUES(
+               #{code},
+               #{name},
+               (SELECT
+                    id
+                FROM
+                    area
+                WHERE
+                    code = #{areaCode})
+              )
         ON DUPLICATE KEY UPDATE
             name = VALUES(name),
             area_id = (SELECT
