@@ -449,7 +449,7 @@ public class PTourApiServiceImpl implements PTourApiService {
 
 	/**
 	 * 여행지 정보와 일치하는 여행지 상세 정보를 DB에 업서트
-	 * @param tourDetail
+	 * @param tourDetail 여행지 정보 DTO 객체
 	 */
 	@Override
 	public void upsertTourDetail(PTourDetail tourDetail) {
@@ -458,7 +458,7 @@ public class PTourApiServiceImpl implements PTourApiService {
 
 	/**
 	 * 여행지 정보 전체 리스트의 상세 정보를 DB에 업서트
-	 * @param tourDetailList
+	 * @param tourDetailList 여행지 정보 DTO 리스트
 	 */
 	@Override
 	public void upsertAllTourDetail(List<PTourDetail> tourDetailList) {
