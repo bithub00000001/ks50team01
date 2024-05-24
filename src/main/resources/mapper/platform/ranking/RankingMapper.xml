@@ -112,12 +112,13 @@
 	
 	<select id="getDestinationContentId" resultType="RankingApi">
 		SELECT
-			destination_content_id AS destinationCId
+			destination_content_id AS destinationCId,
+			destination_title AS destinationTitle,
+			destination_first_address AS destinationAdd
 		FROM
 			TOUR_INFO_FROM_API AS t
-		where
+		WHERE
 			t.destination_content_id = #{destinationCId};
-	
 	</select>
 	
 	<insert id="addApiRanking" parameterType="RankingApi">
@@ -136,12 +137,16 @@
 			(PF_MNGR_RANK_INFO, 
 			REG_PF_ID, 
 			PF_MNGR_RANK, 
-			destination_content_id, 
+			destination_content_id,
+			DN_TITLE,
+			DN_FIRST_ADD,
 			RECOMMENDATION_DETAILS)
 		VALUES 
 			(#{autoIncrementId},
 			#{pRankingRegId}, 
-			#{pRankingId}, 
+			#{pRankingId},
+			#{destinationTitle},
+			#{destinationAdd},
 			#{destinationCId}, 
 			#{recommenDetails})
 	</insert>

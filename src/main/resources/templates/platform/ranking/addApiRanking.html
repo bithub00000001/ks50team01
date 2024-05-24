@@ -37,7 +37,7 @@
 							<tr>
 								<td><label for="pRankingId">플랫폼관리자제휴추천아이디</label></td>
 								<td colspan="2"><input type="text" id="pRankingId"
-									name="pRankingId" placeholder="ex: pp_00"/>
+									name="pRankingId" placeholder="ex: pp_0"/>
 									<button type="button" id="idCheck">중복 아이디 체크</button>
 								</td>
 							</tr>
@@ -49,7 +49,23 @@
 									<input type="text" id="destinationCId" name="destinationCId" th:value="${rankingApi.destinationCId}"/>
 								</td>
 							</tr>
-								<tr>
+							<tr>
+								<td>
+									<label for="destinationTitle">여행지이름</label>
+								</td>
+								<td colspan="2">
+									<input type="text" id="destinationTitle" name="destinationTitle" th:value="${rankingApi.destinationTitle}"/>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label for="destinationAdd">여행지주소</label>
+								</td>
+								<td colspan="2">
+									<input type="text" id="destinationAdd" name="destinationAdd" th:value="${rankingApi.destinationAdd}"/>
+								</td>
+							</tr>
+							<tr>
 								<td>
 									<label for="recommenDetails">추천내용</label>
 								</td>
