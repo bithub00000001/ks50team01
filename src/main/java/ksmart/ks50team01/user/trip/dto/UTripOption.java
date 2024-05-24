@@ -22,6 +22,8 @@ public class UTripOption {
     private String memberType;
 
     private Integer numDate;
+    private Integer numVirtualMember;
+    private Integer numRealMember;
 
     private String tripDuration;
 }
