@@ -184,18 +184,28 @@
     <script th:inline="javascript">
         $(document).on('click', '.data-update', function() {
             const dataTrans = String($('.data-select :selected').val()).trim();
-
+            let alertMessage;
             const request = $.ajax({
                 url:'/platform/plan/update/' + dataTrans,
                 method: 'POST', // 또는 GET, PUT 등 HTTP 메서드 선택
                 dataType: 'json',
-                success: function(response) {
+                success: function(response, textStatus, xhr) {
                     // 성공적으로 응답을 받았을 때 실행할 코드
                     console.log('결과: ', response);
+
+                    if (xhr.status === 200) {
+                        alertMessage = response.message;
+                    } else {
+                        alertMessage = '요청이 실패했습니다: ' + response.message;
+                    }
                 },
                 error: function(xhr, status, error) {
                     // 오류 발생 시 실행할 코드
                     console.error('Error:', error);
+                    alertMessage = '요청 중 오류가 발생했습니다: ' + xhr.responseText;
+                },
+                complete: function() {
+                    alert(alertMessage);
                 }
             });
         });
