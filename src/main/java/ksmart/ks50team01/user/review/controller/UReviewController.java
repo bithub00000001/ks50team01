@@ -31,8 +31,8 @@ public class UReviewController {
 	
 	private final UReviewService uReviewService;
 	
-	@Value("${files.path}")
-	private String filePath;
+	// @Value("${files.path}")
+	// private String filePath;
 	 
 	// private static final Logger log = LoggerFactory.getLogger(UReviewController.class);
 	
