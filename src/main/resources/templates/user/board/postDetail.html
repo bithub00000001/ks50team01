@@ -83,7 +83,7 @@
 													<button class="btn btn-xs dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="true"></button>
 													<ul class="dropdown-menu P-0" aria-labelledby="dropdownMenuButton1">
 														<li>
-															<a class="dropdown-item small" href="#" onclick="editComment()">
+															<a class="dropdown-item small" href="#" onclick="editComment(event)">
 																<i class="fa-solid fa-eraser fa-2x edit-button"></i> 수정</a></li>
 														<li><a class="dropdown-item small" href="#" onclick="deleteComment()">
 														<i class="fa-solid fa-trash-can fa-2x delete-button"></i> 삭제</a></li>
@@ -241,13 +241,14 @@
 
 
 	<th:block layout:fragment="customJsFIle">
-	    <script th:src="@{/user/js/viewCount.js}"></script>
 	    <script src="https://kit.fontawesome.com/8374b337d7.js" crossorigin="anonymous"></script>
 	</th:block>
 
 
 	<th:block layout:fragment="customJs">
 		<script th:inline="javascript">
+		
+		//댓글 작성
 		const commentWrite = () => {
 		    const commentRegId = document.getElementById("commentRegId").value;
 		    const commentContent = document.getElementById("commentContent").value;
@@ -279,6 +280,65 @@
 		    });
 		}
 
+		
+		
+	    /* 댓글 수정 폼 열기 */
+	    function modifyCommentForm(event) {
+	        event.preventDefault();
+	        const commentItem = $(event.target).closest('li');
+	        commentItem.find('.comment-content').hide();
+	        commentItem.find('.commentModifyForm').show();
+	    }
+
+	    /* 댓글 수정 */
+	    function modifyComment(event) {
+	        const commentItem = $(event.target).closest('li');
+	        const commentNum = commentItem.find('.commentNum').val();
+	        const commentContent = commentItem.find('#commentContent').val();
+	        $.ajax({
+	            type: 'PUT',
+	            url: `/community/commentModify/${commentNum}`,
+	            data: JSON.stringify({ commentContent: commentContent }),
+	            contentType: 'application/json',
+	            success: function () {
+	                alert("댓글이 수정되었습니다.");
+	                commentItem.find('.comment-content').text(commentContent).show();
+	                commentItem.find('.commentModifyForm').hide();
+	            },
+	            error: function () {
+	                alert("댓글 수정에 실패했습니다.");
+	            }
+	        });
+	    }
+
+	    /* 댓글 수정 취소 */
+	    function cancelModifyC(event) {
+	        const commentItem = $(event.target).closest('li');
+	        commentItem.find('.commentModifyForm').hide();
+	        commentItem.find('.comment-content').show();
+	    }
+
+	    /* 댓글 삭제 */
+	    function deleteComment(event) {
+	        event.preventDefault();
+	        const commentItem = $(event.target).closest('li');
+	        const commentNo = commentItem.find('.commentNo').val();
+	        const isConfirmed = confirm("댓글을 삭제하시겠습니까?");
+	        if (isConfirmed) {
+	            $.ajax({
+	                type: 'DELETE',
+	                url: `/community/commentDelete/${commentNo}`,
+	                success: function () {
+	                    alert("댓글이 삭제되었습니다.");
+	                    commentItem.remove();
+	                },
+	                error: function () {
+	                    alert("댓글 삭제에 실패했습니다.");
+	                }
+	            });
+	        }
+	    }
+		
 		
 		
 	
@@ -316,9 +376,12 @@
 				dropdownMenu.classList.toggle('show');
 			}
 
-			function editComment() {
-				// 수정 버튼을 클릭했을 때 수행할 작업을 구현합니다.
-				// 이 함수는 실제로 수정 기능을 수행해야 합니다.
+			// 댓글 수정 버튼 클릭했을 때
+			function editComment(event) {
+			    event.preventDefault();
+			    const commentItem = $(event.target).closest('li');
+			    commentItem.find('.comment-content').hide();
+			    commentItem.find('.commentModifyForm').show();
 			}
 
 			function deleteComment() {
@@ -396,75 +459,9 @@
 
 			}
 
-			// 댓글 삭제 
-			function deleteComment(event) {
-				var postno = $(event.target).closest('.ms-3').find('#commentNo').text();
-				var url = '/board/ajaxdelete.do?postno=' + postno;
 
-				$.ajax({
-					url : url,
-					type : 'POST',
-					success : function(result) {
-						getCommentList();
-						$("#comment").val("");
-					},
-					error : function() {
-						alert('댓글 삭제 실패');
-					}
-				});
-			}
-			// 댓글 수정 
-			function modifyComment(event) {
-				var postno = $(event.target).closest('.modifyCForm').find('.commentNo')
-						.text();
-				var content = $(event.target).closest('.modifyCForm').find(
-						'#modifyarea').text();
-				var bDto = {
-					depth : $(event.target).closest('.modifyCForm').find('#hDepth')
-							.val(),
-					pgroup : $(event.target).closest('.modifyCForm').find('#hPgroup')
-							.val(),
-					content : $(event.target).closest('.modifyCForm').find(
-							'#modifyarea').val(),
-					postno : $(event.target).closest('.modifyCForm').find('#hPostno')
-							.val()
-				};
-				$.ajax({
-					url : '/board/ajaxupdate.do?postno=' + postno,
-					type : 'POST',
-					data : bDto,
-					success : function(result) {
-						getCommentList();
-						$("#modifyarea").val("");
-					},
-					error : function() {
-						alert('댓글 수정 실패');
-					}
-				});
-			}
-
-			// 댓글 수정 창
-			function modifyCommentForm(event) {
-				var modifyCForm = event.target.closest(".commentList").nextElementSibling;
-				while (modifyCForm) {
-					if (modifyCForm.classList.contains("modifyCForm")) {
-						break;
-					}
-					modifyCForm = modifyCForm.nextElementSibling;
-				}
-				if (modifyCForm) {
-					modifyCForm.style.display = modifyCForm.style.display === "none" ? "block"
-							: "none";
-				}
-			}
-			function cancelModifyC(event) {
-				var modifyCForm = event.target.closest(".modifyCForm");
-				modifyCForm.style.display = "none";
-			}
-		    
-		</script>
 		
-		
+			</script>
 			
 			
 
