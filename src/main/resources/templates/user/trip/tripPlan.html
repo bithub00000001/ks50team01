@@ -199,7 +199,7 @@
                                      id="accommodation"
                                      role="tabpanel">
                                     <ul class="list-group" id="accommodationOptions">
-                                        <li class="list-group-item" data-id="accommodation1">
+                                        <!--/*<li class="list-group-item" data-id="accommodation1">
                                             <h5>호텔 A</h5>
                                             <p>간단한 설명...</p>
                                             <p>세부 스케줄: <input type="text" class="schedule-input"
@@ -222,61 +222,13 @@
                                             </p>
                                             <button class="btn btn-outline-primary btn-addPlan btn-sm">담기
                                             </button>
-                                        </li>
-                                        <li class="list-group-item" data-id="accommodation3">
-                                            <h5>호텔 B</h5>
-                                            <p>간단한 설명...</p>
-                                            <p>세부 스케줄: <input type="text" class="schedule-input"
-                                                              value="호텔 A 세부 스케줄">
-                                            </p>
-                                            <p>추가 사항: <input type="text" class="additional-input"
-                                                             value="호텔 A 추가 사항">
-                                            </p>
-                                            <button class="btn btn-outline-primary btn-addPlan btn-sm">담기
-                                            </button>
-                                        </li>
-                                        <li class="list-group-item" data-id="accommodation4">
-                                            <h5>호텔 C</h5>
-                                            <p>간단한 설명...</p>
-                                            <p>세부 스케줄: <input type="text" class="schedule-input"
-                                                              value="호텔 A 세부 스케줄">
-                                            </p>
-                                            <p>추가 사항: <input type="text" class="additional-input"
-                                                             value="호텔 A 추가 사항">
-                                            </p>
-                                            <button class="btn btn-outline-primary btn-addPlan btn-sm">담기
-                                            </button>
-                                        </li>
-                                        <li class="list-group-item" data-id="accommodation5">
-                                            <h5>호텔 D</h5>
-                                            <p>간단한 설명...</p>
-                                            <p>세부 스케줄: <input type="text" class="schedule-input"
-                                                              value="호텔 A 세부 스케줄">
-                                            </p>
-                                            <p>추가 사항: <input type="text" class="additional-input"
-                                                             value="호텔 A 추가 사항">
-                                            </p>
-                                            <button class="btn btn-outline-primary btn-addPlan btn-sm">담기
-                                            </button>
-                                        </li>
-                                        <li class="list-group-item" data-id="accommodation6">
-                                            <h5>호텔 E</h5>
-                                            <p>간단한 설명...</p>
-                                            <p>세부 스케줄: <input type="text" class="schedule-input"
-                                                              value="호텔 A 세부 스케줄">
-                                            </p>
-                                            <p>추가 사항: <input type="text" class="additional-input"
-                                                             value="호텔 A 추가 사항">
-                                            </p>
-                                            <button class="btn btn-outline-primary btn-addPlan btn-sm">담기
-                                            </button>
-                                        </li>
+                                        </li>*/-->
                                     </ul>
                                 </div>
                                 <div aria-labelledby="restaurant-tab" class="tab-pane fade" id="restaurant"
                                      role="tabpanel">
                                     <ul class="list-group" id="restaurantOptions">
-                                        <li class="list-group-item" data-id="restaurant1">
+                                        <!--/*<li class="list-group-item" data-id="restaurant1">
                                             <h5>레스토랑 C</h5>
                                             <p>간단한 설명...</p>
                                             <p>세부 스케줄: <input type="text" class="schedule-input"
@@ -299,7 +251,7 @@
                                             </p>
                                             <button class="btn btn btn-outline-primary btn-addPlan btn-sm">담기
                                             </button>
-                                        </li>
+                                        </li>*/-->
                                     </ul>
                                 </div>
                                 <div aria-labelledby="tour-tab" class="tab-pane fade" id="tour" role="tabpanel">
@@ -475,10 +427,8 @@
 </th:block>
 
 <th:block layout:fragment="customJsFIle">
-    <script th:src="@{/user/js/owl.carousel.min.js}"></script>
     <script th:src="@{/user/js/aos.js}"></script>
     <script th:src="@{/user/js/jquery.waypoints.min.js}"></script>
-    <script th:src="@{/user/js/typed.js}"></script>
     <script th:src="@{/user/js/moment.min.js}"></script>
     <script th:src="@{/user/js/daterangepicker.js}"></script>
 
@@ -488,7 +438,7 @@
     <script th:src="@{/user/js/tripPlanner.js}"></script>
     
     <!--2024.05.16-->
-    <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=373ed2ade74fe4dee247e98cc67d8336&libraries=clusterer"></script>
+    <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1f8d70af94b1bb4a663602be085eea87&libraries=clusterer"></script>
     <script th:src="@{/user/js/tripPlan.js}"></script>
     <script th:src="@{/user/js/tripMap.js}"></script>
 </th:block>
