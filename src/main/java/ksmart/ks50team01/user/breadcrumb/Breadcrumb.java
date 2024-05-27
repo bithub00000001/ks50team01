@@ -23,9 +23,9 @@ public class Breadcrumb {
 		pageNames.put("plan", "여행 계획 작성");
 		pageNames.put("board", "여행 계획 공유");
 		pageNames.put("allRanking", "여행 추천");
-		pageNames.put("rankingList", "플랫폼 추천 순위");
-		pageNames.put("userRankingList", "회원 추천 인기순위");
-		pageNames.put("planRankingList", "여행계획 추천 인기순위");
+		pageNames.put("rankingList", "플랫폼 추천");
+		pageNames.put("userRankingList", "회원추천");
+		pageNames.put("planRankingList", "여행계획 추천");
 		
 		// 필요한 만큼 추가
 		return pageNames;
