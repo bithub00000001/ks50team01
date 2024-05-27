@@ -137,10 +137,10 @@ public class RankingController {
 	}
 	
 	@GetMapping("/addApiRanking")
-		public String addApiRanking(@RequestParam(value="contentId") String contentId, Model model) {
+		public String addApiRanking(@RequestParam(value="contentId") String contentId, Model model, String destinationTitle) {
 		List<Ranking> rankingList = rankingService.getRankingList();
 		List<RankingApi> rankingApiList = rankingService.getRankingInfoList();
-		RankingApi rankingApi = rankingService.getDestinationContentId(contentId);
+		RankingApi rankingApi = rankingService.getDestinationContentId(contentId, destinationTitle);
 		model.addAttribute("title", "플랫폼추천 관계리스트 등록");
 		model.addAttribute("rankingApiList", rankingApiList);
 		model.addAttribute("rankingList", rankingList);

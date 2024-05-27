@@ -74,8 +74,10 @@
 								<th>등록플랫폼권한아이디</th>
 								<th>플랫폼관리자제휴추천아이디</th>
 								<th>API컨텐츠아이디</th>
+								<th>관광타입</th>
 								<th>여행지이름</th>
 								<th>여행지주소</th>
+								<th>여행지이미지</th>
 								<th>추천내용</th>
                             	<th>삭제</th>
 							</tr>
@@ -89,8 +91,10 @@
 								<td th:text="${l.pRankingRegId}"></td>
 								<td th:text="${l.pRankingId}"></td>
 								<td th:text="${l.destinationCId}"></td>
+								<td th:text="${l.destinationType}"></td>
 								<td th:text="${l.destinationTitle}"></td>
 								<td th:text="${l.destinationAdd}"></td>
+								<td th:text="${l.destinationImg}"></td>
 								<td th:text="${l.recommenDetails}"></td>
 								<td>
 									<a th:href="@{/platform/ranking/removeRankingInfo(pfRankInfoId=${l.pfRankInfoId})}">삭제</a>					

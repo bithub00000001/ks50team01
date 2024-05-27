@@ -48,7 +48,7 @@ public class RankingService {
 		return rankingMapper.rankingApiListCheck(pfRankInfoId);
 	}
 	
-	public RankingApi getDestinationContentId(String destinationCId) {
+	public RankingApi getDestinationContentId(String destinationCId, String destinationTitle) {
 		RankingApi rankingApi = rankingMapper.getDestinationContentId(destinationCId);
 		return rankingApi;
 	}

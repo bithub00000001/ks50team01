@@ -34,7 +34,7 @@ public class UPlatformRankigController {
 		
 		List<Ranking> rankingList = rankingServeice.getRankingList();
 		List<RankingApi> rankingApiList = rankingServeice.getRankingInfoList();
-		model.addAttribute("title", "플랫폼 추천 순위");
+		model.addAttribute("title", "플랫폼 추천");
 		model.addAttribute("rankingList", rankingList);
 		model.addAttribute("rankingApiList", rankingApiList);
 		return "user/platformranking/rankingList";
@@ -42,13 +42,13 @@ public class UPlatformRankigController {
 	@GetMapping("/userRankingList")
 	public String userRankingList(Model model) {
 		
-		model.addAttribute("title", "회원추천 인기순위");
+		model.addAttribute("title", "회원추천");
 		return "user/platformranking/userRankingList";
 	}
 	@GetMapping("/planRankingList")
 	public String planRankingList(Model model) {
 		
-		model.addAttribute("title", "다른회원의 여행계획 추천");
+		model.addAttribute("title", "여행계획 추천");
 		return "user/platformranking/planRankingList";
 	}
 
