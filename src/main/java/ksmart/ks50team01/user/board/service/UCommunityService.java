@@ -131,60 +131,22 @@ public class UCommunityService {
  
 
 
-	
-	
-
-
-	
-	
-    /**
-     * 게시글 작성
-     * @param uCommunity
-     */
-	/**
-	 
-    public void insertPost(String postRegId, String postCateNum, String postTitle, String postContent, MultipartFile postFile) throws Exception {
-        String fileName = null;
-        if (postFile != null && !postFile.isEmpty()) {
-        	// 저장할 경로 지정
-            String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/user/files";
-            // 랜덤으로 파일이름 생성
-            UUID uuid = UUID.randomUUID();
-            fileName = uuid + "_" + postFile.getOriginalFilename();
-            File saveFile = new File(projectPath, fileName);
-            postFile.transferTo(saveFile);
-            log.info("File saved to: {}", saveFile.getAbsolutePath());
-        }
-
-        // 게시글 저장 로직
-        UCommunity post = new UCommunity();
-        post.setPostRegId(postRegId);
-        post.setPostCateNum(postCateNum);
-        post.setPostTitle(postTitle);
-        post.setPostContent(postContent);
-        post.setPostFile(fileName);
-
-        // 게시글 DB에 저장
-        uCommunityMapper.insertPost(post);
-    } */
-
-	
-	
-	
-
-	
-	
 
 
 
-	public String replySave(String replyContent) {
-		return uCommunityMapper.replySave(replyContent);
+	// 댓글 작성
+	public void commentSave(String commentRegId, String postNum, String commentContent) {
+		UComment uComment = new UComment();
+		uComment.setPostNum(postNum);
+		uComment.setCommentRegId(commentRegId);
+		uComment.setCommentContent(commentContent);
+		uCommunityMapper.commentSave(uComment);
 	}
 
 
 
-	public void setPostCode(String postNum) {
-		
+	public List<UComment> getPostCommentList(String postNum) {
+		return uCommunityMapper.getPostCommentList(postNum);
 	}
 
 

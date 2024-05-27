@@ -44,7 +44,7 @@ public interface UCommunityMapper {
 	String replySave(String replyContent);
 
 	// 게시글 DB에 저장
-	void insertPost(UCommunity post);
+	void insertPost(UCommunity uCommunity);
 
 	// 게시글 수정 
 	void postModify(UCommunity uCommunity);
@@ -57,6 +57,12 @@ public interface UCommunityMapper {
 
 	// 게시글 파일 리스트
 	List<UPostFile> getFileList();
+
+	// 댓글 작성
+	void commentSave(UComment uComment);
+
+
+	List<UComment> getPostCommentList(String postNum);
 
 
 

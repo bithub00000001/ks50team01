@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -21,7 +20,6 @@ import ksmart.ks50team01.user.board.dto.UComment;
 import ksmart.ks50team01.user.board.dto.UCommunity;
 import ksmart.ks50team01.user.board.dto.UPostFile;
 import ksmart.ks50team01.user.board.service.UCommunityService;
-import ksmart.ks50team01.user.review.dto.UReviewFile;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -71,7 +69,7 @@ public class UCommunityController {
 	}
 
 	
-	// 게시글 등록
+	// 게시글 작성
 	@PostMapping("/postWrite")
 	public String postWrite(UCommunity uCommunity, HttpServletRequest request, Model model, @RequestParam(required = false) MultipartFile[] uploadfile) {
 		uCommunityService.insertPost(uCommunity);
@@ -183,13 +181,27 @@ public class UCommunityController {
 	
 	
 	
-	
 
 	// 댓글 작성
-	@PostMapping("/replySave")
-	public String replySave(String replyContent) {
-		// 클라이언트로부터 받은 답글을 서비스에 전달하여 저장하고 결과를 반환
-		return uCommunityService.replySave(replyContent);
-	}
+	@PostMapping("/commentSave")
+	@ResponseBody
+	public List<UComment> postComment(Model model
+									,@RequestParam(value="commentRegId", required = false) String commentRegId
+									,@RequestParam(value="postNum", required = false) String postNum
+									,@RequestParam(value="commentContent", required = false) String commentContent) {
+		// 댓글 저장
+		uCommunityService.commentSave(commentRegId, postNum, commentContent);
+		
+		// 댓글 저장 후 해당 게시글의 모든 댓글을 가져옴
+		List<UComment> postCommentList = uCommunityService.getPostCommentList(postNum);
+		
+		log.info("댓글 작성자: {}", commentRegId);
+	    log.info("댓글 작성: {}", postCommentList);
+	    
+	    model.addAttribute("postCommentList", postCommentList);
+	    model.addAttribute("title", "게시글 댓글 목록");
+	    
+		return postCommentList;
+	} 
 
 }
