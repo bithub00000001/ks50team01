@@ -1,7 +1,6 @@
 package ksmart.ks50team01.user.trip.controller;
 
 import java.time.format.DateTimeParseException;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -65,7 +64,7 @@ public class UTripPlanController {
 
     @GetMapping("/clusterer/{contentTypeId}")
     @ResponseBody
-    public Map<String, Object> getClusterer(@PathVariable(value = "contentTypeId") String contentTypeId) throws
+    public Map<String, Object> getClusterInfo(@PathVariable(value = "contentTypeId") String contentTypeId) throws
         JsonProcessingException {
         return uTripPlanService.getTourInfoObject(contentTypeId);
     }

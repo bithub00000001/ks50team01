@@ -198,18 +198,22 @@ public class PTripPlanController {
 	 */
 	@PostMapping(value = "/update/{dataTrans}")
 	@ResponseBody
-	public String upsertAreaOrSigunCode(@PathVariable String dataTrans) {
-		String status;
+	public ResponseEntity<Map<String, String>> upsertAreaOrSigunCode(@PathVariable String dataTrans) {
+		Map<String, String> response = new HashMap<>();
+		HttpStatus httpStatus;
 		if ("areaCode".equals(dataTrans)) {
 			pTourApiService.upsertAreaData(apiKey);
-			status = "지역 코드 업서트 성공";
+			response.put("message", "지역 코드 업서트 성공");
+			httpStatus = HttpStatus.OK;
 		}else if ("sigunguCode".equals(dataTrans)) {
 			pTourApiService.upsertSigunguData(apiKey);
-			status = "시군 코드 업서트 성공";
+			response.put("message", "시군 코드 업서트 성공");
+			httpStatus = HttpStatus.OK;
 		}else {
-			status = "연결에 실패했습니다";
+			response.put("message", "연결에 실패했습니다");
+			httpStatus = HttpStatus.BAD_REQUEST;
 		}
-		return status; // 또는 다른 응답
+		return ResponseEntity.status(httpStatus).body(response); // 또는 다른 응답
 	}
 
 	// 전체 업데이트 버튼을 누르면 여행지 상세 정보와 일치하는 전체 여행지 상세 정보 업서트 메서드
