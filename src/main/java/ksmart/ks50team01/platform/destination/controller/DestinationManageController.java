@@ -82,7 +82,12 @@ public class DestinationManageController {
 	 * @param destination
 	 * @return
 	 */
-	
+	@GetMapping("/destination/addTourGoodsCheckList")
+	@ResponseBody
+	public boolean addTourGoodsCheckList(@RequestParam(value = "tourGoodsOptionCd") String tourGoodsOptionCd) {
+		boolean isTourGoodsOptionCd= destinationService.addTourGoodsCheckList(tourGoodsOptionCd);
+		return isTourGoodsOptionCd;
+	}
 	
 	@PostMapping("/destination/addTourGoods")
 	public String addTourGoods(Destination destination) {
@@ -362,5 +367,12 @@ public class DestinationManageController {
 		return "/platform/destination/categoryManage";
 		
 	}
+	
+	@GetMapping("/destination/search-tour-name")
+	@ResponseBody
+	public List<Destination> searchTourName(@RequestParam String tourName) {
+		return destinationService.searchTourName(tourName);
+	}
+	
 
 }

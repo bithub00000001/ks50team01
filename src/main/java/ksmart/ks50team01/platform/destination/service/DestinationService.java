@@ -18,6 +18,10 @@ public class DestinationService {
 	
 	private final DestinationMapper destinationMapper;
 	
+	public boolean addTourGoodsCheckList(String tourGoodsOptionCd) {
+		return destinationMapper.addTourGoodsCheckList(tourGoodsOptionCd);
+	}
+	
 	public boolean addTourCheckList(String tourName) {
 		return destinationMapper.addTourCheckList(tourName);
 	}
@@ -157,6 +161,11 @@ public class DestinationService {
 		return destinationMapper.getRestaurantMenuInfoById(restaurantMenuManageCode);
 	}
 
+	public List<Destination> searchTourName(String tourName) {
+		return destinationMapper.searchTourName(tourName);
+	}
+
+	
 
 
 

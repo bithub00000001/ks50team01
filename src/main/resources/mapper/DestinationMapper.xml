@@ -4,17 +4,50 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="ksmart.ks50team01.platform.destination.mapper.DestinationMapper">
+	<select id="addTourGoodsCheckList" parameterType="String" resultType="boolean">
+		/* 중복 관광지 세부사항 체크 */
+			SELECT
+				COUNT(TOUR_GOODS)
+			FROM
+			
+			WHERE
+				TOUR_GOODSOPTION = #{tourGoodsOptionCd};
+		
+	</select>
 	
 	<select id="addTourCheckList" parameterType="String" resultType="boolean">
 		/* 중복 관광지 체크 */
 		SELECT
 			COUNT(TOUR_NAME)
 		FROM
+			TOUR_GOODS
+			INNER JOIN
+			TOUR_GOODSOPTION
+			ON
+			tg.TOUR_GDS_CD = tgo.TOUR_GDS_CD
+			INNER JOIN
 			TOUR_INFO
+			ON
+			tg.TOUR_INFO_CD = ti.TOUR_INFO_CD
 		WHERE
 			TOUR_NAME = #{TOUR_NAME};		
 	
+	
+	
 	</select>
+	
+	<select id="searchTourName" resultType="destination">
+		/* 관광지 이름 검색 */
+		SELECT 
+			TOUR_NAME as tourName,
+			TOUR_INFO_CD as tourInfoCode
+		FROM 
+			TOUR_INFO
+		WHERE 
+			TOUR_NAME LIKE CONCAT('%', #{tourName}, '%')
+			
+	</select>
+	
 	
 	<delete id="removeTourGoods" parameterType="String">
 		/* 관광지 상세목록 삭제 */
