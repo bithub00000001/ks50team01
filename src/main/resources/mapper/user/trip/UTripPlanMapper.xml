@@ -2,6 +2,13 @@
 <!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ksmart.ks50team01.user.trip.mapper.UTripPlanMapper">
 
+    <resultMap id="memberResultMap" type="login">
+        <id column="MBR_ID" property="id"/>
+        <result column="MBR_GRD_NO" property="level"/>
+        <result column="MBR_NM" property="name"/>
+        <result column="MBR_NICKNAME" property="nickname"/>
+    </resultMap>
+
 
     <select id="getTourInfoObject" resultType="String" parameterType="string">
         /* 여행지 정보를 컬럼 이름과 값으로 찾은 후 JSON 객체로 반환 */
@@ -23,5 +30,39 @@
             TOUR_DETAIL_FROM_API
         WHERE
             ${colName} = #{content};
+    </select>
+
+    <select id="getUserMembers" resultMap="memberResultMap">
+        SELECT
+            MBR_ID,
+            MBR_GRD_NO,
+            MBR_NM,
+            MBR_NICKNAME
+        FROM
+            MEMBER_MANAGE
+        WHERE
+            MBR_GRD_NO = 'uln_301'
+
+    </select>
+    <select id="searchUserMembers" resultMap="memberResultMap">
+        SELECT
+            MBR_ID,
+            MBR_GRD_NO,
+            MBR_NM,
+            MBR_NICKNAME
+        FROM
+            MEMBER_MANAGE
+        <where>
+            MBR_GRD_NO = 'uln_301'
+            <if test="nickname != null and nickname != ''">
+                AND (
+                    MBR_NICKNAME LIKE concat('%', #{nickname}, '%')
+                    OR
+                    MBR_NM LIKE concat('%', #{nickname}, '%')
+                    OR
+                    MBR_ID LIKE concat('%', #{nickname}, '%')
+                );
+            </if>
+        </where>
     </select>
 </mapper>
