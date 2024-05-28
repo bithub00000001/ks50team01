@@ -8,7 +8,7 @@
 		<id property="qnaNum" column="QNA_NO" />
 		<result property="qnaRowNum" column="ROW_NUM" />
 		<result property="qnaRegId" column="REG_MBR_BIZ_ID" />
-		<result property="faqCateNum" column="FAQ_CTGRY_NO" />
+		<result property="qnaCateNum" column="FAQ_CTGRY_NO" />
 		<result property="qnaProNum" column="QNA_PRGRS_NO" />
 		<result property="qnaProCate" column="QNA_PRGRS_CTGRY" />
 		<result property="qnaTitle" column="QNA_TTL" />
@@ -176,13 +176,13 @@
     
     
 	<update id="qnaModify" parameterType="UQna">
-		/* 게시글 수정 */
+		/* 1:1문의 수정 */
 		UPDATE 
 			QNA_QUESTION
 		SET
 			QNA_TTL = #{qnaTitle},
 			QNA_CN = #{qnaContent},
-			FAQ_CTGRY_NO = #{faqCateNum},
+			FAQ_CTGRY_NO = #{qnaCateNum},
 			MDFCN_YMD = NOW()
 		WHERE
 			QNA_NO = #{qnaNum};
@@ -190,8 +190,8 @@
 	
 	
 	
-	<delete id="postDelete" parameterType="UCommunity">
-		/* 게시글 삭제 */
+	<delete id="qnaDelete" parameterType="UQna">
+		/* 1:1문의 삭제 */
 	    DELETE FROM 
 	    	QNA_QUESTION 
 	    WHERE 

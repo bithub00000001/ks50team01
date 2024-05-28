@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import jakarta.servlet.http.HttpSession;
 import ksmart.ks50team01.user.board.dto.UCategory;
 import ksmart.ks50team01.user.board.dto.UQna;
 import ksmart.ks50team01.user.board.service.UQnaService;
@@ -56,9 +57,13 @@ public class UQnaController {
 	// 1:1문의 작성 POST 요청
 	@PostMapping("/qnaWrite")
 	public String qnaWrite(UQna uQna, Model model)	{
-		log.info("QNA 등록:{}", uQna);
+		String contentWithLineBreaks = uQna.getQnaContent().replace("\n", "<br>");
+		uQna.setQnaContent(contentWithLineBreaks);
 		
 		uQnaService.insertQna(uQna);
+		
+		log.info("QNA 등록:{}", uQna);
+		
 		return "redirect:/qna";
 	}
 	
@@ -67,7 +72,13 @@ public class UQnaController {
 	
 	// 1:1문의 작성 폼 이동
 	@GetMapping("/qnaWrite")
-	public String qnaWrite(Model model) {
+	public String qnaWrite(Model model, HttpSession session) {
+		String loginId = (String) session.getAttribute("loginId");
+		if (loginId == null) {
+			model.addAttribute("loginRequired", true);
+			return "redirect:/trip"; // 로그인 페이지 경로로 변경
+		}
+		
 		List<UCategory> qnaCateList = uQnaService.getQnaCateList();
 		log.info("qnaCateList: {}", qnaCateList);
 		
@@ -81,10 +92,12 @@ public class UQnaController {
 	// 1:1문의 수정 POST 요청
 	@PostMapping("/qnaModify")
 	public String qnaModify(UQna uQna, Model model) {
-		
-		log.info("1:1문의 수정", uQna);
+		String contentWithLineBreaks = uQna.getQnaContent().replace("\n", "<br>");
+		uQna.setQnaContent(contentWithLineBreaks);
 		
 		uQnaService.qnaModify(uQna);
+		
+		log.info("1:1문의 수정", uQna);
 		
 		// 수정된 1:1문의 상세 페이지로 이동
 		return "redirect:/qna/qnaDetail?qnaNum=" + uQna.getQnaNum();
@@ -95,6 +108,10 @@ public class UQnaController {
 	@GetMapping("/qnaModify")
 	public String qnaModify(@RequestParam(value = "qnaNum") String qnaNum, Model model) {
 		UQna qnaInfo = uQnaService.getQnaInfoByNum(qnaNum);
+		
+	    // <br> 태그를 \n으로 변환
+	    String contentWithLineBreaks = qnaInfo.getQnaContent().replace("<br>", "\n");
+	    qnaInfo.setQnaContent(contentWithLineBreaks);
 		
 		log.info("qnaInfo :{}", qnaInfo);
 		

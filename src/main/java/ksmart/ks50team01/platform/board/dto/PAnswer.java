@@ -9,8 +9,10 @@ public class PAnswer {
 	private String ansRegId;
 	private String qnaNum;
 	private String ansContent;
+	private String ansMdfId;
 	private String ansRegDate;
 	private String ansMdfDate;
 	
-
+	
+	private PQna pQna;
 }

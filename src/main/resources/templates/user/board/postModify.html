@@ -46,11 +46,11 @@
 	                        </div>
 	                        <div class="form-group">
 	                            <label for="postContent">내용</label>
-	                            <textarea class="form-control" id="postContent" name="postContent" rows="15" th:field="*{postContent}" required="required"></textarea>
+	                            <textarea class="form-control" id="postContent" name="postContent" rows="15" required="required" th:utext="*{postContent}"></textarea>
 	                        </div>
 	                        
 	                        <!-- Elements Modal -->
-	                        <div class="pt-5 mb-5" id="modal">
+	                        <div class="pt-5 mb-5" id="modal">s
 	                            <div class="row">
 	                                <div class="col-md-6 col-lg-4">
 	                                    <h3 class="element-title mb-5 font-weight-bold">첨부 파일</h3>
@@ -166,6 +166,7 @@
 	        window.history.back();
 	    }
 	</script>
+	
 		
 
 

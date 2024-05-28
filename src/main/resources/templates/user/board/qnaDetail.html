@@ -35,7 +35,7 @@
 						</p>
 						<!-- 굵은 직선 추가 -->
 						<hr class="my-4">
-						<p class="qna-content" th:text="*{qnaContent}">1:1문의 내용</p>
+						<p class="qna-content" th:utext="*{qnaContent}">1:1문의 내용</p>
 
 					<div class="d-flex justify-content-end mt-10">
 						<a th:href="@{/qna/qnaModify(qnaNum=${qnaDetail.qnaNum})}" class="btn btn-light-gray btn-sm update-Btn">수정</a>
@@ -65,7 +65,7 @@
 								<span class="comment-author" th:text="*{qnaAnswer.answerRegId}">답변자 아이디</span>
 								<span class="comment-date m-2" th:text="*{#strings.substring(qnaAnswer.answerRegDate, 0, 10)}">답변일</span>
 							</div>
-							<p class="answer-content" th:text="*{qnaAnswer.answerContent}">답변 내용</p>
+							<p class="answer-content" th:utext="*{qnaAnswer.answerContent}">답변 내용</p>
 							<!-- 굵은 직선 추가 -->
 							<hr class="my-4">
 						</th:block>
@@ -79,9 +79,7 @@
 						</div>
 					</div>
 				</div>
-	
 			</div>
-	
 		</div>
 	</th:block>
 	
@@ -93,34 +91,45 @@
 				function goBack() {
 					window.history.back();
 				}
-			</script>
-		<script src="https://kit.fontawesome.com/8374b337d7.js"
-			crossorigin="anonymous"></script>
+		</script>
+		
+
+			
+	<!-- 1:1문의 삭제 -->	    
+	<script th:inline="javascript">
+	    function confirmDelete(element) {
+	        var qnaNum = element.getAttribute('data-post-num');
+	        var confirmation = confirm("정말 삭제하시겠습니까?");
+	        
+	        if (confirmation) {
+	            // 확인을 누르면 삭제 동작을 수행하기 위해 POST 요청
+	            qnaDelete(qnaNum);
+	        } else {
+	            console.log("삭제 취소: " + qnaNum);
+	        }
+	    }
 	
-		<script>
-				function toggleDropdownMenu() {
-					const dropdownMenu = document.getElementById('dropdown-menu');
-					dropdownMenu.classList.toggle('show');
-				}
+	    function qnaDelete(qnaNum) {
+	        // POST 요청을 보내기 위해 form을 생성
+	        var form = document.createElement('form');
+	        form.setAttribute('method', 'post');
+	        form.setAttribute('action', '/qna/qnaDelete');
+	        form.style.display = 'none'; // form을 보이지 않도록 설정
 	
-				function editComment() {
-					// 수정 버튼을 클릭했을 때 수행할 작업을 구현합니다.
-					// 이 함수는 실제로 수정 기능을 수행해야 합니다.
-				}
+	        // postNum을 form에 추가
+	        var input = document.createElement('input');
+	        input.setAttribute('type', 'hidden');
+	        input.setAttribute('name', 'qnaNum');
+	        input.setAttribute('value', qnaNum);
+	        form.appendChild(input);
 	
-				function deleteComment() {
-					// 삭제 버튼을 클릭했을 때 수행할 작업을 구현합니다.
-					// 이 함수는 실제로 삭제 기능을 수행해야 합니다.
-				}
-	
-				// 클릭 이벤트가 발생한 곳이 아닌 다른 곳을 클릭하면 드롭다운 메뉴를 닫습니다.
-				document.addEventListener('click', function(event) {
-					const dropdownMenu = document.getElementById('dropdown-menu');
-					if (!event.target.matches('.fa-solid.fa-ellipsis-vertical')) {
-						dropdownMenu.classList.remove('show');
-					}
-				});
-			</script>
+	        // form을 body에 추가하고 submit
+	        document.body.appendChild(form);
+	        form.submit();
+	    }
+	</script>		
+			
+			
 	
 
 	</th:block>

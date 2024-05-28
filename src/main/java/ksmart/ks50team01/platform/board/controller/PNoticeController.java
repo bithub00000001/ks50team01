@@ -41,6 +41,9 @@ public class PNoticeController {
 	// 공지사항 작성 POST 요청
 	@PostMapping("/noticeWrite")
 	public String noticeWrite(PNotice pNotice, Model model) {
+		String contentWithLineBreaks = pNotice.getNoticeContent().replace("\n", "<br>");
+		pNotice.setNoticeContent(contentWithLineBreaks);
+        
 	    pNoticeService.insertNotice(pNotice);
 	    
 	    model.addAttribute("title", "공지사항 작성");
@@ -69,9 +72,12 @@ public class PNoticeController {
 	// 공지사항 수정 POST 요청
 		@PostMapping("/noticeModify")
 		public String noticeModify(PNotice pNotice, Model model) {
+			String contentWithLineBreaks = pNotice.getNoticeContent().replace("\n", "<br>");
+			pNotice.setNoticeContent(contentWithLineBreaks);
+			
+			pNoticeService.noticeModify(pNotice);
 			
 			log.info("공지사항 수정: {}", pNotice);
-			pNoticeService.noticeModify(pNotice);
 			
 			model.addAttribute("title", "공지사항 수정");
 			
@@ -83,9 +89,13 @@ public class PNoticeController {
 	public String noticeModify(@RequestParam(value = "noticeNum") String noticeNum, Model model) {
 		PNotice noticeInfo = pNoticeService.getNoticeInfoByNum(noticeNum);
 		
-		log.info("faqInfo : {}", noticeInfo);
+	    // <br> 태그를 \n으로 변환
+	    String contentWithLineBreaks = noticeInfo.getNoticeContent().replace("<br>", "\n");
+	    noticeInfo.setNoticeContent(contentWithLineBreaks);
 		
-		model.addAttribute("noticeInfo : {}", noticeInfo);
+		log.info("noticeInfo : {}", noticeInfo);
+		
+		model.addAttribute("noticeInfo", noticeInfo);
 		model.addAttribute("title", "공지사항 수정 페이지");
 		
 		return "platform/board/noticeModify";

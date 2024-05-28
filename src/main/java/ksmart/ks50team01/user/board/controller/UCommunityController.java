@@ -72,6 +72,9 @@ public class UCommunityController {
 	// 게시글 작성
 	@PostMapping("/postWrite")
 	public String postWrite(UCommunity uCommunity, HttpServletRequest request, Model model, @RequestParam(required = false) MultipartFile[] uploadfile) {
+		String contentWithLineBreaks = uCommunity.getPostContent().replace("\n", "<br>");
+		uCommunity.setPostContent(contentWithLineBreaks);
+		
 		uCommunityService.insertPost(uCommunity);
 
 		log.info("게시글 등록:{}", uCommunity);
@@ -126,21 +129,28 @@ public class UCommunityController {
 	// 게시글 수정 POST 요청
 	@PostMapping("/postModify")
 	public String postModify(UCommunity uCommunity, Model model) {
-		
-		log.info("게시글 수정", uCommunity);
+		String contentWithLineBreaks = uCommunity.getPostContent().replace("\n", "<br>");
+		uCommunity.setPostContent(contentWithLineBreaks);
 		
 		uCommunityService.postModify(uCommunity);
 		
-	   
+		log.info("게시글 수정", uCommunity);
+		
 		// 수정된 게시글의 상세 페이지로 이동
 		return "redirect:/community/postDetail?postNum=" + uCommunity.getPostNum();
 	}
 
+	
+	
 	// 게시글 수정 페이지
 	@GetMapping("/postModify")
 	public String postModify(@RequestParam(value = "postNum") String postNum, Model model) {
 		UCommunity postInfo = uCommunityService.getPostInfoByNum(postNum);
 		
+	    // <br> 태그를 \n으로 변환
+	    String contentWithLineBreaks = postInfo.getPostContent().replace("<br>", "\n");
+	    postInfo.setPostContent(contentWithLineBreaks);
+	    
 		log.info("postInfo :{}", postInfo);
 		
 		model.addAttribute("postInfo", postInfo);

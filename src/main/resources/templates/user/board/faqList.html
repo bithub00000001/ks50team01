@@ -96,7 +96,7 @@
 								</div>
 								<div th:id="'collapseOne_' + ${l.faqNum}" class="collapse" th:classappend="${(idx == 0)} ? 'show' : ''" th:aria-labelledby="'headingOne_' + ${l.faqNum}" data-bs-parent="#accordionOne">
 									<div class="card-body">
-										<p th:text="${l.faqContent}"></p>
+										<p th:utext="${l.faqContent}"></p>
 									</div>
 								</div>
 							</div>

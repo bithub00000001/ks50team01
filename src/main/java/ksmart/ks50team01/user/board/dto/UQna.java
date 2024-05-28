@@ -9,7 +9,7 @@ public class UQna {
 	private String qnaNum;
 	private int qnaRowNum;
 	private String qnaRegId;
-	private String faqCateNum;
+	private String qnaCateNum;
 	private String faqCateType;
 	private String qnaProNum;
 	private String qnaProCate;

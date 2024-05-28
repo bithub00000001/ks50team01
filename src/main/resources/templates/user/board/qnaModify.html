@@ -41,12 +41,12 @@
 						
 							<div class="form-group">
 								<label for="qnaTitle" class="col-sm-2 col-form-label">문의 제목</label>
-								<input type="text" class="form-control" id=qnaTitle name="qnaTitle" required>
+								<input type="text" class="form-control" id=qnaTitle name="qnaTitle" th:field="*{qnaTitle}" required="required">
 							</div>
 	
 							<div class="form-group">
 								<label for="exampleFormControlTextarea1">문의 내용</label>
-								<textarea class="form-control" id="qnaContent" name="qnaContent" rows="6" required></textarea>
+								<textarea class="form-control" id="qnaContent" name="qnaContent" rows="6" required="required" th:utext="*{qnaContent}"></textarea>
 							</div>
 	
 							<!-- Elements Modal -->
