@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -34,6 +35,8 @@ public class PTourApiServiceImpl implements PTourApiService {
 	private final PTourApiMapper pTourApiMapper;
 	private final PTripPlanService pTripPlanService;
 	private final WebClient tourApiWebClient;
+
+
 
 	/**
 	 * Tour API와 상호작용해 데이터를 가져오는 일반화 된 메서드

@@ -25,18 +25,23 @@ function getData(map, contentTypeId) {
     let currentInfowindow = null;
     let clusterListItems = [];
 
+    const contentTypeListObject = {
+        '12': 'tour',
+        '32': 'accommodation',
+        '39': 'restaurant'
+    }
 
     // 리스트 아이템을 생성하는 함수
-
     function createListItem(item, idx) {
         const title = item.getTitle();
         const addr = item.addr;
         const telNum = item.telNum;
         const contentId = item.contentId;
+        const dataIdType = contentTypeListObject[contentTypeId]
 
         const $li = $('<li></li>', {
             class: 'list-group-item',
-            'data-id': 'accommodation' + (idx + 1)
+            'data-id': dataIdType + (idx + 1)
         });
 
         const $title = $('<h5></h5>').text(title);
@@ -163,12 +168,17 @@ function getData(map, contentTypeId) {
                 // 현재 열린 인포윈도우 저장
                 currentInfowindow = infowindow;
 
+                // 리스트의 상위로 올리는 함수
                 const $li = createListItem(markers[i], i);
+                const $liList = $tabOption.find('li');
+                const $existingLi = $liList.filter((idx, data) => $(data).find('h5').text() === $li.find('h5').text());
 
-                if (!clusterListItems.find($item => $item.text() === $li.text())) {
-                    clusterListItems.unshift($li);
-                    $tabOption.prepend($li);
+                // 기존 요소가 있으면 제거
+                if ($existingLi.length > 0) {
+                    $existingLi.remove();
                 }
+                // 요소 추가
+                $tabOption.prepend($li);
             });
         }
         // 클러스터러에 마커들을 추가합니다

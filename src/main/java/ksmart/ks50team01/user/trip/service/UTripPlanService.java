@@ -2,11 +2,11 @@ package ksmart.ks50team01.user.trip.service;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import ksmart.ks50team01.user.member.login.dto.Login;
+import ksmart.ks50team01.user.trip.dto.UDayInfo;
 import ksmart.ks50team01.user.trip.dto.UTripOption;
 
 public interface UTripPlanService {
@@ -27,4 +27,7 @@ public interface UTripPlanService {
 
 	// 여행 계획 작성 모달에서 회원 닉네임 검색 메서드
 	List<Login> searchUserMembers(String nickname);
+
+	// 여행 세부 계획 작성 페이지에서 정보를 받아 거리와 소요 시간을 계산하는 메서드
+	Map<String, Object> calculateDistanceDuration(List<UDayInfo> locations);
 }
