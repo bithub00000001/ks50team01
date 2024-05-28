@@ -16,7 +16,6 @@ import ksmart.ks50team01.platform.board.dto.PNotice;
 import ksmart.ks50team01.platform.board.service.PNoticeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
 @Controller
@@ -112,6 +111,8 @@ public class PNoticeController {
 		return "redirect:/platform/board/noticeList";
 	}
 	
+	
+	/*
 	// 공지사항 삭제
 	@GetMapping("/noticeDelete")
 	public String noticeDeletePage(@RequestParam(value="noticeNum") String noticeNum, Model model) {
@@ -124,7 +125,7 @@ public class PNoticeController {
 		model.addAttribute("title", "공지사항 삭제");
 		
 		return "redirect:/platform/board/noticeList";
-	}
+	} */
 	
 
 	
