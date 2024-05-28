@@ -157,6 +157,16 @@
 	
 	<insert id="addRanking" parameterType="Ranking">
 		/* 플랫폼 추천 리스트 추가 */
+		<selectKey keyProperty="autoPlatformId" resultType="string" order="BEFORE">
+		SELECT
+			(CASE
+				WHEN COUNT(PF_MNGR_RANK) = 0 
+       				THEN 'pp_1'
+					ELSE CONCAT('pp_', MAX(CAST(SUBSTRING_INDEX(PF_MNGR_RANK,'_', - 1)AS UNSIGNED)) + 1)
+			END)
+				FROM 
+					PLATFORM_PARTNERSHIP AS p
+		</selectKey>
 		INSERT INTO 
 			PLATFORM_PARTNERSHIP
 			(PF_MNGR_RANK, 
@@ -177,7 +187,7 @@
 			ACT_YN, 
 			REG_YMD)
 		VALUES (
-			#{pRankingId}, 
+			#{autoPlatformId}, 
 			#{pRankingRegId}, 
 			#{partnerBusinessCode}, 
 			#{tripLctgryCode},

@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import ksmart.ks50team01.platform.ranking.dto.Ranking;
 import ksmart.ks50team01.platform.ranking.dto.UserRanking;
+import ksmart.ks50team01.platform.ranking.service.RankingService;
 import ksmart.ks50team01.platform.ranking.service.UserRankingService;
+import ksmart.ks50team01.platform.trip.dto.PTourApi;
+import ksmart.ks50team01.platform.trip.service.PTripPlanService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,6 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 public class UserRankingController {
 
 	private final UserRankingService userRankingService;
+	private final PTripPlanService pTripPlanService;
 	
 	@PostMapping("/removeUserRanking")
 	public String remove(@RequestParam(name = "userRankingId") String userRankingId
@@ -72,7 +75,7 @@ public class UserRankingController {
 	@GetMapping("/addUserRanking")
 	public String addUserRanking(Model model) {
 		List<UserRanking> userRankingList = userRankingService.getUserRankingList();
-		System.out.println("userRankingList: " + userRankingList);
+	
 		model.addAttribute("title", "회원 추천리스트 등록");
 		model.addAttribute("userRankingList", userRankingList);
 		return "platform/ranking/addUserRanking";
@@ -88,13 +91,13 @@ public class UserRankingController {
 	
 	@GetMapping("/userRankingList")
 	public String getUserRankingList(Model model) {
-		
+		List<PTourApi> pTourApiList = pTripPlanService.getDestinationList();
 		List<UserRanking> userRankingList = userRankingService.getUserRankingList();
 		log.info("UserRankingController getUserRankingList: {}", userRankingList);
 		
 		model.addAttribute("title", "회원 추천 관리");
 		model.addAttribute("userRankingList", userRankingList);
-
+		model.addAttribute("pTourApiList", pTourApiList);
 		return "platform/ranking/userRankingList";
 	}
 }

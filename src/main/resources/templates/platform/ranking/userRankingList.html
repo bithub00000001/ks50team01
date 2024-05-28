@@ -76,9 +76,12 @@
 								<th>등록플랫폼권한아이디</th>
 								<th>제휴사업장코드</th>
 								<th>여행지대분류코드</th>
-								<th>지역소분류명</th>
+								<th>관광타입</th>
+								<th>컨텐츠아이디</th>
+								<th>여행지명</th>
+								<th>여행지주소</th>
+								<th>여행지이미지</th>
 								<th>최종순위</th>
-								<th>항목별순위</th>
 								<th>한달기준합계시작일</th>
 								<th>한달기분합계종료일</th>
 								<th>플랫폼게시기간시작일</th>
@@ -99,9 +102,12 @@
 								<td th:text="${l.userRankingRegId}"></td>
 								<td th:text="${l.partnerBusinessCode}"></td>
 								<td th:text="${l.tripLctgryCode}"></td>
-								<td th:text="${l.rgnSctgryName}"></td>
+								<td th:text="${l.destinationType}"></td>
+								<td th:text="${l.destinationCId}"></td>
+								<td th:text="${l.destinationTitle}"></td>
+								<td th:text="${l.destinationAddr}"></td>
+								<td th:text="${l.destinationImg}"></td>
 								<td th:text="${l.userRank}"></td>
-								<td th:text="${l.artclRankingNum}"></td>
 								<td th:text="${l.reviewStatsStart}"></td>
 								<td th:text="${l.reviewStatsEnd}"></td>
 								<td th:text="${l.platformAdStart}"></td>

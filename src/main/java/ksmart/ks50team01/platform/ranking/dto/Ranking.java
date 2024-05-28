@@ -23,5 +23,6 @@ public class Ranking {
 	 private String activate;
 	 private String regDate;
 	 private String modifyDate;
+	 private String autoPlatformId;
 	
 }
