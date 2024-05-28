@@ -14,6 +14,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import ksmart.ks50team01.user.member.login.dto.Login;
 import ksmart.ks50team01.user.trip.dto.UTripOption;
 import ksmart.ks50team01.user.trip.enums.UTripContent;
 import ksmart.ks50team01.user.trip.mapper.UTripPlanMapper;
@@ -75,6 +76,12 @@ public class UTripPlanServiceImpl implements UTripPlanService{
 		return uTripOption;
 	}
 
+	/**
+	 * 여행 정보 혹은 여행 상세 정보를 조회하고 카카오 맵 API에서 사용할 수 있도록 객체로 반환하는 메서드
+	 * @param content 컨텐트 ID 혹은 관광 타입
+	 * @return
+	 * @throws JsonProcessingException
+	 */
 	@Override
 	public Map<String, Object> getTourInfoObject(String content) throws JsonProcessingException {
 		List<String> concatObject = utripPlanMapper.getTourInfoObject(UTripContent.getUTripContentByLength(content), content);
@@ -83,5 +90,24 @@ public class UTripPlanServiceImpl implements UTripPlanService{
 		Map<String, Object> paraMap = new HashMap<>();
 		paraMap.put("positions", contentList);
 		return paraMap;
+	}
+
+	/**
+	 * 회원 중 일반 회원의 목록을 조회하는 메서드
+	 * @return Login DTO 의 List
+	 */
+	@Override
+	public List<Login> getUserMembers() {
+		return utripPlanMapper.getUserMembers();
+	}
+
+	/**
+	 * 회원 중 일반 회원이며 nickname과 일치하는 목록을 조회하는 메서드
+	 * @param nickname 회원의 닉네임
+	 * @return Login DTO 의 List
+	 */
+	@Override
+	public List<Login> searchUserMembers(String nickname) {
+		return utripPlanMapper.searchUserMembers(nickname);
 	}
 }
