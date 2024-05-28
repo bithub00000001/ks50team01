@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{platform/layout/default}">
+
+<th:block layout:fragment="customCss">
+    <!-- Datatables CSS START -->
+    <link th:href="@{/platform/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/platform/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/platform/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/platform/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/platform/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css}" rel="stylesheet">
+    <!-- Datatables CSS END -->
+    <style>
+        .custom-search-field {
+            width: 100%;
+            height: 40px;
+            padding: 5px;
+        }
+    </style>
+</th:block>
+
+<th:block layout:fragment="customContent">
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <br>
+                    <form id="dataTrans" class="form-horizontal form-label-left">
+                        <div class="form-group">
+                            <div class="col-md-1 col-sm-1 col-xs-0"></div>
+                            <label class="control-label col-md-2 col-sm-2 col-xs-12">구분</label>
+                            <div class="col-md-8 col-sm-8 col-xs-12">
+                                <select id="contentTypeId" name="contentTypeId" class="form-control text-center data-select" required>
+                                    <option value="12">관광지</option>
+                                    <option value="32">숙소</option>
+                                    <option value="39">음식점</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="ln_solid"></div>
+                        <div class="form-group">
+                            <div class="col-md-12 col-sm-12 col-xs-12 text-center">
+                                <button class="btn btn-success btn-lg data-trans" type="button">검색</button>
+                                <button type="reset" class="btn btn-dark btn-lg">초기화</button>
+                            </div>
+                        </div>
+                    </form>
+                    <table id="dataTbContent" class="table table-striped table-bordered dt-responsive nowrap">
+                        <thead>
+                            <tr>
+                                <th>번호</th>
+                                <th>제목</th>
+                                <th>관광 타입</th>
+                                <th>컨텐츠 ID</th>
+                                <th>주소 1</th>
+                                <th>주소 2</th>
+                                <th>우편 번호</th>
+                                <th>연락처</th>
+                                <th>이미지 링크 1</th>
+                                <th>이미지 링크 2</th>
+                                <th>경도</th>
+                                <th>위도</th>
+                                <th>상세 보기</th>
+                                <th>등록 일자</th>
+                                <th>수정 일자</th>
+                                <th>등록</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:unless="${destinationList != null}">
+                                <td colspan="5" class="center-text">등록된 여행 정보가 없습니다.</td>
+                            </tr>
+
+                            <tr th:if="${destinationList != null}" th:each="list: ${destinationList}">
+                                <td th:text="${list.destinationNum}">번호</td>
+                                <td th:text="${list.destinationTitle}">제목</td>
+                                <td th:text="${list.destinationContentTypeName}">관광 타입</td>
+                                <td th:text="${list.destinationFirstAddress}">주소 1</td>
+                                <td th:text="${list.destinationSecondAddress}">주소 2</td>
+                                <td th:text="${list.destinationZipcode}">우편 번호</td>
+                                <td th:text="${list.destinationTelNum}">연락처</td>
+                                <td th:text="${list.destinationFirstImageLink}">이미지 링크 1</td>
+                                <td th:text="${list.destinationSecondImageLink}">이미지 링크 2</td>
+                                <td th:text="${list.destinationLongitude}">경도</td>
+                                <td th:text="${list.destinationLatitude}">위도</td>
+                                <td th:text="${list.destinationContentId}">컨텐츠 ID</td>
+                                <td><a th:href="@{/platform/plan/destination/detail(contentId=${list.destinationContentId}, contentTypeId=${list.destinationContentTypeId})}">상세보기</a></td>
+                                <td th:text="${list.destinationRegDate}">등록 일자</td>
+                                <td th:text="${list.destinationModDate}">수정 일자</td>     
+                                <td><a class="btn btn-primary btn-md" th:href="@{/platform/ranking/addApiRanking(contentId=${list.destinationContentId})}">등록</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</th:block>
+
+<th:block layout:fragment="customJsFile">
+    <!-- Datatables JSFILE START -->
+    <script th:src="@{/platform/vendors/datatables.net/js/jquery.dataTables.min.js}"></script>
+    <script th:src="@{/platform/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js}"></script>
+    <script th:src="@{/platform/vendors/datatables.net-buttons/js/dataTables.buttons.min.js}"></script>
+    <script th:src="@{/platform/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js}"></script>
+    <script th:src="@{/platform/vendors/datatables.net-buttons/js/buttons.flash.min.js}"></script>
+    <script th:src="@{/platform/vendors/datatables.net-buttons/js/buttons.html5.min.js}"></script>
+    <script th:src="@{/platform/vendors/datatables.net-buttons/js/buttons.print.min.js}"></script>
+    <script th:src="@{/platform/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js}"></script>
+    <script th:src="@{/platform/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js}"></script>
+    <script th:src="@{/platform/vendors/datatables.net-responsive/js/dataTables.responsive.min.js}"></script>
+    <script th:src="@{/platform/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js}"></script>
+    <script th:src="@{/platform/vendors/datatables.net-scroller/js/dataTables.scroller.min.js}"></script>
+    <script th:src="@{/platform/vendors/jszip/dist/jszip.min.js}"></script>
+    <script th:src="@{/platform/vendors/pdfmake/build/pdfmake.min.js}"></script>
+    <script th:src="@{/platform/vendors/pdfmake/build/vfs_fonts.js}"></script>
+    <!-- Datatables JSFILE END -->
+</th:block>
+
+<th:block layout:fragment="customJs">
+    <script th:inline="javascript">
+        const table = $('#dataTbContent').dataTable();
+
+        $(document).on('click', '.data-trans', function(){
+            const dataTrans = String($('.data-select :selected').val()).trim();
+            if(dataTrans){
+                const colObj = {
+                    12 : [
+                        {'title': '번호', 'data': 'destinationNum'},
+                        {'title': '제목', 'data': 'destinationTitle'},
+                        {'title': '관광 타입', 'data': 'destinationContentTypeName'},
+                        {'title': '주소 1', 'data': 'destinationFirstAddress'},
+                        {'title': '주소 2', 'data': 'destinationSecondAddress'},
+                        {'title': '우편 번호', 'data': 'destinationZipcode'},
+                        {'title': '연락처', 'data': 'destinationTelNum'},
+                        {'title': '이미지 링크 1', 'data': 'destinationFirstImageLink'},
+                        {'title': '이미지 링크 2', 'data': 'destinationSecondImageLink'},
+                        {'title': '경도', 'data': 'destinationLongitude'},
+                        {'title': '위도', 'data': 'destinationLatitude'},
+                        {'title': '컨텐츠 ID', 'data': 'destinationContentId'},
+                        {'title': '상세 보기', 'data': 'destinationContentId'},
+                        {'title': '등록 일자', 'data': 'destinationRegDate'},
+                        {'title': '수정 일자', 'data': 'destinationModDate'},
+                    ],
+                    32 : [
+                        {'title': '번호', 'data': 'destinationNum'},
+                        {'title': '제목', 'data': 'destinationTitle'},
+                        {'title': '관광 타입', 'data': 'destinationContentTypeName'},
+                        {'title': '주소 1', 'data': 'destinationFirstAddress'},
+                        {'title': '주소 2', 'data': 'destinationSecondAddress'},
+                        {'title': '우편 번호', 'data': 'destinationZipcode'},
+                        {'title': '연락처', 'data': 'destinationTelNum'},
+                        {'title': '이미지 링크 1', 'data': 'destinationFirstImageLink'},
+                        {'title': '이미지 링크 2', 'data': 'destinationSecondImageLink'},
+                        {'title': '경도', 'data': 'destinationLongitude'},
+                        {'title': '위도', 'data': 'destinationLatitude'},
+                        {'title': '컨텐츠 ID', 'data': 'destinationContentId'},
+                        {'title': '상세 보기', 'data': 'destinationContentId'},
+                        {'title': '등록 일자', 'data': 'destinationRegDate'},
+                        {'title': '수정 일자', 'data': 'destinationModDate'},
+                   
+                    ],
+                    39 : [
+                        {'title': '번호', 'data': 'destinationNum'},
+                        {'title': '제목', 'data': 'destinationTitle'},
+                        {'title': '관광 타입', 'data': 'destinationContentTypeName'},
+                        {'title': '주소 1', 'data': 'destinationFirstAddress'},
+                        {'title': '주소 2', 'data': 'destinationSecondAddress'},
+                        {'title': '우편 번호', 'data': 'destinationZipcode'},
+                        {'title': '연락처', 'data': 'destinationTelNum'},
+                        {'title': '이미지 링크 1', 'data': 'destinationFirstImageLink'},
+                        {'title': '이미지 링크 2', 'data': 'destinationSecondImageLink'},
+                        {'title': '경도', 'data': 'destinationLongitude'},
+                        {'title': '위도', 'data': 'destinationLatitude'},
+                        {'title': '컨텐츠 ID', 'data': 'destinationContentId'},
+                        {'title': '상세 보기', 'data': 'destinationContentId'},
+                        {'title': '등록 일자', 'data': 'destinationRegDate'},
+                        {'title': '수정 일자', 'data': 'destinationModDate'},
+
+                    ]
+                }
+
+                const colArr = [...colObj[`${dataTrans}`]];
+
+                const request = $.ajax({
+                    url:'/platform/plan/destination/' + dataTrans,
+                    method: 'POST',
+                    dataType: 'JSON'
+                });
+                request.done(function(json){
+                    table.fnDestroy();
+                    $('#dataTbContent').text('');
+                    console.log(json);
+
+                    const dataTableOption = {
+                        'searching' : true,
+                        'responsive': true,
+                        'destroy':true,
+                        'data' : json.dataList,
+                        'columns' : colArr,
+                        'columnDefs': [
+                            {
+                                targets: colArr.length-3,
+                                data: 'description',
+                                render: function (data, type, row, meta) {
+                                    const contentId = row['destinationContentId'];  // 'destinationContentId' 컬럼에서 ID를 가져옴
+                                    const contentTypeId = json.dataList[meta.row].destinationContentTypeId;
+                                    const button = `<a href="/platform/plan/destination/detail?contentId=${contentId}&contentTypeId=${contentTypeId}"">상세보기</a>`;
+                                    return button;
+                                }
+                            }
+                           
+                        ]
+                    }
+                    $('#dataTbContent').dataTable(dataTableOption);
+                })
+            }
+        });
+    </script>
+
+</th:block>
+</html>
