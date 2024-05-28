@@ -61,6 +61,9 @@ public interface DestinationMapper {
 	//식당 상세정보 수정
 	int updateRestaurantMenu(Destination destination);
 	Destination getRestaurantMenuInfoById(String restaurantMenuManageCode);
+	
+	//식당 삭제
+	void removeRestaurant(String restaurantInfoCode);
 
 
 
