@@ -8,7 +8,7 @@
 		<id property="qnaNum" column="QNA_NO" />
 		<result property="qnaRowNum" column="ROW_NUM" />
 		<result property="qnaRegId" column="REG_MBR_BIZ_ID" />
-		<result property="faqCateNum" column="FAQ_CTGRY_NO" />
+		<result property="qnaCateNum" column="FAQ_CTGRY_NO" />
 		<result property="qnaProNum" column="QNA_PRGRS_NO" />
 		<result property="qnaProCate" column="QNA_PRGRS_CTGRY" />
 		<result property="qnaTitle" column="QNA_TTL" />
@@ -142,6 +142,61 @@
         INSERT INTO QNA_QUESTION (QNA_NO, REG_MBR_BIZ_ID, FAQ_CTGRY_NO, QNA_TTL, QNA_CN, REG_YMD)
         VALUES (#{qnaNum}, #{qnaRegId}, #{category.qnaCategoryNum}, #{qnaTitle}, #{qnaContent}, NOW());
     </insert>
+    
+    
+    
+    <!-- QNA 번호로 해당 QNA의 상세 정보를 조회하는 쿼리 -->
+	<select id="getQnaInfoByNum" resultMap="qnaResultMap" parameterType="String">
+	    SELECT
+	        Q.QNA_NO,
+	        Q.REG_MBR_BIZ_ID,
+	        F.FAQ_CTGRY_TYPE,
+	        Q.QNA_PRGRS_CTGRY,
+	        Q.QNA_TTL,
+	        Q.QNA_CN,
+	        Q.ANS_REG_PF_ID,
+	        Q.REG_YMD,
+	        Q.MDFCN_YMD,
+	        Q.RTRCN_YMD,
+	        A.ANS_NO,
+	        A.REG_PF_ID,
+	        A.QNA_NO,
+	        A.ANS_CN,
+	        A.MDFCN_PF_ID,
+	        A.REG_YMD,
+	        A.MDFCN_YMD
+	    FROM
+	        QNA_QUESTION AS Q
+	        INNER JOIN FAQ_CATEGORY AS F ON Q.FAQ_CTGRY_NO = F.FAQ_CTGRY_NO
+	        LEFT JOIN QNA_ANSWER AS A ON Q.QNA_NO = A.QNA_NO
+	    WHERE
+	        Q.QNA_NO = #{qnaNum};
+	</select>
+    
+    
+    
+	<update id="qnaModify" parameterType="UQna">
+		/* 1:1문의 수정 */
+		UPDATE 
+			QNA_QUESTION
+		SET
+			QNA_TTL = #{qnaTitle},
+			QNA_CN = #{qnaContent},
+			FAQ_CTGRY_NO = #{qnaCateNum},
+			MDFCN_YMD = NOW()
+		WHERE
+			QNA_NO = #{qnaNum};
+	</update>
+	
+	
+	
+	<delete id="qnaDelete" parameterType="UQna">
+		/* 1:1문의 삭제 */
+	    DELETE FROM 
+	    	QNA_QUESTION 
+	    WHERE 
+	    	QNA_NO = #{qnaNum};
+	</delete>
     
 
     

@@ -11,4 +11,8 @@ public interface PQnaMapper {
 	
 	// 1:1문의 조회
 	List<PQna> getQnaList();
+
+	PQna getQnaDetailByNum(String qnaNum);
+	
+	
 }

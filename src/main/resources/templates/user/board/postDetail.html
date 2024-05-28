@@ -42,7 +42,7 @@
 						</p>
 						<!-- 굵은 직선 추가 -->
 						<hr class="my-4">
-						<p class="post-content" th:text="*{postContent}">게시물 내용</p>
+						<p class="post-content" th:utext="*{postContent}">게시물 내용</p>
 
 <!-- 						<div class="separator1"></div> 굵은 직선 추가
 						<div class="separator2"></div> 굵은 직선 추가 -->
@@ -77,13 +77,13 @@
 												<button type="button" class="btn btn-lg report-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">🚨</button>
 											</div>
 											
-											<!-- 신고 버튼 모달 -->
+											<!-- 댓글 수정 삭제 버튼 -->
 											<div class="col-2">
 												<div class="dropdown float-end">
 													<button class="btn btn-xs dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="true"></button>
 													<ul class="dropdown-menu P-0" aria-labelledby="dropdownMenuButton1">
 														<li>
-															<a class="dropdown-item small" href="#" onclick="editComment()">
+															<a class="dropdown-item small" href="#" onclick="editComment(event)">
 																<i class="fa-solid fa-eraser fa-2x edit-button"></i> 수정</a></li>
 														<li><a class="dropdown-item small" href="#" onclick="deleteComment()">
 														<i class="fa-solid fa-trash-can fa-2x delete-button"></i> 삭제</a></li>
@@ -151,13 +151,13 @@
 						<!-- 댓글 작성 폼 -->
 						<div class="comment-form">
 							<h4 class="">댓글 작성</h4>
-							<form th:action="@{/comment/save}" method="post">
-								<input type="hidden" id="commentRegId" name="commentRegId" th:value="${commentRegId}">
+							<!-- <form th:action="@{/comment/save}" method="post"> -->
+								<input type="hidden" id="commentRegId" name="commentRegId" th:value="${session.loginId}">
 								<textarea class="form-control mb-3" id="commentContent" name="commentContent" rows="5" placeholder="댓글을 입력하세요." required="required"></textarea>
 								<input type="hidden" id="postNum" name="postNum" th:value="${postDetail.postNum}">
 								<button type="button" class="btn btn-secondary btn-sm cancle-Btn">취소</button>
-								<button type="submit" class="btn btn-primary btn-sm submit-Btn" onclick="commentWrite()">등록</button>
-							</form>
+								<button type="button" class="btn btn-primary btn-sm submit-Btn" onclick="commentWrite()">등록</button>
+							<!-- </form> -->
 						</div>
 						<div class="list-btn">
 							<button type="button" class="btn btn-dark list-Btn" onclick="location.href='/community'">목록</button>
@@ -241,13 +241,14 @@
 
 
 	<th:block layout:fragment="customJsFIle">
-	    <script th:src="@{/user/js/viewCount.js}"></script>
 	    <script src="https://kit.fontawesome.com/8374b337d7.js" crossorigin="anonymous"></script>
 	</th:block>
 
 
 	<th:block layout:fragment="customJs">
 		<script th:inline="javascript">
+		
+		//댓글 작성
 		const commentWrite = () => {
 		    const commentRegId = document.getElementById("commentRegId").value;
 		    const commentContent = document.getElementById("commentContent").value;
@@ -258,29 +259,92 @@
 		    console.log("게시글 번호 : ", postNum);
 		    
 		    $.ajax({
-		        url: "/comment/save", // 서버 요청 주소
+		        url: "/community/commentSave", // 서버 요청 주소
 		        type: "POST",
-		        dataType: "json",
-		        contentType: "application/json; charset=utf-8",
-		        data: JSON.stringify({
-		            "commentRegId": commentRegId,
-		            "commentContent": commentContent,
-		            "postNum": postNum
-		        }),
+		    	dataType:'json',
+		        data: {
+		            'postNum': postNum,
+		            'commentRegId': commentRegId,
+		            'commentContent': commentContent
+		        },
 		        success: function(res) {
-		            console.log("요청 성공", res);
-		            // 댓글 작성 후 댓글 목록을 갱신하는 로직 추가 가능
+		            alert('댓글이 작성되었습니다.');
+		            $('#commentContent').val(''); // 텍스트박스 초기화
+		            location.reload();
+		            //loadComments(); // 댓글 목록 새로고침 함수 호출 (필요 시)
 		        },
 		        error: function(err) {
-		            console.log("요청 실패", err);
+		            console.log("댓글 작성 중 오류 발생", err);
+		            alert('댓글 작성 중 오류가 발생했습니다.');
 		        }
 		    });
 		}
-			
-			
 
+		
+		
+	    /* 댓글 수정 폼 열기 */
+	    function modifyCommentForm(event) {
+	        event.preventDefault();
+	        const commentItem = $(event.target).closest('li');
+	        commentItem.find('.comment-content').hide();
+	        commentItem.find('.commentModifyForm').show();
+	    }
+
+	    /* 댓글 수정 */
+	    function modifyComment(event) {
+	        const commentItem = $(event.target).closest('li');
+	        const commentNum = commentItem.find('.commentNum').val();
+	        const commentContent = commentItem.find('#commentContent').val();
+	        $.ajax({
+	            type: 'PUT',
+	            url: `/community/commentModify/${commentNum}`,
+	            data: JSON.stringify({ commentContent: commentContent }),
+	            contentType: 'application/json',
+	            success: function () {
+	                alert("댓글이 수정되었습니다.");
+	                commentItem.find('.comment-content').text(commentContent).show();
+	                commentItem.find('.commentModifyForm').hide();
+	            },
+	            error: function () {
+	                alert("댓글 수정에 실패했습니다.");
+	            }
+	        });
+	    }
+
+	    /* 댓글 수정 취소 */
+	    function cancelModifyC(event) {
+	        const commentItem = $(event.target).closest('li');
+	        commentItem.find('.commentModifyForm').hide();
+	        commentItem.find('.comment-content').show();
+	    }
+
+	    /* 댓글 삭제 */
+	    function deleteComment(event) {
+	        event.preventDefault();
+	        const commentItem = $(event.target).closest('li');
+	        const commentNo = commentItem.find('.commentNo').val();
+	        const isConfirmed = confirm("댓글을 삭제하시겠습니까?");
+	        if (isConfirmed) {
+	            $.ajax({
+	                type: 'DELETE',
+	                url: `/community/commentDelete/${commentNo}`,
+	                success: function () {
+	                    alert("댓글이 삭제되었습니다.");
+	                    commentItem.remove();
+	                },
+	                error: function () {
+	                    alert("댓글 삭제에 실패했습니다.");
+	                }
+	            });
+	        }
+	    }
+		
+		
+		
 	
-		</script>
+
+		
+	</script>
 	
 	
 		<script>
@@ -312,9 +376,12 @@
 				dropdownMenu.classList.toggle('show');
 			}
 
-			function editComment() {
-				// 수정 버튼을 클릭했을 때 수행할 작업을 구현합니다.
-				// 이 함수는 실제로 수정 기능을 수행해야 합니다.
+			// 댓글 수정 버튼 클릭했을 때
+			function editComment(event) {
+			    event.preventDefault();
+			    const commentItem = $(event.target).closest('li');
+			    commentItem.find('.comment-content').hide();
+			    commentItem.find('.commentModifyForm').show();
 			}
 
 			function deleteComment() {
@@ -325,7 +392,7 @@
 			// 클릭 이벤트가 발생한 곳이 아닌 다른 곳을 클릭하면 드롭다운 메뉴를 닫습니다.
 			document.addEventListener('click', function(event) {
 				const dropdownMenu = document.getElementById('dropdown-menu');
-				if (!event.target.matches('.fa-solid.fa-ellipsis-vertical')) {
+				if (!event.target.matches('.fa-solid.fa-ellipsis-vertical') && dropdownMenu != null) {
 					dropdownMenu.classList.remove('show');
 				}
 			});
@@ -392,75 +459,9 @@
 
 			}
 
-			// 댓글 삭제 
-			function deleteComment(event) {
-				var postno = $(event.target).closest('.ms-3').find('#commentNo').text();
-				var url = '/board/ajaxdelete.do?postno=' + postno;
 
-				$.ajax({
-					url : url,
-					type : 'POST',
-					success : function(result) {
-						getCommentList();
-						$("#comment").val("");
-					},
-					error : function() {
-						alert('댓글 삭제 실패');
-					}
-				});
-			}
-			// 댓글 수정 
-			function modifyComment(event) {
-				var postno = $(event.target).closest('.modifyCForm').find('.commentNo')
-						.text();
-				var content = $(event.target).closest('.modifyCForm').find(
-						'#modifyarea').text();
-				var bDto = {
-					depth : $(event.target).closest('.modifyCForm').find('#hDepth')
-							.val(),
-					pgroup : $(event.target).closest('.modifyCForm').find('#hPgroup')
-							.val(),
-					content : $(event.target).closest('.modifyCForm').find(
-							'#modifyarea').val(),
-					postno : $(event.target).closest('.modifyCForm').find('#hPostno')
-							.val()
-				};
-				$.ajax({
-					url : '/board/ajaxupdate.do?postno=' + postno,
-					type : 'POST',
-					data : bDto,
-					success : function(result) {
-						getCommentList();
-						$("#modifyarea").val("");
-					},
-					error : function() {
-						alert('댓글 수정 실패');
-					}
-				});
-			}
-
-			// 댓글 수정 창
-			function modifyCommentForm(event) {
-				var modifyCForm = event.target.closest(".commentList").nextElementSibling;
-				while (modifyCForm) {
-					if (modifyCForm.classList.contains("modifyCForm")) {
-						break;
-					}
-					modifyCForm = modifyCForm.nextElementSibling;
-				}
-				if (modifyCForm) {
-					modifyCForm.style.display = modifyCForm.style.display === "none" ? "block"
-							: "none";
-				}
-			}
-			function cancelModifyC(event) {
-				var modifyCForm = event.target.closest(".modifyCForm");
-				modifyCForm.style.display = "none";
-			}
-		    
-		</script>
 		
-		
+			</script>
 			
 			
 

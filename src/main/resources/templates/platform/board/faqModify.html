@@ -50,7 +50,7 @@
 								</tr>
 								<tr>
 									<td><label for="faqContent">내용</label></td>
-									<td><textarea class="form-control" id="faqContent" name="faqContent" rows="5" th:field="*{faqContent}" required="required"></textarea></td>
+									<td><textarea class="form-control" id="faqContent" name="faqContent" rows="5" th:utext="*{faqContent}" required="required"></textarea></td>
 								</tr>
 								<tr>
 									<td><label for="faqMdfId">수정자</label></td>

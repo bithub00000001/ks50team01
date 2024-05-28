@@ -1,6 +1,7 @@
 package ksmart.ks50team01.platform.board.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +27,10 @@ public class PCategoryService {
 		//List<PCategory> categorListByBoardType = pCategoryMapper.getCategoryListByBoardType(boardType);
 	    //return categorListByBoardType;
 	//}
+	
+	
+	
+
 	
 	/**
 	 * 커뮤니티 카테고리 조회

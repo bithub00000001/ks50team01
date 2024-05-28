@@ -27,7 +27,6 @@ public interface UCommunityMapper {
 	// 게시글 번호로 해당 게시글의 댓글 수를 조회
 	public int getCommentCntByPostNum(String postNum);
 	
-
 	
 	
 	//게시글 카테고리 조회
@@ -37,11 +36,6 @@ public interface UCommunityMapper {
 	// 댓글 조회
 	List<UComment> getCommentByPostNum(String postNum);
 	
-	// 게시글 수정
-	void postUpdate(String postCategory, String postTitle, String postContent, MultipartFile postFile);
-
-	// 게시글 삭제
-	void deletePost(String postNum);
 
 
 
@@ -50,7 +44,7 @@ public interface UCommunityMapper {
 	String replySave(String replyContent);
 
 	// 게시글 DB에 저장
-	void insertPost(UCommunity post);
+	void insertPost(UCommunity uCommunity);
 
 	// 게시글 수정 
 	void postModify(UCommunity uCommunity);
@@ -63,6 +57,12 @@ public interface UCommunityMapper {
 
 	// 게시글 파일 리스트
 	List<UPostFile> getFileList();
+
+	// 댓글 작성
+	void commentSave(UComment uComment);
+
+
+	List<UComment> getPostCommentList(String postNum);
 
 
 

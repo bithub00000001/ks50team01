@@ -46,9 +46,9 @@ public class PCommunityController {
 	 * @return
 	 */
     @PostMapping("/deactivatePost")
-    public ResponseEntity<String> deactivatePost(@RequestBody List<String> postNums) {
-        log.info("비활성화할 게시글 번호: {}", postNums); // 로깅 추가
-        pCommunityService.deactivatePost(postNums);
+    public ResponseEntity<String> deactivatePost(@RequestParam("postNum") String postNum) {
+        log.info("비활성화할 게시글 번호: {}", postNum); 
+        pCommunityService.deactivatePost(postNum);
         return ResponseEntity.ok("비활성화 성공");
     }
 

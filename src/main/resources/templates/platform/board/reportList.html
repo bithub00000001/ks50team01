@@ -47,33 +47,23 @@
 					<div class="x_content">
 						<br />
 						<form id="demo-form2" class="form-horizontal form-label-left">
-							<div class="form-group">
-								<div class="col-md-2 col-sm-2 col-xs-0"></div>
-								<label class="control-label col-md-1 col-sm-1 col-xs-12"
-									for="first-name">제목</label>
-								<div class="col-md-3 col-sm-3 col-xs-12 form-element">
-									<input type="text" id="first-name"
-										class="form-control col-md-4 col-xs-12">
-								</div>
-								<label class="control-label col-md-1 col-sm-1 col-xs-12"
-									for="middle-name">내용</label>
-								<div class="col-md-3 col-sm-3 col-xs-12 form-element">
-									<input id="middle-name" class="form-control col-md-7 col-xs-12"
-										type="text" name="middle-name">
-								</div>
-								<div class="col-md-2 col-sm-2 col-xs-0"></div>
+						<div class="form-group">
+							<div class="col-md-2 col-sm-2 col-xs-0"></div>
+							<label for="searchItem" class="control-label col-md-2 col-sm-2 col-xs-12">아이디</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input id="searchItem" class="form-control col-md-6 col-sm-6 col-xs-12" type="text" name="middle-name">
 							</div>
-							<div class="form-group">
-								<div class="col-md-2 col-sm-2 col-xs-0"></div>
-								<label for="middle-name"
-									class="control-label col-md-2 col-sm-2 col-xs-12">아이디</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input id="middle-name" class="form-control col-md-7 col-xs-12"
-										type="text" name="middle-name">
-								</div>
-								<div class="col-md-2 col-sm-2 col-xs-0"></div>
+							<div class="col-md-2 col-sm-2 col-xs-0"></div>
+						</div>
+						<div class="form-group">
+							<div class="col-md-2 col-sm-2 col-xs-0"></div>
+							<label for="searchItem" class="control-label col-md-2 col-sm-2 col-xs-12">내용</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input id="searchItem" class="form-control col-md-6 col-sm-6 col-xs-12" type="text" name="middle-name">
 							</div>
-							<div class="form-group">
+							<div class="col-md-2 col-sm-2 col-xs-0"></div>
+						</div>
+						<div class="form-group">
 								<div class="col-md-2 col-sm-2 col-xs-0"></div>
 								<label class="control-label col-md-2 col-sm-2 col-xs-12">신고 유형</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
@@ -252,6 +242,17 @@
 		        });
 		    });
 		</script>
+		
+			<script>
+	$(document).ready(function(){
+		$('#searchItem').on('keyup', function(){
+			const searchValue = $(this).val().toLowerCase();
+			$('#datatable-responsive tbody tr').filter(function(){
+				$(this).toggle($(this).text().toLowerCase().indexOf(searchValue) > -1);
+			});
+		});
+	});
+	</script>
 	    
 	
 	</th:block>

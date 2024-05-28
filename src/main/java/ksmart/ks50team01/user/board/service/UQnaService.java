@@ -56,5 +56,35 @@ public class UQnaService {
 	}
 
 
+    /**
+     * 1:1문의 수정
+     * @param uQna 수정된 1:1문의 정보
+     */
+	public void qnaModify(UQna uQna) {
+		uQnaMapper.qnaModify(uQna);
+		
+	}
+	
+	/**
+	 * 주어진 번호에 해당하는 1:1문의 정보 조회
+	 * @param qnaNum 조회할 1:1문의 번호
+	 * @return 조회된 uQna 객체, 없을 경우 null
+	 */
+	public UQna getQnaInfoByNum(String qnaNum) {
+		return uQnaMapper.getQnaInfoByNum(qnaNum);
+	}
+	
+	
+    /**
+     * 1:1문의 삭제
+     * @param qnaNum 삭제할 1:1문의 번호
+     */
+	public void qnaDelete(String qnaNum) {
+		uQnaMapper.qnaDelete(qnaNum);
+		
+	}
+
+
+
 	
 }

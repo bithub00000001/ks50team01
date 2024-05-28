@@ -22,11 +22,6 @@
 	</head>
 
 	<th:block layout:fragment="customContent">
-		
-	
-	
-	
-	
 	
 		<!-- search start -->
 		<div class="row">
@@ -156,7 +151,7 @@
 								<td th:text="${l.noticeRegId}"></td>
 								<td th:text="${l.category.noticeCategoryName}"></td>
 								<td th:text="${l.noticeTitle}"></td>
-								<td th:text="${l.noticeContent}"></td>
+								<td th:utext="${l.noticeContent}"></td>
 								<td th:text="${l.noticeInqCnt}"></td>
 								<td th:text="${l.noticeMdfId}"></td>
 								<td th:text="${l.noticeAct}"></td>

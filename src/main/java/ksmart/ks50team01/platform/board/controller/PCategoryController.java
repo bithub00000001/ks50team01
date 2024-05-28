@@ -56,7 +56,8 @@ public class PCategoryController {
 		return responseMap;
     } */
     
-    @PostMapping("/{dataTrans}")
+	
+    @GetMapping("/{dataTrans}")
     @ResponseBody
     public Map<String, Object> getCategoryList(@PathVariable String dataTrans) {
         Map<String, Object> response = new HashMap<String, Object>();
@@ -85,8 +86,40 @@ public class PCategoryController {
     }
 
 	
+	/*
+	@GetMapping("/{dataTrans}")
+	@ResponseBody
+    public Map<String, Object> getCategoryList(@PathVariable String dataTrans) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("dataTrans", dataTrans);
+        List<PCategory> categoryList = null;
+
+        // dataTrans 값에 따라 적절한 카테고리 목록을 가져옴
+        switch (dataTrans) {
+            case "noticeCateList":
+                categoryList = pCategoryService.getNoticeCategoryList();
+                break;
+            case "reportCateList":
+                categoryList = pCategoryService.getReportCategoryList();
+                break;
+            case "faqCateList":
+                categoryList = pCategoryService.getFaqCategoryList();
+                break;
+            case "communityCateList":
+                categoryList = pCategoryService.getCommunityCategoryList();
+                break;
+            default:
+                categoryList = Collections.emptyList();
+                break;
+        }
+
+        // 응답 데이터 설정
+        response.put("categoryList", categoryList);
+        return response;
+    }*/
 	
 	
+	/*
     @GetMapping("/noticeCateList")
     @ResponseBody
     public Map<String, Object> getNoticeCategoryList() {
@@ -124,8 +157,7 @@ public class PCategoryController {
         List<PCategory> communityCateList = pCategoryService.getCommunityCategoryList();
         response.put("communityCateList", communityCateList);
         return response;
-    }
-	
+    }*/
 	
 	
 	

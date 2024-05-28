@@ -34,9 +34,12 @@ public class PFaqController {
 	// 자주찾는질문 수정 POST 요청
 	@PostMapping("/faqModify")
 	public String faqModify(PFaq pFaq, Model model) {
+        String contentWithLineBreaks = pFaq.getFaqContent().replace("\n", "<br>");
+        pFaq.setFaqContent(contentWithLineBreaks);
 		
+        pFaqService.faqModify(pFaq);
+        
 		log.info("자주찾는질문 수정: {}", pFaq);
-		pFaqService.faqModify(pFaq);
 		
 		model.addAttribute("title", "자주찾는질문 수정");
 		
@@ -51,6 +54,10 @@ public class PFaqController {
 	public String faqModify(@RequestParam(value = "faqNum") String faqNum, Model model) {
 		PFaq faqInfo = pFaqService.getFaqInfoByNum(faqNum);
 		
+	    // <br> 태그를 \n으로 변환
+	    String contentWithLineBreaks = faqInfo.getFaqContent().replace("<br>", "\n");
+	    faqInfo.setFaqContent(contentWithLineBreaks);
+	    
 		log.info("faqInfo : {}", faqInfo);
 		
 		model.addAttribute("faqInfo", faqInfo);
@@ -75,18 +82,19 @@ public class PFaqController {
 	
 	
 	
-	
-	
-	
 	// 자주찾는질문 작성 POST 요청
-	@PostMapping("/faqWrite")
-	public String faqWrite(PFaq pFaq, Model model) {
-		pFaqService.insertFaq(pFaq);
-		
-		model.addAttribute("title", "자주찾는질문 작성");
-		
-		return "redirect:/platform/board/faqList";
-	}
+    @PostMapping("/faqWrite")
+    public String faqWrite(PFaq pFaq, Model model) {
+        String contentWithLineBreaks = pFaq.getFaqContent().replace("\n", "<br>");
+        pFaq.setFaqContent(contentWithLineBreaks);
+
+        pFaqService.insertFaq(pFaq);
+
+        model.addAttribute("title", "자주찾는질문 작성");
+
+        return "redirect:/platform/board/faqList";
+    }
+    
 
 	// 자주찾는질문 작성 페이지
 	@GetMapping("/faqWrite")

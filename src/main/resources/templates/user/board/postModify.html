@@ -19,7 +19,7 @@
 	    <section class="py-10">
 	        <div class="row">
 	            <div class="col-12">
-	                <h3 class="element-title">게시글 작성</h3>
+	                <h3 class="element-title">게시글 수정</h3>
 	                <div class="mb-6">
 	                    <form id="ModifyForm" th:object="${postInfo}" th:action="@{/community/postModify}" method="POST" enctype="multipart/form-data">
 	                          <input type="hidden" th:field="*{postNum}" />
@@ -28,16 +28,17 @@
 	                            <label for="postRegId" class="col-sm-2 col-form-label">작성자</label>
 	                            <input type="text" class="form-control" id="postRegId" name="postRegId" th:field="*{postRegId}" readonly="readonly">
 	                        </div>
-						<div class="form-group">
-							<label for="postCateType">카테고리</label> 
-								<select	class="form-control" id="postCateNum" name="postCateNum"> 
-								<option value="PST_CTGRY_001" th:selected="${postInfo.category.postCategoryNum == 'PST_CTGRY_001'}" selected>여행 정보</option>
-								<option value="PST_CTGRY_002" th:selected="${postInfo.category.postCategoryNum == 'PST_CTGRY_002'}" selected>여행 후기</option>
-								<option value="PST_CTGRY_003" th:selected="${postInfo.category.postCategoryNum == 'PST_CTGRY_003'}" selected>여행 친구 찾기</option>
-								<option value="PST_CTGRY_004" th:selected="${postInfo.category.postCategoryNum == 'PST_CTGRY_004'}" selected>자유게시판</option>
-								<option value="PST_CTGRY_005" th:selected="${postInfo.category.postCategoryNum == 'PST_CTGRY_005'}" selected>질문게시판</option>
-							</select>
-						</div>
+	                        
+							<div class="form-group">
+								<label for="postCateType">카테고리</label> 
+									<select	class="form-control" id="postCateNum" name="postCateNum"> 
+									<option value="PST_CTGRY_1" th:selected="${postInfo.category.postCategoryNum == 'PST_CTGRY_1'}" selected>여행 정보</option>
+									<option value="PST_CTGRY_2" th:selected="${postInfo.category.postCategoryNum == 'PST_CTGRY_2'}" selected>여행 후기</option>
+									<option value="PST_CTGRY_3" th:selected="${postInfo.category.postCategoryNum == 'PST_CTGRY_3'}" selected>여행 친구 찾기</option>
+									<option value="PST_CTGRY_4" th:selected="${postInfo.category.postCategoryNum == 'PST_CTGRY_4'}" selected>자유게시판</option>
+									<option value="PST_CTGRY_5" th:selected="${postInfo.category.postCategoryNum == 'PST_CTGRY_5'}" selected>질문게시판</option>
+								</select>
+							</div>
 
 						<div class="form-group">
 	                            <label for="postTitle" class="col-sm-2 col-form-label">제목</label>
@@ -45,11 +46,11 @@
 	                        </div>
 	                        <div class="form-group">
 	                            <label for="postContent">내용</label>
-	                            <textarea class="form-control" id="postContent" name="postContent" rows="15" th:field="*{postContent}" required="required"></textarea>
+	                            <textarea class="form-control" id="postContent" name="postContent" rows="15" required="required" th:utext="*{postContent}"></textarea>
 	                        </div>
 	                        
 	                        <!-- Elements Modal -->
-	                        <div class="pt-5 mb-5" id="modal">
+	                        <div class="pt-5 mb-5" id="modal">s
 	                            <div class="row">
 	                                <div class="col-md-6 col-lg-4">
 	                                    <h3 class="element-title mb-5 font-weight-bold">첨부 파일</h3>
@@ -165,6 +166,7 @@
 	        window.history.back();
 	    }
 	</script>
+	
 		
 
 
