@@ -194,18 +194,21 @@ public class DestinationService {
 		return destinationMapper.getRestaurantMenuInfoById(restaurantMenuManageCode);
 	}
 
-	public List<Destination> searchTourName(String tourName) {
-		return destinationMapper.searchTourName(tourName);
+
+	public void removeRestaurant(String restaurantInfoCode) {
+		destinationMapper.removeRestaurant(restaurantInfoCode);
+		
 	}
 
-	
-
-
-
-
-
-	
-	
-	
-
 }
+
+
+
+
+
+
+	
+	
+	
+
+

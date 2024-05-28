@@ -483,4 +483,12 @@
 			and
 				RSTRN_MENU_MNG_CD = #{restaurantMenuManageCode};
 	</update>
+	<delete id="removeRestaurant" parameterType="String">
+		DELETE 
+			FROM 
+		RESTAURANT_INFO 
+			WHERE 
+		RSTRN_INFO_CD = #{restaurantMenuManageCode}
+	</delete>
+	
 </mapper>  
