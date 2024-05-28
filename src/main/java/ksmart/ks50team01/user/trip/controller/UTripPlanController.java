@@ -1,7 +1,7 @@
 package ksmart.ks50team01.user.trip.controller;
 
 import java.time.format.DateTimeParseException;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -13,11 +13,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import ksmart.ks50team01.user.member.login.dto.Login;
 import ksmart.ks50team01.user.trip.dto.UTripOption;
 import ksmart.ks50team01.user.trip.service.UTourDataService;
 import ksmart.ks50team01.user.trip.service.UTripPlanService;
@@ -63,9 +65,31 @@ public class UTripPlanController {
         return "user/trip/tripPlan";
     }
 
+    /**
+     * 회원 중 일반 회원 목록을 조회하는 메서드
+     * @return List<Login>
+     */
+    @GetMapping("/user-member")
+    @ResponseBody
+    public List<Login> getUserMembers() {
+        return uTripPlanService.getUserMembers();
+    }
+
+    /**
+     * 회원 중 일반 회원이며 nickname과 유사한 회원의 목록을 조회하는 메서드
+     * @param nickname 회원의 닉네임
+     * @return List<Login>
+     */
+    @GetMapping("/search-user-member")
+    @ResponseBody
+    public List<Login> searchUserMember(@RequestParam(name = "nickname") String nickname) {
+        return uTripPlanService.searchUserMembers(nickname);
+    }
+
+
     @GetMapping("/clusterer/{contentTypeId}")
     @ResponseBody
-    public Map<String, Object> getClusterer(@PathVariable(value = "contentTypeId") String contentTypeId) throws
+    public Map<String, Object> getClusterInfo(@PathVariable(value = "contentTypeId") String contentTypeId) throws
         JsonProcessingException {
         return uTripPlanService.getTourInfoObject(contentTypeId);
     }

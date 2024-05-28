@@ -54,8 +54,6 @@
 							<div class="ln_solid"></div>
 							<div class="form-group">
 								<div class="col-md-12 col-sm-12 col-xs-12 text-center">
-									<button type="reset" class="btn btn-dark btn-lg" onclick="location.href='/platform/ranking/addRanking'">등록</button>
-									<button type="reset" class="btn btn-dark btn-lg">초기화</button>
 								</div>
 							</div>
 	
@@ -72,57 +70,34 @@
                     <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap"  cellspacing="0" width="100%">
                         <thead>
 							<tr>
-								<th>플랫폼제휴추천</th>
+								<th>플랫폼제휴추천정보아이디</th>
 								<th>등록플랫폼권한아이디</th>
-								<th>제휴사업장코드</th>
-								<th>여행지대분류코드</th>
-								<th>여행지대분류명</th>
-								<th>사업자상호</th>
-								<th>지역소분류명</th>
-								<th>제휴브랜드명</th>
-								<th>항목순위</th>
-								<th>제휴기간시작</th>
-								<th>제휴기간종료</th>
-								<th>제휴형태</th>
-								<th>제휴내용</th>
-								<th>배너광고시작</th>
-								<th>배너광고종료</th>
-								<th>활성화</th>
-								<th>등록일자</th>
-								<th>수정일자</th>
-								<th>수정</th>
+								<th>플랫폼관리자제휴추천아이디</th>
+								<th>API컨텐츠아이디</th>
+								<th>관광타입</th>
+								<th>여행지이름</th>
+								<th>여행지주소</th>
+								<th>여행지이미지</th>
+								<th>추천내용</th>
                             	<th>삭제</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:unless="${rankingList != null}">
+							<tr th:unless="${rankingApiList != null}">
 								<td colspan="7">등록된 정보가 없습니다.</td>
 							</tr>
-							<tr th:if="${rankingList != null}" th:each="l : ${rankingList}">
-								<td th:text="${l.pRankingNum}"></td>
+							<tr th:if="${rankingApiList != null}" th:each="l : ${rankingApiList}">
+								<td th:text="${l.pfRankInfoId}"></td>
 								<td th:text="${l.pRankingRegId}"></td>
-								<td th:text="${l.partnerBusinessCode}"></td>
-								<td th:text="${l.tripLctgryCode}"></td>
-								<td th:text="${l.tripLctgryName}"></td>
-								<td th:text="${l.businessName}"></td>
-								<td th:text="${l.rgnSctgryName}"></td>
-								<td th:text="${l.partnerBrandName}"></td>
-								<td th:text="${l.artclRankigNum}"></td>
-								<td th:text="${l.partnerShipStart}"></td>
-								<td th:text="${l.partnerShipStartEnd}"></td>
-								<td th:text="${l.partnerType}"></td>
-								<td th:text="${l.partnerShipDetail}"></td>
-								<td th:text="${l.adStart}"></td>
-								<td th:text="${l.adEnd}"></td>
-								<td th:text="${l.activate}"></td>
-								<td th:text="${l.regDate}"></td>
-								<td th:text="${l.modifyDate}"></td>
+								<td th:text="${l.pRankingId}"></td>
+								<td th:text="${l.destinationCId}"></td>
+								<td th:text="${l.destinationType}"></td>
+								<td th:text="${l.destinationTitle}"></td>
+								<td th:text="${l.destinationAdd}"></td>
+								<td th:text="${l.destinationImg}"></td>
+								<td th:text="${l.recommenDetails}"></td>
 								<td>
-									<!--/* /member/modifyMember?memberId=id001 */-->
-									<a th:href="@{/platform/ranking/modifyRanking(pRankingId=${l.pRankingId})}">수정</a>
-								</td>
-								<td>
-									<a th:href="@{/platform/ranking/removeRanking(pRankingId=${l.pRankingId})}">삭제</a>					
+									<a th:href="@{/platform/ranking/removeRankingInfo(pfRankInfoId=${l.pfRankInfoId})}">삭제</a>					
 								</td>
 							</tr>
 						</tbody>
