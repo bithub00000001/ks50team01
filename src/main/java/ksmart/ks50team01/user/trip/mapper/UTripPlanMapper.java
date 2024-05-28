@@ -1,6 +1,7 @@
 package ksmart.ks50team01.user.trip.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -16,4 +17,7 @@ public interface UTripPlanMapper {
 
 	// 회원 중 일반 회원이며 닉네임과 일치하는 목록 조
 	List<Login> searchUserMembers(String nickname);
+
+	// 컨텐트 ID와 일치하는 위,경도 조회
+	Map<String, Double> getMapXY(String contentId);
 }
