@@ -15,7 +15,7 @@ public interface DestinationMapper {
 	//관광지 등록
 	boolean addTourCheckList(String tourName);
 	
-	//관광지 상세목록 
+	//관광지 상세목록 삭제
 	void removeTourGoods(String tourGoodsOptionCd);
 	
 	// 관광지 삭제
@@ -35,8 +35,13 @@ public interface DestinationMapper {
 	//관광상품 조회
 	List<Destination> getTourGoodsList();
 	
-	//숙소 수정
+	//숙소 삭제
+	void removeLodging(String lodgingInfoCode);
 	
+	//숙소 상세목록 삭제
+	void removeLodgingGoods(String lodgingMenuCode);
+	
+	//숙소 수정
 	int updateLodging(Destination destination);
 	Destination getLodgingInfoById(String lodgingName);
 	

@@ -119,7 +119,7 @@
 									    <a th:href="@{/platform/destination/lodgingModify(lodgingInfoCode=${l.lodgingInfoCode})}">수정</a>
 									</td>
 						            <td>
-						            	<a href="#" th:data-member-id="${l.lodgingInfoCode}" th:onclick="deleteConfirm(this)">삭제</a>
+						            	<a href="#" th:data-lodgingInfo-code="${l.lodgingInfoCode}" th:onclick="deleteConfirm(this)">삭제</a>
 					            	</td>
 								</tr>
 	
@@ -155,7 +155,7 @@
 	<script type="text/javascript" th:src="@{/platform/js/checkbox/memberDel.js}"></script>
 	<script th:inline="javascript">
 		    function deleteConfirm(element) {
-		        var tourInfoCode = element.getAttribute('data-tourInfo-code');
+		        var lodgingInfoCode = element.getAttribute('data-lodgingInfo-code');
 		        var confirmation = confirm("정말로 삭제하시겠습니까?");
 		        
 		        if (confirmation) {
@@ -195,10 +195,10 @@
 					const movePage = $('.searchCate :selected').val();
 					
 					if(movePage){
-						if(movePage === 'tourManage') {
-							location.href = '/platform/destination/addTour';
-						}else if(movePage === 'tourGoodsManage') {
-							location.href = '/platform/destination/addTourGoods';
+						if(movePage === 'lodgingManage') {
+							location.href = '/platform/destination/addLoding';
+						}else if(movePage === 'lodgingGoodsManage') {
+							location.href = '/platform/destination/addLodgingGoods';
 						}
 					}
 				});

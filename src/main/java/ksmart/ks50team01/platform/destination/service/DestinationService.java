@@ -17,24 +17,40 @@ import lombok.extern.slf4j.Slf4j;
 public class DestinationService {
 	
 	private final DestinationMapper destinationMapper;
-	
+	/**
+	 * 관광지 세부항목 추가
+	 * @param tourGoodsOptionCd
+	 * @return
+	 */
 	public boolean addTourGoodsCheckList(String tourGoodsOptionCd) {
 		return destinationMapper.addTourGoodsCheckList(tourGoodsOptionCd);
 	}
 	
+	/**
+	 * 관광지 추가
+	 * @param tourName
+	 * @return
+	 */
 	public boolean addTourCheckList(String tourName) {
 		return destinationMapper.addTourCheckList(tourName);
 	}
-	
+	/**
+	 * 관광지 세부항목 제거
+	 * @param tourGoodsOptionCd
+	 */
 	public void removeTourGoods(String tourGoodsOptionCd) {
 		destinationMapper.removeTourGoods(tourGoodsOptionCd);
 		
 	}
-	
+	/**
+	 * 관광지 삭제
+	 * @param tourInfoCode
+	 */
 	public void removeTour(String tourInfoCode) {
 		destinationMapper.removeTour(tourInfoCode);
 		
 	}
+	
 	
 	public void updateTour(Destination destination) {
 		log.info("service destination:{}", destination);
@@ -75,6 +91,23 @@ public class DestinationService {
 	}
 	public Destination getTourGoodsInfoById(String tourGoodsOptionCd) {
 		return destinationMapper.getTourGoodsInfoById(tourGoodsOptionCd);
+		
+	}
+	/**
+	 * 숙소 삭제
+	 * @param lodgingInfoCode
+	 */
+	public void removeLodging(String lodgingInfoCode) {
+		destinationMapper.removeLodging(lodgingInfoCode);
+		
+	}
+	
+	/**
+	 * 관광지 세부항목 제거
+	 * @param tourGoodsOptionCd
+	 */
+	public void removeLodgingGoods(String lodgingMenuCode) {
+		destinationMapper.removeLodgingGoods(lodgingMenuCode);
 		
 	}
 	

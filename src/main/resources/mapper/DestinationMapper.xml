@@ -222,7 +222,30 @@
 				TOUR_INFO_CD =#{tourInfoCode};
 
 	</update>
-
+	
+	<delete id="removeLodgingGoods" parameterType="String">
+		/* 관광지 상세목록 삭제 */
+			DELETE
+			FROM
+				LODGING_INFO AS li
+				INNER JOIN
+				LODGING_MENU AS lm
+				ON
+				li.LODGING_INFO_CD = lm.LODGING_INFO_CD
+			WHERE
+				LODGING_MENU_CD = #{lodgingMenuCode};
+	</delete>
+	
+	<delete id="removeLodging" parameterType="String">
+		/* 숙소 삭제 */
+			DELETE
+			FROM
+				LODGING_INFO
+			WHERE
+				LODGING_INFO_CD = #{lodgingInfoCode};
+			
+	</delete>
+	
 	<select id="getLodgingInfoList" resultType="destination">
 		/* 숙소 정보 */
 			SELECT
