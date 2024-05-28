@@ -353,5 +353,32 @@ public class DestinationManageController {
 		return "/platform/destination/categoryManage";
 		
 	}
+	
+	/**
+	 * 음식정 목록 삭제
+	 * @param restaurantInfoCode
+	 * @return
+	 */
+	@PostMapping("/removeRestaurant")
+	public String removeRestaurant(@RequestParam(value = "restaurantInfoCode") String restaurantInfoCode) {
+		destinationService.removeRestaurant(restaurantInfoCode);
+		
+		//model.addAttribute("title", "관광지 목록 삭제");
+		//model.addAttribute("tourInfoCode", tourInfoCode);
+		
+		return "redirect:/platform/destination/restaurantManage";
+	}
+	
+	@GetMapping("/removeRestaurant")
+	public String removeRestaurant(@RequestParam(value = "restaurantInfoCode") String restaurantInfoCode, Model model) {
+		List<Destination> restaurantList = destinationService.getTourInfoList();
+		destinationService.removeRestaurant(restaurantInfoCode);
+		
+		model.addAttribute("restaurantList", restaurantList);
+		model.addAttribute("restaurantInfoCode", restaurantInfoCode);
+		model.addAttribute("title", "음식점 목록 삭제");
+		
+		return "redirect:/platform/destination/restaurantManage";
+	}
 
 }
