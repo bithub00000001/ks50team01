@@ -9,6 +9,7 @@ public class Ranking {
 	 private String pRankingRegId;
 	 private String partnerBusinessCode;
 	 private String tripLctgryCode;
+	 private String tripLctgryName;
 	 private String businessName;
 	 private String rgnSctgryName;
 	 private String partnerBrandName;
