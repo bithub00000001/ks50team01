@@ -157,13 +157,20 @@ public class DestinationService {
 		return destinationMapper.getRestaurantMenuInfoById(restaurantMenuManageCode);
 	}
 
-
-
-
-
-
-	
-	
-	
-
+	public void removeRestaurant(String restaurantInfoCode) {
+		destinationMapper.removeRestaurant(restaurantInfoCode);
+		
+	}
+		
 }
+
+
+
+
+
+
+	
+	
+	
+
+
