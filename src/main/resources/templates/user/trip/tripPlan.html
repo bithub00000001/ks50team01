@@ -286,7 +286,7 @@
                                          role="tabpanel">
                                         <!-- sortable 리스트의 내용 -->
                                         <ul class="sortable" id="planDay1" style="padding-left: 0;">
-                                            <li class="sortable-item list-group-item list-group-item-action">
+                                            <!--/*<li class="sortable-item list-group-item list-group-item-action">
                                                 <div class="row align-items-center">
                                                     <div class="col-1">
                                                         <div class="border border-dark badge bg-success text-white d-flex justify-content-center align-items-center mt-1"
@@ -351,7 +351,7 @@
                                                 </button>
                                                 <p class="text-black mb-1">여기에 세부 스케줄 입력</p>
                                                 <small>여기에 추가 사항 입력</small>
-                                            </li>
+                                            </li>*/-->
                                         </ul>
                                     </div>
                                 </div>
@@ -363,11 +363,9 @@
                                     <div id="distanceInfo"></div>
 
 
-                                    <div class="col-lg-4 mb-6 mb-lg-0">
+                                    <div class="col-lg-7 mb-6 mb-lg-0">
                                         <!-- 지도 및 거리/금액 정보 -->
-                                        <div id="tourMap"></div>
-                                        <div>총 거리: <span id="totalDistance"> 10cm</span></div>
-                                        <div>총 금액: <span id="totalCost"> 10원</span></div>
+                                        <div id="totalInfo"></div>
 
                                     </div>
                                     <div class="col-lg-4 mb-6 mb-lg-0">
@@ -825,8 +823,11 @@
 
         });
 
+        // 거리&시간 계산 버튼을 누르면 tmap API에서 거리와 소요시간을 요청
         $('#distanceCalBTN').click(function() {
             const locations = [];
+
+
 
             $('#myDayTabContent > .tab-pane').each(function() {
                 const dayNumber = $(this).attr('id').replace('day', '');
@@ -842,7 +843,10 @@
 
                 $planDay.find('li').each(function(idx, element) {
                     const contentId =  element.querySelector('h4').dataset.contentId;
-                   //$(this).closest('.planDay').find('h4')[0].dataset.condtentId;
+                    const $contentId = $(element).find('h4')[0].dataset.contentId;
+                    console.log($(element).find('h4'));
+                    console.log($contentId);
+                   //$(this).closest('.planDay').find('h4')[0].dataset.contentId;
                     console.log(contentId);
                     const order = $(element).find('span.number').text();
 
@@ -854,9 +858,15 @@
                 locations.push(day);
             });
 
-            locations.forEach((item, idx) => {
-
-            })
+            function formatDuration(duration) {
+                const hours = Math.floor(duration / 3600);
+                const minutes = Math.floor((duration % 3600) / 60);
+                if (hours > 0) {
+                    return `${hours} 시간 ${minutes} 분`;
+                } else {
+                    return `${minutes} 분`;
+                }
+            }
 
             // Ajax 요청 보내기
             $.ajax({
@@ -864,9 +874,61 @@
                 type: 'POST',
                 data: JSON.stringify(locations),
                 contentType: 'application/json',
-                success: function(response) {
+                dataType: 'json',
+                success: function (response) {
                     // 계산 결과 렌더링 로직 작성 필요
+                    console.log('error' in response);
+                    const isError = 'error' in response;
+                    // Object 내에 제공되는 메서드 활용: 같은 의미
+                    // console.log(response.hasOwnProperty('error'));
+                    if (isError) {
+                        const startTitle = response.startTitle;
+                        const endTitle = response.endTitle;
+                        const errorDays = response.days;
+
+                        let alertMsg = `${errorDays}일차 ${startTitle} ~ ${endTitle} 경로는 `
+                        const message = response.error.message.replaceAll('해당 서비스가', '보행자의 시간, 거리 계산이').trim();
+                        alertMsg += message.includes('(') ? message.substring(0, message.indexOf('(')) : message;
+                        alert(alertMsg);
+                        return;
+                    }
                     console.log(response);
+                    let totalDistance = 0;
+                    let totalDuration = 0;
+
+                    $('#totalInfo').empty();
+
+                    for (const responseKey in response) {
+                        const days = response[responseKey];
+                        const day = days.day;
+                        const locations = days.locations;
+
+                        totalDistance = 0;
+                        totalDuration = 0;
+
+                        locations.forEach(data => {
+                            const endContentId = data.endContentId;
+                            totalDistance += Number(data.distance);
+                            totalDuration += Number(data.duration);
+                            const $li = $(`h4[data-content-id="${endContentId}"]`).closest('li')
+                            const $timeDiff = $li.find('.time-diff');
+                            const $distanceDiff = $li.find('.distance-diff');
+                            $timeDiff.text(formatDuration(data.duration)).css('visibility', 'visible');
+                            $distanceDiff.text(`${(data.distance / 1000).toFixed(2)} km`).css('visibility', 'visible');
+                        })
+                        // 매 일자마다 DOM 객체 생성
+                        const $dayInfo = $('<div>').addClass('day-info');
+                        const $dayNumber = $('<h3>').text(`${day}일자`);
+                        const $totalDurationSpan = $('<span>').addClass('total-duration').text(formatDuration(totalDuration));
+                        const $totalDistanceSpan = $('<span>').addClass('total-distance').text(`${(totalDistance / 1000).toFixed(2)} km`);
+
+                        $dayInfo.append($dayNumber);
+                        $dayInfo.append($('<p>').text('총 거리: ').append($totalDistanceSpan));
+                        $dayInfo.append($('<p>').text('총 소요 시간: ').append($totalDurationSpan));
+
+                        // #totalInfo에 추가
+                        $('#totalInfo').append($dayInfo);
+                    }
                 },
                 error: function(xhr, status, error) {
                     console.error(error);

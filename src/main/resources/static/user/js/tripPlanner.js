@@ -129,16 +129,16 @@ function createNewItemHtml(name, category, schedule, additional, id, planDayId, 
                     <span class="number">${$(`#${planDayId} .sortable-item`).length + 1}</span>
                 </div>
             </div>
-            <div class="col-7 mt-2">
+            <div class="col-11 mt-2">
                 <h4 class="col-9" data-content-id="${contentId}">${name}</h4>
             </div>
-            <div class="col-4 text-end">
-                <small class="time-diff">0 분</small>
-                <small class="distance-diff">0 km</small>
+            <div class="col-12 text-end mb-2">
+                <small class="time-diff" style="visibility: hidden;">0 분</small>
+                <small class="distance-diff" style="visibility: hidden;">0 km</small>
             </div>
         </div>
         <button type="button" class="btn btn-outline-danger btn-delete btn-xs float-end" aria-label="Delete">제거</button>
-        <p class="text-black mb-1">${schedule}</p>
+        <p class="col-9 text-black mb-1">${schedule}</p>
                 <small>${additional}</small>
                 <br>                
                 <small>${category}</small>
@@ -158,6 +158,9 @@ function initializeSortable(sortableId) {
         onUpdate: function (evt) {
             $(`#${sortableId} .sortable-item`).each(function (index, item) {
                 $(item).find('.number').text(index + 1);
+                $('.time-diff').css('visibility', 'hidden');
+                $('.distance-diff').css('visibility', 'hidden');
+                $('#totalInfo').empty();
             });
         }
     });
