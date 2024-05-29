@@ -3,12 +3,10 @@ package ksmart.ks50team01.user.trip.service;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.util.UriBuilder;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -45,6 +43,7 @@ public class UTmapApiServiceImpl implements UTmapApiService {
 		queryParams.put("startY", startY);
 		queryParams.put("endX", endX);
 		queryParams.put("endY", endY);
+		log.info("queryParams:{}", queryParams);
 		return tMapApiWebClient.post()
 			.uri(uriBuilder -> uriBuilder
 				.path("/pedestrian")

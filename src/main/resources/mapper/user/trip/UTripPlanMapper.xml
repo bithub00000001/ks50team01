@@ -69,7 +69,8 @@
         /* 컨텐트 ID와 일치하는 위, 경도 조회 */
         select
             tour_detail_longitude as longitude,
-            tour_detail_latitude as latitude
+            tour_detail_latitude as latitude,
+            tour_detail_title as title
         from
             TOUR_DETAIL_FROM_API
         where
