@@ -14,9 +14,9 @@ public class PWebClientConfig {
 	}
 
 	@Bean
-	public WebClient anotherApiWebClient() {
+	public WebClient tMapApiWebClient() {
 		return WebClient.builder()
-			.baseUrl("https://another.api.url")
+			.baseUrl("https://apis.openapi.sk.com/tmap/routes")
 			.build();
 	}
 }

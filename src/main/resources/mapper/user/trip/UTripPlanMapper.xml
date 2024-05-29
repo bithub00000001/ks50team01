@@ -65,4 +65,14 @@
             </if>
         </where>
     </select>
+    <select id="getMapXY" resultType="map" parameterType="string">
+        /* 컨텐트 ID와 일치하는 위, 경도 조회 */
+        select
+            tour_detail_longitude as longitude,
+            tour_detail_latitude as latitude
+        from
+            TOUR_DETAIL_FROM_API
+        where
+            tour_detail_content_id = #{contentId}
+    </select>
 </mapper>
