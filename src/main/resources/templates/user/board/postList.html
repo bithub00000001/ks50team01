@@ -49,31 +49,27 @@
 				</ul>
 			</div> -->
 
-	
-			<div class="row mt-5">
-				<div
-					class="col-xl-12 alert alert-light alert-dismissible d-flex justify-content-center">
-					<form class="mb-0 col-sm-6 col-xl-6" action="#" method="post">
-						<div class="input-group input-group-sm">
-							<div class="select-default">
-								<select class="select-option">
-									<option>제목</option>
-									<option>내용</option>
-									<option>작성자</option>
-								</select>
-							</div>
-							<input type="text" class="form-control form-control-sm rounded-0"
-								placeholder="검색어를 입력해주세요." aria-label="Search....">
-							<button class="btn bg-primary border-0 rounded-0" type="button">
-								<span class="text-white text-uppercase font-weight-bold">검색</span>
-							</button>
+		<div class="row mt-5">
+			<div class="col-xl-12 alert alert-light alert-dismissible d-flex justify-content-center">
+				<form class="mb-0 col-sm-6 col-xl-6" action="@{/community/searchList}" method="get">
+					<div class="input-group input-group-sm">
+						<div class="select-default">
+							<select class="select-option" name="searchKey">
+								<option value="postTitle" th:selected="{searchKey == 'postTitle'}">제목</option>
+								<option value="postContent" th:selected="{searchKey == 'postContent'}">내용</option>
+								<option value="postRegId" th:selected="{searchKey == 'postRegId'}">작성자</option>
+							</select>
 						</div>
-					</form>
-				</div>
+						<input type="text" class="form-control form-control-sm rounded-0" name="searchValue" th:value="${searchValue}" placeholder="검색어를 입력해주세요." aria-label="Search....">
+						<button class="btn bg-primary border-0 rounded-0" type="button">
+							<span class="text-white text-uppercase font-weight-bold">검색</span>
+						</button>
+					</div>
+				</form>
 			</div>
+		</div>
 
-
-			<!-- body -->
+		<!-- body -->
 			<div class="row">
 				<div class="col-sm-12">
 					<div class="table-responsive overflow-hidden">

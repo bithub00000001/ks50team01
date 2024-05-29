@@ -57,12 +57,11 @@ public class PCategoryController {
     } */
     
 	
-    @GetMapping("/{dataTrans}")
+	@PostMapping("/categoryList/{dataTrans}")
     @ResponseBody
-    public Map<String, Object> getCategoryList(@PathVariable String dataTrans) {
-        Map<String, Object> response = new HashMap<String, Object>();
-        response.put("dataTrans", dataTrans);
-        List<PCategory> categoryList = null;
+    public Map<String, Object> categoryList(@PathVariable String dataTrans, Model model) {
+        Map<String, Object> responseMap = new HashMap<>();
+        List<?> categoryList;
         
         // dataTrans에 따라 적절한 카테고리 목록을 가져옴
         if ("noticeCateList".equals(dataTrans)) {
@@ -79,10 +78,25 @@ public class PCategoryController {
             categoryList = Collections.emptyList();
         }
         
-        // 반환할 데이터 설정
-        response.put("categoryList", categoryList);
         
-        return response;
+        // 반환할 데이터 설정
+        responseMap.put("categoryList", categoryList);
+        responseMap.put("dataTrans", dataTrans);
+        
+        // 모델에 데이터 추가
+        model.addAttribute("categoryList", categoryList);
+        model.addAttribute("dataTrans", dataTrans);
+        
+        log.info("categoryList: {}", categoryList);
+        
+        return responseMap;
+    }
+	
+    @GetMapping("/platform/board/categoryList/{dataTrans}")
+    public String getCategoryList(@PathVariable String dataTrans) {
+        // 여기에 카테고리 목록을 로드하고 해당하는 뷰 이름을 반환하는 코드를 작성합니다.
+        // 이 예시에서는 간단하게 뷰 이름을 반환하도록 합니다.
+        return "categoryList"; // 실제로는 해당 뷰의 이름을 반환해야 합니다.
     }
 
 	

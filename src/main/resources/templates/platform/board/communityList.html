@@ -126,7 +126,6 @@
                            cellspacing="0" width="100%">
                         <thead>
                         <tr>
-                            <th><input type="checkbox" id="checkAll" name="checkAll"></th>
                             <th>번호</th>
                             <th>작성자</th>
                             <th>카테고리</th>
@@ -149,7 +148,6 @@
                             <td colspan="15" class="text-center">등록된 게시글이 없습니다.</td>
                         </tr>
                         <tr th:if="${communityList != null}" th:each="l : ${communityList}">
-                            <td><input type="checkbox" id="checkbox_${l.postNum}" name="postNum" th:value="${l.postNum}"></td>
                             <td th:text="${l.postNum}"></td>
                             <td th:text="${l.postRegId}"></td>
                             <td th:text="${l.category.postCategoryName}"></td>
@@ -174,9 +172,6 @@
 						</tr>
                         </tbody>
                     </table>
-                    <div class="text-left">
-                        <button type="button" class="btn btn-danger" id="disabled">비활성화</button>
-                    </div>
                 </div>
             </div>
         </div>
@@ -205,27 +200,60 @@
 
 <!-- custom js file start -->
 <th:block layout:fragment="customJs">
-    <script type="text/javascript" th:src="@{/platform/js/checkbox/categoryDel.js}"></script>
     <script type="text/javascript" th:src="@{/platform/js/checkbox/selectedDisabled.js}"></script>
 
     <script>
-        document.getElementById('checkAll').addEventListener('change', function() {
-            var checkboxes = document.querySelectorAll('[id^=checkbox_]');
-            checkboxes.forEach(function(checkbox) {
-                checkbox.checked = document.getElementById('checkAll').checked;
+    
+
+        document.addEventListener("DOMContentLoaded", function() {
+            // 최신순과 조회순 버튼 요소 가져오기
+            const newestBtn = document.getElementById('optionsRadios1');
+            const mostViewedBtn = document.getElementById('optionsRadios2');
+
+            // 테이블의 tbody 요소 가져오기
+            const tbody = document.querySelector('tbody');
+
+            // 최신순 버튼 클릭 시
+            newestBtn.addEventListener('click', function() {
+                sortTable(13, 'desc'); // 등록일을 기준으로 내림차순 정렬
             });
+
+            // 조회순 버튼 클릭 시
+            mostViewedBtn.addEventListener('click', function() {
+                sortTable(7, 'desc'); // 조회수를 기준으로 내림차순 정렬
+            });
+
+            // 테이블 정렬 함수
+            function sortTable(columnIndex, order) {
+                const rows = Array.from(tbody.querySelectorAll('tr')).filter(row => row.querySelector('td'));
+
+                // 정렬할 때 기준이 되는 값 추출
+                const getValue = (row) => {
+                    const cellValue = row.cells[columnIndex].textContent.trim();
+                    return columnIndex === 9 ? new Date(cellValue) : parseInt(cellValue, 10);
+                };
+
+                // 정렬하기
+                rows.sort((a, b) => {
+                    const aValue = getValue(a);
+                    const bValue = getValue(b);
+                    if (order === 'asc') {
+                        return aValue > bValue ? 1 : -1;
+                    } else {
+                        return aValue < bValue ? 1 : -1;
+                    }
+                });
+
+                // 정렬된 순서대로 다시 테이블에 추가
+                rows.forEach(row => tbody.appendChild(row));
+            }
         });
-    </script>
-    
-    
-    
 
     
     
     
     
-    
-
+        </script>
     
     
     

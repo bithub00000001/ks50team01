@@ -114,7 +114,6 @@
 							cellspacing="0" width="100%">
 							<thead>
 								<tr>
-									<th><input type="checkbox" id="checkAll" name="checkAll"></th>
 									<th>번호</th>
 									<th>작성자</th>
 									<th>카테고리</th>
@@ -127,15 +126,14 @@
 									<th>답변자</th>
 									<th>답변내용</th>
 									<th>답변일</th>
+									<th>답변입력</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr th:unless="${qnaList != null}">
-									<td colspan="11" class="text-center">등록된 1:1문의가 없습니다.</td>
+									<td colspan="12" class="text-center">등록된 1:1문의가 없습니다.</td>
 								</tr>
 								<tr th:if="${qnaList != null}" th:each="l : ${qnaList}">
-									<td><input type="checkbox" id="checkbox_${l.qnaNum}"
-										name="qnaNum" th:value="${l.qnaNum}"></td>
 									<td th:text="${l.qnaNum}"></td>
 									<td th:text="${l.qnaRegId}"></td>
 									<td th:text="${l.category.qnaCategoryName}"></td>
@@ -146,11 +144,11 @@
 									<td th:text="${l.qnaMdfDate}"></td>
 									<td th:text="${l.qnartnDate}"></td>
 									<td th:text="${l.ansRegId}"></td>
-									<td th:each="answer : ${l.answerList}" th:text="${answer.ansContent}"></td>
-									<td th:each="answer : ${l.answerList}" th:text="${answer.ansRegDate}"></td>
+									<td th:each="answer : ${l.answerList}" th:text="${answer.ansContent != null ? answer.ansContent : ''}"></td>
+									<td th:each="answer : ${l.answerList}" th:text="${answer.ansRegDate != null ? answer.ansContent : ''}"></td>
                                 	<td>
 	                                    <!-- 버튼 클릭 시 모달 창 열기 -->
-	                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#answerModal"
+	                                    <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#answerModal"
 	                                            th:data-qna-num="${l.qnaNum}"
 	                                            th:data-qna-title="${l.qnaTitle}"
 	                                            th:data-qna-content="${l.qnaContent}">

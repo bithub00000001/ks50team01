@@ -16,9 +16,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
 
@@ -128,8 +126,13 @@ public class PFaqController {
 		model.addAttribute("title", "자주찾는질문 삭제");
 		
 		return "redirect:/platform/board/faqList";
-	}
+	} 
 	
+
+	
+	
+	
+	/*
 	// 자주찾는 질문 삭제
 	@GetMapping("/faqDelete")
 	public String faqDeletePage(@RequestParam(value = "faqNum") String faqNum, Model model) {
@@ -142,12 +145,7 @@ public class PFaqController {
 		model.addAttribute("title", "자주찾는질문 삭제");
 		
 		return "redirect:/platform/board/faqList";
-	}
+	} */
 	
 	
-	
-
-	
-	
-
 }
