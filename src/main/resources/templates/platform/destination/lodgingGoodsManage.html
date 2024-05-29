@@ -214,12 +214,12 @@
 			            const $deleteForm = $('<form></form>', {
 			            	action : '/platform/removeLodgingGoods'
 			            });
-			            const $lodgingInfoCode = $('<input />', {
+			            const $lodgingMenuCode = $('<input />', {
 			            	type: 'hidden',
 			            	name: 'lodgingMenuCode',
 			            	value: lodgingMenuCode
 			            });
-			            $deleteForm.append($lodgingInfoCode);
+			            $deleteForm.append($lodgingMenuCode);
 			            $('body').append($deleteForm);
 			            $deleteForm.submit();
 			        } else {

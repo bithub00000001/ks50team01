@@ -33,15 +33,33 @@
 							</td>
 						</tr>
 						<tr>
+							<td><label for="tourInfoCode">관광지 정보 코드</label></td>
+							<td colspan="2"><input type="text" id="tourInfoCode" name="tourInfoCode" placeholder="ex: TOUR_INFO_" disabled="disabled"></td>
+						</tr>
+						<tr>
+							<td><label for="tripSCateCode">여행지 소분류 코드</label></td>
+							<td colspan="2"><input type="text" id="tripSCateCode" name="tripSCateCode" placeholder="ex: TRIP_SCTGRY_" disabled="disabled"></td>
+						</tr>
+
+						<tr>
+							<td><label for="partnerBPlaceCode">제휴사업장 코드</label></td>
+							<td colspan="2"><input type="text" id="partnerBPlaceCode" name="partnerBPlaceCode" placeholder="ex: tour_001" disabled="disabled"></td>
+						</tr>
+						<tr>
+							<td><label for="RegionSCateName">지역 소분류 명</label></td>
+							<td colspan="2"><input type="text" id="RegionSCateName" name="RegionSCateName" placeholder="지역소분류명을 입력해주세요" disabled="disabled"></td>
+						</tr>
+						<tr>
 							<td><label for="tourAuthorityId">등록플랫폼권한아이디</label></td>
 							<td colspan="2"><input type="text" id="tourAuthorityId" name="tourAuthorityId" placeholder="ex: admin001" disabled="disabled"></td>
 						</tr>
+						
 						<tr>
 							<td><label for="tourAddr">관광지 주소</label></td>
 							<td colspan="2"><input type="text" id="tourAddr" name="tourAddr" placeholder="관광지 주소를 입력해주세요" disabled="disabled" /></td>
 						</tr>
 						<tr>
-							<td><label for="tourDaddr">여행지대분류코드</label></td>
+							<td><label for="tourDaddr">관광지 상세주소</label></td>
 							<td colspan="2"><input type="text" id="tourDaddr" name="tourDaddr" placeholder="관광지 상세주소를 입력해주세요" disabled="disabled" /></td>
 						</tr>
 						<tr>
@@ -55,6 +73,14 @@
 						<tr>
 							<td><label for="tourContactNum2">관광지 연락처2</label></td>
 							<td colspan="2"><input type="text" id="tourContactNum2" name="tourContactNum2" placeholder="제휴브랜드명을 입력해주세요" disabled="disabled" /></td>
+						</tr>
+						<tr>
+							<td><label for="tourOthers">관광지 기타사항</label></td>
+							<td colspan="2"><input type="text" id="tourOthers" name="tourOthers" placeholder="제휴브랜드명을 입력해주세요" disabled="disabled" /></td>
+						</tr>
+						<tr>
+							<td><label for="tourRegDate">등록일자</label></td>
+							<td colspan="2"><input type="text" id="tourRegDate" name="tourRegDate" placeholder="등록일자를 입력해주세요" disabled="disabled" /></td>
 						</tr>
 						
 					<tfoot>
@@ -72,10 +98,7 @@
 	</div>
 </th:block>
 
-</th:block>
 
-
-</html>
 <th:block layout:fragment="customJsFile">
 	<!-- Datatables JS START -->
 	<script th:src="@{/platform/vendors/datatables.net/js/jquery.dataTables.min.js}"></script>
@@ -94,7 +117,9 @@
 	<script th:src="@{/platform/vendors/pdfmake/build/pdfmake.min.js}"></script>
 	<script th:src="@{/platform/vendors/pdfmake/build/vfs_fonts.js}"></script>
 	<!-- Datatables JS END -->
-	
+
+</th:block>	
+	  
 	  <th:block layout:fragment="customJs">
 		<script>		
 			$('#nameCheck').click(function(){

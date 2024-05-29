@@ -9,10 +9,13 @@ import ksmart.ks50team01.platform.destination.dto.Destination;
 @Mapper
 public interface DestinationMapper {
 	
-	//관광상품 등록
+	//관광지 등록
+	int addTour(Destination destination);
+	
+	//관광상품 중복체크
 	boolean addTourGoodsCheckList(String tourGoodsOptionCd);
 	
-	//관광지 등록
+	//관광지 중복체크
 	boolean addTourCheckList(String tourName);
 	
 	//관광지 상세목록 삭제
@@ -25,12 +28,14 @@ public interface DestinationMapper {
 	List<Destination> getTourInfoList();
 	
 	// 관광지 수정
-	int updateTour(Destination destination);
-	Destination getTourInfoByName(String tourName);
+	int tourModify(Destination destination);
+	Destination getTourInfoByName(String tourInfoCode);
 	
 	//관광지 세부정보 수정
-	int updateTourGoods(Destination destination);
-	Destination getTourGoodsInfoById(String tourName);
+	int tourGoodsModify(Destination destination);
+	Destination getTourGoodsInfoById(String tourGoodsOptionCd);
+	
+
 	
 	//관광상품 조회
 	List<Destination> getTourGoodsList();
@@ -42,11 +47,11 @@ public interface DestinationMapper {
 	void removeLodgingGoods(String lodgingMenuCode);
 	
 	//숙소 수정
-	int updateLodging(Destination destination);
+	int lodgingModify(Destination destination);
 	Destination getLodgingInfoById(String lodgingName);
 	
 	//숙소 세부정보 수정
-	int updateLodgingGoods(Destination destination);
+	int lodgingGoodsModify(Destination destination);
 	Destination getLodgingGoodsInfoById(String lodgingName);
 
 	
@@ -66,14 +71,24 @@ public interface DestinationMapper {
 	//식당 수정
 	int updateRestaurant(Destination destination);
 	Destination getRestaurantInfoById(String RestaurantName);
+	
 	//식당 상세정보 수정
-	int updateRestaurantMenu(Destination destination);
+	int restaurantMenuModify(Destination destination);
 	Destination getRestaurantMenuInfoById(String restaurantMenuManageCode);
 	
-	//식당 삭제
+	//음식점 삭제
 	void removeRestaurant(String restaurantInfoCode);
+	
+	//음식점 상세정보 삭제
+	void removeRestaurantMenu(String restaurantMenuManageCode);
 
-	List<Destination> searchTourName(String tourName);
+
+
+	
+
+	
+	
+	// List<Destination> searchTourName(String tourName);
 
 
 

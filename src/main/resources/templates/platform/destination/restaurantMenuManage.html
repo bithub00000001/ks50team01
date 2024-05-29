@@ -123,7 +123,7 @@
 									    <a th:href="@{/platform/destination/restaurantMenuModify(restaurantMenuManageCode=${l.restaurantMenuManageCode})}">수정</a>
 									</td>
 						            <td>
-						            	<a href="#" th:data-member-id="${l.restaurantMenuManageCode}" th:onclick="deleteConfirm(this)">삭제</a>
+						            	<a href="#" th:data-restaurantmenu-code="${l.restaurantMenuManageCode}" th:onclick="deleteConfirm(this)">삭제</a>
 					            	</td>
 
 								</tr>
@@ -177,7 +177,42 @@
 				
 				if(movePage) location.href = '/platform/destination/' + movePage;
 			});
+			$(document).on('click', '.regBtn', function(){
+				const movePage = $('.searchCate :selected').val();
+				
+				if(movePage){
+					if(movePage === 'restaurantManage') {
+						location.href = '/platform/destination/addRestaurant';
+					}else if(movePage === 'restaurantMenuManage') {
+						location.href = '/platform/destination/addRestaurantMenu';
+					}
+				}	
+			});
 		});
+		
+		function deleteConfirm(element) {
+	        var restaurantMenuManageCode = element.getAttribute('data-restaurantmenu-code');
+	        var confirmation = confirm("정말로 삭제하시겠습니까?");
+	        
+	        if (confirmation) {
+	            // 확인을 누르면 삭제 동작을 수행하기 위해 POST 요청
+	            //removeTour(restaurantInfoCode);
+	            const $deleteForm = $('<form></form>', {
+	            	action : '/platform/removeRestaurantMenu'
+	            });
+	            const $restaurantMenuManageCode = $('<input />', {
+	            	type: 'hidden',
+	            	name: 'restaurantMenuManageCode',
+	            	value: restaurantMenuManageCode
+	            });
+	            $deleteForm.append($restaurantMenuManageCode);
+	            $('body').append($deleteForm);
+	            $deleteForm.submit();
+	        } else {
+	            console.log("삭제 취소: " + restaurantMenuManageCode);
+	        }
+	    }
+		
 	</script>
 	</th:block>
 	

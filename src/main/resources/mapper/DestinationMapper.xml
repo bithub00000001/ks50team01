@@ -20,13 +20,13 @@
 		SELECT
 			COUNT(TOUR_NAME)
 		FROM
-			TOUR_GOODS
-			INNER JOIN
-			TOUR_GOODSOPTION
+			TOUR_GOODS as tg
+			INNER JOIN 
+			TOUR_GOODSOPTION as tgo
 			ON
 			tg.TOUR_GDS_CD = tgo.TOUR_GDS_CD
 			INNER JOIN
-			TOUR_INFO
+			TOUR_INFO as ti
 			ON
 			tg.TOUR_INFO_CD = ti.TOUR_INFO_CD
 		WHERE
@@ -35,6 +35,40 @@
 	
 	
 	</select>
+	
+	<insert id="addTour" parameterType="destination">
+	/* 관광지 등록 처리 */
+	INSERT INTO
+	TOUR_INFO
+	(TOUR_NAME,
+	 TOUR_INFO_CD,
+	 TRIP_SCTGRY_CD,
+	 PRTNR_BPLC_CD,
+	 RGN_SCTGRY_NM,
+	 REG_PF_BIZ_ID,
+	 TOUR_ADDR, 		
+	 TOUR_DADDR, 		
+	 TOUR_SITE, 		
+	 TOUR_CONTATC1,
+	 TOUR_CONTATC2,
+	 TOUR_OTHERS,
+	 REG_YMD)
+VALUES
+	(#{tourName},
+	 #{tourInfoCode},
+	 #{tripSCateCode},
+	 #{partnerBPlaceCode},
+	 #{regionSCateName},
+	 #{tourAuthorityId},
+	 #{tourAddr},
+ 	 #{tourDaddr},
+ 	 #{tourSite},
+	 #{tourContactNum},
+ 	 #{tourContactNum2},
+	#{tourOthers}, 	 
+	NOW());
+	
+	</insert>
 	
 	<select id="searchTourName" resultType="destination">
 		/* 관광지 이름 검색 */
@@ -53,17 +87,9 @@
 		/* 관광지 상세목록 삭제 */
 			DELETE
 			FROM
-				TOUR_GOODS
-				INNER JOIN
 				TOUR_GOODSOPTION
-				ON
-				tg.TOUR_GDS_CD = tgo.TOUR_GDS_CD
-				INNER JOIN
-				TOUR_INFO
-				ON
-				tg.TOUR_INFO_CD = ti.TOUR_INFO_CD
 			WHERE
-				TOUR_GOODSOPTION = #{tourGoodsOptionCd};
+				TOUR_GDSOPT_CD = #{tourGoodsOptionCd};
 	</delete>
 	
 	<delete id="removeTour" parameterType="String">
@@ -98,8 +124,11 @@
 	</select>
 
 	<select id="getTourInfoByName" resultType="destination">
-
+		/* 관광지 수정 전 처리 */
 			SELECT
+				TRIP_SCTGRY_CD  AS  tripSCateCode,
+				PRTNR_BPLC_CD	AS	partnerBPlaceCode,
+				RGN_SCTGRY_NM	AS	regionSCateName,
 				TOUR_INFO_CD 	AS 	tourInfoCode,
 				REG_PF_BIZ_ID 	AS 	tourAuthorityId,
 				TOUR_NAME 		AS 	tourName,
@@ -109,8 +138,7 @@
 				TOUR_CONTATC1 	AS 	tourContactNum,
 				TOUR_CONTATC2 	AS 	tourContactNum2,
 				TOUR_OTHERS 	AS 	tourOthers,
-				REG_YMD 		AS 	tourRegDate,
-				MDFCN_YMD 		AS 	tourFormDate
+				REG_YMD 		AS 	tourRegDate
 			FROM
 				TOUR_INFO
 			where
@@ -118,18 +146,24 @@
 
 	</select>
 
-	<update id="updateTour" parameterType="destination">
+	<update id="tourModify" parameterType="destination">
 		/* 관광지 수정 */
 			UPDATE TOUR_INFO
 			SET
 				TOUR_NAME 		= #{tourName},
+				TOUR_INFO_CD 	= #{tourInfoCode},
+				TRIP_SCTGRY_CD	= #{tripSCateCode},
+				PRTNR_BPLC_CD	= #{partnerBPlaceCode},
+				RGN_SCTGRY_NM	= #{regionSCateName},
+				REG_PF_BIZ_ID 	= #{tourAuthorityId},
 				TOUR_ADDR 		= #{tourAddr},
 				TOUR_DADDR 		= #{tourDaddr},
+				TOUR_SITE 		= #{tourSite},
 				TOUR_CONTATC1 	= #{tourContactNum},
 				TOUR_CONTATC2 	= #{tourContactNum2},
-				TOUR_SITE 		= #{tourSite},
 				TOUR_OTHERS 	= #{tourOthers},
-				MDFCN_YMD 		= NOW()
+				REG_YMD 		= #{tourRegDate},
+				MDFCN_YMD		= NOW()
 			WHERE
 				TOUR_INFO_CD 	= #{tourInfoCode}
 	</update>
@@ -143,7 +177,7 @@
 				tg.TOUR_GDS_CTGRY 		AS tourGoodsCate,
 				tgo.TOUR_GDSOPT_LIST 	AS tourGoodsList,
 				tgo.TOUR_GDSOPT_TIME 	AS tourGoodsTime,
-				tgo.RGN_SCTGRY_NM 		AS RegionSCate,
+				tgo.RGN_SCTGRY_NM 		AS regionSCateName,
 				tg.REG_PF_BIZ_ID		AS tourgoodsAuthorityId,
 				tg.TOUR_GDS_CD 			AS tourGoodsCode,
 				tgo.TOUR_GDSOPT_CD 		AS tourGoodsOptionCd,
@@ -171,7 +205,7 @@
 				tg.TOUR_GDS_CTGRY 		AS tourGoodsCate,
 				tgo.TOUR_GDSOPT_LIST 	AS tourGoodsList,
 				tgo.TOUR_GDSOPT_TIME 	AS tourGoodsTime,
-				tgo.RGN_SCTGRY_NM 		AS RegionSCate,
+				tgo.RGN_SCTGRY_NM 		AS regionSCateName,
 				tg.REG_PF_BIZ_ID 		AS tourgoodsAuthorityId,
 				tg.TOUR_GDS_CD 			AS tourGoodsCode,
 				tgo.TOUR_GDSOPT_CD 		AS tourGoodsOptionCd,
@@ -194,47 +228,61 @@
 	</select>
 
 
-	<update id="updateTourGoods" parameterType="destination">
+	<update id="tourGoodsModify" parameterType="destination">
 		/* 관광지세부사항 수정 후 */
-
 			UPDATE 
-				TOUR_INFO AS ti,
 				TOUR_GOODS AS tg,
-				TOUR_GOODSOPTION AS tgo
-			SET
-				ti.TOUR_NAME			= #{tourName},
-				tg.TOUR_GDS_CTGRY 		= #{tourGoodsCate},
-				tgo.TOUR_GDSOPT_LIST	= #{tourGoodsList},
-				tgo.TOUR_GDSOPT_TIME	= #{tourGoodsTime},
-				tgo.RGN_SCTGRY_NM		= #{RegionSCate},
-				tg.REG_PF_BIZ_ID		= #{tourgoodsAuthorityId},
-				tg.TOUR_GDS_CD			= #{tourGoodsCode},
-				tgo.TOUR_GDSOPT_CD		= #{tourGoodsOptionCd},
-				tgo.TOUR_GDSOPT_RMRK	= #{tourOptionRemarks},
-				tg.FAVS_TOTAL			= #{tourTotal},
-				tgo.REG_YMD				= #{tourRegDate},
-				tgo.MDFCN_YMD			= #{tourFormDate}
-			WHERE
-				ti.TOUR_INFO_CD = tg.TOUR_INFO_CD
-			and
+				TOUR_GOODSOPTION AS tgo,
+				TOUR_INFO AS ti
+			<set>
+				<if test="tourGoodsCate != null and tourGoodsCate != ''">				
+					tg.TOUR_GDS_CTGRY 		= #{tourGoodsCate},
+				</if>
+				<if test="tourGoodsList != null and tourGoodsList != ''">
+					tgo.TOUR_GDSOPT_LIST	= #{tourGoodsList},
+				</if>
+				<if test="tourGoodsTime != null and tourGoodsTime != ''">
+					tgo.TOUR_GDSOPT_TIME	= #{tourGoodsTime},
+				</if>
+				<if test="regionSCateName != null and regionSCateName != ''">
+					tgo.RGN_SCTGRY_NM		= #{regionSCateName},
+				</if>
+				<if test="tourgoodsAuthorityId != null and tourgoodsAuthorityId != ''">
+					tg.REG_PF_BIZ_ID		= #{tourgoodsAuthorityId},
+				</if>
+				<if test="tourGoodsCode != null and tourGoodsCode != ''">
+					tg.TOUR_GDS_CD			= #{tourGoodsCode},
+				</if>
+				<if test="tourOptionRemarks != null and tourOptionRemarks != ''">
+					tgo.TOUR_GDSOPT_RMRK	= #{tourOptionRemarks},
+				</if>
+				<if test="tourTotal != null and tourTotal != ''">
+					tg.FAVS_TOTAL			= #{tourTotal},
+				</if>
+					tgo.MDFCN_YMD			= NOW()
+				
+			</set>
+			WHERE 
 				tg.TOUR_GDS_CD = tgo.TOUR_GDS_CD
-			and
-				TOUR_INFO_CD =#{tourInfoCode};
+				AND 
+				tg.TOUR_INFO_CD = ti.TOUR_INFO_CD
+				AND 
+				tgo.TOUR_GDSOPT_CD = #{tourGoodsOptionCd};
 
 	</update>
 	
 	<delete id="removeLodgingGoods" parameterType="String">
-		/* 관광지 상세목록 삭제 */
+		/* 숙소 상세목록 삭제 */
+			
+			
 			DELETE
 			FROM
-				LODGING_INFO AS li
-				INNER JOIN
-				LODGING_MENU AS lm
-				ON
-				li.LODGING_INFO_CD = lm.LODGING_INFO_CD
+				LODGING_MENU 
 			WHERE
 				LODGING_MENU_CD = #{lodgingMenuCode};
 	</delete>
+	
+
 	
 	<delete id="removeLodging" parameterType="String">
 		/* 숙소 삭제 */
@@ -253,6 +301,7 @@
 				REG_PF_BIZ_ID 		AS lodgingAuthorityId,
 				LODGING_NAME 		AS lodgingName,
 				LODGING_ADDR 		AS lodgingAddr,
+				LODGING_DADDR 		AS lodgingDaddr,
 				LODGING_CONTACT1 	AS lodgingContactNum,
 				LODGING_CONTACT2 	AS lodgingContactNum2,
 				LODGING_SITE 		AS lodgingSite,
@@ -306,7 +355,7 @@
 
 	</select>
 
-	<update id="updateLodging" parameterType="destination">
+	<update id="lodgingModify" parameterType="destination">
 
 			UPDATE LODGING_INFO
 			SET
@@ -349,29 +398,45 @@
 			
 	</select>
 
-	<update id="updateLodgingGoods" parameterType="destination">
+	<update id="lodgingGoodsModify" parameterType="destination">
 		/* 숙소 상세정보 수정 후 업데이트 */
 			UPDATE 
 				LODGING_INFO AS li,
 				LODGING_MENU AS lm
-			SET
-				li.LODGING_NAME				= #{lodgingName},
-				lm.LODGING_MENU_TYPE		= #{lodgingMenuType},
-				li.LODGING_INFO_CD			= #{lodgingInfoCode} ,
-				lm.LODGING_MENU_CD			= #{lodgingMenuCode},
-				lm.LODGING_MENU_MINCPCT		= #{lodgingMenuMinPct},
-				lm.LODGING_MENU_MAXCPCT 	= #{lodgingMenuMaxPct},
-				lm.LODGING_MENU_PRC			= #{lodgingMenuPrc},
-				lm.LODGING_MENU_ADDPRC  	= #{lodgingMenuAddprc},
-				lm.LODGING_MENU_SMOKE_YN	= #{lodgingMenuSmokeYn},
-				lm.LODGING_MENU_BK_YN		= #{lodgingMenuBkYn},
-				li.REG_YMD 					= #{lodgingRegDate},
-				li.MDFCN_YMD 				= #{lodgingFormDate}
-
+			<set>
+				<if test="lodgingName != null and lodgingName != ''">
+					li.LODGING_NAME				= #{lodgingName},
+				</if>
+				<if test="lodgingMenuType != null and lodgingMenuType != ''">
+					lm.LODGING_MENU_TYPE		= #{lodgingMenuType},
+				</if>
+				<if test="lodgingInfoCode != null and lodgingInfoCode != ''">
+					li.LODGING_INFO_CD			= #{lodgingInfoCode} ,
+				</if>
+				<if test="lodgingMenuMinPct != null and lodgingMenuMinPct != ''">
+					lm.LODGING_MENU_MINCPCT		= #{lodgingMenuMinPct},
+				</if>
+				<if test="lodgingMenuMaxPct != null and lodgingMenuMaxPct != ''">
+					lm.LODGING_MENU_MAXCPCT 	= #{lodgingMenuMaxPct},
+				</if>
+				<if test="lodgingMenuPrc != null and lodgingMenuPrc != ''">
+					lm.LODGING_MENU_PRC			= #{lodgingMenuPrc},
+				</if>
+				<if test="lodgingMenuAddprc != null and lodgingMenuAddprc != ''">
+					lm.LODGING_MENU_ADDPRC  	= #{lodgingMenuAddprc},
+				</if>
+				<if test="lodgingMenuSmokeYn != null and lodgingMenuSmokeYn != ''">
+					lm.LODGING_MENU_SMOKE_YN	= #{lodgingMenuSmokeYn},
+				</if>
+				<if test="lodgingMenuBkYn != null and lodgingMenuBkYn != ''">
+					lm.LODGING_MENU_BK_YN		= #{lodgingMenuBkYn},
+				</if>
+					li.MDFCN_YMD 				= NOW()
+			</set>
 			WHERE
 				li.LODGING_INFO_CD = lm.LODGING_INFO_CD
-			and
-				lodgingMenuCode = #{lodgingMenuCode};
+				AND
+				lm.LODGING_MENU_CD = #{lodgingMenuCode};
 
 	</update>
 
@@ -387,6 +452,7 @@
 				RSTRN_DADDR	 	AS restaurantDaddr,
 				RSTRN_CONTACT 	AS restaurantContactNum,
 				RSTRN_SITE 		AS restaurantSite,
+				RSTRN_OTHERS	AS restaurantOthers,
 				REG_YMD 		AS restaurantRegDate,
 				MDFCN_YMD 		AS restaurantFormDate
 			FROM
@@ -425,6 +491,7 @@
 				RSTRN_DADDR 	AS restaurantDaddr,
 				RSTRN_CONTACT 	AS restaurantContactNum,
 				RSTRN_SITE 		AS restaurantSite,
+				RSTRN_OTHERS	AS restaurantOthers,
 				REG_YMD 		AS restaurantRegDate,
 				MDFCN_YMD 		AS restaurantFormDate
 			FROM
@@ -466,29 +533,49 @@
 			ON
 				ri.RSTRN_INFO_CD = rm.RSTRN_INFO_CD
 			WHERE
-				RSTRN_MENU_MNG_CD = #{restaurantMenuManageCode};	
+				rm.RSTRN_MENU_MNG_CD = #{restaurantMenuManageCode};	
 	</select>
-	<update id="updateRestaurantMenu" parameterType="destination">
+	<update id="restaurantMenuModify" parameterType="destination">
 		/*  */
 			UPDATE 
 				RESTAURANT_INFO AS ri, 
 				RESTAURANT_MENU AS rm
-			SET 
-				ri.RSTRN_NAME		= #{restaurantName},
-				rm.RSTRN_MENU		= #{restaurantMenu},	
-				rm.RSTRN_MENU_PRICE = #{restaurantMenuPrice}
+			<set>
+				<if test="restaurantName != null and restaurantName != ''">
+					ri.RSTRN_NAME		= #{restaurantName},
+				</if>
+				<if test="restaurantMenu != null and restaurantMenu != ''">
+					rm.RSTRN_MENU		= #{restaurantMenu},	
+				</if>
+				<if test="restaurantMenuPrice != null and restaurantMenuPrice != ''">
+					rm.RSTRN_MENU_PRICE = #{restaurantMenuPrice},
+				</if>
+					
+			</set> 
 			
 			WHERE
 				ri.RSTRN_INFO_CD = rm.RSTRN_INFO_CD
 			and
-				RSTRN_MENU_MNG_CD = #{restaurantMenuManageCode};
+				rm.RSTRN_MENU_MNG_CD = #{restaurantMenuManageCode};
 	</update>
+	
 	<delete id="removeRestaurant" parameterType="String">
-		DELETE 
-			FROM 
-		RESTAURANT_INFO 
-			WHERE 
-		RSTRN_INFO_CD = #{restaurantMenuManageCode}
+		/* 음식점 삭제 */
+			DELETE 
+	        FROM 
+	        	RESTAURANT_INFO 
+	        WHERE 
+	        	RSTRN_INFO_CD = #{restaurantinfoCode};
 	</delete>
 	
+	
+	<delete id="removeRestaurantMenu" parameterType="String">
+		/* 음식점 삭제 */
+			DELETE 
+	        FROM 
+	        	RESTAURANT_MENU
+	        WHERE 
+	        	RSTRN_MENU_MNG_CD = #{restaurantMenuManageCode};
+	
+	</delete>
 </mapper>  
