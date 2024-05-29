@@ -13,7 +13,7 @@ public class Ranking {
 	 private String businessName;
 	 private String rgnSctgryName;
 	 private String partnerBrandName;
-	 private int artclRankigNum;
+	 private int 	artclRankigNum;
 	 private String partnerShipStart;
 	 private String	partnerShipStartEnd;
 	 private String partnerType;

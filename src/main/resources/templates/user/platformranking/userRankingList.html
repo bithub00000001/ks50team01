@@ -36,7 +36,7 @@
 	          <div class="col-md-5 col-lg-4" id="location6">
 	            <div class="bg-primary text-center p-5 view-details">
 	              <h2 th:text="${l.destinationType}" class="text-white font-weight-bold h2"></h2>
-	              <p class="text-white text-capitalize"></p>
+	              <p th:text="${l.userRank} + 위" class="text-white text-capitalize" style="font-size:25px;"></p>
 	              <div>
 	                <a href="/user/destination/tourCheckDetails"
 	                  class="btn btn-xs btn-outline-white btn-booking text-uppercase mb-2">상세정보</a>

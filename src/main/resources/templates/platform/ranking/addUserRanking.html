@@ -204,14 +204,12 @@
 			});
 						
 			$('#addUserRankingBtn').click(function(){
-				const userRankingNum = $('userRankingId').val();
 				const userRankingRegId = $('userRankingRegId').val();
 				const partnerBusinessCode = $('partnerBusinessCode').val();
 				const tripLctgryCode = $('tripLctgryCode').val();
 				const destinationType = $('destinationType').val();
 				const destinationCId = $('destinationCId').val();
 				const userRank = $('userRank').val();
-				const artclRankigNum = $('artclRankigNum').val();
 				const reviewStatsStart = $('reviewStatsStart').val();
 				const reviewStatsEnd = $('reviewStatsEnd').val();
 				const platformAdStart = $('platformAdStart').val();
@@ -222,7 +220,7 @@
 				$('form input, form select').each(function(idx, element){
 					const id = element.id;
 					const value = $(element).val();
-					if(value == ''){
+					if(userRankingId == ''){
 						const cate = $(`label[for="${id}"]`).text();
 						alert(`${cate} 필수 입력항목입니다.`);
 						$(element).focus();
