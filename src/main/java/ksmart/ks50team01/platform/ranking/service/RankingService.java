@@ -40,8 +40,8 @@ public class RankingService {
 	 * @param pRankingNum
 	 * @return
 	 */
-	public boolean rankingListCheck(String pRankingNum) {
-		return rankingMapper.rankingListCheck(pRankingNum);
+	public boolean rankingListCheck(String pRankingId) {
+		return rankingMapper.rankingListCheck(pRankingId);
 	}
 	
 	public boolean rankingApiListCheck(String pfRankInfoId) {

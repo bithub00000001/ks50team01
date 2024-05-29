@@ -63,30 +63,28 @@
 									</select>
 								</td>
 							</tr>
-					
 							<tr>
 								<td>
-									<label for="rgnSctgryName">지역소분류명</label>
+									<label for=destinationType>관광타입</label>
 								</td>
 								<td colspan="2">
-									<input type="text" id="rgnSctgryName" name="rgnSctgryName" th:value=${userRanking.rgnSctgryName} readonly="readonly"/>
+									<input type="text" id="destinationType" name="destinationType" th:value=${userRanking.destinationType} readonly="readonly"/>
 								</td>
 							</tr>
-						
+							<tr>
+								<td>
+									<label for="destinationCId">컨텐츠아이디</label>
+								</td>
+								<td colspan="2">
+									<input type="text" id="destinationCId" name="destinationCId" th:value=${userRanking.destinationCId} readonly="readonly"/>
+								</td>
+							</tr>
 							<tr>
 								<td>
 									<label for="userRank">최종순위</label>
 								</td>
 								<td colspan="2">
 									<input type="text" id="userRank" name="userRank" th:value=${userRanking.userRank} readonly="readonly"/>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<label for="artclRankingNum">항목별순위</label>
-								</td>
-								<td colspan="2">
-									<input type="text" id="artclRankingNum" name="artclRankingNum" th:value=${userRanking.artclRankingNum} readonly="readonly"/>
 								</td>
 							</tr>
 							<tr>
