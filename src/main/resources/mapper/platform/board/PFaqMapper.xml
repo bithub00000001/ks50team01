@@ -116,6 +116,7 @@
 		SELECT 
 			F.FAQ_NO, 
 			F.REG_PF_ID, 
+			F.FAQ_CTGRY_NO,
 			C.FAQ_CTGRY_TYPE,
 			F.FAQ_TTL, 
 			F.FAQ_CN, 

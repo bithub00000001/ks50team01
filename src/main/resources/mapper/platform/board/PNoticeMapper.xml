@@ -69,6 +69,7 @@
         SELECT
             N.NTC_NO,
             N.REG_PF_ID,
+            N.NTC_CTGRY_NO,
             C.NTC_CTGRY_TYPE,
             N.NTC_TTL,
             N.NTC_CN,

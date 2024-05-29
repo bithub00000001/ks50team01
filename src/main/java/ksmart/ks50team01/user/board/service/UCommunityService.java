@@ -151,10 +151,21 @@ public class UCommunityService {
 
 
 
-
-
-
-
+	public List<UCommunity> getSearchList(String searchKey, String searchValue) {
+		// 검색항목
+		if("postTitle".equals(searchKey)) {
+			searchKey = "P.PST_TTL";
+		}else if("postRegId".equals(searchKey)) {
+			searchKey = "P.REG_MBR_ID";;
+		}else {
+			searchKey = "";
+		}
+		
+		List<UCommunity> postList = uCommunityMapper.getSearchList(searchKey, searchValue);
+		
+		
+		return postList;
+	}
 
 
 }
