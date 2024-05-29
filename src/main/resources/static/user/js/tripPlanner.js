@@ -89,12 +89,13 @@ $(document).ready(function() {
     $(document).on('click', '.btn-addPlan', function() {
         const element = $(this).closest('li');
         const name = element.find('h5').text();
-        const schedule = element.find('.schedule-input').val();
-        const additional = element.find('.additional-input').val();
+        const schedule = element.find('.schedule-input').text();
+        const additional = element.find('.additional-input').text();
         const id = element.data('id');
         const category = getAccommodationType($(this).closest('.tab-pane').attr('id'));
+        const contentId = $(this).siblings('.detail-modal').attr('data-detail-content-id');
 
-        addToPlan(name, category, schedule, additional, id);
+        addToPlan(name, category, schedule, additional, id, contentId);
     });
 
 });
@@ -104,22 +105,22 @@ function getAccommodationType(selector) {
     return selector.includes('accommodation') ? '숙박' : (selector.includes('restaurant') ? '식당' : '관광지');
 }
 
-// 선택한 항목을 여행 계획에 추가
-function addToPlan(name, category, schedule, additional, id) {
+// 담기 버튼을 눌러 선택한 항목을 여행 계획에 추가
+function addToPlan(name, category, schedule, additional, id, contentId) {
     const activeTabLink = $('#myDayTab .nav-link.active');
     const activeTabContentId = activeTabLink.attr('href');
     const activeTabContent = $(activeTabContentId);
     const planDayX = activeTabContent.find('ul.sortable').attr('id');
 
     // HTML 요소 생성 항수로 분리
-    const newItemHtml = createNewItemHtml(name, category, schedule, additional, id, planDayX);
+    const newItemHtml = createNewItemHtml(name, category, schedule, additional, id, planDayX, contentId);
 
     $(`#${planDayX}`).append(newItemHtml);
     initializeSortable(planDayX);
 }
 
 // 새로운 HTML 요소 생성
-function createNewItemHtml(name, category, schedule, additional, id, planDayId) {
+function createNewItemHtml(name, category, schedule, additional, id, planDayId, contentId) {
     return `
     <li class="sortable-item list-group-item list-group-item-action" data-id="${id}">
         <div class="row align-items-center">
@@ -128,17 +129,19 @@ function createNewItemHtml(name, category, schedule, additional, id, planDayId) 
                     <span class="number">${$(`#${planDayId} .sortable-item`).length + 1}</span>
                 </div>
             </div>
-            <div class="col-7 mt-2">
-                <h4 class="col-9">${name}</h4>
+            <div class="col-11 mt-2">
+                <h4 class="col-9" data-content-id="${contentId}">${name}</h4>
             </div>
-            <div class="col-4 text-end">
-                <small>여기에 시간 입력</small>
+            <div class="col-12 text-end mb-2">
+                <small class="time-diff" style="visibility: hidden;">0 분</small>
+                <small class="distance-diff" style="visibility: hidden;">0 km</small>
             </div>
         </div>
         <button type="button" class="btn btn-outline-danger btn-delete btn-xs float-end" aria-label="Delete">제거</button>
-        <p class="text-black mb-1">${schedule}</p>
-                <small>${category}</small>
+        <p class="col-9 text-black mb-1">${schedule}</p>
                 <small>${additional}</small>
+                <br>                
+                <small>${category}</small>
             </div>
         </div>
     </li>`;
@@ -155,6 +158,9 @@ function initializeSortable(sortableId) {
         onUpdate: function (evt) {
             $(`#${sortableId} .sortable-item`).each(function (index, item) {
                 $(item).find('.number').text(index + 1);
+                $('.time-diff').css('visibility', 'hidden');
+                $('.distance-diff').css('visibility', 'hidden');
+                $('#totalInfo').empty();
             });
         }
     });

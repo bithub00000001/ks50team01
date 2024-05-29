@@ -15,18 +15,18 @@
 		        <div class="col-xl-3">
 		          <div class="section-title-bg mb-1 mb-lg-3 mb-xl-0">
 		            <h2 class="text-white text-uppercase font-weight-bold mb-0">HOT <span class="text-primary">여행</span></h2>
-		            <h1 class="text-white text-uppercase mb-0">인기순위</h1>
+		            <h1 class="text-white text-uppercase mb-0">인기여행</h1>
 		          </div>
 		        </div>
 		  
 		        <div class="col-xl-9">
 		          <form method="GET" action="index.html">
 		            <div class="row">
-		              <div class="col-lg-10">
+		              <div class="col-lg-8">
 		                <div class="row">
-		                  <div class="col-md-6 col-lg-3">
+		                  <div class="col-md-6 col-lg-10">
 		                    <div class="select-dropdown">
-		                      <div class="form-group mb-lg-0">
+		                      <div class="form-group mb-lg-3">
 		                        <div class="select-default select-search-box">
 		                          <select class="select-option" id="cate">
 		                            <option value="platform">플랫폼 추천</option>
@@ -37,7 +37,7 @@
 		                      </div>
 		                    </div>
 		                  </div>
-		  
+		  				<!--
 		                  <div class="col-md-6 col-lg-3">
 		                    <div class="form-group form-group-icon mb-lg-0">
 		                      <i class="far fa-calendar-alt" aria-hidden="true"></i>
@@ -45,7 +45,7 @@
 		                        placeholder="YYYY/MM/DD" />
 		                    </div>
 		                  </div>
-		  
+		  				  
 		                  <div class="col-md-6 col-lg-3">
 		                    <div class="form-group form-group-icon mb-lg-0">
 		                      <i class="far fa-calendar-alt" aria-hidden="true"></i>
@@ -53,6 +53,7 @@
 		                        placeholder="YYYY/MM/DD" />
 		                    </div>
 		                  </div>
+		  				
 		  
 		                  <div class="col-md-6 col-lg-3">
 		                    <div class="select-dropdown">
@@ -66,14 +67,13 @@
 		                      </div>
 		                    </div>
 		                  </div>
+		                  -->
 		                </div>
 		              </div>
 		  
-		              <div class="col-lg-2">
+		              <div class="col-lg-4">
 		                <button class="btn btn-primary text-uppercase" type="button"
-		                  onclick="redirectToSelectedCategory();">
-		                  찾기
-		               </button>
+		                  onclick="redirectToSelectedCategory();">바로가기</button>
 		               <script>
 							function redirectToSelectedCategory() {
 							  // 선택된 카테고리의 값을 가져옴
@@ -124,11 +124,11 @@
 		                  <div class="media media-list-sm align-items-center bg-smoke">
 		                    <div class="media-img">
 		                      <img class="w-100 lazyestload" data-src="/user/img/cities/cities-sm-01.jpg" src="/user/img/cities/cities-sm-01.jpg" alt="Generic placeholder image">
-		                      <a href="/allRanking/rankingList#location5" class="media-img-overlay"></a>
+		                      <a href="/allRanking/rankingList" class="media-img-overlay"></a>
 		                    </div>
 		
 		                    <div class="media-body ps-3">
-		                      <a href="/allRanking/rankingList#location5" class="text-uppercase h6 text-dark hover-text-primary mb-3">관광지 top 3</a>
+		                      <a href="/allRanking/rankingList" class="text-uppercase h6 text-dark hover-text-primary mb-3">관광지 top 3</a>
 		                      <h6 class="text-primary mb-0">관광지</h6>
 		                    </div>
 		                  </div>
@@ -190,7 +190,7 @@
 		                    </div>
 		        
 		                    <div class="media-body ps-3">
-		                      <a href="/allRanking/userRankingList#location6" class="text-uppercase h6 text-dark hover-text-primary mb-3">관광지 top 3</a>
+		                      <a href="/allRanking/userRankingList#location6" class="text-uppercase h6 text-dark hover-text-primary mb-3">관광지</a>
 		                      <h6 class="text-primary mb-0">관광지</h6>
 		                    </div>
 		                  </div>
@@ -204,7 +204,7 @@
 		                    </div>
 		        
 		                    <div class="media-body ps-3">
-		                      <a href="/allRanking/userRankingList#location4" class="text-uppercase h6 text-dark hover-text-primary mb-3">숙소 top 3</a>
+		                      <a href="/allRanking/userRankingList#location4" class="text-uppercase h6 text-dark hover-text-primary mb-3">숙소</a>
 		                      <h6 class="text-primary mb-0">숙소</h6>
 		                    </div>
 		                  </div>
@@ -218,7 +218,7 @@
 		                    </div>
 		        
 		                    <div class="media-body ps-3">
-		                      <a href="/allRanking/userRankingList#location3" class="text-uppercase h6 text-dark hover-text-primary mb-3">음식점 top 3</a>
+		                      <a href="/allRanking/userRankingList#location3" class="text-uppercase h6 text-dark hover-text-primary mb-3">음식점</a>
 		                      <h6 class="text-primary mb-0">음식점</h6>
 		                    </div>
 		                  </div>
@@ -256,7 +256,7 @@
 		                    </div>
 		    
 		                    <div class="media-body ps-4">
-		                      <a href="/allRanking/planRankingList#location7" class="text-uppercase h4 text-dark hover-text-primary mb-3">여행계획 top 5</a>
+		                      <a href="/allRanking/planRankingList#location7" class="text-uppercase h4 text-dark hover-text-primary mb-3">여행계획 추천</a>
 		                      <h4 class="text-primary mb-0">여행계획</h4>	                  
 		                    </div>
 		                  </div>
@@ -274,87 +274,41 @@
 										role="tablist">
 										<li class="nav-item"><a class="nav-link active"
 											id="recent-tab" data-bs-toggle="tab" href="#recent"
-											role="tab" aria-controls="recent" aria-selected="true">플랫폼 추천순위</a>
+											role="tab" aria-controls="recent" aria-selected="true">플랫폼 추천</a>
 										</li>
 	
 										<li class="nav-item"><a class="nav-link"
 											id="popular-tab" data-bs-toggle="tab" href="#popular"
-											role="tab" aria-controls="popular" aria-selected="false">회원추천 인기순위</a>
+											role="tab" aria-controls="popular" aria-selected="false">회원추천</a>
 										</li>
 										<li class="nav-item"><a class="nav-link" id="new-tab"
 											data-bs-toggle="tab" href="#new" role="tab"
-											aria-controls="new" aria-selected="false">여행계획 추천순위</a></li>
+											aria-controls="new" aria-selected="false">여행계획 추천</a></li>
 									</ul>
 	
-									<div
-										class="tab-content bg-smoke border border-light-gray border-top-0 rounded-bottom px-3 py-5"
-										id="myTabContent">
+									<div class="tab-content bg-smoke border border-light-gray border-top-0 rounded-bottom px-3 py-5" id="myTabContent">
 										<div class="tab-pane fade show active" id="recent"
 											role="tabpanel" aria-labelledby="recent-tab">
-											<div
+											<div th:each="l : ${rankingApiList}"
 												class="media meta-post-sm border-bottom border-off-white pb-3 mb-3">
 												<div class="img-overlay rounded me-2">
 													<img class="lazyestload"
-														data-src="/user/img/blog/tab-01.jpg"
-														src="/user/img/blog/tab-01.jpg"
+														th:data-src="${l.destinationImg}"
+														th:src="${l.destinationImg}"
+														height="50" width="50"
 														alt="Generic placeholder image"> <a
 														href="/allRanking/rankingList" class="hover-img-overlay-dark"></a>
 												</div>
 	
 												<div class="media-body">
-													<a href="/allRanking/rankingList"
+													<a th:text="${l.destinationType}" href="/allRanking/rankingList"
 														class="text-dark hover-text-primary text-capitalize mb-1">
-														관광지 1위 </a>
+														</a>
 	
 													<ul class="list-unstyled d-flex flex-wrap mb-0">
 														<li class="meta-tag text-gray-color me-4 mb-1"><i
-															class="far fa-calendar-alt" aria-hidden="true"></i> <span
-															class="ms-1 text-capitalize">5 March, 2021</span></li>
-													</ul>
-												</div>
-											</div>
-	
-											<div
-												class="media meta-post-sm border-bottom border-off-white pb-3 mb-3">
-												<div class="img-overlay rounded me-2">
-													<img class="lazyestload"
-														data-src="/user/img/blog/tab-02.jpg"
-														src="/user/img/blog/tab-02.jpg"
-														alt="Generic placeholder image"> <a
-														href="/allRanking/rankingList" class="hover-img-overlay-dark"></a>
-												</div>
-	
-												<div class="media-body">
-													<a href="/allRanking/rankingList"
-														class="text-dark hover-text-primary text-capitalize mb-1">
-														관광지 2위 </a>
-	
-													<ul class="list-unstyled d-flex flex-wrap mb-0">
-														<li class="meta-tag text-gray-color me-4 mb-1"><i
-															class="far fa-calendar-alt" aria-hidden="true"></i> <span
-															class="ms-1 text-capitalize">5 March, 2021</span></li>
-													</ul>
-												</div>
-											</div>
-																							
-											<div class="media meta-post-sm">
-												<div class="img-overlay rounded me-2">
-													<img class="lazyestload"
-														data-src="/user/img/blog/tab-04.jpg"
-														src="/user/img/blog/tab-04.jpg"
-														alt="Generic placeholder image"> <a
-														href="/allRanking/rankingList" class="hover-img-overlay-dark"></a>
-												</div>
-	
-												<div class="media-body">
-													<a href="/allRanking/rankingList"
-														class="text-dark hover-text-primary text-capitalize mb-1">
-														관광지 3위 </a>
-	
-													<ul class="list-unstyled d-flex flex-wrap mb-0">
-														<li class="meta-tag text-gray-color me-4 mb-1"><i
-															class="far fa-calendar-alt" aria-hidden="true"></i> <span
-															class="ms-1 text-capitalize">5 March, 2021</span></li>
+															class="far fa-calendar-alt" aria-hidden="true"></i> 
+															<span th:text="${l.destinationTitle}" class="ms-1 text-capitalize"></span></li>
 													</ul>
 												</div>
 											</div>
@@ -362,78 +316,34 @@
 	
 										<div class="tab-pane fade" id="popular" role="tabpanel"
 											aria-labelledby="popular-tab">
-											<div
+											<div th:each="l : ${userRankingList}"
 												class="media meta-post-sm border-bottom border-off-white pb-3 mb-3">
 												<div class="img-overlay rounded me-2">
 													<img class="lazyestload"
-														data-src="/user/img/blog/tab-04.jpg"
-														src="/user/img/blog/tab-04.jpg"
+														th:data-src="${l.destinationImg}"
+														th:src="${l.destinationImg}"
+														height="50" width="50"
 														alt="Generic placeholder image"> <a
 														href="/allRanking/userRankingList" class="hover-img-overlay-dark"></a>
 												</div>
 	
 												<div class="media-body">
-													<a href="/allRanking/userRankingList"
+													<a th:text="${l.destinationType}" href="/allRanking/userRankingList"
 														class="text-dark hover-text-primary text-capitalize mb-1">
-														관광지 1위 </a>
+														관광지</a>
 	
 													<ul class="list-unstyled d-flex flex-wrap mb-0">
 														<li class="meta-tag text-gray-color me-4 mb-1"><i
-															class="far fa-calendar-alt" aria-hidden="true"></i> <span
-															class="ms-1 text-capitalize">5 March, 2021</span></li>
+															class="far fa-calendar-alt" aria-hidden="true"></i> 
+															<span th:text="${l.destinationTitle}" class="ms-1 text-capitalize">5 March, 2021</span></li>
 													</ul>
 												</div>
-											</div>
-	
-											<div
-												class="media meta-post-sm border-bottom border-off-white pb-3 mb-3">
-												<div class="img-overlay rounded me-2">
-													<img class="lazyestload"
-														data-src="/user/img/blog/tab-03.jpg"
-														src="/user/img/blog/tab-03.jpg"
-														alt="Generic placeholder image"> <a
-														href="/allRanking/userRankingList" class="hover-img-overlay-dark"></a>
-												</div>
-	
-												<div class="media-body">
-													<a href="/allRanking/userRankingList"
-														class="text-dark hover-text-primary text-capitalize mb-1">
-														관광지 2위 </a>
-	
-													<ul class="list-unstyled d-flex flex-wrap mb-0">
-														<li class="meta-tag text-gray-color me-4 mb-1"><i
-															class="far fa-calendar-alt" aria-hidden="true"></i> <span
-															class="ms-1 text-capitalize">5 March, 2021</span></li>
-													</ul>
-												</div>
-											</div>
-																					
-											<div class="media meta-post-sm">
-												<div class="img-overlay rounded me-2">
-													<img class="lazyestload"
-														data-src="/user/img/blog/tab-01.jpg"
-														src="/user/img/blog/tab-01.jpg"
-														alt="Generic placeholder image"> <a
-														href="/allRanking/userRankingList" class="hover-img-overlay-dark"></a>
-												</div>
-	
-												<div class="media-body">
-													<a href="/allRanking/userRankingList"
-														class="text-dark hover-text-primary text-capitalize mb-1">
-														관광지 3위 </a>
-	
-													<ul class="list-unstyled d-flex flex-wrap mb-0">
-														<li class="meta-tag text-gray-color me-4 mb-1"><i
-															class="far fa-calendar-alt" aria-hidden="true"></i> <span
-															class="ms-1 text-capitalize">5 March, 2021</span></li>
-													</ul>
-												</div>	
 											</div>
 										</div>
 	
 										<div class="tab-pane fade" id="new" role="tabpanel"
 											aria-labelledby="new-tab">
-											<div
+											<div th:each="l : ${planRankingList}"
 												class="media meta-post-sm border-bottom border-off-white pb-3 mb-3">
 												<div class="img-overlay rounded me-2">
 													<img class="lazyestload"
@@ -446,98 +356,8 @@
 												<div class="media-body">
 													<a href="/allRanking/planRankingList"
 														class="text-dark hover-text-primary text-capitalize mb-1">
-														여행계획 1위 </a>
-	
-													<ul class="list-unstyled d-flex flex-wrap mb-0">
-														<li class="meta-tag text-gray-color me-4 mb-1"><i
-															class="far fa-calendar-alt" aria-hidden="true"></i> <span
-															class="ms-1 text-capitalize">5 March, 2021</span></li>
-													</ul>
-												</div>
-											</div>
-	
-											<div
-												class="media meta-post-sm border-bottom border-off-white pb-3 mb-3">
-												<div class="img-overlay rounded me-2">
-													<img class="lazyestload"
-														data-src="/user/img/blog/tab-04.jpg"
-														src="/user/img/blog/tab-04.jpg"
-														alt="Generic placeholder image"> <a
-														href="/allRanking/planRankingList" class="hover-img-overlay-dark"></a>
-												</div>
-	
-												<div class="media-body">
-													<a href="/allRanking/planRankingList"
-														class="text-dark hover-text-primary text-capitalize mb-1">
-														여행계획 2위 </a>
-	
-													<ul class="list-unstyled d-flex flex-wrap mb-0">
-														<li class="meta-tag text-gray-color me-4 mb-1"><i
-															class="far fa-calendar-alt" aria-hidden="true"></i> <span
-															class="ms-1 text-capitalize">5 March, 2021</span></li>
-													</ul>
-												</div>
-											</div>
-	
-											<div
-												class="media meta-post-sm border-bottom border-off-white pb-3 mb-3">
-												<div class="img-overlay rounded me-2">
-													<img class="lazyestload"
-														data-src="/user/img/blog/tab-01.jpg"
-														src="/user/img/blog/tab-01.jpg"
-														alt="Generic placeholder image"> <a
-														href="/allRanking/planRankingList" class="hover-img-overlay-dark"></a>
-												</div>
-	
-												<div class="media-body">
-													<a href="/allRanking/planRankingList"
-														class="text-dark hover-text-primary text-capitalize mb-1">
-														여행계획 3위 </a>
-	
-													<ul class="list-unstyled d-flex flex-wrap mb-0">
-														<li class="meta-tag text-gray-color me-4 mb-1"><i
-															class="far fa-calendar-alt" aria-hidden="true"></i> <span
-															class="ms-1 text-capitalize">5 March, 2021</span></li>
-													</ul>
-												</div>
-											</div>
-	
-											<div class="media meta-post-sm border-bottom border-off-white pb-3 mb-3">
-												<div class="img-overlay rounded me-2">
-													<img class="lazyestload"
-														data-src="/user/img/blog/tab-03.jpg"
-														src="/user/img/blog/tab-03.jpg"
-														alt="Generic placeholder image"> <a
-														href="/allRanking/planRankingList" class="hover-img-overlay-dark"></a>
-												</div>
-	
-												<div class="media-body">
-													<a href="/allRanking/planRankingList"
-														class="text-dark hover-text-primary text-capitalize mb-1">
-														여행계획 4위 </a>
-	
-													<ul class="list-unstyled d-flex flex-wrap mb-0">
-														<li class="meta-tag text-gray-color me-4 mb-1"><i
-															class="far fa-calendar-alt" aria-hidden="true"></i> <span
-															class="ms-1 text-capitalize">5 March, 2021</span></li>
-													</ul>
-												</div>
-											</div>
-											
-												<div class="media meta-post-sm">
-												<div class="img-overlay rounded me-2">
-													<img class="lazyestload"
-														data-src="/user/img/blog/tab-03.jpg"
-														src="/user/img/blog/tab-03.jpg"
-														alt="Generic placeholder image"> <a
-														href="/allRanking/planRankingList" class="hover-img-overlay-dark"></a>
-												</div>
-	
-												<div class="media-body">
-													<a href="/allRanking/planRankingList"
-														class="text-dark hover-text-primary text-capitalize mb-1">
-														여행계획 5위 </a>
-	
+														여행계획</a>
+
 													<ul class="list-unstyled d-flex flex-wrap mb-0">
 														<li class="meta-tag text-gray-color me-4 mb-1"><i
 															class="far fa-calendar-alt" aria-hidden="true"></i> <span

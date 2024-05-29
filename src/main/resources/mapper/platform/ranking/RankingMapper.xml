@@ -21,6 +21,15 @@
 		<result property="activate" column="ACT_YN"/>
 	</resultMap>
 	
+	<delete id="removeRankingInfo" parameterType="String">
+		DELETE
+		FROM
+			PLATFORM_PARTNERSHIP_INFO
+		WHERE 
+			PF_MNGR_RANK_INFO=#{pfRankInfoId};
+	</delete>
+	
+	
 	<delete id="removeRanking" parameterType="String">
 		/*플랫폼 추천리스트 삭제*/
 		DELETE
@@ -38,6 +47,7 @@
 			REG_PF_ID=#{pRankingRegId},
 			PRTNR_BPLC_CD=#{partnerBusinessCode},
 			TRIP_LCTGRY_CD=#{tripLctgryCode},
+			TRIP_LCTGRY_NM=#{tripLctgryName},
 			BZMN_CONM=#{businessName},
 			RGN_SCTGRY_NM=#{rgnSctgryName},
 			PRTNR_BRD_NM=#{partnerBrandName},
@@ -61,6 +71,7 @@
 			REG_PF_ID 									AS pRankingRegId,
 			PRTNR_BPLC_CD 								AS partnerBusinessCode,
 			TRIP_LCTGRY_CD								AS tripLctgryCode,
+			TRIP_LCTGRY_NM								AS tripLctgryName,
 			BZMN_CONM 									AS businessName,
 			RGN_SCTGRY_NM 								AS rgnSctgryName,
 			PRTNR_BRD_NM 								AS partnerBrandName,
@@ -90,14 +101,79 @@
 			PF_MNGR_RANK = #{PF_MNGR_RANK};
 	</select>
 	
+	<select id="rankingApiListCheck" parameterType="String" resultType="boolean">
+		SELECT 
+			COUNT(PF_MNGR_RANK_INFO)
+		FROM 
+			PLATFORM_PARTNERSHIP_INFO
+		WHERE 
+			PF_MNGR_RANK_INFO = #{PF_MNGR_RANK_INFO};
+	</select>
+	
+	<select id="getDestinationContentId" resultType="RankingApi">
+		SELECT
+			destination_content_id AS destinationCId,
+			destination_title AS destinationTitle,
+			destination_first_address AS destinationAdd
+		FROM
+			TOUR_INFO_FROM_API AS t
+		WHERE
+			t.destination_content_id = #{destinationCId};
+	</select>
+	
+	<insert id="addApiRanking" parameterType="RankingApi">
+		<selectKey keyProperty="autoIncrementId" resultType="string" order="BEFORE">
+			SELECT
+				(CASE
+					WHEN COUNT(PF_MNGR_RANK_INFO) = 0 
+        				THEN 'pmr_01'
+						ELSE CONCAT('pmr_', MAX(CAST(SUBSTRING_INDEX(PF_MNGR_RANK_INFO,'_', - 1)AS UNSIGNED)) + 1)
+				END)
+					FROM 
+						PLATFORM_PARTNERSHIP_INFO AS p
+		</selectKey>
+		INSERT INTO 
+			PLATFORM_PARTNERSHIP_INFO
+			(PF_MNGR_RANK_INFO, 
+			REG_PF_ID, 
+			PF_MNGR_RANK, 
+			destination_content_id,
+			DN_CON_TYPE,
+			DN_TITLE,
+			DN_FIRST_ADD,
+			DN_F_IMG,
+			RECOMMENDATION_DETAILS)
+		VALUES 
+			(#{autoIncrementId},
+			#{pRankingRegId}, 
+			#{pRankingId},
+			#{destinationCId},
+			#{destinationType},
+			#{destinationTitle},
+			#{destinationAdd},
+			#{destinationImg},
+			#{recommenDetails})
+	</insert>
+	
 	<insert id="addRanking" parameterType="Ranking">
 		/* 플랫폼 추천 리스트 추가 */
+		<selectKey keyProperty="autoPlatformId" resultType="string" order="BEFORE">
+		SELECT
+			(CASE
+				WHEN COUNT(PF_MNGR_RANK) = 0 
+       				THEN 'pp_01'
+					ELSE CONCAT('pp_', MAX(CAST(SUBSTRING_INDEX(PF_MNGR_RANK,'_', - 1)AS UNSIGNED)) + 1)
+			END)
+		FROM 
+			PLATFORM_PARTNERSHIP AS pa
+		</selectKey>
 		INSERT INTO 
 			PLATFORM_PARTNERSHIP
 			(PF_MNGR_RANK, 
 			REG_PF_ID, 
 			PRTNR_BPLC_CD, 
-			TRIP_LCTGRY_CD, 
+			TRIP_LCTGRY_CD,
+			TRIP_LCTGRY_NM, 
 			BZMN_CONM, 
 			RGN_SCTGRY_NM, 
 			PRTNR_BRD_NM, 
@@ -111,10 +187,11 @@
 			ACT_YN, 
 			REG_YMD)
 		VALUES (
-			#{pRankingId}, 
+			#{autoPlatformId}, 
 			#{pRankingRegId}, 
 			#{partnerBusinessCode}, 
-			#{tripLctgryCode}, 
+			#{tripLctgryCode},
+			#{tripLctgryName}, 
 			#{businessName}, 
 			#{rgnSctgryName}, 
 			#{partnerBrandName}, 
@@ -137,6 +214,7 @@
 			REG_PF_ID 									AS pRankingRegId,
 			PRTNR_BPLC_CD 								AS partnerBusinessCode,
 			TRIP_LCTGRY_CD								AS tripLctgryCode,
+			TRIP_LCTGRY_NM								AS tripLctgryName,
 			BZMN_CONM 									AS businessName,
 			RGN_SCTGRY_NM 								AS rgnSctgryName,
 			PRTNR_BRD_NM 								AS partnerBrandName,
@@ -153,5 +231,25 @@
 		FROM 
 			PLATFORM_PARTNERSHIP;
 	</select>
+	
+	<select id="getRankingInfoList" resultType="RankingApi">
+		SELECT 
+			PF_MNGR_RANK_INFO 						AS pfRankInfoId, 
+			REG_PF_ID 								AS pRankingRegId, 
+			PF_MNGR_RANK 							AS pRankingId, 
+			p.destination_content_id 				AS destinationCId,
+			DN_CON_TYPE								AS destinationType,
+			DN_TITLE								AS destinationTitle,
+			DN_FIRST_ADD 							AS destinationAdd,
+			t.destination_first_image_link   		AS destinationImg,
+			RECOMMENDATION_DETAILS 					AS recommenDetails
+		FROM 
+			PLATFORM_PARTNERSHIP_INFO AS p
+		INNER JOIN
+			TOUR_INFO_FROM_API AS t
+		ON
+			p.destination_content_id = t.destination_content_id
 
+		
+	</select>
 </mapper>

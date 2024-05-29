@@ -14,7 +14,7 @@ public interface UserRankingMapper {
 	UserRanking getUserRankingInfoById(String userRankingId);
 	
 	int modifyUserRanking(UserRanking userRanking);
-	
+		
 	int addUserRanking(UserRanking userRanking);
 	
 	boolean userRankingListCheck(String userRankingId);

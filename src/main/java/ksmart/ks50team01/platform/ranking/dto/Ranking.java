@@ -9,10 +9,11 @@ public class Ranking {
 	 private String pRankingRegId;
 	 private String partnerBusinessCode;
 	 private String tripLctgryCode;
+	 private String tripLctgryName;
 	 private String businessName;
 	 private String rgnSctgryName;
 	 private String partnerBrandName;
-	 private int artclRankigNum;
+	 private int 	artclRankigNum;
 	 private String partnerShipStart;
 	 private String	partnerShipStartEnd;
 	 private String partnerType;
@@ -22,5 +23,6 @@ public class Ranking {
 	 private String activate;
 	 private String regDate;
 	 private String modifyDate;
+	 private String autoPlatformId;
 	
 }

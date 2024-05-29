@@ -102,6 +102,7 @@
 									<th>음식점 상세주소</th>
 									<th>음식점 사이트</th>
 									<th>음식점 연락처</th>
+									<th>음식점 기타정보</th>
 									<th>수정</th>
 									<th>삭제</th>
 								</tr>
@@ -115,11 +116,12 @@
 									<td th:text="${l.restaurantDaddr}"></td>
 									<td th:text="${l.restaurantSite}"></td>
 									<td th:text="${l.restaurantContactNum}"></td>
+									<td th:text="${l.restaurantOthers}"></td>
 									<td>
 									    <a th:href="@{/platform/destination/restaurantModify(restaurantInfoCode=${l.restaurantInfoCode})}">수정</a>
 									</td>
 						            <td>
-						            	<a href="#" th:data-member-id="${l.restaurantMenuManageCode}" th:onclick="deleteConfirm(this)">삭제</a>
+						            	<a href="#" th:data-restaurantInfo-code="${l.restaurantInfoCode}" th:onclick="deleteConfirm(this)">삭제</a>
 					            	</td>
 								</tr>
 	
@@ -156,22 +158,59 @@
 	</th:block>
 	<!-- custom js file end -->
 	<th:block layout:fragment="customJs">
-	<script>
-		$(document).ready(function(){
-			$('#searchItem').on('keyup', function(){
-				const searchValue = $(this).val().toLowerCase();
-				$('#datatable-responsive tbody tr').filter(function(){
-					$(this).toggle($(this).text().toLowerCase().indexOf(searchValue) > -1);
+		 <script th:inline="javascript">
+			function deleteConfirm(element) {
+			    var restaurantInfoCode = element.getAttribute('data-restaurantInfo-code');
+			    console.log(restaurantInfoCode);
+			    var confirmation = confirm("정말로 삭제하시겠습니까?");
+			    
+			    if (confirmation) {
+			        // 확인을 누르면 삭제 동작을 수행하기 위해 POST 요청
+			        //removeTour(tourInfoCode);
+			        const $deleteForm = $('<form></form>', {
+			        	action : '/platform/removeRestaurant'
+			        });
+			        const $restaurantInfoCode = $('<input />', {
+			        	type: 'hidden',
+			        	name: 'restaurantInfoCode',
+			        	value: restaurantInfoCode
+			        });
+			        $deleteForm.append($restaurantInfoCode);
+			        $('body').append($deleteForm);
+			        $deleteForm.submit();
+			    } else {
+			        console.log("삭제 취소: " + restaurantInfoCode);
+			    }
+			}
+			
+			$(document).ready(function(){
+				$('#searchItem').on('keyup', function(){
+					const searchValue = $(this).val().toLowerCase();
+					$('#datatable-responsive tbody tr').filter(function(){
+						$(this).toggle($(this).text().toLowerCase().indexOf(searchValue) > -1);
+					});
+				});
+				
+				$(document).on('click','.searchBtn', function(){
+					const movePage = $('.searchCate :selected').val();
+					
+					if(movePage) location.href = '/platform/destination/' + movePage;
+				});
+				
+				$(document).on('click', '.regBtn', function(){
+					const movePage = $('.searchCate :selected').val();
+					
+					if(movePage){
+						if(movePage === 'tourManage') {
+							location.href = '/platform/destination/addRestaurant';
+						}else if(movePage === 'restaurantMenuManage') {
+							location.href = '/platform/destination/addRestaurantMenu';
+						}
+					}	
 				});
 			});
-			
-			$(document).on('click','.searchBtn', function(){
-				const movePage = $('.searchCate :selected').val();
-				
-				if(movePage) location.href = '/platform/destination/' + movePage;
-			});
-		});
-	</script>
-	</th:block>
 
+		</script>
+    </th:block>
+	<!-- custom js file end -->
 </html>

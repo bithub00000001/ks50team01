@@ -110,6 +110,8 @@
                             <li><a th:href="@{/platform/ranking/rankingList}">?플랫폼 추천 관리</a></li>
                             <li><a th:href="@{/platform/ranking/userRankingList}">?회원 추천 관리</a></li>
                             <li><a th:href="@{/platform/ranking/planRankingList}">?여행계획 추천 관리</a></li>
+                            <li><a th:href="@{/platform/ranking/rankingApiList}">?API리스트 조회</a></li>
+                            <li><a th:href="@{/platform/ranking/rankingInfoList}">?관계리스트 관리</a></li>
                         </ul>
                     </li>
 					<li>
@@ -151,7 +153,7 @@
             <a data-placement="top" data-toggle="tooltip" title="Lock">
                 <span aria-hidden="true" class="glyphicon glyphicon-eye-close"></span>
             </a>
-            <a data-placement="top" data-toggle="tooltip" href="#" title="Logout">
+            <a data-placement="top" data-toggle="tooltip" th:href="@{/login/logout}" title="Logout">
                 <span aria-hidden="true" class="glyphicon glyphicon-off"></span>
             </a>
         </div>

@@ -54,77 +54,55 @@
                                    th:field="*{numPeople}" min="1"
                                    required>
                         </div>
-                    </form>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label">회원 유형:</label>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" name="memberType" id="realMember">
-                                    <label class="form-check-label" for="realMember">실제 회원</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" name="memberType"
-                                           id="virtualMember">
-                                    <label class="form-check-label" for="virtualMember">가상 회원</label>
-                                </div>
-                            </div>
-                            <div id="realMemberSearch" class="mb-3" style="display: none;">
-                                <button id="searchMemberBtn" class="btn btn-outline-primary btn-xs" type="button"
-                                        data-bs-toggle="modal" data-bs-target="#searchMemberModal">회원 검색
-                                </button>
-                            </div>
-                            <div id="virtualMemberAdjust" class="mb-3" style="display: none;">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" id="virtualMemberNickname"
-                                           placeholder="별칭 입력 (쉼표로 구분)">
-                                    <button class="btn btn-outline-secondary btn-sm" type="button" id="addMember">추가
-                                    </button>
-                                </div>
-                                <ul id="virtualMembersList" class="list-group mt-2">
-                                    <!-- 가상 회원 목록이 여기에 추가됨 -->
-                                </ul>
-                            </div>
-                            <div id="memberList">
-                                <h5>초대된 회원 목록</h5>
-                                <ul id="invitedMembersList" class="list-group">
-                                    <!-- 초대된 실제 회원 목록이 여기에 추가됨 -->
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">추가한 총 인원 수</h5>
-                                    <p class="card-text"><span id="totalMemberCount">0</span>명</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <!-- 회원 검색 모달 -->
-                    <div class="modal fade" id="searchMemberModal" tabindex="-1"
-                         aria-labelledby="searchMemberModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="searchMemberModalLabel">회원 검색</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">회원 유형:</label>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" name="memberType" id="realMember">
+                                        <label class="form-check-label" for="realMember">실제 회원</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" name="memberType"
+                                               id="virtualMember">
+                                        <label class="form-check-label" for="virtualMember">가상 회원</label>
+                                    </div>
                                 </div>
-                                <div class="modal-body">
-                                    <input type="text" class="form-control" id="searchMemberInput"
-                                           placeholder="회원 이름 또는 ID 입력">
-                                    <div id="searchResultContainer" class="mt-3"></div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary btn-xs" id="inviteMembers">검색</button>
-                                    <button type="button" class="btn btn-secondary btn-xs" data-bs-dismiss="modal">취소
+                                <div id="realMemberSearch" class="mb-3" style="display: none;">
+                                    <button id="searchMemberBtn" class="btn btn-outline-primary btn-xs" type="button"
+                                            data-bs-toggle="modal" data-bs-target="#searchMemberModal">회원 검색
                                     </button>
+                                </div>
+                                <div id="virtualMemberAdjust" class="mb-3" style="display: none;">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="virtualMemberNickname"
+                                               placeholder="별칭 입력 (쉼표로 구분)">
+                                        <button class="btn btn-outline-secondary btn-sm" type="button" id="addMember">추가
+                                        </button>
+                                    </div>
+                                    <ul id="virtualMembersList" class="list-group mt-2">
+                                        <!-- 가상 회원 목록이 여기에 추가됨 -->
+                                    </ul>
+                                </div>
+                                <div id="memberList">
+                                    <h5>초대된 회원 목록</h5>
+                                    <ul id="invitedMembersList" class="list-group">
+                                        <!-- 초대된 실제 회원 목록이 여기에 추가됨 -->
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">추가한 총 인원 수</h5>
+                                        <p class="card-text"><span id="totalMemberCount">0</span>명</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
+
                 </div>
             </div>
         </div>
@@ -142,6 +120,7 @@
                     <!-- 두 번째 페이지 내용 -->
                     <div class="row justify-content-between">
                         <div class="d-flex justify-content-end">
+                            <button class="btn btn-primary btn-sm me-2" type="button">저장</button>
                             <button class="btn btn-secondary btn-sm" type="button">이전으로</button>
                         </div>
                         <!-- 지역 선택 -->
@@ -199,7 +178,7 @@
                                      id="accommodation"
                                      role="tabpanel">
                                     <ul class="list-group" id="accommodationOptions">
-                                        <li class="list-group-item" data-id="accommodation1">
+                                        <!--/*<li class="list-group-item" data-id="accommodation1">
                                             <h5>호텔 A</h5>
                                             <p>간단한 설명...</p>
                                             <p>세부 스케줄: <input type="text" class="schedule-input"
@@ -222,61 +201,13 @@
                                             </p>
                                             <button class="btn btn-outline-primary btn-addPlan btn-sm">담기
                                             </button>
-                                        </li>
-                                        <li class="list-group-item" data-id="accommodation3">
-                                            <h5>호텔 B</h5>
-                                            <p>간단한 설명...</p>
-                                            <p>세부 스케줄: <input type="text" class="schedule-input"
-                                                              value="호텔 A 세부 스케줄">
-                                            </p>
-                                            <p>추가 사항: <input type="text" class="additional-input"
-                                                             value="호텔 A 추가 사항">
-                                            </p>
-                                            <button class="btn btn-outline-primary btn-addPlan btn-sm">담기
-                                            </button>
-                                        </li>
-                                        <li class="list-group-item" data-id="accommodation4">
-                                            <h5>호텔 C</h5>
-                                            <p>간단한 설명...</p>
-                                            <p>세부 스케줄: <input type="text" class="schedule-input"
-                                                              value="호텔 A 세부 스케줄">
-                                            </p>
-                                            <p>추가 사항: <input type="text" class="additional-input"
-                                                             value="호텔 A 추가 사항">
-                                            </p>
-                                            <button class="btn btn-outline-primary btn-addPlan btn-sm">담기
-                                            </button>
-                                        </li>
-                                        <li class="list-group-item" data-id="accommodation5">
-                                            <h5>호텔 D</h5>
-                                            <p>간단한 설명...</p>
-                                            <p>세부 스케줄: <input type="text" class="schedule-input"
-                                                              value="호텔 A 세부 스케줄">
-                                            </p>
-                                            <p>추가 사항: <input type="text" class="additional-input"
-                                                             value="호텔 A 추가 사항">
-                                            </p>
-                                            <button class="btn btn-outline-primary btn-addPlan btn-sm">담기
-                                            </button>
-                                        </li>
-                                        <li class="list-group-item" data-id="accommodation6">
-                                            <h5>호텔 E</h5>
-                                            <p>간단한 설명...</p>
-                                            <p>세부 스케줄: <input type="text" class="schedule-input"
-                                                              value="호텔 A 세부 스케줄">
-                                            </p>
-                                            <p>추가 사항: <input type="text" class="additional-input"
-                                                             value="호텔 A 추가 사항">
-                                            </p>
-                                            <button class="btn btn-outline-primary btn-addPlan btn-sm">담기
-                                            </button>
-                                        </li>
+                                        </li>*/-->
                                     </ul>
                                 </div>
                                 <div aria-labelledby="restaurant-tab" class="tab-pane fade" id="restaurant"
                                      role="tabpanel">
                                     <ul class="list-group" id="restaurantOptions">
-                                        <li class="list-group-item" data-id="restaurant1">
+                                        <!--/*<li class="list-group-item" data-id="restaurant1">
                                             <h5>레스토랑 C</h5>
                                             <p>간단한 설명...</p>
                                             <p>세부 스케줄: <input type="text" class="schedule-input"
@@ -299,12 +230,12 @@
                                             </p>
                                             <button class="btn btn btn-outline-primary btn-addPlan btn-sm">담기
                                             </button>
-                                        </li>
+                                        </li>*/-->
                                     </ul>
                                 </div>
                                 <div aria-labelledby="tour-tab" class="tab-pane fade" id="tour" role="tabpanel">
                                     <ul class="list-group" id="tourOptions">
-                                        <li class="list-group-item" data-id="tour1">
+                                        <!--/*<li class="list-group-item" data-id="tour1">
                                             <h5>박물관 E</h5>
                                             <p>간단한 설명...</p>
                                             <p>세부 스케줄: <input type="text" class="schedule-input"
@@ -327,7 +258,7 @@
                                             </p>
                                             <button class="btn btn-outline-primary btn-addPlan btn-sm">담기
                                             </button>
-                                        </li>
+                                        </li>*/-->
                                     </ul>
                                 </div>
                                 <br>
@@ -355,7 +286,7 @@
                                          role="tabpanel">
                                         <!-- sortable 리스트의 내용 -->
                                         <ul class="sortable" id="planDay1" style="padding-left: 0;">
-                                            <li class="sortable-item list-group-item list-group-item-action">
+                                            <!--/*<li class="sortable-item list-group-item list-group-item-action">
                                                 <div class="row align-items-center">
                                                     <div class="col-1">
                                                         <div class="border border-dark badge bg-success text-white d-flex justify-content-center align-items-center mt-1"
@@ -420,7 +351,7 @@
                                                 </button>
                                                 <p class="text-black mb-1">여기에 세부 스케줄 입력</p>
                                                 <small>여기에 추가 사항 입력</small>
-                                            </li>
+                                            </li>*/-->
                                         </ul>
                                     </div>
                                 </div>
@@ -432,16 +363,13 @@
                                     <div id="distanceInfo"></div>
 
 
-                                    <div class="col-lg-4 mb-6 mb-lg-0">
+                                    <div class="col-lg-7 mb-6 mb-lg-0">
                                         <!-- 지도 및 거리/금액 정보 -->
-                                        <div id="tourMap"></div>
-                                        <div>총 거리: <span id="totalDistance"> 10cm</span></div>
-                                        <div>총 금액: <span id="totalCost"> 10원</span></div>
+                                        <div id="totalInfo"></div>
 
                                     </div>
                                     <div class="col-lg-4 mb-6 mb-lg-0">
-                                        <button class="btn btn-primary btn-mb2">확정</button>
-                                        <button class="btn btn-secondary btn-mb2">취소</button>
+                                        <button class="btn btn-outline-primary btn-sm btn-mb2" id="distanceCalBTN">거리&시간 계산</button>
                                     </div>
                                 </div>
                                 <br><br><br><br>
@@ -453,7 +381,31 @@
         </div>
     </div>
 
-    <!-- Modal -->
+    <!-- 회원 검색 MODAL -->
+    <div class="modal fade" id="searchMemberModal" tabindex="-1"
+         aria-labelledby="searchMemberModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="searchMemberModalLabel">회원 검색</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <input type="text" class="form-control" id="searchMemberInput"
+                           placeholder="회원 이름 또는 ID 입력">
+                    <div id="searchResultContainer" class="mt-3"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-xs" id="inviteMembers">검색</button>
+                    <button type="button" class="btn btn-secondary btn-xs" data-bs-dismiss="modal">취소
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 여행지 상세보기 MODAL -->
     <div class="modal mb-8" id="overviewModal" tabindex="-1" role="dialog" aria-labelledby="overviewModal"
          aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -475,10 +427,8 @@
 </th:block>
 
 <th:block layout:fragment="customJsFIle">
-    <script th:src="@{/user/js/owl.carousel.min.js}"></script>
     <script th:src="@{/user/js/aos.js}"></script>
     <script th:src="@{/user/js/jquery.waypoints.min.js}"></script>
-    <script th:src="@{/user/js/typed.js}"></script>
     <script th:src="@{/user/js/moment.min.js}"></script>
     <script th:src="@{/user/js/daterangepicker.js}"></script>
 
@@ -527,7 +477,6 @@
                 const contentId = this.dataset.detailContentId;
                 clearModalContent();
                 $.get(`/trip/detailContentId/${contentId}`, function (data) {
-                    console.log(data.positions[0]);
                     fillModalContent(data);
                 });
                 $('#overviewModal').modal('show');
@@ -560,20 +509,38 @@
             $('#overviewModal .modal-body p').text(data.positions[0].overview);
         }
 
-        const kakaoMap = (() => {
+        /*const kakaoMap = (() => {
             const map = new kakao.maps.Map(document.getElementById('map'), { // 지도를 표시할 div
                 center: new kakao.maps.LatLng(36.2683, 127.6358), // 지도의 중심좌표
                 level: 20 // 지도의 확대 레벨
             });
             return map;
-        })();
+        })();*/
+
+
 
         // 실제 회원 데이터 (예시)
         const realMembers = [
-            {id: 1, name: '실제 회원 예시 1'},
+            /*{id: 1, name: '실제 회원 예시 1'},
             {id: 2, name: '실제 회원 예시 2'},
-            {id: 3, name: '실제 회원 예시 3'},
+            {id: 3, name: '실제 회원 예시 3'},*/
         ];
+
+        // 실제 회원 데이터 삽입 ajax
+        /*$.ajax({
+            url: "/trip/user-member",
+            type: "GET",
+            success: function (response) {
+                response.forEach(function (user) {
+                    const userMember = {
+                        id: user.id,
+                        name: user.nickname
+                    };
+                    realMembers.push(userMember);
+                });
+                console.log(realMembers);
+            }
+        });*/
 
         // 인원 수 입력 필드에 이벤트 리스너 추가
         const numPeopleInput = $('#numPeople');
@@ -615,6 +582,7 @@
         const searchMemberModal = $(new bootstrap.Modal($('#searchMemberModal'), {}));
 
         searchMemberBtn.click(() => {
+            searchResultContainer.empty();
             searchMemberModal.show();
         });
 
@@ -634,17 +602,17 @@
 
             // 검색 결과 리스트 표시
             searchResultContainer.empty();
-            searchResults.forEach((member) => {
+            searchResults.forEach((member, idx) => {
                 const li = $('<li></li>', {
                     class: 'list-group-item d-flex justify-content-between align-items-center mb-1',
                     text: member.name
                 });
 
-                // 최대 인원 수를 초과하지 않는 경우에만 초대 버튼 활성화
                 const inviteBtn = $('<button></button>', {
                     class: 'btn btn-primary btn-xs',
                     text: '초대'
                 });
+                // 최대 인원 수를 초과하지 않는 경우에만 초대 버튼 활성화
                 if (currentMemberCount < maxPeople || maxPeople === 0) {
                     inviteBtn.prop('disabled', invitedMembers.some(invited => invited.id === member.id));
                 } else {
@@ -684,9 +652,17 @@
                     text: member.name
                 });
 
+                // 240527: 회원 아이디를 추가하기 위한 input hidden 추가
+                const idInput = $('<input>', {
+                    hidden: 'hidden',
+                    id: 'inviteeId' + index,
+                    name: 'inviteeName' + index,
+                    value: member.id
+                });
+
                 // 제거 버튼 생성
                 const removeBtn = $('<button>', {
-                    class: 'btn btn-danger btn-xs float-end',
+                    class: 'btn btn-danger btn-xs float-end text-white',
                     text: '제거'
                 });
                 // 위 와 같이 작성해도 된다
@@ -700,6 +676,7 @@
                     renderInvitedMembers(); // 변경된 목록 다시 렌더링
                 });
 
+                li.append(idInput);
                 li.append(removeBtn);
                 invitedMembersList.append(li);
             });
@@ -731,12 +708,20 @@
                 return;
             }
 
-            virtualNicknames.forEach(nickname => {
+            virtualNicknames.forEach((nickname, index) => {
                 if (nickname && !virtualMembers.includes(nickname)) {
                     virtualMembers.push(nickname); // 배열에 추가
                     const listItem = $('<li></li>', {
                         class: 'list-group-item d-flex justify-content-between align-items-center',
                         text: nickname
+                    });
+
+                    // 240527: 가상 회원 이름을 추가하기 위한 input hidden 추가
+                    const virtualIdInput = $('<input>', {
+                        hidden: 'hidden',
+                        id: 'addVirtualId' + index,
+                        name: 'addVirtualId' + index,
+                        value: nickname
                     });
 
                     const removeButton = $('<button></button>', {
@@ -755,28 +740,11 @@
                         renderTotalMemberCount();
                     });
 
+                    listItem.append(virtualIdInput);
                     listItem.append(removeButton);
                     virtualMembersList.append(listItem);
                 }
             });
-                // 실제 회원 추가 예시 (동적 구현 필요)
-                /*
-                const actualMember = '실제 회원 이름'; // 예시
-                const listItem = document.createElement('li');
-                listItem.className = 'list-group-item';
-                listItem.textContent = actualMember;
-
-                const removeButton = document.createElement('button');
-                removeButton.className = 'btn btn-outline-danger btn-sm';
-                removeButton.textContent = '제거';
-                removeButton.onclick = function() {
-                    invitedMembersList.removeChild(listItem);
-                };
-
-                listItem.appendChild(removeButton);
-                invitedMembersList.appendChild(listItem);
-                */
-
                 // 입력 필드 초기화
                 virtualMemberInput.val('');
                 renderTotalMemberCount(); // 총 회원 수 재계산 및 렌더링
@@ -810,6 +778,162 @@
                     level: 20 // 지도의 확대 레벨
                 });
             },50);
+        });
+
+        // 디바운스
+        const debounce = (callback, delay=500) => {
+            let timer;
+            return event => {
+                if(timer) clearTimeout(timer);
+                timer = setTimeout(callback, delay, event);
+            }
+        }
+
+        // 디바운스를 이용해 검색어 지연 이벤트 등록
+        $('#searchMemberInput').on('input', debounce(e => {
+            console.log(e.target.value);
+            const target = e.target;
+            const value = $(target).val();
+            if(!value) console.log('검색어를 입력해주세요.')
+            const request = $.ajax({
+                url : "/trip/search-user-member",
+                method: "GET",
+                data: {
+                    nickname: value
+                },
+                dataType : "json"
+            });
+            request.done(function(data){
+                console.log(data);
+                data.forEach(function (user) {
+                    const userMember = {
+                        id: user.id,
+                        name: user.nickname
+                    };
+                    realMembers.push(userMember);
+                });
+
+            });
+            request.fail(function(jqXHR, status, error){
+                console.log(error);
+            });
+        }));
+
+        $('#tmpSave').click(function () {
+
+        });
+
+        // 거리&시간 계산 버튼을 누르면 tmap API에서 거리와 소요시간을 요청
+        $('#distanceCalBTN').click(function() {
+            const locations = [];
+
+
+
+            $('#myDayTabContent > .tab-pane').each(function() {
+                const dayNumber = $(this).attr('id').replace('day', '');
+                console.log($(this).attr('id'));
+                const planDayId = `planDay${dayNumber}`;
+                const $planDay = $(`#${planDayId}`);
+                console.log($planDay);
+
+                const day = {
+                    day: dayNumber,
+                    locations: []
+                };
+
+                $planDay.find('li').each(function(idx, element) {
+                    const contentId =  element.querySelector('h4').dataset.contentId;
+                    const $contentId = $(element).find('h4')[0].dataset.contentId;
+                    console.log($(element).find('h4'));
+                    console.log($contentId);
+                   //$(this).closest('.planDay').find('h4')[0].dataset.contentId;
+                    console.log(contentId);
+                    const order = $(element).find('span.number').text();
+
+                    day.locations.push({
+                        contentId,
+                        order
+                    });
+                });
+                locations.push(day);
+            });
+
+            function formatDuration(duration) {
+                const hours = Math.floor(duration / 3600);
+                const minutes = Math.floor((duration % 3600) / 60);
+                if (hours > 0) {
+                    return `${hours} 시간 ${minutes} 분`;
+                } else {
+                    return `${minutes} 분`;
+                }
+            }
+
+            // Ajax 요청 보내기
+            $.ajax({
+                url: '/trip/calculate-info',
+                type: 'POST',
+                data: JSON.stringify(locations),
+                contentType: 'application/json',
+                dataType: 'json',
+                success: function (response) {
+                    // 계산 결과 렌더링 로직 작성 필요
+                    console.log('error' in response);
+                    const isError = 'error' in response;
+                    // Object 내에 제공되는 메서드 활용: 같은 의미
+                    // console.log(response.hasOwnProperty('error'));
+                    if (isError) {
+                        const startTitle = response.startTitle;
+                        const endTitle = response.endTitle;
+                        const errorDays = response.days;
+
+                        let alertMsg = `${errorDays}일차 ${startTitle} ~ ${endTitle} 경로는 `
+                        const message = response.error.message.replaceAll('해당 서비스가', '보행자의 시간, 거리 계산이').trim();
+                        alertMsg += message.includes('(') ? message.substring(0, message.indexOf('(')) : message;
+                        alert(alertMsg);
+                        return;
+                    }
+                    console.log(response);
+                    let totalDistance = 0;
+                    let totalDuration = 0;
+
+                    $('#totalInfo').empty();
+
+                    for (const responseKey in response) {
+                        const days = response[responseKey];
+                        const day = days.day;
+                        const locations = days.locations;
+
+                        totalDistance = 0;
+                        totalDuration = 0;
+
+                        locations.forEach(data => {
+                            const endContentId = data.endContentId;
+                            totalDistance += Number(data.distance);
+                            totalDuration += Number(data.duration);
+                            const $li = $(`h4[data-content-id="${endContentId}"]`).closest('li')
+                            const $timeDiff = $li.find('.time-diff');
+                            const $distanceDiff = $li.find('.distance-diff');
+                            $timeDiff.text(formatDuration(data.duration)).css('visibility', 'visible');
+                            $distanceDiff.text(`${(data.distance / 1000).toFixed(2)} km`).css('visibility', 'visible');
+                        })
+                        // 매 일자마다 DOM 객체 생성
+                        const $dayInfo = $('<div>').addClass('day-info');
+                        const $dayNumber = $('<h3>').text(`${day}일자`);
+                        const $totalDurationSpan = $('<span>').addClass('total-duration').text(formatDuration(totalDuration));
+                        const $totalDistanceSpan = $('<span>').addClass('total-distance').text(`${(totalDistance / 1000).toFixed(2)} km`);
+
+                        $dayInfo.append($dayNumber);
+                        $dayInfo.append($('<p>').text('총 거리: ').append($totalDistanceSpan));
+                        $dayInfo.append($('<p>').text('총 소요 시간: ').append($totalDurationSpan));
+
+                        // #totalInfo에 추가
+                        $('#totalInfo').append($dayInfo);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
         });
     </script>
 

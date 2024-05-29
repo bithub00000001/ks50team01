@@ -17,25 +17,68 @@ import lombok.extern.slf4j.Slf4j;
 public class DestinationService {
 	
 	private final DestinationMapper destinationMapper;
+	/**
+	 * 관광지 세부항목 추가
+	 * @param tourGoodsOptionCd
+	 * @return
+	 */
+	public boolean addTourGoodsCheckList(String tourGoodsOptionCd) {
+		return destinationMapper.addTourGoodsCheckList(tourGoodsOptionCd);
+	}
 	
+	/**
+	 * 관광지 추가
+	 * @param tourName
+	 * @return
+	 */
 	public boolean addTourCheckList(String tourName) {
 		return destinationMapper.addTourCheckList(tourName);
 	}
-	
+	/**
+	 * 관광지 세부항목 제거
+	 * @param tourGoodsOptionCd
+	 */
 	public void removeTourGoods(String tourGoodsOptionCd) {
 		destinationMapper.removeTourGoods(tourGoodsOptionCd);
 		
 	}
-	
+	/**
+	 * 관광지 삭제
+	 * @param tourInfoCode
+	 */
 	public void removeTour(String tourInfoCode) {
 		destinationMapper.removeTour(tourInfoCode);
 		
 	}
-	
-	public void updateTour(Destination destination) {
-		log.info("service destination:{}", destination);
-		destinationMapper.updateTour(destination);
+	/**
+	 * 관광지 등록
+	 * @param destination
+	 * @return
+	 */
+	public int addTour(Destination destination) {
+		return destinationMapper.addTour(destination);
+		
 	}
+	
+	/**
+	 * 관광지 수정
+	 * @param destination
+	 * @return
+	 */
+	public int tourModify(Destination destination) {
+		return destinationMapper.tourModify(destination);
+	}
+	
+	/**
+	 * 관광지 세부정보 수정
+	 * @param destination
+	 * @return
+	 */
+	public int tourGoodsModify(Destination destination) {
+		return destinationMapper.tourGoodsModify(destination);
+		
+	}
+
 	
 	/**
 	 * 여행 정보 id에 해당하는 투어 정보 조회
@@ -66,11 +109,27 @@ public class DestinationService {
 		return destinationMapper.getTourGoodsList();
 	}
 	
-	public void updateTourGoods(Destination destination) {
-		destinationMapper.updateTourGoods(destination);
-	}
+	
+	
 	public Destination getTourGoodsInfoById(String tourGoodsOptionCd) {
 		return destinationMapper.getTourGoodsInfoById(tourGoodsOptionCd);
+		
+	}
+	/**
+	 * 숙소 삭제
+	 * @param lodgingInfoCode
+	 */
+	public void removeLodging(String lodgingInfoCode) {
+		destinationMapper.removeLodging(lodgingInfoCode);
+		
+	}
+	
+	/**
+	 * 슥소 세부항목 제거
+	 * @param tourGoodsOptionCd
+	 */
+	public void removeLodgingGoods(String lodgingMenuCode) {
+		destinationMapper.removeLodgingGoods(lodgingMenuCode);
 		
 	}
 	
@@ -79,8 +138,8 @@ public class DestinationService {
 	 * @param destination
 	 */
 
-	public void updateLodging(Destination destination) {
-		destinationMapper.updateLodging(destination);
+	public void lodgingModify(Destination destination) {
+		destinationMapper.lodgingModify(destination);
 	}
 	
 	public Destination getLodgingInfoById(String lodgingInfoCode) {
@@ -107,8 +166,8 @@ public class DestinationService {
 		return destinationMapper.getLodgingGoodsList();
 	}
 	
-	public void updateLodgingGoods(Destination destination) {
-		destinationMapper.updateLodgingGoods(destination);
+	public void lodgingGoodsModify(Destination destination) {
+		destinationMapper.lodgingGoodsModify(destination);
 	}
 	
 	public Destination getLodgingGoodsInfoById(String lodgingGoodsName) {
@@ -147,23 +206,47 @@ public class DestinationService {
 		log.info("DestinationService restaurantMenuList:{}", restaurantMenuList);
 		
 		return restaurantMenuList;
-		
 	}
-
-	public void updateRestaurantMenu(Destination destination) {
-		destinationMapper.updateRestaurantMenu(destination);
+	
+	public void restaurantMenuModify(Destination destination) {
+		destinationMapper.restaurantMenuModify(destination);
 	}
 	public Destination getRestaurantMenuInfoById(String restaurantMenuManageCode) {
 		return destinationMapper.getRestaurantMenuInfoById(restaurantMenuManageCode);
 	}
 
-
+	
+	/**
+	 * 음식점 삭제
+	 * @param restaurantInfoCode
+	 */
+	public void removeRestaurant(String restaurantInfoCode) {
+		destinationMapper.removeRestaurant(restaurantInfoCode);
+		
+	}
+	
+	/**
+	 * 음식점 상세정보 삭제
+	 * @param restaurantMenuManageCode
+	 */
+	public void removeRestaurantMenu(String restaurantMenuManageCode) {
+		destinationMapper.removeRestaurantMenu(restaurantMenuManageCode);
+		
+	}
 
 
 
 
 	
-	
-	
-
 }
+
+
+
+
+
+
+	
+	
+	
+
+

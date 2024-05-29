@@ -113,14 +113,14 @@
 									<td th:text="${l.tourGoodsCate}"></td>
 									<td th:text="${l.tourGoodsList}"></td>
 									<td th:text="${l.tourGoodsTime}"></td>
-									<td th:text="${l.RegionSName}"></td>
+									<td th:text="${l.regionSCateName}"></td>
 									<td th:text="${l.tourgoodsAuthorityId}"></td>
 									<td th:text="${l.tourGoodsCode}"></td>
 									<td th:text="${l.tourGoodsOptionCd}"></td>
 									<td th:text="${l.tourOptionRemarks}"></td>
 									<td th:text="${l.tourTotal}"></td>
-									<td th:text="${l.tourOthers}"></td>
 									<td th:text="${l.tourRegDate}"></td>
+									<td th:text="${l.tourFormDate}"></td>
 									<td>
 									    <a th:href="@{/platform/destination/tourGoodsModify(tourGoodsOptionCd=${l.tourGoodsOptionCd})}">수정</a>
 									</td>
@@ -191,8 +191,6 @@
 			    });
 			});
 		</script>
-	</th:block>
-	<th:block>
 		<script th:inline="javascript">
 			    function deleteConfirm(element) {
 			        var tourGoodsOptionCd = element.getAttribute('data-tourGoodsInfo-code');
@@ -209,7 +207,7 @@
 			            	name: 'tourGoodsOptionCd',
 			            	value: tourGoodsOptionCd
 			            });
-			            $deleteForm.append($tourGoodsOptionCd);
+			            $deleteForm.append($tourInfoCode);
 			            $('body').append($deleteForm);
 			            $deleteForm.submit();
 			        } else {

@@ -36,18 +36,44 @@
 				        <input type="text" class="form-control" id="tourName" name="tourName" th:value="${tourInfo.tourName}">
 				    </div>
 				
+				    
+				    <div class="form-group">
+				        <label for="tripSCateCode">여행지 소분류 코드</label>
+				        <input type="text" class="form-control" id="tripSCateCode" name="tripSCateCode" th:value="${tourInfo.tripSCateCode}">
+				    </div>
+				    
+				    <div class="form-group">
+				        <label for="partnerBPlaceCode">제휴사업장 코드</label>
+				        <input type="text" class="form-control" id="partnerBPlaceCode" name="partnerBPlaceCode" th:value="${tourInfo.partnerBPlaceCode}">
+				    </div>
+				    
+				    <div class="form-group">
+				        <label for="regionSCateName">지역 소분류 명</label>
+				        <input type="text" class="form-control" id="regionSCateName" name="regionSCateName" th:value="${tourInfo.regionSCateName}">
+				    </div>
+				    
+				    <div class="form-group">
+				        <label for="tourAuthorityId">등록플랫폼권한아이디</label>
+				        <input type="text" class="form-control" id="tourAuthorityId" name="tourAuthorityId" th:value="${tourInfo.tourAuthorityId}">
+				    </div>
+				
 				    <div class="form-group">
 				        <label for="tourAddr">관광지 주소</label>
 				        <input type="text" class="form-control" id="tourAddr" name="tourAddr" th:value="${tourInfo.tourAddr}">
 				    </div>
 				
 				    <div class="form-group">
-				        <label for="tourDaddr">광광지 상세주소</label>
+				        <label for="tourDaddr">관광지 상세주소</label>
 				        <input type="text" class="form-control" id="tourDaddr" name="tourDaddr" th:value="${tourInfo.tourDaddr}">
+				    </div>
+				    
+				    <div class="form-group">
+				        <label for="tourSite">관광지 사이트</label>
+				        <input type="text" class="form-control" id="tourSite" name="tourSite" th:value="${tourInfo.tourSite}">
 				    </div>
 				
 				    <div class="form-group">
-				        <label for="tourContactNum">관광지 연락처</label>
+				        <label for="tourContactNum">관광지 연락처1</label>
 				        <input type="tel" class="form-control" id="tourContactNum" name="tourContactNum" th:value="${tourInfo.tourContactNum}">
 				    </div>
 				
@@ -56,14 +82,14 @@
 				        <input type="tel" class="form-control" id="tourContactNum2" name="tourContactNum2" th:value="${tourInfo.tourContactNum2}">
 				    </div>
 				    
-				    <div class="form-group">
-				        <label for="tourSite">광광지 사이트</label>
-				        <input type="text" class="form-control" id="tourSite" name="tourSite" th:value="${tourInfo.tourSite}">
+				     <div class="form-group">
+				        <label for="tourOthers">관광지 기타정보</label>
+				        <input type="tel" class="form-control" id="tourOthers" name="tourOthers" th:value="${tourInfo.tourOthers}">
 				    </div>
 				    
 				    <div class="form-group">
-				        <label for="tourOthers">광광지 기타정보</label>
-				        <input type="text" class="form-control" id="tourOthers" name="tourOthers" th:value="${tourInfo.tourOthers}">
+				        <label for="tourRegDate">등록일자</label>
+				        <input type="text" class="form-control" id="tourRegDate" name="tourRegDate" th:value="${tourInfo.tourRegDate}">
 				    </div>
 				    
 				    <button type="submit" class="btn btn-primary">저장</button>
