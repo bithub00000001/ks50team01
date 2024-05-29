@@ -60,7 +60,11 @@ public class PlanRankingController {
 		
 		return "platform/ranking/modifyPlanRanking";
 	}
-	
+	/**
+	 * 여행계획 리스트 등록
+	 * @param planRanking
+	 * @return
+	 */
 	@PostMapping("/addPlanUserRanking")
 	public String addPlanUserRanking(PlanRanking planRanking) {
 		planRankingService.addPlanUserRanking(planRanking);
@@ -75,7 +79,11 @@ public class PlanRankingController {
 		model.addAttribute("planRankingList", planRankingList);
 		return "platform/ranking/addPlanUserRanking";
 	}
-	
+	/**
+	 * 여행계획 리스트 중복체크
+	 * @param userTripPlanId
+	 * @return
+	 */
 	@PostMapping("/planRankingListCheck")
 	@ResponseBody
 	public boolean planRankingListCheck(@RequestParam(value="userTripPlanId") String userTripPlanId) {
