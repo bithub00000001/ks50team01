@@ -30,4 +30,6 @@ public interface UTripPlanService {
 
 	// 여행 세부 계획 작성 페이지에서 정보를 받아 거리와 소요 시간을 계산하는 메서드
 	Map<String, Object> calculateDistanceDuration(List<UDayInfo> locations) throws JsonProcessingException;
+
+	int addTempPlanInfo(UTripOption uTripOption);
 }
