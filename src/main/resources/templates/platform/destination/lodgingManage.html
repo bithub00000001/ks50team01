@@ -96,11 +96,16 @@
 									<th>숙소 이름</th>
 									<th>숙소 코드</th>
 									<th>숙소 등록권한 아이디</th>
+									<th>여행지 소분류 코드</th>
+									<th>제휴 사업장 코드</th>
+									<th>지역 소분류 명</th>
 									<th>숙소 주소</th>
 									<th>숙소 상세주소</th>
 									<th>숙소 사이트</th>
 									<th>숙소 연락처</th>
 									<th>숙소 연락처2</th>
+									<th>등록일자</th>
+									<th>수정일자</th>
 									<th>수정</th>
 									<th>삭제</th>
 								</tr>
@@ -110,11 +115,16 @@
 									<td th:text="${l.lodgingName}"></td>
 									<td th:text="${l.lodgingInfoCode}"></td>
 									<td th:text="${l.lodgingAuthorityId}"></td>
+									<td th:text="${l.tripSCateCode}"></td>
+									<td th:text="${l.partnerBPlaceCode}"></td>
+									<td th:text="${l.regionSCateName}"></td>
 									<td th:text="${l.lodgingAddr}"></td>
 									<td th:text="${l.lodgingDaddr}"></td>
 									<td th:text="${l.lodgingSite}"></td>
 									<td th:text="${l.lodgingContactNum}"></td>
 									<td th:text="${l.lodgingContactNum2}"></td>
+									<td th:text="${l.lodgingRegDate}"></td>
+									<td th:text="${l.lodgingFormDate}"></td>
 									<td>
 									    <a th:href="@{/platform/destination/lodgingModify(lodgingInfoCode=${l.lodgingInfoCode})}">수정</a>
 									</td>
@@ -196,7 +206,7 @@
 					
 					if(movePage){
 						if(movePage === 'lodgingManage') {
-							location.href = '/platform/destination/addLoding';
+							location.href = '/platform/destination/addLodging';
 						}else if(movePage === 'lodgingGoodsManage') {
 							location.href = '/platform/destination/addLodgingGoods';
 						}
