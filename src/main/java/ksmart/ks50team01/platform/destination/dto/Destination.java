@@ -28,7 +28,6 @@ public class Destination {
 	private String tourGoodsOptionCd;
 	private String tourOptionRemarks;
 	private String tourTotal;
-	private String tourGoodsOptPrice;
 	
 	
 	private String lodgingName;
@@ -64,7 +63,7 @@ public class Destination {
 	private String restaurantOthers;
 	private String restaurantMenuManageCode;
 	private String restaurantMenuPrice;
-	
+
 	
 	
 	

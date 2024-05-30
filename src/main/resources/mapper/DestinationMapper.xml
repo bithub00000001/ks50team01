@@ -4,7 +4,6 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="ksmart.ks50team01.platform.destination.mapper.DestinationMapper">
-	
 	<select id="addTourGoodsCheckList" parameterType="String" resultType="boolean">
 		/* 중복 관광지 세부사항 체크 */
 			SELECT
@@ -18,109 +17,57 @@
 	
 	<select id="addTourCheckList" parameterType="String" resultType="boolean">
 		/* 중복 관광지 체크 */
-			SELECT
-				COUNT(TOUR_NAME)
-			FROM
-				TOUR_GOODS as tg
-				INNER JOIN 
-				TOUR_GOODSOPTION as tgo
-				ON
-				tg.TOUR_GDS_CD = tgo.TOUR_GDS_CD
-				INNER JOIN
-				TOUR_INFO as ti
-				ON
-				tg.TOUR_INFO_CD = ti.TOUR_INFO_CD
-			WHERE
-				TOUR_NAME = #{TOUR_NAME};		
+		SELECT
+			COUNT(TOUR_NAME)
+		FROM
+			TOUR_GOODS as tg
+			INNER JOIN 
+			TOUR_GOODSOPTION as tgo
+			ON
+			tg.TOUR_GDS_CD = tgo.TOUR_GDS_CD
+			INNER JOIN
+			TOUR_INFO as ti
+			ON
+			tg.TOUR_INFO_CD = ti.TOUR_INFO_CD
+		WHERE
+			TOUR_NAME = #{TOUR_NAME};		
 	
 	
 	
 	</select>
 	
 	<insert id="addTour" parameterType="destination">
-		/* 관광지 등록 처리 */
-		INSERT INTO
-			TOUR_INFO
-			(TOUR_NAME,
-			 TOUR_INFO_CD,
-			 TRIP_SCTGRY_CD,
-			 PRTNR_BPLC_CD,
-			 RGN_SCTGRY_NM,
-			 REG_PF_BIZ_ID,
-			 TOUR_ADDR, 		
-			 TOUR_DADDR, 		
-			 TOUR_SITE, 		
-			 TOUR_CONTATC1,
-			 TOUR_CONTATC2,
-			 TOUR_OTHERS,
-			 REG_YMD)
-		VALUES
-			(#{tourName},
-			 #{tourInfoCode},
-			 #{tripSCateCode},
-			 #{partnerBPlaceCode},
-			 #{regionSCateName},
-			 #{tourAuthorityId},
-			 #{tourAddr},
-		 	 #{tourDaddr},
-		 	 #{tourSite},
-			 #{tourContactNum},
-		 	 #{tourContactNum2},
-			#{tourOthers}, 	 
-			NOW());
+	/* 관광지 등록 처리 */
+	INSERT INTO
+	TOUR_INFO
+	(TOUR_NAME,
+	 TOUR_INFO_CD,
+	 TRIP_SCTGRY_CD,
+	 PRTNR_BPLC_CD,
+	 RGN_SCTGRY_NM,
+	 REG_PF_BIZ_ID,
+	 TOUR_ADDR, 		
+	 TOUR_DADDR, 		
+	 TOUR_SITE, 		
+	 TOUR_CONTATC1,
+	 TOUR_CONTATC2,
+	 TOUR_OTHERS,
+	 REG_YMD)
+VALUES
+	(#{tourName},
+	 #{tourInfoCode},
+	 #{tripSCateCode},
+	 #{partnerBPlaceCode},
+	 #{regionSCateName},
+	 #{tourAuthorityId},
+	 #{tourAddr},
+ 	 #{tourDaddr},
+ 	 #{tourSite},
+	 #{tourContactNum},
+ 	 #{tourContactNum2},
+	#{tourOthers}, 	 
+	NOW());
 	
-	</insert>
-	
-
-	<insert id="addTourGoods" parameterType="destination">
-		/* 관광지 세부 등록 */
-			INSERT INTO 
-				TOUR_GOODS
-				(TOUR_GDS_CD, 
-				PRTNR_BPLC_CD,
-				 REG_PF_BIZ_ID, 
-				 TOUR_INFO_CD,
-				 RGN_SCTGRY_NM, 
-				 TOUR_GDS_CTGRY,
-				 ACT_YN,
-				 REG_YMD)
-				VALUES 
-				(
-				 #{tourGoodsCode},
-				 #{partnerBPlaceCode},
-				 #{tourAuthorityId},
-				 #{tourInfoCode},
-				 #{regionSCateName},
-				 #{tourGoodsCate},
-				 'Y',
-				 now()
-				 );
-	</insert>
-	
-	<insert id="addTourGoodsOp">
-		/* 관광지 세부사항 옵션 등록 */
-			INSERT INTO TOUR_GOODSOPTION
-			(TOUR_GDSOPT_CD,
-			 REG_PF_BIZ_ID, 
-			 TOUR_GDS_CD,
-			 PRTNR_BPLC_CD,
-			 RGN_SCTGRY_NM, 
-			 TOUR_GDSOPT_LIST,
-			 TOUR_GDSOPT_PRC,
-			 TOUR_GDSOPT_TIME, 
-			 TOUR_GDSOPT_RMRK, 
-			 REG_YMD)
-			VALUES 
-			(#{tourGoodsOptionCd},
-			 #{tourAuthorityId},
-			 #{tourGoodsCode},
-			 #{partnerBPlaceCode},
-			 #{regionSCateName}, 
-			 #{tourGoodsList},
-			 #{tourGoodsOptPrice},
-			 #{tourGoodsTime}, 
-			 #{tourOptionRemarks}, 
-			 NOW());
 	</insert>
 	
 	<select id="searchTourName" resultType="destination">
@@ -175,33 +122,6 @@
 				TOUR_INFO;
 
 	</select>
-	
-	<select id="getTourInfoListByName" resultType="destination">
-
-		/* 관광지 이름 검색 정보 조회 */
-
-			SELECT
-				TOUR_INFO_CD 	AS 	tourInfoCode,
-				REG_PF_BIZ_ID 	AS 	tourAuthorityId,
-				TOUR_NAME 		AS 	tourName,
-				TOUR_ADDR 		AS 	tourAddr,
-				TOUR_DADDR 		AS 	tourDaddr,
-				TOUR_SITE 		AS	tourSite,
-				TOUR_CONTATC1 	AS	tourContactNum,
-				TOUR_CONTATC2 	AS 	tourContactNum2,
-				TOUR_OTHERS 	AS 	tourOthers,
-				REG_YMD 		AS 	tourRegDate,
-				MDFCN_YMD 		AS 	tourFormDate
-			FROM
-				TOUR_INFO
-			<where>
-				<if test="tourName != null and tourName != ''">
-					TOUR_NAME LIKE CONCAT('%', #{tourName}, '%');
-				</if>
-			</where>
-
-	</select>
-	
 
 	<select id="getTourInfoByName" resultType="destination">
 		/* 관광지 수정 전 처리 */
@@ -262,7 +182,7 @@
 				tg.TOUR_GDS_CD 			AS tourGoodsCode,
 				tgo.TOUR_GDSOPT_CD 		AS tourGoodsOptionCd,
 				tgo.TOUR_GDSOPT_RMRK 	AS tourOptionRemarks,
-				tgo.TOUR_GDSOPT_PRC		AS tourGoodsOptPrice,
+				tg.FAVS_TOTAL 			AS tourTotal,
 				tgo.REG_YMD 			AS tourRegDate,
 				tgo.MDFCN_YMD 			AS tourFormDate
 			FROM
@@ -350,65 +270,6 @@
 				tgo.TOUR_GDSOPT_CD = #{tourGoodsOptionCd};
 
 	</update>
-		
-	<select id="addLodgingCheckList" parameterType="String" resultType="boolean">
-		/* 중복 숙소 체크 */
-			SELECT	
-				COUNT(LODGING_NAME)
-			FROM
-				LODGING_INFO
-			WHERE
-				LODGING_NAME = #{lodgingName};	
-	</select>
-	
-	<select id="addLodgingGoodsCheckList" parameterType="String" resultType="boolean">
-		/* 중복 숙소 세부정보 체크 */
-			SELECT
-				COUNT(LODGING_MENU_CD)
-			FROM
-				LODGING_MENU
-			WHERE
-				LODGING_MENU_CD = #{lodgingMenuCode};
-	</select>
-	
-	<insert id="addLodging" parameterType="destination">
-		/*숙소 등록 처리 */
-			INSERT INTO 
-				LODGING_INFO
-				(LODGING_INFO_CD, 
-				 REG_PF_BIZ_ID, 
-				 TRIP_SCTGRY_CD, 
-				 PRTNR_BPLC_CD, 
-				 RGN_SCTGRY_NM, 
-				 LODGING_NAME, 
-				 LODGING_ADDR, 
-				 LODGING_DADDR, 
-				 LODGING_CONTACT1, 
-				 LODGING_CONTACT2, 
-				 LODGING_SITE, 
-				 REG_YMD)
-				VALUES 
-				(#{lodgingInfoCode}, 
-				 #{lodgingAuthorityId}, 
-				 #{tripSCateCode}, 
-				 #{partnerBPlaceCode}, 
-				 #{regionSCateName}, 
-				 #{lodgingName}, 
-				 #{lodgingAddr}, 
-				 #{lodgingDaddr}, 
-				 #{lodgingContactNum}, 
-				 #{lodgingContactNum2}, 
-				 #{lodgingSite}, 
-				 NOW());
-	</insert>
-	
-	<insert id="addLodingGoods" parameterType="destination">
-		/* 숙소 상세정보 등록 처리 */
-				
-			
-	
-	</insert>
-
 	
 	<delete id="removeLodgingGoods" parameterType="String">
 		/* 숙소 상세목록 삭제 */
@@ -420,6 +281,8 @@
 			WHERE
 				LODGING_MENU_CD = #{lodgingMenuCode};
 	</delete>
+	
+
 	
 	<delete id="removeLodging" parameterType="String">
 		/* 숙소 삭제 */
@@ -434,19 +297,16 @@
 	<select id="getLodgingInfoList" resultType="destination">
 		/* 숙소 정보 */
 			SELECT
-				LODGING_INFO_CD 	AS 	lodgingInfoCode,
-				TRIP_SCTGRY_CD		AS	tripSCateCode,
-				PRTNR_BPLC_CD		AS	partnerBPlaceCode,
-				RGN_SCTGRY_NM		AS	regionSCateName,
-				REG_PF_BIZ_ID 		AS 	lodgingAuthorityId,
-				LODGING_NAME 		AS 	lodgingName,
-				LODGING_ADDR 		AS 	lodgingAddr,
-				LODGING_DADDR 		AS 	lodgingDaddr,
-				LODGING_CONTACT1 	AS 	lodgingContactNum,
-				LODGING_CONTACT2 	AS 	lodgingContactNum2,
-				LODGING_SITE 		AS 	lodgingSite,
-				REG_YMD 			AS 	lodgingRegDate,
-				MDFCN_YMD 			AS 	lodgingFormDate
+				LODGING_INFO_CD 	AS lodgingInfoCode,
+				REG_PF_BIZ_ID 		AS lodgingAuthorityId,
+				LODGING_NAME 		AS lodgingName,
+				LODGING_ADDR 		AS lodgingAddr,
+				LODGING_DADDR 		AS lodgingDaddr,
+				LODGING_CONTACT1 	AS lodgingContactNum,
+				LODGING_CONTACT2 	AS lodgingContactNum2,
+				LODGING_SITE 		AS lodgingSite,
+				REG_YMD 			AS lodgingRegDate,
+				MDFCN_YMD 			AS lodgingFormDate
 			FROM
 				LODGING_INFO;
 	</select>

@@ -27,14 +27,6 @@ public class DestinationManageController {
 	
 	private final DestinationService destinationService;
 	
-	@GetMapping("/destination/search-tour-name")
-	@ResponseBody
-	public List<Destination> getTourListByName(@RequestParam(value="tourName") String tourName){
-		List<Destination> tourList = destinationService.getTourInfoListByName(tourName);
-		
-		return tourList;
-	}
-	
 	/**
 	 * 관광지 상세정보 삭제
 	 * @param tourGoodsOptionCd
@@ -86,16 +78,28 @@ public class DestinationManageController {
 	}
 	
 	/**
-	 * 관광지 상세정보 중복체크
-	 * @param tourGoodsOptionCd
+	 * 관광지 상품 등록
+	 * @param destination
 	 * @return
 	 */
 	@GetMapping("/destination/addTourGoodsCheckList")
 	@ResponseBody
 	public boolean addTourGoodsCheckList(@RequestParam(value = "tourGoodsOptionCd") String tourGoodsOptionCd) {
-		boolean isTourGoodsOptionCd = destinationService.addTourGoodsCheckList(tourGoodsOptionCd);
+		boolean isTourGoodsOptionCd= destinationService.addTourGoodsCheckList(tourGoodsOptionCd);
 		return isTourGoodsOptionCd;
 	}
+	
+	@PostMapping("/destination/addTourGoods")
+	public String addTourGoods(Destination destination) {
+		return "redirect:/platform/destination/tourGoodsManage";
+	}
+	
+	@GetMapping("/destination/addTourGoods")
+	public String addTourGoods(Model model) {
+		model.addAttribute("title", "관광지 세부항목 등록");
+		return "platform/destination/addTourGoods";
+	}
+	
 	
 	/**
 	 * 관광지 중복체크
@@ -109,7 +113,6 @@ public class DestinationManageController {
 		boolean isTourName = destinationService.addTourCheckList(tourName);
 		return isTourName;
 	}
-	
 	/**
 	 * 관광지 등록
 	 * @param destination
@@ -127,30 +130,6 @@ public class DestinationManageController {
 		model.addAttribute("addTourList", addTourList);
 		model.addAttribute("title", "관광지 등록");
 		return "platform/destination/addTour";
-	}
-
-	/**
-	 * 관광지 상품 등록
-	 * @param destination
-	 * @return
-	 */
-	@PostMapping("/destination/addTourGoods")
-	public String addTourGoods(Destination destination) {
-		
-		log.info("input destination: {}", destination);
-		destinationService.addTourGoods(destination);
-
-		return "redirect:/platform/destination/tourGoodsManage";
-	}
-	
-	@GetMapping("/destination/addTourGoods")
-	public String addTourGoods(Model model) {
-		List<Destination> addTourGoods = destinationService.getTourGoodsList();
-		
-		model.addAttribute("addTourGoods", addTourGoods);
-		model.addAttribute("title", "관광지 세부항목 등록");
-		
-		return "platform/destination/addTourGoods";
 	}
 	
 	/**
@@ -226,69 +205,6 @@ public class DestinationManageController {
 		model.addAttribute("title", "관광상품 관리");
 		
 		return "/platform/destination/tourGoodsManage";
-	}
-	
-	/**
-	 * 숙소 등록
-	 * @param destination
-	 * @return
-	 */
-	@PostMapping("/destination/addLodging")
-	public String addLodging(Destination destination) {
-		destinationService.addLodging(destination);
-		return "redirect:/platform/destination/lodgingManage";
-	}
-	@GetMapping("/destination/addLodging")
-	public String addLodging(Model model) {
-		List<Destination> addLodgingList = destinationService.getLodgingInfoList();
-		
-		model.addAttribute("addLodgingList", addLodgingList);
-		model.addAttribute("title", "숙소 등록");
-		
-		return "platform/destination/addLodging";
-	}
-	/**
-	 * 숙소 상세정보 등록
-	 * @param destination
-	 * @return
-	 */
-	@PostMapping("/destination/addLodgingGoods")
-	public String addLodgingGoods(Destination destination) {
-		destinationService.addLodgingGoods(destination);
-		return "redirect:/platform/destination/lodgingGoodsManage";
-	}
-	@GetMapping("/destination/addLodgingGoods")
-	public String addLodgingGoods(Model model) {
-		List<Destination> addLodgingGoodsList = destinationService.getLodgingGoodsList();
-		
-		model.addAttribute("addLodgingGoodsList", addLodgingGoodsList);
-		model.addAttribute("title", "숙소 상제정보 등록");
-		
-		return "platform/destination/addLodgingGoods";
-	}
-	
-	/**
-	 * 숙소이름 중복체크
-	 * @param lodgingName
-	 * @return
-	 */
-	@GetMapping("/destination/addLodgingCheckList")
-	@ResponseBody
-	public boolean addLodgingCheckList(@RequestParam(value = "lodgingName") String lodgingName) {
-		boolean isLodgingName = destinationService.addLodgingCheckList(lodgingName);
-		return isLodgingName;
-	}
-	
-	/**
-	 * 숙소 상세정보 중복체크
-	 * @param lodgingMenuCode
-	 * @return
-	 */
-	@GetMapping("/destination/addLodgingGoodsCheckList")
-	@ResponseBody
-	public boolean addLodgingGoodsCheckList(@RequestParam(value = "lodgingMenuCode") String lodgingMenuCode) {
-		boolean isLodgingMenuCode = destinationService.addLodgingGoodsCheckList(lodgingMenuCode);
-		return isLodgingMenuCode;
 	}
 	
 	/**

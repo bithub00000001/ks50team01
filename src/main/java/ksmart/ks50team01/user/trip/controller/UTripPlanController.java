@@ -1,6 +1,7 @@
 package ksmart.ks50team01.user.trip.controller;
 
 import java.time.format.DateTimeParseException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -85,20 +86,6 @@ public class UTripPlanController {
 
         log.info("resultMap: {}", resultMap);
         return ResponseEntity.status(HttpStatus.OK).body(resultMap);
-    }
-
-    @PostMapping("/save-temp-plan-info")
-    @ResponseBody
-    public ResponseEntity<String> addTempPlanInfo(@ModelAttribute("uTripOption") UTripOption uTripOption) {
-
-        log.info("uTripOption: {}", uTripOption);
-        try {
-            // uTripOption 객체를 DB에 저장하는 로직
-            // uTripPlanService.addTempPlanInfo(uTripOption);
-            return ResponseEntity.ok("Success");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to save temporary trip details.");
-        }
     }
 
     /**
