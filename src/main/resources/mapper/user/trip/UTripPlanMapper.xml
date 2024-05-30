@@ -9,11 +9,6 @@
         <result column="MBR_NICKNAME" property="nickname"/>
     </resultMap>
 
-    <insert id="addTempPlanInfo">
-        /* 임시 상태로 여행 계획을 저장 */
-
-    </insert>
-
 
     <select id="getTourInfoObject" resultType="String" parameterType="string">
         /* 여행지 정보를 컬럼 이름과 값으로 찾은 후 JSON 객체로 반환 */
