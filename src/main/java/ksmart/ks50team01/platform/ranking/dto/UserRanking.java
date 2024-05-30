@@ -9,9 +9,12 @@ public class UserRanking {
 	private String userRankingRegId;
 	private String partnerBusinessCode;
 	private String tripLctgryCode;
-	private String rgnSctgryName;
+	private String destinationType;
+	private String destinationCId;
+	private String destinationTitle;
+	private String destinationAddr;
+	private String destinationImg;
 	private int userRank;
-	private String artclRankingNum;
 	private String reviewStatsStart;
 	private String reviewStatsEnd;
 	private String platformAdStart;
@@ -19,4 +22,5 @@ public class UserRanking {
 	private String activate;
 	private String regDate;
 	private String modifyDate;
+	private String autoUserId;
 }

@@ -17,4 +17,5 @@ public class PlanRanking {
 	private String activate;
 	private String regDate;
 	private String modifyDate;
+	private String autoPlanId;
 }

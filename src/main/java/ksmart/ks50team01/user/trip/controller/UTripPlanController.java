@@ -1,6 +1,7 @@
 package ksmart.ks50team01.user.trip.controller;
 
 import java.time.format.DateTimeParseException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -76,13 +77,15 @@ public class UTripPlanController {
      */
     @PostMapping("/calculate-info")
     @ResponseBody
-    public ResponseEntity<Map<String, Object>> calculateInfo(@RequestBody List<UDayInfo> uDayInfoList) {
-        log.info("uDayInfoList: {}", uDayInfoList);
+    public ResponseEntity<Map<String, Object>> calculateInfo(@RequestBody List<UDayInfo> uDayInfoList) throws
+		JsonProcessingException {
         Map<String, Object> resultMap = uTripPlanService.calculateDistanceDuration(uDayInfoList);
+
+        resultMap = uTripPlanService.calculateDistanceDuration(uDayInfoList);
+
+
         log.info("resultMap: {}", resultMap);
-        HttpStatus httpStatus;
-        httpStatus = HttpStatus.OK;
-        return ResponseEntity.status(httpStatus).body(resultMap);
+        return ResponseEntity.status(HttpStatus.OK).body(resultMap);
     }
 
     /**

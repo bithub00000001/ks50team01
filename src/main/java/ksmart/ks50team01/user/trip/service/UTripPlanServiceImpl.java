@@ -10,6 +10,7 @@ import java.util.Objects;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -33,7 +34,7 @@ import lombok.extern.slf4j.Slf4j;
 public class UTripPlanServiceImpl implements UTripPlanService {
 
 	private final UTripPlanMapper utripPlanMapper;
-	private final UTmapApiService utmapApiService;
+	private final UTmapApiService uTmapApiService;
 
 	/**
 	 * 데이트 레인지를 받아 출발 날짜와 도착 날짜로 분리하는 메서드(현재는 출발 날짜와 도착 날짜를 클라이언트에서 처리함)
@@ -120,7 +121,7 @@ public class UTripPlanServiceImpl implements UTripPlanService {
 	}
 
 	@Override
-	public Map<String, Object> calculateDistanceDuration(List<UDayInfo> days) {
+	public Map<String, Object> calculateDistanceDuration(List<UDayInfo> days) throws JsonProcessingException {
 		Map<String, Object> results = new HashMap<>();
 
 		for (UDayInfo uDayInfo : days) {
@@ -134,20 +135,33 @@ public class UTripPlanServiceImpl implements UTripPlanService {
 
 
 
-				Map<String, Double> startXY = utripPlanMapper.getMapXY(startPoint.getContentId());
-				Map<String, Double> endXY = utripPlanMapper.getMapXY(endPoint.getContentId());
+				Map<String, Object> startXY = utripPlanMapper.getMapXY(startPoint.getContentId());
+				Map<String, Object> endXY = utripPlanMapper.getMapXY(endPoint.getContentId());
 
-				startPoint.setStartMapX(startXY.get("longitude"));
-				startPoint.setStartMapY(startXY.get("latitude"));
-				endPoint.setEndMapX(endXY.get("longitude"));
-				endPoint.setEndMapY(endXY.get("latitude"));
 
-				TMapApiResponse apiResponse = utmapApiService.fetchFromApi(
-					startPoint.getContentId(), endPoint.getContentId(),
-					startPoint.getStartMapX(), startPoint.getStartMapY(),
-					endPoint.getEndMapX(), endPoint.getEndMapY()
-				).block();
-				log.info("apiResponse: {}", apiResponse);
+
+				startPoint.setStartMapX((Double)startXY.get("longitude"));
+				startPoint.setStartMapY((Double)startXY.get("latitude"));
+				endPoint.setEndMapX((Double)endXY.get("longitude"));
+				endPoint.setEndMapY((Double)endXY.get("latitude"));
+				ObjectMapper objectMapper = new ObjectMapper();
+				TMapApiResponse apiResponse = null;
+				try {
+					apiResponse = uTmapApiService.fetchFromApi(
+						startPoint.getContentId(), endPoint.getContentId(),
+						startPoint.getStartMapX(), startPoint.getStartMapY(),
+						endPoint.getEndMapX(), endPoint.getEndMapY()
+					).block();
+				}catch (WebClientResponseException exception) {
+					log.info("exception.getResponseBodyAsString: {}", exception.getResponseBodyAsString());
+					String exceptionMessage = exception.getResponseBodyAsString();
+					Map<String, Object> exceptionMapper = objectMapper.readValue(exceptionMessage,new TypeReference<Map<String, Object>>() {});
+					exceptionMapper.put("startTitle", startXY.get("title"));
+					exceptionMapper.put("endTitle", endXY.get("title"));
+					exceptionMapper.put("days", uDayInfo.getDay());
+					return exceptionMapper;
+				}
+
 
 				ULocationDistanceInfo locationResult = setLocationDistanceInfo(startPoint, endPoint,
 					apiResponse);

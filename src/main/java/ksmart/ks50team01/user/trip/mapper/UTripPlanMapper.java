@@ -19,5 +19,5 @@ public interface UTripPlanMapper {
 	List<Login> searchUserMembers(String nickname);
 
 	// 컨텐트 ID와 일치하는 위,경도 조회
-	Map<String, Double> getMapXY(String contentId);
+	Map<String, Object> getMapXY(String contentId);
 }
