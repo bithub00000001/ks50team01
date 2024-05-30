@@ -15,7 +15,7 @@
         <div class="accordion-item">
             <h2 class="accordion-header" id="headingOne">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
-                        aria-expanded="true" aria-controls="collapseOne">
+                        disabled="disabled" aria-expanded="true" aria-controls="collapseOne">
                     여행 계획 세부 정보
                 </button>
             </h2>
@@ -25,7 +25,7 @@
                     <!-- 첫 번째 페이지 내용 -->
                     <form th:action="@{/trip/details}" method="post" th:object="${uTripOption}">
                         <div class="d-flex justify-content-end">
-                            <button class="btn btn-primary btn-sm me-2" type="button" id="tmpSave" onclick="fristStepSubmit()">임시 저장</button>
+                            <button class="btn btn-primary btn-sm me-2" type="button" id="tmpSave" onclick="firstStepSubmit()">임시 저장</button>
                             <button class="btn btn-secondary btn-sm" type="button">목록으로</button>
                         </div>
                         <div class="mb-3">
@@ -109,7 +109,7 @@
 
         <div class="accordion-item">
             <h2 class="accordion-header" id="headingTwo">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" disabled="disabled"
                         data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                     여행 계획 조정
                 </button>
@@ -121,7 +121,7 @@
                     <div class="row justify-content-between">
                         <div class="d-flex justify-content-end">
                             <button class="btn btn-primary btn-sm me-2" type="button">저장</button>
-                            <button class="btn btn-secondary btn-sm" type="button">이전으로</button>
+                            <button class="btn btn-secondary btn-sm" type="button" onclick="backToFirstStepStage()">이전으로</button>
                         </div>
                         <!-- 지역 선택 -->
                         <div class="form-group col-lg-6 mb-md-6 mb-lg-0">
@@ -935,36 +935,6 @@
                 }
             });
         });
-    </script>
-
-    <script th:inline="javascript">
-        /*$(function () {
-            setTimeout(function () {
-                // 숙소 탭 활성화
-                //$('#accommodation-tab').addClass('active');
-                // 1일차 탭도 활성화
-                $('#day1-tab').addClass('active');
-            }, 50);
-        });*/
-        // Accordion 버튼에 대한 클릭 이벤트 설정
-        /*
-        $('.accordion-button').on('click', function () {
-            // 특정 탭에 'active' 클래스 추가
-            $('#day1-tab').addClass('active');
-            const option = {
-                center : new kakao.maps.LatLng(36.2683, 127.6358), // 지도의 중심좌표
-                level : 20 // 지도의 확대 레벨
-            }
-            console.log(kakaoMap);
-            //map.setCenter(new kakao.maps.LatLng(36.2683, 127.6358));
-            //map.relayout();
-            /*
-            const  map = new kakao.maps.Map(document.getElementById('map'), { // 지도를 표시할 div
-                center : new kakao.maps.LatLng(36.2683, 127.6358), // 지도의 중심좌표
-                level : 20 // 지도의 확대 레벨
-            });
-
-        }); */
     </script>
 </th:block>
 </html>
