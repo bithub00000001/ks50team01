@@ -5,7 +5,7 @@
 <mapper namespace="ksmart.ks50team01.platform.board.mapper.PCommunityMapper">
 	
 	<resultMap 	id="postResultMap" 		type="PCommunity">
-		<id 	property="postNum" 		column="PST_NO" />
+		<id 	property="postCode" 	column="PST_NO" />
 		<result property="postRegId" 	column="REG_MBR_ID" />
 		<result property="postCateNum" 	column="PST_CTGRY_NO" />
 		<result property="postTitle" 	column="PST_TTL" />
@@ -19,6 +19,7 @@
 		<result property="postRegDate" 	column="REG_YMD" />
 		<result property="postMdfDate" 	column="MDFCN_YMD" />
 		<result property="postDelDate" 	column="DEL_YMD" />
+		<result property="postNum" 		column="postNum" />
 		
 		
 		<!-- 1:1 association -->
@@ -77,7 +78,7 @@
 	<select id="getCommunityList" resultMap="postResultMap">
 	 	/* 커뮤니티 조회 */
 	 	SELECT
-			ROW_NUMBER() OVER(ORDER BY CAST(SUBSTRING_INDEX(P.PST_NO, 'PST_', -1) AS UNSIGNED)) AS ROW_NUM,
+			ROW_NUMBER() OVER(ORDER BY P.PST_NO) AS postNum,
 			P.PST_NO, 
 			P.REG_MBR_ID,
 			C.PST_CTGRY_NO, 
@@ -123,9 +124,13 @@
 	
 	
 	<update id="deactivatePost">
-        UPDATE POST
-        SET ACT_YN = 'N'
-        WHERE PST_NO = #{postNum};
+		/ * 게시물의 활성화 여부를 N으로 변경 * /
+        UPDATE 
+        	POST
+        SET 
+        	ACT_YN = 'N'
+        WHERE 
+        	PST_NO = #{postNum};
     </update>
 
     

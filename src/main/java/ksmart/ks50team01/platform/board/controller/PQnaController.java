@@ -26,9 +26,21 @@ public class PQnaController {
 	@GetMapping("/qnaList")
 	public String qnaList(Model model) {
 		List<PQna> qnaList = pQnaService.getQnaList();
+		
+		/*
+	    // <br> 태그를 \n으로 변환
+	    for (PQna pQna : qnaList) {
+	        if (pQna.getQnaContent() != null) {
+	            String contentWithLineBreaks = pQna.getQnaContent().replace("<br>", "\n");
+	            pQna.setQnaContent(contentWithLineBreaks);
+	        }
+	    } */
+
 		log.info("qnaList: {}", qnaList);
+		
 		model.addAttribute("qnaList", qnaList);
 		model.addAttribute("title", "1:1문의 조회");
+		
 		return "platform/board/qnaList";
 	}
 	

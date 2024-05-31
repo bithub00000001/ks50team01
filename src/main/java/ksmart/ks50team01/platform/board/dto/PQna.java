@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Data
 public class PQna {
+	private String qnaCode;
 	private String qnaNum;
 	private int qnaRowNum;
 	private String qnaRegId;

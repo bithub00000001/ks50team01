@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -40,6 +39,7 @@ public class PCommunityController {
 		return "platform/board/communityList";
 	}
 	
+	
 	/**
 	 * 게시글 비활성화
 	 * @param postNum
@@ -52,10 +52,15 @@ public class PCommunityController {
         return ResponseEntity.ok("비활성화 성공");
     }
 
+    
     @GetMapping("/deactivatePost")
     public String deactivatePost(@RequestParam(value="postNum" , required = false) String postNum, Model model) {
         log.info("게시글 비활성화 : {}", postNum);
         model.addAttribute("title", "게시글 비활성화");
         return "platform/board/communityList";
     }
+    
+
 }
+    
+

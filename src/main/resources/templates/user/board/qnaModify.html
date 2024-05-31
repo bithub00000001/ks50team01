@@ -28,18 +28,20 @@
 								<label for="qnaRegId" class="col-sm-2 col-form-label">작성자</label>
 								<input type="text" class="form-control" id="qnaRegId" name="qnaRegId" th:field="*{qnaRegId}" readonly="readonly">
 							</div>
-							
-							<div class="form-group">
-								<label for="qnaCateType">1:1문의 유형</label>
-									<select class="form-control" id="qnaCateNum" name="qnaCateNum">
-									<option value="FAQ_CTGRY_1" th:selected="${qnaInfo.category.qnaCategoryNum == 'FAQ_CTGRY_1'}" selected>계정 관리</option>
-									<option value="FAQ_CTGRY_2" th:selected="${qnaInfo.category.qnaCategoryNum == 'FAQ_CTGRY_2'}" selected>이용 문의</option>
-									<option value="FAQ_CTGRY_3" th:selected="${qnaInfo.category.qnaCategoryNum == 'FAQ_CTGRY_3'}" selected>건의 / 제안</option>
-									<option value="FAQ_CTGRY_4" th:selected="${qnaInfo.category.qnaCategoryNum == 'FAQ_CTGRY_4'}" selected>결제 / 환불</option>
+
+						<div class="form-group">
+							<label for="qnaCateType">1:1문의 유형</label>
+							<div class="select-default">
+								<select class="select-option" id="qnaCateNum" name="qnaCateNum">
+									<option value="FAQ_CTGRY_1" th:selected="${qnaInfo.qnaCateNum == 'FAQ_CTGRY_1'}" >계정 관리</option>
+									<option value="FAQ_CTGRY_2" th:selected="${qnaInfo.qnaCateNum == 'FAQ_CTGRY_2'}" >이용 문의</option>
+									<option value="FAQ_CTGRY_3" th:selected="${qnaInfo.qnaCateNum == 'FAQ_CTGRY_3'}" >건의 / 제안</option>
+									<option value="FAQ_CTGRY_4" th:selected="${qnaInfo.qnaCateNum == 'FAQ_CTGRY_4'}" >결제 / 환불</option>
 								</select>
 							</div>
-						
-							<div class="form-group">
+						</div>
+
+						<div class="form-group">
 								<label for="qnaTitle" class="col-sm-2 col-form-label">문의 제목</label>
 								<input type="text" class="form-control" id=qnaTitle name="qnaTitle" th:field="*{qnaTitle}" required="required">
 							</div>
@@ -77,59 +79,7 @@
 
 
 	<th:block layout:fragment="customJsFIle">
-		<script>
-		    document.getElementById('attachBtn').addEventListener('click', function() {
-		        document.getElementById('fileInput').click();
-		    });
-		
-		    document.getElementById('fileInput').addEventListener('change', function() {
-		        const files = this.files;
-		        const fileNamesContainer = document.getElementById('fileNames');
-		        const uploadedFiles = fileNamesContainer.getElementsByClassName('thumbnail-container').length;
-		        const remainingSlots = 10 - uploadedFiles;
-		        
-		        if (files.length > remainingSlots) {
-		            alert('최대 10개의 파일만 업로드할 수 있습니다.');
-		            return;
-		        }
-		
-		        if (files.length > 0) {
-		            for (let i = 0; i < files.length; i++) {
-		                const file = files[i];
-		                const fileName = file.name;
-		
-		                const thumbnailContainer = document.createElement('div');
-		                thumbnailContainer.classList.add('thumbnail-container');
-		
-		                const thumbnail = document.createElement('img');
-		                thumbnail.src = URL.createObjectURL(file);
-		                thumbnail.alt = file.name;
-		                thumbnail.classList.add('thumbnail');
-		                thumbnailContainer.appendChild(thumbnail);
-		
-		                const fileNameText = document.createElement('div');
-		                fileNameText.textContent = fileName;
-		                thumbnailContainer.appendChild(fileNameText);
-		
-		                const deleteButton = document.createElement('button');
-		                deleteButton.textContent = 'x';
-		                deleteButton.classList.add('delete-button');
-		                deleteButton.addEventListener('click', function() {
-		                    thumbnailContainer.remove();
-		                });
-		                thumbnailContainer.appendChild(deleteButton);
-		
-		                fileNamesContainer.appendChild(thumbnailContainer);
-		            }
-		        }
-		    });
-		
-		    document.getElementById('submitBtn').addEventListener('click', function() {
-		        document.getElementById('postForm').submit();
-		    });
-		</script>
-		
-			
+		<script th:src="@{/user/js/file.js}"></script>
 		
 		<!-- 취소 버튼 눌렀을 때 이전 페이지로 -->
 		<script>

@@ -73,6 +73,47 @@
 		<result 	property="postCategoryMdfDate" 		column="MDFCN_YMD"/>
 	</resultMap>
 
+	<select id="getSearchList" parameterType="String" resultMap="postResultMap">
+		<![CDATA[
+	 	SELECT
+			ROW_NUMBER() OVER(ORDER BY CAST(SUBSTRING_INDEX(P.PST_NO, 'PST_', -1) AS UNSIGNED)) AS ROW_NUM,
+			P.PST_NO, 
+			P.REG_MBR_ID,
+			C.PST_CTGRY_NO, 
+			C.PST_CTGRY_NM,
+			P.PST_TTL, 
+			P.PST_CN, 
+			P.PST_INQ_CNT, 
+			P.PST_LIKE_TOTAL, 
+			P.PST_DISLIKE_TOTAL, 
+			P.PST_REPT_TOTAL, 
+			P.ACT_YN, 
+			P.REG_YMD, 
+			P.MDFCN_YMD, 
+			P.DEL_YMD,
+			COUNT(PC.PST_CMNT_NO) AS PST_CMNT_TOTAL,
+			IF(DATEDIFF(NOW(), P.REG_YMD) < 7, TRUE, FALSE) AS POST_NEW
+		FROM 
+			POST AS P
+			INNER JOIN
+			POST_CATEGORY AS C
+			ON
+			P.PST_CTGRY_NO = C.PST_CTGRY_NO
+			LEFT JOIN 
+			POST_COMMENT AS PC
+			ON 
+			P.PST_NO = PC.PST_NO
+		GROUP BY P.PST_NO
+		ORDER BY P.REG_YMD DESC;
+		]]>
+		<where>
+			<if test="searchValue != null and searchValue != ''">
+				${searchKey} LIKE CONCAT('%', #{searchValue}, '%')
+			</if>
+		</where>
+	</select>
+	
+	
 	
 	<select id="getPostList" resultMap="postResultMap">
 		/* 게시글 리스트 조회 */

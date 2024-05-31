@@ -5,7 +5,8 @@
 <mapper namespace="ksmart.ks50team01.platform.board.mapper.PQnaMapper">
 	
 	<resultMap id="qnaResultMap" type="PQna">
-		<id property="qnaNum" column="QNA_NO" />
+		<id property="qnaCode" column="QNA_NO" />
+		<result property="qnaNum" column="qnaNum" />
 		<result property="qnaRegId" column="REG_MBR_BIZ_ID" />
 		<result property="faqCateNum" column="FAQ_CTGRY_NO" />
 		<result property="qnaProNum" column="QNA_PRGRS_NO" />
@@ -46,6 +47,7 @@
 	<select id="getQnaList" resultMap="qnaResultMap">
 	 	/* 1:1문의 조회 */			
 		SELECT
+			ROW_NUMBER() OVER(ORDER BY Q.QNA_NO) AS qnaNum,
 			Q.QNA_NO,
 			Q.REG_MBR_BIZ_ID,
 			F.FAQ_CTGRY_TYPE,

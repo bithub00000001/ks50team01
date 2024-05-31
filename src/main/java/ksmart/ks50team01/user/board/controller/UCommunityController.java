@@ -31,6 +31,24 @@ public class UCommunityController {
 
 	private final UCommunityService uCommunityService;
 
+	
+	@GetMapping("/searchList")
+	public String searchList(@RequestParam(value="searchKey", required = false) String searchKey
+							,@RequestParam(value="searchValue", required = false) String searchValue
+							,Model model) {
+		List<UCommunity> postList = uCommunityService.getSearchList(searchKey, searchValue);
+		
+		model.addAttribute("title", "검색목록조회");
+		model.addAttribute("postList", postList);
+		
+		model.addAttribute("searchKey", searchKey);
+		model.addAttribute("searchValue", searchValue);
+		
+		return "user/board/postList";
+	}
+	
+	
+	
 	// 게시글 목록 조회
 	@GetMapping({"/",""})
 	public String postList(Model model) {

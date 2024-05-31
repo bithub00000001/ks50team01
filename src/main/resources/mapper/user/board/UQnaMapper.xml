@@ -147,9 +147,11 @@
     
     <!-- QNA 번호로 해당 QNA의 상세 정보를 조회하는 쿼리 -->
 	<select id="getQnaInfoByNum" resultMap="qnaResultMap" parameterType="String">
+		/* QNA 번호로 해당 QNA의 상세 정보를 조회하는 쿼리 */
 	    SELECT
 	        Q.QNA_NO,
 	        Q.REG_MBR_BIZ_ID,
+	        F.FAQ_CTGRY_NO,
 	        F.FAQ_CTGRY_TYPE,
 	        Q.QNA_PRGRS_CTGRY,
 	        Q.QNA_TTL,

@@ -64,6 +64,9 @@ public interface UCommunityMapper {
 
 	List<UComment> getPostCommentList(String postNum);
 
+	// 검색목록 조회
+	List<UCommunity> getSearchList(String searchKey, String searchValue);
+
 
 
 
