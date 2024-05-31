@@ -89,7 +89,7 @@ public class UTripPlanController {
 
     @PostMapping("/save-temp-plan-info")
     @ResponseBody
-    public ResponseEntity<String> addTempPlanInfo(@ModelAttribute("uTripOption") UTripOption uTripOption) {
+    public ResponseEntity<String> addTempPlanInfo(@RequestBody UTripOption uTripOption) {
 
         log.info("uTripOption: {}", uTripOption);
         try {

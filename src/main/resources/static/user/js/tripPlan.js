@@ -97,7 +97,8 @@ function getCurrentTabCount() {
 
 // 여행지 제목 등 큰 분류의 계획을 저장하는 함수
 function saveTripInfo() {
-    const formData = $('form').serializeArray(); // 폼 데이터를 배열로 변환
+    const formData = $('#tripPlanForm').serializeArray(); // 폼 데이터를 배열로 변환
+    console.log(formData);
     const jsonData = {}; // JSON 객체 생성
 
     // 폼 데이터를 JSON 객체로 변환 1
@@ -117,14 +118,36 @@ function saveTripInfo() {
 
     // 폼 데이터를 JSON 객체로 변환 2: ES6에 맞도록 수정
     $.each(formData, function () {
-        if (jsonData[this.name]) {
-            jsonData[this.name] = Array.isArray(jsonData[this.name])
-                ? [...jsonData[this.name], this.value || '']
-                : [jsonData[this.name], this.value || ''];
+        if (this.name.startsWith('addVirtualId')) {
+            // addVirtualId로 시작하는 경우 virtualMembers 배열에 추가
+            const index = this.name.replace('addVirtualId', '');
+            if (!jsonData.virtualMembers) {
+                jsonData.virtualMembers = [];
+            }
+            jsonData.virtualMembers[index] = this.value;
+        } else if (this.name.startsWith('inviteeName')) {
+            // inviteeName로 시작하는 경우 invitedMembers 배열에 추가
+            const index = this.name.replace('inviteeName', '');
+            if (!jsonData.invitedMembers) {
+                jsonData.invitedMembers = [];
+            }
+            jsonData.invitedMembers[index] = this.value;
         } else {
-            jsonData[this.name] = this.value || '';
+            // 그 외의 경우 기존 로직 유지
+            if (jsonData[this.name]) {
+                jsonData[this.name] = Array.isArray(jsonData[this.name])
+                    ? [...jsonData[this.name], this.value || '']
+                    : [jsonData[this.name], this.value || ''];
+            } else {
+                jsonData[this.name] = this.value || '';
+            }
         }
     });
+
+    jsonData.numVirtualMembers = jsonData.virtualMembers.length;
+    jsonData.numRealMembers = jsonData.invitedMembers.length;
+
+    console.log(jsonData);
 
     $.ajax({
         type: 'POST',
