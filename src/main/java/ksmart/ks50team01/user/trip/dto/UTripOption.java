@@ -1,6 +1,8 @@
 package ksmart.ks50team01.user.trip.dto;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -19,11 +21,14 @@ public class UTripOption {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDate;
     private Integer numPeople = 1;
-    private String memberType;
+
+    private List<String> memberType = new ArrayList<>();
+    private List<String> virtualMembers = new ArrayList<>();
+    private List<String> invitedMembers = new ArrayList<>();
+    private Integer numVirtualMembers;
+    private Integer numRealMembers;
 
     private Integer numDate;
-    private Integer numVirtualMember;
-    private Integer numRealMember;
 
     private String tripDuration;
 }
