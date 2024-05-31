@@ -19,9 +19,9 @@
 		REG_PF_ID = #{userRankingRegId},
 		PRTNR_BPLC_CD = #{partnerBusinessCode},
 		TRIP_LCTGRY_CD = #{tripLctgryCode},
-		RGN_SCTGRY_NM = #{rgnSctgryName},
+		destination_Type = #{destinationType},
+		destination_content_id = #{destinationCId},
 		TOT_RANK = #{userRank},
-		ARTCL_RANK_TOP_FIVE = #{artclRankingNum},
 		REV_STATS_STRT_YMD = #{reviewStatsStart},
 		REV_STATS_END_YMD = #{reviewStatsEnd},
 		PF_PSTG_STRT_YMD = #{platformAdStart},
@@ -32,61 +32,74 @@
 	</update>
 	
 	<select id="getUserRankingInfoById" resultType="UserRanking">
-	SELECT 
-		ROW_NUMBER() OVER(ORDER BY MBR_ARTCL_RANK) 		AS userRankingNum,
-		MBR_ARTCL_RANK									AS userRankingId,
-		REG_PF_ID 										AS userRankingRegId,
-		PRTNR_BPLC_CD 									AS partnerBusinessCode,
-		TRIP_LCTGRY_CD 									AS tripLctgryCode,
-		RGN_SCTGRY_NM 									AS rgnSctgryName, 
-		TOT_RANK 										AS userRank, 
-		ARTCL_RANK_TOP_FIVE								AS artclRankingNum, 
-		REV_STATS_STRT_YMD 								AS reviewStatsStart, 
-		REV_STATS_END_YMD 								AS reviewStatsEnd, 
-		PF_PSTG_STRT_YMD 								AS platformAdStart,
-		PF_PSTG_END_YMD 								AS platformAdEnd, 
-		ACT_YN 											AS activate,
-		REG_YMD											AS regDate, 	
-		MDFCN_YMD 										AS modifyDate
-	
-	FROM
-		MEMBER_RECOMMENDATION_RANKING AS m
-	WHERE
-		m.MBR_ARTCL_RANK = #{userRankingNum};
-		
+		SELECT 
+			ROW_NUMBER() OVER(ORDER BY MBR_ARTCL_RANK)	AS userRankingNum,
+			MBR_ARTCL_RANK								AS userRankingId,  
+			REG_PF_ID 									AS userRankingRegId, 
+			PRTNR_BPLC_CD 								AS partnerBusinessCode, 
+			TRIP_LCTGRY_CD 								AS tripLctgryCode,
+			destination_Type							AS destinationType,
+			m.destination_content_id	 				AS destinationCId,
+			t.destination_title 						AS destinationTitle,
+			t.destination_first_address 				AS destinationAddr,
+			t.destination_first_image_link 				AS destinationImg,
+			TOT_RANK 									AS userRank, 
+			REV_STATS_STRT_YMD 							AS reviewStatsStart, 
+			REV_STATS_END_YMD 							AS reviewStatsEnd, 
+			PF_PSTG_STRT_YMD 							AS platformAdStart, 
+			PF_PSTG_END_YMD 							AS platformAdEnd, 
+			ACT_YN 										AS activate
+		FROM 
+			MEMBER_RECOMMENDATION_RANKING AS m
+			INNER JOIN
+			TOUR_INFO_FROM_API AS t
+			ON
+			m.destination_content_id = t.destination_content_id
+		WHERE
+			m.MBR_ARTCL_RANK = #{userRankingNum};
+			
 	</select>
-	
-	
+
 	<insert id="addUserRanking" parameterType="UserRanking">
-		INSERT INTO 
-			MEMBER_RECOMMENDATION_RANKING
-			(MBR_ARTCL_RANK,
-			 REG_PF_ID, 
-			 PRTNR_BPLC_CD, 
-			 TRIP_LCTGRY_CD, 
-			 RGN_SCTGRY_NM, 
-			 TOT_RANK, 
-			 ARTCL_RANK_TOP_FIVE, 
-			 REV_STATS_STRT_YMD, 
-			 REV_STATS_END_YMD, 
-			 PF_PSTG_STRT_YMD, 
-			 PF_PSTG_END_YMD, 
-			 ACT_YN, 
-			 REG_YMD)
-		VALUES 
-			(#{userRankingId}, 
-			#{userRankingRegId}, 
-			#{partnerBusinessCode}, 
-			#{tripLctgryCode}, 
-			#{rgnSctgryName}, 
-			#{userRank}, 
-			#{artclRankingNum}, 
-			#{reviewStatsStart}, 
-			#{reviewStatsEnd}, 
-			#{platformAdStart}, 
-			#{platformAdEnd}, 
-			#{activate},  
-			NOW())
+		<selectKey keyProperty="autoUserId" resultType="string" order="BEFORE">
+			SELECT
+				(CASE
+					WHEN COUNT(MBR_ARTCL_RANK) = 0 
+	       				THEN 'mrr_01'
+						ELSE CONCAT('mrr_', MAX(CAST(SUBSTRING_INDEX(MBR_ARTCL_RANK,'_', - 1)AS UNSIGNED)) + 1)
+				END)
+					FROM 
+						MEMBER_RECOMMENDATION_RANKING AS m
+		</selectKey>
+			INSERT INTO 
+				MEMBER_RECOMMENDATION_RANKING
+				(MBR_ARTCL_RANK,
+				 REG_PF_ID, 
+				 PRTNR_BPLC_CD, 
+				 TRIP_LCTGRY_CD,
+				 destination_Type, 
+				 destination_content_id, 
+				 TOT_RANK, 
+				 REV_STATS_STRT_YMD, 
+				 REV_STATS_END_YMD, 
+				 PF_PSTG_STRT_YMD, 
+				 PF_PSTG_END_YMD, 
+				 ACT_YN, 
+				 REG_YMD)
+			VALUES 
+				(#{autoUserId}, 
+				#{userRankingRegId}, 
+				#{partnerBusinessCode}, 
+				#{tripLctgryCode},
+				#{destinationType}, 
+				#{destinationCId}, 
+				#{userRank}, 
+				#{reviewStatsStart}, 
+				#{reviewStatsEnd}, 
+				#{platformAdStart}, 
+				#{platformAdEnd}, 
+				#{activate},  
+				NOW())
 	
 	</insert>
 	
@@ -102,25 +115,29 @@
 
 	<select id="getUserRankingList" resultType="UserRanking">
 		/* 회원추천 조회 */
-	SELECT 
-		ROW_NUMBER() OVER(ORDER BY MBR_ARTCL_RANK) 		AS userRankingNum,
-		MBR_ARTCL_RANK									AS userRankingId,
-		REG_PF_ID 										AS userRankingRegId,
-		PRTNR_BPLC_CD 									AS partnerBusinessCode,
-		TRIP_LCTGRY_CD 									AS tripLctgryCode,
-		RGN_SCTGRY_NM 									AS rgnSctgryName, 
-		TOT_RANK 										AS userRank, 
-		ARTCL_RANK_TOP_FIVE								AS artclRankingNum, 
-		REV_STATS_STRT_YMD 								AS reviewStatsStart, 
-		REV_STATS_END_YMD 								AS reviewStatsEnd, 
-		PF_PSTG_STRT_YMD 								AS platformAdStart,
-		PF_PSTG_END_YMD 								AS platformAdEnd, 
-		ACT_YN 											AS activate,
-		REG_YMD											AS regDate, 	
-		MDFCN_YMD 										AS modifyDate
-	
-	FROM
-		MEMBER_RECOMMENDATION_RANKING;
+		SELECT
+			ROW_NUMBER() OVER(ORDER BY MBR_ARTCL_RANK)	AS userRankingNum,
+			MBR_ARTCL_RANK								AS userRankingId, 
+			REG_PF_ID 									AS userRankingRegId, 
+			PRTNR_BPLC_CD 								AS partnerBusinessCode, 
+			TRIP_LCTGRY_CD 								AS tripLctgryCode,
+			destination_Type  							AS destinationType,
+			m.destination_content_id 					AS destinationCId,
+			t.destination_title							AS destinationTitle,
+			t.destination_first_address 				AS destinationAddr,
+			t.destination_first_image_link 				AS destinationImg,
+			TOT_RANK 									AS userRank, 
+			REV_STATS_STRT_YMD							AS reviewStatsStart, 
+			REV_STATS_END_YMD 							AS reviewStatsEnd, 
+			PF_PSTG_STRT_YMD 							AS platformAdStart, 
+			PF_PSTG_END_YMD 							AS platformAdEnd, 
+			ACT_YN 										AS activate
+		FROM 
+			MEMBER_RECOMMENDATION_RANKING AS m
+			INNER JOIN
+			TOUR_INFO_FROM_API AS t
+			ON
+			m.destination_content_id = t.destination_content_id;
 	</select>
 
 </mapper>

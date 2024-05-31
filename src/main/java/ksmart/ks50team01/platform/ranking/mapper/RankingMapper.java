@@ -19,7 +19,7 @@ public interface RankingMapper {
 	
 	int modifyRanking(Ranking ranking);
 	
-	boolean rankingListCheck(String pRankingNum);
+	boolean rankingListCheck(String pRankingId);
 	
 	boolean rankingApiListCheck(String pfRankInfoId);
 	

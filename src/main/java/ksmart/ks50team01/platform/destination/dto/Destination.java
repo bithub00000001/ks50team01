@@ -7,6 +7,8 @@ public class Destination {
 	
 	private String tourName;
 	private String tourInfoCode;
+	private String tripSCateCode;
+	private String partnerBPlaceCode;
 	private String tourAuthorityId;
 	private String tourAddr;
 	private String tourDaddr;
@@ -20,12 +22,13 @@ public class Destination {
 	private String tourGoodsList;
 	private String tourGoodsTime;
 	private String RegionSName;
-	private String RegionSCate;
+	private String regionSCateName;
 	private String tourgoodsAuthorityId;
 	private String tourGoodsCode;
 	private String tourGoodsOptionCd;
 	private String tourOptionRemarks;
 	private String tourTotal;
+	private String tourGoodsOptPrice;
 	
 	
 	private String lodgingName;
@@ -61,7 +64,7 @@ public class Destination {
 	private String restaurantOthers;
 	private String restaurantMenuManageCode;
 	private String restaurantMenuPrice;
-
+	
 	
 	
 	

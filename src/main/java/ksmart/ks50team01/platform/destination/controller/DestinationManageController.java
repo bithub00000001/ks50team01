@@ -26,6 +26,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class DestinationManageController {
 	
 	private final DestinationService destinationService;
+	
+	@GetMapping("/destination/search-tour-name")
+	@ResponseBody
+	public List<Destination> getTourListByName(@RequestParam(value="tourName") String tourName){
+		List<Destination> tourList = destinationService.getTourInfoListByName(tourName);
+		
+		return tourList;
+	}
+	
+	/**
+	 * 관광지 상세정보 삭제
+	 * @param tourGoodsOptionCd
+	 * @return
+	 */
 	@PostMapping("removeTourGoods")
 	public String removeTourGoods(@RequestParam(value = "tourGoodsOptionCd") String tourGoodsOptionCd) {
 		
@@ -59,7 +73,6 @@ public class DestinationManageController {
 		
 		return "redirect:/platform/destination/tourManage";
 	}
-	
 	@GetMapping("/removeTour")
 	public String removeTourProcess(@RequestParam(value = "tourInfoCode") String tourInfoCode, Model model) {
 		List<Destination> tourList = destinationService.getTourInfoList();
@@ -73,20 +86,22 @@ public class DestinationManageController {
 	}
 	
 	/**
-	 * 관광상품 등록
+	 * 관광지 상세정보 중복체크
+	 * @param tourGoodsOptionCd
+	 * @return
+	 */
+	@GetMapping("/destination/addTourGoodsCheckList")
+	@ResponseBody
+	public boolean addTourGoodsCheckList(@RequestParam(value = "tourGoodsOptionCd") String tourGoodsOptionCd) {
+		boolean isTourGoodsOptionCd = destinationService.addTourGoodsCheckList(tourGoodsOptionCd);
+		return isTourGoodsOptionCd;
+	}
+	
+	/**
+	 * 관광지 중복체크
 	 * @param destination
 	 * @return
 	 */
-	@PostMapping("/destination/addTourGoods")
-	public String addTourGoods(Destination destination) {
-		return "redirect:/platform/destination/tourGoodsManage";
-	}
-	
-	@GetMapping("/destination/addTourGoods")
-	public String addTourGoods(Model model) {
-		model.addAttribute("title", "관광지 세부항목 등록");
-		return "/platform/destination/addTourGoods";
-	}
 	@GetMapping("/destination/addTourCheckList")
 	@ResponseBody
 	public boolean addTourCheckList(@RequestParam(value = "tourName") String tourName) {
@@ -102,12 +117,40 @@ public class DestinationManageController {
 	 */
 	@PostMapping("/destination/addTour")
 	public String addTour(Destination destination) {
+		destinationService.addTour(destination);
 		return "redirect:/platform/destination/tourManage";
 	}
 	@GetMapping("/destination/addTour")
 	public String addTour(Model model) {
+		List<Destination> addTourList = destinationService.getTourInfoList();
+		
+		model.addAttribute("addTourList", addTourList);
 		model.addAttribute("title", "관광지 등록");
-		return "/platform/destination/addTour";
+		return "platform/destination/addTour";
+	}
+
+	/**
+	 * 관광지 상품 등록
+	 * @param destination
+	 * @return
+	 */
+	@PostMapping("/destination/addTourGoods")
+	public String addTourGoods(Destination destination) {
+		
+		log.info("input destination: {}", destination);
+		destinationService.addTourGoods(destination);
+
+		return "redirect:/platform/destination/tourGoodsManage";
+	}
+	
+	@GetMapping("/destination/addTourGoods")
+	public String addTourGoods(Model model) {
+		List<Destination> addTourGoods = destinationService.getTourGoodsList();
+		
+		model.addAttribute("addTourGoods", addTourGoods);
+		model.addAttribute("title", "관광지 세부항목 등록");
+		
+		return "platform/destination/addTourGoods";
 	}
 	
 	/**
@@ -117,7 +160,7 @@ public class DestinationManageController {
 	 */
 	@PostMapping("/destination/tourGoodsModify")
 	public String tourGoodsModifyProcess(Destination destination) {
-		destinationService.updateTourGoods(destination);
+		destinationService.tourGoodsModify(destination);
 		return "redirect:/platform/destination/tourGoodsManage";
 	}
 	@GetMapping("/destination/tourGoodsModify")
@@ -128,7 +171,7 @@ public class DestinationManageController {
 		model.addAttribute("tourGoodsInfo", tourGoodsInfo);
 		model.addAttribute("tourGoodsList", tourGoodsList);
 		model.addAttribute("title", "관광지 세부사항 수정");
-		return "/platform/destination/tourGoodsModify";
+		return "platform/destination/tourGoodsModify";
 	}
 	
 	/**
@@ -140,7 +183,7 @@ public class DestinationManageController {
 	public String tourModifyProcess(Destination destination) {
 		
 		log.info("controller destination:{}", destination);
-		destinationService.updateTour(destination);		
+		destinationService.tourModify(destination);		
 		return "redirect:/platform/destination/tourManage";
 	}
 	
@@ -184,6 +227,114 @@ public class DestinationManageController {
 		
 		return "/platform/destination/tourGoodsManage";
 	}
+	
+	/**
+	 * 숙소 등록
+	 * @param destination
+	 * @return
+	 */
+	@PostMapping("/destination/addLodging")
+	public String addLodging(Destination destination) {
+		destinationService.addLodging(destination);
+		return "redirect:/platform/destination/lodgingManage";
+	}
+	@GetMapping("/destination/addLodging")
+	public String addLodging(Model model) {
+		List<Destination> addLodgingList = destinationService.getLodgingInfoList();
+		
+		model.addAttribute("addLodgingList", addLodgingList);
+		model.addAttribute("title", "숙소 등록");
+		
+		return "platform/destination/addLodging";
+	}
+	/**
+	 * 숙소 상세정보 등록
+	 * @param destination
+	 * @return
+	 */
+	@PostMapping("/destination/addLodgingGoods")
+	public String addLodgingGoods(Destination destination) {
+		destinationService.addLodgingGoods(destination);
+		return "redirect:/platform/destination/lodgingGoodsManage";
+	}
+	@GetMapping("/destination/addLodgingGoods")
+	public String addLodgingGoods(Model model) {
+		List<Destination> addLodgingGoodsList = destinationService.getLodgingGoodsList();
+		
+		model.addAttribute("addLodgingGoodsList", addLodgingGoodsList);
+		model.addAttribute("title", "숙소 상제정보 등록");
+		
+		return "platform/destination/addLodgingGoods";
+	}
+	
+	/**
+	 * 숙소이름 중복체크
+	 * @param lodgingName
+	 * @return
+	 */
+	@GetMapping("/destination/addLodgingCheckList")
+	@ResponseBody
+	public boolean addLodgingCheckList(@RequestParam(value = "lodgingName") String lodgingName) {
+		boolean isLodgingName = destinationService.addLodgingCheckList(lodgingName);
+		return isLodgingName;
+	}
+	
+	/**
+	 * 숙소 상세정보 중복체크
+	 * @param lodgingMenuCode
+	 * @return
+	 */
+	@GetMapping("/destination/addLodgingGoodsCheckList")
+	@ResponseBody
+	public boolean addLodgingGoodsCheckList(@RequestParam(value = "lodgingMenuCode") String lodgingMenuCode) {
+		boolean isLodgingMenuCode = destinationService.addLodgingGoodsCheckList(lodgingMenuCode);
+		return isLodgingMenuCode;
+	}
+	
+	/**
+	 * 숙소 목록 삭제
+	 * @param tourInfoCode
+	 * @return
+	 */
+	@PostMapping("/removeLodging")
+	public String removeLodging(@RequestParam(value = "lodgingInfoCode") String lodgingInfoCode) {
+
+		return "redirect:/platform/destination/lodgingManage";
+	}
+	@GetMapping("/removeLodging")
+	public String removeLodgingProcess(@RequestParam(value = "lodgingInfoCode") String lodgingInfoCode, Model model) {
+		List<Destination> lodgingList = destinationService.getLodgingInfoList();
+		destinationService.removeLodging(lodgingInfoCode);
+		
+		model.addAttribute("lodgingInfoCode", lodgingInfoCode);
+		model.addAttribute("lodgingList", lodgingList);
+		model.addAttribute("title", "숙소 삭제");
+		
+		return "redirect:/platform/destination/lodgingManage";
+	}
+	/**
+	 * 숙소 상제정보 삭제
+	 * @param lodgingMenuCode
+	 * @return
+	 */
+	@PostMapping("/removeLodgingGoods")
+	public String removeLodgingGoods(@RequestParam(value = "lodgingMenuCode") String lodgingMenuCode) {
+
+		return "redirect:/platform/destination/lodgingGoodsManage";
+	}
+	@GetMapping("/removeLodgingGoods")
+	public String removeLodgingGoodsProcess(@RequestParam(value = "lodgingMenuCode") String lodgingMenuCode, Model model) {
+		List<Destination> lodgingGoodsList =  destinationService.getLodgingGoodsList();
+		destinationService.removeLodgingGoods(lodgingMenuCode);
+		
+		model.addAttribute("lodgingMenuCode", lodgingMenuCode);
+		model.addAttribute("lodgingGoodsList", lodgingGoodsList);
+		model.addAttribute("title", "숙소상제정보 삭제");
+		
+		return "redirect:/platform/destination/lodgingGoodsManage";
+	}
+	
+	
 	/**
 	 * 숙소 수정
 	 * @param destination
@@ -192,7 +343,7 @@ public class DestinationManageController {
 	@PostMapping("/destination/lodgingModify")
 	public String lodgingModifyProcess(Destination destination) {
 		
-		destinationService.updateLodging(destination);
+		destinationService.lodgingModify(destination);
 		return "redirect:/platform/destination/lodgingManage";
 	}
 	
@@ -215,7 +366,7 @@ public class DestinationManageController {
 	@PostMapping("/destination/lodgingGoodsModify")
 	public String lodgingGoodsModifyProcess(Destination destination) {
 		
-		destinationService.updateLodgingGoods(destination);
+		destinationService.lodgingGoodsModify(destination);
 		return "redirect:/platform/destination/lodgingGoodsManage";
 	}
 	
@@ -284,11 +435,15 @@ public class DestinationManageController {
 		
 		return "/platform/destination/restaurantModify";
 	}
-	
+	/**
+	 * 음식점 상세정보 수정
+	 * @param destination
+	 * @return
+	 */
 	@PostMapping("/destination/restaurantMenuModify")
 	public String restaurantMenuModify(Destination destination) {
 		
-		destinationService.updateRestaurantMenu(destination);
+		destinationService.restaurantMenuModify(destination);
 		
 		return "redirect:/platform/destination/restaurantMenuManage";
 	}
@@ -354,6 +509,7 @@ public class DestinationManageController {
 		
 	}
 	
+
 	/**
 	 * 음식정 목록 삭제
 	 * @param restaurantInfoCode
@@ -371,7 +527,7 @@ public class DestinationManageController {
 	
 	@GetMapping("/removeRestaurant")
 	public String removeRestaurant(@RequestParam(value = "restaurantInfoCode") String restaurantInfoCode, Model model) {
-		List<Destination> restaurantList = destinationService.getTourInfoList();
+		List<Destination> restaurantList = destinationService.getRestaurantInfoList();
 		destinationService.removeRestaurant(restaurantInfoCode);
 		
 		model.addAttribute("restaurantList", restaurantList);
@@ -379,6 +535,24 @@ public class DestinationManageController {
 		model.addAttribute("title", "음식점 목록 삭제");
 		
 		return "redirect:/platform/destination/restaurantManage";
+	}
+	
+	
+	@PostMapping("/removeRestaurantMenu")
+	public String removeRestaurantMenu(@RequestParam(value = "restaurantMenuManageCode") String tourGoodsOptionCd) {
+		return "redirect:/platform/destination/restaurantMenuManage";
+	}
+	@GetMapping("/removeRestaurantMenu")
+	public String removeRestaurantMenuProcess(@RequestParam(value = "restaurantMenuManageCode") String restaurantMenuManageCode, Model model) {
+		List<Destination> restaurantMenuList = destinationService.getRestaurantMenuList();
+		destinationService.removeRestaurantMenu(restaurantMenuManageCode);
+		
+		model.addAttribute("restaurantMenuList", restaurantMenuList);
+		model.addAttribute("restaurantMenuManageCode", restaurantMenuManageCode);
+		model.addAttribute("title", "음식점 상세정보 삭제");
+		
+		return "redirect:/platform/destination/restaurantMenuManage";
+		
 	}
 
 }

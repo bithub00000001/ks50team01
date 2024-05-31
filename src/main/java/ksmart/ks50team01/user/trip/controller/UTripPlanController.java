@@ -76,13 +76,29 @@ public class UTripPlanController {
      */
     @PostMapping("/calculate-info")
     @ResponseBody
-    public ResponseEntity<Map<String, Object>> calculateInfo(@RequestBody List<UDayInfo> uDayInfoList) {
-        log.info("uDayInfoList: {}", uDayInfoList);
+    public ResponseEntity<Map<String, Object>> calculateInfo(@RequestBody List<UDayInfo> uDayInfoList) throws
+		JsonProcessingException {
         Map<String, Object> resultMap = uTripPlanService.calculateDistanceDuration(uDayInfoList);
+
+        resultMap = uTripPlanService.calculateDistanceDuration(uDayInfoList);
+
+
         log.info("resultMap: {}", resultMap);
-        HttpStatus httpStatus;
-        httpStatus = HttpStatus.OK;
-        return ResponseEntity.status(httpStatus).body(resultMap);
+        return ResponseEntity.status(HttpStatus.OK).body(resultMap);
+    }
+
+    @PostMapping("/save-temp-plan-info")
+    @ResponseBody
+    public ResponseEntity<String> addTempPlanInfo(@RequestBody UTripOption uTripOption) {
+
+        log.info("uTripOption: {}", uTripOption);
+        try {
+            // uTripOption 객체를 DB에 저장하는 로직
+            // uTripPlanService.addTempPlanInfo(uTripOption);
+            return ResponseEntity.ok("Success");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to save temporary trip details.");
+        }
     }
 
     /**

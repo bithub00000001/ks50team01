@@ -26,26 +26,19 @@
                         <tbody>
 							<tr>
 								<td><label for="userTripPlanId">회원추천</label></td>
-								<td><input type="text" id="userTripPlanId" name="userTripPlanId"
-									placeholder="여행계획추천리스트 아이디를 입력해주세요" />
-									<select>
-										<option>ex: mtr_00</option>
-									</select>
-									</td>
-								<td>
-									<button type="button" id="idCheck">중복 아이디 체크</button>
+								<td><input type="hidden" id="userTripPlanId" name="userTripPlanId" />
 								</td>
 							</tr>
 							<tr>
 								<td><label for="pRankingRegId">등록플랫폼권한아이디</label></td>
 								<td colspan="2"><input type="text" id="pRankingRegId"
-									name="pRankingRegId" placeholder="ex: admin001" disabled="disabled">
+									name="pRankingRegId" placeholder="ex: admin001" >
 								</td>
 							</tr>
 							<tr>
 								<td><label for="tripPlanNum">개별여행계획번호</label></td>
 								<td colspan="2"><input type="text" id="tripPlanNum"
-									name="tripPlanNum" placeholder="개별여행계획번호를 입력해주세요" disabled="disabled" />
+									name="tripPlanNum" placeholder="개별여행계획번호를 입력해주세요"  />
 									<select>
 										<option>ind_trip_0</option>
 									</select>
@@ -56,7 +49,7 @@
 									<label for="rgnSctgryName">지역소분류명</label>
 								</td>
 								<td colspan="2">
-									<input type="text" id="rgnSctgryName" name="rgnSctgryName" placeholder="지역소분류명을 입력해주세요" disabled="disabled"/>
+									<input type="text" id="rgnSctgryName" name="rgnSctgryName" placeholder="지역소분류명을 입력해주세요" />
 								</td>
 							</tr>
 					
@@ -65,7 +58,7 @@
 									<label for="tripPlanRank">순위</label>
 								</td>
 								<td colspan="2">
-									<input type="text" id="tripPlanRank" name="tripPlanRank" placeholder="순위를 입력해주세요" disabled="disabled"/>
+									<input type="text" id="tripPlanRank" name="tripPlanRank" placeholder="순위를 입력해주세요" />
 								</td>
 							</tr>
 						
@@ -74,7 +67,7 @@
 									<label for="reviewStatsStart">한달기준합계시작일</label>
 								</td>
 								<td colspan="2">
-									<input type="text" id="reviewStatsStart" name="reviewStatsStart" placeholder="ex: 0000-00-00" disabled="disabled"/>
+									<input type="text" id="reviewStatsStart" name="reviewStatsStart" placeholder="ex: 0000-00-00" />
 								</td>
 							</tr>
 							<tr>
@@ -82,7 +75,7 @@
 									<label for="reviewStatsEnd">한달기분합계종료일</label>
 								</td>
 								<td colspan="2">
-									<input type="text" id="reviewStatsEnd" name="reviewStatsEnd" placeholder="ex: 0000-00-00" disabled="disabled"/>
+									<input type="text" id="reviewStatsEnd" name="reviewStatsEnd" placeholder="ex: 0000-00-00" />
 								</td>
 							</tr>
 							<tr>
@@ -90,7 +83,7 @@
 									<label for="platformAdStart">플랫폼게시기간시작일</label>
 								</td>
 								<td colspan="2">
-									<input type="text" id="platformAdStart" name="platformAdStart" placeholder="0000-00-00" disabled="disabled"/>
+									<input type="text" id="platformAdStart" name="platformAdStart" placeholder="0000-00-00" />
 								</td>
 							</tr>
 							<tr>
@@ -98,7 +91,7 @@
 									<label for="platformAdEnd">플랫폼게시기간종료일</label>
 								</td>
 								<td colspan="2">
-									<input type="text" id="platformAdEnd" name="platformAdEnd" placeholder="0000-00-00" disabled="disabled"/>
+									<input type="text" id="platformAdEnd" name="platformAdEnd" placeholder="0000-00-00" />
 								</td>
 							</tr>
 							
@@ -107,7 +100,7 @@
 									<label for="activate">활성화여부</label>
 								</td>
 								<td colspan="2">
-									<input type="text" id="activate" name="activate" placeholder="ex: Y or N" disabled="disabled"/>
+									<input type="text" id="activate" name="activate" placeholder="ex: Y or N" />
 								</td>
 							</tr>
 	
@@ -115,8 +108,8 @@
 						<tfoot>
 							<tr>
 								<td colspan="3">
-									<button type="button" id="addPlanUserRankingBtn" disabled="disabled">등록</button>
-									<button type="reset" id="resetBtn" disabled="disabled">초기화</button>
+									<button type="button" id="addPlanUserRankingBtn" >등록</button>
+									<button type="reset" id="resetBtn" >초기화</button>
 								</td>
 							</tr>
 						</tfoot>	
@@ -189,7 +182,6 @@
 			});
 						
 			$('#addPlanUserRankingBtn').click(function(){
-				const userTripPlanId = $('userTripPlanId').val();
 				const pRankingRegId = $('pRankingRegId').val();
 				const tripPlanNum = $('tripPlanNum').val();
 				const rgnSctgryName = $('rgnSctgryName').val();
@@ -204,7 +196,7 @@
 				$('form input, form select').each(function(idx, element){
 					const id = element.id;
 					const value = $(element).val();
-					if(value == ''){
+					if(userTripPlanId == ''){
 						const cate = $(`label[for="${id}"]`).text();
 						alert(`${cate} 필수 입력항목입니다.`);
 						$(element).focus();

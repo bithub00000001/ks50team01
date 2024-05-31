@@ -52,6 +52,16 @@
 	
 	
 	<insert id="addPlanUserRanking" parameterType="PlanRanking">
+		<selectKey keyProperty="autoPlanId" resultType="string" order="BEFORE">
+		SELECT
+			(CASE
+				WHEN COUNT(MBR_TRIP_PLN) = 0 
+       				THEN 'mtr_01'
+					ELSE CONCAT('mtr_', MAX(CAST(SUBSTRING_INDEX(MBR_TRIP_PLN,'_', - 1)AS UNSIGNED)) + 1)
+			END)
+		FROM 
+			MEMBER_TRIP_PLAN_RANKING AS mp
+		</selectKey>
 		INSERT INTO 
 			MEMBER_TRIP_PLAN_RANKING
 			(MBR_TRIP_PLN, 
@@ -65,7 +75,7 @@
 			PF_PSTG_END_YMD, 
 			ACT_YN, 
 			REG_YMD)
-	VALUES (#{userTripPlanId}, 
+	VALUES (#{autoPlanId},
 			#{pRankingRegId}, 
 			#{tripPlanNum}, 
 			#{rgnSctgryName}, 

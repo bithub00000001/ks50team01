@@ -21,66 +21,56 @@
 	<div class="row">
 		<div class="col-xs-12 table">
 			<h1 th:text="${title}"></h1>
-			<form th:action="@{/platform/destination/addTour}" method="post">
+			<form th:action="@{/platform/destination/addLodging}" method="post">
 				<table id="datatable-responsive"
 					class="table table-striped table-bordered dt-responsive nowrap"
 					cellspacing="0" width="100%">
 					<tbody>
 						<tr>
-							<td><label for="tourName">관광지 이름</label></td>
-							<td><input type="text" id="tourName" name="tourName" placeholder="관광지를 입력해주세요" />
-								<button type="button" id="nameCheck">중복 관광지 체크</button>
+							<td><label for="lodgingName">숙소 이름</label></td>
+							<td><input type="text" id="lodgingName" name="lodgingName" placeholder="숙소를 입력해주세요" />
+								<button type="button" id="nameCheck">중복 숙소 체크</button>
 							</td>
 						</tr>
 						<tr>
-							<td><label for="tourInfoCode">관광지 정보 코드</label></td>
-							<td colspan="2"><input type="text" id="tourInfoCode" name="tourInfoCode" placeholder="ex: TOUR_INFO_" disabled="disabled"></td>
+							<td><label for="lodgingInfoCode">숙소 코드</label></td>
+							<td colspan="2"><input type="text" id="lodgingInfoCode" name="lodgingInfoCode" placeholder="ex: ln_" disabled="disabled"></td>
+						</tr>
+						<tr>
+							<td><label for="lodgingAuthorityId">등록 권한자 아이디</label></td>
+							<td colspan="2"><input type="text" id="lodgingAuthorityId" name="lodgingAuthorityId" placeholder="ex: admin_001" disabled="disabled" /></td>
 						</tr>
 						<tr>
 							<td><label for="tripSCateCode">여행지 소분류 코드</label></td>
-							<td colspan="2"><input type="text" id="tripSCateCode" name="tripSCateCode" placeholder="ex: TRIP_SCTGRY_" disabled="disabled"></td>
-						</tr>
-
-						<tr>
-							<td><label for="partnerBPlaceCode">제휴사업장 코드</label></td>
-							<td colspan="2"><input type="text" id="partnerBPlaceCode" name="partnerBPlaceCode" placeholder="ex: tour_001" disabled="disabled"></td>
+							<td colspan="2"><input type="text" id="tripSCateCode" name="tripSCateCode" placeholder="ex: TRIP_SCTGRY_000" disabled="disabled" /></td>
 						</tr>
 						<tr>
-							<td><label for="RegionSCateName">지역 소분류 명</label></td>
-							<td colspan="2"><input type="text" id="RegionSCateName" name="RegionSCateName" placeholder="지역소분류명을 입력해주세요" disabled="disabled"></td>
+							<td><label for="partnerBPlaceCode">제휴 사업장 코드</label></td>
+							<td colspan="2"><input type="text" id="partnerBPlaceCode" name="partnerBPlaceCode" placeholder="ex: tour_001" disabled="disabled" /></td>
 						</tr>
 						<tr>
-							<td><label for="tourAuthorityId">등록플랫폼권한아이디</label></td>
-							<td colspan="2"><input type="text" id="tourAuthorityId" name="tourAuthorityId" placeholder="ex: admin001" disabled="disabled"></td>
-						</tr>
-						
-						<tr>
-							<td><label for="tourAddr">관광지 주소</label></td>
-							<td colspan="2"><input type="text" id="tourAddr" name="tourAddr" placeholder="관광지 주소를 입력해주세요" disabled="disabled" /></td>
+							<td><label for="regionSCateName">지역소분류명</label></td>
+							<td colspan="2"><input type="text" id="regionSCateName" name="regionSCateName" placeholder="지역소분류 명을 입력해주세요" disabled="disabled" /></td>
 						</tr>
 						<tr>
-							<td><label for="tourDaddr">관광지 상세주소</label></td>
-							<td colspan="2"><input type="text" id="tourDaddr" name="tourDaddr" placeholder="관광지 상세주소를 입력해주세요" disabled="disabled" /></td>
+							<td><label for="lodgingAddr">숙소 주소</label></td>
+							<td colspan="2"><input type="text" id="lodgingAddr" name="lodgingAddr" placeholder="주소를 입력해주세요" disabled="disabled" /></td>
 						</tr>
 						<tr>
-							<td><label for="tourSite">관광지 사이트</label></td>
-							<td colspan="2"><input type="text" id="tourSite" name="tourSite" placeholder="관광지 사이트를 입력해주세요" disabled="disabled" /></td>
+							<td><label for="lodgingDaddr">숙소 세부주소</label></td>
+							<td colspan="2"><input type="text" id="lodgingDaddr" name="lodgingDaddr" placeholder="관광지 세부조소를 입력해주세요" disabled="disabled" /></td>
 						</tr>
 						<tr>
-							<td><label for="tourContactNum">관광지 연락처1</label></td>
-							<td colspan="2"><input type="text" id="tourContactNum" name="tourContactNum" placeholder="관광지 연락처를 입력해주세요" disabled="disabled" /></td>
+							<td><label for="lodgingSite">속소 사이트</label></td>
+							<td colspan="2"><input type="text" id="lodgingSite" name="lodgingSite" placeholder="관광지 사이트를 입력해주세요" disabled="disabled" /></td>
 						</tr>
 						<tr>
-							<td><label for="tourContactNum2">관광지 연락처2</label></td>
-							<td colspan="2"><input type="text" id="tourContactNum2" name="tourContactNum2" placeholder="제휴브랜드명을 입력해주세요" disabled="disabled" /></td>
+							<td><label for="lodgingContactNum">숙소 연락처1</label></td>
+							<td colspan="2"><input type="text" id="lodgingContactNum" name="lodgingContactNum" placeholder="관광지 연락처를 입력해주세요" disabled="disabled" /></td>
 						</tr>
 						<tr>
-							<td><label for="tourOthers">관광지 기타사항</label></td>
-							<td colspan="2"><input type="text" id="tourOthers" name="tourOthers" placeholder="제휴브랜드명을 입력해주세요" disabled="disabled" /></td>
-						</tr>
-						<tr>
-							<td><label for="tourRegDate">등록일자</label></td>
-							<td colspan="2"><input type="text" id="tourRegDate" name="tourRegDate" placeholder="등록일자를 입력해주세요" disabled="disabled" /></td>
+							<td><label for="lodgingContactNum2">숙소 연락처2</label></td>
+							<td colspan="2"><input type="text" id="lodgingContactNum2" name="lodgingContactNum2" placeholder="관광지 연락처를 입력해주세요" disabled="disabled" /></td>
 						</tr>
 						
 					<tfoot>
@@ -123,55 +113,55 @@
 	  <th:block layout:fragment="customJs">
 		<script>		
 			$('#nameCheck').click(function(){
-				const tourName = $('#tourName').val();
+				const lodgingName = $('#lodgingName').val();
 				//const $memberId = $('#memberId')[0];
 				//console.log({$memberId});
 				//console.log(typeof memberId);
-				if(tourName == ''){
-					alert('관광지 이름을 입력해주세요');
-					$('#tourName').focus();
+				if(lodgingName == ''){
+					alert('숙소 이름을 입력해주세요');
+					$('#lodgingName').focus();
 					return ;
 				}
 				const request = $.ajax({
 					method : 'GET',
-					url : '/platform/destination/addTourCheckList',
-					data : {'tourName' : tourName},
+					url : '/platform/destination/addLodgingCheckList',
+					data : {'lodgingName' : lodgingName},
 					dataType : 'json'
 				});
 				request.done(function(res){
 					console.log(res);
 					console.log(typeof res);
-					const isTourName = res;
-					$('form input').not('#tourName').prop('disabled', isTourName);
-					$('form select').prop('disabled', isTourName);
-					$('form button').not('#nameCheck').prop('disabled', isTourName);
-					if(isTourName){
-						alert('등록 할 수 없는 이름입니다.');
+					const isLodgingName = res;
+					$('form input').not('#lodgingName').prop('disabled', isLodgingName);
+					$('form select').prop('disabled', isLodgingName);
+					$('form button').not('#nameCheck').prop('disabled', isLodgingName);
+					if(isLodgingName){
+						alert('등록 할 수 없는 숙소입니다.');
 						$('form input').val('');
 						$('form select').val('');
-						$('#tourName').focus();
+						$('#lodgingName').focus();
 					}
 				});
 				request.fail(function(jqXHR, textStatus, error){
 					console.log(error);
 				});
 			});
-			$('#tourName').change(function(){
-				$('form input').not('#tourName').prop('disabled', true);
+			$('#lodgingName').change(function(){
+				$('form input').not('#lodgingName').prop('disabled', true);
 				$('form select').prop('disabled', true);
 				$('form button').not('#nameCheck').prop('disabled', true);
 			}); 
 						
 			$('#addMemberBtn').click(function(){
-				const tourName = $('tourName').val();
-				const tourInfoCode = $('tourInfoCode').val();
-				const tourAuthorityId = $('tourAuthorityId').val();
-				const tourAddr = $('tourAddr').val();
-				const tourDaddr = $('tourDaddr').val();
-				const tourSite = $('tourSite').val();
-				const tourContactNum = $('tourContactNum').val();
-				const tourContactNum2 = $('tourContactNum2').val();
-				const tourOthers = $('tourOthers').val();
+				const lodgingName = $('lodgingName').val();
+				const lodgingInfoCode = $('lodgingInfoCode').val();
+				const lodgingAuthorityId = $('lodgingAuthorityId').val();
+				const lodgingAddr = $('lodgingAddr').val();
+				const lodgingDaddr = $('lodgingDaddr').val();
+				const lodgingSite = $('lodgingSite').val();
+				const lodgingContactNum = $('lodgingContactNum').val();
+				const lodgingContactNum2 = $('lodgingContactNum2').val();
+				
 				
 				let isSubmit = true;
 				$('form input, form select').each(function(idx, element){
