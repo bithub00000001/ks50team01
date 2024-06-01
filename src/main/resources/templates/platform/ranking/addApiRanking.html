@@ -82,6 +82,14 @@
 							</tr>
 							<tr>
 								<td>
+									<label for="artclRankigNum">순위</label>
+								</td>
+								<td colspan="2">
+									<input type="text" id="artclRankigNum" name="artclRankigNum" placeholder="순위를 입력해주세요" disabled="disabled"/>
+								</td>
+							</tr>
+							<tr>
+								<td>
 									<label for="recommenDetails">추천내용</label>
 								</td>
 								<td colspan="2">
@@ -166,6 +174,7 @@
 			
 			$('#addApiRankingBtn').click(function(){
 				const pRankingId = $('pRankingId').val();
+				const artclRankigNum = $('artclRankigNum').val();
 				const recommenDetails = $('recommenDetails').val();
 			
 				let isSubmit = true;

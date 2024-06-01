@@ -13,26 +13,28 @@
 	</delete>
 	
 	<update id="modifyUserRanking" parameterType="UserRanking">
-	UPDATE 
-		MEMBER_RECOMMENDATION_RANKING
-	SET
-		REG_PF_ID = #{userRankingRegId},
-		PRTNR_BPLC_CD = #{partnerBusinessCode},
-		TRIP_LCTGRY_CD = #{tripLctgryCode},
-		destination_Type = #{destinationType},
-		destination_content_id = #{destinationCId},
-		DN_DETAIL = #{destinationDetail},
-		TOP_RANK = #{userRank},
-		REV_STATS_STRT_YMD = #{reviewStatsStart},
-		REV_STATS_END_YMD = #{reviewStatsEnd},
-		PF_PSTG_STRT_YMD = #{platformAdStart},
-		PF_PSTG_END_YMD = #{platformAdEnd},
-		ACT_YN = #{activate}
-	WHERE 
-		MBR_ARTCL_RANK = #{userRankingId};
+		/*회원추천리스트 수정*/
+		UPDATE 
+			MEMBER_RECOMMENDATION_RANKING
+		SET
+			REG_PF_ID = #{userRankingRegId},
+			PRTNR_BPLC_CD = #{partnerBusinessCode},
+			TRIP_LCTGRY_CD = #{tripLctgryCode},
+			destination_Type = #{destinationType},
+			destination_content_id = #{destinationCId},
+			DN_DETAIL = #{destinationDetail},
+			TOP_RANK = #{userRank},
+			REV_STATS_STRT_YMD = #{reviewStatsStart},
+			REV_STATS_END_YMD = #{reviewStatsEnd},
+			PF_PSTG_STRT_YMD = #{platformAdStart},
+			PF_PSTG_END_YMD = #{platformAdEnd},
+			ACT_YN = #{activate}
+		WHERE 
+			MBR_ARTCL_RANK = #{userRankingId};
 	</update>
 	
 	<select id="getUserRankingInfoById" resultType="UserRanking">
+		/*회원추천리스트 수정정보*/
 		SELECT 
 			ROW_NUMBER() OVER(ORDER BY MBR_ARTCL_RANK)	AS userRankingNum,
 			MBR_ARTCL_RANK								AS userRankingId,  
@@ -73,6 +75,7 @@
 					FROM 
 						MEMBER_RECOMMENDATION_RANKING AS m
 		</selectKey>
+			/*회원추천리스트 등록*/
 			INSERT INTO 
 				MEMBER_RECOMMENDATION_RANKING
 				(MBR_ARTCL_RANK,
@@ -107,18 +110,18 @@
 	
 	</insert>
 	
-	<select id="userRankingListCheck" parameterType="String" resultType="boolean">
-		/* 중복플랫폼리스트 체크 */
+	<select id="userRankingListCheck" parameterType="int" resultType="boolean">
+		/* 중복플랫폼리스트 중복체크 */
 		SELECT 
-			COUNT(MBR_ARTCL_RANK)
+			COUNT(TOP_RANK)
 		FROM 
 			MEMBER_RECOMMENDATION_RANKING
 		WHERE 
-			MBR_ARTCL_RANK = #{MBR_ARTCL_RANK};
+			TOP_RANK = #{TOP_RANK};
 	</select>
 
 	<select id="getUserRankingList" resultType="UserRanking">
-		/* 회원추천 조회 */
+		/* 회원추천리스트 조회 */
 		SELECT
 			ROW_NUMBER() OVER(ORDER BY MBR_ARTCL_RANK)	AS userRankingNum,
 			MBR_ARTCL_RANK								AS userRankingId, 

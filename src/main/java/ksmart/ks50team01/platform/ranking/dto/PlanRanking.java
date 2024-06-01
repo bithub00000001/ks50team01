@@ -9,6 +9,8 @@ public class PlanRanking {
 	private String pRankingRegId;
 	private String tripPlanNum;
 	private String rgnSctgryName;
+	private String planTitle;
+	private String planDetail;
 	private int  tripPlanRank;
 	private String reviewStatsStart;
 	private String reviewStatsEnd;
