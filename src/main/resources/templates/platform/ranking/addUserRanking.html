@@ -78,10 +78,19 @@
 							</tr>
 							<tr>
 								<td>
+									<label for="destinationDetail">추천내용</label>
+								</td>
+								<td colspan="2">
+									<input type="text" id="destinationDetail" name="destinationDetail" placeholder="추천내용을 입력해주세요" />
+								</td>
+							</tr>
+							<tr>
+								<td>
 									<label for="userRank">최종순위</label>
 								</td>
 								<td colspan="2">
 									<input type="text" id="userRank" name="userRank" placeholder="최종순위를 입력해주세요" />
+									<button type="button" id="idCheck">중복체크</button>
 								</td>
 							</tr>
 							<tr>
@@ -164,42 +173,41 @@
  <th:block layout:fragment="customJs">
 		<script>		
 			$('#idCheck').click(function(){
-				const userRankingId = $('#userRankingId').val();
+				const userRank = $('#userRank').val();
 				//const $memberId = $('#memberId')[0];
 				//console.log({$memberId});
 				//console.log(typeof memberId);
-				if(userRankingId == ''){
-					alert('회원추천 아이디를 입력해주세요');
-					$('#userRankingId').focus();
+				if(userRank == ''){
+					alert('순위를 입력해주세요');
+					$('#userRank').focus();
 					return ;
 				}
 				const request = $.ajax({
 					method : 'POST',
 					url : '/platform/ranking/userRankingListCheck',
-					data : { 'userRankingId' : userRankingId },
+					data : { 'userRank' : userRank },
 					dataType : 'json'
 				});
 				request.done(function(res){
 					console.log(res);
 					console.log(typeof res);
-					const isuserRankingNum = res;
-					$('form input').not('#userRankingId').prop('disabled', isuserRankingNum);
-					$('form select').prop('disabled', isuserRankingNum);
-					$('form button').not('#idCheck').prop('disabled', isuserRankingNum);
-					if(isuserRankingNum){
-						alert('등록 할 수 없는 넘버입니다.');
+					const isUserRank = res;
+					$('form input').not('#userRank').prop('disabled', isUserRank);
+					$('form select').prop('disabled', isUserRank);
+					$('form button').not('#idCheck').prop('disabled', isUserRank);
+					if(isUserRank){
+						alert('등록할 수 없는 순위입니다.');
 						$('form input').val('');
-						$('form select').val('');
-						$('#userRankingId').focus();
+						$('#userRank').focus();
 					}
 				});
 				request.fail(function(jqXHR, textStatus, error){
 					console.log(error);
 				});
 			});
-			$('#userRankingId').change(function(){
-				$('form input').not('#userRankingId').prop('disabled', true);
-				$('form select').prop('disabled', true);
+			$('#userRank').change(function(){
+				$('form input').not('#userRank').prop('disabled', true);
+				$('form select').prop('disabled', false);
 				$('form button').not('#idCheck').prop('disabled', true);
 			});
 						
@@ -220,7 +228,7 @@
 				$('form input, form select').each(function(idx, element){
 					const id = element.id;
 					const value = $(element).val();
-					if(userRankingId == ''){
+					if(userRank == ''){
 						const cate = $(`label[for="${id}"]`).text();
 						alert(`${cate} 필수 입력항목입니다.`);
 						$(element).focus();
