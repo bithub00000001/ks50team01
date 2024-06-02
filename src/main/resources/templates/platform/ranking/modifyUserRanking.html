@@ -65,7 +65,7 @@
 							</tr>
 							<tr>
 								<td>
-									<label for=destinationType>관광타입</label>
+									<label for=destinationType>여행지대분류명</label>
 								</td>
 								<td colspan="2">
 									<input type="text" id="destinationType" name="destinationType" th:value=${userRanking.destinationType} placeholder="관광타입을 입력해주세요"/>
@@ -79,7 +79,14 @@
 									<input type="text" id="destinationCId" name="destinationCId" th:value=${userRanking.destinationCId}/>
 								</td>
 							</tr>
-							
+							<tr>
+								<td>
+									<label for="destinationDetail">추천내용</label>
+								</td>
+								<td colspan="2">
+									<input type="text" id="destinationDetail" name="destinationDetail" th:value=${userRanking.destinationDetail}/>
+								</td>
+							</tr>
 							<tr>
 								<td>
 									<label for="userRank">최종순위</label>
