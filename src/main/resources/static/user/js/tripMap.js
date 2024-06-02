@@ -61,10 +61,10 @@ function getData(map, contentTypeId) {
         const $additionalContainer = $('<p></p>', {
             text: '연락처 : '
         }).append(
-            $('<span></span>', {
+            $('<small></small>', {
                 type: 'text',
                 class: 'additional-input',
-                text: telNum ? telNum : '없음'
+                text: telNum ? telNum.replaceAll('<br />', ', ') : '없음'
             })
         );
         $li.append($additionalContainer);

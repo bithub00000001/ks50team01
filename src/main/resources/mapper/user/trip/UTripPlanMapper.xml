@@ -9,6 +9,11 @@
         <result column="MBR_NICKNAME" property="nickname"/>
     </resultMap>
 
+    <insert id="addTempPlanInfo">
+        /* 임시 상태로 여행 계획을 저장 */
+
+    </insert>
+
 
     <select id="getTourInfoObject" resultType="String" parameterType="string">
         /* 여행지 정보를 컬럼 이름과 값으로 찾은 후 JSON 객체로 반환 */
@@ -69,7 +74,8 @@
         /* 컨텐트 ID와 일치하는 위, 경도 조회 */
         select
             tour_detail_longitude as longitude,
-            tour_detail_latitude as latitude
+            tour_detail_latitude as latitude,
+            tour_detail_title as title
         from
             TOUR_DETAIL_FROM_API
         where
