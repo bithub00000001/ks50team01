@@ -83,6 +83,17 @@ public class PFaqService {
 		pFaqMapper.insertFaq(pFaq);
 		
 	}
+
+
+	/**
+	 * 해당 카테고리의 자주 묻는 질문 목록 조회
+	 * @param category
+	 * @return 카테고리에 해당하는 자주 묻는 질문 목록
+	 */
+	public List<PFaq> getFaqListByCategory(String category) {
+		List<PFaq> faqList = pFaqMapper.getFaqListByCategory(category);
+		return faqList;
+	}
 	
 	
 

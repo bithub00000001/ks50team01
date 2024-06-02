@@ -241,7 +241,7 @@
 	</select>
 	
 	
-		<!-- 게시글 번호로 해당 게시글의 상세 정보를 조회하는 쿼리 -->
+	<!-- 게시글 번호로 해당 게시글의 상세 정보를 조회하는 쿼리 -->
 	<select id="getPostInfoByNum" resultMap="postResultMap" parameterType="String">
 		SELECT
 			P.PST_NO, 

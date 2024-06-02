@@ -83,6 +83,17 @@ public class PNoticeService {
 		pNoticeMapper.noticeDelete(noticeNum);
 	}
 
+	
+	/**
+	 * 해당 카테고리의 공지사항 목록 조회
+	 * @param category
+	 * @return 카테고리에 해당하는 공지사항 목록
+	 */
+	public List<PNotice> getNoticeListByCategory(String category) {
+		List<PNotice> noticeList = pNoticeMapper.getNoticeListByCategory(category);
+		return noticeList;
+	}
+
 
 
 

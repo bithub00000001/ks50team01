@@ -29,7 +29,7 @@ public class PFaqController {
 	
 	private final PFaqService pFaqService;
 	
-	// 자주찾는질문 수정 POST 요청
+	// 자주 묻는 질문 수정 POST 요청
 	@PostMapping("/faqModify")
 	public String faqModify(PFaq pFaq, Model model) {
         String contentWithLineBreaks = pFaq.getFaqContent().replace("\n", "<br>");
@@ -37,9 +37,9 @@ public class PFaqController {
 		
         pFaqService.faqModify(pFaq);
         
-		log.info("자주찾는질문 수정: {}", pFaq);
+		log.info("자주 묻는 질문 수정: {}", pFaq);
 		
-		model.addAttribute("title", "자주찾는질문 수정");
+		model.addAttribute("title", "자주 묻는 질문 수정");
 		
 		return "redirect:/platform/board/faqList";
 	}
@@ -47,7 +47,7 @@ public class PFaqController {
 
 	
 	
-	// 자주찾는질문 수정 페이지
+	// 자주 묻는 질문 수정 페이지
 	@GetMapping("/faqModify")
 	public String faqModify(@RequestParam(value = "faqNum") String faqNum, Model model) {
 		PFaq faqInfo = pFaqService.getFaqInfoByNum(faqNum);
@@ -59,7 +59,7 @@ public class PFaqController {
 		log.info("faqInfo : {}", faqInfo);
 		
 		model.addAttribute("faqInfo", faqInfo);
-		model.addAttribute("title", "자주찾는질문 수정 페이지");
+		model.addAttribute("title", "자주 묻는 질문 수정 페이지");
 		
 		return "platform/board/faqModify";
 	}
@@ -68,19 +68,29 @@ public class PFaqController {
 	
 
 	
-	// 자주찾는질문 조회 페이지
+	// 자주 묻는 질문 조회 페이지
 	@GetMapping("/faqList")
-	public String faqList(Model model) {
-		List<PFaq> faqList = pFaqService.getFaqList();
+	public String faqList(@RequestParam(value = "category", required = false) String category, Model model) {
+		List<PFaq> faqList;
+		
+	    if (category != null) {
+	    	faqList = pFaqService.getFaqListByCategory(category);
+	    } else {
+	    	faqList = pFaqService.getFaqList();
+	    }
+		
 		log.info("faqList: {}", faqList);
+		 
 		model.addAttribute("faqList", faqList);
-		model.addAttribute("title", "자주찾는 질문 조회");
+		model.addAttribute("selectedCategory", category);
+		model.addAttribute("title", "자주 묻는 질문 조회");
+		
 		return "platform/board/faqList";
 	}
 	
 	
 	
-	// 자주찾는질문 작성 POST 요청
+	// 자주 묻는 질문 작성 POST 요청
     @PostMapping("/faqWrite")
     public String faqWrite(PFaq pFaq, Model model) {
         String contentWithLineBreaks = pFaq.getFaqContent().replace("\n", "<br>");
@@ -88,13 +98,13 @@ public class PFaqController {
 
         pFaqService.insertFaq(pFaq);
 
-        model.addAttribute("title", "자주찾는질문 작성");
+        model.addAttribute("title", "자주 묻는 질문 작성");
 
         return "redirect:/platform/board/faqList";
     }
     
 
-	// 자주찾는질문 작성 페이지
+	// 자주 묻는 질문 작성 페이지
 	@GetMapping("/faqWrite")
 	public String faqWrite(Model model) {
 		List<PCategory> faqCateList = pFaqService.getfaqCateList();
@@ -108,7 +118,7 @@ public class PFaqController {
 	    // 모델에 현재 날짜 추가
 	    model.addAttribute("currentDate", currentDate);
 	    model.addAttribute("faqCateList", faqCateList);
-		model.addAttribute("title", "자주찾는질문 작성 페이지");
+		model.addAttribute("title", "자주 묻는 질문 작성 페이지");
 		
 		return "platform/board/faqWrite";
 	}
@@ -116,14 +126,14 @@ public class PFaqController {
 	
 	
 	
-	// 자주찾는 질문 삭제 POST 요청
+	// 자주 묻는 질문 삭제 POST 요청
 	@PostMapping("/faqDelete")
 	public String faqDelete(@RequestParam(value = "faqNum") String faqNum, Model model) {
 	    
 		pFaqService.faqDelete(faqNum);
 		
 		model.addAttribute("faqNum", faqNum);
-		model.addAttribute("title", "자주찾는질문 삭제");
+		model.addAttribute("title", "자주 묻는 질문 삭제");
 		
 		return "redirect:/platform/board/faqList";
 	} 
@@ -133,7 +143,7 @@ public class PFaqController {
 	
 	
 	/*
-	// 자주찾는 질문 삭제
+	// 자주 묻는 질문 삭제
 	@GetMapping("/faqDelete")
 	public String faqDeletePage(@RequestParam(value = "faqNum") String faqNum, Model model) {
 		

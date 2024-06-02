@@ -12,4 +12,10 @@ public interface PReportMapper {
 	// 신고내역 조회
 	List<PReport> getReportList();
 
+	// 해당 카테고리의 신고내역 조회
+	List<PReport> getReportListByCategory(String category);
+
+	// 신고 승인
+	void approveReport(String reportNum);
+
 }

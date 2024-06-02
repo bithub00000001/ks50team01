@@ -30,6 +30,9 @@ public interface PNoticeMapper {
 	// 공지사항 DB에 저장
 	void insertNotice(PNotice pNotice);
 
+	// 해당 카테고리의 공지사항 목록 조회 
+	List<PNotice> getNoticeListByCategory(String category);
+
 
 	
 

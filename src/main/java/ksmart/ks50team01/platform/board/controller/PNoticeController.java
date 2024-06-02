@@ -29,11 +29,21 @@ public class PNoticeController {
 	
 	// 공지사항 조회 페이지
 	@GetMapping("/noticeList")
-	public String noticeList(Model model) {
-	    List<PNotice> noticeList = pNoticeService.getNoticeList();
+	public String noticeList(@RequestParam(value = "category", required = false) String category, Model model) {
+	    List<PNotice> noticeList;
+	    
+	    if (category != null) {
+	    	noticeList = pNoticeService.getNoticeListByCategory(category);
+	    } else {
+	    	noticeList = pNoticeService.getNoticeList();
+	    }
+	    
 	    log.info("noticeList: {}", noticeList);
+	    
 	    model.addAttribute("noticeList", noticeList);
+	    model.addAttribute("selectedCategory", category);
 		model.addAttribute("title", "공지사항 조회");
+		
 		return "platform/board/noticeList";
 	}
 

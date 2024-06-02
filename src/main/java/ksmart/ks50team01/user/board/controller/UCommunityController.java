@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import ksmart.ks50team01.user.board.dto.UCategory;
 import ksmart.ks50team01.user.board.dto.UComment;
 import ksmart.ks50team01.user.board.dto.UCommunity;
@@ -89,7 +87,7 @@ public class UCommunityController {
 	
 	// 게시글 작성
 	@PostMapping("/postWrite")
-	public String postWrite(UCommunity uCommunity, HttpServletRequest request, Model model, @RequestParam(required = false) MultipartFile[] uploadfile) {
+	public String postWrite(UCommunity uCommunity, Model model, @RequestParam(required = false) MultipartFile[] uploadfile) {
 		String contentWithLineBreaks = uCommunity.getPostContent().replace("\n", "<br>");
 		uCommunity.setPostContent(contentWithLineBreaks);
 		
@@ -107,12 +105,7 @@ public class UCommunityController {
 
 	// 게시글 작성 폼 이동
 	@GetMapping("/postWrite")
-	public String postWrite(Model model, HttpSession session) {
-		String loginId = (String) session.getAttribute("loginId");
-		if (loginId == null) {
-			model.addAttribute("loginRequired", true);
-			return "redirect:/trip"; // 로그인 페이지 경로로 변경
-		}
+	public String postWrite(Model model) {
 		
 		List<UCategory> postCateList = uCommunityService.getPostCateList();
 		log.info("postCateList: {}", postCateList);
@@ -122,6 +115,9 @@ public class UCommunityController {
 		
 		return "user/board/postWrite";
 	}
+	
+	
+	
 	
 	/**
 	 * 파일 json

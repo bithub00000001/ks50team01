@@ -46,7 +46,26 @@ public class PQnaService {
 
 	public PQna getQnaDetailByNum(String qnaNum) {
 		PQna qnaDetail = pQnaMapper.getQnaDetailByNum(qnaNum);
-		// TODO Auto-generated method stub
 		return qnaDetail;
+	}
+
+	
+	// 1:문의 답변 작성
+    public void answerSave(String qnaNum, String ansRegId, String ansContent) {
+        // 질문 테이블 업데이트
+        pQnaMapper.updateQnaWithAnswererId(qnaNum, ansRegId);
+
+        // 답변 테이블 삽입
+        PAnswer pAnswer = new PAnswer();
+        pAnswer.setQnaNum(qnaNum);
+        pAnswer.setAnsContent(ansContent);
+        pQnaMapper.answerSave(pAnswer);
+    }
+
+
+
+	public List<PQna> getQnaListByCategory(String category) {
+		List<PQna> qnaList = pQnaMapper.getQnaListByCategory(category);
+		return qnaList;
 	}
 }

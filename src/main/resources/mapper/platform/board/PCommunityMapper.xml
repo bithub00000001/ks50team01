@@ -5,7 +5,8 @@
 <mapper namespace="ksmart.ks50team01.platform.board.mapper.PCommunityMapper">
 	
 	<resultMap 	id="postResultMap" 		type="PCommunity">
-		<id 	property="postCode" 	column="PST_NO" />
+		<id 	property="postNum" 		column="PST_NO" />
+		<result property="postRowNum" 	column="ROW_NUM" />
 		<result property="postRegId" 	column="REG_MBR_ID" />
 		<result property="postCateNum" 	column="PST_CTGRY_NO" />
 		<result property="postTitle" 	column="PST_TTL" />
@@ -19,7 +20,6 @@
 		<result property="postRegDate" 	column="REG_YMD" />
 		<result property="postMdfDate" 	column="MDFCN_YMD" />
 		<result property="postDelDate" 	column="DEL_YMD" />
-		<result property="postNum" 		column="postNum" />
 		
 		
 		<!-- 1:1 association -->
@@ -78,8 +78,8 @@
 	<select id="getCommunityList" resultMap="postResultMap">
 	 	/* 커뮤니티 조회 */
 	 	SELECT
-			ROW_NUMBER() OVER(ORDER BY P.PST_NO) AS postNum,
-			P.PST_NO, 
+	 		ROW_NUMBER() OVER(ORDER BY CAST(SUBSTRING_INDEX(P.PST_NO, 'PST_', -1) AS UNSIGNED)) AS ROW_NUM,
+	 		CAST(SUBSTRING_INDEX(P.PST_NO, 'PST_', -1) AS UNSIGNED) AS PST_NO,
 			P.REG_MBR_ID,
 			C.PST_CTGRY_NO, 
 			C.PST_CTGRY_NM,
@@ -108,29 +108,49 @@
 		ORDER BY P.REG_YMD DESC;
 	</select>
 	
-	<!-- 
-	<update id="deactivatePost">
-		/ * 선택한 게시물의 활성화 여부를 N으로 변경 * /
-	    UPDATE 
-	    	POST
-	    SET 
-	    	ACT_YN = 'N'
-	    WHERE 
-	    	PST_NO IN
-	    <foreach item="postNum" collection="list" open="(" separator="," close=")">
-	        #{postNum};
-    	</foreach>
-	</update>  -->
+	
+	
+	<select id="getCommunityListByCategory" resultMap="postResultMap">
+	 	SELECT
+	 		P.PST_NO,
+			P.REG_MBR_ID,
+			C.PST_CTGRY_NO, 
+			C.PST_CTGRY_NM,
+			P.PST_TTL, 
+			P.PST_CN, 
+			P.PST_INQ_CNT, 
+			P.PST_LIKE_TOTAL, 
+			P.PST_DISLIKE_TOTAL, 
+			P.PST_REPT_TOTAL, 
+			P.ACT_YN, 
+			P.REG_YMD, 
+			P.MDFCN_YMD, 
+			P.DEL_YMD,
+			COUNT(PC.PST_CMNT_NO) AS PST_CMNT_TOTAL
+		FROM 
+			POST AS P
+			INNER JOIN
+			POST_CATEGORY AS C
+			ON
+			P.PST_CTGRY_NO = C.PST_CTGRY_NO
+			LEFT JOIN 
+			POST_COMMENT AS PC
+			ON 
+			P.PST_NO = PC.PST_NO
+	    WHERE
+	        C.PST_CTGRY_NM = #{postCategoryName};
+	</select>
+
 	
 	
 	<update id="deactivatePost">
-		/ * 게시물의 활성화 여부를 N으로 변경 * /
+		/* 게시물의 활성화 여부를 N으로 변경 */
         UPDATE 
         	POST
         SET 
         	ACT_YN = 'N'
         WHERE 
-        	PST_NO = #{postNum};
+        	CAST(SUBSTRING_INDEX(PST_NO, 'PST_', -1) AS UNSIGNED) = #{postNum};
     </update>
 
     
