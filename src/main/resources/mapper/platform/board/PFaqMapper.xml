@@ -40,10 +40,10 @@
 
 
 	<select id="getFaqList" resultMap="faqResultMap">
-	 	/* 자주찾는질문 조회 */
+	 	/* 자주 묻는 질문 조회 */
 		SELECT 
 			ROW_NUMBER() OVER (ORDER BY CAST(SUBSTRING_INDEX(F.FAQ_NO, 'FAQ_', -1) AS UNSIGNED)) AS ROW_NUM,
-			F.FAQ_NO, 
+			CAST(SUBSTRING_INDEX(F.FAQ_NO, 'FAQ_', -1) AS UNSIGNED) AS FAQ_NO,
 			F.REG_PF_ID, 
 			C.FAQ_CTGRY_TYPE,
 			F.FAQ_TTL, 
@@ -63,56 +63,30 @@
 	</select>
 	
 	
-	<select id="getfaqCateList" resultMap="categoryResultMap">
-        /* 자주찾는질문 카테고리 리스트 조회 */
-        SELECT
-            FAQ_CTGRY_NO,
-            FAQ_CTGRY_TYPE
-        FROM
-            FAQ_CATEGORY
-    	WHERE 
-			ACT_YN = 'Y';
-    </select>
-    
-    
-    
-    
-    <!-- 자주찾는질문 번호 자동증가 -->
-    <insert id="insertFaq" parameterType="PFaq">
-    	<selectKey keyProperty="faqNum" resultType="String" order="BEFORE">
-    		/* 자주찾는질문 등록 */
-    		SELECT
-				CONCAT(
-							'FAQ_', 
-							MAX(CAST(SUBSTRING_INDEX(F.FAQ_NO, 'FAQ_', -1) AS UNSIGNED)) + 1
-						) AS faqNum
-			FROM
-				FREQUENTLY_ASKED_QUESTIONS AS F
-    	</selectKey>
-        INSERT INTO FREQUENTLY_ASKED_QUESTIONS (FAQ_NO, REG_PF_ID, FAQ_CTGRY_NO, FAQ_TTL, FAQ_CN, MDFCN_PF_ID, ACT_YN, REG_YMD)
-        VALUES (#{faqNum}, #{faqRegId}, #{category.faqCategoryNum}, #{faqTitle}, #{faqContent}, #{faqMdfId}, #{faqAct}, NOW());
-    </insert>
-
-	
-	<update id="faqModify" parameterType="PFaq">
-		/* 자주찾는질문 수정 */
-	    UPDATE 
-	        FREQUENTLY_ASKED_QUESTIONS
-	    SET
-	        FAQ_CTGRY_NO = #{faqCateNum},
-	        FAQ_TTL = #{faqTitle},
-	        FAQ_CN = #{faqContent},
-	        MDFCN_PF_ID = #{faqMdfId},
-	        ACT_YN = #{faqAct},
-	        MDFCN_YMD = NOW()
-	    WHERE 
-	        FAQ_NO = #{faqNum};
-	</update>
-
+	<select id="getFaqListByCategory" resultMap="faqResultMap">
+	 	SELECT
+			F.FAQ_NO,
+			F.REG_PF_ID, 
+			C.FAQ_CTGRY_TYPE,
+			F.FAQ_TTL, 
+			F.FAQ_CN, 
+			F.MDFCN_PF_ID,
+			F.ACT_YN, 
+			F.REG_YMD, 
+			F.MDFCN_YMD
+		FROM 
+			FREQUENTLY_ASKED_QUESTIONS AS F
+			INNER JOIN
+			FAQ_CATEGORY AS C
+			ON
+			F.FAQ_CTGRY_NO = C.FAQ_CTGRY_NO
+	    WHERE
+	        C.FAQ_CTGRY_TYPE = #{faqCategoryName};
+	</select>
 	
 	
 	<select id="getFaqInfoByNum" resultMap="faqResultMap">
-		/* getFaqInfoByNum 자주찾는질문 조회 */
+		/* getFaqInfoByNum 자주 묻는 질문 조회 */
 		SELECT 
 			F.FAQ_NO, 
 			F.REG_PF_ID, 
@@ -131,17 +105,65 @@
 			ON
 			F.FAQ_CTGRY_NO = C.FAQ_CTGRY_NO
 		WHERE 
-			F.FAQ_NO = #{faqNum};
+			CAST(SUBSTRING_INDEX(F.FAQ_NO, 'FAQ_', -1) AS UNSIGNED) = #{faqNum};
 	</select>
 	
 	
 	
+	<select id="getfaqCateList" resultMap="categoryResultMap">
+        /* 자주 묻는 질문 카테고리 리스트 조회 */
+        SELECT
+            FAQ_CTGRY_NO,
+            FAQ_CTGRY_TYPE
+        FROM
+            FAQ_CATEGORY
+    	WHERE 
+			ACT_YN = 'Y';
+    </select>
+    
+    
+    
+    
+    <!-- 자주 묻는 질문 번호 자동증가 -->
+    <insert id="insertFaq" parameterType="PFaq">
+    	<selectKey keyProperty="faqNum" resultType="String" order="BEFORE">
+    		/* 자주 묻는 질문 등록 */
+    		SELECT
+				CONCAT(
+							'FAQ_', 
+							MAX(CAST(SUBSTRING_INDEX(F.FAQ_NO, 'FAQ_', -1) AS UNSIGNED)) + 1
+						) AS faqNum
+			FROM
+				FREQUENTLY_ASKED_QUESTIONS AS F
+    	</selectKey>
+        INSERT INTO FREQUENTLY_ASKED_QUESTIONS (FAQ_NO, REG_PF_ID, FAQ_CTGRY_NO, FAQ_TTL, FAQ_CN, MDFCN_PF_ID, ACT_YN, REG_YMD)
+        VALUES (#{faqNum}, #{faqRegId}, #{category.faqCategoryNum}, #{faqTitle}, #{faqContent}, #{faqMdfId}, #{faqAct}, NOW());
+    </insert>
+
+	
+	<update id="faqModify" parameterType="PFaq">
+		/* 자주 묻는 질문 수정 */
+	    UPDATE 
+	        FREQUENTLY_ASKED_QUESTIONS
+	    SET
+	        FAQ_CTGRY_NO = #{faqCateNum},
+	        FAQ_TTL = #{faqTitle},
+	        FAQ_CN = #{faqContent},
+	        MDFCN_PF_ID = #{faqMdfId},
+	        ACT_YN = #{faqAct},
+	        MDFCN_YMD = NOW()
+	    WHERE 
+	        FAQ_NO = #{faqNum};
+	</update>
+
+	
+	
 	<delete id="faqDelete" parameterType="PFaq">
-		/* 자주찾는질문 삭제 */
+		/* 자주 묻는 질문 삭제 */
 	    DELETE FROM 
 	    	FREQUENTLY_ASKED_QUESTIONS 
 	    WHERE 
-	    	FAQ_NO = #{faqNum};
+	    	CAST(SUBSTRING_INDEX(FAQ_NO, 'FAQ_', -1) AS UNSIGNED) = #{faqNum};
 	</delete>
 
 	

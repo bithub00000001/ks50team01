@@ -34,6 +34,9 @@ public interface PFaqMapper {
 
 	// 자주찾는질문 카테고리 조회
 	List<PCategory> getfaqCateList();
+
+	// 해당 카테고리의 자주 묻는 질문 목록 조회
+	List<PFaq> getFaqListByCategory(String category);
 	
 
 	

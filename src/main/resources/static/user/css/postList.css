@@ -1,0 +1,8 @@
+@charset "UTF-8";
+
+/* 활성화여부가 N인 게시글의 전체 행 텍스트 색상 변경 */
+.regulated-post td{
+    color: #adb5bd; /* 원하는 색상으로 변경 */
+    background-color: #f8f9fa; /* 회색 배경색 */
+    /* 다른 스타일 속성 추가 가능 */
+}

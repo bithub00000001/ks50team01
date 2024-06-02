@@ -27,5 +27,19 @@ public class PReportService {
 		log.info("신고내역 조회 결과: {}", reportList);
 		return reportList;
 	}
+
+	public List<PReport> getReportListByCategory(String category) {
+		List<PReport> reportList = pReportMapper.getReportListByCategory(category);
+		return reportList;
+	}
+
+	/**
+	 * 신고 승인
+	 * @param reportNum 승인할 게시물 번호
+	 */
+	public void approveReport(String reportNum) {
+		pReportMapper.approveReport(reportNum);
+		
+	}
 	
 }

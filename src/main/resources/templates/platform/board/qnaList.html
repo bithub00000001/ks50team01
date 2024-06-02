@@ -60,11 +60,11 @@
 	                            <div class="col-md-2 col-sm-2 col-xs-0"></div>
 	                            <label class="control-label col-md-2 col-sm-2 col-xs-12">1:1문의 유형</label>
 	                            <div class="col-md-6 col-sm-6 col-xs-12">
-	                                <select class="form-control text-center">
-	                                    <option>계정 관리</option>
-	                                    <option>이용 문의</option>
-	                                    <option>건의 / 제안</option>
-	                                    <option>결제 / 환불</option>
+	                                <select class="form-control text-center searchCate">
+	                                    <option value="계정 관리" th:selected="${selectedCategory == '계정 관리'}">계정 관리</option>
+	                                    <option value="이용 문의" th:selected="${selectedCategory == '이용 문의'}">이용 문의</option>
+	                                    <option value="건의 / 제안" th:selected="${selectedCategory == '건의 / 제안'}">건의 / 제안</option>
+	                                    <option value="결제 / 환불" th:selected="${selectedCategory == '결제 / 환불'}">결제 / 환불</option>
 	                                </select>
 	                            </div>
 	                            <div class="col-md-2 col-sm-2 col-xs-0"></div>
@@ -72,8 +72,8 @@
 	
 	                        <div class="form-group">
 	                            <div class="col-md-12 col-sm-12 col-xs-12 text-center">
-	                                <button class="btn btn-success btn-lg" type="button">검색</button>
-	                                <button type="reset" class="btn btn-dark btn-lg" onclick="location.reload();">초기화</button>
+	                                <button class="btn btn-success btn-lg searchBtn" type="button">검색</button>
+	                                <button type="reset" class="btn btn-dark btn-lg" onclick="location.href='/platform/board/qnaList'">초기화</button>
 	                            </div>
 	                        </div>
 	                    </form>
@@ -119,6 +119,8 @@
 	                                <td th:text="${q.qnaRegDate}"></td>
 	                                <td th:text="${q.qnaMdfDate}"></td>
 	                                <td th:text="${q.ansRegId}"></td>
+	                                
+	                                
 	                                <th:block th:if="${not #lists.isEmpty(q.answerList)}">
 	                                	<td>
 	                                	<!--/*/ <th:block th:each="l, status : ${q.answerList}"> /*/-->
@@ -149,11 +151,10 @@
 	                                <th:block th:unless="${not #lists.isEmpty(q.answerList)}">
 	                                	<td></td>
 	                                </th:block>
-	                                <!--/* <td th:each="a : ${q.answerList}" th:text="${a.ansContent != null ? a.ansContent : ''}"></td>
-	                                <td th:each="a : ${q.answerList}" th:text="${a.ansRegDate != null ? a.ansRegDate : ''}"></td> */-->
+
 	                                <td>
 	                                    <!-- 버튼 클릭 시 모달 창 열기 -->
-	                                    <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#answerModal" th:data-qna-num="${q.qnaNum}" th:data-qna-title="${q.qnaTitle}" th:data-qna-content="${q.qnaContent}">
+	                                    <button type="button" class="btn btn-primary btn-xs answerBtn" data-toggle="modal"  th:data-qna-num="${q.qnaNum}" th:data-qna-title="${q.qnaTitle}" th:data-qna-content="${q.qnaContent}">
 	                                        답변 입력
 	                                    </button>
 	                                </td>
@@ -184,12 +185,14 @@
 	                                    <!-- 답변 내용 입력 -->
 	                                    <div class="form-group">
 	                                        <label for="answerContent">답변 내용</label>
-	                                        <textarea class="form-control" id="answerContent" rows="5" th:utext="${answerContent}" required="required"></textarea>
+	                                        <textarea class="form-control" id="ansContent" rows="5" th:utext="${ansContent}" required="required"></textarea>
+	                                    	<input type="hidden" id="qnaNum"/>
+	                                    	<input type="hidden" id="ansRegId" th:value="${session.loginId}"/>
 	                                    </div>
 	                                </div>
 	                                <div class="modal-footer">
 	                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-	                                    <button type="button" class="btn btn-primary" id="saveAnswer">답변 저장</button>
+	                                    <button type="button" class="btn btn-primary" id="answerSave">답변 저장</button>
 	                                </div>
 	                            </div>
 	                        </div>
@@ -224,28 +227,74 @@
 
 	<th:block layout:fragment="customJs">
 	    <script>
-	        $(document).ready(function() {
-	            $('#datatable-responsive').DataTable();
+	    $('.answerBtn').click(function(event){
+	        var button = $(event.relatedTarget);
+	        var qnaNum = button.data('qna-num');
+	        var qnaTitle = button.data('qna-title');
+	        var qnaContent = button.data('qna-content');
+
+	        var modal = $(this).closest('.modal');
+	        modal.find('.modal-title').text('문의 번호 ' + qnaNum + '에 대한 답변');
+	        modal.find('#qnaNum').val(qnaNum);
+	        modal.find('#qnaTitle').val(qnaTitle);
+	        modal.find('#qnaContent').val(qnaContent);
+
+	        // session.id 값 가져오기
+	        var ansRegId = $('#ansRegId').val();
+	        modal.find('#ansRegId').val(ansRegId);
+	    });
+
+	    $('#answerSave').click(function() {
+	        var qnaNum = $('#qnaNum').val();
+	        var ansContent = $('#ansContent').val();
+	        var ansRegId = $('#ansRegId').val();
+
+	        $.ajax({
+	            url: '/platform/board/answerSave',
+	            method: 'POST',
+	            contentType: 'application/json',
+	            data: JSON.stringify({
+	                qnaNum: qnaNum,
+	                ansContent: ansContent,
+	                ansRegId: ansRegId
+	            }),
+	            success: function(response) {
+	                if (response.success) {
+	                    alert('답변이 저장되었습니다.');
+	                    $('#answerModal').modal('hide');
+	                    location.reload(); // 변경사항을 반영하기 위해 페이지 새로고침
+	                } else {
+	                    alert('답변 저장에 실패했습니다.');
+	                }
+	            },
+	            error: function(error) {
+	                console.log("Error: ", error);
+	                alert('답변 저장 중 오류가 발생했습니다.');
+	            }
 	        });
-	
-	        $('#answerModal').on('show.bs.modal', function(event) {
-	            var button = $(event.relatedTarget); 
-	            var qnaNum = button.data('qna-num');
-	            var qnaTitle = button.data('qna-title');
-	            var qnaContent = button.data('qna-content');
-	
-	            var modal = $(this);
-	            modal.find('.modal-title').text('문의 번호 ' + qnaNum + '에 대한 답변');
-	            modal.find('.modal-body #qnaTitle').val(qnaTitle);
-	            modal.find('.modal-body #qnaContent').val(qnaContent);
+	    });
+
+
+	    
+	    
+	    $(document).ready(function(){
+	        $('#searchItem').on('keyup', function(){
+	            const searchValue = $(this).val().toLowerCase();
+	            $('#datatable-responsive tbody tr').filter(function(){
+	                $(this).toggle($(this).text().toLowerCase().indexOf(searchValue) > -1);
+	            });
 	        });
-	
-	        // 답변 저장 버튼 클릭 시 이벤트 처리
-	        $('#saveAnswer').on('click', function() {
-	            var answerContent = $('#answerContent').val();
-	            // 여기에 AJAX를 사용하여 서버로 데이터를 전송하는 코드를 추가
-	            console.log('답변 내용: ' + answerContent);
+	        
+	        $(document).on('click','.searchBtn', function(){
+	            const movePage = $('.searchCate').val(); 
+	            if(movePage) location.href = '/platform/board/qnaList?category=' + movePage;
 	        });
+
+
+	    });
+
+	    
+	    
 	    </script>
 	</th:block>
 

@@ -47,11 +47,10 @@
 					</div>
 					<div class="x_content">
 						<br>
-						<form id="demo-form2" class="form-horizontal form-label-left">
+						<form id="demo-form2" class="form-horizontal form-label-left" >
 							<div class="form-group">
 								<div class="col-md-2 col-sm-2 col-xs-0"></div>
-								<label for="searchItem"
-									class="control-label col-md-2 col-sm-2 col-xs-12">검색</label>
+								<label for="searchItem" class="control-label col-md-2 col-sm-2 col-xs-12">검색</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
 									<input id="searchItem" class="form-control col-md-6 col-sm-6 col-xs-12" type="text" name="middle-name">
 								</div>
@@ -62,16 +61,16 @@
 								<div class="col-md-2 col-sm-2 col-xs-0"></div>
 								<label class="control-label col-md-2 col-sm-2 col-xs-12">신고 유형</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<select class="form-control text-center">
-										<option>욕설/인신공격</option>
-										<option>홍보/상업성</option>
-										<option>음란/선정성</option>
-										<option>같은 내용 도배</option>
-										<option>부적절한 콘텐츠</option>
-										<option>스팸 또는 광고</option>
-										<option>개인정보 노출</option>
-										<option>권리침해 신고</option>
-										<option>기타</option>
+									<select class="form-control text-center searchCate">
+										<option value="욕설/인신공격" th:selected="${selectedCategory == '욕설/인신공격'}">욕설/인신공격</option>
+										<option value="홍보/상업성" th:selected="${selectedCategory == '홍보/상업성'}">홍보/상업성</option>
+										<option value="음란/선정성" th:selected="${selectedCategory == '음란/선정성'}">음란/선정성</option>
+										<option value="같은 내용 도배" th:selected="${selectedCategory == '같은 내용 도배'}">같은 내용 도배</option>
+										<option value="부적절한 콘텐츠" th:selected="${selectedCategory == '부적절한 콘텐츠'}">부적절한 콘텐츠</option>
+										<option value="스팸 또는 광고" th:selected="${selectedCategory == '스팸 또는 광고'}">스팸 또는 광고</option>
+										<option value="개인정보 노출" th:selected="${selectedCategory == '개인정보 노출'}">개인정보 노출</option>
+										<option value="권리침해 신고" th:selected="${selectedCategory == '권리침해 신고'}">권리침해 신고</option>
+										<option value="기타" th:selected="${selectedCategory == '기타'}">기타</option>
 									</select>
 								</div>
 								<div class="col-md-2 col-sm-2 col-xs-0"></div>
@@ -80,8 +79,8 @@
 							<div class="ln_solid"></div>
 							<div class="form-group">
 								<div class="col-md-12 col-sm-12 col-xs-12 text-center">
-									<button class="btn btn-success btn-lg" type="button">검색</button>
-									<button type="reset" class="btn btn-dark btn-lg" onclick="location.reload();">초기화</button>
+									<button class="btn btn-success btn-lg searchBtn" type="button">검색</button>
+									<button type="reset" class="btn btn-dark btn-lg" onclick="location.href='/platform/board/reportList'">초기화</button>
 								</div>
 							</div>
 						</form>
@@ -114,28 +113,26 @@
 							</thead>
 							<tbody>
 								<tr th:unless="${reportList != null}">
-									<td colspan="12" class="text-center">등록된 신고내역이 없습니다.</td>
+									<td colspan="11" class="text-center">등록된 신고내역이 없습니다.</td>
 								</tr>
-								<tr th:if="${reportList != null}" th:each="l : ${reportList}">
-									<td th:text="${l.reportNum}"></td>
-									<td th:text="${l.reportId}"></td>
-									<td th:text="${l.reportCate.reportCateType}"></td>
-									<td th:text="${l.postCmntNum}"></td>
-									<td th:text="${l.reportContent}"></td>
-									<td th:text="${l.reportDate}"></td>
-									<td th:text="${l.reportedId}"></td>
-									<td th:text="${l.approveId}"></td>
-									<td th:text="${l.reportApprove}"></td>
-									<td th:text="${l.approveDate}"></td>
+								<tr th:if="${reportList != null}" th:each="r : ${reportList}">
+									<td th:text="${r.reportNum}"></td>
+									<td th:text="${r.reportId}"></td>
+									<td th:text="${r.category.reportCategoryName}"></td>
+									<td th:text="${r.postCmntNum}"></td>
+									<td th:text="${r.reportContent}"></td>
+									<td th:text="${r.reportDate}"></td>
+									<td th:text="${r.reportedId}"></td>
+									<td th:text="${r.approveId}"></td>
+									<td th:text="${r.reportApprove}"></td>
+									<td th:text="${r.approveDate}"></td>
 									<td>
-										<a href="#">승인</a>
+										<button type="button" id="changeApprove" name="reportApprove" data-action="update" class="btn btn-primary btn-xs approveBtn" th:attr="data-report-num=${r.reportNum}">승인</button>
+										<!-- <a href="#">승인</a>  -->
 									</td>
 								</tr>
 							</tbody>
 						</table>
-						<div class="text-left">
-							<button type="button" class="btn btn-primary" id="approveSelected">선택 승인</button>
-						</div>
 					</div>
 				</div>
 			</div>
@@ -166,5 +163,51 @@
 	
 	
 	<th:block layout:fragment="customJs">
+		<script>
+		<!-- 카테고리별 검색 -->
+			    $(document).ready(function(){
+			        $('#searchItem').on('keyup', function(){
+			            const searchValue = $(this).val().toLowerCase();
+			            $('#datatable-responsive tbody tr').filter(function(){
+			                $(this).toggle($(this).text().toLowerCase().indexOf(searchValue) > -1);
+			            });
+			        });
+			        
+			        $(document).on('click','.searchBtn', function(){
+			            const movePage = $('.searchCate').val(); 
+			            if(movePage) location.href = '/platform/board/reportList?category=' + movePage;
+			        });
+		
+			    });
+			    
+			    
+			    
+			    function confirmApproe(element) {
+			    	var reportNum = element.getAttribute("data-report-num");
+			    	if (confirm("승인하시겠습니까?")) {
+			    		$.ajax({
+			    			type: "POST",
+			    			url: "/platform/board/approveReport",
+			    			data: { reportNum: reportNum },
+			    			success: function(response) {
+			    				if (response.success) {
+			    					alert(response.message);
+			    					location.reload();
+			    				} else {
+			    					alert(response.message);
+			    				}
+			    			},
+			    			error: function() {
+			    				alert("승인 처리 중 오류가 발생했습니다.");
+			    			}
+			    		});
+			    	}
+			    }
+
+			    $(document).on('click', '.approveBtn', function() {
+			    	confirmApproe(this);
+			    });
+	
+		</script>
 	</th:block>
 </html>

@@ -62,20 +62,20 @@
 							<div class="col-md-2 col-sm-2 col-xs-0"></div>
 							<label class="control-label col-md-2 col-sm-2 col-xs-12">공지사항 유형</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
-								<select class="form-control text-center">
-									<option>일반 공지</option>
-									<option>긴급 공지</option>
-									<option>예정 공지</option>
-									<option>시스템 공지</option>
-									<option>이벤트 공지</option>
+								<select class="form-control text-center searchCate">
+									<option value="일반 공지" th:selected="${selectedCategory == '일반 공지'}">일반 공지</option>
+									<option value="긴급 공지" th:selected="${selectedCategory == '긴급 공지'}">긴급 공지</option>
+									<option value="예정 공지" th:selected="${selectedCategory == '예정 공지'}">예정 공지</option>
+									<option value="시스템 공지" th:selected="${selectedCategory == '시스템 공지'}">시스템 공지</option>
+									<option value="이벤트 공지" th:selected="${selectedCategory == '이벤트 공지'}">이벤트 공지</option>
 								</select>
 							</div>
 						</div>
 
 						<div class="form-group">
 							<div class="col-md-12 col-sm-12 col-xs-12 text-center">
-								<button class="btn btn-success btn-lg" type="button">검색</button>
-								<button type="reset" class="btn btn-dark btn-lg" onclick="location.reload();">초기화</button>
+								<button class="btn btn-success btn-lg searchBtn" type="button">검색</button>
+								<button type="reset" class="btn btn-dark btn-lg" onclick="location.href='/platform/board/noticeList'">초기화</button>
 							</div>
 						</div>
 					</form>
@@ -84,7 +84,6 @@
 		</div>
 	</div>
 	<!-- search end -->
-	
 	
 		<!-- grid table start -->
 		<div class="row">
@@ -112,22 +111,22 @@
 								<tr th:unless="${noticeList != null}">
 									<td colspan="12" class="text-center">등록된 공지사항이 없습니다.</td>
 								</tr>
-								<tr th:if="${noticeList != null}" th:each="l : ${noticeList}">
-									<td th:text="${l.noticeNum}"></td>
-									<td th:text="${l.noticeRegId}"></td>
-									<td th:text="${l.category.noticeCategoryName}"></td>
-									<td th:text="${l.noticeTitle}"></td>
-									<td th:utext="${l.noticeContent}"></td>
-									<td th:text="${l.noticeInqCnt}"></td>
-									<td th:text="${l.noticeMdfId}"></td>
-									<td th:text="${l.noticeAct}"></td>
-									<td th:text="${l.noticeRegDate}"></td>
-									<td th:text="${l.noticeMdfDate}"></td>
+								<tr th:if="${noticeList != null}" th:each="n : ${noticeList}">
+									<td th:text="${n.noticeNum}"></td>
+									<td th:text="${n.noticeRegId}"></td>
+									<td th:text="${n.category.noticeCategoryName}"></td>
+									<td th:text="${n.noticeTitle}"></td>
+									<td th:utext="${n.noticeContent}"></td>
+									<td th:text="${n.noticeInqCnt}"></td>
+									<td th:text="${n.noticeMdfId}"></td>
+									<td th:text="${n.noticeAct}"></td>
+									<td th:text="${n.noticeRegDate}"></td>
+									<td th:text="${n.noticeMdfDate}"></td>
 									<td>
-										<a th:href="@{/platform/board/noticeModify(noticeNum=${l.noticeNum})}">수정</a>
+										<a th:href="@{/platform/board/noticeModify(noticeNum=${n.noticeNum})}">수정</a>
 									</td>
 									<td>
-										<a href="#" th:data-notice-num="${l.noticeNum}" th:onclick="confirmDelete(this)">삭제</a>
+										<a href="#" th:data-notice-num="${n.noticeNum}" th:onclick="confirmDelete(this)">삭제</a>
 									</td>
 								</tr>
 							</tbody>
@@ -141,7 +140,6 @@
 		</div>
 	<!-- grid table end -->
 	</th:block>
-		
 	
 	<th:block layout:fragment="customJsFile">
 		<!-- Datatables -->
@@ -162,7 +160,6 @@
 	    <script th:src="@{/platform/vendors/pdfmake/build/vfs_fonts.js}"></script>
 		<script th:src="@{/platform/js/search/search.js}"></script>
 	</th:block>
-
 	
 	<th:block layout:fragment="customJs">
     
@@ -198,9 +195,24 @@
 		        document.body.appendChild(form);
 		        form.submit();
 		    }
+		
+		    
+		<!-- 카테고리별 검색 -->
+			    $(document).ready(function(){
+			        $('#searchItem').on('keyup', function(){
+			            const searchValue = $(this).val().toLowerCase();
+			            $('#datatable-responsive tbody tr').filter(function(){
+			                $(this).toggle($(this).text().toLowerCase().indexOf(searchValue) > -1);
+			            });
+			        });
+			        
+			        $(document).on('click','.searchBtn', function(){
+			            const movePage = $('.searchCate').val(); 
+			            if(movePage) location.href = '/platform/board/noticeList?category=' + movePage;
+			        });
+			    });
 		</script>
 
-    
-
-</th:block>
+	</th:block>
+	
 </html>

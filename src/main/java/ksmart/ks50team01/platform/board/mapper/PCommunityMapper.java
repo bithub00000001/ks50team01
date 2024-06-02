@@ -18,15 +18,14 @@ public interface PCommunityMapper {
 	// 댓글 조회
 	List<PCommunity> getCommentList();
 
-	void updatePost(PCommunity post);
-
 
 	PCommunity getPostByNum(String postNum);
 
 	// 게시글 비활성화
-	void deactivatePost(PCommunity pcommunity);
+	void deactivatePost(@Param("postNum") String postNum);
 
-	void deactivatePost(@Param("postNum") String postNum); 
+	// 해당 카테고리의 게시글 목록 조회
+	List<PCommunity> getCommunityListByCategory(String category); 
 	
 	
 }

@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import jakarta.servlet.http.HttpSession;
 import ksmart.ks50team01.user.board.dto.UCategory;
 import ksmart.ks50team01.user.board.dto.UQna;
 import ksmart.ks50team01.user.board.service.UQnaService;
@@ -72,12 +71,7 @@ public class UQnaController {
 	
 	// 1:1문의 작성 폼 이동
 	@GetMapping("/qnaWrite")
-	public String qnaWrite(Model model, HttpSession session) {
-		String loginId = (String) session.getAttribute("loginId");
-		if (loginId == null) {
-			model.addAttribute("loginRequired", true);
-			return "redirect:/trip"; // 로그인 페이지 경로로 변경
-		}
+	public String qnaWrite(Model model) {
 		
 		List<UCategory> qnaCateList = uQnaService.getQnaCateList();
 		log.info("qnaCateList: {}", qnaCateList);

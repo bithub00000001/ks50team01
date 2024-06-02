@@ -20,8 +20,9 @@ public class PNotice {
 	private String noticeMdfDate;
 	
 	private PCategory category;
+	
 	private List<PNotice> noticeList;
-	//private PNotice noticeInfo;
+	private PNotice noticeInfo;
 	
 	
 

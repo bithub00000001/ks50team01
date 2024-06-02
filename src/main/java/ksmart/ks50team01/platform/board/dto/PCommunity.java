@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class PCommunity {
-	private String postCode;
+	private int postRowNum;
 	private String postNum;
 	private String postRegId;
 	private String postCateType;
@@ -25,6 +25,7 @@ public class PCommunity {
 	
 	private PCategory category;
 	
+	private List<PCommunity> communityList;
 	private List<PComment> commentList;
 
 }

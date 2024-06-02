@@ -22,13 +22,13 @@ public class UFaqController {
 	
 	private final UFaqService uFaqService;
 	
-	// 자주찾는 질문 조회 페이지
+	// 자주 묻는 질문 조회 페이지
 	@GetMapping({"/",""})
 	public String faqList(Model model) {
 		List<UFaq> faqList = uFaqService.getFaqList();
 		log.info("faqList: {}", faqList);
 		model.addAttribute("faqList", faqList);
-		model.addAttribute("title", "자주찾는 질문");
+		model.addAttribute("title", "자주 묻는 질문");
 		return "user/board/faqList";
 	}
 	
