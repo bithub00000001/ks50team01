@@ -69,7 +69,7 @@ public class UTripPlanController {
             option -> model.addAttribute("uTripOption", option),
             () -> model.addAttribute("uTripOption", new UTripOption())
         );
-        return "user/trip/tripPlantripPlan";
+        return "user/trip/tripPlan";
     }
 
     /**
@@ -82,10 +82,6 @@ public class UTripPlanController {
     public ResponseEntity<Map<String, Object>> calculateInfo(@RequestBody List<UDayInfo> uDayInfoList) throws
 		JsonProcessingException {
         Map<String, Object> resultMap = uTripPlanService.calculateDistanceDuration(uDayInfoList);
-
-        resultMap = uTripPlanService.calculateDistanceDuration(uDayInfoList);
-
-
         log.info("resultMap: {}", resultMap);
         return ResponseEntity.status(HttpStatus.OK).body(resultMap);
     }
