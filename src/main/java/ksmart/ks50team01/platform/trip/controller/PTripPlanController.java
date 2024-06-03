@@ -43,7 +43,7 @@ public class PTripPlanController {
 
 	// 여행 계획 목록 수정 post 요청
 	@PostMapping("/modify")
-	public String modify(@ModelAttribute PTripPlan pTripPlan) {
+	public String modifyTripPlan(@ModelAttribute PTripPlan pTripPlan) {
 		pTripPlanService.UpdatePTripPlan(pTripPlan);
 		return "redirect:/platform/plan/list";
 	}
@@ -93,12 +93,14 @@ public class PTripPlanController {
 		return "platform/trip/tourInfoManage";
 	}
 
+	// 지역 코드와 일치하는 시군구 코드 목록 조회
 	@GetMapping("/sigungu-codes")
 	@ResponseBody
 	public List<PTourApi> getSigunguCodes(@RequestParam(name = "areaCode") String areaCode) {
 		return pTripPlanService.getSigunguCodesByAreaCode(areaCode);
 	}
 
+	// 여행지 정보 목록 조회
 	@GetMapping("/destination")
 	public String destinationInfoManage(Model model) {
 		List<PTourApi> destinationList = pTripPlanService.getDestinationList();
@@ -107,7 +109,12 @@ public class PTripPlanController {
 		return "platform/trip/destinationInfoManage";
 	}
 
-
+	/**
+	 * 여행지 정보 1개 조회
+	 * @param contentId 컨텐트 ID
+	 * @param contentTypeId 관광 타입
+	 * @return
+	 */
 	@GetMapping("/destination/detail")
 	public String destinationDetailInfo(
 		@RequestParam(name = "contentId") String contentId,
@@ -120,6 +127,12 @@ public class PTripPlanController {
 		return "platform/trip/destinationDetailInfo";
 	}
 
+	/**
+	 * 여행지 상세 정보 업서트 메서드
+	 * @param contentId 컨텐트 ID
+	 * @param contentTypeId 관광 타입
+	 * @return
+	 */
 	@PostMapping("/destination/update")
 	public ResponseEntity<String> updateTourDetail(String contentId, String contentTypeId) {
 		log.info("contentId:{}, contentTypeId:{}", contentId, contentTypeId);
@@ -157,7 +170,7 @@ public class PTripPlanController {
 		return responseMap;
 	}
 
-	// 지역 코드, 시군구 코드 dataTables ajax
+	// 여행지 정보 dataTables ajax
 	@PostMapping(value = "/destination/{dataTrans}")
 	@ResponseBody
 	public Map<String, Object> destinationListByTypeId(@PathVariable String dataTrans) {
@@ -236,7 +249,7 @@ public class PTripPlanController {
 		}
 	}
 
-	// 여행지를 api에서 업데이트 처리
+	// 여행지 1개의 정보를 api에서 업데이트 처리
 	@PostMapping("/update/tourInfo")
 	public ResponseEntity<String> updateTourInfo(@RequestBody Map<String, Object> requestData) {
 		int numOfRows = Integer.parseInt((String) requestData.get("numOfRows"));

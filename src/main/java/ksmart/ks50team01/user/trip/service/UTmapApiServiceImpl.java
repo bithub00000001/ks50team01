@@ -26,6 +26,16 @@ public class UTmapApiServiceImpl implements UTmapApiService {
 	@Value("${tmap.api.key}")
 	private String tmapAppKey;
 
+	/**
+	 * T map APi에서 출발지, 출발지 위경도, 도착지, 도착지 위경도를 입력 받아 정보를 요청하는 메서드
+	 * @param startName 출발지 명
+	 * @param endName 도착지 명
+	 * @param startX 출발지 경도
+	 * @param startY 출발지 위도
+	 * @param endX 도착지 경도
+	 * @param endY 도착지 위도
+	 * @return
+	 */
 	@Override
 	public Mono<TMapApiResponse> fetchFromApi(
 		String startName,
@@ -58,6 +68,11 @@ public class UTmapApiServiceImpl implements UTmapApiService {
 			.flatMap(this::parseApiResponse);
 	}
 
+	/**
+	 * T map API에서 응답받은 데이터를 거리와 소요 시간으로 파싱하여 DTO에 세팅하는 메서드
+	 * @param jsonNode
+	 * @return
+	 */
 	private Mono<TMapApiResponse> parseApiResponse(JsonNode jsonNode) {
 		try {
 			JsonNode responseNode = jsonNode.get("features").get(0).get("properties");

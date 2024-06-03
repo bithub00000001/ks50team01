@@ -16,7 +16,7 @@ public interface PTourApiMapper {
 	// 여행지 정보 업서트
 	void upsertTourInfo(PTourApi tourInfo);
 
+	//  TOUR API 의 여행지 상세 정보 삽입
 	void upsertTourDetail(PTourDetail tourDetail);
 
-	// 여행지 세부 정보 업서트
 }

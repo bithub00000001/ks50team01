@@ -123,9 +123,9 @@
             row_number() OVER (ORDER BY INDIVIDUAL_TRIP_PLAN.REG_YMD) AS planNum,
             TRIP_PLN_NO,
             MBR_ID,
-            CONCAT_WS(' ',
+            /*CONCAT_WS(' ',
                       REGION_SMALL_CATEGORY.RGN_LCTGRY_NM,
-                      REGION_SMALL_CATEGORY.RGN_MCTGRY_NM) AS planAddr,
+                      REGION_SMALL_CATEGORY.RGN_MCTGRY_NM) AS planAddr,*/
             TRIP_PLN_BGNG_YMD,
             TRIP_PLN_END_YMD,
             TRIP_PLN_DAY,
@@ -140,10 +140,10 @@
             INDIVIDUAL_TRIP_PLAN.MDFCN_YMD AS modDate
         FROM
             INDIVIDUAL_TRIP_PLAN
-        INNER JOIN
+        /*INNER JOIN
             REGION_SMALL_CATEGORY
         ON
-            INDIVIDUAL_TRIP_PLAN.RGN_SCTGRY_CD = REGION_SMALL_CATEGORY.RGN_SCTGRY_CD
+            INDIVIDUAL_TRIP_PLAN.RGN_SCTGRY_CD = REGION_SMALL_CATEGORY.RGN_SCTGRY_CD*/
     </select>
     <select id="getTripPlanById" resultMap="tripPlanMap">
         /* 계획 id에 해당하는 여행 계획 조회 */
@@ -151,8 +151,8 @@
             row_number() OVER (ORDER BY INDIVIDUAL_TRIP_PLAN.REG_YMD) AS planNum,
             TRIP_PLN_NO,
             MBR_ID,
-            CONCAT_WS(' ',REGION_SMALL_CATEGORY.RGN_LCTGRY_NM,
-                      REGION_SMALL_CATEGORY.RGN_MCTGRY_NM) AS planAddr,
+            /*CONCAT_WS(' ',REGION_SMALL_CATEGORY.RGN_LCTGRY_NM,
+                      REGION_SMALL_CATEGORY.RGN_MCTGRY_NM) AS planAddr,*/
             TRIP_PLN_BGNG_YMD,
             TRIP_PLN_END_YMD,
             TRIP_PLN_DAY,
@@ -168,10 +168,10 @@
             INDIVIDUAL_TRIP_PLAN.MDFCN_YMD
         FROM
             INDIVIDUAL_TRIP_PLAN
-            INNER JOIN
+            /*INNER JOIN
             REGION_SMALL_CATEGORY
             ON
-                INDIVIDUAL_TRIP_PLAN.RGN_SCTGRY_CD = REGION_SMALL_CATEGORY.RGN_SCTGRY_CD
+                INDIVIDUAL_TRIP_PLAN.RGN_SCTGRY_CD = REGION_SMALL_CATEGORY.RGN_SCTGRY_CD*/
         WHERE
             INDIVIDUAL_TRIP_PLAN.TRIP_PLN_NO = #{PlanId}
     </select>
