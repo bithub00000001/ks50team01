@@ -75,13 +75,13 @@ function createNewItemHtml(name, category, schedule, additional, id, planDayId, 
     return `
     <li class="sortable-item list-group-item list-group-item-action" data-id="${id}">
         <div class="row align-items-center">
-            <div class="col-1">
+            <div class="col-1 sortable-number me-2">
                 <div class="border border-dark badge bg-success text-white d-flex justify-content-center align-items-center mt-1" style="height:22px;width:22px;">
                     <span class="number">${$(`#${planDayId} .sortable-item`).length + 1}</span>
                 </div>
             </div>
-            <div class="col-11 mt-2">
-                <h4 class="col-9" data-content-id="${contentId}">${name}</h4>
+            <div class="col-10 mt-2">
+                <h4 class="col-12" data-content-id="${contentId}">${name}</h4>
             </div>
             <div class="col-12 text-end mb-2">
                 <small class="time-diff" style="visibility: hidden;">0 분</small>
@@ -106,6 +106,7 @@ function initializeSortable(sortableId) {
         ghostClass: 'sortable-ghost',
         chosenClass: 'sortable-chosen',
         dragClass: 'sortable-drag',
+        delayOnTouchOnly: true,
         onUpdate: function (evt) {
             $(`#${sortableId} .sortable-item`).each(function (index, item) {
                 $(item).find('.number').text(index + 1);
