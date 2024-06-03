@@ -6,6 +6,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
 public class PWebClientConfig {
+	// Tour API baseURL 설정 메서드
 	@Bean
 	public WebClient tourApiWebClient() {
 		return WebClient.builder()
@@ -13,6 +14,7 @@ public class PWebClientConfig {
 			.build();
 	}
 
+	// T map API baseURL 설정 메서드
 	@Bean
 	public WebClient tMapApiWebClient() {
 		return WebClient.builder()

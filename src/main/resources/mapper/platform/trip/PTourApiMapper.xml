@@ -105,7 +105,7 @@
                 MDFCN_YMD                     = now()
     </insert>
     <insert id="upsertTourDetail" parameterType="pTourDetail">
-        /* TOUR API 의 여행지 정보 삽입 */
+        /* TOUR API 의 여행지 상세 정보 삽입 */
         INSERT INTO TOUR_DETAIL_FROM_API
         (
             tour_detail_content_id,
