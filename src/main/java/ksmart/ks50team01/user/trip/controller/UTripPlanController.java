@@ -42,18 +42,21 @@ public class UTripPlanController {
     @Value("${tour.api.key}")
     private String apiKey;
 
+    // 여행 계획 세부 아이템 페이지
     @GetMapping("/plan")
     public String tripPlanPage(Model model){
         model.addAttribute("title", "여행 계획 작성");
         return "user/trip/tripItem";
     }
 
+    // 여행 계획 공유 게시판 페이지
     @GetMapping("/board")
     public String boardPage(Model model){
         model.addAttribute("title", "여행 계획 공유");
         return "user/trip/sharePlan";
     }
 
+    // 여행 계획 작성 페이지
     @GetMapping("/detail")
     public String tripCreatePage(@ModelAttribute("uTripOption") Optional<UTripOption> uTripOption,Model model){
         model.addAttribute("title", "여행 계획 작성");
@@ -66,12 +69,12 @@ public class UTripPlanController {
             option -> model.addAttribute("uTripOption", option),
             () -> model.addAttribute("uTripOption", new UTripOption())
         );
-        return "user/trip/tripPlan";
+        return "user/trip/tripPlantripPlan";
     }
 
     /**
      * 전달받은 순서, contentId, 일자를 입력받아 거리와 시간을 계산하고 반환하는 메서드
-     * @param uDayInfoList
+     * @param uDayInfoList 여행지 세부 사항 DTO
      * @return
      */
     @PostMapping("/calculate-info")
@@ -87,6 +90,11 @@ public class UTripPlanController {
         return ResponseEntity.status(HttpStatus.OK).body(resultMap);
     }
 
+    /**
+     * 여행 계획 정보 임시 저장 메서드
+     * @param uTripOption 작성된 여행 계획 정보
+     * @return
+     */
     @PostMapping("/save-temp-plan-info")
     @ResponseBody
     public ResponseEntity<String> addTempPlanInfo(@RequestBody UTripOption uTripOption) {
@@ -95,7 +103,7 @@ public class UTripPlanController {
         try {
             // uTripOption 객체를 DB에 저장하는 로직
             // uTripPlanService.addTempPlanInfo(uTripOption);
-            return ResponseEntity.ok("Success");
+            return ResponseEntity.ok("success");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to save temporary trip details.");
         }

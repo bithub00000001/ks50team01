@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Component;
+import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -15,6 +16,16 @@ import ksmart.ks50team01.user.breadcrumb.Breadcrumb;
 @Component
 public class BreadcrumbInterceptor implements HandlerInterceptor {
 
+	/**
+	 * /를 기준으로 URI를 구분해 breadcrumb을 동적으로 생성
+	 * @param request current HTTP request
+	 * @param response current HTTP response
+	 * @param handler the handler (or {@link HandlerMethod}) that started asynchronous
+	 * execution, for type and/or instance examination
+	 * @param modelAndView the {@code ModelAndView} that the handler returned
+	 * (can also be {@code null})
+	 * @throws Exception
+	 */
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 		ModelAndView modelAndView) throws Exception {

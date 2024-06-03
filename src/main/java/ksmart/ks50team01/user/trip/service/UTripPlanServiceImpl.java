@@ -121,7 +121,8 @@ public class UTripPlanServiceImpl implements UTripPlanService {
 	}
 
 	/**
-	 * 여행 계획 세부 아이템의 위치를 받아 위경도를 설정하고 T map API에 요청해 도보 거리와 소요 시간
+	 * 여행 계획 세부 아이템의 위치를 받아 위경도를 설정하고 T map API에 요청해 도보 거리와 소요 시간을 요청하는 메서드
+	 * 오류가 발생 했을 경우 Exception 관리를 위해 JSON으로 변환한 후 반환하는 메서드
 	 * @param days 일자별로 여행 계획 세부 아이템의 정보가 담겨 있는 객체
 	 * @return 일자별로 출발지, 목적지 사이의 거리, 소요시간, 도착지의 contentId가 담겨 있는 객
 	 * @throws JsonProcessingException T map API 에러 핸들링 상황에서 에러 상황을 JSON으로 변환할 때 발생하는 에러 예외 처리

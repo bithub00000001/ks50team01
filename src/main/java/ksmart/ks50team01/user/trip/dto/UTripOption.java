@@ -15,6 +15,8 @@ public class UTripOption {
     private String category;
     private String optionName;
 
+    private String sessionId;
+
     private String tripTitle;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startDate;
@@ -22,7 +24,6 @@ public class UTripOption {
     private LocalDate endDate;
     private Integer numPeople = 1;
 
-    private List<String> memberType = new ArrayList<>();
     private List<String> virtualMembers = new ArrayList<>();
     private List<String> invitedMembers = new ArrayList<>();
     private Integer numVirtualMembers;

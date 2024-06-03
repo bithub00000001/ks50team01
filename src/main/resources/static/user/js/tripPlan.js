@@ -6,7 +6,6 @@ function firstStepSubmit() {
 
     // 사용자에게 확인 메시지를 보여주고, 확인 시에만 계속 진행
     if (confirm("입력된 정보로 임시저장 하시겠습니까?")) {
-
         saveTripInfo(); // AJAX 요청 보내기
         moveToNextAccordion();
     }
@@ -106,7 +105,7 @@ function saveTripInfo() {
         if (jsonData[this.name]) {
             // jsonData[this.name]에 push 메서드가 있는지 검사
             // if (!jsonData[this.name].push) {
-            // 이렇게 작성하는게 ES5 문법에 맞는 방식이고 위와 같이 작성하는게 옛날 방식
+            // 아래와 같이 작성하는게 ES5 문법에 맞는 방식이고 위와 같이 작성하는게 옛날 방식
             if (!Array.isArray(jsonData[this.name])) {
                 jsonData[this.name] = [jsonData[this.name]];
             }
@@ -144,8 +143,8 @@ function saveTripInfo() {
         }
     });
 
-    jsonData.numVirtualMembers = jsonData.virtualMembers.length;
-    jsonData.numRealMembers = jsonData.invitedMembers.length;
+    if (jsonData.virtualMembers) jsonData.numVirtualMembers = jsonData.virtualMembers.length;
+    if (jsonData.invitedMembers) jsonData.numRealMembers = jsonData.invitedMembers.length;
 
     console.log(jsonData);
 
@@ -154,9 +153,9 @@ function saveTripInfo() {
         url: '/trip/save-temp-plan-info',
         data: JSON.stringify(jsonData), // JSON 데이터로 변환
         contentType: 'application/json; charset=utf-8', // JSON 형식 명시
-        dataType: 'json', // 응답 데이터 형식 명시 (선택적)
         success: function (response) {
-            firstStepSubmit();
+            alert(response);
+            // firstStepSubmit();
         },
         error: function (xhr, status, error) {
             alert('임시 저장에 실패했습니다.');
