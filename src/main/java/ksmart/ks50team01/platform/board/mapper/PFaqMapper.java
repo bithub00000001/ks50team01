@@ -22,7 +22,6 @@ public interface PFaqMapper {
     // 자주찾는질문 수정
     void faqModify(PFaq pFaq);
 	
-	
 	// 자주찾는질문 등록
 	void faqWrite(String faqNum);
 	

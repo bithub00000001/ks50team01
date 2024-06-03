@@ -33,8 +33,6 @@ public interface PNoticeMapper {
 	// 해당 카테고리의 공지사항 목록 조회 
 	List<PNotice> getNoticeListByCategory(String category);
 
-
-	
-
-
 }
+
+

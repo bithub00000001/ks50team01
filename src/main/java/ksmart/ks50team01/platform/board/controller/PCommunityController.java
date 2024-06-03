@@ -34,7 +34,7 @@ public class PCommunityController {
 	
 	
 
-	// 커뮤니티 조회 페이지
+	// 커뮤니티 게시글 조회 페이지
 	@GetMapping("/communityList")
 	public String communityList(@RequestParam(value = "category", required = false) String category, Model model) {
 		List<PCommunity> communityList;
@@ -56,7 +56,7 @@ public class PCommunityController {
 	
 	
 	/*
-    @PostMapping("/data")
+    @PostMapping("/dataTrans")
     @ResponseBody
     public Map<String, Object> getData(String type) {
         Map<String, Object> response = new HashMap<>();

@@ -9,27 +9,23 @@ import ksmart.ks50team01.platform.board.dto.PCommunity;
 
 @Mapper
 public interface PCommunityMapper {
-	// 커뮤니티 조회
+	
+	// 커뮤니티 게시글 목록 조회
 	List<PCommunity> getCommunityList();
 	
-	// 게시글 조회
+	// 게시글 목록 조회
 	List<PCommunity> getPostList();
 	
 	// 댓글 조회
 	List<PCommunity> getCommentList();
 
-
+	// 게시글 번호로 게시글 조회
 	PCommunity getPostByNum(String postNum);
 
 	// 게시글 비활성화
 	void deactivatePost(@Param("postNum") String postNum);
 
-	// 해당 카테고리의 게시글 목록 조회
+	// 카테고리별 게시글 목록 조회
 	List<PCommunity> getCommunityListByCategory(String category); 
 	
-	
 }
-	
-
-	
-

@@ -29,44 +29,6 @@ public class PFaqController {
 	
 	private final PFaqService pFaqService;
 	
-	// 자주 묻는 질문 수정 POST 요청
-	@PostMapping("/faqModify")
-	public String faqModify(PFaq pFaq, Model model) {
-        String contentWithLineBreaks = pFaq.getFaqContent().replace("\n", "<br>");
-        pFaq.setFaqContent(contentWithLineBreaks);
-		
-        pFaqService.faqModify(pFaq);
-        
-		log.info("자주 묻는 질문 수정: {}", pFaq);
-		
-		model.addAttribute("title", "자주 묻는 질문 수정");
-		
-		return "redirect:/platform/board/faqList";
-	}
-	
-
-	
-	
-	// 자주 묻는 질문 수정 페이지
-	@GetMapping("/faqModify")
-	public String faqModify(@RequestParam(value = "faqNum") String faqNum, Model model) {
-		PFaq faqInfo = pFaqService.getFaqInfoByNum(faqNum);
-		
-	    // <br> 태그를 \n으로 변환
-	    String contentWithLineBreaks = faqInfo.getFaqContent().replace("<br>", "\n");
-	    faqInfo.setFaqContent(contentWithLineBreaks);
-	    
-		log.info("faqInfo : {}", faqInfo);
-		
-		model.addAttribute("faqInfo", faqInfo);
-		model.addAttribute("title", "자주 묻는 질문 수정 페이지");
-		
-		return "platform/board/faqModify";
-	}
-	
- 
-	
-
 	
 	// 자주 묻는 질문 조회 페이지
 	@GetMapping("/faqList")
@@ -87,7 +49,6 @@ public class PFaqController {
 		
 		return "platform/board/faqList";
 	}
-	
 	
 	
 	// 자주 묻는 질문 작성 POST 요청
@@ -124,6 +85,38 @@ public class PFaqController {
 	}
 		
 	
+	// 자주 묻는 질문 수정 POST 요청
+	@PostMapping("/faqModify")
+	public String faqModify(PFaq pFaq, Model model) {
+        String contentWithLineBreaks = pFaq.getFaqContent().replace("\n", "<br>");
+        pFaq.setFaqContent(contentWithLineBreaks);
+		
+        pFaqService.faqModify(pFaq);
+        
+		log.info("자주 묻는 질문 수정: {}", pFaq);
+		
+		model.addAttribute("title", "자주 묻는 질문 수정");
+		
+		return "redirect:/platform/board/faqList";
+	}
+	
+	
+	// 자주 묻는 질문 수정 페이지
+	@GetMapping("/faqModify")
+	public String faqModify(@RequestParam(value = "faqNum") String faqNum, Model model) {
+		PFaq faqInfo = pFaqService.getFaqInfoByNum(faqNum);
+		
+	    // <br> 태그를 \n으로 변환
+	    String contentWithLineBreaks = faqInfo.getFaqContent().replace("<br>", "\n");
+	    faqInfo.setFaqContent(contentWithLineBreaks);
+	    
+		log.info("faqInfo : {}", faqInfo);
+		
+		model.addAttribute("faqInfo", faqInfo);
+		model.addAttribute("title", "자주 묻는 질문 수정 페이지");
+		
+		return "platform/board/faqModify";
+	}
 	
 	
 	// 자주 묻는 질문 삭제 POST 요청
@@ -137,7 +130,7 @@ public class PFaqController {
 		
 		return "redirect:/platform/board/faqList";
 	} 
-	
+}	
 
 	
 	
@@ -158,4 +151,4 @@ public class PFaqController {
 	} */
 	
 	
-}
+

@@ -85,59 +85,59 @@
 	</div>
 	<!-- search end -->
 	
-		<!-- grid table start -->
-		<div class="row">
-			<div class="col-md-12 col-sm-12 col-xs-12">
-				<div class="x_panel">
-					<div class="x_content">
-						<table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
-							<thead>
-								<tr>
-									<th>번호</th>
-									<th>작성자</th>
-									<th>카테고리</th>
-									<th>제목</th>
-									<th>내용</th>
-									<th>조회수</th>
-									<th>수정자</th>
-									<th>활성화여부</th>
-									<th>등록일</th>
-									<th>수정일</th>
-									<th>수정</th>
-									<th>삭제</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr th:unless="${noticeList != null}">
-									<td colspan="12" class="text-center">등록된 공지사항이 없습니다.</td>
-								</tr>
-								<tr th:if="${noticeList != null}" th:each="n : ${noticeList}">
-									<td th:text="${n.noticeNum}"></td>
-									<td th:text="${n.noticeRegId}"></td>
-									<td th:text="${n.category.noticeCategoryName}"></td>
-									<td th:text="${n.noticeTitle}"></td>
-									<td th:utext="${n.noticeContent}"></td>
-									<td th:text="${n.noticeInqCnt}"></td>
-									<td th:text="${n.noticeMdfId}"></td>
-									<td th:text="${n.noticeAct}"></td>
-									<td th:text="${n.noticeRegDate}"></td>
-									<td th:text="${n.noticeMdfDate}"></td>
-									<td>
-										<a th:href="@{/platform/board/noticeModify(noticeNum=${n.noticeNum})}">수정</a>
-									</td>
-									<td>
-										<a href="#" th:data-notice-num="${n.noticeNum}" th:onclick="confirmDelete(this)">삭제</a>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-						<div class="text-left">
-							<a th:href="@{/platform/board/noticeWrite}" class="btn btn-primary">등록</a>
-						</div>
+	<!-- grid table start -->
+	<div class="row">
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<div class="x_panel">
+				<div class="x_content">
+					<table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+						<thead>
+							<tr>
+								<th>번호</th>
+								<th>작성자</th>
+								<th>카테고리</th>
+								<th>제목</th>
+								<th>내용</th>
+								<th>조회수</th>
+								<th>수정자</th>
+								<th>활성화여부</th>
+								<th>등록일</th>
+								<th>수정일</th>
+								<th>수정</th>
+								<th>삭제</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:unless="${noticeList != null}">
+								<td colspan="12" class="text-center">등록된 공지사항이 없습니다.</td>
+							</tr>
+							<tr th:if="${noticeList != null}" th:each="n : ${noticeList}">
+								<td th:text="${n.noticeNum}"></td>
+								<td th:text="${n.noticeRegId}"></td>
+								<td th:text="${n.category.noticeCategoryName}"></td>
+								<td th:text="${n.noticeTitle}"></td>
+								<td th:utext="${n.noticeContent}"></td>
+								<td th:text="${n.noticeInqCnt}"></td>
+								<td th:text="${n.noticeMdfId}"></td>
+								<td th:text="${n.noticeAct}"></td>
+								<td th:text="${n.noticeRegDate}"></td>
+								<td th:text="${n.noticeMdfDate}"></td>
+								<td>
+									<a th:href="@{/platform/board/noticeModify(noticeNum=${n.noticeNum})}">수정</a>
+								</td>
+								<td>
+									<a href="#" th:data-notice-num="${n.noticeNum}" th:onclick="confirmDelete(this)">삭제</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="text-left">
+						<a th:href="@{/platform/board/noticeWrite}" class="btn btn-primary">등록</a>
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
 	<!-- grid table end -->
 	</th:block>
 	
