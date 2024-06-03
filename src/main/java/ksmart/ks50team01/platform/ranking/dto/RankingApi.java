@@ -13,6 +13,7 @@ public class RankingApi {
 	private String destinationTitle;
 	private String destinationAdd;
 	private String destinationImg;
+	private int artclRankigNum;
 	private String recommenDetails;
 	private String autoIncrementId;
 }

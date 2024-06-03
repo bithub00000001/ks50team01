@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import ksmart.ks50team01.platform.ranking.dto.UserRanking;
-import ksmart.ks50team01.platform.ranking.service.RankingService;
 import ksmart.ks50team01.platform.ranking.service.UserRankingService;
 import ksmart.ks50team01.platform.trip.dto.PTourApi;
 import ksmart.ks50team01.platform.trip.service.PTripPlanService;
@@ -24,10 +23,19 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Slf4j
 public class UserRankingController {
-
+	
+	/**
+	 * 의존성 주입
+	 */
 	private final UserRankingService userRankingService;
 	private final PTripPlanService pTripPlanService;
 	
+	/**
+	 * 회원추천리스트 삭제
+	 * @param userRankingId
+	 * @param model
+	 * @return
+	 */
 	@PostMapping("/removeUserRanking")
 	public String remove(@RequestParam(name = "userRankingId") String userRankingId
 						,Model model) {
@@ -35,8 +43,12 @@ public class UserRankingController {
 		model.addAttribute("userRankingId", userRankingId);
 		return "platform/ranking/removeUserRanking";
 	}
-	
-	
+	/**
+	 * 회원추천리스트 삭제정보
+	 * @param userRankingId
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/removeUserRanking")
 	public String removeUserRanking(@RequestParam(name="userRankingId") String userRankingId
 			,Model model) {
@@ -46,13 +58,22 @@ public class UserRankingController {
 		model.addAttribute("userRankingList", userRankingList);
 		return "redirect:/platform/ranking/userRankingList";
 	}
-	
+	/**
+	 * 회원추천리스트 수정
+	 * @param userRanking
+	 * @return
+	 */
 	@PostMapping("/modifyUserRanking")
 	public String modify(@ModelAttribute UserRanking userRanking) {
 		userRankingService.modifyUserRanking(userRanking);
 		return "redirect:/platform/ranking/userRankingList";
 	}
-	
+	/**
+	 * 회원추천리스트 수정 정보
+	 * @param userRankingId
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/modifyUserRanking")
 	public String modifyUserRanking(@RequestParam(name="userRankingId") String userRankingId
 							  ,Model model) {
@@ -65,13 +86,21 @@ public class UserRankingController {
 		
 		return "platform/ranking/modifyUserRanking";
 	}
-	
+	/**
+	 * 회원추천리스트 등록
+	 * @param userRanking
+	 * @return
+	 */
 	@PostMapping("/addUserRanking")
 	public String addUserRanking(UserRanking userRanking) {
 		userRankingService.addUserRanking(userRanking);
 		return "redirect:/platform/ranking/userRankingList";
 	}
-	
+	/**
+	 * 회원추천리스트 등록정보
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/addUserRanking")
 	public String addUserRanking(Model model) {
 		List<UserRanking> userRankingList = userRankingService.getUserRankingList();
@@ -81,14 +110,22 @@ public class UserRankingController {
 		return "platform/ranking/addUserRanking";
 	}
 	
-	
+	/**
+	 * 회원추천관리 리스트 중복체크
+	 * @param userRankingId
+	 * @return
+	 */
 	@PostMapping("/userRankingListCheck")
 	@ResponseBody
-	public boolean rankingListCheck(@RequestParam(value="userRankingId") String userRankingId) {
-		boolean isuserRankingNum = userRankingService.userRankingListCheck(userRankingId);
-		return  isuserRankingNum;
+	public boolean rankingListCheck(@RequestParam(value="userRank") int userRank) {
+		boolean isUserRank = userRankingService.userRankingListCheck(userRank);
+		return  isUserRank;
 	}
-	
+	/**
+	 * 회원추천관리 리스트 조회
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/userRankingList")
 	public String getUserRankingList(Model model) {
 		List<PTourApi> pTourApiList = pTripPlanService.getDestinationList();
