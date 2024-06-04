@@ -120,6 +120,13 @@ public class UTripPlanServiceImpl implements UTripPlanService {
 		return utripPlanMapper.searchUserMembers(nickname);
 	}
 
+	/**
+	 * 여행 계획 세부 아이템의 위치를 받아 위경도를 설정하고 T map API에 요청해 도보 거리와 소요 시간을 요청하는 메서드
+	 * 오류가 발생 했을 경우 Exception 관리를 위해 JSON으로 변환한 후 반환하는 메서드
+	 * @param days 일자별로 여행 계획 세부 아이템의 정보가 담겨 있는 객체
+	 * @return 일자별로 출발지, 목적지 사이의 거리, 소요시간, 도착지의 contentId가 담겨 있는 객
+	 * @throws JsonProcessingException T map API 에러 핸들링 상황에서 에러 상황을 JSON으로 변환할 때 발생하는 에러 예외 처리
+	 */
 	@Override
 	public Map<String, Object> calculateDistanceDuration(List<UDayInfo> days) throws JsonProcessingException {
 		Map<String, Object> results = new HashMap<>();
@@ -130,29 +137,30 @@ public class UTripPlanServiceImpl implements UTripPlanService {
 			List<ULocationDistanceInfo> locationResults = new ArrayList<>();
 
 			for (int i = 0; i < uDayInfo.getLocations().size() - 1; i++) {
+				// 출발지와 도착지를 생성
 				ULocationDistanceInfo startPoint = uDayInfo.getLocations().get(i);
 				ULocationDistanceInfo endPoint = uDayInfo.getLocations().get(i + 1);
 
-
-
 				Map<String, Object> startXY = utripPlanMapper.getMapXY(startPoint.getContentId());
 				Map<String, Object> endXY = utripPlanMapper.getMapXY(endPoint.getContentId());
-
-
 
 				startPoint.setStartMapX((Double)startXY.get("longitude"));
 				startPoint.setStartMapY((Double)startXY.get("latitude"));
 				endPoint.setEndMapX((Double)endXY.get("longitude"));
 				endPoint.setEndMapY((Double)endXY.get("latitude"));
+
+				// T map API에서 오류가 발생할때 오류 처리를 JSON으로 보내기 위해 objectMapper 생성
 				ObjectMapper objectMapper = new ObjectMapper();
-				TMapApiResponse apiResponse = null;
+				TMapApiResponse apiResponse;
 				try {
+					// 오류가 발생하지 않았을 경우
 					apiResponse = uTmapApiService.fetchFromApi(
 						startPoint.getContentId(), endPoint.getContentId(),
 						startPoint.getStartMapX(), startPoint.getStartMapY(),
 						endPoint.getEndMapX(), endPoint.getEndMapY()
 					).block();
 				}catch (WebClientResponseException exception) {
+					// 오류가 발생해 API에서 오류 내용을 그대로 전달받아 객체로 변환
 					log.info("exception.getResponseBodyAsString: {}", exception.getResponseBodyAsString());
 					String exceptionMessage = exception.getResponseBodyAsString();
 					Map<String, Object> exceptionMapper = objectMapper.readValue(exceptionMessage,new TypeReference<Map<String, Object>>() {});
@@ -161,7 +169,6 @@ public class UTripPlanServiceImpl implements UTripPlanService {
 					exceptionMapper.put("days", uDayInfo.getDay());
 					return exceptionMapper;
 				}
-
 
 				ULocationDistanceInfo locationResult = setLocationDistanceInfo(startPoint, endPoint,
 					apiResponse);
@@ -174,6 +181,23 @@ public class UTripPlanServiceImpl implements UTripPlanService {
 		return results;
 	}
 
+	/**
+	 * 임시 저장 상태로 현재의 여행 계획을 저장하는 메서드
+	 * @param uTripOption 계획 제목, 출발 날짜, 도착 날짜, 일자, 초대 인원 등의 정보가 기록
+	 * @return 정상 처리되었는지 판단
+	 */
+	@Override
+	public int addTempPlanInfo(UTripOption uTripOption) {
+		return utripPlanMapper.addTempPlanInfo(uTripOption);
+	}
+
+	/**
+	 * 출발지와 목적지의 위경도, 거리, 소요시간 등을 계산하는 메서드
+	 * @param startPoint 출발지 정보
+	 * @param endPoint 도착지 정보
+	 * @param apiResponse T map API에서 응답받은 데이터
+	 * @return
+	 */
 	private static ULocationDistanceInfo setLocationDistanceInfo(ULocationDistanceInfo startPoint,
 		ULocationDistanceInfo endPoint, TMapApiResponse apiResponse) {
 		ULocationDistanceInfo locationResult = new ULocationDistanceInfo();

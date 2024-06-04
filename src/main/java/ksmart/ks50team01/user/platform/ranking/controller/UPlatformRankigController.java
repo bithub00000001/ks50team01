@@ -25,7 +25,12 @@ public class UPlatformRankigController {
 	private final RankingService rankingServeice;
 	private final UserRankingService userRankingService;
 	private final PlanRankingService planRankingService;
-
+	
+	/**
+	 * 통합추천리스트
+	 * @param model
+	 * @return
+	 */
 	@GetMapping
 	public String platformRanking(Model model) {
 		List<RankingApi> rankingApiList = rankingServeice.getRankingInfoList();
@@ -37,7 +42,11 @@ public class UPlatformRankigController {
 		model.addAttribute("planRankingList", planRankingList);
 		return "user/platformranking/allRanking";
 	}
-	
+	/**
+	 * 플랫폼추천리스트
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/rankingList")
 	public String platformRankingList(Model model) {
 		
@@ -48,6 +57,11 @@ public class UPlatformRankigController {
 		model.addAttribute("rankingApiList", rankingApiList);
 		return "user/platformranking/rankingList";
 	}
+	/**
+	 * 회원추천리스트
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/userRankingList")
 	public String userRankingList(Model model) {
 		List<UserRanking> userRankingList = userRankingService.getUserRankingList();
@@ -56,12 +70,17 @@ public class UPlatformRankigController {
 		model.addAttribute("title", "회원추천");
 		return "user/platformranking/userRankingList";
 	}
+	/**
+	 * 여행계획리스트
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/planRankingList")
 	public String planRankingList(Model model) {
-		
+		List<PlanRanking> planRankingList = planRankingService.getPlanRankingList();
+		model.addAttribute("planRankingList", planRankingList);
 		model.addAttribute("title", "여행계획 추천");
 		return "user/platformranking/planRankingList";
 	}
-
 }
 

@@ -70,15 +70,17 @@
                     <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap"  cellspacing="0" width="100%">
                         <thead>
 							<tr>
-								<th>플랫폼제휴추천정보아이디</th>
+								<th>플랫폼추천정보아이디</th>
 								<th>등록플랫폼권한아이디</th>
-								<th>플랫폼관리자제휴추천아이디</th>
+								<th>플랫폼추천관리아이디</th>
 								<th>API컨텐츠아이디</th>
 								<th>관광타입</th>
 								<th>여행지이름</th>
 								<th>여행지주소</th>
 								<th>여행지이미지</th>
+								<th>순위</th>
 								<th>추천내용</th>
+								<th>수정</th>
                             	<th>삭제</th>
 							</tr>
 						</thead>
@@ -95,7 +97,11 @@
 								<td th:text="${l.destinationTitle}"></td>
 								<td th:text="${l.destinationAdd}"></td>
 								<td th:text="${l.destinationImg}"></td>
+								<td th:text="${l.artclRankigNum}"></td>
 								<td th:text="${l.recommenDetails}"></td>
+								<td>
+									<a th:href="@{/platform/ranking/modifyApiRanking(pfRankInfoId=${l.pfRankInfoId})}">수정</a>					
+								</td>
 								<td>
 									<a th:href="@{/platform/ranking/removeRankingInfo(pfRankInfoId=${l.pfRankInfoId})}">삭제</a>					
 								</td>

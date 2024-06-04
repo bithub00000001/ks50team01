@@ -328,7 +328,7 @@ public class PTourApiServiceImpl implements PTourApiService {
 	}
 
 	/**
-	 * 지역 코드 데이터를 가져오는 메서드
+	 * Tour API에서 지역 코드 데이터를 가져오는 메서드
 	 * 지역 코드가 없으면 지역 코드, 지역 코드가 있다면 시군 코드
 	 * @param apiKey 공공데이터포털 디코딩 키
 	 * @param optionalAreaCode 선택적으로 전달되는 지역 코드
@@ -470,6 +470,12 @@ public class PTourApiServiceImpl implements PTourApiService {
 		}
 	}
 
+	/**
+	 * Tour API에서 여행지 상세 정보 조회 메서드
+	 * @param apiKey 디코딩 키
+	 * @param tourInfoList 여행지 정보 목록
+	 * @return
+	 */
 	@Override
 	public List<PTourDetail> fetchTourDetailList(String apiKey, List<PTourApi> tourInfoList) {
 		return tourInfoList

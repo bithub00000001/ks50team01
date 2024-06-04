@@ -35,6 +35,7 @@ public interface PTourApiService {
 	// 전체 여행지 상세 정보 업서트 메서드
 	void upsertAllTourDetail(List<PTourDetail> tourDetailList);
 
+	// Tour API에서 여행지 상세 정보 조회 메서드
 	List<PTourDetail> fetchTourDetailList(String apiKey, List<PTourApi> tourInfoList);
 }
 

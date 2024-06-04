@@ -34,8 +34,10 @@ public interface PTripPlanMapper {
 	// 관광 타입에 따른 여행지 정보 조회 메서드
 	List<PTourApi> getDestinationListByContentType(String contentTypeId);
 
+	// 컨텐트 ID와 일치하는 여행 상세 정보 조회
 	PTourDetail getPTourDetailByContentId(String contentId, String contentTypeId);
 
+	// 시군구 코드와 일치하는 시군구 이름 조회
 	PTourApi getSigunguNameBySigunCode(String areaCode, String sigunguCode);
 
 	// 여행지 세부 정보 조회 메서드

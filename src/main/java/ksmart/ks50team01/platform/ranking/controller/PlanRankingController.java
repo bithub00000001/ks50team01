@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import ksmart.ks50team01.platform.ranking.dto.PlanRanking;
-import ksmart.ks50team01.platform.ranking.dto.UserRanking;
 import ksmart.ks50team01.platform.ranking.service.PlanRankingService;
 import lombok.RequiredArgsConstructor;
 
@@ -21,8 +20,17 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PlanRankingController {
 
+	/**
+	 * 의존성 주입
+	 */
 	private final PlanRankingService planRankingService;
 	
+	/**
+	 * 여행계획리스트 삭제
+	 * @param userTripPlanId
+	 * @param model
+	 * @return
+	 */
 	@PostMapping("/removePlanRanking")
 	public String remove(@RequestParam(name = "userTripPlanId") String userTripPlanId
 						,Model model) {
@@ -31,7 +39,12 @@ public class PlanRankingController {
 		return "platform/ranking/removePlanRanking";
 	}
 	
-	
+	/**
+	 * 여행계획 리스트 삭제 정보
+	 * @param userTripPlanId
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/removePlanRanking")
 	public String removePlanRanking(@RequestParam(name="userTripPlanId") String userTripPlanId
 			,Model model) {
@@ -41,13 +54,22 @@ public class PlanRankingController {
 		model.addAttribute("planRankingList", planRankingList);
 		return "redirect:/platform/ranking/planRankingList";
 	}
-	
+	/**
+	 * 여행계획 리스트 수정
+	 * @param planRanking
+	 * @return
+	 */
 	@PostMapping("/modifyPlanRanking")
 	public String modify(@ModelAttribute PlanRanking planRanking) {
 		planRankingService.modifyPlanRanking(planRanking);
 		return "redirect:/platform/ranking/planRankingList";
 	}
-	
+	/**
+	 * 여행계획 리스트 수정정보
+	 * @param userTripPlanId
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/modifyPlanRanking")
 	public String modifyPlanRanking(@RequestParam(name="userTripPlanId") String userTripPlanId
 							  ,Model model) {
@@ -70,7 +92,11 @@ public class PlanRankingController {
 		planRankingService.addPlanUserRanking(planRanking);
 		return "redirect:/platform/ranking/planRankingList";
 	}
-	
+	/**
+	 * 여행계획 리스트 등록정보
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/addPlanUserRanking")
 	public String addPlanUserRanking(Model model) {
 		List<PlanRanking> planRankingList = planRankingService.getPlanRankingList();
@@ -86,11 +112,15 @@ public class PlanRankingController {
 	 */
 	@PostMapping("/planRankingListCheck")
 	@ResponseBody
-	public boolean planRankingListCheck(@RequestParam(value="userTripPlanId") String userTripPlanId) {
-		boolean isplanUserRankingNum = planRankingService.planRankingListCheck(userTripPlanId);
-		return  isplanUserRankingNum;
+	public boolean planRankingListCheck(@RequestParam(value="tripPlanRank") int tripPlanRank) {
+		boolean isTripPlanRank = planRankingService.planRankingListCheck(tripPlanRank);
+		return  isTripPlanRank;
 	}
-	
+	/**
+	 * 여행계획 리스트 등록
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/planRankingList")
 	public String getPlanRankingList(Model model) {
 		
