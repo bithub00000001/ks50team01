@@ -44,6 +44,7 @@ public class DestinationService {
 	public boolean addTourCheckList(String tourName) {
 		return destinationMapper.addTourCheckList(tourName);
 	}
+	
 	/**
 	 * 관광지 세부항목 제거
 	 * @param tourGoodsOptionCd
@@ -130,7 +131,11 @@ public class DestinationService {
 	}
 	
 	
-	
+	/**
+	 * 관광지 상세목록 정보 조회
+	 * @param tourGoodsOptionCd
+	 * @return
+	 */
 	public Destination getTourGoodsInfoById(String tourGoodsOptionCd) {
 		return destinationMapper.getTourGoodsInfoById(tourGoodsOptionCd);
 		
@@ -143,7 +148,11 @@ public class DestinationService {
 		return destinationMapper.addLodging(destination);
 		
 	}
-
+	/**
+	 * 숙소 상세 등록
+	 * @param destination
+	 * @return
+	 */
 	public int addLodgingGoods(Destination destination) {
 		return destinationMapper.addLodgingGoods(destination);
 		
@@ -198,6 +207,11 @@ public class DestinationService {
 		destinationMapper.lodgingModify(destination);
 	}
 	
+	/**
+	 * 숙소 
+	 * @param lodgingInfoCode
+	 * @return
+	 */
 	public Destination getLodgingInfoById(String lodgingInfoCode) {
 		
 		return destinationMapper.getLodgingInfoById(lodgingInfoCode);
@@ -221,7 +235,10 @@ public class DestinationService {
 		
 		return destinationMapper.getLodgingGoodsList();
 	}
-	
+	/**
+	 * 숙소 상세 수정
+	 * @param destination
+	 */
 	public void lodgingGoodsModify(Destination destination) {
 		destinationMapper.lodgingGoodsModify(destination);
 	}
@@ -234,8 +251,8 @@ public class DestinationService {
 	 * 음식점 수정
 	 * @param destination
 	 */
-	public void updateRestaurant(Destination destination) {
-		destinationMapper.updateRestaurant(destination);
+	public void restaurantMoidfy(Destination destination) {
+		destinationMapper.restaurantMoidfy(destination);
 	}
 	public Destination getRestaurantInfoById(String restaurantInfoCode) {
 		return destinationMapper.getRestaurantInfoById(restaurantInfoCode);
@@ -264,9 +281,11 @@ public class DestinationService {
 		return restaurantMenuList;
 	}
 	
+	
 	public void restaurantMenuModify(Destination destination) {
 		destinationMapper.restaurantMenuModify(destination);
 	}
+	
 	public Destination getRestaurantMenuInfoById(String restaurantMenuManageCode) {
 		return destinationMapper.getRestaurantMenuInfoById(restaurantMenuManageCode);
 	}
@@ -288,6 +307,14 @@ public class DestinationService {
 	public void removeRestaurantMenu(String restaurantMenuManageCode) {
 		destinationMapper.removeRestaurantMenu(restaurantMenuManageCode);
 		
+	}
+	/**
+	 * 음식점 중복체크
+	 * @param restaurantName
+	 * @return
+	 */
+	public boolean addRestaurantCheckList(String restaurantName) {
+		return destinationMapper.addRestaurantCheckList(restaurantName);
 	}
 
 

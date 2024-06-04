@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,7 +15,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
 @Controller
@@ -266,6 +264,12 @@ public class DestinationManageController {
 		
 		return "platform/destination/addLodgingGoods";
 	}
+	@GetMapping("destination/addRestaurantCheckList")
+	@ResponseBody
+	public boolean addRestaurantCheckList(@RequestParam(value = "restaurantName") String restaurantName) {
+		boolean isRestaurantName = destinationService.addRestaurantCheckList(restaurantName);
+		return isRestaurantName;
+	}
 	
 	/**
 	 * 숙소이름 중복체크
@@ -278,6 +282,7 @@ public class DestinationManageController {
 		boolean isLodgingName = destinationService.addLodgingCheckList(lodgingName);
 		return isLodgingName;
 	}
+	
 	
 	/**
 	 * 숙소 상세정보 중복체크
@@ -419,7 +424,7 @@ public class DestinationManageController {
 	@PostMapping("/destination/restaurantModify")
 	public String restaurantModifyProcess(Destination destination) {
 		
-		destinationService.updateRestaurant(destination);
+		destinationService.restaurantMoidfy(destination);
 		
 		return "redirect:/platform/destination/restaurantManage";
 	}
