@@ -30,6 +30,9 @@ function getData(map, contentTypeId) {
         '32': 'accommodation',
         '39': 'restaurant'
     }
+    // 240604: 리스트의 개수를 제한하기 위한 변수 생성
+    let listItemCount = 0;
+    const MAX_LIST_ITEMS = 5;
 
     // 리스트 아이템을 생성하는 함수
     function createListItem(item, idx) {
@@ -37,7 +40,12 @@ function getData(map, contentTypeId) {
         const addr = item.addr;
         const telNum = item.telNum;
         const contentId = item.contentId;
-        const dataIdType = contentTypeListObject[contentTypeId]
+        const dataIdType = contentTypeListObject[contentTypeId];
+
+        // 최대 개수 초과 시 종료
+        if (listItemCount >= MAX_LIST_ITEMS) {
+            return;
+        }
 
         const $li = $('<li></li>', {
             class: 'list-group-item',
@@ -82,6 +90,8 @@ function getData(map, contentTypeId) {
             text: '담기'
         });
         $li.append($addPlanBtn);
+
+        listItemCount++;
 
         return $li;
     }
@@ -168,7 +178,16 @@ function getData(map, contentTypeId) {
                 // 현재 열린 인포윈도우 저장
                 currentInfowindow = infowindow;
 
+                // 리스트의 최하위 요소 찾기
+                const $lastItem = $tabOption.find('li:last-child');
+
+                // 최하위 요소가 있으면 제거
+                if ($lastItem.length > 0) {
+                    $lastItem.remove();
+                }
+
                 // 리스트의 상위로 올리는 함수
+                listItemCount = 0;
                 const $li = createListItem(markers[i], i);
                 const $liList = $tabOption.find('li');
                 const $existingLi = $liList.filter((idx, data) => $(data).find('h5').text() === $li.find('h5').text());
@@ -202,6 +221,7 @@ function getData(map, contentTypeId) {
 
         clusterListItems = [];
 
+        listItemCount = 0;
         markerArr.forEach((item, idx)=>{
             const $li = createListItem(item, idx);
             clusterListItems.push($li);
