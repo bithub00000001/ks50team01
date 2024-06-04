@@ -126,13 +126,13 @@
 									<a th:href="@{/platform/board/noticeModify(noticeNum=${n.noticeNum})}">수정</a>
 								</td>
 								<td>
-									<a href="#" th:data-notice-num="${n.noticeNum}" th:onclick="confirmDelete(this)">삭제</a>
+									<a href="#" th:data-notice-num="${n.noticeNum}" th:onclick="confirmRemove(this)">삭제</a>
 								</td>
 							</tr>
 						</tbody>
 					</table>
 					<div class="text-left">
-						<a th:href="@{/platform/board/noticeWrite}" class="btn btn-primary">등록</a>
+						<a th:href="@{/platform/board/noticeAdd}" class="btn btn-primary">등록</a>
 					</div>
 				</div>
 			</div>
@@ -165,23 +165,23 @@
     
 		<!-- 공지사항 삭제 -->	    
 		<script th:inline="javascript">
-		    function confirmDelete(element) {
+		    function confirmRemove(element) {
 		        var noticeNum = element.getAttribute('data-notice-num');
 		        var confirmation = confirm("정말 삭제하시겠습니까?");
 		        
 		        if (confirmation) {
 		            // 확인을 누르면 삭제 동작을 수행하기 위해 POST 요청
-		            noticeDelete(noticeNum);
+		            noticeRemove(noticeNum);
 		        } else {
 		            console.log("삭제 취소: " + noticeNum);
 		        }
 		    }
 		
-		    function noticeDelete(noticeNum) {
+		    function noticeRemove(noticeNum) {
 		        // POST 요청을 보내기 위해 form을 생성
 		        var form = document.createElement('form');
 		        form.setAttribute('method', 'post');
-		        form.setAttribute('action', '/platform/board/noticeDelete');
+		        form.setAttribute('action', '/platform/board/noticeRemove');
 		        form.style.display = 'hidden'; // form을 보이지 않도록 설정
 		
 		        // noticeNum을 form에 추가

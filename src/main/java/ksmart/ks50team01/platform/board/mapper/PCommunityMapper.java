@@ -22,10 +22,11 @@ public interface PCommunityMapper {
 	// 게시글 번호로 게시글 조회
 	PCommunity getPostByNum(String postNum);
 
+	// 카테고리별 게시글 목록 조회
+	List<PCommunity> getCommunityListByCategory(String category);
+	
 	// 게시글 비활성화
 	void deactivatePost(@Param("postNum") String postNum);
 
-	// 카테고리별 게시글 목록 조회
-	List<PCommunity> getCommunityListByCategory(String category); 
 	
 }

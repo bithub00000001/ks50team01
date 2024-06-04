@@ -39,7 +39,7 @@
 
 					<div class="d-flex justify-content-end mt-10">
 						<a th:href="@{/qna/qnaModify(qnaNum=${qnaDetail.qnaNum})}" class="btn btn-light-gray btn-sm update-Btn">수정</a>
-						<a href="#"th:data-post-num="${qnaDetail.qnaNum}" class="btn btn-off-white btn-sm delete-Btn" th:onclick="confirmDelete(this)">삭제</a>
+						<a href="#"th:data-post-num="${qnaDetail.qnaNum}" class="btn btn-off-white btn-sm delete-Btn" th:onclick="confirmRemove(this)">삭제</a>
 					</div>
 
 					<!-- 굵은 직선 추가 -->
@@ -83,7 +83,6 @@
 		</div>
 	</th:block>
 	
-	
 
 	<th:block layout:fragment="customJs">
 		<script>
@@ -92,45 +91,42 @@
 					window.history.back();
 				}
 		</script>
-		
+			
 
+		<!-- 1:1문의 삭제 -->	    
+		<script th:inline="javascript">
+		    function confirmRemove(element) {
+		        var qnaNum = element.getAttribute('data-post-num');
+		        var confirmation = confirm("정말 삭제하시겠습니까?");
+		        
+		        if (confirmation) {
+		            // 확인을 누르면 삭제 동작을 수행하기 위해 POST 요청
+		            qnaRemove(qnaNum);
+		        } else {
+		            console.log("삭제 취소: " + qnaNum);
+		        }
+		    }
+		
+		    function qnaRemove(qnaNum) {
+		        // POST 요청을 보내기 위해 form을 생성
+		        var form = document.createElement('form');
+		        form.setAttribute('method', 'post');
+		        form.setAttribute('action', '/qna/qnaRemove');
+		        form.style.display = 'none'; // form을 보이지 않도록 설정
+		
+		        // postNum을 form에 추가
+		        var input = document.createElement('input');
+		        input.setAttribute('type', 'hidden');
+		        input.setAttribute('name', 'qnaNum');
+		        input.setAttribute('value', qnaNum);
+		        form.appendChild(input);
+		
+		        // form을 body에 추가하고 submit
+		        document.body.appendChild(form);
+		        form.submit();
+		    }
+		</script>		
 			
-	<!-- 1:1문의 삭제 -->	    
-	<script th:inline="javascript">
-	    function confirmDelete(element) {
-	        var qnaNum = element.getAttribute('data-post-num');
-	        var confirmation = confirm("정말 삭제하시겠습니까?");
-	        
-	        if (confirmation) {
-	            // 확인을 누르면 삭제 동작을 수행하기 위해 POST 요청
-	            qnaDelete(qnaNum);
-	        } else {
-	            console.log("삭제 취소: " + qnaNum);
-	        }
-	    }
-	
-	    function qnaDelete(qnaNum) {
-	        // POST 요청을 보내기 위해 form을 생성
-	        var form = document.createElement('form');
-	        form.setAttribute('method', 'post');
-	        form.setAttribute('action', '/qna/qnaDelete');
-	        form.style.display = 'none'; // form을 보이지 않도록 설정
-	
-	        // postNum을 form에 추가
-	        var input = document.createElement('input');
-	        input.setAttribute('type', 'hidden');
-	        input.setAttribute('name', 'qnaNum');
-	        input.setAttribute('value', qnaNum);
-	        form.appendChild(input);
-	
-	        // form을 body에 추가하고 submit
-	        document.body.appendChild(form);
-	        form.submit();
-	    }
-	</script>		
-			
-			
-	
 
 	</th:block>
 </html>

@@ -49,11 +49,8 @@
 		
 				<div class="d-flex justify-content-end mt-10">
 					<a th:href="@{/community/postModify(postNum=${postDetail.postNum})}" class="btn btn-light-gray btn-sm update-Btn">수정</a>
-					<a href="#" th:data-post-num="${postDetail.postNum}" class="btn btn-off-white btn-sm delete-Btn" th:onclick="confirmDelete(this)">삭제</a>
+					<a href="#" th:data-post-num="${postDetail.postNum}" class="btn btn-off-white btn-sm delete-Btn" th:onclick="confirmRemove(this)">삭제</a>
 				</div>	
-
-
-
 
 					<hr class="my-4">
 					</div>
@@ -85,7 +82,7 @@
 														<li>
 															<a class="dropdown-item small" href="#" onclick="editComment(event)">
 																<i class="fa-solid fa-eraser fa-2x edit-button"></i> 수정</a></li>
-														<li><a class="dropdown-item small" href="#" onclick="deleteComment()">
+														<li><a class="dropdown-item small" href="#" onclick="removeComment()">
 														<i class="fa-solid fa-trash-can fa-2x delete-button"></i> 삭제</a></li>
 													</ul>
 												</div>
@@ -319,7 +316,7 @@
 	    }
 
 	    /* 댓글 삭제 */
-	    function deleteComment(event) {
+	    function removeComment(event) {
 	        event.preventDefault();
 	        const commentItem = $(event.target).closest('li');
 	        const commentNo = commentItem.find('.commentNo').val();
@@ -327,7 +324,7 @@
 	        if (isConfirmed) {
 	            $.ajax({
 	                type: 'DELETE',
-	                url: `/community/commentDelete/${commentNo}`,
+	                url: `/community/commentRemove/${commentNo}`,
 	                success: function () {
 	                    alert("댓글이 삭제되었습니다.");
 	                    commentItem.remove();
@@ -339,10 +336,6 @@
 	        }
 	    }
 		
-		
-		
-	
-
 		
 	</script>
 	
@@ -384,7 +377,7 @@
 			    commentItem.find('.commentModifyForm').show();
 			}
 
-			function deleteComment() {
+			function removeComment() {
 				// 삭제 버튼을 클릭했을 때 수행할 작업을 구현합니다.
 				// 이 함수는 실제로 삭제 기능을 수행해야 합니다.
 			}
@@ -458,63 +451,43 @@
 				})
 
 			}
-
-
-		
 			</script>
 			
 			
-
-			
-			
-			
-<!-- 게시글 삭제 -->	    
-<script th:inline="javascript">
-    function confirmDelete(element) {
-        var postNum = element.getAttribute('data-post-num');
-        var confirmation = confirm("정말 삭제하시겠습니까?");
-        
-        if (confirmation) {
-            // 확인을 누르면 삭제 동작을 수행하기 위해 POST 요청
-            postDelete(postNum);
-        } else {
-            console.log("삭제 취소: " + postNum);
-        }
-    }
-
-    function postDelete(postNum) {
-        // POST 요청을 보내기 위해 form을 생성
-        var form = document.createElement('form');
-        form.setAttribute('method', 'post');
-        form.setAttribute('action', '/community/postDelete');
-        form.style.display = 'none'; // form을 보이지 않도록 설정
-
-        // postNum을 form에 추가
-        var input = document.createElement('input');
-        input.setAttribute('type', 'hidden');
-        input.setAttribute('name', 'postNum');
-        input.setAttribute('value', postNum);
-        form.appendChild(input);
-
-        // form을 body에 추가하고 submit
-        document.body.appendChild(form);
-        form.submit();
-    }
-    
-    
-    
-    
-    
-    
-</script>
-
-
-	
-
+		<!-- 게시글 삭제 -->	    
+		<script th:inline="javascript">
+		    function confirmRemove(element) {
+		        var postNum = element.getAttribute('data-post-num');
+		        var confirmation = confirm("정말 삭제하시겠습니까?");
+		        
+		        if (confirmation) {
+		            // 확인을 누르면 삭제 동작을 수행하기 위해 POST 요청
+		            postRemove(postNum);
+		        } else {
+		            console.log("삭제 취소: " + postNum);
+		        }
+		    }
 		
+		    function postRemove(postNum) {
+		        // POST 요청을 보내기 위해 form을 생성
+		        var form = document.createElement('form');
+		        form.setAttribute('method', 'post');
+		        form.setAttribute('action', '/community/postRemove');
+		        form.style.display = 'none'; // form을 보이지 않도록 설정
 		
+		        // postNum을 form에 추가
+		        var input = document.createElement('input');
+		        input.setAttribute('type', 'hidden');
+		        input.setAttribute('name', 'postNum');
+		        input.setAttribute('value', postNum);
+		        form.appendChild(input);
 		
-		
+		        // form을 body에 추가하고 submit
+		        document.body.appendChild(form);
+		        form.submit();
+		    }
+		    
+		</script>
 
 	</th:block>
 	

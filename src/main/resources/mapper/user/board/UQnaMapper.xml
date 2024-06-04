@@ -84,8 +84,8 @@
 
 	
 	
-	<!-- getQnaByQnaNum 쿼리 정의 -->
-	<select id="getQnaByQnaNum" resultMap="qnaResultMap">
+	<!-- getQnaDetail 쿼리 정의 -->
+	<select id="getQnaDetail" resultMap="qnaResultMap">
 	    /* 1:1문의 상세 조회 */
 	    SELECT
 	        Q.QNA_NO,
@@ -128,7 +128,7 @@
     
     
     <!-- QNA 등록 -->
-    <insert id="insertQna" parameterType="UQna">
+    <insert id="qnaAdd" parameterType="UQna">
     	<selectKey keyProperty="qnaNum" resultType="String" order="BEFORE">
     		/* QNA 번호 자동증가 */
     		SELECT
@@ -145,7 +145,7 @@
     
     
     
-    <!-- QNA 번호로 해당 QNA의 상세 정보를 조회하는 쿼리 -->
+    <!-- QNA 번호로 해당 QNA의 상세 정보 조회 -->
 	<select id="getQnaInfoByNum" resultMap="qnaResultMap" parameterType="String">
 		/* QNA 번호로 해당 QNA의 상세 정보를 조회하는 쿼리 */
 	    SELECT
@@ -192,18 +192,12 @@
 	
 	
 	
-	<delete id="qnaDelete" parameterType="UQna">
+	<delete id="qnaRemove" parameterType="UQna">
 		/* 1:1문의 삭제 */
 	    DELETE FROM 
 	    	QNA_QUESTION 
 	    WHERE 
 	    	QNA_NO = #{qnaNum};
 	</delete>
-    
-
-    
-    
-	
-	
 	
 </mapper>

@@ -30,6 +30,18 @@ public class UCommunityController {
 	private final UCommunityService uCommunityService;
 
 	
+	// 게시글 목록 조회
+	@GetMapping({"/",""})
+	public String postList(Model model) {
+		List<UCommunity> postList = uCommunityService.getPostList();
+
+		model.addAttribute("postList", postList); // postList를 모델에 추가
+		model.addAttribute("title", "커뮤니티");
+		return "user/board/postList";
+	}
+	
+	
+	// 검색 목록 조회
 	@GetMapping("/searchList")
 	public String searchList(@RequestParam(value="searchKey", required = false) String searchKey
 							,@RequestParam(value="searchValue", required = false) String searchValue
@@ -46,19 +58,6 @@ public class UCommunityController {
 	}
 	
 	
-	
-	// 게시글 목록 조회
-	@GetMapping({"/",""})
-	public String postList(Model model) {
-		List<UCommunity> postList = uCommunityService.getPostList();
-
-		model.addAttribute("postList", postList); // postList를 모델에 추가
-		model.addAttribute("title", "커뮤니티");
-		return "user/board/postList";
-	}
-	
-	
-	
 	// 게시글 상세 조회
 	@GetMapping("/postDetail")
 	public String postDetail(@RequestParam(name = "postNum", required = false) String postNum, Model model) {
@@ -67,7 +66,7 @@ public class UCommunityController {
 		uCommunityService.increaseViewCount(postNum);
 		
 		// 게시물 정보를 가져와서 모델에 담아 상세 페이지로 전달
-		UCommunity postDetail = uCommunityService.getPostByPostNum(postNum);
+		UCommunity postDetail = uCommunityService.getPostDetail(postNum);
 		
 		// 해당 게시글의 모든 댓글 가져오기
 		List<UComment> commentList = uCommunityService.getCommentByPostNum(postNum);
@@ -85,13 +84,13 @@ public class UCommunityController {
 	}
 
 	
-	// 게시글 작성
-	@PostMapping("/postWrite")
-	public String postWrite(UCommunity uCommunity, Model model, @RequestParam(required = false) MultipartFile[] uploadfile) {
+	// 게시글 등록
+	@PostMapping("/postAdd")
+	public String postAdd(UCommunity uCommunity, Model model, @RequestParam(required = false) MultipartFile[] uploadfile) {
 		String contentWithLineBreaks = uCommunity.getPostContent().replace("\n", "<br>");
 		uCommunity.setPostContent(contentWithLineBreaks);
 		
-		uCommunityService.insertPost(uCommunity);
+		uCommunityService.postAdd(uCommunity);
 
 		log.info("게시글 등록:{}", uCommunity);
 		log.info("입력받은 file data: {}",Arrays.toString(uploadfile));
@@ -103,9 +102,9 @@ public class UCommunityController {
 	
 	
 
-	// 게시글 작성 폼 이동
-	@GetMapping("/postWrite")
-	public String postWrite(Model model) {
+	// 게시글 등록 페이지
+	@GetMapping("/postAdd")
+	public String postAdd(Model model) {
 		
 		List<UCategory> postCateList = uCommunityService.getPostCateList();
 		log.info("postCateList: {}", postCateList);
@@ -113,7 +112,7 @@ public class UCommunityController {
 		model.addAttribute("title", "게시글 작성 페이지");
 		model.addAttribute("postCateList", postCateList);
 		
-		return "user/board/postWrite";
+		return "user/board/postAdd";
 	}
 	
 	
@@ -174,10 +173,10 @@ public class UCommunityController {
 	}
 	
 	// 게시글 삭제 POST 요청
-	@PostMapping("/postDelete")
-	public String postDelete(@RequestParam (value = "postNum") String postNum, Model model) {
+	@PostMapping("/postRemove")
+	public String postRemove(@RequestParam (value = "postNum") String postNum, Model model) {
 		
-		uCommunityService.postDelete(postNum);
+		uCommunityService.postRemove(postNum);
 		
 		model.addAttribute("postNum", postNum);
 		model.addAttribute("title", "게시글 삭제");
@@ -190,11 +189,11 @@ public class UCommunityController {
 	
     /*
 	// 게시글 삭제
-	@GetMapping("/postDelete")
-	public String postDeletePage(@RequestParam (value = "postNum") String postNum, Model model) {
+	@GetMapping("/postRemove")
+	public String postRemove(@RequestParam (value = "postNum") String postNum, Model model) {
 		
 		List<UCommunity> postList = uCommunityService.getPostList();
-		uCommunityService.postDelete(postNum);
+		uCommunityService.postRemove(postNum);
 
 		model.addAttribute("postList", postList);
 		model.addAttribute("postNum", postNum);

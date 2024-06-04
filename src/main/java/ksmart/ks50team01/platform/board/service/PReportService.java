@@ -28,6 +28,11 @@ public class PReportService {
 		return reportList;
 	}
 
+	
+	/**
+	 * 카테고리별 신고내역 조회
+	 * @param category 
+	 */
 	public List<PReport> getReportListByCategory(String category) {
 		List<PReport> reportList = pReportMapper.getReportListByCategory(category);
 		return reportList;

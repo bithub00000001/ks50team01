@@ -125,7 +125,7 @@
     
     
     <!-- 자주 묻는 질문 번호 자동증가 -->
-    <insert id="insertFaq" parameterType="PFaq">
+    <insert id="faqAdd" parameterType="PFaq">
     	<selectKey keyProperty="faqNum" resultType="String" order="BEFORE">
     		/* 자주 묻는 질문 등록 */
     		SELECT
@@ -158,7 +158,7 @@
 
 	
 	
-	<delete id="faqDelete" parameterType="PFaq">
+	<delete id="faqRemove" parameterType="PFaq">
 		/* 자주 묻는 질문 삭제 */
 	    DELETE FROM 
 	    	FREQUENTLY_ASKED_QUESTIONS 

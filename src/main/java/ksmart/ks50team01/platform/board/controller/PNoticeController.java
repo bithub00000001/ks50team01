@@ -48,12 +48,12 @@ public class PNoticeController {
 	}
 
 	// 공지사항 작성 POST 요청
-	@PostMapping("/noticeWrite")
-	public String noticeWrite(PNotice pNotice, Model model) {
+	@PostMapping("/noticeAdd")
+	public String noticeAdd(PNotice pNotice, Model model) {
 		String contentWithLineBreaks = pNotice.getNoticeContent().replace("\n", "<br>");
 		pNotice.setNoticeContent(contentWithLineBreaks);
         
-	    pNoticeService.insertNotice(pNotice);
+	    pNoticeService.noticeAdd(pNotice);
 	    
 	    model.addAttribute("title", "공지사항 작성");
 	    
@@ -61,8 +61,8 @@ public class PNoticeController {
 	}
 	
 	// 공지사항 작성 폼 이동
-	@GetMapping("/noticeWrite")
-	public String noticeWrite(Model model) {
+	@GetMapping("/noticeAdd")
+	public String noticeAdd(Model model) {
 		List<PCategory> noticeCateList = pNoticeService.getNoticeCateList();
 		log.info("noticeCateList: {}", noticeCateList);
 		
@@ -75,7 +75,7 @@ public class PNoticeController {
 		model.addAttribute("noticeCateList", noticeCateList);
 		model.addAttribute("title", "공지사항 작성 페이지");
 		
-		return "platform/board/noticeWrite";
+		return "platform/board/noticeAdd";
 	}
 	
 	// 공지사항 수정 POST 요청
@@ -111,9 +111,9 @@ public class PNoticeController {
 	}
 	
 	// 공지사항 삭제 POST 요청
-	@PostMapping("/noticeDelete")
-	public String noticeDelete(@RequestParam(value="noticeNum") String noticeNum, Model model) {
-		pNoticeService.noticeDelete(noticeNum);
+	@PostMapping("/noticeRemove")
+	public String noticeRemove(@RequestParam(value="noticeNum") String noticeNum, Model model) {
+		pNoticeService.noticeRemove(noticeNum);
 		
 		model.addAttribute("title", "공지사항 삭제");
 		model.addAttribute("noticeNum", noticeNum);
@@ -124,11 +124,11 @@ public class PNoticeController {
 	
 	/*
 	// 공지사항 삭제
-	@GetMapping("/noticeDelete")
-	public String noticeDeletePage(@RequestParam(value="noticeNum") String noticeNum, Model model) {
+	@GetMapping("/noticeRemove")
+	public String noticeRemove(@RequestParam(value="noticeNum") String noticeNum, Model model) {
 		
 		List<PNotice> noticeList = pNoticeService.getNoticeList();
-		pNoticeService.noticeDelete(noticeNum);
+		pNoticeService.noticeRemove(noticeNum);
 		
 		model.addAttribute("faqList", noticeList);
 		model.addAttribute("faqNum", noticeNum);

@@ -31,28 +31,45 @@ public class UQnaService {
 
 	
 	/**
-	 * 1:1문의 상세 조회
-	 * @return UQna
+	 * 1:1문의 카테고리 조회
+	 * @return qnaCateList
 	 */
-	public UQna getQnaByQnaNum(String qnaNum) {
-		UQna qnaDetail = uQnaMapper.getQnaByQnaNum(qnaNum);
-		log.info("getQnaByQnaNum: {}", qnaDetail);
-		return qnaDetail;
-	}
-
-	// qna 등록
-	public void insertQna(UQna uQna) {
-		// qna DB에 저장
-		uQnaMapper.insertQna(uQna);
-		
-	}
-
-
 	public List<UCategory> getQnaCateList() {
 		List<UCategory> qnaCateList = uQnaMapper.getQnaCateList();
 		
 		log.info("QNA 카테고리 조회 결과: {}", qnaCateList);
 		return qnaCateList;
+	}
+
+	
+	/**
+	 * 1:1문의 상세 조회
+	 * @return UQna
+	 */
+	public UQna getQnaDetail(String qnaNum) {
+		UQna qnaDetail = uQnaMapper.getQnaDetail(qnaNum);
+		log.info("getQnaByQnaNum: {}", qnaDetail);
+		return qnaDetail;
+	}
+	
+	
+	/**
+	 * 해당 번호의 1:1문의 조회
+	 * @param qnaNum 조회할 1:1문의 번호
+	 * @return 조회된 uQna 객체, 없을 경우 null
+	 */
+	public UQna getQnaInfoByNum(String qnaNum) {
+		return uQnaMapper.getQnaInfoByNum(qnaNum);
+	}
+	
+	
+
+    /**
+     * 1:1문의 등록
+     */
+	public void qnaAdd(UQna uQna) {
+		uQnaMapper.qnaAdd(uQna);
+		
 	}
 
 
@@ -65,26 +82,15 @@ public class UQnaService {
 		
 	}
 	
-	/**
-	 * 주어진 번호에 해당하는 1:1문의 정보 조회
-	 * @param qnaNum 조회할 1:1문의 번호
-	 * @return 조회된 uQna 객체, 없을 경우 null
-	 */
-	public UQna getQnaInfoByNum(String qnaNum) {
-		return uQnaMapper.getQnaInfoByNum(qnaNum);
-	}
-	
 	
     /**
      * 1:1문의 삭제
      * @param qnaNum 삭제할 1:1문의 번호
      */
-	public void qnaDelete(String qnaNum) {
-		uQnaMapper.qnaDelete(qnaNum);
+	public void qnaRemove(String qnaNum) {
+		uQnaMapper.qnaRemove(qnaNum);
 		
 	}
-
-
 
 	
 }

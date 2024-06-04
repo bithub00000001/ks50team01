@@ -8,7 +8,7 @@
 	</head>
 	
 	<th:block layout:fragment="customCss">
-		<link th:href="@{/user/css/qnaWrite.css}" rel="stylesheet">
+		<link th:href="@{/user/css/qnaAdd.css}" rel="stylesheet">
 		
 		<!-- GOOGLE FONT -->
     	<link href='https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700' rel='stylesheet'>
@@ -21,7 +21,7 @@
 				<div class="col-12">
 					<h3 class="element-title">1:1 문의 작성</h3>
 					<div class="mb-6">
-						<form id="qnaForm" th:action="@{/qna/qnaWrite}" method="POST" enctype="multipart/form-data">
+						<form id="qnaForm" th:action="@{/qna/qnaAdd}" method="POST" enctype="multipart/form-data">
 							
 							<div class="form-group">
 								<label for="qnaRegId" class="col-sm-2 col-form-label">작성자</label>

@@ -44,13 +44,14 @@ public class PQnaService {
 
 
 
+	// 1:1문의 번호로 1:1문의 상세 조회																
 	public PQna getQnaDetailByNum(String qnaNum) {
 		PQna qnaDetail = pQnaMapper.getQnaDetailByNum(qnaNum);
 		return qnaDetail;
 	}
 
 	
-	// 1:문의 답변 작성
+	// 1:1문의 답변 작성
     public void answerSave(String qnaNum, String ansRegId, String ansContent) {
         // 질문 테이블 업데이트
         pQnaMapper.updateQnaWithAnswererId(qnaNum, ansRegId);
@@ -63,7 +64,7 @@ public class PQnaService {
     }
 
 
-
+    // 카테고리별 1:1문의 목록 조회	
 	public List<PQna> getQnaListByCategory(String category) {
 		List<PQna> qnaList = pQnaMapper.getQnaListByCategory(category);
 		return qnaList;

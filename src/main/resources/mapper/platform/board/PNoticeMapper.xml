@@ -132,7 +132,7 @@
 
     
     <!-- 공지사항 번호 자동증가 -->
-    <insert id="insertNotice" parameterType="UNotice">
+    <insert id="noticeAdd" parameterType="UNotice">
     	<selectKey keyProperty="noticeNum" resultType="String" order="BEFORE">
     		/* 공지사항 등록 */
     		SELECT
@@ -166,10 +166,9 @@
 	        NTC_NO = #{noticeNum};
 	</update>
 	    
-    
 
 
-	<delete id="noticeDelete" parameterType="PNotice">
+	<delete id="noticeRemove" parameterType="PNotice">
 		/* 공지사항 삭제 */
 	    DELETE FROM 
 	    	NOTICE 

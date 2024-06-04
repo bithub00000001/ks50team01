@@ -179,7 +179,7 @@
     
     
     <!-- 게시글 등록 -->
-    <insert id="insertPost" parameterType="UCommunity">
+    <insert id="postAdd" parameterType="UCommunity">
     	<selectKey keyProperty="postNum" resultType="String" order="BEFORE">
     		/* 게시글 번호 자동증가 */
     		SELECT
@@ -197,8 +197,8 @@
 
     
     
-	<!-- getPostByPostNum 쿼리 정의 -->
-	<select id="getPostByPostNum" resultMap="postResultMap">
+	<!-- getPostDetail 쿼리 정의 -->
+	<select id="getPostDetail" resultMap="postResultMap">
 		/* 게시글 번호로 게시글 상세 조회 */
 		SELECT
 			P.PST_NO, 
@@ -241,7 +241,7 @@
 	</select>
 	
 	
-	<!-- 게시글 번호로 해당 게시글의 상세 정보를 조회하는 쿼리 -->
+	<!-- 게시글 번호로 게시글 정보 조회  -->
 	<select id="getPostInfoByNum" resultMap="postResultMap" parameterType="String">
 		SELECT
 			P.PST_NO, 
@@ -337,7 +337,7 @@
 	
 	
 	
-	<delete id="postDelete" parameterType="UCommunity">
+	<delete id="postRemove" parameterType="UCommunity">
 		/* 게시글 삭제 */
 	    DELETE FROM 
 	    	POST 
@@ -382,14 +382,6 @@
         WHERE
             PST_NO = #{postNum};
     </select>
-    
-    
-    
-
-
-
-
-
     
 	
 </mapper>

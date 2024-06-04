@@ -8,7 +8,7 @@
 	</head>
 	
     <th:block layout:fragment="customCss">
-        <link th:href="@{/user/css/postWrite.css}" rel="stylesheet">
+        <link th:href="@{/user/css/postAdd.css}" rel="stylesheet">
         
         <!-- GOOGLE FONT -->
     	<link href='https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700' rel='stylesheet'>
@@ -21,7 +21,7 @@
 	            <div class="col-12">
 	                <h3 class="element-title">게시글 작성</h3>
 	                <div class="mb-6">
-	                    <form id="postForm" th:action="@{/community/postWrite}" method="POST" enctype="multipart/form-data">
+	                    <form id="postForm" th:action="@{/community/postAdd}" method="POST" enctype="multipart/form-data">
 	                          <div class="form-group">
 	                            <label for="postRegId" class="col-sm-2 col-form-label">작성자</label>
 	                            <input type="text" class="form-control" id="postRegId" name="postRegId" th:value="${session.loginId}" readonly="readonly">

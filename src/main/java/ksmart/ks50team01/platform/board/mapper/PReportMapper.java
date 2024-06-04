@@ -12,7 +12,7 @@ public interface PReportMapper {
 	// 신고내역 조회
 	List<PReport> getReportList();
 
-	// 해당 카테고리의 신고내역 조회
+	// 카테고리별 신고내역 목록 조회
 	List<PReport> getReportListByCategory(String category);
 
 	// 신고 승인

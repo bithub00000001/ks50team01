@@ -52,12 +52,12 @@ public class PFaqController {
 	
 	
 	// 자주 묻는 질문 작성 POST 요청
-    @PostMapping("/faqWrite")
-    public String faqWrite(PFaq pFaq, Model model) {
+    @PostMapping("/faqAdd")
+    public String faqAdd(PFaq pFaq, Model model) {
         String contentWithLineBreaks = pFaq.getFaqContent().replace("\n", "<br>");
         pFaq.setFaqContent(contentWithLineBreaks);
 
-        pFaqService.insertFaq(pFaq);
+        pFaqService.faqAdd(pFaq);
 
         model.addAttribute("title", "자주 묻는 질문 작성");
 
@@ -66,8 +66,8 @@ public class PFaqController {
     
 
 	// 자주 묻는 질문 작성 페이지
-	@GetMapping("/faqWrite")
-	public String faqWrite(Model model) {
+	@GetMapping("/faqAdd")
+	public String faqAdd(Model model) {
 		List<PCategory> faqCateList = pFaqService.getfaqCateList();
 		log.info("자주찾는질문 카테고리 조회 결과: {}", faqCateList);
 		
@@ -81,7 +81,7 @@ public class PFaqController {
 	    model.addAttribute("faqCateList", faqCateList);
 		model.addAttribute("title", "자주 묻는 질문 작성 페이지");
 		
-		return "platform/board/faqWrite";
+		return "platform/board/faqAdd";
 	}
 		
 	
@@ -120,10 +120,10 @@ public class PFaqController {
 	
 	
 	// 자주 묻는 질문 삭제 POST 요청
-	@PostMapping("/faqDelete")
-	public String faqDelete(@RequestParam(value = "faqNum") String faqNum, Model model) {
+	@PostMapping("/faqRemove")
+	public String faqRemove(@RequestParam(value = "faqNum") String faqNum, Model model) {
 	    
-		pFaqService.faqDelete(faqNum);
+		pFaqService.faqRemove(faqNum);
 		
 		model.addAttribute("faqNum", faqNum);
 		model.addAttribute("title", "자주 묻는 질문 삭제");
@@ -137,11 +137,11 @@ public class PFaqController {
 	
 	/*
 	// 자주 묻는 질문 삭제
-	@GetMapping("/faqDelete")
-	public String faqDeletePage(@RequestParam(value = "faqNum") String faqNum, Model model) {
+	@GetMapping("/faqRemove")
+	public String faqRemove(@RequestParam(value = "faqNum") String faqNum, Model model) {
 		
 		List<PFaq> faqList = pFaqService.getFaqList();
-		pFaqService.faqDelete(faqNum);
+		pFaqService.faqRemove(faqNum);
 		
 		model.addAttribute("faqList", faqList);
 		model.addAttribute("faqNum", faqNum);

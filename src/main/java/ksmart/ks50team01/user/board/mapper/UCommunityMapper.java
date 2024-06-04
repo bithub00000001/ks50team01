@@ -17,85 +17,45 @@ public interface UCommunityMapper {
 	// 게시글 조회
 	List<UCommunity> getPostList();
 	
-	// 게시글 상세 조회
-	UCommunity getPostByPostNum(String postNum);
+	// 게시글 카테고리 조회
+	List<UCategory> getPostCateList();
 	
-
+	// 검색목록 조회
+	List<UCommunity> getSearchList(String searchKey, String searchValue);
+	
+	// 게시글 상세 조회
+	UCommunity getPostDetail(String postNum);
+	
 	// 게시글 조회수 증가
 	public int increaseViewCount(String postNum);
 	
-	// 게시글 번호로 해당 게시글의 댓글 수를 조회
+	// 게시글 번호로 게시글 댓글 수 조회
 	public int getCommentCntByPostNum(String postNum);
 	
+	// 게시글 번호로 게시글 정보 조회
+	UCommunity getPostInfoByNum(String postNum);
 	
-	
-	//게시글 카테고리 조회
-	List<UCategory> getPostCateList();
-	
-	
-	// 댓글 조회
+	// 게시글 번호로 게시글 댓글 조회
 	List<UComment> getCommentByPostNum(String postNum);
 	
-
-
-
+	List<UComment> getPostCommentList(String postNum);
 	
-	// 답글 저장
-	String replySave(String replyContent);
-
-	// 게시글 DB에 저장
-	void insertPost(UCommunity uCommunity);
+	// 게시글 작성
+	void postAdd(UCommunity uCommunity);
 
 	// 게시글 수정 
 	void postModify(UCommunity uCommunity);
 
-	// 주어진 번호에 해당하는 게시글 정보 조회
-	UCommunity getPostInfoByNum(String postNum);
-
 	// 게시글 삭제
-	void postDelete(String postNum);
+	void postRemove(String postNum);
 
-	// 게시글 파일 리스트
+	// 게시글 파일 리스트 조회
 	List<UPostFile> getFileList();
 
 	// 댓글 작성
 	void commentSave(UComment uComment);
-
-
-	List<UComment> getPostCommentList(String postNum);
-
-	// 검색목록 조회
-	List<UCommunity> getSearchList(String searchKey, String searchValue);
-
-
-
-
-
 	
-
-
-
-
-	
-	// 특정 게시물의 댓글 수를 가져오는 메서드 추가
-	//Integer getCommentCntByPostNum(String postNum);
-	
-	
-	/**
-	public Integer getCommentCntByPostNum(String postNum) {
-	    Integer count = uCommunityMapper.getCommentCntByPostNum(postNum);
-	    return count != null ? count : 0;
-	} */
-	
-
-
-	
-	/**
-	// 게시글 작성
-	void postSave(@Param("postCategory") String postCategory, 
-				  @Param("postTitle") String postTitle, 
-				  @Param("postContent") String postContent, 
-				  @Param("postFile") String postFile);
-				  */
+	// 답글 저장
+	String replySave(String replyContent);
 
 }

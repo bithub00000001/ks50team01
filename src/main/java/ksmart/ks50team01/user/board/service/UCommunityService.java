@@ -34,7 +34,7 @@ public class UCommunityService {
 	}
 	
 	
-	
+	// 게시글 카테고리 조회
 	public List<UCategory> getPostCateList(){
 		List<UCategory> postCateList = uCommunityMapper.getPostCateList();
 		
@@ -43,6 +43,21 @@ public class UCommunityService {
 	}
 	
 	
+	// 검색목록 조회
+	public List<UCommunity> getSearchList(String searchKey, String searchValue) {
+		if("postTitle".equals(searchKey)) {
+			searchKey = "P.PST_TTL";
+		}else if("postRegId".equals(searchKey)) {
+			searchKey = "P.REG_MBR_ID";;
+		}else {
+			searchKey = "";
+		}
+		
+		List<UCommunity> postList = uCommunityMapper.getSearchList(searchKey, searchValue);
+		
+		return postList;
+	}
+	
 	
 	
     /**
@@ -50,45 +65,51 @@ public class UCommunityService {
      * @param postNum 조회할 게시글 ID
      * @return UCommunity
      */
-    public UCommunity getPostByPostNum(String postNum) {
-    	UCommunity postDetail = uCommunityMapper.getPostByPostNum(postNum);
+    public UCommunity getPostDetail(String postNum) {
+    	UCommunity postDetail = uCommunityMapper.getPostDetail(postNum);
     	log.info("getPostByPostNum : {}", postDetail);
         return postDetail;
     }
     
+
+	/**
+	 * 해당 번호의 게시글 조회
+	 * @param postNum 조회할 게시글 번호
+	 * @return 조회된 uCommunity 객체, 없을 경우 null
+	 */
+	public UCommunity getPostInfoByNum(String postNum) {
+		return uCommunityMapper.getPostInfoByNum(postNum);
+	}
     
+	
+	// 해당 게시글의 모든 댓글을 가져오는 메서드
+	public List<UComment> getCommentByPostNum(String postNum) {
+		return uCommunityMapper.getCommentByPostNum(postNum); 
+	}
+	
+	// 해당 게시글의 총 댓글 수
+	public int getCommentCntByPostNum(String postNum) {
+		int commentCnt = uCommunityMapper.getCommentCntByPostNum(postNum);
+		return commentCnt;
+	}
+	
+	
     
 	// 조회수 증가
     public int increaseViewCount(String postNum) {
         return uCommunityMapper.increaseViewCount(postNum);
     }
     
-    
-    // 게시글 번호에 해당하는 모든 댓글을 가져오는 메서드 호출
-    public List<UComment> getCommentByPostNum(String postNum) {
-        return uCommunityMapper.getCommentByPostNum(postNum); 
-    }
-    
-    // 특정 게시물의 총 댓글 수
-	public int getCommentCntByPostNum(String postNum) {
-	    int commentCnt = uCommunityMapper.getCommentCntByPostNum(postNum);
-	    return commentCnt;
-	}
-
-	
-	
 	
 	/**
 	 * 게시글 작성
 	 * @param uCommunity
 	 */
-    public void insertPost(UCommunity uCommunity) {
+    public void postAdd(UCommunity uCommunity) {
         
-        // 게시글 DB에 저장
-        uCommunityMapper.insertPost(uCommunity);
+        uCommunityMapper.postAdd(uCommunity);
     }
 
-	
 
 
 	/**
@@ -100,27 +121,18 @@ public class UCommunityService {
 	}
 
 
-	/**
-	 * 주어진 번호에 해당하는 게시글 정보 조회
-	 * @param postNum 조회할 게시글 번호
-	 * @return 조회된 uCommunity 객체, 없을 경우 null
-	 */
-	public UCommunity getPostInfoByNum(String postNum) {
-		return uCommunityMapper.getPostInfoByNum(postNum);
-	}
-
 
 	/**
 	 * 게시글 삭제
 	 */
-	public void postDelete(String postNum) {
-		uCommunityMapper.postDelete(postNum);
+	public void postRemove(String postNum) {
+		uCommunityMapper.postRemove(postNum);
 		
 	}
 
 
 	/**
-	 * 파일목록
+	 * 파일목록 조회
 	 * @return
 	 */
 	public List<UPostFile> getFileList() {
@@ -129,10 +141,6 @@ public class UCommunityService {
 	}
 
  
-
-
-
-
 
 	// 댓글 작성
 	public void commentSave(String commentRegId, String postNum, String commentContent) {
@@ -144,28 +152,12 @@ public class UCommunityService {
 	}
 
 
-
+	// 게시글 댓글 조회
 	public List<UComment> getPostCommentList(String postNum) {
 		return uCommunityMapper.getPostCommentList(postNum);
 	}
 
 
-
-	public List<UCommunity> getSearchList(String searchKey, String searchValue) {
-		// 검색항목
-		if("postTitle".equals(searchKey)) {
-			searchKey = "P.PST_TTL";
-		}else if("postRegId".equals(searchKey)) {
-			searchKey = "P.REG_MBR_ID";;
-		}else {
-			searchKey = "";
-		}
-		
-		List<UCommunity> postList = uCommunityMapper.getSearchList(searchKey, searchValue);
-		
-		
-		return postList;
-	}
 
 
 }

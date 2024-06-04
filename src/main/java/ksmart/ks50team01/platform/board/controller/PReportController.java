@@ -50,7 +50,7 @@ public class PReportController {
 	
 	
 	/**
-	 * 신고 승인
+	 * 신고내역 승인
 	 * @param reportNum
 	 * @return
 	 */

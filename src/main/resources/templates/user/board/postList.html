@@ -124,7 +124,7 @@
 						<div class="col-12" style="text-align: right;">
 							<!-- 로그인 상태인 경우 -->
 							<th:block th:if="${session.loginId != null}">
-								<a th:href="@{/community/postWrite}">
+								<a th:href="@{/community/postAdd}">
 									<button type="button"
 										class="btn btn-outline-primary btn-sm postWriteBtn">글쓰기</button>
 								</a>
@@ -163,140 +163,130 @@
 		</div>
 	</th:block>
 
-
-
 	<th:block layout:fragment="customJsFIle">
 	</th:block>
 	
 	<th:block layout:fragment="customJs">
 	
+      <script>
+          // 드롭다운 메뉴 선택 시 해당하는 게시물만 보이게 하는 함수
+          function filterPosts(category) {
+              const tbody = document.querySelector('tbody');
+              const rows = tbody.querySelectorAll('tr');
+
+              rows.forEach(row => {
+                  const categoryBadge = row.querySelector('.badge-cate'); // 각 행의 게시물 카테고리 뱃지
+                  const categoryText = categoryBadge.textContent; // 뱃지에 표시된 카테고리 텍스트
+                  const display = category === '전체' || categoryText === category ? '' : 'none'; // 선택된 카테고리와 일치하는 행이면 보이게 함, 아니면 숨김
+
+                  row.style.display = display;
+              });
+          }
+
+          // 페이지 로드 시 실행되는 함수
+          document.addEventListener("DOMContentLoaded", function() {
+              const dropdownItems = document.querySelectorAll('.dropdown-item');
+
+              dropdownItems.forEach(item => {
+                  item.addEventListener('click', function() {
+                      const selectedCategory = this.textContent.trim(); // 선택된 드롭다운 메뉴의 텍스트
+
+                      // 선택된 카테고리에 해당하는 게시물만 보이게 함
+                      filterPosts(selectedCategory);
+                  });
+              });
+          });
+        </script>
 		     
-		     
-	        <script>
-	            // 드롭다운 메뉴 선택 시 해당하는 게시물만 보이게 하는 함수
-	            function filterPosts(category) {
-	                const tbody = document.querySelector('tbody');
-	                const rows = tbody.querySelectorAll('tr');
-	
-	                rows.forEach(row => {
-	                    const categoryBadge = row.querySelector('.badge-cate'); // 각 행의 게시물 카테고리 뱃지
-	                    const categoryText = categoryBadge.textContent; // 뱃지에 표시된 카테고리 텍스트
-	                    const display = category === '전체' || categoryText === category ? '' : 'none'; // 선택된 카테고리와 일치하는 행이면 보이게 함, 아니면 숨김
-	
-	                    row.style.display = display;
-	                });
-	            }
-	
-	            // 페이지 로드 시 실행되는 함수
-	            document.addEventListener("DOMContentLoaded", function() {
-	                const dropdownItems = document.querySelectorAll('.dropdown-item');
-	
-	                dropdownItems.forEach(item => {
-	                    item.addEventListener('click', function() {
-	                        const selectedCategory = this.textContent.trim(); // 선택된 드롭다운 메뉴의 텍스트
-	
-	                        // 선택된 카테고리에 해당하는 게시물만 보이게 함
-	                        filterPosts(selectedCategory);
-	                    });
-	                });
-	            });
-	            </script>
-		     
-	<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const searchBtn = document.querySelector('.btn.bg-primary'); // 검색 버튼 가져오기
-        const searchInput = document.querySelector('.form-control.form-control-sm'); // 검색어 입력 필드 가져오기
-
-        // 검색 버튼 클릭 시
-        searchBtn.addEventListener('click', performSearch);
-
-        // 검색어 입력 필드에서 엔터 키 눌렀을 때
-        searchInput.addEventListener('keyup', function(event) {
-            if (event.keyCode === 13) { // Enter 키 눌렀을 때
-                performSearch();
-            }
-        });
-
-        // 검색 기능을 수행하는 함수
-        function performSearch() {
-            const searchValue = searchInput.value.trim().toLowerCase(); // 검색어 가져오기 (소문자로 변환, 공백 제거)
-            const searchKey = document.querySelector('select[name="searchKey"]').value; // 선택된 검색 조건(제목, 내용, 작성자) 가져오기
-            
-            const tbody = document.querySelector('tbody');
-            const rows = tbody.querySelectorAll('tr');
-
-            rows.forEach(row => {
-                let searchTarget = ''; // 검색 대상 텍스트 초기화
-
-                // 선택된 검색 조건에 따라 검색 대상 설정
-                if (searchKey === 'postTitle') {
-                    searchTarget = row.querySelector('td:nth-child(2)').textContent.replace(/\s+/g, '').toLowerCase(); // 각 행의 제목에서 공백을 제거하고 소문자로 변환하여 저장
-                } else if (searchKey === 'postRegId') {
-                    searchTarget = row.querySelector('td:nth-child(3)').textContent.replace(/\s+/g, '').toLowerCase(); // 각 행의 작성자에서 공백을 제거하고 소문자로 변환하여 저장
-                }
-
-                const searchValueWithoutSpaces = searchValue.replace(/\s+/g, ''); // 검색어에서 공백을 제거한 후 소문자로 변환하여 저장
-                
-                // 검색어가 포함된 경우 행을 표시하고 아닌 경우 행을 숨김
-                if (searchTarget.includes(searchValueWithoutSpaces)) {
-                    row.style.display = '';
-                } else {
-                    row.style.display = 'none';
-                }
-            });
-        }
-    });
-
-
-			
-	</script>	
-
-	<script>
-	    // 게시글 조회수 증가
+		<script>
 	    document.addEventListener("DOMContentLoaded", function() {
-	        // 제목을 클릭했을 때
-	        const titleLinks = document.querySelectorAll('tbody tr td:nth-child(2) a');
-	        titleLinks.forEach(link => {
-	            link.addEventListener('click', function(event) {
-	                // 클릭된 제목의 게시물 번호 가져오기
-	                const postNum = this.getAttribute('data-post-num');
+	        const searchBtn = document.querySelector('.btn.bg-primary'); // 검색 버튼 가져오기
+	        const searchInput = document.querySelector('.form-control.form-control-sm'); // 검색어 입력 필드 가져오기
 	
-	                // 서버에 조회수 증가 요청을 보냄
-	                fetch(`/community/increaseViewCount?postNum=${postNum}`, {
-	                    method: 'POST'
-	                })
-	                
-	                .then(response => {
-	                    if (!response.ok) {
-	                        throw new Error('Network response was not ok');
-	                    }
-	                    // 성공적으로 요청이 완료된 경우, 게시물 상세 페이지로 이동
-	                    location.href = `/community/postDetail?postNum=${postNum}`;
-	                    // 게시물 리스트의 조회수도 증가시키는 요청
-	                    fetch(`/community/increaseListViewCount?postNum=${postNum}`, {
-	                        method: 'POST'
-	                    })
-	                    .then(response => {
-	                        if (!response.ok) {
-	                            throw new Error('Network response was not ok');
-	                        }
-	                    })
-	                    .catch(error => {
-	                        console.error('Error:', error);
-	                    });
-	                })
+	        // 검색 버튼 클릭 시
+	        searchBtn.addEventListener('click', performSearch);
 	
-	
-	            });
-	
+	        // 검색어 입력 필드에서 엔터 키 눌렀을 때
+	        searchInput.addEventListener('keyup', function(event) {
+	            if (event.keyCode === 13) { // Enter 키 눌렀을 때
+	                performSearch();
+	            }
 	        });
+	
+	        // 검색 기능을 수행하는 함수
+	        function performSearch() {
+	            const searchValue = searchInput.value.trim().toLowerCase(); // 검색어 가져오기 (소문자로 변환, 공백 제거)
+	            const searchKey = document.querySelector('select[name="searchKey"]').value; // 선택된 검색 조건(제목, 내용, 작성자) 가져오기
+	            
+	            const tbody = document.querySelector('tbody');
+	            const rows = tbody.querySelectorAll('tr');
+	
+	            rows.forEach(row => {
+	                let searchTarget = ''; // 검색 대상 텍스트 초기화
+	
+	                // 선택된 검색 조건에 따라 검색 대상 설정
+	                if (searchKey === 'postTitle') {
+	                    searchTarget = row.querySelector('td:nth-child(2)').textContent.replace(/\s+/g, '').toLowerCase(); // 각 행의 제목에서 공백을 제거하고 소문자로 변환하여 저장
+	                } else if (searchKey === 'postRegId') {
+	                    searchTarget = row.querySelector('td:nth-child(3)').textContent.replace(/\s+/g, '').toLowerCase(); // 각 행의 작성자에서 공백을 제거하고 소문자로 변환하여 저장
+	                }
+	
+	                const searchValueWithoutSpaces = searchValue.replace(/\s+/g, ''); // 검색어에서 공백을 제거한 후 소문자로 변환하여 저장
+	                
+	                // 검색어가 포함된 경우 행을 표시하고 아닌 경우 행을 숨김
+	                if (searchTarget.includes(searchValueWithoutSpaces)) {
+	                    row.style.display = '';
+	                } else {
+	                    row.style.display = 'none';
+	                }
+	            });
+	        }
 	    });
-	    
-	    
-	    
-	    
-	    
-	</script>
+	
+		</script>	
+	
+		<script>
+		    // 게시글 조회수 증가
+		    document.addEventListener("DOMContentLoaded", function() {
+		        // 제목을 클릭했을 때
+		        const titleLinks = document.querySelectorAll('tbody tr td:nth-child(2) a');
+		        titleLinks.forEach(link => {
+		            link.addEventListener('click', function(event) {
+		                // 클릭된 제목의 게시물 번호 가져오기
+		                const postNum = this.getAttribute('data-post-num');
+		
+		                // 서버에 조회수 증가 요청을 보냄
+		                fetch(`/community/increaseViewCount?postNum=${postNum}`, {
+		                    method: 'POST'
+		                })
+		                
+		                .then(response => {
+		                    if (!response.ok) {
+		                        throw new Error('Network response was not ok');
+		                    }
+		                    // 성공적으로 요청이 완료된 경우, 게시물 상세 페이지로 이동
+		                    location.href = `/community/postDetail?postNum=${postNum}`;
+		                    // 게시물 리스트의 조회수도 증가시키는 요청
+		                    fetch(`/community/increaseListViewCount?postNum=${postNum}`, {
+		                        method: 'POST'
+		                    })
+		                    .then(response => {
+		                        if (!response.ok) {
+		                            throw new Error('Network response was not ok');
+		                        }
+		                    })
+		                    .catch(error => {
+		                        console.error('Error:', error);
+		                    });
+		                })
+		
+		
+		            });
+		
+		        });
+		    });
+		    
+		</script>
 		
 	</th:block>
 </html>

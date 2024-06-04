@@ -23,9 +23,9 @@ public class UQnaController {
 	
 	private final UQnaService uQnaService;
 	
-	// 1:1문의 조회
+	// 1:1문의 목록 조회
 	@GetMapping({"/",""})
-	public String qna(Model model) {
+	public String qnaList(Model model) {
 		List<UQna> qnaList = uQnaService.getQnaList();
 		log.info("qnaList: {}", qnaList);
 		model.addAttribute("qnaList", qnaList);
@@ -38,7 +38,7 @@ public class UQnaController {
 	// 1:1문의 상세 조회
 	@GetMapping("/qnaDetail")
 	public String qnaDetail(@RequestParam(name = "qnaNum", required = false) String qnaNum, Model model) {
-		UQna qnaDetail = uQnaService.getQnaByQnaNum(qnaNum);
+		UQna qnaDetail = uQnaService.getQnaDetail(qnaNum);
 		
 		model.addAttribute("qnaDetail", qnaDetail);
 		model.addAttribute("qnaTitle", qnaDetail.getQnaTitle());
@@ -54,12 +54,12 @@ public class UQnaController {
 	
 	
 	// 1:1문의 작성 POST 요청
-	@PostMapping("/qnaWrite")
-	public String qnaWrite(UQna uQna, Model model)	{
+	@PostMapping("/qnaAdd")
+	public String qnaAdd(UQna uQna, Model model)	{
 		String contentWithLineBreaks = uQna.getQnaContent().replace("\n", "<br>");
 		uQna.setQnaContent(contentWithLineBreaks);
 		
-		uQnaService.insertQna(uQna);
+		uQnaService.qnaAdd(uQna);
 		
 		log.info("QNA 등록:{}", uQna);
 		
@@ -70,8 +70,8 @@ public class UQnaController {
 
 	
 	// 1:1문의 작성 폼 이동
-	@GetMapping("/qnaWrite")
-	public String qnaWrite(Model model) {
+	@GetMapping("/qnaAdd")
+	public String qnaAdd(Model model) {
 		
 		List<UCategory> qnaCateList = uQnaService.getQnaCateList();
 		log.info("qnaCateList: {}", qnaCateList);
@@ -79,7 +79,7 @@ public class UQnaController {
 		model.addAttribute("title", "1:1문의 작성");
 		model.addAttribute("qnaCateList", qnaCateList);
 		
-		return "user/board/qnaWrite";
+		return "user/board/qnaAdd";
 		
 	}
 	
@@ -116,10 +116,10 @@ public class UQnaController {
 	}
 	
 	// 1:1문의 삭제 POST 요청
-	@PostMapping("/qnaDelete")
-	public String qnaDelete(@RequestParam (value = "qnaNum") String qnaNum, Model model) {
+	@PostMapping("/qnaRemove")
+	public String qnaRemove(@RequestParam (value = "qnaNum") String qnaNum, Model model) {
 		
-		uQnaService.qnaDelete(qnaNum);
+		uQnaService.qnaRemove(qnaNum);
 		
 		model.addAttribute("qnaNum", qnaNum);
 		model.addAttribute("title", "1:1문의 삭제");

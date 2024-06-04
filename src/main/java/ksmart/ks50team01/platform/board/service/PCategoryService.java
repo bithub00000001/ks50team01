@@ -29,7 +29,6 @@ public class PCategoryService {
 	//}
 	
 	
-	
 
 	
 	/**
@@ -70,8 +69,16 @@ public class PCategoryService {
 		return reportCateList;
 	}
 	
-
 	
+	/**
+	 * 카테고리 등록
+	 * @param pCategory
+	 */
+	public void categoryAdd(PCategory pCategory) {
+		pCategoryMapper.categoryAdd(pCategory);
+	}
+	
+
 	
 	/**
 	 * 카테고리 수정
@@ -81,17 +88,4 @@ public class PCategoryService {
 		pCategoryMapper.categoryModify(pCategory);
 	}
 	
-	
-	/**
-	 * 카테고리 추가
-	 * @param pCategory
-	 */
-	public void categoryAdd(PCategory pCategory) {
-		pCategoryMapper.categoryAdd(pCategory);
-	}
-	
-
-
-
-
 }
