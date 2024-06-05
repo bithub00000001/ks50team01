@@ -583,7 +583,8 @@
 
 
 	<select id="getRestaurantInfoById" resultType="destination">
-		/*  */
+		/* 식당 수정 전 정보 */
+		
 	
 			SELECT
 				RSTRN_INFO_CD 	AS restaurantInfoCode,
@@ -622,7 +623,7 @@
 
 
 	<select id="getRestaurantInfoList" resultType="destination">
-		/* 식당 정보 */
+		/* 식당 정보 목록 */
 
 			SELECT
 				RSTRN_INFO_CD 	AS restaurantInfoCode,
