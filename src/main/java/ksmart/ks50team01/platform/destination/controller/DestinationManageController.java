@@ -264,6 +264,11 @@ public class DestinationManageController {
 		
 		return "platform/destination/addLodgingGoods";
 	}
+	/**
+	 * 음식점 중복체크
+	 * @param restaurantName
+	 * @return
+	 */
 	@GetMapping("destination/addRestaurantCheckList")
 	@ResponseBody
 	public boolean addRestaurantCheckList(@RequestParam(value = "restaurantName") String restaurantName) {
@@ -436,7 +441,7 @@ public class DestinationManageController {
 		
 		model.addAttribute("restaurantInfo", restaurantInfo);
 		model.addAttribute("restaurantList", restaurantList);
-		model.addAttribute("title", "식당 수정");
+		model.addAttribute("title", "음식점 수정");
 		
 		return "/platform/destination/restaurantModify";
 	}
@@ -476,7 +481,7 @@ public class DestinationManageController {
 		List<Destination> restaurantInfoList = destinationService.getRestaurantInfoList();
 		
 		model.addAttribute("restaurantInfoList", restaurantInfoList);
-		model.addAttribute("title", "식당 관리");
+		model.addAttribute("title", "음식점 관리");
 		
 		return "/platform/destination/restaurantManage";
 	}
@@ -491,28 +496,28 @@ public class DestinationManageController {
 		log.info("DestinationManageController restaurantMenuList:{}", restaurantMenuList);
 		
 		model.addAttribute("restaurantMenuList", restaurantMenuList);
-		model.addAttribute("title", "식당메뉴 관리");
+		model.addAttribute("title", "음식점메뉴 관리");
 		
 		return "/platform/destination/restaurantMenuManage";
 	}
 	
-	
-	@GetMapping("/destination/destinationRegister")
-	public String destinationRegister(Model model) {
-		
-		model.addAttribute("title", "여행지 등록");
-		
-		return "/platform/destination/destinationRegister";
-	}
-	
-	@GetMapping("/destination/categoryManage")
-	public String categoryManage(Model model) {
-		
-		model.addAttribute("title", "카테고리 관리");
-		
-		return "/platform/destination/categoryManage";
-		
-	}
+	/*
+	 * @GetMapping("/destination/destinationRegister") public String
+	 * destinationRegister(Model model) {
+	 * 
+	 * model.addAttribute("title", "여행지 등록");
+	 * 
+	 * return "/platform/destination/destinationRegister"; }
+	 * 
+	 * @GetMapping("/destination/categoryManage") public String categoryManage(Model
+	 * model) {
+	 * 
+	 * model.addAttribute("title", "카테고리 관리");
+	 * 
+	 * return "/platform/destination/categoryManage";
+	 * 
+	 * }
+	 */
 	
 
 	/**
@@ -524,7 +529,7 @@ public class DestinationManageController {
 	public String removeRestaurant(@RequestParam(value = "restaurantInfoCode") String restaurantInfoCode) {
 		destinationService.removeRestaurant(restaurantInfoCode);
 		
-		//model.addAttribute("title", "관광지 목록 삭제");
+		//model.addAttribute("title", "음식점 목록 삭제");
 		//model.addAttribute("tourInfoCode", tourInfoCode);
 		
 		return "redirect:/platform/destination/restaurantManage";
