@@ -3,6 +3,11 @@ const headingTwoButton = $('#headingTwo').find("button");
 
 // 첫번째 아코디언에서 임시 저장 버튼을 눌렀을때 DB로 값을 저장하는 함수
 function firstStepSubmit() {
+    const sessionLoginId = $('#sessionId').val();
+    if (!sessionLoginId) {
+        alert("로그인되지 않았습니다");
+        return;
+    }
 
     // 사용자에게 확인 메시지를 보여주고, 확인 시에만 계속 진행
     if (confirm("입력된 정보로 임시저장 하시겠습니까?")) {
@@ -94,8 +99,16 @@ function getCurrentTabCount() {
     return $("#myDayTab .nav-item:not(.add-day)").length;
 }
 
+// uuid가 없을 경우에만 생성하도록 전역 변수로 선언
+let uuid;
+
 // 여행지 제목 등 큰 분류의 계획을 저장하는 함수
 function saveTripInfo() {
+    // UUID 생성 및 jsonData에 추가
+    if (!uuid) { // UUID가 없는 경우에만 생성
+        uuid = generateUUID();
+    }
+
     const formData = $('#tripPlanForm').serializeArray(); // 폼 데이터를 배열로 변환
     console.log(formData);
     const jsonData = {}; // JSON 객체 생성
@@ -146,6 +159,8 @@ function saveTripInfo() {
     if (jsonData.virtualMembers) jsonData.numVirtualMembers = jsonData.virtualMembers.length;
     if (jsonData.invitedMembers) jsonData.numRealMembers = jsonData.invitedMembers.length;
 
+    jsonData.planUUID = uuid;
+
     console.log(jsonData);
 
     $.ajax({
@@ -163,5 +178,15 @@ function saveTripInfo() {
     });
 }
 
+// 240605: UUID 생성 함수: 표준에 따른 UUID를 생성하는 함수(v4 표준을 지키려면 3번째 세그먼트가 4로 시작해야하고 4번째 세그먼트가 8,9,A,B여야함)
+function generateUUID() {
+    let dt = new Date().getTime();
+    const generateUuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        const r = (dt + Math.random() * 16) % 16 | 0;
+        dt = Math.floor(dt / 16);
+        return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    });
+    return generateUuid;
+}
 
 
