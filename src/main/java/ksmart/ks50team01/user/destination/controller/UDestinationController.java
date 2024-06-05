@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import ksmart.ks50team01.platform.trip.dto.PTourApi;
 import ksmart.ks50team01.platform.trip.service.PTripPlanService;
-import ksmart.ks50team01.user.destination.dto.UDestination;
-import ksmart.ks50team01.user.destination.service.UDestinationService;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -21,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 public class UDestinationController {
 	
 	private final PTripPlanService pTripPlanService;
-	private final UDestinationService udestinationService;
+	
 	
 	@GetMapping("/destination/lodgingCheck")
 	public String lodgingCheck(Model model) {
@@ -62,9 +60,9 @@ public class UDestinationController {
 	@GetMapping("/destination/tourCheck")
 	public String tourCheck(Model model) {
 		List<?> areaCodeList = pTripPlanService.getAreaCodeList();
-		List<UDestination> tourCheck = udestinationService.getTourInfoList();
 		
-		model.addAttribute("tourCheck", tourCheck);
+		
+		
 		model.addAttribute("title", "관광지 조회");
 		model.addAttribute("areaCodeList", areaCodeList);
 		
