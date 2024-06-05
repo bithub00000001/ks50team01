@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="ksmart.ks50team01.user.destination.mapper.UDestinationMapper">
+
+	<select id="getTourListRowCnt" resultType="int">
+		/* 관광지 행의 갯수 */
+		
+		SELECT
+			COUNT(1)
+		FROM
+			TOUR_DETAIL_FROM_API
+		WHERE
+			tour_detail_content_type_id = '12'
+	</select>
+	
+	<select id="getTourListByPage" parameterType="map" resultType="map">
+		/* 페이지네이션 관광지 리스트 조회*/
+		SELECT 
+			tour_detail_content_type_id		AS contentTypeId, 
+			tour_detail_content_id			AS contentId,
+			tour_detail_title 				AS tourTitle, 
+			tour_detail_first_image 		AS tourImage, 
+			AREA_CODE 						AS areaCode, 
+			SIGUNGU_CODE 					AS sigunCode, 
+			tour_detail_overview 			AS tourOverview
+		FROM 
+			TOUR_DETAIL_FROM_API
+		WHERE
+			tour_detail_content_type_id = '12'
+		ORDER BY 
+			AREA_CODE ASC
+		LIMIT #{startRow}, #{rowPerPage};
+	</select>
+	
+	<select id="getDestinationDetail" parameterType="string" resultType="PTourDetail">
+		/* 관광지 조회*/
+		SELECT 
+			tour_detail_content_type_id		AS contentTypeId, 
+			tour_detail_content_id			AS contentId,
+			tour_detail_title 				AS title, 
+			tour_detail_first_image 		AS firstImage, 
+			tour_detail_second_image		AS secondImage, 
+			AREA_CODE 						AS areaCode, 
+			SIGUNGU_CODE 					AS sigunCode, 
+			tour_detail_overview 			AS overview,
+			tour_detail_tel_num				AS tel
+		FROM 
+			TOUR_DETAIL_FROM_API
+		WHERE
+			tour_detail_content_id = #{contentId}
+	</select>
+  
+</mapper>
