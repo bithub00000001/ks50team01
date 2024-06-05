@@ -11,6 +11,12 @@ public interface DestinationMapper {
 	
 	//관광지 등록
 	int addTour(Destination destination);
+
+	//관광지 세부등록
+	int addTourGoods(Destination destination);
+	
+	//관광지 세부옵션 등록
+	int addTourGoodsOp(Destination destination);
 	
 	//관광상품 중복체크
 	boolean addTourGoodsCheckList(String tourGoodsOptionCd);
@@ -27,6 +33,9 @@ public interface DestinationMapper {
 	// 관광지 조회
 	List<Destination> getTourInfoList();
 	
+	// 관광지 이름 조회
+	List<Destination> getTourInfoListByName(String tourName);
+	
 	// 관광지 수정
 	int tourModify(Destination destination);
 	Destination getTourInfoByName(String tourInfoCode);
@@ -35,11 +44,21 @@ public interface DestinationMapper {
 	int tourGoodsModify(Destination destination);
 	Destination getTourGoodsInfoById(String tourGoodsOptionCd);
 	
-
-	
 	//관광상품 조회
 	List<Destination> getTourGoodsList();
 	
+	//숙소 등록
+	int addLodging(Destination destination);
+	
+	//숙소 상세정보 등록
+	// int addLodgingGoods(Destination destination);
+	
+	//숙소 중복체크
+	boolean addLodgingCheckList(String lodgingName);
+	
+	//숙소 상세 중복체크
+	boolean addLodgingGoodsCheckList(String lodgingMenuCode);
+
 	//숙소 삭제
 	void removeLodging(String lodgingInfoCode);
 	
@@ -68,7 +87,7 @@ public interface DestinationMapper {
 	
 	
 	//음식점 이름 중복체크
-	boolean addRestaurantCheckList(String restaurantName);
+	// boolean addRestaurantCheckList(String restaurantName);
 	
 	//음식점 수정
 	int restaurantMoidfy(Destination destination);
@@ -89,10 +108,6 @@ public interface DestinationMapper {
 
 
 
-	
-
-	
-	
 	// List<Destination> searchTourName(String tourName);
 
 
