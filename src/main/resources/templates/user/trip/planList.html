@@ -7,25 +7,23 @@
 <th:block layout:fragment="customPageSection">
     <div class="list-group">
         <div th:each="plan, iterStat : ${plans}"
-             th:id="${'plan-'+plan.id}"
+             th:id="${'plan-'+iterStat.count}"
              class="list-group-item list-group-item-action flex-column align-items-start">
             <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1">
                     <small th:text="${iterStat.count}">1</small>
-                    <span th:text="${plan.title}">여행 계획 제목</span>
+                    <span th:text="${plan.tripTitle}">여행 계획 제목</span>
                 </h5>
-                <small th:text="${#dates.daysSince(plan.createdDate)} + '일 전'">3일 전</small>
+                <small th:text="${plan.dayDiff}">3일 전</small>
             </div>
             <div class="d-flex w-100 justify-content-between">
                 <p class="mb-1" th:text="${plan.description}">여행 계획에 대한 간단한 설명이나 세부사항</p>
-                <button class="btn btn-primary share-btn" th:data-plan-id="${plan.id}">공유하기</button>
+                <button class="btn btn-primary share-btn" th:data-plan-id="${plan.tripId}">공유하기</button>
             </div>
-            <div class="d-flex w-100 justify-content-between">
+            <div class="d-flex w-25 justify-content-between">
                 <small>인원: <span th:text="${plan.numPeople}">4</span></small>
-                <small>예산: <span th:text="${plan.budget}">$500</span></small>
             </div>
-            <div class="d-flex w-100 justify-content-between">
-                <small>위치: <span th:text="${plan.location}">제주도</span></small>
+            <div class="d-flex w-25 justify-content-between">
                 <small>기간: <span th:text="${plan.tripDuration}">3박 4일</span></small>
             </div>
         </div>
@@ -46,11 +44,10 @@
                 <p class="mb-1">제주도 여행에 대한 세부 계획 요약</p>
                 <button class="btn btn-primary btn-xs share-btn mb-1" data-plan-id="1">공유하기</button>
             </div>
-            <div class="d-flex w-100 justify-content-between">
+            <div class="d-flex w-25 justify-content-between">
                 <small>인원: <span>4</span></small>
-                <small>예산: <span>100만원</span></small>
             </div>
-            <div class="d-flex w-100 justify-content-between">
+            <div class="d-flex w-25 justify-content-between">
                 <small>위치: <span>제주도</span></small>
                 <small>기간: <span>3박 4일</span></small>
             </div>
@@ -68,11 +65,10 @@
                 <p class="mb-1">경주 역사 여행에 대한 세부 계획 요약</p>
                 <button class="btn btn-primary btn-xs share-btn mb-1" data-plan-id="2">공유하기</button>
             </div>
-            <div class="d-flex w-100 justify-content-between">
+            <div class="d-flex w-25 justify-content-between">
                 <small>인원: <span>2</span></small>
-                <small>예산: <span>50만원</span></small>
             </div>
-            <div class="d-flex w-100 justify-content-between">
+            <div class="d-flex w-25 justify-content-between">
                 <small>위치: <span>경주</span></small>
                 <small>기간: <span>2박 3일</span></small>
             </div>

@@ -24,7 +24,7 @@
                 <div class="accordion-body">
                     <!-- 첫 번째 페이지 내용 -->
                     <form th:action="@{/trip/details}" method="post" th:object="${uTripOption}" id="tripPlanForm">
-                        <input type="text" hidden="hidden" name="sessionId" id="sessionId">
+                        <input type="text" hidden="hidden" name="sessionId" id="sessionId" th:value="${session.loginId}">
                         <div class="d-flex justify-content-end">
                             <button class="btn btn-primary btn-sm me-2" type="button" id="tmpSave" onclick="firstStepSubmit()">임시 저장</button>
                             <button class="btn btn-secondary btn-sm" type="button">목록으로</button>
