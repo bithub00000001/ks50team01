@@ -8,6 +8,7 @@ import lombok.Data;
 public class PFaq {
 	
 	private String faqNum;
+	private int faqRowNum;
 	private String faqRegId;
 	private String faqCateNum;
 	private String faqCateType;

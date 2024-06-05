@@ -6,8 +6,9 @@
 	
 	<resultMap id="reportResultMap" type="PReport">
 		<id 	property="reportNum" 		column="PST_CMNT_REPT_NO" />
+		<result property="reportRowNum" 	column="ROW_NUM" />
 		<result property="reportId" 		column="REPORT_MBR_ID" />
-		<result property="reportCateNum" 		column="REPT_CTGRY_NO" />
+		<result property="reportCateNum" 	column="REPT_CTGRY_NO" />
 		<result property="postCmntNum" 		column="PST_PST_CMNT_NO" />
 		<result property="reportContent" 	column="PST_CMNT_REPT_CN" />
 		<result property="reportDate" 		column="PST_CMNT_REPT_YMD" />
@@ -18,14 +19,14 @@
 		
 		
 		<!-- 1:1 association -->
-		<association property="reportCate" javaType="PReport">
-			<id 		property="reportCateNum" 		column="REPT_CTGRY_NO"/>
-			<result 	property="reportRegId" 		column="REG_PF_ID"/>
-			<result 	property="reportCateType" 		column="REPT_CTGRY_TYPE"/>
-			<result 	property="reportMdfId" 		column="MDFCN_PF_ID"/>
-			<result 	property="reportAct" 			column="ACT_YN"/>
-			<result 	property="reportRegDate" 		column="REG_YMD"/>
-			<result 	property="reportMdfDate" 		column="MDFCN_YMD"/>
+		<association 	property="category" 				javaType="PCategory">
+			<id 		property="reportCategoryNum" 		column="REPT_CTGRY_NO"/>
+			<result 	property="reportCategoryRegId" 		column="REG_PF_ID"/>
+			<result 	property="reportCategoryName" 		column="REPT_CTGRY_TYPE"/>
+			<result 	property="reportCategoryMdfId" 		column="MDFCN_PF_ID"/>
+			<result 	property="reportCateActive" 		column="ACT_YN"/>
+			<result 	property="reportCategoryRegDate" 	column="REG_YMD"/>
+			<result 	property="reportCategoryMdfDate" 	column="MDFCN_YMD"/>
 		</association>
 		
 	
@@ -35,6 +36,31 @@
 
 	<select id="getReportList" resultMap="reportResultMap">
 	 	/* 신고내역 조회 */			
+		SELECT 
+			ROW_NUMBER() OVER (ORDER BY CAST(SUBSTRING_INDEX(H.PST_CMNT_REPT_NO, 'PST_CMNT_REPT_', -1) AS UNSIGNED)) AS ROW_NUM,
+      		CAST(SUBSTRING_INDEX(H.PST_CMNT_REPT_NO, 'PST_CMNT_REPT_', -1) AS UNSIGNED) AS PST_CMNT_REPT_NO,
+			H.REPORT_MBR_ID,
+			C.REPT_CTGRY_TYPE,
+			H.PST_PST_CMNT_NO,
+			H.PST_CMNT_REPT_CN,
+			H.PST_CMNT_REPT_YMD,
+			H.REPORTED_MBR_ID,
+			H.APRV_PF_ID,
+			H.PST_CMNT_REPT_APRV,
+			H.PST_CMNT_REPT_APRV_YMD
+		FROM 
+			REPORT_HISTORY AS H
+			INNER JOIN
+			REPORT_CATEGORY AS C
+			ON
+			H.REPT_CTGRY_NO = C.REPT_CTGRY_NO
+		<!-- 신고 번호 오름차순 정렬  -->
+	    ORDER BY CAST(SUBSTRING_INDEX(H.PST_CMNT_REPT_NO, 'PST_CMNT_REPT_', -1) AS UNSIGNED) ASC;
+	</select>
+	
+	
+	
+	<select id="getReportListByCategory" resultMap="reportResultMap">
 		SELECT 
 			H.PST_CMNT_REPT_NO,
 			H.REPORT_MBR_ID,
@@ -51,8 +77,20 @@
 			INNER JOIN
 			REPORT_CATEGORY AS C
 			ON
-			H.REPT_CTGRY_NO = C.REPT_CTGRY_NO;
+			H.REPT_CTGRY_NO = C.REPT_CTGRY_NO
+	    WHERE
+	        C.REPT_CTGRY_TYPE = #{reportCategoryName};
 	</select>
+	
+	<update id="approveReport">
+		/* 신고 승인여부를 Y로 변경 */
+        UPDATE 
+        	REPORT_HISTORY
+        SET 
+        	PST_CMNT_REPT_APRV = 'Y'
+        WHERE 
+        	CAST(SUBSTRING_INDEX(PST_CMNT_REPT_NO, 'PST_CMNT_REPT_', -1) AS UNSIGNED) = #{reportNum};
+    </update>
 
 	
 </mapper>

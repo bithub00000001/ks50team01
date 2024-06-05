@@ -19,13 +19,24 @@ public class PNoticeService {
 	
 	private final PNoticeMapper pNoticeMapper;
 	
+	
 	/**
-	 * 공지사항 수정
-	 * @param pNotice
+	 * 공지사항 조회
+	 * @return List<PNotice>
 	 */
-	public void noticeModify(PNotice pNotice) {
-		pNoticeMapper.noticeModify(pNotice);
+	public List<PNotice> getNoticeList(){
+		return pNoticeMapper.getNoticeList();
 	}
+
+	
+	/**
+	 * 공지사항 상세 조회
+	 * @return List<PNotice>
+	 */
+	public List<PNotice> getNoticeDetailList(){
+		return pNoticeMapper.getNoticeDetailList();
+	}
+	
 	
 	/**
 	 * 공지사항 카테고리 조회
@@ -41,51 +52,48 @@ public class PNoticeService {
 
 	
 	/**
-	 * 주어진 번호에 해당하는 공지사항 조회
+	 * 공지사항 번호로 공지사항 조회
 	 * @param noticeNum
 	 */
 	public PNotice getNoticeInfoByNum(String noticeNum) {
 		return pNoticeMapper.getNoticeInfoByNum(noticeNum);
 	}
 	
+	
+	/**
+	 * 카테고리별 공지사항 목록 조회
+	 * @param category
+	 * @return 카테고리에 해당하는 공지사항 목록
+	 */
+	public List<PNotice> getNoticeListByCategory(String category) {
+		List<PNotice> noticeList = pNoticeMapper.getNoticeListByCategory(category);
+		return noticeList;
+	}
 
 
-	// db에 저장
-	public void insertNotice(PNotice pNotice) {
-		pNoticeMapper.insertNotice(pNotice);
+	/**
+	 * 공지사항 등록
+	 */
+	public void noticeAdd(PNotice pNotice) {
+		pNoticeMapper.noticeAdd(pNotice);
 		
 	}
 	
 	/**
-	 * 공지사항 상세 조회
-	 * @return List<PNotice>
+	 * 공지사항 수정
+	 * @param pNotice
 	 */
-	public List<PNotice> getNoticeDetailList(){
-		return pNoticeMapper.getNoticeDetailList();
+	public void noticeModify(PNotice pNotice) {
+		pNoticeMapper.noticeModify(pNotice);
 	}
-	
-	
-	
-	/**
-	 * 공지사항 조회
-	 * @return List<PNotice>
-	 */
-	public List<PNotice> getNoticeList(){
-		return pNoticeMapper.getNoticeList();
-	}
-
 
 
 	/**
 	 * 공지사항 삭제
 	 */
-	public void noticeDelete(String noticeNum) {
-		pNoticeMapper.noticeDelete(noticeNum);
+	public void noticeRemove(String noticeNum) {
+		pNoticeMapper.noticeRemove(noticeNum);
 	}
-
-
-
-
 
 
 }

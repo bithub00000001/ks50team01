@@ -1,10 +1,13 @@
 package ksmart.ks50team01.platform.board.dto;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
 public class PReport {
 	private String reportNum;
+	private String reportRowNum;
 	private String reportId;
 	private String reportCateType;
 	private String postCmntNum;
@@ -15,8 +18,9 @@ public class PReport {
 	private String reportApprove;
 	private String approveDate;
 	
+	private PCategory category;
 	
-	// 추가된 association을 위한 멤버 변수
-	private PReport reportCate;
+	private List<PReport> reportList;
+	
 
 }
