@@ -8,12 +8,10 @@ import org.springframework.transaction.annotation.Transactional;
 import ksmart.ks50team01.user.board.dto.UFaq;
 import ksmart.ks50team01.user.board.mapper.UFaqMapper;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
-@Slf4j
 public class UFaqService {
 	
 	private final UFaqMapper uFaqMapper;

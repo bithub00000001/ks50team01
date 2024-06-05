@@ -18,19 +18,29 @@
 		<result property="qnartnDate" column="RTRCN_YMD" />
 	
 		<!-- 1:1 association -->
-		<association property="faqCate" javaType="PFaq">
-			<id 		property="faqCateNum" 		column="FAQ_CTGRY_NO"/>
-			<result 	property="faqRegId" 		column="REG_PF_ID"/>
-			<result 	property="faqCateType" 		column="FAQ_CTGRY_TYPE"/>
-			<result 	property="faqMdfId" 		column="MDFCN_PF_ID"/>
-			<result 	property="faqAct" 			column="ACT_YN"/>
-			<result 	property="faqRegDate" 		column="REG_YMD"/>
-			<result 	property="faqMdfDate" 		column="MDFCN_YMD"/>
+		<association	property="category" 			javaType="PCategory">
+			<id 		property="qnaCategoryNum" 		column="FAQ_CTGRY_NO"/>
+			<result 	property="qnaCategoryRegId" 	column="REG_PF_ID"/>
+			<result 	property="qnaCategoryName" 		column="FAQ_CTGRY_TYPE"/>
+			<result 	property="qnaCategoryMdfId" 	column="MDFCN_PF_ID"/>
+			<result 	property="qnaCateActive" 		column="ACT_YN"/>
+			<result 	property="qnaCategoryRegDate" 	column="REG_YMD"/>
+			<result 	property="qnaCategoryMdfDate" 	column="MDFCN_YMD"/>
 		</association>
-		
-	
+		<collection property="answerList" ofType="PAnswer" column="QNA_NO" select="getAnswerListByQnaNum"/>
 	</resultMap>
 	
+	
+	
+	<resultMap id="answerResultMap" type="PAnswer">
+		<id property="ansNum" column="ANS_NO" />
+		<result property="ansRegId" column="REG_PF_ID" />
+		<result property="qnaNum" column="QNA_NO" />
+		<result property="ansContent" column="ANS_CN" />
+		<result property="ansMdfId" column="MDFCN_PF_ID" />
+		<result property="ansRegDate" column="REG_YMD" />
+		<result property="ansMdfDate" column="MDFCN_YMD" />
+	</resultMap>
 	
 
 	<select id="getQnaList" resultMap="qnaResultMap">
@@ -56,28 +66,74 @@
 	
 
 
-
-    <update id="updateQna" parameterType="PQna">
-        /* 1:1문의 업데이트 */
-        UPDATE QNA_QUESTION
-        SET
-            FAQ_CTGRY_NO = #{faqCateNum},
-            QNA_TTL = #{qnaTitle},
-            QNA_CN = #{qnaContent},
-            MDFCN_YMD = NOW()
-        WHERE
-            REG_PF_ID = #{qnaRegId};
-    </update>
-
-    <delete id="delQna" parameterType="PQna">
-        /* 1:1문의 삭제 */
-        DELETE 
+    <select id="getAnswerListByQnaNum" resultMap="answerResultMap" parameterType="String">
+        SELECT 
+            ANS_NO, 
+            REG_PF_ID, 
+            QNA_NO, 
+            ANS_CN, 
+            MDFCN_PF_ID, 
+            REG_YMD, 
+            MDFCN_YMD
         FROM 
-            QNA_QUESTION
-        WHERE 
+            QNA_ANSWER
+        WHERE
             QNA_NO = #{qnaNum};
-    </delete>
+    </select>
+
+
+
+	<update id="updateQnaWithAnswererId" parameterType="map">
+	    /* 질문 테이블 업데이트 */
+	    UPDATE 
+	    	QNA_QUESTION
+	    SET 
+	    	ANS_REG_PF_ID = #{ansRegId}
+	    WHERE 
+	    	QNA_NO = #{qnaNum};
+	</update>
 
     
+
+    
+	 <insert id="answerSave" parameterType="PAnswer">
+    	<selectKey keyProperty="ansNum" resultType="String" order="BEFORE">
+    		/* 1:1문의 답변 등록 */
+    		/* ANS 번호 자동증가 */
+    		SELECT
+				CONCAT(
+							'ANS_', 
+							MAX(CAST(SUBSTRING_INDEX(A.ANS_NO, 'ANS_', -1) AS UNSIGNED)) + 1
+						) AS ansNum
+			FROM
+				QNA_ANSWER AS A
+    	</selectKey>
+        INSERT INTO QNA_ANSWER (ANS_NO, REG_PF_ID, QNA_NO, ANS_CN, REG_YMD)
+        VALUES (#{ansNum}, #{ansRegId}, #{qnaNum}, #{ansContent}, NOW());
+    </insert>
+
 	
+		
+	<select id="getQnaListByCategory" resultMap="qnaResultMap">
+	    SELECT
+	        Q.QNA_NO,
+	        Q.REG_MBR_BIZ_ID,
+	        F.FAQ_CTGRY_TYPE,
+	        Q.QNA_PRGRS_CTGRY,
+	        Q.QNA_TTL,
+	        Q.QNA_CN,
+	        Q.ANS_REG_PF_ID,
+	        Q.REG_YMD,
+	        Q.MDFCN_YMD,
+	        Q.RTRCN_YMD
+	    FROM
+	        QNA_QUESTION AS Q
+	        INNER JOIN
+	        FAQ_CATEGORY AS F
+	        ON
+	        Q.FAQ_CTGRY_NO = F.FAQ_CTGRY_NO
+	    WHERE
+	        F.FAQ_CTGRY_TYPE = #{qnaCategoryName};
+	</select>
+
 </mapper>

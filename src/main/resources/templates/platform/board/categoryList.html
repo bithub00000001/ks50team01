@@ -10,7 +10,6 @@
 	    <link th:href="@{/platform/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css}" rel="stylesheet">
 	    <link th:href="@{/platform/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css}" rel="stylesheet">
 	    <link th:href="@{/platform/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css}" rel="stylesheet">
-	
 		<style type="text/css">
 			.control-label{
 				text-align: center !important;
@@ -18,121 +17,115 @@
 				padding-bottom: 8px !important;	
 			}
 		</style>
-
 	</head>
 
 	<th:block layout:fragment="customContent">
     <!-- search start -->
+	<div class="row">
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<div class="x_panel">
+				<div class="x_title">
+					<h2>
+						검색 <small>search form</small>
+					</h2>
+					<ul class="nav navbar-right panel_toolbox">
+						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+						<li class="dropdown"><a href="#" class="dropdown-toggle"
+							data-toggle="dropdown" role="button" aria-expanded="false"><i
+								class="fa fa-wrench"></i></a>
+							<ul class="dropdown-menu" role="menu">
+								<li><a href="#">Settings 1</a></li>
+								<li><a href="#">Settings 2</a></li>
+							</ul></li>
+						<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+					</ul>
+					<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+					<br>
+					<form id="dataTrans" class="form-horizontal form-label-left">
+						<div class="form-group">
+							<div class="col-md-2 col-sm-2 col-xs-0"></div>
+							<label class="control-label col-md-2 col-sm-2 col-xs-12">게시판
+								종류</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<select class="form-control text-center data-select">
+									<option value="">==== 게시판 종류를 선택해주세요 ====</option>
+									<option value="communityCateList">커뮤니티</option>
+									<option value="noticeCateList">공지사항</option>
+									<option value="faqCateList">자주찾는 질문 및 1:1 문의</option>
+									<option value="reportCateList">신고</option>
+								</select>
+							</div>
+						</div>
+						<div class="ln_solid"></div>
+						<div class="form-group">
+							<div class="col-md-12 col-sm-12 col-xs-12 text-center">
+								<button class="btn btn-success btn-lg data-trans" type="button">검색</button>
+								<button type="reset" class="btn btn-dark btn-lg">초기화</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- search end -->
+
+	<!-- grid table start -->
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
-                <div class="x_title">
-                    <h2>검색 <small>search form</small></h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-                        <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                                aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="#">Settings 1</a></li>
-                                <li><a href="#">Settings 2</a></li>
-                            </ul>
-                        </li>
-                        <li><a class="close-link"><i class="fa fa-close"></i></a></li>
-                    </ul>
-                    <div class="clearfix"></div>
-                </div>
                 <div class="x_content">
-                    <br />
-                    <form id="demo-form2" class="form-horizontal form-label-left">
-                        <div class="form-group">
-                            <div class="col-md-2 col-sm-2 col-xs-0"></div>
-                            <label class="control-label col-md-2 col-sm-2 col-xs-12">게시판 종류</label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select class="form-control text-center data-select">
-                                    <option value="">==== 게시판 종류를 선택해주세요 ====</option>
-                                    <option value="communityCateList">커뮤니티</option>
-                                    <option value="noticeCateList">공지사항</option>
-                                    <option value="faqCateList">자주찾는 질문 및 1:1 문의</option>
-                                    <option value="reportCateList">신고</option>
-                                </select>
-                            </div>
-                            <div class="col-md-2 col-sm-2 col-xs-0"></div>
-                        </div>
-                        <div class="ln_solid"></div>
-                        <div class="form-group">
-                            <div class="col-md-12 col-sm-12 col-xs-12 text-center">
-                                <button class="btn btn-success btn-lg data-trans" type="button">검색</button>
-                                <button type="reset" class="btn btn-dark btn-lg">초기화</button>
-                            </div>
-                        </div>
-                        <!-- search end -->
-
-                        <!-- grid table start -->
-                        <div class="row">
-                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                <div class="x_panel">
-                                    <div class="x_content">
-                                        <table id="dataTbContent"
-                                            class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
-                                            <thead>
-                                                <tr>
-                                                    <th><input type="checkbox" id="checkAll" name="checkAll"></th>
-                                                    <th>번호</th>
-                                                    <th>작성자</th>
-                                                    <th>카테고리</th>
-                                                    <th>수정자</th>
-                                                    <th>활성화여부</th>
-                                                    <th>등록일</th>
-                                                    <th>수정일</th>
-                                                    <th>수정</th>
-                                                    <th>삭제</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                              <!-- Category list will be dynamically loaded here -->
-                                            
-                                            
-                                            
-                                            <!--  
-                                                <tr th:unless="${categoryList != null}">
-                                                    <td colspan="10" class="text-center">등록된 카테고리가 없습니다.</td>
-                                                </tr>
-                                                <tr th:if="${categoryList != null}" th:each="l : ${categoryList}">
-                                                    <td><input type="checkbox" id="checkbox_${l.faqCateNum}" name="faqCateType" th:value="${l.faqCateType}"></td>
-                                                    <td th:text="${l.faqCateNum}"></td>
-                                                    <td th:text="${l.faqRegId}"></td>
-                                                    <td th:text="${l.faqCateType}"></td>
-                                                    <td th:text="${l.faqMdfId}"></td>
-                                                    <td th:text="${l.faqAct}"></td>
-                                                    <td th:text="${l.faqRegDate}"></td>
-                                                    <td th:text="${l.faqMdfDate}"></td>
-                                                    <td>
-                                                        <a th:href="@{/platform/board/categoryModify(faqCateNum=${l.faqCateNum})}">수정</a>
-                                                    </td>
-                                                    <td>
-                                                        <a href="#" th:data-category-num="${l.faqCateNum}"
-                                                            th:onclick="deleteConfirm(this)">삭제</a>
-                                                    </td>
-                                                </tr>
-                                                -->
-                                            </tbody>
-                                        </table>
-                                        <div class="text-left">
-                                            <a th:href="@{/platform/board/categoryAdd}" class="btn btn-primary">추가</a>
-                                        	<button type="button" class="btn btn-danger" id="deleteSelected">선택 삭제</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- grid table end -->
-
-                    </form>
+                    <table id="dataTbContent" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" id="checkAll" name="checkAll"></th>
+                                <th>번호</th>
+                                <th>작성자</th>
+                                <th>카테고리</th>
+                                <th>수정자</th>
+                                <th>활성화여부</th>
+                                <th>등록일</th>
+                                <th>수정일</th>
+                                <th>수정</th>
+                                <th>삭제</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                          <!-- Category list will be dynamically loaded here -->
+                            <tr th:unless="${postCateList != null}">
+                                <td colspan="10" class="text-center">등록된 카테고리가 없습니다.</td>
+                            </tr>
+                            <tr th:if="${communityCateList != null}" th:each="l : ${postCateList}">
+                                <td><input type="checkbox" id="checkbox_${l.categoryNum}" name="categoryName" th:value="${l.categoryName}"></td>
+                                <td th:text="${l.postCategoryNum}"></td>
+                                <td th:text="${l.postCategoryRegId}"></td>
+                                <td th:text="${l.postCategoryCateName}"></td>
+                                <td th:text="${l.postCategoryMdfId}"></td>
+                                <td th:text="${l.postCategoryActive}"></td>
+                                <td th:text="${l.postCategoryRegDate}"></td>
+                                <td th:text="${l.postCategoryMdfDate}"></td>
+                                <td>
+                                    <a th:href="@{/platform/board/categoryModify(postCategoryNum=${l.postCategoryNum})}">수정</a>
+                                </td>
+                                <td>
+                                    <a href="#" th:data-category-num="${l.postCategoryNum}"
+                                        th:onclick="deleteConfirm(this)">삭제</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="text-left">
+                        <a th:href="@{/platform/board/categoryAdd}" class="btn btn-primary">추가</a>
+                    	<button type="button" class="btn btn-danger" id="deleteSelected">선택 삭제</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- search end -->
+    <!-- grid table end -->
+
 			
 		
 	</th:block>
@@ -154,136 +147,94 @@
 	    <script th:src="@{/platform/vendors/jszip/dist/jszip.min.js}"></script>
 	    <script th:src="@{/platform/vendors/pdfmake/build/pdfmake.min.js}"></script>
 	    <script th:src="@{/platform/vendors/pdfmake/build/vfs_fonts.js}"></script>
-	
-	
 	</th:block>
 	
 
 
-	
-	    <!-- ===========================================
-        ———	CUSTOM JAVASCRIPT SCRIPT START
-        ========================================== -->
-        <th:block layout:fragment="customJs">
-			<script type="text/javascript" th:src="@{/platform/js/checkbox/categoryDel.js}"></script>
-        	<script type="text/javascript" th:src="@{/platform/js/checkbox/selectedDel.js}"></script>
-        
-        
-        	<script>
-		    document.getElementById('checkAll').addEventListener('change', function() {
-		        var checkboxes = document.querySelectorAll('[id^=checkbox_]');
-		        checkboxes.forEach(function(checkbox) {
-		            checkbox.checked = document.getElementById('checkAll').checked;
-		        });
-		    });
-			</script>
-			
-			
-			
-			<script>
+
+  <!-- ===========================================
+     ———	CUSTOM JAVASCRIPT SCRIPT START
+     ========================================== -->
+     <th:block layout:fragment="customJs">
+		<script type="text/javascript" th:src="@{/platform/js/checkbox/categoryDel.js}"></script>
+  	
+    	
+		<script>    	
+		    	
+		   // const table = $('#dataTbContent').dataTable();
 		
-    		const table = $('#dataTbContent').dataTable();
-    		
-    		$(document).on('click', '.data-trans', function(){
-    			const dataTrans = String($('.data-select :selected').val()).trim();
-    			if(dataTrans){
-    				const colObj = {  
-    						
-                         communityCateList : [
-       						{'title': '커뮤니티 카테고리 번호', 'data': 'postCateNum'},
-       					    {'title': '등록자 아이디', 'data': 'postCateRegId'},
-       					    {'title': '커뮤니티 카테고리 유형', 'data': 'postCateType'},
-       					    {'title': '수정자 아이디', 'data': 'postCateMdfId'},
-       					    {'title': '활성화 여부', 'data': 'postAct'},
-       					    {'title': '등록일자', 'data': 'postRegDate'},
-       					    {'title': '수정일자', 'data': 'postMdfDate'},
-       					 ],
-    						
-    						
-    						
-    					noticeCateList : [
-    						{'title': '공지사항 카테고리 번호', 'data': 'noticeCateNum'},
-    					    {'title': '등록자 아이디', 'data': 'noticeRegId'},
-    					    {'title': '공지사항 카테고리 유형', 'data': 'noticeCateType'},
-    					    {'title': '수정자 아이디', 'data': 'noticeMdfId'},
-    					    {'title': '활성화 여부', 'data': 'noticeAct'},
-    					    {'title': '등록일자', 'data': 'noticeRegDate'},
-    					    {'title': '수정일자', 'data': 'noticeMdfDate'},
-    					 ],
-       					    
-       					faqCateList : [
-     						{'title': '자주찾는질문 및 1:1문의 카테고리 번호', 'data': 'faqCateNum'},
-     					    {'title': '등록자 아이디', 'data': 'faqRegId'},
-     					    {'title': '자주찾는질문 및 1:1문의 카테고리 유형', 'data': 'faqCateType'},
-     					    {'title': '수정자 아이디', 'data': 'faqMdfId'},
-     					    {'title': '활성화 여부', 'data': 'faqAct'},
-     					    {'title': '등록일자', 'data': 'faqRegDate'},
-     					    {'title': '수정일자', 'data': 'faqMdfDate'},
-     					 ],
-    					    
-    					    
-    					reportCateList : [
-       						{'title': '신고 카테고리 번호', 'data': 'reportCateNum'},
-       					    {'title': '등록자 아이디', 'data': 'reportRegId'},
-       					    {'title': '신고 카테고리 유형', 'data': 'reportCateType'},
-       					    {'title': '수정자 아이디', 'data': 'reportMdfId'},
-       					    {'title': '활성화 여부', 'data': 'reportAct'},
-       					    {'title': '등록일자', 'data': 'reportRegDate'},
-       					    {'title': '수정일자', 'data': 'reportMdfDate'},
-       					 ],
-    				};
-    				
-    				const colArr = [...colObj[`${dataTrans}`]];
-    				
-    				const request = $.ajax({
-    					url:'/platform/board/' + dataTrans,
-    					method: 'POST',
-    					dataType: 'JSON'
-    				}); 
-    				request.done(function(json){
-    					table.fnDestroy();
-    					$('#dataTbContent').text('');
-    					
-    					const dataTableOption = {
-    						'searching' : true,
-   							'responsive': true,
-       						'destroy':true,
-       						'data' : json.data,
-       						'columns' : colArr,
-       						'columnDefs': [
-       					        {
-       					            targets: colArr.length-1,
-       					            data: 'description',
-       					            render: function (data, type, row, meta) {
-       					            	
-       					            	const button = `<a href="/platform/review/report/approve?reportNum=${data}">수정</a>`;
-       					            	
-       					                return button;
-       					            }
-       					        }
-       					    ]	
-    					}
-    					
-    					if(dataTrans == 'react') delete dataTableOption.columnDefs;
-    					
-    					$('#dataTbContent').dataTable(dataTableOption);
-    				})	
-    			}
-    		});
-    		
-    	</script>
-    	
-    	
+		    $(document).on('click', '.data-trans', function() {
+		        const dataTrans = String($('.data-select :selected').val()).trim();
+		        if (dataTrans) {
+		            const colObj = {  
+		                communityCateList : [
+		                    {'title': '커뮤니티 카테고리 번호', 'data': 'postCategoryNum'},
+		                    {'title': '등록자 아이디', 'data': 'postCategoryRegId'},
+		                    {'title': '커뮤니티 카테고리 유형', 'data': 'postCategoryName'},
+		                    {'title': '수정자 아이디', 'data': 'postCategoryMdfId'},
+		                    {'title': '활성화 여부', 'data': 'postCateActive'},
+		                    {'title': '등록일자', 'data': 'postCategoryRegDate'},
+		                    {'title': '수정일자', 'data': 'postCategoryMdfDate'}
+		                ],
+		                noticeCateList : [
+		                    {'title': '공지사항 카테고리 번호', 'data': 'noticeCategoryNum'},
+		                    {'title': '등록자 아이디', 'data': 'noticeCategoryRegId'},
+		                    {'title': '공지사항 카테고리 유형', 'data': 'noticeCategoryName'},
+		                    {'title': '수정자 아이디', 'data': 'noticeCategoryMdfId'},
+		                    {'title': '활성화 여부', 'data': 'noticeCateActive'},
+		                    {'title': '등록일자', 'data': 'noticeCategoryRegDate'},
+		                    {'title': '수정일자', 'data': 'noticeCategoryMdfDate'}
+		                ],
+		                faqCateList : [
+		                    {'title': '자주찾는질문 및 1:1문의 카테고리 번호', 'data': 'faqCategoryNum'},
+		                    {'title': '등록자 아이디', 'data': 'faqCategoryRegId'},
+		                    {'title': '자주찾는질문 및 1:1문의 카테고리 유형', 'data': 'faqCategoryName'},
+		                    {'title': '수정자 아이디', 'data': 'faqCategoryMdfId'},
+		                    {'title': '활성화 여부', 'data': 'faqCateActive'},
+		                    {'title': '등록일자', 'data': 'faqCategoryRegDate'},
+		                    {'title': '수정일자', 'data': 'faqCategoryMdfDate'}
+		                ],
+		                reportCateList : [
+		                    {'title': '신고 카테고리 번호', 'data': 'reportCategoryNum'},
+		                    {'title': '등록자 아이디', 'data': 'reportCategoryRegId'},
+		                    {'title': '신고 카테고리 유형', 'data': 'reportCategoryName'},
+		                    {'title': '수정자 아이디', 'data': 'reportCategoryMdfId'},
+		                    {'title': '활성화 여부', 'data': 'reportCateActive'},
+		                    {'title': '등록일자', 'data': 'reportCategoryRegDate'},
+		                    {'title': '수정일자', 'data': 'reportCategoryMdfDate'}
+		                ]
+		            }
+		
+		            const colArr = [...colObj[`${dataTrans}`]];
+		
+		            const request = $.ajax({
+		                url:'/platform/board/categoryList/' + dataTrans,
+		                method: 'post',
+		                dataType: 'JSON'
+		            });
+		            request.done(function(json){
+		                table.fnDestroy();
+		                $('#dataTbContent').DataTable().clear().destroy();
+		
+		                const dataTableOption = {
+		                    searching : true,
+		                    responsive: true,
+		                    destroy:true,
+		                    data : json.data,
+		                    columns : colArr
+		                }
+		
+		                $('#dataTbContent').dataTable(dataTableOption);
+		            })
+		        }
+		
+		    });
+					
+		</script>			
 			
 			
 			
-			
-			
-			
-			
-			
-			
-        </th:block>
+	</th:block>
         <!-- ===========================================
         ———	CUSTOM JAVASCRIPT SCRIPT END
         ========================================== -->

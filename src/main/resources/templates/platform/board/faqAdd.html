@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+				layout:decorate="~{platform/layout/default}">
+
+<th:block layout:fragment="customCss"></th:block>
+
+	<th:block layout:fragment="customContent">
+		<div class="col-md-12 col-sm-6 col-xs-12">
+			<div class="x_panel">
+				<div class="x_title">
+					<h3>자주 묻는 질문 작성</h3>
+					<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+					<form id="writeForm" th:action="@{/platform/board/faqAdd}" method="post">
+						<input type="hidden" name="sessionId" th:value="${session.loginId}">
+						
+						<div class="form-group">
+							<label for="faqRegId">작성자</label>
+							<input type="text" class="form-control" id="faqRegId" name="faqRegId" th:value="${session.loginId}" readonly="readonly">
+						</div>
+							
+						<div class="form-group">	
+							<label for="faqCateType">자주 묻는 질문 유형</label>
+								<select class="form-control" id="faqCateNum" name="category.faqCategoryNum">
+									<option th:each="fc : ${faqCateList}" th:value="${fc.faqCategoryNum}" th:text="${fc.faqCategoryName}"></option>
+								</select>
+						</div>
+						
+						<div class="form-group">
+							<label for="faqTitle">제목</label>
+							<input type="text" class="form-control" id="faqTitle" name="faqTitle" th:value="*{faqTitle}" required="required">
+						</div>
+						
+						<div class="form-group">		
+							<label for="faqContent">내용</label>
+							<textarea class="form-control" id="faqContent" name="faqContent" rows="5" th:text="*{faqContent}" required="required"></textarea>
+						</div>		
+								
+						<div class="form-group">		
+							<label for="faqAct">활성화 여부</label>
+							<select class="form-control" id="faqAct" name="faqAct" th:value="*{faqAct}">
+								<option value="Y">Y</option>
+								<option value="N">N</option>
+							</select>
+						</div>
+						
+						<div class="form-group">		
+							<label for="faqRegDate">등록일</label>
+							<input type="text" class="form-control" id="faqRegDate" name="faqRegDate" th:value="${currentDate}" readonly="readonly"/>
+						</div>		
+							
+							<button type="submit" class="btn btn-primary">등록</button>
+							<button type="button" class="btn btn-secondary" onclick="location.href='/platform/board/faqList'">취소</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</th:block>
+
+	<th:block layout:fragment="customJsFIle">
+	
+	</th:block>
+
+</html>

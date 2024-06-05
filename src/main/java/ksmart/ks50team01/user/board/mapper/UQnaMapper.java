@@ -12,14 +12,24 @@ public interface UQnaMapper {
 
 	// 1:1문의 조회
 	List<UQna> getQnaList();
-
-	// 1:1문의 상세목록 조회
-	UQna getQnaByQnaNum(String qnaNum);
-
-	// 1:1문의 DB에 저장
-	void insertQna(UQna qna);
-
+	
 	// QNA 카테고리 조회
 	List<UCategory> getQnaCateList();
+
+	// 1:1문의 상세목록 조회
+	UQna getQnaDetail(String qnaNum);
+	
+	// 해당 번호의 1:1문의 조회
+	UQna getQnaInfoByNum(String qnaNum);
+
+	// 1:1문의 작성
+	void qnaAdd(UQna qna);
+
+	// 1:1문의 수정
+	void qnaModify(UQna uQna);
+
+	// 1:1문의 삭제
+	void qnaRemove(String qnaNum);
+
 
 }
