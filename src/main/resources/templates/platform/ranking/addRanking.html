@@ -100,6 +100,7 @@
 								</td>
 								<td colspan="2">
 									<input type="text" id="artclRankigNum" name="artclRankigNum" placeholder="항목순위를 입력해주세요" />
+									<button type="button" id="idCheck">중복체크</button>
 								</td>
 							</tr>
 							<tr>
@@ -163,7 +164,7 @@
 						<tfoot>
 							<tr>
 								<td colspan="3">
-									<button type="button" id="addMemberBtn">등록</button>
+									<button type="button" id="addBtn">등록</button>
 									<button type="reset" id="resetBtn">초기화</button>
 								</td>
 							</tr>
@@ -197,51 +198,51 @@
     <th:block layout:fragment="customJs">
 		<script>		
 			$('#idCheck').click(function(){
-				const pRankingId = $('#pRankingId').val();
+				const artclRankigNum = $('#artclRankigNum').val();
 				//const $memberId = $('#memberId')[0];
 				//console.log({$memberId});
 				//console.log(typeof memberId);
-				if(pRankingId == ''){
-					alert('플랫폼 넘버를 입력해주세요');
-					$('#pRankingId').focus();
+				if(artclRankigNum == ''){
+					alert('항목순위를 입력해주세요');
+					$('#artclRankigNum').focus();
 					return ;
 				}
 				const request = $.ajax({
 					method : 'POST',
 					url : '/platform/ranking/rankingListCheck',
-					data : { 'pRankingId' : pRankingId },
+					data : { 'artclRankigNum' : artclRankigNum },
 					dataType : 'json'
 				});
 				request.done(function(res){
 					console.log(res);
 					console.log(typeof res);
-					const isPRankingNum = res;
-					$('form input').not('#pRankingId').prop('disabled', isPRankingNum);
-					$('form select').prop('disabled', isPRankingNum);
-					$('form button').not('#idCheck').prop('disabled', isPRankingNum);
-					if(isPRankingNum){
-						alert('등록 할 수 없는 넘버입니다.');
+					const isArtclRankigNum = res;
+					$('form input').not('#artclRankigNum').prop('disabled', isArtclRankigNum);
+					$('form select').prop('disabled', isArtclRankigNum);
+					$('form button').not('#idCheck').prop('disabled', isArtclRankigNum);
+					if(isArtclRankigNum){
+						alert('등록할 수 없는 넘버입니다.');
 						$('form input').val('');
-						$('form select').val('');
-						$('#pRankingId').focus();
+						$('#artclRankigNum').focus();
 					}
 				});
 				request.fail(function(jqXHR, textStatus, error){
 					console.log(error);
 				});
 			});
-			$('#pRankingId').change(function(){
-				$('form input').not('#pRankingId').prop('disabled', true);
-				$('form select').prop('disabled', true);
+			$('#artclRankigNum').change(function(){
+				$('form input').not('#artclRankigNum').prop('disabled', true);
+				$('form select').prop('disabled', false);
 				$('form button').not('#idCheck').prop('disabled', true);
 			});
 						
-			$('#addMemberBtn').click(function(){
+			$('#addBtn').click(function(){
 				const pRankingRegId = $('pRankingRegId').val();
 				const partnerBusinessCode = $('partnerBusinessCode').val();
 				const tripLctgryCode = $('tripLctgryCode').val();
 				const businessName = $('businessName').val();
 				const partnerBrandName = $('partnerBrandName').val();
+				const artclRankigNum = $('artclRankigNum').val();
 				const partnerShipStart = $('partnerShipStart').val();
 				const partnerShipStartEnd = $('partnerShipStartEnd').val();
 				const partnerType = $('partnerType').val();
@@ -254,7 +255,7 @@
 				$('form input, form select').each(function(idx, element){
 					const id = element.id;
 					const value = $(element).val();
-					if(pRankingRegId == ''){
+					if(artclRankigNum == ''){
 						const cate = $(`label[for="${id}"]`).text();
 						alert(`${cate} 필수 입력항목입니다.`);
 						$(element).focus();

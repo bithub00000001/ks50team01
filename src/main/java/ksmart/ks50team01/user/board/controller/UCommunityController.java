@@ -1,21 +1,28 @@
 package ksmart.ks50team01.user.board.controller;
 
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import jakarta.servlet.http.HttpServletResponse;
 import ksmart.ks50team01.user.board.dto.UCategory;
 import ksmart.ks50team01.user.board.dto.UComment;
 import ksmart.ks50team01.user.board.dto.UCommunity;
+import ksmart.ks50team01.user.board.dto.UPostFile;
 import ksmart.ks50team01.user.board.service.UCommunityService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,28 +35,33 @@ public class UCommunityController {
 
 	private final UCommunityService uCommunityService;
 
+	
 	// 게시글 목록 조회
 	@GetMapping({"/",""})
 	public String postList(Model model) {
 		List<UCommunity> postList = uCommunityService.getPostList();
-		//postList.sort((p1, p2) -> p2.getPostRegDate().compareTo(p1.getPostRegDate())); // 최신순으로 정렬
 
-		
-	    // 각 게시글에 대한 댓글 수를 가져와서 모델에 추가
-		/*
-	    Map<String, Integer> commentCntMap = new HashMap<>();
-	    for (UCommunity post : postList) {
-	        int commentCnt = uCommunityService.getCommentCntByPostNum(post.getPostNum());
-	        commentCntMap.put(post.getPostNum(), commentCnt);
-	    }
-	    */
 		model.addAttribute("postList", postList); // postList를 모델에 추가
-		model.addAttribute("currentDate", LocalDate.now()); // 현재 날짜 추가
-		//model.addAttribute("commentCntMap", commentCntMap); // 댓글 수 맵을 모델에 추가
 		model.addAttribute("title", "커뮤니티");
 		return "user/board/postList";
 	}
 	
+	
+	// 검색 목록 조회
+	@GetMapping("/searchList")
+	public String searchList(@RequestParam(value="searchKey", required = false) String searchKey
+							,@RequestParam(value="searchValue", required = false) String searchValue
+							,Model model) {
+		List<UCommunity> postList = uCommunityService.getSearchList(searchKey, searchValue);
+		
+		model.addAttribute("title", "검색목록조회");
+		model.addAttribute("postList", postList);
+		
+		model.addAttribute("searchKey", searchKey);
+		model.addAttribute("searchValue", searchValue);
+		
+		return "user/board/postList";
+	}
 	
 	
 	// 게시글 상세 조회
@@ -59,20 +71,15 @@ public class UCommunityController {
 		// 상세 페이지에 접속할 때마다 조회수 증가
 		uCommunityService.increaseViewCount(postNum);
 		
-		
 		// 게시물 정보를 가져와서 모델에 담아 상세 페이지로 전달
-		UCommunity postDetail = uCommunityService.getPostByPostNum(postNum);
-		model.addAttribute("postDetail", postDetail);
+		UCommunity postDetail = uCommunityService.getPostDetail(postNum);
 		
 		// 해당 게시글의 모든 댓글 가져오기
 		List<UComment> commentList = uCommunityService.getCommentByPostNum(postNum);
 		
 
-		model.addAttribute("commentList", commentList);
 		model.addAttribute("postDetail", postDetail);
-		model.addAttribute("postTitle", postDetail.getPostTitle());
-		model.addAttribute("postContent", postDetail.getPostContent());
-		model.addAttribute("postInqCnt", postDetail.getPostInqCnt());
+		model.addAttribute("commentList", commentList);
 		model.addAttribute("title", "게시글 상세");
 
 		log.info("postNum: {}", postNum);
@@ -81,48 +88,230 @@ public class UCommunityController {
 
 		return "user/board/postDetail";
 	}
-	
 
-	// 게시글 리스트의 카테고리 리스트를 모델에 추가하는 어노테이션
-	/*
-	@ModelAttribute("postCateList")
-	public List<String> postCateList() {
-		return uCommunityService.getPostCateList();
-	}
-	 */
+	
 	// 게시글 등록
-	@PostMapping("/postWrite")
-	public String postWrite(UCommunity uCommunity,
-							RedirectAttributes redirectAttributes,
-							Model model) {
-		log.info("게시글 등록:{}", uCommunity);
+	@PostMapping("/postAdd")
+	public String postAdd(UCommunity uCommunity, Model model, @RequestParam(required = false) MultipartFile[] uploadfile) {
+		String contentWithLineBreaks = uCommunity.getPostContent().replace("\n", "<br>");
+		uCommunity.setPostContent(contentWithLineBreaks);
 		
-        uCommunityService.insertPost(uCommunity);
-        redirectAttributes.addFlashAttribute("success", "게시글이 성공적으로 저장되었습니다.");
-        
+		uCommunityService.postAdd(uCommunity);
+
+		log.info("게시글 등록:{}", uCommunity);
+		log.info("입력받은 file data: {}",Arrays.toString(uploadfile));
+		
+		model.addAttribute("title", "게시글 작성");
+		
         return "redirect:/community";
 	}
 	
+	
 
-
-	// 게시글 작성 폼 이동
-	@GetMapping("/postWrite")
-	public String postWrite(Model model) {
+	// 게시글 등록 페이지
+	@GetMapping("/postAdd")
+	public String postAdd(Model model) {
+		
 		List<UCategory> postCateList = uCommunityService.getPostCateList();
 		log.info("postCateList: {}", postCateList);
 		
-		model.addAttribute("title", "게시글 작성");
+		model.addAttribute("title", "게시글 작성 페이지");
 		model.addAttribute("postCateList", postCateList);
 		
-		return "user/board/postWrite";
+		return "user/board/postAdd";
 	}
 	
-
-	// 댓글 작성
-	@PostMapping("/replySave")
-	public String replySave(String replyContent) {
-		// 클라이언트로부터 받은 답글을 서비스에 전달하여 저장하고 결과를 반환
-		return uCommunityService.replySave(replyContent);
+	
+	
+	
+	/**
+	 * 파일 json
+	 */
+	@GetMapping("/file/json")
+	@ResponseBody
+	public List<UPostFile> postFileJsonView(Model model) {
+		
+		List<UPostFile> postFileList = uCommunityService.getFileList();
+		log.info("postFileList: {}", postFileList);
+		
+		model.addAttribute("title", "게시글 파일 목록");
+		model.addAttribute("postFileList", postFileList);
+		
+	return postFileList;
+		
 	}
+
+	
+	// 게시글 수정 POST 요청
+	@PostMapping("/postModify")
+	public String postModify(UCommunity uCommunity, Model model) {
+		String contentWithLineBreaks = uCommunity.getPostContent().replace("\n", "<br>");
+		uCommunity.setPostContent(contentWithLineBreaks);
+		
+		uCommunityService.postModify(uCommunity);
+		
+		log.info("게시글 수정", uCommunity);
+		
+		// 수정된 게시글의 상세 페이지로 이동
+		return "redirect:/community/postDetail?postNum=" + uCommunity.getPostNum();
+	}
+
+	
+	// 게시글 수정 페이지
+	@GetMapping("/postModify")
+	public String postModify(@RequestParam(value = "postNum") String postNum, Model model) {
+		UCommunity postInfo = uCommunityService.getPostInfoByNum(postNum);
+		
+	    // <br> 태그를 \n으로 변환
+	    String contentWithLineBreaks = postInfo.getPostContent().replace("<br>", "\n");
+	    postInfo.setPostContent(contentWithLineBreaks);
+	    
+		log.info("postInfo :{}", postInfo);
+		
+		model.addAttribute("postInfo", postInfo);
+		model.addAttribute("title", "게시글 수정 페이지");
+		
+		return "user/board/postModify";
+	}
+	
+	// 게시글 삭제 POST 요청
+	@PostMapping("/postRemove")
+	public String postRemove(@RequestParam (value = "postNum") String postNum, Model model) {
+		
+		uCommunityService.postRemove(postNum);
+		
+		model.addAttribute("postNum", postNum);
+		model.addAttribute("title", "게시글 삭제");
+		
+		return "redirect:/community";
+		
+	}
+	
+	
+    /*
+	// 게시글 삭제
+	@GetMapping("/postRemove")
+	public String postRemove(@RequestParam (value = "postNum") String postNum, Model model) {
+		
+		List<UCommunity> postList = uCommunityService.getPostList();
+		uCommunityService.postRemove(postNum);
+
+		model.addAttribute("postList", postList);
+		model.addAttribute("postNum", postNum);
+		model.addAttribute("title", "게시글 삭제");
+		
+		return "redirect:/community";
+	} */
+	
+	
+	// 댓글 작성
+	@PostMapping("/commentSave")
+	@ResponseBody
+	public List<UComment> postComment(Model model
+									,@RequestParam(value="commentRegId", required = false) String commentRegId
+									,@RequestParam(value="postNum", required = false) String postNum
+									,@RequestParam(value="commentContent", required = false) String commentContent) {
+		// 댓글 저장
+		uCommunityService.commentSave(commentRegId, postNum, commentContent);
+		
+		// 댓글 저장 후 해당 게시글의 모든 댓글을 가져옴
+		List<UComment> postCommentList = uCommunityService.getPostCommentList(postNum);
+		
+		log.info("댓글 작성자: {}", commentRegId);
+	    log.info("댓글 작성: {}", postCommentList);
+	    
+	    model.addAttribute("postCommentList", postCommentList);
+	    model.addAttribute("title", "게시글 댓글 목록");
+	    
+		return postCommentList;
+	} 
+	
+	
+    // 답글 작성
+    @PostMapping("/replySave")
+    @ResponseBody
+    public List<UComment> postReply(Model model,
+                                    @RequestParam(value = "commentRegId", required = false) String commentRegId,
+                                    @RequestParam(value = "postNum", required = false) String postNum,
+                                    @RequestParam(value = "commentContent", required = false) String commentContent,
+                                    @RequestParam(value = "parentCommentId", required = false) String parentCommentId) {
+    	// 답글 저장
+    	uCommunityService.replySave(commentRegId, postNum, commentContent, parentCommentId);
+    	
+    	// 답글 저장 후 해당 게시글의 모든 댓글을 가져옴
+        List<UComment> postCommentList = uCommunityService.getPostCommentList(postNum);
+
+        log.info("답글 작성자: {}", commentRegId);
+        log.info("답글 작성: {}", postCommentList);
+
+        model.addAttribute("postCommentList", postCommentList);
+        model.addAttribute("title", "게시글 답글 목록");
+
+        return postCommentList;
+    }
+	
+    
+    
+    // 좋아요 버튼 클릭 시 처리
+    @PostMapping("/like")
+    @ResponseBody
+    public String like(@RequestParam String postNum, Model model) {
+        // 해당 게시물의 좋아요 총 개수를 증가시킴
+        uCommunityService.increaseLikeCount(postNum);
+        // 증가된 좋아요 총 개수를 반환
+        UCommunity post = uCommunityService.getPostByNum(postNum);
+        return Integer.toString(post.getTotalLikes());
+    }
+    
+    // 싫어요 버튼 클릭 시 처리
+    @PostMapping("/dislike")
+    @ResponseBody
+    public String dislike(@RequestParam String postNum, Model model) {
+        // 해당 게시물의 싫어요 총 개수를 증가시킴
+        uCommunityService.increaseDislikeCount(postNum);
+        // 증가된 싫어요 총 개수를 반환
+        UCommunity post = uCommunityService.getPostByNum(postNum);
+        return Integer.toString(post.getTotalDislikes());
+    }
+    
+    
+	
+	// 댓글 수정
+    @PostMapping("/commentModify")
+    public String commentModify(UComment uComment, Model model) {
+        uCommunityService.commentModify(uComment); 
+        
+        log.info("댓글 수정", uComment);
+        
+        return "redirect:/community/postDetail?postNum=" + uComment.getPostNum();
+
+    }
+    
+    
+    // 댓글 삭제
+    @PostMapping("/commentRemove")
+    @ResponseBody
+    public Map<String, Object> commentRemove(@RequestParam("commentNum") String commentNum) {
+        log.info("삭제할 댓글 번호: {}", commentNum);
+
+        Map<String, Object> response = new HashMap<>();
+        try {
+        	uCommunityService.commentRemove(commentNum);
+
+            response.put("success", true);
+            response.put("message", "댓글이 삭제되었습니다.");
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("message", "댓글 삭제에 실패했습니다.");
+        }
+
+        return response;
+    }
+    
+    
+
+    
+    
+    
 
 }

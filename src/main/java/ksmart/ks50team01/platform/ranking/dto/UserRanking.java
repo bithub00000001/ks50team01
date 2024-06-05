@@ -14,6 +14,7 @@ public class UserRanking {
 	private String destinationTitle;
 	private String destinationAddr;
 	private String destinationImg;
+	private String destinationDetail;
 	private int userRank;
 	private String reviewStatsStart;
 	private String reviewStatsEnd;

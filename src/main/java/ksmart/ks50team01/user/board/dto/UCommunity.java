@@ -11,6 +11,7 @@ public class UCommunity {
 	private String postNum;
 	private int postRowNum;
 	private String postRegId;
+	private String postCateNum;
 	private String postTitle;
 	private String postContent;
 	private int postInqCnt;
@@ -27,6 +28,15 @@ public class UCommunity {
 	private UCategory category;
 	
 	private List<UComment> commentList;
+
+	public int getTotalLikes() {
+		return 0;
+	}
+
+	public int getTotalDislikes() {
+		return 0;
+	}
+	
 	
 	//private String postCateName;
 	/*
@@ -55,7 +65,7 @@ public class UCommunity {
 	//private List<UComment> commentList;
     
     // 추가된 필드: 게시물 상세 정보
-    //private String postDetail;
+    private String postDetail;
     
     //private String pstNoNumeric;
 

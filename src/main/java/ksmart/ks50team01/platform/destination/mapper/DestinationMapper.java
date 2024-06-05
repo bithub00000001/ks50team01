@@ -54,25 +54,27 @@ public interface DestinationMapper {
 	int lodgingGoodsModify(Destination destination);
 	Destination getLodgingGoodsInfoById(String lodgingName);
 
-	
 	//숙소 조회
 	List<Destination> getLodgingInfoList();
-	
-	//식당 조회
-	List<Destination> getRestaurantInfoList();
-	
 	
 	//숙소상품 조회
 	List<Destination> getLodgingGoodsList();
 	
-	//식당 메뉴 조회
+	//음식점 조회
+	List<Destination> getRestaurantInfoList();
+	
+	//음식점 메뉴 조회
 	List<Destination> getRestaurantMenuList();
 	
-	//식당 수정
-	int updateRestaurant(Destination destination);
+	
+	//음식점 이름 중복체크
+	boolean addRestaurantCheckList(String restaurantName);
+	
+	//음식점 수정
+	int restaurantMoidfy(Destination destination);
 	Destination getRestaurantInfoById(String RestaurantName);
 	
-	//식당 상세정보 수정
+	//음식점 상세정보 수정
 	int restaurantMenuModify(Destination destination);
 	Destination getRestaurantMenuInfoById(String restaurantMenuManageCode);
 	
@@ -81,6 +83,9 @@ public interface DestinationMapper {
 	
 	//음식점 상세정보 삭제
 	void removeRestaurantMenu(String restaurantMenuManageCode);
+
+
+	
 
 
 

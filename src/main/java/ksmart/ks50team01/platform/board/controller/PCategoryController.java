@@ -17,7 +17,6 @@ import ksmart.ks50team01.platform.board.dto.PCategory;
 import ksmart.ks50team01.platform.board.service.PCategoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
 @Controller
@@ -28,6 +27,92 @@ public class PCategoryController {
 	
 	private final PCategoryService pCategoryService;
 	
+	/*
+	@PostMapping(value = "/categoryList/{dataTrans}")
+    @ResponseBody
+    public Map<String, Object> categoryList(@PathVariable String dataTrans, Model model) {
+        Map<String, Object> responseMap = new HashMap<>();
+        List<?> categoryList;
+        
+        // dataTrans에 따라 적절한 카테고리 목록을 가져옴
+        if ("noticeCateList".equals(dataTrans)) {
+            categoryList = pCategoryService.getNoticeCategoryList();
+        } else if ("reportCateList".equals(dataTrans)) {
+            categoryList = pCategoryService.getReportCategoryList();
+        } else if ("faqCateList".equals(dataTrans)) {
+            categoryList = pCategoryService.getFaqCategoryList();
+        } else if ("communityCateList".equals(dataTrans)) {
+            categoryList = pCategoryService.getCommunityCategoryList();
+        } else {
+            // 유효하지 않은 dataTrans 값이 들어온 경우에 대한 처리
+            // 여기서는 간단히 빈 목록을 반환하도록 함
+            categoryList = Collections.emptyList();
+        }
+        
+        
+        // 반환할 데이터 설정
+        responseMap.put("data", categoryList);
+        responseMap.put("dataTrans", dataTrans);
+        
+        // 모델에 데이터 추가
+        model.addAttribute("categoryList", categoryList);
+        model.addAttribute("dataTrans", dataTrans);
+        
+        log.info("categoryList: {}", categoryList);
+        
+        return responseMap;
+    }
+	
+    @GetMapping("/platform/board/categoryList/{dataTrans}")
+    public String getCategoryList(@PathVariable String dataTrans) {
+        // 여기에 카테고리 목록을 로드하고 해당하는 뷰 이름을 반환하는 코드를 작성합니다.
+        // 이 예시에서는 간단하게 뷰 이름을 반환하도록 합니다.
+        return "categoryList"; // 실제로는 해당 뷰의 이름을 반환해야 합니다.
+    } */
+    
+    
+    
+    
+    
+
+
+        @PostMapping("/categoryList/{dataTrans}")
+        public Map<String, Object> categoryList(@PathVariable String dataTrans) {
+            Map<String, Object> responseMap = new HashMap<>();
+            List<?> categoryList;
+
+            switch (dataTrans) {
+                case "noticeCateList":
+                    categoryList = pCategoryService.getNoticeCategoryList();
+                    break;
+                case "reportCateList":
+                    categoryList = pCategoryService.getReportCategoryList();
+                    break;
+                case "faqCateList":
+                    categoryList = pCategoryService.getFaqCategoryList();
+                    break;
+                case "communityCateList":
+                    categoryList = pCategoryService.getCommunityCategoryList();
+                    break;
+                default:
+                    categoryList = Collections.emptyList();
+                    break;
+            }
+
+            responseMap.put("data", categoryList);
+            return responseMap;
+        }
+    
+
+    
+    
+    
+    
+	
+	
+	
+	
+	/*
 	// 게시판 종류에 해당하는 카테고리 조회
 	@GetMapping("/categoryList")
 	public String categoryList(String boardType, Model model) {
@@ -37,50 +122,100 @@ public class PCategoryController {
 		model.addAttribute("categoryList", categoryList);
 		return "platform/board/categoryList";
 	}
+	*/
+	
+	
+	
+    /*
+    @PostMapping("/{dataTrans}")
+    @ResponseBody
+    public Map<String, Object> postMethodName(@PathVariable String dataTrans) {
+    	Map<String, Object> responseMap = new HashMap<String, Object>();
+    	responseMap.put("dataTrans", dataTrans);
+    	List<?> dataList = null;
+		if("noticeCateList".equals(dataTrans)) {
+			dataList = pCategoryService.getNoticeCategoryList();
+		}
+		if(dataList != null) responseMap.put("data", dataList);
+		return responseMap;
+    } */
+    
 	
 
-	
+
 	
 	/*
-    @GetMapping("/notice")
-    @ResponseBody
-    public Map<String, Object> getNoticeCategory() {
+	@GetMapping("/{dataTrans}")
+	@ResponseBody
+    public Map<String, Object> getCategoryList(@PathVariable String dataTrans) {
         Map<String, Object> response = new HashMap<>();
-        List<PCategory> noticeCategory = pCategoryService.getNoticeCategoryList();
-        response.put("noticeCategory", noticeCategory);
-        return response;
-    }
-    
+        response.put("dataTrans", dataTrans);
+        List<PCategory> categoryList = null;
 
-    
+        // dataTrans 값에 따라 적절한 카테고리 목록을 가져옴
+        switch (dataTrans) {
+            case "noticeCateList":
+                categoryList = pCategoryService.getNoticeCategoryList();
+                break;
+            case "reportCateList":
+                categoryList = pCategoryService.getReportCategoryList();
+                break;
+            case "faqCateList":
+                categoryList = pCategoryService.getFaqCategoryList();
+                break;
+            case "communityCateList":
+                categoryList = pCategoryService.getCommunityCategoryList();
+                break;
+            default:
+                categoryList = Collections.emptyList();
+                break;
+        }
 
-    @GetMapping("/report")
-    @ResponseBody
-    public Map<String, Object> getReportCategory() {
-        Map<String, Object> response = new HashMap<>();
-        List<PCategory> reportCategory = pCategoryService.getReportCategoryList();
-        response.put("reportCategory", reportCategory);
-        return response;
-    }
-
-    @GetMapping("/faq")
-    @ResponseBody
-    public Map<String, Object> getFaqCategory() {
-        Map<String, Object> response = new HashMap<>();
-        List<PCategory> faqCategory = pCategoryService.getFaqCategoryList();
-        response.put("faqCategory", faqCategory);
-        return response;
-    }
-
-    @GetMapping("/community")
-    @ResponseBody
-    public Map<String, Object> getCommunityCategory() {
-        Map<String, Object> response = new HashMap<>();
-        List<PCategory> communityCategory = pCategoryService.getCommunityCategoryList();
-        response.put("communityCategory", communityCategory);
+        // 응답 데이터 설정
+        response.put("categoryList", categoryList);
         return response;
     }*/
 	
+	
+	/*
+    @GetMapping("/noticeCateList")
+    @ResponseBody
+    public Map<String, Object> getNoticeCategoryList() {
+        Map<String, Object> response = new HashMap<>();
+        List<PCategory> noticeCateList = pCategoryService.getNoticeCategoryList();
+        response.put("noticeCateList", noticeCateList);
+        return response;
+    }
+    
+
+    
+
+    @GetMapping("/reportCateList")
+    @ResponseBody
+    public Map<String, Object> getReportCategoryList() {
+        Map<String, Object> response = new HashMap<>();
+        List<PCategory> reportCateList = pCategoryService.getReportCategoryList();
+        response.put("reportCateList", reportCateList);
+        return response;
+    }
+
+    @GetMapping("/faqCateList")
+    @ResponseBody
+    public Map<String, Object> getFaqCategoryList() {
+        Map<String, Object> response = new HashMap<>();
+        List<PCategory> faqCateList = pCategoryService.getFaqCategoryList();
+        response.put("faqCateList", faqCateList);
+        return response;
+    }
+
+    @GetMapping("/communityCateList")
+    @ResponseBody
+    public Map<String, Object> getCommunityCategoryList() {
+        Map<String, Object> response = new HashMap<>();
+        List<PCategory> communityCateList = pCategoryService.getCommunityCategoryList();
+        response.put("communityCateList", communityCateList);
+        return response;
+    }*/
 	
 	
 	
@@ -115,47 +250,7 @@ public class PCategoryController {
 	}
 	
     
-    /*
-    @PostMapping("/{dataTrans}")
-    @ResponseBody
-    public Map<String, Object> postMethodName(@PathVariable String dataTrans) {
-    	Map<String, Object> responseMap = new HashMap<String, Object>();
-    	responseMap.put("dataTrans", dataTrans);
-    	List<?> dataList = null;
-		if("noticeCateList".equals(dataTrans)) {
-			dataList = pCategoryService.getNoticeCategoryList();
-		}
-		if(dataList != null) responseMap.put("data", dataList);
-		return responseMap;
-    } */
-    
-    @PostMapping("/{dataTrans}")
-    @ResponseBody
-    public Map<String, Object> getCategoryList(@PathVariable String dataTrans) {
-        Map<String, Object> response = new HashMap<String, Object>();
-        response.put("dataTrans", dataTrans);
-        List<PCategory> categoryList = null;
-        
-        // dataTrans에 따라 적절한 카테고리 목록을 가져옴
-        if ("noticeCateList".equals(dataTrans)) {
-            categoryList = pCategoryService.getNoticeCategoryList();
-        } else if ("reportCateList".equals(dataTrans)) {
-            categoryList = pCategoryService.getReportCategoryList();
-        } else if ("faqCateList".equals(dataTrans)) {
-            categoryList = pCategoryService.getFaqCategoryList();
-        } else if ("communityCateList".equals(dataTrans)) {
-            categoryList = pCategoryService.getCommunityCategoryList();
-        } else {
-            // 유효하지 않은 dataTrans 값이 들어온 경우에 대한 처리
-            // 여기서는 간단히 빈 목록을 반환하도록 함
-            categoryList = Collections.emptyList();
-        }
-        
-        // 반환할 데이터 설정
-        response.put("categoryList", categoryList);
-        
-        return response;
-    }
+
     
 
     

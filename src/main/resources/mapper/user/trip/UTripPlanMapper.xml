@@ -3,11 +3,72 @@
 <mapper namespace="ksmart.ks50team01.user.trip.mapper.UTripPlanMapper">
 
     <resultMap id="memberResultMap" type="login">
-        <id column="MBR_ID" property="id"/>
-        <result column="MBR_GRD_NO" property="level"/>
-        <result column="MBR_NM" property="name"/>
+        <id     column="MBR_ID"       property="id"/>
+        <result column="MBR_GRD_NO"   property="level"/>
+        <result column="MBR_NM"       property="name"/>
         <result column="MBR_NICKNAME" property="nickname"/>
+
     </resultMap>
+
+    <resultMap id="tripPlanMap" type="uTripOption">
+        <id     column="TRIP_PLAN_ID"        property="tripId"/>
+        <result column="PLAN_UUID"           property="planUUID"/>
+        <result column="SESSION_ID"          property="sessionId"/>
+        <result column="TRIP_TITLE"          property="tripTitle"/>
+        <result column="START_DATE"          property="startDate"/>
+        <result column="END_DATE"            property="endDate"/>
+        <result column="NUM_PEOPLE"          property="numPeople"/>
+        <result column="NUM_VIRTUAL_MEMBERS" property="numVirtualMembers"/>
+        <result column="NUM_REAL_MEMBERS"    property="numRealMembers"/>
+        <result column="NUM_DATE"            property="numDate"/>
+        <result column="TRIP_DURATION"       property="tripDuration"/>
+        <result column="REG_YMD"             property="regDate"/>
+        <result column="MDFCN_YMD"           property="modDate"/>
+        <result column="IN_PRGRS"            property="inProgress"/>
+    </resultMap>
+
+    <insert id="addTempPlanInfo">
+        /* 임시 상태로 여행 계획을 저장 */
+        INSERT INTO INDIVIDUAL_TRIP_PLAN_NEW (
+                                              PLAN_UUID,
+                                              SESSION_ID,
+                                              TRIP_TITLE,
+                                              START_DATE,
+                                              END_DATE,
+                                              NUM_PEOPLE,
+                                              NUM_VIRTUAL_MEMBERS,
+                                              NUM_REAL_MEMBERS,
+                                              NUM_DATE,
+                                              TRIP_DURATION
+        )
+        VALUES (
+                #{planUUID},
+                #{sessionId},
+                #{tripTitle},
+                #{startDate},
+                #{endDate},
+                #{numPeople},
+                #{numVirtualMembers},
+                #{numRealMembers},
+                #{numDate},
+                #{tripDuration})
+    </insert>
+    <update id="updateTempPlanInfo" parameterType="uTripOption">
+        /* 여행 계획 업데이트 */
+        UPDATE INDIVIDUAL_TRIP_PLAN_NEW
+        SET
+            SESSION_ID = #{sessionId},
+            TRIP_TITLE = #{tripTitle},
+            START_DATE = #{startDate},
+            END_DATE = #{endDate},
+            NUM_PEOPLE = #{numPeople},
+            NUM_VIRTUAL_MEMBERS = #{numVirtualMembers},
+            NUM_REAL_MEMBERS = #{numRealMembers},
+            NUM_DATE = #{numDate},
+            TRIP_DURATION = #{tripDuration},
+            MDFCN_YMD = CURRENT_TIMESTAMP
+        WHERE PLAN_UUID = #{planUUID}
+    </update>
 
 
     <select id="getTourInfoObject" resultType="String" parameterType="string">
@@ -33,6 +94,7 @@
     </select>
 
     <select id="getUserMembers" resultMap="memberResultMap">
+        /* 일반 회원 정보 검색 */
         SELECT
             MBR_ID,
             MBR_GRD_NO,
@@ -45,6 +107,7 @@
 
     </select>
     <select id="searchUserMembers" resultMap="memberResultMap">
+        /* 일반 회원의 정보 중 닉네임과 일치하는 정보 조회 */
         SELECT
             MBR_ID,
             MBR_GRD_NO,
@@ -76,4 +139,123 @@
         where
             tour_detail_content_id = #{contentId}
     </select>
+    <select id="selectUTripOptionByUUID" parameterType="string" resultType="UTripOption">
+        /* UUID로 임시 저장된 여행 계획 조회 */
+        SELECT
+            TRIP_PLAN_ID,
+            PLAN_UUID,
+            SESSION_ID,
+            TRIP_TITLE,
+            START_DATE,
+            END_DATE,
+            NUM_PEOPLE,
+            NUM_VIRTUAL_MEMBERS,
+            NUM_REAL_MEMBERS,
+            NUM_DATE,
+            IN_PRGRS,
+            REG_YMD,
+            MDFCN_YMD
+        FROM
+            INDIVIDUAL_TRIP_PLAN_NEW
+        WHERE
+            PLAN_UUID = #{planUUID}
+    </select>
+
+    <select id="selectVirtualMemberIdByName" resultType="Integer">
+        /* 가상 회원 ID 조회 */
+        SELECT
+            id
+        FROM
+            virtual_member
+        WHERE
+            name = #{name}
+    </select>
+    <select id="selectRealMemberIdByMemberId" resultType="Integer">
+        /* 실제 회원 ID 조회 */
+        SELECT
+            id
+        FROM
+            real_member
+        WHERE
+            member_id = #{memberId}
+    </select>
+    <select id="selectTempPlanListBySessionId" resultMap="tripPlanMap">
+        /* 여행 계획 목록 조회 */
+        SELECT
+            TRIP_PLAN_ID,
+            PLAN_UUID,
+            SESSION_ID,
+            TRIP_TITLE,
+            START_DATE,
+            END_DATE,
+            NUM_PEOPLE,
+            NUM_VIRTUAL_MEMBERS,
+            NUM_REAL_MEMBERS,
+            NUM_DATE,
+            TRIP_DURATION,
+            REG_YMD,
+            MDFCN_YMD,
+            IN_PRGRS
+        FROM
+            INDIVIDUAL_TRIP_PLAN_NEW
+        WHERE
+            SESSION_ID = #{sessionId}
+    </select>
+
+    <delete id="deleteTripVirtualMembers">
+        /* 여행 계획에 관련된 모든 가상 회원 삭제 */
+        DELETE
+        FROM
+            trip_virtual_member
+        WHERE
+            trip_uuid = #{tripUuid}
+    </delete>
+
+    <delete id="deleteTripRealMembers">
+        /* 여행 계획에 관련된 모든 실제 회원 삭제 */
+        DELETE
+        FROM
+            trip_real_member
+        WHERE
+            trip_uuid = #{tripUuid}
+    </delete>
+
+    <insert id="insertVirtualMember">
+        /* 가상 회원 추가 */
+        INSERT INTO
+            virtual_member (name)
+        VALUES
+            (#{name})
+    </insert>
+
+    <insert id="insertRealMember">
+        /* 실제 회원 추가 */
+        INSERT INTO
+            real_member (member_id)
+        VALUES
+            (#{memberId})
+    </insert>
+
+    <insert id="insertTripVirtualMember">
+        /* 여행 계획에 가상 회원 추가 */
+        INSERT INTO trip_virtual_member (
+                                         trip_uuid,
+                                         virtual_member_id
+        )
+        VALUES (
+                #{tripUuid},
+                #{virtualMemberId}
+               )
+    </insert>
+
+    <insert id="insertTripRealMember">
+        /* 여행 계획에 실제 회원 추가 */
+        INSERT INTO trip_real_member (
+                                      trip_uuid,
+                                      real_member_id
+        )
+        VALUES (
+                #{tripUuid},
+                #{realMemberId})
+    </insert>
 </mapper>

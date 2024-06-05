@@ -17,6 +17,16 @@ import lombok.extern.slf4j.Slf4j;
 public class DestinationService {
 	
 	private final DestinationMapper destinationMapper;
+	
+	/**
+	 * 관광지 목록조회 (관광지 이름 검색) 
+	 * @param tourName
+	 * @return
+	 */
+	public List<Destination> getTourInfoListByName(String tourName){
+		return destinationMapper.getTourInfoListByName(tourName);
+	}
+	
 	/**
 	 * 관광지 세부항목 추가
 	 * @param tourGoodsOptionCd
@@ -27,13 +37,14 @@ public class DestinationService {
 	}
 	
 	/**
-	 * 관광지 추가
+	 * 관광지 중복체크
 	 * @param tourName
 	 * @return
 	 */
 	public boolean addTourCheckList(String tourName) {
 		return destinationMapper.addTourCheckList(tourName);
 	}
+	
 	/**
 	 * 관광지 세부항목 제거
 	 * @param tourGoodsOptionCd
@@ -57,9 +68,19 @@ public class DestinationService {
 	 */
 	public int addTour(Destination destination) {
 		return destinationMapper.addTour(destination);
-		
 	}
 	
+	
+	/**
+	 *  관광지 세부사항 등록
+	 * @param destination
+	 * @return
+	 */
+	public int addTourGoods(Destination destination) {
+		destinationMapper.addTourGoods(destination);
+		return destinationMapper.addTourGoodsOp(destination);
+	}
+
 	/**
 	 * 관광지 수정
 	 * @param destination
@@ -110,11 +131,55 @@ public class DestinationService {
 	}
 	
 	
-	
+	/**
+	 * 관광지 상세목록 정보 조회
+	 * @param tourGoodsOptionCd
+	 * @return
+	 */
 	public Destination getTourGoodsInfoById(String tourGoodsOptionCd) {
 		return destinationMapper.getTourGoodsInfoById(tourGoodsOptionCd);
 		
 	}
+	/**
+	 * 숙소 등록
+	 * @param destination
+	 */
+	public int addLodging(Destination destination) {
+		return destinationMapper.addLodging(destination);
+		
+	}
+	/**
+	 * 숙소 상세 등록
+	 * @param destination
+	 * @return
+	 */
+	public int addLodgingGoods(Destination destination) {
+		return destinationMapper.addLodgingGoods(destination);
+		
+	}
+
+	
+	/**
+	 * 숙소 중복체크
+	 * @param lodgingName
+	 * @return
+	 */
+	public boolean addLodgingCheckList(String lodgingName) {
+		
+		return destinationMapper.addLodgingCheckList(lodgingName);
+	}
+	/**
+	 * 숙소 상세정보 중복체크
+	 * @param lodgingMenuCode
+	 * @return
+	 */
+	public boolean addLodgingGoodsCheckList(String lodgingMenuCode) {
+		
+		return destinationMapper.addLodgingGoodsCheckList(lodgingMenuCode);
+	}
+
+
+	
 	/**
 	 * 숙소 삭제
 	 * @param lodgingInfoCode
@@ -142,6 +207,11 @@ public class DestinationService {
 		destinationMapper.lodgingModify(destination);
 	}
 	
+	/**
+	 * 숙소 
+	 * @param lodgingInfoCode
+	 * @return
+	 */
 	public Destination getLodgingInfoById(String lodgingInfoCode) {
 		
 		return destinationMapper.getLodgingInfoById(lodgingInfoCode);
@@ -165,7 +235,10 @@ public class DestinationService {
 		
 		return destinationMapper.getLodgingGoodsList();
 	}
-	
+	/**
+	 * 숙소 상세 수정
+	 * @param destination
+	 */
 	public void lodgingGoodsModify(Destination destination) {
 		destinationMapper.lodgingGoodsModify(destination);
 	}
@@ -178,8 +251,8 @@ public class DestinationService {
 	 * 음식점 수정
 	 * @param destination
 	 */
-	public void updateRestaurant(Destination destination) {
-		destinationMapper.updateRestaurant(destination);
+	public void restaurantMoidfy(Destination destination) {
+		destinationMapper.restaurantMoidfy(destination);
 	}
 	public Destination getRestaurantInfoById(String restaurantInfoCode) {
 		return destinationMapper.getRestaurantInfoById(restaurantInfoCode);
@@ -208,9 +281,11 @@ public class DestinationService {
 		return restaurantMenuList;
 	}
 	
+	
 	public void restaurantMenuModify(Destination destination) {
 		destinationMapper.restaurantMenuModify(destination);
 	}
+	
 	public Destination getRestaurantMenuInfoById(String restaurantMenuManageCode) {
 		return destinationMapper.getRestaurantMenuInfoById(restaurantMenuManageCode);
 	}
@@ -233,11 +308,16 @@ public class DestinationService {
 		destinationMapper.removeRestaurantMenu(restaurantMenuManageCode);
 		
 	}
+	/**
+	 * 음식점 중복체크
+	 * @param restaurantName
+	 * @return
+	 */
+	public boolean addRestaurantCheckList(String restaurantName) {
+		return destinationMapper.addRestaurantCheckList(restaurantName);
+	}
 
 
-
-
-	
 }
 
 

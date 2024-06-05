@@ -336,6 +336,7 @@ VALUES
 	</select>
 
 	<select id="getLodgingInfoById" resultType="destination">
+		/* 숙소 수정을 위한 목록가져오기 */	
 			SELECT
 				LODGING_INFO_CD 	AS lodgingInfoCode,
 				REG_PF_BIZ_ID 		AS lodgingAuthorityId,
@@ -356,7 +357,7 @@ VALUES
 	</select>
 
 	<update id="lodgingModify" parameterType="destination">
-
+		/* 숙소 수정 */
 			UPDATE LODGING_INFO
 			SET
 				LODGING_NAME 		= #{lodgingName},
@@ -442,7 +443,8 @@ VALUES
 
 
 	<select id="getRestaurantInfoById" resultType="destination">
-		/*  */
+		/* 식당 수정 전 정보 */
+		
 	
 			SELECT
 				RSTRN_INFO_CD 	AS restaurantInfoCode,
@@ -462,7 +464,7 @@ VALUES
 
 	</select>
 
-	<update id="updateRestaurant" parameterType="destination">
+	<update id="restaurantMoidfy" parameterType="destination">
 		/* 식당 수정 */
 			UPDATE RESTAURANT_INFO
 			SET
@@ -481,11 +483,13 @@ VALUES
 
 
 	<select id="getRestaurantInfoList" resultType="destination">
-		/* 식당 정보 */
+		/* 식당 정보 목록 */
 
 			SELECT
 				RSTRN_INFO_CD 	AS restaurantInfoCode,
 				REG_PF_BIZ_ID 	AS restaurantAuthorityId,
+				TRIP_SCTGRY_CD 	AS tripSCateCode,
+				PRTNR_BPLC_CD 	AS partnerBPlaceCode,
 				RSTRN_NAME 		AS restaurantName,
 				RSTRN_ADDR 		AS restaurantAddr,
 				RSTRN_DADDR 	AS restaurantDaddr,

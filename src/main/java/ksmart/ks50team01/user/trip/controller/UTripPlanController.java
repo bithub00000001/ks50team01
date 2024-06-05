@@ -1,7 +1,6 @@
 package ksmart.ks50team01.user.trip.controller;
 
 import java.time.format.DateTimeParseException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -23,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import jakarta.servlet.http.HttpSession;
 import ksmart.ks50team01.user.member.login.dto.Login;
 import ksmart.ks50team01.user.trip.dto.UDayInfo;
 import ksmart.ks50team01.user.trip.dto.UTripOption;
@@ -43,18 +43,21 @@ public class UTripPlanController {
     @Value("${tour.api.key}")
     private String apiKey;
 
+    // 여행 계획 세부 아이템 페이지
     @GetMapping("/plan")
     public String tripPlanPage(Model model){
         model.addAttribute("title", "여행 계획 작성");
         return "user/trip/tripItem";
     }
 
+    // 여행 계획 공유 게시판 페이지
     @GetMapping("/board")
     public String boardPage(Model model){
         model.addAttribute("title", "여행 계획 공유");
         return "user/trip/sharePlan";
     }
 
+    // 여행 계획 작성 페이지
     @GetMapping("/detail")
     public String tripCreatePage(@ModelAttribute("uTripOption") Optional<UTripOption> uTripOption,Model model){
         model.addAttribute("title", "여행 계획 작성");
@@ -72,7 +75,7 @@ public class UTripPlanController {
 
     /**
      * 전달받은 순서, contentId, 일자를 입력받아 거리와 시간을 계산하고 반환하는 메서드
-     * @param uDayInfoList
+     * @param uDayInfoList 여행지 세부 사항 DTO
      * @return
      */
     @PostMapping("/calculate-info")
@@ -80,12 +83,26 @@ public class UTripPlanController {
     public ResponseEntity<Map<String, Object>> calculateInfo(@RequestBody List<UDayInfo> uDayInfoList) throws
 		JsonProcessingException {
         Map<String, Object> resultMap = uTripPlanService.calculateDistanceDuration(uDayInfoList);
-
-        resultMap = uTripPlanService.calculateDistanceDuration(uDayInfoList);
-
-
         log.info("resultMap: {}", resultMap);
         return ResponseEntity.status(HttpStatus.OK).body(resultMap);
+    }
+
+    /**
+     * 여행 계획 정보 임시 저장 메서드
+     * @param uTripOption 작성된 여행 계획 정보
+     * @return
+     */
+    @PostMapping("/save-temp-plan-info")
+    @ResponseBody
+    public ResponseEntity<String> addTempPlanInfo(@RequestBody UTripOption uTripOption) {
+        log.info("uTripOption: {}", uTripOption);
+        try {
+            // 기존 데이터가 있는지 확인하고, 있다면 업데이트, 없다면 새로 추가
+            uTripPlanService.saveOrUpdateTempPlanInfo(uTripOption);
+            return ResponseEntity.ok("여행 계획이 성공적으로 저장되었습니다.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("여행 정보를 임시 저장하는데 실패했습니다.");
+        }
     }
 
     /**
@@ -162,10 +179,16 @@ public class UTripPlanController {
      * @return
      */
     @GetMapping("/list")
-    public String planListPage(Model model){
+    public String planListPage(HttpSession session, Model model){
 
+        String sessionId = (String) session.getAttribute("loginId");
+        if (sessionId == null) {
+            return "redirect:/trip"; // 로그인 페이지로 리디렉션
+        }
         // uTourDataService.upsertSigunguData(apiKey);
+        List<UTripOption> tripPlanList = uTripPlanService.getTempPlanList(sessionId);
         model.addAttribute("title", "내 여행 계획 목록");
+        model.addAttribute("plans", tripPlanList);
         return "user/trip/planList";
     }
 

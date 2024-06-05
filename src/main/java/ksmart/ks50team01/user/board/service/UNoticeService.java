@@ -32,8 +32,8 @@ public class UNoticeService {
 	 * 공지사항 상세 조회
 	 * @return UNotice
 	 */
-	public UNotice getNoticeByNoticeNum(String noticeNum){
-		UNotice noticeDetail = uNoticeMapper.getNoticeByNoticeNum(noticeNum);
+	public UNotice getNoticeDetail(String noticeNum){
+		UNotice noticeDetail = uNoticeMapper.getNoticeDetail(noticeNum);
 		log.info("getNoticeByNoticeNum : {}", noticeDetail);
 		return noticeDetail;
 	}
