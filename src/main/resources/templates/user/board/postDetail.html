@@ -82,13 +82,12 @@
 														<li>
 															<a class="dropdown-item small" href="#" onclick="editComment(event)">
 																<i class="fa-solid fa-eraser fa-2x edit-button"></i> 수정</a></li>
-														<li><a class="dropdown-item small" href="#" onclick="removeComment()">
+														<li><a class="dropdown-item small" href="#" onclick="commentRemove(this)">
 														<i class="fa-solid fa-trash-can fa-2x delete-button"></i> 삭제</a></li>
 													</ul>
 												</div>
 											</div>
 											<!-- Button trigger modal -->
-	
 	
 	
 	
@@ -229,11 +228,40 @@
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary"
 							data-bs-dismiss="modal">닫기</button>
-						<button type="button" class="btn btn-primary" id="saveReplyButton">저장</button>
+						<button type="button" class="btn btn-primary" id="saveReplyButton" onclick="saveReply()">저장</button>
 					</div>
 				</div>
 			</div>
 		</div>
+		
+		
+<!-- 댓글 수정 모달 -->
+<div class="modal fade" id="editCommentModal" tabindex="-1" aria-labelledby="editCommentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editCommentModalLabel">댓글 수정</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editCommentForm">
+                    <div class="form-group">
+                        <label for="editCommentContent">댓글 내용</label>
+                        <textarea class="form-control" id="CommentMdfContent" rows="3" required></textarea>
+                    </div>
+                    <input type="hidden" id="CommentNum">
+                    <input type="hidden" id="CommentMdfId">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                <button type="button" class="btn btn-primary" onclick="submitEditComment()">댓글 수정</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+		
 	</th:block>
 
 
@@ -279,63 +307,64 @@
 
 		
 		
-	    /* 댓글 수정 폼 열기 */
-	    function modifyCommentForm(event) {
-	        event.preventDefault();
-	        const commentItem = $(event.target).closest('li');
-	        commentItem.find('.comment-content').hide();
-	        commentItem.find('.commentModifyForm').show();
-	    }
+		// 댓글 수정
+		function editComment(event) {
+		    const listItem = event.target.closest('.list-group-item');
+		    if (!listItem) return;
+		    
+		    const commentContent = listItem.querySelector('.comment-content').textContent;
+		    const commentRegId = listItem.querySelector('.comment-author').textContent;
+		    
+		    // 수정 모달 폼에 댓글 내용과 작성자 설정
+		    $('#CommentMdfContent').val(commentContent);
+		    $('#CommentMdfId').val(commentRegId);
+		    
+		    $('#editCommentModal').modal('show');
+		}
 
-	    /* 댓글 수정 */
-	    function modifyComment(event) {
-	        const commentItem = $(event.target).closest('li');
-	        const commentNum = commentItem.find('.commentNum').val();
-	        const commentContent = commentItem.find('#commentContent').val();
+
+	    function submitEditComment() {
+	        const commentNum = document.getElementById('CommentNum').value;
+	        const commentContent = document.getElementById('CommentMdfContent').value;
 	        $.ajax({
-	            type: 'PUT',
-	            url: `/community/commentModify/${commentNum}`,
-	            data: JSON.stringify({ commentContent: commentContent }),
-	            contentType: 'application/json',
-	            success: function () {
-	                alert("댓글이 수정되었습니다.");
-	                commentItem.find('.comment-content').text(commentContent).show();
-	                commentItem.find('.commentModifyForm').hide();
+	            url: "/community/commentModify",
+	            type: "POST",
+	            data: JSON.stringify({ commentNum: commentNum, commentContent: commentContent }),
+	            contentType: "application/json",
+	            success: function(res) {
+	                alert('댓글이 수정되었습니다.');
+	                location.reload();
 	            },
-	            error: function () {
-	                alert("댓글 수정에 실패했습니다.");
+	            error: function(err) {
+	                console.log("댓글 수정 중 오류 발생", err);
+	                alert('댓글 수정 중 오류가 발생했습니다.');
 	            }
 	        });
 	    }
 
-	    /* 댓글 수정 취소 */
-	    function cancelModifyC(event) {
-	        const commentItem = $(event.target).closest('li');
-	        commentItem.find('.commentModifyForm').hide();
-	        commentItem.find('.comment-content').show();
-	    }
-
-	    /* 댓글 삭제 */
-	    function removeComment(event) {
-	        event.preventDefault();
-	        const commentItem = $(event.target).closest('li');
-	        const commentNo = commentItem.find('.commentNo').val();
-	        const isConfirmed = confirm("댓글을 삭제하시겠습니까?");
-	        if (isConfirmed) {
-	            $.ajax({
-	                type: 'DELETE',
-	                url: `/community/commentRemove/${commentNo}`,
-	                success: function () {
-	                    alert("댓글이 삭제되었습니다.");
-	                    commentItem.remove();
-	                },
-	                error: function () {
-	                    alert("댓글 삭제에 실패했습니다.");
+	    
+	    
+	    
+	    // 댓글 삭제
+	    function commentRemove(commentNum) {
+	        if (confirm('댓글을 삭제하시겠습니까?')) {
+	            var xhr = new XMLHttpRequest();
+	            xhr.open('POST', '/community/commentRemove/' + commentNum, true);
+	            xhr.onload = function () {
+	                if (xhr.status === 200) {
+	                    location.reload();
+	                } else {
+	                    alert('댓글 삭제 중 오류가 발생했습니다.');
 	                }
-	            });
+	            };
+	            xhr.send();
 	        }
 	    }
-		
+
+	    
+	    
+	    
+	    
 		
 	</script>
 	
@@ -369,18 +398,7 @@
 				dropdownMenu.classList.toggle('show');
 			}
 
-			// 댓글 수정 버튼 클릭했을 때
-			function editComment(event) {
-			    event.preventDefault();
-			    const commentItem = $(event.target).closest('li');
-			    commentItem.find('.comment-content').hide();
-			    commentItem.find('.commentModifyForm').show();
-			}
 
-			function removeComment() {
-				// 삭제 버튼을 클릭했을 때 수행할 작업을 구현합니다.
-				// 이 함수는 실제로 삭제 기능을 수행해야 합니다.
-			}
 
 			// 클릭 이벤트가 발생한 곳이 아닌 다른 곳을 클릭하면 드롭다운 메뉴를 닫습니다.
 			document.addEventListener('click', function(event) {
@@ -409,48 +427,70 @@
 		    });
 		    
 		    
-			// 대댓글 작성창
-			function reCommentForm(event) {
-				var reCommentForm = event.target.closest(".commentList").nextElementSibling;
-				while (reCommentForm) {
-					if (reCommentForm.classList.contains("reCommentForm")) {
-						break;
-					}
-					reCommentForm = reCommentForm.nextElementSibling;
-				}
-				if (reCommentForm) {
-					reCommentForm.style.display = reCommentForm.style.display === "none" ? "block"
-							: "none";
-				}
-			}
+		    
+		 // 좋아요 버튼 클릭 시 호출되는 함수
+		    function likeButtonClick(postId) {
+		        // AJAX 요청을 보냄
+		        var xhr = new XMLHttpRequest();
+		        xhr.open('POST', '/like/' + postId, true);
+		        xhr.setRequestHeader('Content-Type', 'application/json');
+		        xhr.onreadystatechange = function() {
+		            if (xhr.readyState === XMLHttpRequest.DONE) {
+		                if (xhr.status === 200) {
+		                    // 성공적으로 요청이 처리되면 화면을 업데이트
+		                    var responseData = JSON.parse(xhr.responseText);
+		                    document.getElementById('like-count').textContent = responseData.likeCount;
+		                } else {
+		                    // 요청이 실패하면 에러 메시지를 표시
+		                    console.error('Request failed:', xhr.status);
+		                }
+		            }
+		        };
+		        xhr.send();
+		    }
 
-			// 대댓글 작성 ajax 
-			function insertReComment(event) {
-				var commentStep = parseInt($(event.target).closest('.reCommentForm').find('#commentStep').val());
-				
-		/* 		alert("그룹" + $('#pgroup').val())
-				alert("스텝" + commentStep)
-				alert("뎁스" + $('#reDepth').val())
-				alert("내용" + $(event.target).closest('.reCommentForm').find('#reComment').val())		
-		 */
-				var bDto = {
-					pgroup : $('#pgroup').val(),
-					step : commentStep,
-					depth : $("#reDepth").val(),
-					content : $(event.target).closest('.reCommentForm').find(	'#reComment').val()
-				};
+		    
 
-				$.ajax({
-					url : "/board/addC.do",
-					data : bDto,
-					type : 'POST',
-					success : function(result) {
-						getCommentList();
-						$("#reComment").val("");
-					}
-				})
+		    // 답글 저장
+		    const saveReply = () => {
+		        const replyContent = document.getElementById("replyContent").value;
+		        const postNum = document.getElementById("postNum").value;
+		        const parentCommentId = document.querySelector("#replyModal").dataset.parentCommentId;
 
-			}
+		        console.log("답글 내용: ", replyContent);
+		        console.log("게시글 번호: ", postNum);
+		        console.log("부모 댓글 ID: ", parentCommentId);
+
+		        $.ajax({
+		            url: "/community/replySave", // 서버 요청 주소
+		            type: "POST",
+		            dataType: 'json',
+		            data: {
+		                'postNum': postNum,
+		                'replyContent': replyContent,
+		                'parentCommentId': parentCommentId
+		            },
+		            success: function(res) {
+		                alert('답글이 작성되었습니다.');
+		                $('#replyContent').val(''); // 텍스트박스 초기화
+		                location.reload();
+		            },
+		            error: function(err) {
+		                console.log("답글 작성 중 오류 발생", err);
+		                alert('답글 작성 중 오류가 발생했습니다.');
+		            }
+		        });
+		    }
+
+		    // 대댓글 모달창 열 때 부모 댓글 ID 저장
+		    document.querySelectorAll('.reply-btn').forEach(button => {
+		        button.addEventListener('click', function(event) {
+		            const parentCommentId = event.target.closest('li').dataset.commentId;
+		            document.querySelector("#replyModal").dataset.parentCommentId = parentCommentId;
+		        });
+		    });
+		    
+		    
 			</script>
 			
 			

@@ -121,7 +121,6 @@ public class UCommunityService {
 	}
 
 
-
 	/**
 	 * 게시글 삭제
 	 */
@@ -140,7 +139,6 @@ public class UCommunityService {
 		return postFileList;
 	}
 
- 
 
 	// 댓글 작성
 	public void commentSave(String commentRegId, String postNum, String commentContent) {
@@ -151,11 +149,54 @@ public class UCommunityService {
 		uCommunityMapper.commentSave(uComment);
 	}
 
+	
+	
+	// 댓글 삭제
+	public void commentRemove(String commentNum) {
+		uCommunityMapper.commentRemove(commentNum);
+		
+	}
+	
+	
+	
+	// 답글 작성
+	public void replySave(String commentRegId, String postNum, String commentContent, String parentCommentId) {
+		UComment uComment = new UComment();
+		uComment.setPostNum(postNum);
+		uComment.setCommentRegId(commentRegId);
+		uComment.setCommentContent(commentContent);
+		uCommunityMapper.replySave(uComment);
+	}
 
+	
 	// 게시글 댓글 조회
 	public List<UComment> getPostCommentList(String postNum) {
 		return uCommunityMapper.getPostCommentList(postNum);
 	}
+
+
+	// 좋아요 수 증가
+	public void increaseLikeCount(String postNum) {
+		uCommunityMapper.increaseLikeCount(postNum);
+		
+	}
+
+
+	public UCommunity getPostByNum(String postNum) {
+		return uCommunityMapper.getPostByNum(postNum);
+	}
+
+	// 싫어요 수 증가
+	public void increaseDislikeCount(String postNum) {
+		uCommunityMapper.increaseDislikeCount(postNum);
+	}
+
+	
+	// 댓글 수정
+	public void commentModify(UComment uComment) {
+		uCommunityMapper.commentModify(uComment);
+	}
+
 
 
 

@@ -10,7 +10,6 @@
 	    <link th:href="@{/platform/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css}" rel="stylesheet">
 	    <link th:href="@{/platform/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css}" rel="stylesheet">
 	    <link th:href="@{/platform/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css}" rel="stylesheet">
-	
 		<style type="text/css">
 			.control-label{
 				text-align: center !important;
@@ -152,108 +151,90 @@
 	
 
 
-	
-	    <!-- ===========================================
-        ———	CUSTOM JAVASCRIPT SCRIPT START
-        ========================================== -->
-        <th:block layout:fragment="customJs">
-			<script type="text/javascript" th:src="@{/platform/js/checkbox/categoryDel.js}"></script>
-        	<script type="text/javascript" th:src="@{/platform/js/checkbox/selectedDel.js}"></script>
-        
-        
-        	<script>
-		    document.getElementById('checkAll').addEventListener('change', function() {
-		        var checkboxes = document.querySelectorAll('[id^=checkbox_]');
-		        checkboxes.forEach(function(checkbox) {
-		            checkbox.checked = document.getElementById('checkAll').checked;
-		        });
+
+  <!-- ===========================================
+     ———	CUSTOM JAVASCRIPT SCRIPT START
+     ========================================== -->
+     <th:block layout:fragment="customJs">
+		<script type="text/javascript" th:src="@{/platform/js/checkbox/categoryDel.js}"></script>
+  	
+    	
+		<script>    	
+		    	
+		   // const table = $('#dataTbContent').dataTable();
+		
+		    $(document).on('click', '.data-trans', function() {
+		        const dataTrans = String($('.data-select :selected').val()).trim();
+		        if (dataTrans) {
+		            const colObj = {  
+		                communityCateList : [
+		                    {'title': '커뮤니티 카테고리 번호', 'data': 'postCategoryNum'},
+		                    {'title': '등록자 아이디', 'data': 'postCategoryRegId'},
+		                    {'title': '커뮤니티 카테고리 유형', 'data': 'postCategoryName'},
+		                    {'title': '수정자 아이디', 'data': 'postCategoryMdfId'},
+		                    {'title': '활성화 여부', 'data': 'postCateActive'},
+		                    {'title': '등록일자', 'data': 'postCategoryRegDate'},
+		                    {'title': '수정일자', 'data': 'postCategoryMdfDate'}
+		                ],
+		                noticeCateList : [
+		                    {'title': '공지사항 카테고리 번호', 'data': 'noticeCategoryNum'},
+		                    {'title': '등록자 아이디', 'data': 'noticeCategoryRegId'},
+		                    {'title': '공지사항 카테고리 유형', 'data': 'noticeCategoryName'},
+		                    {'title': '수정자 아이디', 'data': 'noticeCategoryMdfId'},
+		                    {'title': '활성화 여부', 'data': 'noticeCateActive'},
+		                    {'title': '등록일자', 'data': 'noticeCategoryRegDate'},
+		                    {'title': '수정일자', 'data': 'noticeCategoryMdfDate'}
+		                ],
+		                faqCateList : [
+		                    {'title': '자주찾는질문 및 1:1문의 카테고리 번호', 'data': 'faqCategoryNum'},
+		                    {'title': '등록자 아이디', 'data': 'faqCategoryRegId'},
+		                    {'title': '자주찾는질문 및 1:1문의 카테고리 유형', 'data': 'faqCategoryName'},
+		                    {'title': '수정자 아이디', 'data': 'faqCategoryMdfId'},
+		                    {'title': '활성화 여부', 'data': 'faqCateActive'},
+		                    {'title': '등록일자', 'data': 'faqCategoryRegDate'},
+		                    {'title': '수정일자', 'data': 'faqCategoryMdfDate'}
+		                ],
+		                reportCateList : [
+		                    {'title': '신고 카테고리 번호', 'data': 'reportCategoryNum'},
+		                    {'title': '등록자 아이디', 'data': 'reportCategoryRegId'},
+		                    {'title': '신고 카테고리 유형', 'data': 'reportCategoryName'},
+		                    {'title': '수정자 아이디', 'data': 'reportCategoryMdfId'},
+		                    {'title': '활성화 여부', 'data': 'reportCateActive'},
+		                    {'title': '등록일자', 'data': 'reportCategoryRegDate'},
+		                    {'title': '수정일자', 'data': 'reportCategoryMdfDate'}
+		                ]
+		            }
+		
+		            const colArr = [...colObj[`${dataTrans}`]];
+		
+		            const request = $.ajax({
+		                url:'/platform/board/categoryList/' + dataTrans,
+		                method: 'post',
+		                dataType: 'JSON'
+		            });
+		            request.done(function(json){
+		                table.fnDestroy();
+		                $('#dataTbContent').DataTable().clear().destroy();
+		
+		                const dataTableOption = {
+		                    searching : true,
+		                    responsive: true,
+		                    destroy:true,
+		                    data : json.data,
+		                    columns : colArr
+		                }
+		
+		                $('#dataTbContent').dataTable(dataTableOption);
+		            })
+		        }
+		
 		    });
-			</script>
-
-    	
-    	
-    	
-<script>    	
-    	
-    const table = $('#dataTbContent').dataTable();
-
-    $(document).on('click', '.data-trans', function() {
-        const dataTrans = String($('.data-select :selected').val()).trim();
-        if (dataTrans) {
-            const colObj = {  
-                communityCateList : [
-                    {'title': '커뮤니티 카테고리 번호', 'data': 'postCategoryNum'},
-                    {'title': '등록자 아이디', 'data': 'postCategoryRegId'},
-                    {'title': '커뮤니티 카테고리 유형', 'data': 'postCategoryName'},
-                    {'title': '수정자 아이디', 'data': 'postCategoryMdfId'},
-                    {'title': '활성화 여부', 'data': 'postCateActive'},
-                    {'title': '등록일자', 'data': 'postCategoryRegDate'},
-                    {'title': '수정일자', 'data': 'postCategoryMdfDate'}
-                ],
-                noticeCateList : [
-                    {'title': '공지사항 카테고리 번호', 'data': 'noticeCategoryNum'},
-                    {'title': '등록자 아이디', 'data': 'noticeCategoryRegId'},
-                    {'title': '공지사항 카테고리 유형', 'data': 'noticeCategoryName'},
-                    {'title': '수정자 아이디', 'data': 'noticeCategoryMdfId'},
-                    {'title': '활성화 여부', 'data': 'noticeCateActive'},
-                    {'title': '등록일자', 'data': 'noticeCategoryRegDate'},
-                    {'title': '수정일자', 'data': 'noticeCategoryMdfDate'}
-                ],
-                faqCateList : [
-                    {'title': '자주찾는질문 및 1:1문의 카테고리 번호', 'data': 'faqCategoryNum'},
-                    {'title': '등록자 아이디', 'data': 'faqCategoryRegId'},
-                    {'title': '자주찾는질문 및 1:1문의 카테고리 유형', 'data': 'faqCategoryName'},
-                    {'title': '수정자 아이디', 'data': 'faqCategoryMdfId'},
-                    {'title': '활성화 여부', 'data': 'faqCateActive'},
-                    {'title': '등록일자', 'data': 'faqCategoryRegDate'},
-                    {'title': '수정일자', 'data': 'faqCategoryMdfDate'}
-                ],
-                reportCateList : [
-                    {'title': '신고 카테고리 번호', 'data': 'reportCategoryNum'},
-                    {'title': '등록자 아이디', 'data': 'reportCategoryRegId'},
-                    {'title': '신고 카테고리 유형', 'data': 'reportCategoryName'},
-                    {'title': '수정자 아이디', 'data': 'reportCategoryMdfId'},
-                    {'title': '활성화 여부', 'data': 'reportCateActive'},
-                    {'title': '등록일자', 'data': 'reportCategoryRegDate'},
-                    {'title': '수정일자', 'data': 'reportCategoryMdfDate'}
-                ]
-            }
-
-            const colArr = [...colObj[`${dataTrans}`]];
-
-            const request = $.ajax({
-                url:'/platform/board/categoryList/' + dataTrans,
-                method: 'post',
-                dataType: 'JSON'
-            });
-            request.done(function(json){
-                table.fnDestroy();
-                $('#dataTbContent').text('');
-                console.log(json);
-
-                const dataTableOption = {
-                    'searching' : true,
-                    'responsive': true,
-                    'destroy':true,
-                    'data' : json.data,
-                    'columns' : colArr
-                }
-
-                $('#dataTbContent').dataTable(dataTableOption);
-            })
-        }
-
-    });
-			
-</script>			
+					
+		</script>			
 			
 			
 			
-			
-			
-			
-			
-        </th:block>
+	</th:block>
         <!-- ===========================================
         ———	CUSTOM JAVASCRIPT SCRIPT END
         ========================================== -->

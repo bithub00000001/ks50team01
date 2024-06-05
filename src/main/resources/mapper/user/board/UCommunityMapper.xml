@@ -316,11 +316,6 @@
         	PST_NO = #{postNum};
     </update>
     
-	    
-
-    
-    
-    
     
 	<update id="postModify" parameterType="UCommunity">
 		/* 게시글 수정 */
@@ -382,6 +377,51 @@
         WHERE
             PST_NO = #{postNum};
     </select>
+    
+    
+    <!-- 게시물의 좋아요 총 개수를 증가시키는 메서드 -->
+    <update id="increaseLikeCount" parameterType="String">
+        UPDATE
+        	POST
+        SET 
+        	PST_LIKE_TOTAL = postLikeTotal + 1
+        WHERE PST_NO = #{postNum};
+    </update>
+    
+    
+    <!-- 게시물의 싫어요 총 개수를 증가시키는 메서드 -->
+    <update id="increaseDislikeCount" parameterType="String">
+        UPDATE 
+        	POST
+        SET
+        	PST_DISLIKE_TOTAL = postDislikeTotal + 1
+        WHERE
+        	 PST_NO = #{postNum};
+    </update>
+    
+    
+    
+    <update id="commentModify" parameterType="UComment">
+		/* 댓글 수정 */
+		UPDATE 
+			POST_COMMENT
+		SET
+			PST_CMNT_CN = #{commentContent},
+			MDFCN_YMD = NOW()
+		WHERE
+			PST_CMNT_NO = #{commentNum};
+	</update>
+	
+
+    
+    <!-- 댓글 삭제 -->
+    <delete id="commentRemove" parameterType="UComment">
+        DELETE FROM 
+        	POST_COMMENT
+        WHERE 
+        	PST_CMNT_NO = #{commentNum};
+    </delete>
+    
     
 	
 </mapper>

@@ -2,17 +2,23 @@ package ksmart.ks50team01.user.board.controller;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import jakarta.servlet.http.HttpServletResponse;
 import ksmart.ks50team01.user.board.dto.UCategory;
 import ksmart.ks50team01.user.board.dto.UComment;
 import ksmart.ks50team01.user.board.dto.UCommunity;
@@ -134,9 +140,6 @@ public class UCommunityController {
 	return postFileList;
 		
 	}
-	
-	
-	
 
 	
 	// 게시글 수정 POST 요청
@@ -153,7 +156,6 @@ public class UCommunityController {
 		return "redirect:/community/postDetail?postNum=" + uCommunity.getPostNum();
 	}
 
-	
 	
 	// 게시글 수정 페이지
 	@GetMapping("/postModify")
@@ -185,7 +187,6 @@ public class UCommunityController {
 		
 	}
 	
-
 	
     /*
 	// 게시글 삭제
@@ -203,8 +204,6 @@ public class UCommunityController {
 	} */
 	
 	
-	
-
 	// 댓글 작성
 	@PostMapping("/commentSave")
 	@ResponseBody
@@ -226,5 +225,93 @@ public class UCommunityController {
 	    
 		return postCommentList;
 	} 
+	
+	
+    // 답글 작성
+    @PostMapping("/replySave")
+    @ResponseBody
+    public List<UComment> postReply(Model model,
+                                    @RequestParam(value = "commentRegId", required = false) String commentRegId,
+                                    @RequestParam(value = "postNum", required = false) String postNum,
+                                    @RequestParam(value = "commentContent", required = false) String commentContent,
+                                    @RequestParam(value = "parentCommentId", required = false) String parentCommentId) {
+    	// 답글 저장
+    	uCommunityService.replySave(commentRegId, postNum, commentContent, parentCommentId);
+    	
+    	// 답글 저장 후 해당 게시글의 모든 댓글을 가져옴
+        List<UComment> postCommentList = uCommunityService.getPostCommentList(postNum);
+
+        log.info("답글 작성자: {}", commentRegId);
+        log.info("답글 작성: {}", postCommentList);
+
+        model.addAttribute("postCommentList", postCommentList);
+        model.addAttribute("title", "게시글 답글 목록");
+
+        return postCommentList;
+    }
+	
+    
+    
+    // 좋아요 버튼 클릭 시 처리
+    @PostMapping("/like")
+    @ResponseBody
+    public String like(@RequestParam String postNum, Model model) {
+        // 해당 게시물의 좋아요 총 개수를 증가시킴
+        uCommunityService.increaseLikeCount(postNum);
+        // 증가된 좋아요 총 개수를 반환
+        UCommunity post = uCommunityService.getPostByNum(postNum);
+        return Integer.toString(post.getTotalLikes());
+    }
+    
+    // 싫어요 버튼 클릭 시 처리
+    @PostMapping("/dislike")
+    @ResponseBody
+    public String dislike(@RequestParam String postNum, Model model) {
+        // 해당 게시물의 싫어요 총 개수를 증가시킴
+        uCommunityService.increaseDislikeCount(postNum);
+        // 증가된 싫어요 총 개수를 반환
+        UCommunity post = uCommunityService.getPostByNum(postNum);
+        return Integer.toString(post.getTotalDislikes());
+    }
+    
+    
+	
+	// 댓글 수정
+    @PostMapping("/commentModify")
+    public String commentModify(UComment uComment, Model model) {
+        uCommunityService.commentModify(uComment); 
+        
+        log.info("댓글 수정", uComment);
+        
+        return "redirect:/community/postDetail?postNum=" + uComment.getPostNum();
+
+    }
+    
+    
+    // 댓글 삭제
+    @PostMapping("/commentRemove")
+    @ResponseBody
+    public Map<String, Object> commentRemove(@RequestParam("commentNum") String commentNum) {
+        log.info("삭제할 댓글 번호: {}", commentNum);
+
+        Map<String, Object> response = new HashMap<>();
+        try {
+        	uCommunityService.commentRemove(commentNum);
+
+            response.put("success", true);
+            response.put("message", "댓글이 삭제되었습니다.");
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("message", "댓글 삭제에 실패했습니다.");
+        }
+
+        return response;
+    }
+    
+    
+
+    
+    
+    
 
 }

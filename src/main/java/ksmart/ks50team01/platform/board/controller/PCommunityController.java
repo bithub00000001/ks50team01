@@ -72,7 +72,6 @@ public class PCommunityController {
 	
 	
 	
-	
 	/**
 	 * 게시글 비활성화
 	 * @param postNum

@@ -55,7 +55,25 @@ public interface UCommunityMapper {
 	// 댓글 작성
 	void commentSave(UComment uComment);
 	
-	// 답글 저장
-	String replySave(String replyContent);
+	// 답글 작성
+	void replySave(UComment uComment);
+
+	// 좋아요 수 증가
+	void increaseLikeCount(String postNum);
+
+	// 증가된 좋아요 수 반환
+	UCommunity getPostByNum(String postNum);
+
+	// 싫어요 수 증가
+	void increaseDislikeCount(String postNum);
+
+	// 댓글 삭제
+	void commentRemove(String commentNum);
+
+	List<UCommunity> getPostListByPage(int page, int size);
+
+	// 댓글 수정
+	void commentModify(UComment uComment);
+
 
 }
