@@ -191,7 +191,7 @@ public class DestinationService {
 	
 	/**
 	 * 슥소 세부항목 제거
-	 * @param tourGoodsOptionCd
+	 * @param lodgingMenuCode
 	 */
 	public void removeLodgingGoods(String lodgingMenuCode) {
 		destinationMapper.removeLodgingGoods(lodgingMenuCode);
