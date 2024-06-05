@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+                layout:decorate="~{user/layout/default}">
+                
+	<head>
+	    <title>게시글 작성</title>
+	</head>
+	
+    <th:block layout:fragment="customCss">
+        <link th:href="@{/user/css/postAdd.css}" rel="stylesheet">
+        
+        <!-- GOOGLE FONT -->
+    	<link href='https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700' rel='stylesheet'>
+    </th:block>
+
+	<th:block layout:fragment="customPageSection">
+	    <!-- Elements Forms -->
+	    <section class="py-10">
+	        <div class="row">
+	            <div class="col-12">
+	                <h3 class="element-title">게시글 작성</h3>
+	                <div class="mb-6">
+	                    <form id="postForm" th:action="@{/community/postAdd}" method="POST" enctype="multipart/form-data">
+	                          <div class="form-group">
+	                            <label for="postRegId" class="col-sm-2 col-form-label">작성자</label>
+	                            <input type="text" class="form-control" id="postRegId" name="postRegId" th:value="${session.loginId}" readonly="readonly">
+	                        </div>
+	                        <div class="form-group">
+	                            <label for="exampleInputText">카테고리</label>
+	                            <div class="select-default">
+	                                <select class="select-option" id="postCateNum" name="category.postCategoryNum">
+	                                	<option th:each="pc : ${postCateList}" th:value="${pc.postCategoryNum}" th:text="${pc.postCategoryName}"></option>
+	                                </select>
+	                            </div>
+	                        </div>
+                            
+	                        <div class="form-group">
+	                            <label for="postTitle" class="col-sm-2 col-form-label">제목</label>
+	                            <input type="text" class="form-control" id="postTitle" name="postTitle" placeholder="제목" required="required">
+	                        </div>
+	                        <div class="form-group">
+	                            <label for="postContent">내용</label>
+	                            <textarea class="form-control" id="postContent" name="postContent" rows="15" placeholder="내용을 입력하세요." required="required"></textarea>
+	                        </div>
+	                        
+	                        <!-- Elements Modal -->
+	                        <div class="pt-5 mb-5" id="modal">
+	                            <div class="row">
+	                                <div class="col-md-6 col-lg-4">
+	                                    <h3 class="element-title mb-5 font-weight-bold">첨부 파일</h3>
+	                                    <!-- Button trigger modal -->
+	                                    <button id="attachBtn" class="btn btn-primary file-upload-btn" type="button">+ 파일 첨부하기 (0/10)</button>
+	                                    <input type="file" name="postFile" id="fileInput" style="display: none;" accept=".jpg, .jpeg, .gif, .png, .pdf" multiple>
+	                                    <div id="fileNames"></div>
+	                                </div>
+	                            </div>
+	                        </div>
+	
+	                        <div class="d-flex justify-content-end mt-10">
+	                            <!-- 취소 버튼 -->
+	                            <button type="button" id="cancle-Btn" class="btn btn-secondary cancle-Btn" onclick="location.href='/community'">취소</button>
+	                            <!-- 등록 버튼 -->
+	                            <button type="submit" id="submit-Btn" class="btn btn-primary submit-Btn">등록</button>
+	                        </div>
+	                    </form>
+	                </div>
+	            </div>
+	        </div>
+	    </section>
+	</th:block>
+
+	<th:block layout:fragment="customJsFIle">
+		<script th:src="@{/user/js/file.js}"></script>
+
+	</th:block>
+
+</html>

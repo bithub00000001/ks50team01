@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+                layout:decorate="~{user/layout/default}">
+                
+	<head>
+	    <title>게시글 수정</title>
+	</head>
+	
+	<th:block layout:fragment="customCss">
+        <link th:href="@{/user/css/postWrite.css}" rel="stylesheet">
+        
+        <!-- GOOGLE FONT -->
+    	<link href='https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700' rel='stylesheet'>
+    </th:block>
+    
+    <th:block layout:fragment="customPageSection">
+	    <!-- Elements Forms -->
+	    <section class="py-10">
+	        <div class="row">
+	            <div class="col-12">
+	                <h3 class="element-title">게시글 수정</h3>
+	                <div class="mb-6">
+	                    <form id="ModifyForm" th:object="${postInfo}" th:action="@{/community/postModify}" method="POST" enctype="multipart/form-data">
+	                          <input type="hidden" th:field="*{postNum}" />
+	                          
+	                          <div class="form-group">
+	                            <label for="postRegId" class="col-sm-2 col-form-label">작성자</label>
+	                            <input type="text" class="form-control" id="postRegId" name="postRegId" th:field="*{postRegId}" readonly="readonly">
+	                        </div>
+	                        
+						<div class="form-group">
+							<label for="postCateType">카테고리</label> 
+							<div class="select-default">
+								<select	class="select-option" id="postCateNum" name="postCateNum"> 
+									<option value="PST_CTGRY_1" th:selected="${postInfo.category.postCategoryNum == 'PST_CTGRY_1'}" >여행 정보</option>
+									<option value="PST_CTGRY_2" th:selected="${postInfo.category.postCategoryNum == 'PST_CTGRY_2'}" >여행 후기</option>
+									<option value="PST_CTGRY_3" th:selected="${postInfo.category.postCategoryNum == 'PST_CTGRY_3'}" >여행 친구 찾기</option>
+									<option value="PST_CTGRY_4" th:selected="${postInfo.category.postCategoryNum == 'PST_CTGRY_4'}" >자유게시판</option>
+									<option value="PST_CTGRY_5" th:selected="${postInfo.category.postCategoryNum == 'PST_CTGRY_5'}" >질문게시판</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="form-group">
+	                            <label for="postTitle" class="col-sm-2 col-form-label">제목</label>
+	                            <input type="text" class="form-control" id="postTitle" name="postTitle" th:field="*{postTitle}" required="required">
+	                        </div>
+	                        <div class="form-group">
+	                            <label for="postContent">내용</label>
+	                            <textarea class="form-control" id="postContent" name="postContent" rows="15" required="required" th:utext="*{postContent}"></textarea>
+	                        </div>
+	                        
+	                        <!-- Elements Modal -->
+	                        <div class="pt-5 mb-5" id="modal">s
+	                            <div class="row">
+	                                <div class="col-md-6 col-lg-4">
+	                                    <h3 class="element-title mb-5 font-weight-bold">첨부 파일</h3>
+	                                    <!-- Button trigger modal -->
+	                                    <button id="attachBtn" class="btn btn-primary file-upload-btn" type="button">+ 파일 첨부하기 (0/10)</button>
+	                                    <input type="file" name="postFile" id="fileInput" style="display: none;" accept=".jpg, .jpeg, .gif, .png, .pdf" multiple>
+	                                    <div id="fileNames"></div>
+	                                </div>
+	                            </div>
+	                        </div>
+	
+	                        <div class="d-flex justify-content-end mt-10">
+	                            <!-- 취소 버튼 -->
+	                            <button type="button" id="cancle-Btn" class="btn btn-secondary cancle-Btn" onclick="goBack()">취소</button>
+	                            <!-- 등록 버튼 -->
+	                            <button type="submit" id="submit-Btn" class="btn btn-primary submit-Btn">등록</button>
+	                        </div>
+	                    </form>
+	                </div>
+	            </div>
+	        </div>
+	    </section>
+	</th:block>
+	
+	
+	<th:block layout:fragment="customJsFIle">
+		<script th:src="@{/user/js/file.js}"></script>
+	
+		
+		<!-- 취소 버튼 눌렀을 때 이전 페이지로 -->
+		<script>
+		    function goBack() {
+		        window.history.back();
+		    }
+		</script>
+		
+    
+	</th:block>
+
+</html>

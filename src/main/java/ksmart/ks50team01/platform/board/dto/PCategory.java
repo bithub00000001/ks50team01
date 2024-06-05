@@ -1,5 +1,7 @@
 package ksmart.ks50team01.platform.board.dto;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -52,5 +54,7 @@ public class PCategory {
 	private String reportCateActive;
 	private String reportCategoryRegDate;
 	private String reportCategoryMdfDate;
+	
+	private List<PCategory> categoryList;
 	
 }

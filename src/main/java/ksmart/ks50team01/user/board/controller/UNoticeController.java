@@ -47,7 +47,7 @@ public class UNoticeController {
 		uNoticeService.increaseViewCount(noticeNum);
 		
 		// 게시물 정보를 가져와서 모델에 담아 상세 페이지로 전달
-		UNotice noticeDetail = uNoticeService.getNoticeByNoticeNum(noticeNum);
+		UNotice noticeDetail = uNoticeService.getNoticeDetail(noticeNum);
 	
 	    model.addAttribute("noticeDetail", noticeDetail);
 	    model.addAttribute("noticeTitle", noticeDetail.getNoticeTitle());

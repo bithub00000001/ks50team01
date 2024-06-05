@@ -73,16 +73,14 @@
 }
 
 
-
-.like-btn {
-    float: right;
+.update-Btn, 
+.delete-Btn {
+	text-align: right;
 }
 
-.dislike-btn {
-    float: right;
-} 
-
-
+.update-Btn {
+	margin-right: 5px;
+}
 
 .comment-meta {
     display: flex;

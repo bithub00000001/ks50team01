@@ -14,13 +14,10 @@ public interface UNoticeMapper {
 	List<UNotice> getNoticeList();
 	
 	// 공지사항 상세 조회
-	UNotice getNoticeByNoticeNum(String noticeNum);
-	//List<UNotice> getNoticeDetailList();
-
+	UNotice getNoticeDetail(String noticeNum);
 
 	// 조회수 증가
 	int increaseViewCount(String noticeNum);
-	
 	
 
 }

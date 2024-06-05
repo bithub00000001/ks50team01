@@ -1,10 +1,13 @@
 package ksmart.ks50team01.platform.board.dto;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
 public class PQna {
 	private String qnaNum;
+	private int qnaRowNum;
 	private String qnaRegId;
 	private String faqCateType;
 	private String qnaProCate;
@@ -15,10 +18,10 @@ public class PQna {
 	private String qnaMdfDate;
 	private String qnartnDate;
 	
-	// 추가된 association을 위한 멤버 변수
-	private PFaq faqCate;
+	private PCategory category;
 	
-	private PAnswer answer;
-	
+	private List<PAnswer> answerList;
+
+
 
 }

@@ -58,8 +58,8 @@
 	</select>
 	
 	
-	<!-- getNoticeByNoticeNum 쿼리 정의 -->
-	<select id="getNoticeByNoticeNum" resultMap="noticeResultMap">
+	<!-- getNoticeDetail 쿼리 정의 -->
+	<select id="getNoticeDetail" resultMap="noticeResultMap">
 		/* 공지사항 상세 조회 */
 		SELECT
 		    N.NTC_NO,
@@ -92,13 +92,4 @@
         	NTC_NO = #{noticeNum};
     </update>
     
-    
-    
-    
-
-    
-    
-	
-	
-	
 </mapper>	

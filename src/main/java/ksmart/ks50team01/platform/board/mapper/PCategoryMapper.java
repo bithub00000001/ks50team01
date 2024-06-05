@@ -9,8 +9,8 @@ import ksmart.ks50team01.platform.board.dto.PCategory;
 @Mapper
 public interface PCategoryMapper {
 	
-	// 게시판 종류에 해당하는 카테고리 조회
-	List<PCategory> getCategoryListByBoardType(String boardType);
+	// 커뮤니티 카테고리 조회
+	List<PCategory> getCommunityCategoryList();
 	
 	// 공지사항 카테고리 조회
 	List<PCategory> getNoticeCategoryList();
@@ -21,11 +21,10 @@ public interface PCategoryMapper {
 	// 신고 카테고리 조회
 	List<PCategory> getReportCategoryList();
 	
-	// 커뮤니티 카테고리 조회
-	List<PCategory> getCommunityCategoryList();
 	
 	
-	
+	// 게시판 종류에 해당하는 카테고리 조회
+	//List<PCategory> getCategoryListByBoardType(String boardType);
 	
 	
 	
@@ -36,7 +35,6 @@ public interface PCategoryMapper {
 	// 카테고리 수정
 	String categoryModify(PCategory pCategory);
 
-	
 
 	
 }

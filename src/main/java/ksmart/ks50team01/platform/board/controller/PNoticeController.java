@@ -16,7 +16,6 @@ import ksmart.ks50team01.platform.board.dto.PNotice;
 import ksmart.ks50team01.platform.board.service.PNoticeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
 @Controller
@@ -30,18 +29,31 @@ public class PNoticeController {
 	
 	// 공지사항 조회 페이지
 	@GetMapping("/noticeList")
-	public String noticeList(Model model) {
-	    List<PNotice> noticeList = pNoticeService.getNoticeList();
+	public String noticeList(@RequestParam(value = "category", required = false) String category, Model model) {
+	    List<PNotice> noticeList;
+	    
+	    if (category != null) {
+	    	noticeList = pNoticeService.getNoticeListByCategory(category);
+	    } else {
+	    	noticeList = pNoticeService.getNoticeList();
+	    }
+	    
 	    log.info("noticeList: {}", noticeList);
+	    
 	    model.addAttribute("noticeList", noticeList);
+	    model.addAttribute("selectedCategory", category);
 		model.addAttribute("title", "공지사항 조회");
+		
 		return "platform/board/noticeList";
 	}
 
 	// 공지사항 작성 POST 요청
-	@PostMapping("/noticeWrite")
-	public String noticeWrite(PNotice pNotice, Model model) {
-	    pNoticeService.insertNotice(pNotice);
+	@PostMapping("/noticeAdd")
+	public String noticeAdd(PNotice pNotice, Model model) {
+		String contentWithLineBreaks = pNotice.getNoticeContent().replace("\n", "<br>");
+		pNotice.setNoticeContent(contentWithLineBreaks);
+        
+	    pNoticeService.noticeAdd(pNotice);
 	    
 	    model.addAttribute("title", "공지사항 작성");
 	    
@@ -49,8 +61,8 @@ public class PNoticeController {
 	}
 	
 	// 공지사항 작성 폼 이동
-	@GetMapping("/noticeWrite")
-	public String noticeWrite(Model model) {
+	@GetMapping("/noticeAdd")
+	public String noticeAdd(Model model) {
 		List<PCategory> noticeCateList = pNoticeService.getNoticeCateList();
 		log.info("noticeCateList: {}", noticeCateList);
 		
@@ -63,15 +75,18 @@ public class PNoticeController {
 		model.addAttribute("noticeCateList", noticeCateList);
 		model.addAttribute("title", "공지사항 작성 페이지");
 		
-		return "platform/board/noticeWrite";
+		return "platform/board/noticeAdd";
 	}
 	
 	// 공지사항 수정 POST 요청
 		@PostMapping("/noticeModify")
 		public String noticeModify(PNotice pNotice, Model model) {
+			String contentWithLineBreaks = pNotice.getNoticeContent().replace("\n", "<br>");
+			pNotice.setNoticeContent(contentWithLineBreaks);
+			
+			pNoticeService.noticeModify(pNotice);
 			
 			log.info("공지사항 수정: {}", pNotice);
-			pNoticeService.noticeModify(pNotice);
 			
 			model.addAttribute("title", "공지사항 수정");
 			
@@ -83,18 +98,22 @@ public class PNoticeController {
 	public String noticeModify(@RequestParam(value = "noticeNum") String noticeNum, Model model) {
 		PNotice noticeInfo = pNoticeService.getNoticeInfoByNum(noticeNum);
 		
-		log.info("faqInfo : {}", noticeInfo);
+	    // <br> 태그를 \n으로 변환
+	    String contentWithLineBreaks = noticeInfo.getNoticeContent().replace("<br>", "\n");
+	    noticeInfo.setNoticeContent(contentWithLineBreaks);
 		
-		model.addAttribute("noticeInfo : {}", noticeInfo);
+		log.info("noticeInfo : {}", noticeInfo);
+		
+		model.addAttribute("noticeInfo", noticeInfo);
 		model.addAttribute("title", "공지사항 수정 페이지");
 		
 		return "platform/board/noticeModify";
 	}
 	
 	// 공지사항 삭제 POST 요청
-	@PostMapping("/noticeDelete")
-	public String noticeDelete(@RequestParam(value="noticeNum") String noticeNum, Model model) {
-		pNoticeService.noticeDelete(noticeNum);
+	@PostMapping("/noticeRemove")
+	public String noticeRemove(@RequestParam(value="noticeNum") String noticeNum, Model model) {
+		pNoticeService.noticeRemove(noticeNum);
 		
 		model.addAttribute("title", "공지사항 삭제");
 		model.addAttribute("noticeNum", noticeNum);
@@ -102,19 +121,21 @@ public class PNoticeController {
 		return "redirect:/platform/board/noticeList";
 	}
 	
+	
+	/*
 	// 공지사항 삭제
-	@GetMapping("/noticeDelete")
-	public String noticeDeletePage(@RequestParam(value="noticeNum") String noticeNum, Model model) {
+	@GetMapping("/noticeRemove")
+	public String noticeRemove(@RequestParam(value="noticeNum") String noticeNum, Model model) {
 		
 		List<PNotice> noticeList = pNoticeService.getNoticeList();
-		pNoticeService.noticeDelete(noticeNum);
+		pNoticeService.noticeRemove(noticeNum);
 		
 		model.addAttribute("faqList", noticeList);
 		model.addAttribute("faqNum", noticeNum);
 		model.addAttribute("title", "공지사항 삭제");
 		
 		return "redirect:/platform/board/noticeList";
-	}
+	} */
 	
 
 	
