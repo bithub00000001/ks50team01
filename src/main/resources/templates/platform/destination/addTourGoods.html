@@ -52,15 +52,9 @@
 							<td colspan="2"><input type="text" id="tourGoodsTime" name="tourGoodsTime" placeholder="관광옵션 소요시간을 입력해주세요" disabled="disabled" /></td>
 						</tr>
 					 	<tr>
-							<td><label for="regionSCateName">관광상품 지역 소분류명</label></td>
-							<td colspan="2"><input type="text" id="regionSCateName" name="regionSCateName" placeholder="지역을 입력해주세요" disabled="disabled" /></td>
+							<td><label for="RegionSCate">관광상품 지역 소분류명</label></td>
+							<td colspan="2"><input type="text" id="RegionSCate" name="RegionSCate" placeholder="지역을 입력해주세요" disabled="disabled" /></td>
 						</tr>
-						
-						<tr>
-							<td><label for="partnerBPlaceCode">관광상품 제휴코드</label></td>
-							<td colspan="2"><input type="text" id="partnerBPlaceCode" name="partnerBPlaceCode" placeholder="관광상품 제휴코드를 입력해주세요" disabled="disabled" /></td>
-						</tr>
-						
 						<tr>
 							<td><label for="tourGoodsCode">관광상품 코드</label></td>
 							<td colspan="2"><input type="text" id="tourGoodsCode" name="tourGoodsCode" placeholder="관광상품 코드를 입력해주세요" disabled="disabled" /></td>
@@ -70,14 +64,17 @@
 							<td colspan="2"><input type="text" id="tourGoodsOptionCd" name="tourGoodsOptionCd" placeholder="제휴브랜드명을 입력해주세요" disabled="disabled" /></td>
 						</tr>
 						<tr>
-							<td><label for="tourGoodsOptPrice">관광상품 비용</label></td>
-							<td colspan="2"><input type="text" id="tourGoodsOptPrice" name="tourGoodsOptPrice" placeholder="관광상품 비용을 입력해주세요" disabled="disabled" /></td>
+							<td><label for="tourTotal">관광상품 비용</label></td>
+							<td colspan="2"><input type="text" id="tourTotal" name="tourTotal" placeholder="관광상품 비용을 입력해주세요" disabled="disabled" /></td>
 						</tr>
 						<tr>
 							<td><label for="tourOptionRemarks">관광상품 비고</label></td>
 							<td colspan="2"><input type="text" id="tourOptionRemarks" name="tourOptionRemarks" placeholder="기타 옵션을 입력해주세요" disabled="disabled" /></td>
 						</tr>
-						
+						<tr>
+							<td><label for="tourRegDate">관광상품 등록일자</label></td>
+							<td colspan="2"><input type="text" id="tourRegDate" name="tourRegDate" placeholder="등록일자를 입력해주세요" disabled="disabled" /></td>
+						</tr>
 						
 					<tfoot>
 						<tr>
@@ -214,11 +211,7 @@
 	            console.log(e.target.value);
 	            const target = e.target;
 	            const value = $(target).val();
-	            if(!value) {
-	            	console.log('검색어를 입력해주세요.');
-	            	return;
-	            }
-	            $('#searchResultContainer').empty();
+	            if(!value) console.log('검색어를 입력해주세요.')
 	            const request = $.ajax({
 	                url : "/platform/destination/search-tour-name",
 	                method: "GET",
@@ -230,16 +223,6 @@
 	            request.done(function(data){
 	                console.log(data);
 	                searchResults.push(...data);
-	                data.forEach(tourInfo => {
-	                	const li = $('<li></li>', {
-		                    'class': 'list-group-item d-flex justify-content-between align-items-center mb-5',
-		                    'id': 'searchList'
-		                }).text(tourInfo.tourName);
-	                	// 관광지 이름과 일치하는 관광지 정보 테이블 pk를 input(hidden)에 입력
-	                	$('#tourInfoCode').val(tourInfo.tourInfoCode);
-	                	$('#searchResultContainer').append(li);
-		                //searchResultContainer.append(li);
-	                })
 	            });
 	            request.fail(function(jqXHR, status, error){
 	                console.log(error);
@@ -247,35 +230,28 @@
 	        }));
 
 	        const searchQueriesBtn = $('#searchQueries');
-	        searchQueriesBtn.click((e) => {
-	        	const value = $('#searchTourNameInput').val();
-	        	if(!value) return ;
-	        	$('#searchResultContainer').empty();
+	        searchQueriesBtn.click(() => {
 		        // 검색 결과 리스트 표시
-	        	const request = $.ajax({
-	                url : "/platform/destination/search-tour-name",
-	                method: "GET",
-	                data: {
-	                    tourName: value
-	                },
-	                dataType : "json"
-	            });
-	            request.done(function(data){
-	                console.log(data);
-	                searchResults.push(...data);
-	                data.forEach(tourInfo => {
-	                	const li = $('<li></li>', {
-		                    'class': 'list-group-item d-flex justify-content-between align-items-center mb-5',
-		                    'id': 'searchList'
-		                }).text(tourInfo.tourName);
-	                	$('#tourInfoCode').val(tourInfo.tourInfoCode);
-	                	$('#searchResultContainer').append(li);
-		                //searchResultContainer.append(li);
-	                })
-	            });
-	            request.fail(function(jqXHR, status, error){
-	                console.log(error);
-	            });
+		        const searchResultContainer = $('#searchResultContainer');
+		        searchResultContainer.empty();
+	            searchResults.forEach((tourInfo) => {
+	                const li = $('<li></li>', {
+	                    class: 'list-group-item d-flex justify-content-between align-items-center mb-5',
+	                    id: 'searchList',
+	                    text: tourInfo.tourName
+	                });
+	                
+	                /* const insertBtn = $('<button></button>', {
+	                    class: 'btn btn-primary btn-xs addTourNameBtn',
+	                    id: 'addTourNameBtn',
+	                    text: '추가'
+	                }); */
+	                $('#tourInfoCode').val(tourInfo.tourInfoCode);
+	                searchResultContainer.append(li);
+	                /* searchResultContainer.append(insertBtn); */
+	                
+	                searchResults = [];
+	           	 });
 	        });
 	        $('#addTourNameBtn').click(function() {
 	        	let tourNameText = $(this).parent().parent().find('li').text();
