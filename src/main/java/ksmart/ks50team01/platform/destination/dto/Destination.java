@@ -21,7 +21,7 @@ public class Destination {
 	private String tourGoodsCate;
 	private String tourGoodsList;
 	private String tourGoodsTime;
-	private String RegionSName;
+	private String regionSName;
 	private String regionSCateName;
 	private String tourgoodsAuthorityId;
 	private String tourGoodsCode;
