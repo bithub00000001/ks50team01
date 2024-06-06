@@ -14,31 +14,22 @@
     	<link href='https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700' rel='stylesheet'>
 	</th:block>
 
-
-
-<th:block layout:fragment="customPageSection">
-	<!-- list-style -->
-
-
-	<!-- 여기에 메인 컨텐츠가 삽입됩니다. -->
-	<!-- 드롭다운 메뉴 -->
-	<div class="main-wrapper pages">
-		<div class="d-flex align-items-start">
-			<div class="dropdown">
-				<button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">공지사항</button>
-				<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-					<li><a class="dropdown-item" href="javascript:void(0)">일반 공지</a></li>
-					<li><a class="dropdown-item" href="javascript:void(0)">긴급 공지</a></li>
-					<li><a class="dropdown-item" href="javascript:void(0)">예정 공지</a></li>
-					<li><a class="dropdown-item" href="javascript:void(0)">시스템 공지</a></li>
-					<li><a class="dropdown-item" href="javascript:void(0)">이벤트 공지</a></li>
-				</ul>
-			</div>
-		</div>  
-
-
-
+	<th:block layout:fragment="customPageSection">
 		<!-- 드롭다운 메뉴 -->
+		<div class="main-wrapper pages">
+			<div class="d-flex align-items-start">
+				<div class="dropdown">
+					<button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">공지사항</button>
+					<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+						<li><a class="dropdown-item" href="javascript:void(0)">일반 공지</a></li>
+						<li><a class="dropdown-item" href="javascript:void(0)">긴급 공지</a></li>
+						<li><a class="dropdown-item" href="javascript:void(0)">예정 공지</a></li>
+						<li><a class="dropdown-item" href="javascript:void(0)">시스템 공지</a></li>
+						<li><a class="dropdown-item" href="javascript:void(0)">이벤트 공지</a></li>
+					</ul>
+				</div>
+			</div>  
+
 		<!-- <div class="dropdown">
 			<button class="btn btn-primary dropdown-toggle" type="button"
 				id="dropdownMenuButton" data-bs-toggle="dropdown">공지사항</button>
@@ -51,7 +42,6 @@
 				</th:block>
 			</ul>
 		</div> -->
-
 
 		<div class="flex-grow-1 d-flex justify-content-center">
 			<div id="board-search" style="width: 500px;">
@@ -66,241 +56,213 @@
 			</div>
 		</div>
 
-
-
 		<div class="pt-5 mb-5" id="navs">
 			<div class="row">
 				<div class="col-lg-12 mb-12 mb-lg-0">
 					<div id="destination">
 						<div class="mb-0">
-							<ul class="nav nav-tabs destination-tabs" id="destinationTab"
-								role="tablist">
-								<li class="nav-item"><a class="nav-link active"
-									id="overView-tab" data-bs-toggle="tab" href="#overView"
-									role="tab" aria-controls="overView" aria-selected="true">최신순</a>
+							<ul class="nav nav-tabs destination-tabs" id="destinationTab" role="tablist">
+								<li class="nav-item"><a class="nav-link active" id="overView-tab" data-bs-toggle="tab" href="#overView" role="tab" aria-controls="overView" aria-selected="true">최신순</a>
 								</li>
-
-								<li class="nav-item"><a class="nav-link" id="tourGuide-tab"
-									data-bs-toggle="tab" href="#tourGuide" role="tab"
-									aria-controls="tourGuide" aria-selected="false">조회순</a></li>
-
-
+								<li class="nav-item"><a class="nav-link" id="tourGuide-tab" data-bs-toggle="tab" href="#tourGuide" role="tab" aria-controls="tourGuide" aria-selected="false">조회순</a></li>
 								<li class="nav-item d-none"></li>
 							</ul>
-
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 
-
 		<!-- body -->
-		<div class="row">
-			<div class="col-sm-12">
-				<div class="table-responsive">
-
-					<table class="table table-hover table-bordered">
-						<colgroup>
-							<col class="col-sm-1" />
-							<col class="col-sm-7" />
-							<col class="col-sm-1" />
-							<col class="col-sm-2" />
-							<col class="col-sm-1" />
-						</colgroup>
-						<thead>
-							<tr class="active" style="text-align: center">
-								<th>번호</th>
-								<th>제목</th>
-								<th>작성자</th>
-								<th>등록일</th>
-								<th>조회</th>
-							</tr>
-						</thead>
-						
-						<tbody>
-                            <tr th:each="l, i : ${noticeList}">
-                                <td class="text-center" th:text="${l.noticeRowNum}"></td>
-                                <td>
-                                	<!-- 신규 공지사항 뱃지 (30일 이내)-->
-                                	<th:block th:if="${l.isNew}">
-          								<span class="badge bg-warning">N</span>
-        							</th:block>
-                                    <!-- 공지사항 카테고리 뱃지 -->
-                                    <i class="badge rounded-pill bg-primary badge-cate" th:text="${l.category.noticeCategoryName}"></i>
-                                    <!-- 공지사항 제목 -->
-                                    <a th:href="@{/notice/noticeDetail(noticeNum=${l.noticeNum})}" th:text="${l.noticeTitle}"></a>
-                                </td>
-                                <td class="text-center" th:text="${l.noticeRegId}"></td>
-                                <td class="text-center" th:text="${#strings.substring(l.noticeRegDate, 0, 10)}"></td>
-                                <td class="text-center" th:text="${l.noticeInqCnt}"></td>
-                            </tr>
-                        </tbody>
-						
-					</table>
-				</div>
+		<div class="col-sm-12">
+			<div class="table-responsive">
+				<table class="table table-hover table-bordered">
+					<colgroup>
+						<col class="col-sm-1" />
+						<col class="col-sm-7" />
+						<col class="col-sm-1" />
+						<col class="col-sm-2" />
+						<col class="col-sm-1" />
+					</colgroup>
+					<thead>
+						<tr class="active" style="text-align: center">
+							<th>번호</th>
+							<th>제목</th>
+							<th>작성자</th>
+							<th>등록일</th>
+							<th>조회</th>
+						</tr>
+					</thead>
+					<tbody>
+                           <tr th:each="l, i : ${noticeList}">
+                               <td class="text-center" th:text="${l.noticeRowNum}"></td>
+                               <td>
+                               	<!-- 신규 공지사항 뱃지 (30일 이내)-->
+                               	<th:block th:if="${l.isNew}">
+         								<span class="badge bg-warning">N</span>
+       							</th:block>
+                                   <!-- 공지사항 카테고리 뱃지 -->
+                                   <i class="badge rounded-pill bg-primary badge-cate" th:text="${l.category.noticeCategoryName}"></i>
+                                   <!-- 공지사항 제목 -->
+                                   <a th:href="@{/notice/noticeDetail(noticeNum=${l.noticeNum})}" th:text="${l.noticeTitle}"></a>
+                               </td>
+                               <td class="text-center" th:text="${l.noticeRegId}"></td>
+                               <td class="text-center" th:text="${#strings.substring(l.noticeRegDate, 0, 10)}"></td>
+                               <td class="text-center" th:text="${l.noticeInqCnt}"></td>
+                           </tr>
+                       </tbody>
+				</table>
 			</div>
 		</div>
 
 		<!-- 페이징 -->
-		<section class="pt-5 pt-md-7">
-			<div class="container" style="margin-bottom: 50px">
-				<nav aria-label="Page navigation">
-					<ul class="pagination justify-content-center align-items-center">
-						<li class="page-item"><a class="page-link" href="#" tabindex="-1"> 
-							<i aria-hidden="true"></i> ◀ 이전 </a></li>
-
-						<li class="page-item"><a class="page-link active" href="#">1</a></li>
-
-						<li class="page-item"><a class="page-link" href="#">2</a></li>
-
-						<li class="page-item"><a class="page-link" href="#">3</a></li>
-
-						<li class="page-item"><a class="page-link" href="#">4</a></li>
-
-						<li class="page-item"><a class="page-link" href="#">5</a></li>
-
-						<li class="page-item"><a class="page-link" href="#">다음 ▶ <i aria-hidden="true"></i>
-						</a></li>
-					</ul>
-				</nav>
-			</div>
-		</section>
-	</div>
-</th:block>
+			<section class="pt-5 pt-md-7">
+				<div class="container" style="margin-bottom: 50px">
+					<nav aria-label="Page navigation">
+						<ul class="pagination justify-content-center align-items-center">
+							<li class="page-item">
+								<a class="page-link" th:if="${currentPage > 1}" th:href="@{/notice(currentPage=${currentPage - 1})}" tabindex="-1"> 
+									<i aria-hidden="true"></i> ◀ 이전 </a>
+							</li>
+							<li th:each="num : ${#numbers.sequence(startPageNum, lastPageNum)}" class="page-item">
+								<a th:if="${num != currentPage}" class="page-link" th:href="@{/notice(currentPage=${num})}" th:text="|${num}|"></a>
+							   	<span th:unless="${num != currentPage}"class="page-link current-page" th:text="|[${num}]|"></span> 
+							</li>
+							<li class="page-item">
+								<a th:if="${currentPage < lastPage}" class="page-link" th:href="@{/notice(currentPage=${currentPage + 1})}">다음 ▶ 
+								<i aria-hidden="true"></i></a>
+							</li>
+						</ul>
+					</nav>
+				</div>
+			</section>
+		</div>
+	</th:block>
 
 
-
-
-
-<th:block layout:fragment="customJs">
-		<script>
-			document.addEventListener("DOMContentLoaded", function() {
-				// 최신순과 조회순 버튼 요소 가져오기
-				const newestBtn = document.getElementById('overView-tab');
-				const mostViewedBtn = document.getElementById('tourGuide-tab');
-
-				// 테이블의 tbody 요소 가져오기
-				const tbody = document.querySelector('tbody');
-
-				// 최신순 버튼 클릭 시
-				newestBtn.addEventListener('click', function() {
-					sortTable(3, 'desc'); // 등록일을 기준으로 내림차순 정렬
-				});
-
-				// 조회순 버튼 클릭 시
-				mostViewedBtn.addEventListener('click', function() {
-					sortTable(4, 'desc'); // 조회수를 기준으로 내림차순 정렬
-				});
-
-				// 테이블 정렬 함수
-				function sortTable(columnIndex, order) {
-					const rows = Array.from(tbody.querySelectorAll('tr'));
-
-					// 정렬할 때 기준이 되는 값 추출
-					const getValue = (row) => {
-						const cellValue = row.cells[columnIndex].textContent.trim();
-						return columnIndex === 3 ? new Date(cellValue) : parseInt(cellValue, 10);
-					};
-
-					// 정렬하기
-					rows.sort((a, b) => {
-						const aValue = getValue(a);
-						const bValue = getValue(b);
-						if (order === 'asc') {
-							return aValue > bValue ? 1 : -1;
-						} else {
-							return aValue < bValue ? 1 : -1;
-						}
+	<th:block layout:fragment="customJs">
+			<script>
+				document.addEventListener("DOMContentLoaded", function() {
+					// 최신순과 조회순 버튼 요소 가져오기
+					const newestBtn = document.getElementById('overView-tab');
+					const mostViewedBtn = document.getElementById('tourGuide-tab');
+	
+					// 테이블의 tbody 요소 가져오기
+					const tbody = document.querySelector('tbody');
+	
+					// 최신순 버튼 클릭 시
+					newestBtn.addEventListener('click', function() {
+						sortTable(3, 'desc'); // 등록일을 기준으로 내림차순 정렬
 					});
-
-					// 정렬된 순서대로 다시 테이블에 추가
-					rows.forEach(row => tbody.appendChild(row));
-				}
-			});
-        
-
-     
-     
-     
-     // 드롭다운 메뉴 선택 시 해당하는 공지사항만 보이게 하는 함수
-        function filterNotices(category) {
-            const tbody = document.querySelector('tbody');
-            const rows = tbody.querySelectorAll('tr');
-
-            rows.forEach(row => {
-                const categoryBadge = row.querySelector('.badge-cate'); // 각 행의 게시물 카테고리 뱃지
-                const categoryText = categoryBadge.textContent; // 뱃지에 표시된 카테고리 텍스트
-                const display = category === '전체' || categoryText === category ? '' : 'none'; // 선택된 카테고리와 일치하는 행이면 보이게 함, 아니면 숨김
-
-                row.style.display = display;
-            });
-        }
-
-        // 페이지 로드 시 실행되는 함수
-        document.addEventListener("DOMContentLoaded", function() {
-            const dropdownItems = document.querySelectorAll('.dropdown-item');
-
-            dropdownItems.forEach(item => {
-                item.addEventListener('click', function() {
-                    const selectedCategory = this.textContent.trim(); // 선택된 드롭다운 메뉴의 텍스트
-
-                    // 선택된 카테고리에 해당하는 게시물만 보이게 함
-                    filterNotices(selectedCategory);
-                });
-            });
-        });
-     
-     
-     
-     
-        document.addEventListener("DOMContentLoaded", function() {
-            // 검색 버튼 요소 가져오기
-            const searchBtn = document.querySelector('#board-search button[type="submit"]');
-
-            // 검색 버튼 클릭 시
-            searchBtn.addEventListener('click', function(event) {
-                event.preventDefault(); // 기본 동작 방지 (페이지 새로고침 방지)
-                performSearch();
-            });
-
-            // 검색어 입력 필드에서 Enter 키 눌렀을 때
-            document.querySelector('#board-search input[type="text"]').addEventListener('keyup', function(event) {
-                if (event.keyCode === 13) { // Enter 키 눌렀을 때
-                    performSearch();
-                }
-            });
-
-            // 검색 기능을 수행하는 함수
-            function performSearch() {
-                const searchValue = document.querySelector('#board-search input[type="text"]').value.trim().toLowerCase(); // 검색어를 소문자로 변환하여 저장
-                const rows = document.querySelectorAll('tbody tr'); // 테이블의 모든 행 가져오기
-                let found = false; // 검색 결과 여부 초기화
-
-                rows.forEach(row => {
-                    const title = row.querySelector('td:nth-child(2)').textContent.replace(/\s+/g, '').toLowerCase(); // 각 행의 제목에서 공백을 제거하고 소문자로 변환하여 저장
-                    const searchValueWithoutSpaces = searchValue.replace(/\s+/g, ''); // 검색어에서 공백을 제거한 후 소문자로 변환하여 저장
-                    
-                    if (title.includes(searchValueWithoutSpaces)) { // 검색어가 제목에 포함되어 있다면 해당 행을 보이게 함
-                        row.style.display = '';
-                        found = true; // 검색 결과가 있음을 표시
-                    } else { // 검색어가 제목에 포함되어 있지 않다면 해당 행을 숨김
-                        row.style.display = 'none';
-                    }
-                });
-
-                // 검색 결과가 없을 경우 메시지 출력
-                if (!found) {
-                    document.querySelector('#no-results').style.display = 'block';
-                } else {
-                    document.querySelector('#no-results').style.display = 'none';
-                }
-            }
-        });
-        
-        
-        
-    </script>
-
-</th:block>
+	
+					// 조회순 버튼 클릭 시
+					mostViewedBtn.addEventListener('click', function() {
+						sortTable(4, 'desc'); // 조회수를 기준으로 내림차순 정렬
+					});
+	
+					// 테이블 정렬 함수
+					function sortTable(columnIndex, order) {
+						const rows = Array.from(tbody.querySelectorAll('tr'));
+	
+						// 정렬할 때 기준이 되는 값 추출
+						const getValue = (row) => {
+							const cellValue = row.cells[columnIndex].textContent.trim();
+							return columnIndex === 3 ? new Date(cellValue) : parseInt(cellValue, 10);
+						};
+	
+						// 정렬하기
+						rows.sort((a, b) => {
+							const aValue = getValue(a);
+							const bValue = getValue(b);
+							if (order === 'asc') {
+								return aValue > bValue ? 1 : -1;
+							} else {
+								return aValue < bValue ? 1 : -1;
+							}
+						});
+	
+						// 정렬된 순서대로 다시 테이블에 추가
+						rows.forEach(row => tbody.appendChild(row));
+					}
+				});
+	        
+	
+	     // 드롭다운 메뉴 선택 시 해당하는 공지사항만 보이게 하는 함수
+	        function filterNotices(category) {
+	            const tbody = document.querySelector('tbody');
+	            const rows = tbody.querySelectorAll('tr');
+	
+	            rows.forEach(row => {
+	                const categoryBadge = row.querySelector('.badge-cate'); // 각 행의 게시물 카테고리 뱃지
+	                const categoryText = categoryBadge.textContent; // 뱃지에 표시된 카테고리 텍스트
+	                const display = category === '전체' || categoryText === category ? '' : 'none'; // 선택된 카테고리와 일치하는 행이면 보이게 함, 아니면 숨김
+	
+	                row.style.display = display;
+	            });
+	        }
+	
+	        // 페이지 로드 시 실행되는 함수
+	        document.addEventListener("DOMContentLoaded", function() {
+	            const dropdownItems = document.querySelectorAll('.dropdown-item');
+	
+	            dropdownItems.forEach(item => {
+	                item.addEventListener('click', function() {
+	                    const selectedCategory = this.textContent.trim(); // 선택된 드롭다운 메뉴의 텍스트
+	
+	                    // 선택된 카테고리에 해당하는 게시물만 보이게 함
+	                    filterNotices(selectedCategory);
+	                });
+	            });
+	        });
+	     
+	     
+	        document.addEventListener("DOMContentLoaded", function() {
+	            // 검색 버튼 요소 가져오기
+	            const searchBtn = document.querySelector('#board-search button[type="submit"]');
+	
+	            // 검색 버튼 클릭 시
+	            searchBtn.addEventListener('click', function(event) {
+	                event.preventDefault(); // 기본 동작 방지 (페이지 새로고침 방지)
+	                performSearch();
+	            });
+	
+	            // 검색어 입력 필드에서 Enter 키 눌렀을 때
+	            document.querySelector('#board-search input[type="text"]').addEventListener('keyup', function(event) {
+	                if (event.keyCode === 13) { // Enter 키 눌렀을 때
+	                    performSearch();
+	                }
+	            });
+	
+	            // 검색 기능을 수행하는 함수
+	            function performSearch() {
+	                const searchValue = document.querySelector('#board-search input[type="text"]').value.trim().toLowerCase(); // 검색어를 소문자로 변환하여 저장
+	                const rows = document.querySelectorAll('tbody tr'); // 테이블의 모든 행 가져오기
+	                let found = false; // 검색 결과 여부 초기화
+	
+	                rows.forEach(row => {
+	                    const title = row.querySelector('td:nth-child(2)').textContent.replace(/\s+/g, '').toLowerCase(); // 각 행의 제목에서 공백을 제거하고 소문자로 변환하여 저장
+	                    const searchValueWithoutSpaces = searchValue.replace(/\s+/g, ''); // 검색어에서 공백을 제거한 후 소문자로 변환하여 저장
+	                    
+	                    if (title.includes(searchValueWithoutSpaces)) { // 검색어가 제목에 포함되어 있다면 해당 행을 보이게 함
+	                        row.style.display = '';
+	                        found = true; // 검색 결과가 있음을 표시
+	                    } else { // 검색어가 제목에 포함되어 있지 않다면 해당 행을 숨김
+	                        row.style.display = 'none';
+	                    }
+	                });
+	
+	                // 검색 결과가 없을 경우 메시지 출력
+	                if (!found) {
+	                    document.querySelector('#no-results').style.display = 'block';
+	                } else {
+	                    document.querySelector('#no-results').style.display = 'none';
+	                }
+	            }
+	        });
+	        
+	        
+	    </script>
+	
+	</th:block>
+	
 </html>

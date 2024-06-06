@@ -1,6 +1,7 @@
 package ksmart.ks50team01.user.board.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -30,6 +31,10 @@ public interface UQnaMapper {
 
 	// 1:1문의 삭제
 	void qnaRemove(String qnaNum);
+
+	List<Map<String, Object>> getQnaListByPage(Map<String, Object> paramMap);
+
+	int getQnaListRowCnt();
 
 
 }
