@@ -1,6 +1,7 @@
 package ksmart.ks50team01.user.board.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,14 +26,27 @@ public class UQnaController {
 	
 	// 1:1문의 목록 조회
 	@GetMapping({"/",""})
-	public String qnaList(Model model) {
-		List<UQna> qnaList = uQnaService.getQnaList();
-		log.info("qnaList: {}", qnaList);
+	public String qnaList(@RequestParam(value="currentPage", required = false, defaultValue = "1") int currentPage,
+			Model model) {
+		//List<UQna> qnaList = uQnaService.getQnaList();
+		
+		Map<String, Object> resultMap = uQnaService.getQnaList(currentPage);
+		
+		@SuppressWarnings("unchecked")
+		List<Map<String, Object>> qnaList = (List<Map<String, Object>>) resultMap.get("qnaList");
+		int lastPage = (int) resultMap.get("lastPage");
+		int startPageNum = (int) resultMap.get("startPageNum");
+		int lastPageNum = (int) resultMap.get("lastPageNum");
+		
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("lastPage", lastPage);
+		model.addAttribute("startPageNum", startPageNum);
+		model.addAttribute("lastPageNum", lastPageNum);
+		
 		model.addAttribute("qnaList", qnaList);
 		model.addAttribute("title", "1:1문의");
 		
 		return "user/board/qnaList";
-		
 	}
 	
 	// 1:1문의 상세 조회
@@ -66,8 +80,6 @@ public class UQnaController {
 		return "redirect:/qna";
 	}
 	
-	
-
 	
 	// 1:1문의 작성 폼 이동
 	@GetMapping("/qnaAdd")

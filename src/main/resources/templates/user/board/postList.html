@@ -7,7 +7,6 @@
 	<title>커뮤니티</title>
 	</head>
 
-
 	<th:block layout:fragment="customCss">
 		<link th:href="@{/user/css/list-style.css}" rel="stylesheet" >
 		<link th:href="@{/user/css/postList.css}" rel="stylesheet" >
@@ -18,13 +17,11 @@
 
 
 	<th:block layout:fragment="customPageSection">
-		<!-- 여기에 메인 컨텐츠가 삽입됩니다. -->
+		<!-- 드롭다운 메뉴 -->
 		<div class="main-wrapper pages">
-	
 			<div class="d-flex align-items-start">
 				<div class="dropdown">
-					<button class="btn btn-primary dropdown-toggle" type="button"
-						id="dropdownMenuButton" data-bs-toggle="dropdown">커뮤니티</button>
+					<button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">커뮤니티</button>
 					<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 						<li><a class="dropdown-item" href="javascript:void(0)">여행 정보</a></li>
 						<li><a class="dropdown-item" href="javascript:void(0)">여행 후기</a></li>
@@ -36,19 +33,16 @@
 			</div>
 			
 			
-			<!-- 드롭다운 메뉴 
-			<div class="dropdown mt-3">
-				<button class="btn btn-primary dropdown-toggle" type="button"
-					id="dropdownMenuButton" data-bs-toggle="dropdown">커뮤니티</button>
-				<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+		<!--	<div class="dropdown mt-3">
+					<button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">커뮤니티</button>
+					<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 					<!-- Thymeleaf를 사용하여 백엔드에서 받아온 카테고리 데이터를 반복하여 드롭다운 아이템으로 렌더링 -->
 					<!-- <th:block th:each="l : ${postCate}">
-						<li><a class="dropdown-item" href="javascript:void(0)"
-							th:text="${l.postCateType}"
-							th:attr="data-category=${l.postCateType}">카테고리명</a></li>
-					</th:block>
-				</ul>
-			</div> -->
+						<li>
+							<a class="dropdown-item" href="javascript:void(0)" th:text="${l.postCateType}" th:attr="data-category=${l.postCateType}">카테고리명</a>
+						</li>
+					</ul>
+				</div>   -->
 
 		<div class="row mt-5">
 			<div class="col-xl-12 alert alert-light alert-dismissible d-flex justify-content-center">
@@ -70,92 +64,87 @@
 		</div>
 
 		<!-- body -->
-		<div class="row">
-			<div class="col-sm-12">
-				<div class="table-responsive overflow-hidden">
-					<table class="table table-hover table-bordered table-striped">
-						<colgroup>
-							<col class="col-sm-1" />
-							<col class="col-sm-7" />
-							<col class="col-sm-1" />
-							<col class="col-sm-2" />
-							<col class="col-sm-1" />
-						</colgroup>
-						<thead>
-							<tr class="active" style="text-align: center">
-								<th>번호</th>
-								<th>제목</th>
-								<th>작성자</th>
-								<th>등록일</th>
-								<th>조회</th>
-							</tr>
-						</thead>
-
-						<tbody>
-							<tr th:each="l : ${postList}" th:attr="data-post-num=${l.postNum}" th:class="${l.postAct == 'N'} ? 'regulated-post' : ''">
-								<td class="text-center" th:text="${l.postRowNum}"></td>
-								<!-- 제목 -->
-								<td>
-									<!-- 신규 게시물 뱃지 --> 
-									<th:block th:if="${l.isNew}">
-										<span class="badge bg-warning">N</span>
-									</th:block> 
-									<!-- 게시물 카테고리 뱃지 --> 
-									<i class="badge rounded-pill bg-primary badge-cate" th:text="${l.category.postCategoryName}"></i> 
-									<!-- 게시물 제목 --> 
-									<!-- 활성화 여부가 'N'인 경우 -->
-									<span th:if="${l.postAct == 'N'}" class="post-title-regulated" style="color: #adb5bd;">관리자에 의해 규제된 게시글입니다.</span> 
-									<!-- 활성화 여부가 'Y'인 경우 -->
-									<a th:if="${l.postAct == 'Y'}" th:href="@{/community/postDetail(postNum=${l.postNum})}" th:text="${l.postTitle}"></a> 
-									<!-- 총 댓글수 --> 
-									<span th:if="${l.commentTotal > 0}" class="badge rounded-pill bg-info" th:text="${l.commentTotal}"></span>
-								</td>
-								<!-- 작성자 -->
-								<td class="text-center" th:text="${l.postRegId}"></td>
-								<!-- 등록일 -->
-								<td class="text-center" th:text="${#strings.substring(l.postRegDate, 0, 10)}"></td>
-								<!-- 조회수 -->
-								<td class="text-center" th:text="${l.postInqCnt}"></td>
-							</tr>
-						</tbody>
-
-					</table>
-					<div class="row">
-						<div class="col-12" style="text-align: right;">
-							<!-- 로그인 상태인 경우 -->
-							<th:block th:if="${session.loginId != null}">
-								<a th:href="@{/community/postAdd}">
-									<button type="button"
-										class="btn btn-outline-primary btn-sm postWriteBtn">글쓰기</button>
-								</a>
-							</th:block>
-							<!-- 로그인되지 않은 경우 -->
-							<th:block th:unless="${session.loginId != null}">
-								<button type="button"
-									class="btn btn-outline-primary btn-sm postWriteBtn"
-									data-bs-toggle="modal" data-bs-target="#login">글쓰기</button>
-							</th:block>
-						</div>
+		<div class="col-sm-12">
+			<div class="table-responsive overflow-hidden">
+				<table class="table table-hover table-bordered table-striped">
+					<colgroup>
+						<col class="col-sm-1" />
+						<col class="col-sm-7" />
+						<col class="col-sm-1" />
+						<col class="col-sm-2" />
+						<col class="col-sm-1" />
+					</colgroup>
+					<thead>
+						<tr class="active" style="text-align: center">
+							<th>번호</th>
+							<th>제목</th>
+							<th>작성자</th>
+							<th>등록일</th>
+							<th>조회</th>
+						</tr>
+					</thead>
+					<tbody> 
+						<tr th:each="p : ${postList}" th:attr="data-post-num=${p.postNum}" th:class="${p.postAct == 'N'} ? 'regulated-post' : ''">
+							<td class="text-center" th:text="${p.postRowNum}"></td>
+							<!-- 제목 -->
+							<td>
+								<!-- 신규 게시물 뱃지 --> 
+								<th:block th:if="${p.isNew}">
+									<span class="badge bg-warning">N</span>
+								</th:block> 
+								<!-- 게시물 카테고리 뱃지 --> 
+								<i class="badge rounded-pill bg-primary badge-cate" th:text="${p.category.postCategoryName}"></i> 
+								<!-- 게시물 제목 --> 
+								<!-- 활성화 여부가 'N'인 경우 -->
+								<span th:if="${p.postAct == 'N'}" class="post-title-regulated" style="color: #adb5bd;">관리자에 의해 규제된 게시글입니다.</span> 
+								<!-- 활성화 여부가 'Y'인 경우 -->
+								<a th:if="${p.postAct == 'Y'}" th:href="@{/community/postDetail(postNum=${p.postNum})}" th:text="${p.postTitle}"></a> 
+								<!-- 총 댓글수 --> 
+								<span th:if="${p.commentTotal > 0}" class="badge rounded-pill bg-info" th:text="${p.commentTotal}"></span>
+							</td>
+							<!-- 작성자 -->
+							<td class="text-center" th:text="${p.postRegId}"></td>
+							<!-- 등록일 -->
+							<td class="text-center" th:text="${#strings.substring(p.postRegDate, 0, 10)}"></td>
+							<!-- 조회수 -->
+							<td class="text-center" th:text="${p.postInqCnt}"></td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="row">
+					<div class="col-12" style="text-align: right;">
+						<!-- 로그인 상태인 경우 -->
+						<th:block th:if="${session.loginId != null}">
+							<a th:href="@{/community/postAdd}">
+								<button type="button" class="btn btn-outline-primary btn-sm postWriteBtn">글쓰기</button>
+							</a>
+						</th:block>
+						<!-- 로그인되지 않은 경우 -->
+						<th:block th:unless="${session.loginId != null}">
+							<button type="button" class="btn btn-outline-primary btn-sm postWriteBtn" data-bs-toggle="modal" data-bs-target="#login">글쓰기</button>
+						</th:block>
 					</div>
 				</div>
 			</div>
 		</div>
-
 
 		<!-- 페이징 -->
 			<section class="pt-5 pt-md-7">
 				<div class="container" style="margin-bottom: 50px">
 					<nav aria-label="Page navigation">
 						<ul class="pagination justify-content-center align-items-center">
-							<li class="page-item"><a class="page-link" href="#" tabindex="-1"> 
-								<i aria-hidden="true"></i> ◀ 이전 </a></li>
-							<li class="page-item"><a class="page-link active" href="#">1</a></li>
-							<li class="page-item"><a class="page-link" href="#">2</a></li>
-							<li class="page-item"><a class="page-link" href="#">3</a></li>
-							<li class="page-item"><a class="page-link" href="#">4</a></li>
-							<li class="page-item"><a class="page-link" href="#">5</a></li>
-							<li class="page-item"><a class="page-link" href="#">다음 ▶ <i aria-hidden="true"></i>
-							</a></li>
+							<li class="page-item">
+								<a class="page-link" th:if="${currentPage > 1}" th:href="@{/community(currentPage=${currentPage - 1})}" tabindex="-1"> 
+									<i aria-hidden="true"></i> ◀ 이전 </a>
+							</li>
+							<li th:each="num : ${#numbers.sequence(startPageNum, lastPageNum)}" class="page-item">
+								<a th:if="${num != currentPage}" class="page-link" th:href="@{/community(currentPage=${num})}" th:text="|${num}|"></a>
+							   	<span th:unless="${num != currentPage}"class="page-link current-page" th:text="|[${num}]|"></span> 
+							</li>
+							<li class="page-item">
+								<a th:if="${currentPage < lastPage}" class="page-link" th:href="@{/community(currentPage=${currentPage + 1})}">다음 ▶ 
+								<i aria-hidden="true"></i></a>
+							</li>
 						</ul>
 					</nav>
 				</div>
@@ -284,9 +273,10 @@
 		
 		        });
 		    });
-		    
+
 		</script>
 		
 	</th:block>
+	
 </html>
 

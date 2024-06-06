@@ -38,13 +38,29 @@ public class UCommunityController {
 	
 	// 게시글 목록 조회
 	@GetMapping({"/",""})
-	public String postList(Model model) {
-		List<UCommunity> postList = uCommunityService.getPostList();
-
-		model.addAttribute("postList", postList); // postList를 모델에 추가
+	public String postList(@RequestParam(value="currentPage", required = false, defaultValue = "1") int currentPage,
+			Model model) {
+		//List<UCommunity> postList = uCommunityService.getPostList();
+		
+		Map<String, Object> resultMap = uCommunityService.getPostList(currentPage);
+		
+		@SuppressWarnings("unchecked")
+		List<Map<String, Object>> postList = (List<Map<String, Object>>) resultMap.get("postList");
+		int lastPage = (int) resultMap.get("lastPage");
+		int startPageNum = (int) resultMap.get("startPageNum");
+		int lastPageNum = (int) resultMap.get("lastPageNum");
+				
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("lastPage", lastPage);
+		model.addAttribute("startPageNum", startPageNum);
+		model.addAttribute("lastPageNum", lastPageNum);
+		
+		model.addAttribute("postList", postList);
 		model.addAttribute("title", "커뮤니티");
+		
 		return "user/board/postList";
 	}
+	
 	
 	
 	// 검색 목록 조회
@@ -256,22 +272,20 @@ public class UCommunityController {
     @PostMapping("/like")
     @ResponseBody
     public String like(@RequestParam String postNum, Model model) {
-        // 해당 게시물의 좋아요 총 개수를 증가시킴
         uCommunityService.increaseLikeCount(postNum);
-        // 증가된 좋아요 총 개수를 반환
-        UCommunity post = uCommunityService.getPostByNum(postNum);
-        return Integer.toString(post.getTotalLikes());
+
+        UCommunity uCommunity = uCommunityService.getPostByNum(postNum);
+        return Integer.toString(uCommunity.getTotalLikes());
     }
     
     // 싫어요 버튼 클릭 시 처리
     @PostMapping("/dislike")
     @ResponseBody
     public String dislike(@RequestParam String postNum, Model model) {
-        // 해당 게시물의 싫어요 총 개수를 증가시킴
         uCommunityService.increaseDislikeCount(postNum);
-        // 증가된 싫어요 총 개수를 반환
-        UCommunity post = uCommunityService.getPostByNum(postNum);
-        return Integer.toString(post.getTotalDislikes());
+        
+        UCommunity uCommunity = uCommunityService.getPostByNum(postNum);
+        return Integer.toString(uCommunity.getTotalDislikes());
     }
     
     

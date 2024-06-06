@@ -6,3 +6,12 @@
     background-color: #f8f9fa; /* 회색 배경색 */
     /* 다른 스타일 속성 추가 가능 */
 }
+
+
+.current-page {
+    color: orange; /* 주황색으로 변경 */
+}
+
+.page-link.current-page {
+    color: ff9b40; /* 주황색으로 변경 */
+}

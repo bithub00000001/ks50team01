@@ -1,10 +1,12 @@
 package ksmart.ks50team01.user.board.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.web.multipart.MultipartFile;
 
+import ksmart.ks50team01.platform.trip.dto.PTourDetail;
 import ksmart.ks50team01.user.board.dto.UCategory;
 import ksmart.ks50team01.user.board.dto.UComment;
 import ksmart.ks50team01.user.board.dto.UCommunity;
@@ -74,6 +76,11 @@ public interface UCommunityMapper {
 
 	// 댓글 수정
 	void commentModify(UComment uComment);
+
+	List<Map<String, Object>> getPostListByPage(Map<String, Object> paramMap);
+
+	int getPostListRowCnt();
+	
 
 
 }

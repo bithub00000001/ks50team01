@@ -65,7 +65,7 @@ public class UCommunity {
 	//private List<UComment> commentList;
     
     // 추가된 필드: 게시물 상세 정보
-    private String postDetail;
+    //private String postDetail;
     
     //private String pstNoNumeric;
 
