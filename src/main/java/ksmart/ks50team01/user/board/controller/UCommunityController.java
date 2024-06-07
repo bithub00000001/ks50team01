@@ -8,7 +8,6 @@ import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import ksmart.ks50team01.user.board.dto.UCategory;
 import ksmart.ks50team01.user.board.dto.UComment;
 import ksmart.ks50team01.user.board.dto.UCommunity;
@@ -290,20 +290,11 @@ public class UCommunityController {
     
     
 	
-	// 댓글 수정
-    @PostMapping("/commentModify")
-    public String commentModify(UComment uComment, Model model) {
-        uCommunityService.commentModify(uComment); 
-        
-        log.info("댓글 수정", uComment);
-        
-        return "redirect:/community/postDetail?postNum=" + uComment.getPostNum();
 
-    }
     
-    
+    /*
     // 댓글 삭제
-    @PostMapping("/commentRemove")
+    @PostMapping("/commentRemove/{commentNum}")
     @ResponseBody
     public Map<String, Object> commentRemove(@RequestParam("commentNum") String commentNum) {
         log.info("삭제할 댓글 번호: {}", commentNum);
@@ -320,12 +311,120 @@ public class UCommunityController {
         }
 
         return response;
-    }
+    } 
+    
+	// 댓글 삭제 POST 요청
+	@PostMapping("/commentRemove")
+	public String commentRemove(@RequestParam (value = "commentNum") String commentNum, Model model) {
+		
+		uCommunityService.commentRemove(commentNum);
+		
+		model.addAttribute("commentNum", commentNum);
+		model.addAttribute("title", "댓글 삭제");
+		
+		return "redirect:/community/postDetail";
+		
+	} */
+	
     
     
+    @PostMapping("/commentRemove")
+    @ResponseBody
+    public Map<String, Object> commentRemove(HttpSession session,
+                                             @RequestBody Map<String, String> request) {
+        Map<String, Object> response = new HashMap<>();
+        String commentNum = request.get("commentNum");
+        String postNum = request.get("postNum");
 
+        try {
+            // 세션에서 로그인 아이디 가져오기
+            String loginId = (String) session.getAttribute("loginId");
+
+            if (loginId == null) {
+                response.put("status", "error");
+                response.put("message", "로그인하지 않은 사용자입니다.");
+                return response;
+            }
+
+            // 댓글 삭제 전 댓글 작성자와 로그인 ID가 일치하는지 확인
+            UComment comment = uCommunityService.getCommentById(commentNum);
+
+            if (comment == null || !comment.getCommentRegId().equals(loginId)) {
+                response.put("status", "error");
+                response.put("message", "댓글을 삭제할 권한이 없습니다.");
+                return response;
+            }
+
+            // 댓글 삭제
+            uCommunityService.commentRemove(commentNum);
+
+            // 댓글 삭제 후 해당 게시글의 모든 댓글을 가져옴
+            List<UComment> postCommentList = uCommunityService.getPostCommentList(postNum);
+
+            log.info("댓글 삭제자: {}", loginId);
+            log.info("댓글 삭제 후: {}", postCommentList);
+
+            response.put("status", "success");
+            response.put("postCommentList", postCommentList);
+        } catch (Exception e) {
+            response.put("status", "error");
+            response.put("message", e.getMessage());
+        }
+
+        return response;
+    }
+
+
+    /*
+	// 댓글 수정
+    @PostMapping("/commentModify")
+    public String commentModify(UComment uComment, Model model) {
+        uCommunityService.commentModify(uComment); 
+        
+        log.info("댓글 수정", uComment);
+        
+        return "redirect:/community/postDetail?postNum=" + uComment.getPostNum();
+
+    } */
     
-    
-    
+    // 댓글 수정
+    @PostMapping("/commentModify")
+    @ResponseBody
+    public Map<String, Object> commentModify(HttpSession session, @RequestBody UComment uComment) {
+        Map<String, Object> response = new HashMap<>();
+
+        try {
+            // 세션에서 로그인 아이디 가져오기
+            String loginId = (String) session.getAttribute("loginId");
+
+            if (loginId == null) {
+                response.put("status", "error");
+                response.put("message", "로그인하지 않은 사용자입니다.");
+                return response;
+            }
+
+            // 댓글 수정 전 댓글 작성자와 로그인 ID가 일치하는지 확인
+            UComment originalComment = uCommunityService.getCommentById(uComment.getCommentNum());
+
+            if (originalComment == null || !originalComment.getCommentRegId().equals(loginId)) {
+                response.put("status", "error");
+                response.put("message", "댓글을 수정할 권한이 없습니다.");
+                return response;
+            }
+
+            // 댓글 수정
+            uCommunityService.commentModify(uComment);
+
+            log.info("댓글 수정", uComment);
+
+            response.put("status", "success");
+            response.put("message", "댓글이 수정되었습니다.");
+        } catch (Exception e) {
+            response.put("status", "error");
+            response.put("message", e.getMessage());
+        }
+
+        return response;
+    }
 
 }

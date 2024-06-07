@@ -71,8 +71,16 @@
 												<span class="comment-author" th:text="${l.commentRegId}">댓글 작성자 아이디</span> 
 												<span class="comment-date m-2" th:text="${#strings.substring(l.commentRegDate, 0, 10)}">댓글 작성일</span>
 												<!-- 신고 버튼  -->
-												<button type="button" class="btn btn-lg report-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">🚨</button>
+													<!-- 로그인 상태인 경우 -->
+													<th:block th:if="${session.loginId != null}">
+														<button type="button" class="btn btn-lg report-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">🚨</button>
+													</th:block>
+													<!-- 로그인되지 않은 경우 -->
+													<th:block th:unless="${session.loginId != null}">
+														<button type="button" class="btn btn-lg report-btn" data-bs-toggle="modal" data-bs-target="#login">🚨</button>
+													</th:block>
 											</div>
+											
 											
 											<!-- 댓글 수정 삭제 버튼 -->
 											<div class="col-2">
@@ -80,7 +88,7 @@
 													<button class="btn btn-xs dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="true"></button>
 													<ul class="dropdown-menu P-0" aria-labelledby="dropdownMenuButton1">
 														<li>
-															<a class="dropdown-item small" href="#" onclick="editComment(event)">
+															<a class="dropdown-item small" href="#" onclick="commentModify(event)">
 																<i class="fa-solid fa-eraser fa-2x edit-button"></i> 수정</a></li>
 														<li><a class="dropdown-item small" href="#" onclick="commentRemove(this)">
 														<i class="fa-solid fa-trash-can fa-2x delete-button"></i> 삭제</a></li>
@@ -93,13 +101,21 @@
 										<p class="comment-content" id="commentList" th:text="${l.commentContent}">댓글 내용</p>
 	
 										<div class="comment-actions">
-											<!-- 답글 달기 버튼 -->
-											<button class="btn btn-primary rounded-pill btn-xs reply-btn"
-												data-bs-toggle="modal" data-bs-target="#replyModal">
-												<i class="fa fa-reply"></i> 답글
-											</button>
-	
-											<!-- 댓글 싫어요 버튼 -->
+											<!-- 답글 버튼 -->
+												<!-- 로그인 상태인 경우 -->
+												<th:block th:if="${session.loginId != null}">
+												<button class="btn btn-primary rounded-pill btn-xs reply-btn" data-bs-toggle="modal" data-bs-target="#replyModal">
+													<i class="fa fa-reply"></i> 답글
+												</button>
+												</th:block>
+												<!-- 로그인되지 않은 경우 -->
+												<th:block th:unless="${session.loginId != null}">
+													<button class="btn btn-primary rounded-pill btn-xs reply-btn" data-bs-toggle="modal" data-bs-target="#login">
+														<i class="fa fa-reply"></i> 답글
+													</button>
+												</th:block>
+
+										<!-- 댓글 싫어요 버튼 -->
 											<button class="btn btn-outline-danger btn-xs dislike-btn">
 												<i class="fa-regular fa-thumbs-down"></i><span
 													class="dislike-count">0</span>
@@ -122,7 +138,6 @@
 						<!-- 댓글 작성 폼 -->
 						<div class="comment-form">
 							<h4 class="">댓글 작성</h4>
-							<!-- <form th:action="@{/comment/save}" method="post"> -->
 								<input type="hidden" id="commentRegId" name="commentRegId" th:value="${session.loginId}">
 								<textarea class="form-control mb-3" id="commentContent" name="commentContent" rows="5" placeholder="댓글을 입력하세요." required="required"></textarea>
 								<input type="hidden" id="postNum" name="postNum" th:value="${postDetail.postNum}">
@@ -137,6 +152,11 @@
 				</div>
 			</div>
 		</div>
+	
+							
+	
+	
+	
 	
 		<!-- Modal -->
 		<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -175,6 +195,11 @@
 			</div>
 		</div>
 	
+
+	
+	
+	
+	
 		<!-- 답글 모달 -->
 		<div class="modal fade" id="replyModal" tabindex="-1" role="dialog"
 			aria-labelledby="replyModalLabel" aria-hidden="true">
@@ -203,26 +228,28 @@
 		</div>
 		
 		<!-- 댓글 수정 모달 -->
-		<div class="modal fade" id="editCommentModal" tabindex="-1" aria-labelledby="editCommentModalLabel" aria-hidden="true">
+		<div class="modal fade" id="commentMdfModal" tabindex="-1" aria-labelledby="commentMdfModalLabel" aria-hidden="true">
 		    <div class="modal-dialog">
 		        <div class="modal-content">
 		            <div class="modal-header">
-		                <h5 class="modal-title" id="editCommentModalLabel">댓글 수정</h5>
+		                <h5 class="modal-title" id="commentMdfModalLabel">댓글 수정</h5>
 		                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 		            </div>
 		            <div class="modal-body">
-		                <form id="editCommentForm">
+		                <form id="commentMdfForm">
 		                    <div class="form-group">
-		                        <label for="editCommentContent">댓글 내용</label>
-		                        <textarea class="form-control" id="CommentMdfContent" rows="3" required></textarea>
+		                        <label for="commentMdfContent">댓글 내용</label>
+		                        <textarea class="form-control" id="commentMdfContent" rows="3" required></textarea>
 		                    </div>
-		                    <input type="hidden" id="CommentNum">
-		                    <input type="hidden" id="CommentMdfId">
+		                     <!-- 세션에서 로그인 아이디를 가져오는 부분 -->
+                		    <input type="hidden" id="loginId" value="${session.loginId}" />
+		                    <input type="hidden" id="commentNum">
+		                    <input type="hidden" id="commentMdfId">
 		                </form>
 		            </div>
 		            <div class="modal-footer">
 		                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-		                <button type="button" class="btn btn-primary" onclick="submitEditComment()">댓글 수정</button>
+		                <button type="button" class="btn btn-primary" onclick="commentMdfSubmit()">댓글 수정</button>
 		            </div>
 		        </div>
 		    </div>
@@ -242,6 +269,13 @@
 		    const commentRegId = document.getElementById("commentRegId").value;
 		    const commentContent = document.getElementById("commentContent").value;
 		    const postNum = document.getElementById("postNum").value;
+		    
+		    if (!commentRegId) {
+		        // 로그인 상태가 아니면 로그인 모달 창을 띄움
+		        const loginModal = new bootstrap.Modal(document.getElementById('login'));
+		        loginModal.show();
+		        return; 
+		    }
 		    
 		    console.log("작성자 : ", commentRegId);
 		    console.log("내용 : ", commentContent);
@@ -268,64 +302,64 @@
 		        }
 		    });
 		}
-
 		// 댓글 수정
-		function editComment(event) {
+		function commentModify(event) {
+		    // 사용자 로그인 여부 확인 (세션에서 가져온 값 사용)
+		    const loginId = document.getElementById("loginId").value;
+		    if (!loginId) {
+		        // 로그인되지 않은 경우 로그인 모달 창 띄우기
+		        const loginModal = new bootstrap.Modal(document.getElementById('login'));
+		        loginModal.show();
+		        return;
+		    }
+
 		    const listItem = event.target.closest('.list-group-item');
 		    if (!listItem) return;
-		    
+
 		    const commentContent = listItem.querySelector('.comment-content').textContent;
 		    const commentRegId = listItem.querySelector('.comment-author').textContent;
-		    
+
+		    // 로그인한 사용자와 댓글 작성자를 비교하여 본인의 댓글인지 확인
+		    if (loginId !== commentRegId) {
+		        // 본인의 댓글이 아니면 알림 표시
+		        alert("본인이 작성한 댓글만 수정할 수 있습니다.");
+		        return;
+		    }
+
 		    // 수정 모달 폼에 댓글 내용과 작성자 설정
-		    $('#CommentMdfContent').val(commentContent);
-		    $('#CommentMdfId').val(commentRegId);
-		    
-		    $('#editCommentModal').modal('show');
+		    $('#commentMdfContent').val(commentContent);
+		    $('#commentMdfId').val(commentRegId);
+		    $('#commentMdfModal').modal('show');
 		}
 
+		function commentMdfSubmit() {
+		    const commentNum = document.getElementById('commentNum').value;
+		    const commentContent = document.getElementById('commentMdfContent').value;
 
-	    function submitEditComment() {
-	        const commentNum = document.getElementById('CommentNum').value;
-	        const commentContent = document.getElementById('CommentMdfContent').value;
-	        $.ajax({
-	            url: "/community/commentModify",
-	            type: "POST",
-	            data: JSON.stringify({ commentNum: commentNum, commentContent: commentContent }),
-	            contentType: "application/json",
-	            success: function(res) {
-	                alert('댓글이 수정되었습니다.');
-	                location.reload();
-	            },
-	            error: function(err) {
-	                console.log("댓글 수정 중 오류 발생", err);
-	                alert('댓글 수정 중 오류가 발생했습니다.');
-	            }
-	        });
-	    }
-
-	    
-	    // 댓글 삭제
-	    function commentRemove(commentNum) {
-	        if (confirm('댓글을 삭제하시겠습니까?')) {
-	            var xhr = new XMLHttpRequest();
-	            xhr.open('POST', '/community/commentRemove/' + commentNum, true);
-	            xhr.onload = function () {
-	                if (xhr.status === 200) {
-	                    location.reload();
-	                } else {
-	                    alert('댓글 삭제 중 오류가 발생했습니다.');
-	                }
-	            };
-	            xhr.send();
-	        }
-	    }
+		    $.ajax({
+		        url: "/community/commentModify",
+		        type: "POST",
+		        data: JSON.stringify({ commentNum: commentNum, commentContent: commentContent }),
+		        contentType: "application/json",
+		        success: function(res) {
+		            if (res.status === "success") {
+		                alert('댓글이 수정되었습니다.');
+		                location.reload();
+		            } else {
+		                alert(res.message);
+		            }
+		        },
+		        error: function(err) {
+		            console.log("댓글 수정 중 오류 발생", err);
+		            alert('댓글 수정 중 오류가 발생했습니다.');
+		        }
+		    });
+		}
 
 	    
-	    
-	    
-	    
-		
+
+
+		        
 	</script>
 	
 	
@@ -488,6 +522,31 @@
 		    }
 		    
 		    
+		    
+		    // 댓글 삭제
+			function commentRemove(commentNum) {
+			    $.ajax({
+			        type: 'POST',
+			        url: '/community/commentRemove',
+			        contentType: 'application/json',
+			        dataType: 'json',
+			        data: JSON.stringify({
+			            commentNum: commentNum,
+			            postNum: postNum
+			        }),
+			        success: function(response) {
+			            updateCommentSection(response);
+			        },
+			        error: function(error) {
+			            console.error('댓글 삭제 중 오류 발생:', error);
+			            alert('댓글 삭제에 실패했습니다. 다시 시도해 주세요.');
+			        }
+			    });
+			}
+		    
 		</script>
+		
+		
+		
 	</th:block>
 </html>

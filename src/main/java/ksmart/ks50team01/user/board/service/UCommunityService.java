@@ -152,6 +152,10 @@ public class UCommunityService {
 	}
 
 	
+	public UComment getCommentById(String commentNum) {
+		return uCommunityMapper.getCommentById(commentNum);
+	}
+	
 	
 	// 댓글 삭제
 	public void commentRemove(String commentNum) {
@@ -238,6 +242,12 @@ public class UCommunityService {
 
 	    return resultMap;
 	}
+
+
+
+
+
+
 
 }
 	

@@ -6,7 +6,6 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.web.multipart.MultipartFile;
 
-import ksmart.ks50team01.platform.trip.dto.PTourDetail;
 import ksmart.ks50team01.user.board.dto.UCategory;
 import ksmart.ks50team01.user.board.dto.UComment;
 import ksmart.ks50team01.user.board.dto.UCommunity;
@@ -80,6 +79,8 @@ public interface UCommunityMapper {
 	List<Map<String, Object>> getPostListByPage(Map<String, Object> paramMap);
 
 	int getPostListRowCnt();
+
+	UComment getCommentById(String commentNum);
 	
 
 
