@@ -1,5 +1,7 @@
 package ksmart.ks50team01.user.trip.service;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -11,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
@@ -227,12 +230,43 @@ public class UTripPlanServiceImpl implements UTripPlanService {
 		return plans;
 	}
 
+	/**
+	 * 클라이언트 페이지네이션 구현을 위한 데이터 가공
+	 * @return
+	 */
+	@Override
+	public List<Map<String, Object>> readMockData() {
+		try {
+			ObjectMapper objectMapper = new ObjectMapper();
+			ClassPathResource classPathResource = new ClassPathResource("static/user/data/MOCK_DATA.json");
+			InputStream inputStream = classPathResource.getInputStream();
+			return objectMapper.readValue(inputStream,new TypeReference<List<Map<String, Object>>>(){});
+		}catch (IOException exception) {
+			log.error("MOCK_DATA.json 를 읽는데 실패했습니다.", exception);
+			return new ArrayList<>();
+		}
+	}
+
+	/**
+	 * Tour API에서 DB에 저장한 여행지 상세 정보 목록을 조회하는 메서드
+	 * @return
+	 */
+	@Override
+	public List<Map<String, Object>> getTourDataList() {
+		return uTripPlanMapper.getTourDataList();
+	}
+
+	/**
+	 * 가상 회원의 존재 유무를 판단해서 가상회원 테이블, 여행 계획에 참여한 가상 회원 테이블에 추가하는 메서드
+	 * @param tripUuid 여행 계획 UUID
+	 * @param virtualMemberNames 가상 회원 이름 배열
+	 */
 	private void saveVirtualMembers(String tripUuid, List<String> virtualMemberNames) {
 		for (String name : virtualMemberNames) {
 			// 가상 멤버가 존재하는지 확인
 			Integer virtualMemberId = uTripPlanMapper.selectVirtualMemberIdByName(name);
 			if (virtualMemberId == null) {
-				// 존재하지 않으면 삽입
+				// 존재하지 않으면 가상 회원 테이블에 삽입
 				uTripPlanMapper.insertVirtualMember(name);
 				virtualMemberId = uTripPlanMapper.selectVirtualMemberIdByName(name);
 			}

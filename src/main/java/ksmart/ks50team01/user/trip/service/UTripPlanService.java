@@ -39,4 +39,10 @@ public interface UTripPlanService {
 
 	// 임시 저장된 여행 계획 목록 조회
 	List<UTripOption> getTempPlanList(String sessionId);
+
+	// 클라이언트 사이드 페이지네이션 구현 레퍼런스 json 데이터 처리
+	List<Map<String, Object>> readMockData();
+
+	// Tour API에서 DB로 저장한 상세 정보 목록 조회
+	List<Map<String, Object>> getTourDataList();
 }

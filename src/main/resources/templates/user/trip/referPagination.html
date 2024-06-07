@@ -1,0 +1,107 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{user/layout/default}">
+<th:block layout:fragment="customCss">
+    <style>
+        #tableDiv{
+            width: 900px;
+        }
+        #tableDiv > #searchDiv{
+            display: grid;
+            width: inherit;
+            grid-template-columns: 1fr 1fr;
+        }
+        #tableDiv > #searchDiv input{
+            width: 270px;
+            height: 20px;
+        }
+        #tableDiv > #searchDiv div{
+            float:right;
+            align-content: center;
+        }
+        #tableDiv > #searchDiv select{
+            text-align-last: center;
+            text-align: center;
+            -ms-text-align-last: center;
+            -moz-text-align-last: center;
+            width: 78px;
+            height: 25px;
+            margin-bottom: 10px;
+        }
+        table {
+            border: 1px solid black;
+            width: 900px;
+            table-layout: auto; /* 테이블레이아웃 셀 가로 균등 배분 */
+            text-align: center;
+        }
+        th {
+            border: 1px solid black;
+            background-color: cornflowerblue;
+            color: azure;
+            height: 30px;
+        }
+        td {
+            border: 1px solid black;
+            height: 30px;
+        }
+        table a {
+            text-decoration: none;
+            padding: 5px;
+        }
+
+    </style>
+</th:block>
+
+<th:block layout:fragment="customPageSection">
+    <div id="tableDiv" class="w-100">
+        <!--/*<button type="button" class="btn btn-outline-primary btn-xs" id="ajaxBtn">데이터 요청</button>*/-->
+        <div id="searchDiv">
+            <label for="searchText">Search:</label>
+            <input type="text" id="searchText" value="" placeholder="검색어를 입력해주세요" class="input input"/>
+            <div>
+                <label>
+                    Show
+                    <select id="contentAmount">
+                        <option value="10">10 개</option>
+                        <option value="20">20 개</option>
+                        <option value="30">30 개</option>
+                        <option value="50">50 개</option>
+                    </select>
+                    entries
+                </label>
+
+            </div>
+        </div>
+        <table class="w-100">
+            <colgroup>
+                <col width="56px">
+                <col width="123px">
+                <col width="153px">
+                <col width="440px">
+                <col width="128px">
+            </colgroup>
+            <thead>
+            <tr>
+                <th>번호</th>
+                <th>성</th>
+                <th>이름</th>
+                <th>이메일</th>
+                <th>성별</th>
+            </tr>
+            </thead>
+            <tbody id="tbody">
+
+            </tbody>
+            <tfoot id="tfoot">
+
+            </tfoot>
+        </table>
+    </div>
+</th:block>
+
+<th:block layout:fragment="customJsFIle">
+    <script th:src="@{/user/js/trip/paginationRefer.js}"></script>
+</th:block>
+
+<th:block layout:fragment="customJs"></th:block>
+</html>
