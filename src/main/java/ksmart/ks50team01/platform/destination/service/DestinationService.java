@@ -157,14 +157,14 @@ public class DestinationService {
 		
 	}
 	/**
-	 * 숙소 상세 등록
+	 * 숙소 상세 등록 240606: 메서드 사용 안함 처리
 	 * @param destination
 	 * @return
 	 */
-	public int addLodgingGoods(Destination destination) {
+	/*public int addLodgingGoods(Destination destination) {
 		return destinationMapper.addLodgingGoods(destination);
 		
-	}
+	}*/
 
 	
 	/**
@@ -199,7 +199,7 @@ public class DestinationService {
 	
 	/**
 	 * 슥소 세부항목 제거
-	 * @param tourGoodsOptionCd
+	 * @param lodgingMenuCode
 	 */
 	public void removeLodgingGoods(String lodgingMenuCode) {
 		destinationMapper.removeLodgingGoods(lodgingMenuCode);
@@ -317,13 +317,13 @@ public class DestinationService {
 		
 	}
 	/**
-	 * 음식점 중복체크
+	 * 음식점 중복체크 240606: 메서드 사용 안함 처리
 	 * @param restaurantName
 	 * @return
 	 */
-	public boolean addRestaurantCheckList(String restaurantName) {
+	/*public boolean addRestaurantCheckList(String restaurantName) {
 		return destinationMapper.addRestaurantCheckList(restaurantName);
-	}
+	}*/
 
 	
 

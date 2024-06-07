@@ -22,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import jakarta.servlet.http.HttpSession;
 import ksmart.ks50team01.user.member.login.dto.Login;
 import ksmart.ks50team01.user.trip.dto.UDayInfo;
 import ksmart.ks50team01.user.trip.dto.UTripOption;
@@ -94,14 +95,13 @@ public class UTripPlanController {
     @PostMapping("/save-temp-plan-info")
     @ResponseBody
     public ResponseEntity<String> addTempPlanInfo(@RequestBody UTripOption uTripOption) {
-
         log.info("uTripOption: {}", uTripOption);
         try {
-            // uTripOption 객체를 DB에 저장하는 로직
-            // uTripPlanService.addTempPlanInfo(uTripOption);
-            return ResponseEntity.ok("success");
+            // 기존 데이터가 있는지 확인하고, 있다면 업데이트, 없다면 새로 추가
+            uTripPlanService.saveOrUpdateTempPlanInfo(uTripOption);
+            return ResponseEntity.ok("여행 계획이 성공적으로 저장되었습니다.");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to save temporary trip details.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("여행 정보를 임시 저장하는데 실패했습니다.");
         }
     }
 
@@ -179,10 +179,16 @@ public class UTripPlanController {
      * @return
      */
     @GetMapping("/list")
-    public String planListPage(Model model){
+    public String planListPage(HttpSession session, Model model){
 
+        String sessionId = (String) session.getAttribute("loginId");
+        if (sessionId == null) {
+            return "redirect:/trip"; // 로그인 페이지로 리디렉션
+        }
         // uTourDataService.upsertSigunguData(apiKey);
+        List<UTripOption> tripPlanList = uTripPlanService.getTempPlanList(sessionId);
         model.addAttribute("title", "내 여행 계획 목록");
+        model.addAttribute("plans", tripPlanList);
         return "user/trip/planList";
     }
 

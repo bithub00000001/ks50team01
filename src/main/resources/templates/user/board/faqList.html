@@ -29,7 +29,6 @@
 
 	
 	<th:block layout:fragment="customPageSection">
-		<!-- 여기에 메인 컨텐츠가 삽입됩니다. -->
 		<!-- 드롭다운 메뉴 
 		<div class="main-wrapper pages">
 			<div class="d-flex align-items-start">
@@ -44,20 +43,7 @@
 				</div>
 			</div> -->
 
-		<!-- 드롭다운 메뉴 -->
-			<!-- <div class="dropdown">
-				<button class="btn btn-primary dropdown-toggle" type="button"
-					id="dropdownMenuButton" data-bs-toggle="dropdown">자주 묻는 질문</button>
-				<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-					<!-- Thymeleaf를 사용하여 백엔드에서 받아온 카테고리 데이터를 반복하여 드롭다운 아이템으로 렌더링 -->
-					<!-- <th:block th:each="l : ${faqList}">
-						<li><a class="dropdown-item" href="javascript:void(0)"
-							th:text="${l.faqCate.faqCateType}"
-							th:attr="data-category=${l.faqCate.faqCateType}">카테고리명</a></li>
-					</th:block>
-				</ul>
-			</div> -->
-
+		<div class="main-wrapper pages">
 			<div class="flex-grow-1 d-flex justify-content-center">
 				<div id="board-search" style="width: 500px;">
 					<form class="mb-6" action="index.html" method="post">
@@ -70,7 +56,6 @@
 					</form>
 				</div>
 			</div>
-
 
 		<!-- Elements Alerts -->
 		<section class="pt-7 pb-9 pt-lg-9 pb-lg-10">
@@ -103,32 +88,29 @@
 			</div>
 		</section>
 		
-		
-		
-
 			<!-- 페이징 -->
 			<section class="pt-5 pt-md-7">
 				<div class="container" style="margin-bottom: 50px">
 					<nav aria-label="Page navigation">
 						<ul class="pagination justify-content-center align-items-center">
-							<li class="page-item"><a class="page-link" href="#" tabindex="-1"> 
-								<i aria-hidden="true"></i> ◀ 이전 </a></li>
-							<li class="page-item"><a class="page-link active" href="#">1</a></li>
-							<li class="page-item"><a class="page-link" href="#">2</a></li>
-							<li class="page-item"><a class="page-link" href="#">3</a></li>
-							<li class="page-item"><a class="page-link" href="#">4</a></li>
-							<li class="page-item"><a class="page-link" href="#">5</a></li>
-							<li class="page-item"><a class="page-link" href="#">다음 ▶ <i aria-hidden="true"></i>
-							</a></li>
+							<li class="page-item">
+								<a class="page-link" th:if="${currentPage > 1}" th:href="@{/faq(currentPage=${currentPage - 1})}" tabindex="-1"> 
+									<i aria-hidden="true"></i> ◀ 이전 </a>
+							</li>
+							<li th:each="num : ${#numbers.sequence(startPageNum, lastPageNum)}" class="page-item">
+								<a th:if="${num != currentPage}" class="page-link" th:href="@{/faq(currentPage=${num})}" th:text="|${num}|"></a>
+							   	<span th:unless="${num != currentPage}"class="page-link current-page" th:text="|[${num}]|"></span> 
+							</li>
+							<li class="page-item">
+								<a th:if="${currentPage < lastPage}" class="page-link" th:href="@{/faq(currentPage=${currentPage + 1})}">다음 ▶ 
+								<i aria-hidden="true"></i></a>
+							</li>
 						</ul>
 					</nav>
 				</div>
 			</section>
-		</th:block>
-	
-	
-	
-	
+		</div>	
+	</th:block>
 
 
 	<th:block layout:fragment="customJsFIle"></th:block>
@@ -136,63 +118,32 @@
 	<th:block layout:fragment="customJs">
 	
 		<script>
-		    $(document).ready(function(){
-		        $('#searchItem').on('keyup', function(){
-		            const searchValue = $(this).val().toLowerCase();
-		            $('.card').filter(function(){
-		                const title = $(this).find('.text-capitalize').text().toLowerCase();
-		                $(this).toggle(title.includes(searchValue));
-		            });
-		        });
-		    });
-		</script>
-
-
-	    
-	    
-	    
-	    <script>
-	    // 드롭다운 메뉴 선택 시 해당하는 FAQ 항목만 보이게 하는 함수
-	    function filterFAQs(category) {
-	        const cards = document.querySelectorAll('.card');
-	
-	        cards.forEach(card => {
-	            const categoryBadge = card.querySelector('.badge-cate');
-	            const categoryText = categoryBadge.textContent.trim().toLowerCase(); // 공백 제거 및 소문자 변환
-	            // 카테고리에 속한 FAQ 항목인 경우 해당 카드를 보여줌
-	            // 그렇지 않은 경우 카드를 숨김
-	            if (category === '전체' || categoryText === category.toLowerCase()) {
-	                card.style.display = '';
-	            } else {
-	                card.style.display = 'none';
-	            }
+		
+		// 검색
+	    $(document).ready(function(){
+	        $('#searchItem').on('keyup', function(){
+	            const searchValue = $(this).val().toLowerCase();
+	            $('.card').filter(function(){
+	                const title = $(this).find('.text-capitalize').text().toLowerCase();
+	                $(this).toggle(title.includes(searchValue));
+	            });
 	        });
-	    }
-	
-	 // 페이지 로드 시 실행되는 함수
+	    });
+
+
+	 	// 페이지 로드 시 실행되는 함수
 	    document.addEventListener("DOMContentLoaded", function() {
 	        const dropdownItems = document.querySelectorAll('.dropdown-item');
 
-	        dropdownItems.forEach(item => {
-	            item.addEventListener('click', function() {
-	                const selectedCategory = this.textContent.trim();
 
-	                // 선택된 카테고리에 해당하는 FAQ 항목만 보이도록 필터링
-	                filterFAQs(selectedCategory);
-	            });
-	        });
-
-	        // 첫 번째 질문이 항상 열린 상태로 유지되도록 추가
+	        // 첫 번째 질문이 항상 열린 상태로 유지
 	        const firstAccordion = document.querySelector('.accordion .card:first-of-type .collapse');
 	        firstAccordion.classList.add('show');
 	    });
 	    
 
-
 		</script>
-		    
 
-	
 	</th:block>
 
 </html>

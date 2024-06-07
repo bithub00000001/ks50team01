@@ -53,6 +53,45 @@
 	</resultMap>
 		
 		
+		
+	<select id="getQnaListRowCnt" resultType="int">
+		/* 1:1문의 행의 갯수 */
+	    SELECT
+	        COUNT(1)
+	    FROM
+	        QNA_QUESTION
+	</select>
+	
+	
+	
+	<select id="getQnaListByPage" parameterType="map" resultMap="qnaResultMap">
+		/* 페이지네이션 1:1문의 리스트 조회*/
+	    <![CDATA[
+	        SELECT
+	            ROW_NUMBER() OVER(ORDER BY CAST(SUBSTRING_INDEX(Q.QNA_NO, 'QNA_', -1) AS UNSIGNED)) AS ROW_NUM,
+	            Q.QNA_NO,
+	            Q.REG_MBR_BIZ_ID,
+	            F.FAQ_CTGRY_TYPE,
+	            Q.QNA_PRGRS_CTGRY,
+	            Q.QNA_TTL,
+	            Q.QNA_CN,
+	            Q.ANS_REG_PF_ID,
+	            Q.REG_YMD,
+	            Q.MDFCN_YMD,
+	            Q.RTRCN_YMD,
+	            CASE WHEN DATEDIFF(NOW(), Q.REG_YMD) < 3 THEN TRUE ELSE FALSE END AS QNA_NEW
+	        FROM
+	            QNA_QUESTION AS Q
+	            INNER JOIN
+	            FAQ_CATEGORY AS F
+	            ON
+	            Q.FAQ_CTGRY_NO = F.FAQ_CTGRY_NO
+	        GROUP BY Q.QNA_NO
+	        ORDER BY Q.REG_YMD DESC
+	        LIMIT #{startRow}, #{rowPerPage};
+	    ]]>
+	</select>
+		
 	
 
 	<select id="getQnaList" resultMap="qnaResultMap">

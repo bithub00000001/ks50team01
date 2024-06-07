@@ -54,7 +54,7 @@ public interface DestinationMapper {
 	int addLodging(Destination destination);
 	
 	//숙소 상세정보 등록
-	int addLodgingGoods(Destination destination);
+	// int addLodgingGoods(Destination destination);
 	
 	//숙소 중복체크
 	boolean addLodgingCheckList(String lodgingName);
@@ -90,7 +90,7 @@ public interface DestinationMapper {
 	
 	
 	//음식점 이름 중복체크
-	boolean addRestaurantCheckList(String restaurantName);
+	// boolean addRestaurantCheckList(String restaurantName);
 	
 	//음식점 수정
 	int restaurantMoidfy(Destination destination);

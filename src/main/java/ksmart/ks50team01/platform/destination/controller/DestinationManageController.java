@@ -108,7 +108,7 @@ public class DestinationManageController {
 	
 	/**
 	 * 관광지 중복체크
-	 * @param destination
+	 * @param tourName
 	 * @return
 	 */
 	@GetMapping("/destination/addTourCheckList")
@@ -257,15 +257,15 @@ public class DestinationManageController {
 		return "platform/destination/addLodging";
 	}
 	/**
-	 * 숙소 상세정보 등록
-	 * @param destination
+	 * 숙소 상세정보 등록 240606: 메서드 사용 안함 처리
+	 * @param model
 	 * @return
 	 */
-	@PostMapping("/destination/addLodgingGoods")
+	/*@PostMapping("/destination/addLodgingGoods")
 	public String addLodgingGoods(Destination destination) {
 		destinationService.addLodgingGoods(destination);
 		return "redirect:/platform/destination/lodgingGoodsManage";
-	}
+	}*/
 	@GetMapping("/destination/addLodgingGoods")
 	public String addLodgingGoods(Model model) {
 		List<Destination> addLodgingGoodsList = destinationService.getLodgingGoodsList();
@@ -276,16 +276,16 @@ public class DestinationManageController {
 		return "platform/destination/addLodgingGoods";
 	}
 	/**
-	 * 음식점 중복체크
+	 * 음식점 중복체크 240606: 메서드 사용 안함 처리
 	 * @param restaurantName
 	 * @return
 	 */
-	@GetMapping("destination/addRestaurantCheckList")
+	/*@GetMapping("destination/addRestaurantCheckList")
 	@ResponseBody
 	public boolean addRestaurantCheckList(@RequestParam(value = "restaurantName") String restaurantName) {
 		boolean isRestaurantName = destinationService.addRestaurantCheckList(restaurantName);
 		return isRestaurantName;
-	}
+	}*/
 	
 	/**
 	 * 숙소이름 중복체크
@@ -313,8 +313,8 @@ public class DestinationManageController {
 	}
 	
 	/**
-	 * 숙소 목록 삭제
-	 * @param tourInfoCode
+	 * 숙소 목록 삭제 240606: 인수 변경
+	 * @param lodgingInfoCode
 	 * @return
 	 */
 	@PostMapping("/removeLodging")
@@ -432,9 +432,8 @@ public class DestinationManageController {
 		return "/platform/destination/lodgingGoodsManage";
 	}
 	/**
-	 * 음식점 수정
-	 * @param restaurantInfoCode
-	 * @param model
+	 * 음식점 수정 240606: 메서드 인수 변경 처리
+	 * @param destination
 	 * @return
 	 */
 	@PostMapping("/destination/restaurantModify")

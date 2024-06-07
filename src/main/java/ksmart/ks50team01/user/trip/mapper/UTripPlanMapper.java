@@ -24,4 +24,37 @@ public interface UTripPlanMapper {
 
 	// 임시 상태로 여행 계획을 저장
 	int addTempPlanInfo(UTripOption uTripOption);
+
+	// UUID로 임시 저장된 여행 계획 조회
+	UTripOption selectUTripOptionByUUID(String planUUID);
+
+	// 여행 계획에 관련된 모든 가상 회원 삭제
+	void deleteTripVirtualMembers(String tripUuid);
+
+	// 여행 계획에 관련된 모든 실제 회원 삭제
+	void deleteTripRealMembers(String tripUuid);
+
+	// 여행 계획에 가상 회원 추가
+	void insertTripVirtualMember(String tripUuid, String virtualMemberId);
+
+	// 여행 계획에 실제 회원 추가
+	void insertTripRealMember(String tripUuid, String realMemberId);
+
+	// 여행 계획 업데이트
+	void updateTempPlanInfo(UTripOption uTripOption);
+
+	// 가상 회원 ID 조회
+	Integer selectVirtualMemberIdByName(String name);
+
+	// 실제 회원 ID 조회
+	Integer selectRealMemberIdByMemberId(String memberId);
+
+	// 가상 회원 추가
+	void insertVirtualMember(String name);
+
+	// 실제 회원 추가
+	void insertRealMember(String memberId);
+
+	// 여행 계획 목록 조회
+	List<UTripOption> selectTempPlanListBySessionId(String sessionId);
 }

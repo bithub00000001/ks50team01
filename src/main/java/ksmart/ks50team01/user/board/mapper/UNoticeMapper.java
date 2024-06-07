@@ -1,6 +1,7 @@
 package ksmart.ks50team01.user.board.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -18,6 +19,10 @@ public interface UNoticeMapper {
 
 	// 조회수 증가
 	int increaseViewCount(String noticeNum);
+
+	List<Map<String, Object>> getNoticeListByPage(Map<String, Object> paramMap);
+
+	int getNoticeListRowCnt();
 	
 
 }

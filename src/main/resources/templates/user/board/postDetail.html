@@ -8,8 +8,8 @@
 	</head>
 	
 	<th:block layout:fragment="customCss">
-		<link th:href="@{/user/css/postDetail.css}" rel="stylesheet">
 		<link th:href="@{/user/css/report.css}" rel="stylesheet">
+		<link th:href="@{/user/css/postDetail.css}" rel="stylesheet">
 		
     	<!-- GOOGLE FONT -->
     	<link href='https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700' rel='stylesheet'>
@@ -51,7 +51,7 @@
 					<a th:href="@{/community/postModify(postNum=${postDetail.postNum})}" class="btn btn-light-gray btn-sm update-Btn">수정</a>
 					<a href="#" th:data-post-num="${postDetail.postNum}" class="btn btn-off-white btn-sm delete-Btn" th:onclick="confirmRemove(this)">삭제</a>
 				</div>	
-
+				
 					<hr class="my-4">
 					</div>
 					<div class="comments">
@@ -87,33 +87,8 @@
 													</ul>
 												</div>
 											</div>
-											<!-- Button trigger modal -->
-	
-	
-	
-											<!-- 댓글 수정 및 삭제 아이콘 
-											<div class="modify-btn delete-btn">
-												<i class="fa-solid fa-eraser fa-2x"></i>
-												사각형 닫기 아이콘
-												<i class="fa-solid fa-square-xmark fa-2x"></i>
-												원형 닫기 아이콘
-												<i class="fa-solid fa-circle-xmark fa-2x"></i>
-											</div> -->
-	
-	
-											<!-- 댓글 수정, 댓글 삭제 드롭다운
-											<div class="dropdown">
-												<i class="fa-solid fa-ellipsis-vertical fa-2x"
-													onclick="toggleDropdownMenu()"></i>
-												<div id="dropdown-menu" class="dropdown-menu">
-													<i class="dropdown-item1 fa-solid fa-eraser fa-2x edit-button" onclick="editComment()"></i>
-													<i class="dropdown-item2 fa-solid fa-square-xmark fa-2x delete-button" onclick="deleteComment()"></i>
-													<i class="dropdown-item3 fa-solid fa-trash-can fa-2x delete-button" onclick="deleteComment()"></i>
-													<i class="dropdown-item4 fa-regular fa-trash-can fa-2x delete-button" onclick="deleteComment()"></i>
-												</div>
-											</div> -->
-	
 										</div>
+										
 										<!-- 댓글 리스트 출력 -->
 										<p class="comment-content" id="commentList" th:text="${l.commentContent}">댓글 내용</p>
 	
@@ -164,16 +139,13 @@
 		</div>
 	
 		<!-- Modal -->
-		<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
-			data-bs-keyboard="false" tabindex="-1"
-			aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
 						<h5 class="modal-title" id="staticBackdropLabel">신고하기</h5>
 						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
-					<!-- Example single danger button -->
 					<div class="btn-group">
 						<button type="button" class="btn btn-primary dropdown-toggle px-3" data-bs-toggle="dropdown" aria-expanded="false">신고 유형 선택</button>
 						<ul class="dropdown-menu">
@@ -188,7 +160,6 @@
 							<li><a class="dropdown-item">기타</a></li>
 						</ul>
 					</div>
-	
 					<div class="modal-body">
 						<div class="mb-3">
 							<label for="message-text" class="col-form-label">신고 내용:</label>
@@ -204,7 +175,7 @@
 			</div>
 		</div>
 	
-		<!-- 답글 모달 창 -->
+		<!-- 답글 모달 -->
 		<div class="modal fade" id="replyModal" tabindex="-1" role="dialog"
 			aria-labelledby="replyModalLabel" aria-hidden="true">
 			<div class="modal-dialog" role="document">
@@ -214,16 +185,13 @@
 						<button type="button" class="btn-close" data-bs-dismiss="modal"
 							aria-label="Close"></button>
 					</div>
-					
 					<div class="modal-body">
-						<!-- 답글 작성 폼 -->
 						<form>
 							<div class="form-group">
 								<label for="replyContent">답글 내용</label>
 								<textarea class="form-control" id="replyContent" rows="5" placeholder="답글을 입력하세요"></textarea>
 							</div>
 						</form>
-	
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary"
@@ -234,41 +202,37 @@
 			</div>
 		</div>
 		
-		
-<!-- 댓글 수정 모달 -->
-<div class="modal fade" id="editCommentModal" tabindex="-1" aria-labelledby="editCommentModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editCommentModalLabel">댓글 수정</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="editCommentForm">
-                    <div class="form-group">
-                        <label for="editCommentContent">댓글 내용</label>
-                        <textarea class="form-control" id="CommentMdfContent" rows="3" required></textarea>
-                    </div>
-                    <input type="hidden" id="CommentNum">
-                    <input type="hidden" id="CommentMdfId">
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                <button type="button" class="btn btn-primary" onclick="submitEditComment()">댓글 수정</button>
-            </div>
-        </div>
-    </div>
-</div>
-
+		<!-- 댓글 수정 모달 -->
+		<div class="modal fade" id="editCommentModal" tabindex="-1" aria-labelledby="editCommentModalLabel" aria-hidden="true">
+		    <div class="modal-dialog">
+		        <div class="modal-content">
+		            <div class="modal-header">
+		                <h5 class="modal-title" id="editCommentModalLabel">댓글 수정</h5>
+		                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		            </div>
+		            <div class="modal-body">
+		                <form id="editCommentForm">
+		                    <div class="form-group">
+		                        <label for="editCommentContent">댓글 내용</label>
+		                        <textarea class="form-control" id="CommentMdfContent" rows="3" required></textarea>
+		                    </div>
+		                    <input type="hidden" id="CommentNum">
+		                    <input type="hidden" id="CommentMdfId">
+		                </form>
+		            </div>
+		            <div class="modal-footer">
+		                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+		                <button type="button" class="btn btn-primary" onclick="submitEditComment()">댓글 수정</button>
+		            </div>
+		        </div>
+		    </div>
+		</div>
 		
 	</th:block>
-
 
 	<th:block layout:fragment="customJsFIle">
 	    <script src="https://kit.fontawesome.com/8374b337d7.js" crossorigin="anonymous"></script>
 	</th:block>
-
 
 	<th:block layout:fragment="customJs">
 		<script th:inline="javascript">
@@ -305,8 +269,6 @@
 		    });
 		}
 
-		
-		
 		// 댓글 수정
 		function editComment(event) {
 		    const listItem = event.target.closest('.list-group-item');
@@ -342,8 +304,6 @@
 	        });
 	    }
 
-	    
-	    
 	    
 	    // 댓글 삭제
 	    function commentRemove(commentNum) {
@@ -527,8 +487,7 @@
 		        form.submit();
 		    }
 		    
+		    
 		</script>
-
 	</th:block>
-	
 </html>

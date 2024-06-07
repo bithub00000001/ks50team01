@@ -4,25 +4,25 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="ksmart.ks50team01.platform.destination.mapper.DestinationMapper">
-	
+
 	<select id="addTourGoodsCheckList" parameterType="String" resultType="boolean">
 		/* 중복 관광지 세부사항 체크 */
 			SELECT
 				COUNT(TOUR_GOODS)
 			FROM
-			
+
 			WHERE
 				TOUR_GOODSOPTION = #{tourGoodsOptionCd};
-		
+
 	</select>
-	
+
 	<select id="addTourCheckList" parameterType="String" resultType="boolean">
 		/* 중복 관광지 체크 */
 			SELECT
 				COUNT(TOUR_NAME)
 			FROM
 				TOUR_GOODS as tg
-				INNER JOIN 
+				INNER JOIN
 				TOUR_GOODSOPTION as tgo
 				ON
 				tg.TOUR_GDS_CD = tgo.TOUR_GDS_CD
@@ -31,13 +31,13 @@
 				ON
 				tg.TOUR_INFO_CD = ti.TOUR_INFO_CD
 			WHERE
-				TOUR_NAME = #{TOUR_NAME};		
-	
-	
-	
+				TOUR_NAME = #{TOUR_NAME};
+
+
+
 	</select>
-	
-	<insert id="addTour" parameterType="destination">
+
+	<insert id="addTour" parameterType="Destination">
 		/* 관광지 등록 처리 */
 		INSERT INTO
 			TOUR_INFO
@@ -47,9 +47,9 @@
 			 PRTNR_BPLC_CD,
 			 RGN_SCTGRY_NM,
 			 REG_PF_BIZ_ID,
-			 TOUR_ADDR, 		
-			 TOUR_DADDR, 		
-			 TOUR_SITE, 		
+			 TOUR_ADDR,
+			 TOUR_DADDR,
+			 TOUR_SITE,
 			 TOUR_CONTATC1,
 			 TOUR_CONTATC2,
 			 TOUR_OTHERS,
@@ -66,25 +66,25 @@
 		 	 #{tourSite},
 			 #{tourContactNum},
 		 	 #{tourContactNum2},
-			#{tourOthers}, 	 
+			#{tourOthers},
 			NOW());
-	
-	</insert>
-	
 
-	<insert id="addTourGoods" parameterType="destination">
+	</insert>
+
+
+	<insert id="addTourGoods" parameterType="Destination">
 		/* 관광지 세부 등록 */
-			INSERT INTO 
+			INSERT INTO
 				TOUR_GOODS
-				(TOUR_GDS_CD, 
+				(TOUR_GDS_CD,
 				PRTNR_BPLC_CD,
-				 REG_PF_BIZ_ID, 
+				 REG_PF_BIZ_ID,
 				 TOUR_INFO_CD,
-				 RGN_SCTGRY_NM, 
+				 RGN_SCTGRY_NM,
 				 TOUR_GDS_CTGRY,
 				 ACT_YN,
 				 REG_YMD)
-				VALUES 
+				VALUES
 				(
 				 #{tourGoodsCode},
 				 #{partnerBPlaceCode},
@@ -96,46 +96,46 @@
 				 now()
 				 );
 	</insert>
-	
-	<insert id="addTourGoodsOp">
+
+	<insert id="addTourGoodsOp" parameterType="Destination">
 		/* 관광지 세부사항 옵션 등록 */
 			INSERT INTO TOUR_GOODSOPTION
 			(TOUR_GDSOPT_CD,
-			 REG_PF_BIZ_ID, 
+			 REG_PF_BIZ_ID,
 			 TOUR_GDS_CD,
 			 PRTNR_BPLC_CD,
-			 RGN_SCTGRY_NM, 
+			 RGN_SCTGRY_NM,
 			 TOUR_GDSOPT_LIST,
 			 TOUR_GDSOPT_PRC,
-			 TOUR_GDSOPT_TIME, 
-			 TOUR_GDSOPT_RMRK, 
+			 TOUR_GDSOPT_TIME,
+			 TOUR_GDSOPT_RMRK,
 			 REG_YMD)
-			VALUES 
+			VALUES
 			(#{tourGoodsOptionCd},
 			 #{tourAuthorityId},
 			 #{tourGoodsCode},
 			 #{partnerBPlaceCode},
-			 #{regionSCateName}, 
+			 #{regionSCateName},
 			 #{tourGoodsList},
 			 #{tourGoodsOptPrice},
-			 #{tourGoodsTime}, 
-			 #{tourOptionRemarks}, 
+			 #{tourGoodsTime},
+			 #{tourOptionRemarks},
 			 NOW());
 	</insert>
-	
-	<select id="searchTourName" resultType="destination">
+
+	<select id="searchTourName" resultType="Destination">
 		/* 관광지 이름 검색 */
-		SELECT 
+		SELECT
 			TOUR_NAME as tourName,
 			TOUR_INFO_CD as tourInfoCode
-		FROM 
+		FROM
 			TOUR_INFO
-		WHERE 
+		WHERE
 			TOUR_NAME LIKE CONCAT('%', #{tourName}, '%')
-			
+
 	</select>
-	
-	
+
+
 	<delete id="removeTourGoods" parameterType="String">
 		/* 관광지 상세목록 삭제 */
 			DELETE
@@ -144,7 +144,7 @@
 			WHERE
 				TOUR_GDSOPT_CD = #{tourGoodsOptionCd};
 	</delete>
-	
+
 	<delete id="removeTour" parameterType="String">
 		/* 관광지 삭제 */
 			DELETE
@@ -152,10 +152,10 @@
 				TOUR_INFO
 			WHERE
 				TOUR_INFO_CD = #{tourInfoCode};
-		
+
 	</delete>
-	
-	<select id="getTourInfoList" resultType="destination">
+
+	<select id="getTourInfoList" resultType="Destination">
 
 		/* 관광지 정보 조회 */
 
@@ -175,8 +175,8 @@
 				TOUR_INFO;
 
 	</select>
-	
-	<select id="getTourInfoListByName" resultType="destination">
+
+	<select id="getTourInfoListByName" resultType="Destination">
 
 		/* 관광지 이름 검색 정보 조회 */
 
@@ -201,9 +201,9 @@
 			</where>
 
 	</select>
-	
 
-	<select id="getTourInfoByName" resultType="destination">
+
+	<select id="getTourInfoByName" resultType="Destination">
 		/* 관광지 수정 전 처리 */
 			SELECT
 				TRIP_SCTGRY_CD  AS  tripSCateCode,
@@ -226,7 +226,7 @@
 
 	</select>
 
-	<update id="tourModify" parameterType="destination">
+	<update id="tourModify" parameterType="Destination">
 		/* 관광지 수정 */
 			UPDATE TOUR_INFO
 			SET
@@ -250,7 +250,7 @@
 
 
 
-	<select id="getTourGoodsList" resultType="destination">
+	<select id="getTourGoodsList" resultType="Destination">
 		/* 관광지 옵션 조회 */
 			SELECT
 				ti.TOUR_NAME 			AS tourName,
@@ -278,7 +278,7 @@
 
 	</select>
 
-	<select id="getTourGoodsInfoById" resultType="destination">
+	<select id="getTourGoodsInfoById" resultType="Destination">
 		/* 관광지 세부사항 수정 */
 			SELECT
 				ti.TOUR_NAME 			AS tourName,
@@ -308,14 +308,14 @@
 	</select>
 
 
-	<update id="tourGoodsModify" parameterType="destination">
+	<update id="tourGoodsModify" parameterType="Destination">
 		/* 관광지세부사항 수정 후 */
-			UPDATE 
+			UPDATE
 				TOUR_GOODS AS tg,
 				TOUR_GOODSOPTION AS tgo,
 				TOUR_INFO AS ti
 			<set>
-				<if test="tourGoodsCate != null and tourGoodsCate != ''">				
+				<if test="tourGoodsCate != null and tourGoodsCate != ''">
 					tg.TOUR_GDS_CTGRY 		= #{tourGoodsCate},
 				</if>
 				<if test="tourGoodsList != null and tourGoodsList != ''">
@@ -340,16 +340,17 @@
 					tg.FAVS_TOTAL			= #{tourTotal},
 				</if>
 					tgo.MDFCN_YMD			= NOW()
-				
+
 			</set>
-			WHERE 
+			WHERE
 				tg.TOUR_GDS_CD = tgo.TOUR_GDS_CD
-				AND 
+				AND
 				tg.TOUR_INFO_CD = ti.TOUR_INFO_CD
-				AND 
+				AND
 				tgo.TOUR_GDSOPT_CD = #{tourGoodsOptionCd};
 
 	</update>
+<<<<<<< HEAD
 	
 	<select id="getLodgingInfoListByName" resultType="destination">
 		/* 숙소 이름 검색 정보 조회 */
@@ -376,16 +377,19 @@
 			</where>	
 	</select>
 		
+=======
+
+>>>>>>> refs/heads/develop
 	<select id="addLodgingCheckList" parameterType="String" resultType="boolean">
 		/* 중복 숙소 체크 */
-			SELECT	
+			SELECT
 				COUNT(LODGING_NAME)
 			FROM
 				LODGING_INFO
 			WHERE
-				LODGING_NAME = #{lodgingName};	
+				LODGING_NAME = #{lodgingName};
 	</select>
-	
+
 	<select id="addLodgingGoodsCheckList" parameterType="String" resultType="boolean">
 		/* 중복 숙소 세부정보 체크 */
 			SELECT
@@ -395,57 +399,57 @@
 			WHERE
 				LODGING_MENU_CD = #{lodgingMenuCode};
 	</select>
-	
-	<insert id="addLodging" parameterType="destination">
+
+	<insert id="addLodging" parameterType="Destination">
 		/*숙소 등록 처리 */
-			INSERT INTO 
+			INSERT INTO
 				LODGING_INFO
-				(LODGING_INFO_CD, 
-				 REG_PF_BIZ_ID, 
-				 TRIP_SCTGRY_CD, 
-				 PRTNR_BPLC_CD, 
-				 RGN_SCTGRY_NM, 
-				 LODGING_NAME, 
-				 LODGING_ADDR, 
-				 LODGING_DADDR, 
-				 LODGING_CONTACT1, 
-				 LODGING_CONTACT2, 
-				 LODGING_SITE, 
+				(LODGING_INFO_CD,
+				 REG_PF_BIZ_ID,
+				 TRIP_SCTGRY_CD,
+				 PRTNR_BPLC_CD,
+				 RGN_SCTGRY_NM,
+				 LODGING_NAME,
+				 LODGING_ADDR,
+				 LODGING_DADDR,
+				 LODGING_CONTACT1,
+				 LODGING_CONTACT2,
+				 LODGING_SITE,
 				 REG_YMD)
-				VALUES 
-				(#{lodgingInfoCode}, 
-				 #{lodgingAuthorityId}, 
-				 #{tripSCateCode}, 
-				 #{partnerBPlaceCode}, 
-				 #{regionSCateName}, 
-				 #{lodgingName}, 
-				 #{lodgingAddr}, 
-				 #{lodgingDaddr}, 
-				 #{lodgingContactNum}, 
-				 #{lodgingContactNum2}, 
-				 #{lodgingSite}, 
+				VALUES
+				(#{lodgingInfoCode},
+				 #{lodgingAuthorityId},
+				 #{tripSCateCode},
+				 #{partnerBPlaceCode},
+				 #{regionSCateName},
+				 #{lodgingName},
+				 #{lodgingAddr},
+				 #{lodgingDaddr},
+				 #{lodgingContactNum},
+				 #{lodgingContactNum2},
+				 #{lodgingSite},
 				 NOW());
 	</insert>
-	
-	<insert id="addLodingGoods" parameterType="destination">
+
+	<insert id="addLodingGoods" parameterType="Destination">
 		/* 숙소 상세정보 등록 처리 */
-				
-			
-	
+
+
+
 	</insert>
 
-	
+
 	<delete id="removeLodgingGoods" parameterType="String">
 		/* 숙소 상세목록 삭제 */
-			
-			
+
+
 			DELETE
 			FROM
-				LODGING_MENU 
+				LODGING_MENU
 			WHERE
 				LODGING_MENU_CD = #{lodgingMenuCode};
 	</delete>
-	
+
 	<delete id="removeLodging" parameterType="String">
 		/* 숙소 삭제 */
 			DELETE
@@ -453,10 +457,10 @@
 				LODGING_INFO
 			WHERE
 				LODGING_INFO_CD = #{lodgingInfoCode};
-			
+
 	</delete>
-	
-	<select id="getLodgingInfoList" resultType="destination">
+
+	<select id="getLodgingInfoList" resultType="Destination">
 		/* 숙소 정보 */
 			SELECT
 				LODGING_INFO_CD 	AS 	lodgingInfoCode,
@@ -476,7 +480,7 @@
 				LODGING_INFO;
 	</select>
 
-	<select id="getLodgingGoodsList" resultType="destination">
+	<select id="getLodgingGoodsList" resultType="Destination">
 		/* 숙소상품 정보 */
 			SELECT
 				li.LODGING_NAME 			AS lodgingName,
@@ -501,8 +505,8 @@
 
 	</select>
 
-	<select id="getLodgingInfoById" resultType="destination">
-		/* 숙소 수정을 위한 목록가져오기 */	
+	<select id="getLodgingInfoById" resultType="Destination">
+		/* 숙소 수정을 위한 목록가져오기 */
 			SELECT
 				LODGING_INFO_CD 	AS lodgingInfoCode,
 				REG_PF_BIZ_ID 		AS lodgingAuthorityId,
@@ -522,7 +526,7 @@
 
 	</select>
 
-	<update id="lodgingModify" parameterType="destination">
+	<update id="lodgingModify" parameterType="Destination">
 		/* 숙소 수정 */
 			UPDATE LODGING_INFO
 			SET
@@ -539,7 +543,7 @@
 
 	</update>
 
-	<select id="getLodgingGoodsInfoById" resultType="destination">
+	<select id="getLodgingGoodsInfoById" resultType="Destination">
 		/* 숙소 상세정보 수정 화면 */
 			SELECT
 				li.LODGING_NAME 			AS lodgingName,
@@ -554,7 +558,7 @@
 				lm.LODGING_MENU_BK_YN 		AS lodgingMenuBkYn,
 				li.REG_YMD 					AS lodgingRegDate,
 				li.MDFCN_YMD 				AS lodgingFormDate
-	
+
 			FROM
 				LODGING_INFO AS li
 				INNER JOIN
@@ -562,13 +566,13 @@
 				ON
 				li.LODGING_INFO_CD = lm.LODGING_INFO_CD
 			WHERE
-				lm.LODGING_MENU_CD = #{lodgingMenuCode};	
-			
+				lm.LODGING_MENU_CD = #{lodgingMenuCode};
+
 	</select>
 
-	<update id="lodgingGoodsModify" parameterType="destination">
+	<update id="lodgingGoodsModify" parameterType="Destination">
 		/* 숙소 상세정보 수정 후 업데이트 */
-			UPDATE 
+			UPDATE
 				LODGING_INFO AS li,
 				LODGING_MENU AS lm
 			<set>
@@ -612,10 +616,10 @@
 	</update>
 
 
-	<select id="getRestaurantInfoById" resultType="destination">
+	<select id="getRestaurantInfoById" resultType="Destination">
 		/* 식당 수정 전 정보 */
-		
-	
+
+
 			SELECT
 				RSTRN_INFO_CD 	AS restaurantInfoCode,
 				REG_PF_BIZ_ID 	AS restaurantAuthorityId,
@@ -634,7 +638,7 @@
 
 	</select>
 
-	<update id="restaurantMoidfy" parameterType="destination">
+	<update id="restaurantMoidfy" parameterType="Destination">
 		/* 식당 수정 */
 			UPDATE RESTAURANT_INFO
 			SET
@@ -652,7 +656,7 @@
 
 
 
-	<select id="getRestaurantInfoList" resultType="destination">
+	<select id="getRestaurantInfoList" resultType="Destination">
 		/* 식당 정보 목록 */
 
 			SELECT
@@ -671,13 +675,13 @@
 			FROM
 				RESTAURANT_INFO;
 	</select>
-	<select id="getRestaurantMenuList" resultType="destination">
+	<select id="getRestaurantMenuList" resultType="Destination">
 		/* 식당메뉴 정보 */
 			SELECT
 				rm.RSTRN_INFO_CD			AS restaurantInfoCode,
 				ri.RSTRN_NAME 				AS restaurantName,
 				rm.RSTRN_MENU_MNG_CD		AS restaurantMenuManageCode,
-				rm.RSTRN_MENU 				AS restaurantMenu,	
+				rm.RSTRN_MENU 				AS restaurantMenu,
 				rm.RSTRN_MENU_PRICE			AS restaurantMenuPrice,
 				rm.REG_PF_BIZ_ID			AS restaurantAuthorityId,
 				rm.REG_YMD					AS restaurantRegDate,
@@ -689,13 +693,13 @@
 			ON
 				ri.RSTRN_INFO_CD = rm.RSTRN_INFO_CD;
 	</select>
-	<select id="getRestaurantMenuInfoById" resultType="destination">
+	<select id="getRestaurantMenuInfoById" resultType="Destination">
 		/*  */
 			SELECT
 				rm.RSTRN_INFO_CD			AS restaurantInfoCode,
 				ri.RSTRN_NAME 				AS restaurantName,
 				rm.RSTRN_MENU_MNG_CD		AS restaurantMenuManageCode,
-				rm.RSTRN_MENU 				AS restaurantMenu,	
+				rm.RSTRN_MENU 				AS restaurantMenu,
 				rm.RSTRN_MENU_PRICE			AS restaurantMenuPrice,
 				rm.REG_PF_BIZ_ID			AS restaurantAuthorityId,
 				rm.REG_YMD					AS restaurantRegDate,
@@ -707,9 +711,9 @@
 			ON
 				ri.RSTRN_INFO_CD = rm.RSTRN_INFO_CD
 			WHERE
-				rm.RSTRN_MENU_MNG_CD = #{restaurantMenuManageCode};	
+				rm.RSTRN_MENU_MNG_CD = #{restaurantMenuManageCode};
 	</select>
-	<update id="restaurantMenuModify" parameterType="destination">
+	<update id="restaurantMenuModify" parameterType="Destination">
 		/*  */
 			UPDATE 
 				RESTAURANT_INFO AS ri, 
