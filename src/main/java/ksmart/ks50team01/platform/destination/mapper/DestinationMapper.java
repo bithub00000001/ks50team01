@@ -47,6 +47,9 @@ public interface DestinationMapper {
 	//관광상품 조회
 	List<Destination> getTourGoodsList();
 	
+	//숙소 이름 조회
+	List<Destination> getLodgingInfoListByName(String lodgingName);
+	
 	//숙소 등록
 	int addLodging(Destination destination);
 	

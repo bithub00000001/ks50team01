@@ -350,6 +350,31 @@
 				tgo.TOUR_GDSOPT_CD = #{tourGoodsOptionCd};
 
 	</update>
+	
+	<select id="getLodgingInfoListByName" resultType="destination">
+		/* 숙소 이름 검색 정보 조회 */
+			SELECT
+				LODGING_INFO_CD 	AS 	lodgingInfoCode,
+				TRIP_SCTGRY_CD		AS	tripSCateCode,
+				PRTNR_BPLC_CD		AS	partnerBPlaceCode,
+				RGN_SCTGRY_NM		AS	regionSCateName,
+				REG_PF_BIZ_ID 		AS 	lodgingAuthorityId,
+				LODGING_NAME 		AS 	lodgingName,
+				LODGING_ADDR 		AS 	lodgingAddr,
+				LODGING_DADDR 		AS 	lodgingDaddr,
+				LODGING_CONTACT1 	AS 	lodgingContactNum,
+				LODGING_CONTACT2 	AS 	lodgingContactNum2,
+				LODGING_SITE 		AS 	lodgingSite,
+				REG_YMD 			AS 	lodgingRegDate,
+				MDFCN_YMD 			AS 	lodgingFormDate
+			FROM
+				LODGING_INFO
+			<where>
+				<if test="lodgingName != null and lodgingName != ''">
+					LODGING_NAME LIKE CONCAT('%', #{lodgingName}, '%');
+				</if>
+			</where>	
+	</select>
 		
 	<select id="addLodgingCheckList" parameterType="String" resultType="boolean">
 		/* 중복 숙소 체크 */
@@ -458,6 +483,7 @@
 				lm.LODGING_MENU_TYPE 		AS lodgingMenuType,
 				li.LODGING_INFO_CD 			AS lodgingInfoCode,
 				lm.LODGING_MENU_CD 			AS lodgingMenuCode,
+				lm.REG_PF_BIZ_ID 			AS lodgingAuthorityId,
 				lm.LODGING_MENU_MINCPCT 	AS lodgingMenuMinPct,
 				lm.LODGING_MENU_MAXCPCT 	AS lodgingMenuMaxPct,
 				lm.LODGING_MENU_PRC 		AS lodgingMenuPrc,
@@ -519,6 +545,7 @@
 				li.LODGING_NAME 			AS lodgingName,
 				lm.LODGING_MENU_CD			AS lodgingMenuCode,
 				lm.LODGING_MENU_TYPE 		AS lodgingMenuType,
+				lm.REG_PF_BIZ_ID 		AS lodgingAuthorityId,
 				lm.LODGING_MENU_MINCPCT 	AS lodgingMenuMinPct,
 				lm.LODGING_MENU_MAXCPCT 	AS lodgingMenuMaxPct,
 				lm.LODGING_MENU_PRC 		AS lodgingMenuPrc,
@@ -553,6 +580,9 @@
 				</if>
 				<if test="lodgingInfoCode != null and lodgingInfoCode != ''">
 					li.LODGING_INFO_CD			= #{lodgingInfoCode} ,
+				</if>
+				<if test="lodgingAuthorityId != null and lodgingAuthorityId != ''">
+					lm.REG_PF_BIZ_ID			= #{lodgingAuthorityId} ,
 				</if>
 				<if test="lodgingMenuMinPct != null and lodgingMenuMinPct != ''">
 					lm.LODGING_MENU_MINCPCT		= #{lodgingMenuMinPct},

@@ -24,13 +24,24 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class DestinationManageController {
 	
 	private final DestinationService destinationService;
-	
+	/**
+	 * 관관지 이름 검색으로 찾기
+	 * @param tourName
+	 * @return
+	 */
 	@GetMapping("/destination/search-tour-name")
 	@ResponseBody
 	public List<Destination> getTourListByName(@RequestParam(value="tourName") String tourName){
 		List<Destination> tourList = destinationService.getTourInfoListByName(tourName);
 		
 		return tourList;
+	}
+	@GetMapping("/destination/search-lodging-name")
+	@ResponseBody
+	public List<Destination> getLodgingListByName(@RequestParam(value = "lodgingName") String lodgingName){
+		List<Destination> lodgingList = destinationService.getLodgingInfoListByName(lodgingName);
+		
+		return lodgingList;
 	}
 	
 	/**
@@ -387,7 +398,7 @@ public class DestinationManageController {
 		
 		model.addAttribute("lodgingGoodsInfo", lodgingGoodsInfo);
 		model.addAttribute("lodgingGoodsList", lodgingGoodsList);
-		model.addAttribute("title", "관광지 세부사항 수정");
+		model.addAttribute("title", "숙소 상세정보 수정");
 	
 		return "/platform/destination/lodgingGoodsModify";
 	}

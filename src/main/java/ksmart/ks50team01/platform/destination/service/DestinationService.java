@@ -26,6 +26,14 @@ public class DestinationService {
 	public List<Destination> getTourInfoListByName(String tourName){
 		return destinationMapper.getTourInfoListByName(tourName);
 	}
+	/**
+	 * 숙소 목록조회(숙소 이름 검색)
+	 * @param lodgingName
+	 * @return
+	 */
+	public List<Destination> getLodgingInfoListByName(String lodgingName){
+		return destinationMapper.getLodgingInfoListByName(lodgingName);
+	}
 	
 	/**
 	 * 관광지 세부항목 추가
@@ -316,6 +324,8 @@ public class DestinationService {
 	public boolean addRestaurantCheckList(String restaurantName) {
 		return destinationMapper.addRestaurantCheckList(restaurantName);
 	}
+
+	
 
 
 }
