@@ -350,7 +350,7 @@
 				tgo.TOUR_GDSOPT_CD = #{tourGoodsOptionCd};
 
 	</update>
-<<<<<<< HEAD
+
 	
 	<select id="getLodgingInfoListByName" resultType="destination">
 		/* 숙소 이름 검색 정보 조회 */
@@ -377,9 +377,7 @@
 			</where>	
 	</select>
 		
-=======
 
->>>>>>> refs/heads/develop
 	<select id="addLodgingCheckList" parameterType="String" resultType="boolean">
 		/* 중복 숙소 체크 */
 			SELECT
