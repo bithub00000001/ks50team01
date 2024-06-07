@@ -96,7 +96,7 @@
     <script th:src="@{/user/js/custom.js}"></script>
 </th:block>
 <th:block layout:fragment="customJs">
-    <script>
+    <script th:inline="javascript">
         $(function () {
             const slides = $('.slides'),
                 images = slides.find('img');
@@ -122,12 +122,24 @@
             });
         })
     </script>
-    <script>
+    <script th:inline="javascript">
         $('#dateRange').on('apply.daterangepicker', function (ev, picker){
             const start = picker.startDate.format('YYYY-MM-DD');
             const end = picker.endDate.format('YYYY-MM-DD');
             $('#startDate').val(start);
             $('#endDate').val(end);
+        });
+    </script>
+    <script th:inline="javascript">
+        $(document).ready(function () {
+            // 240607: project information에서 설정한 localStorage의 값으로 모달 호출
+            const modalName = localStorage.getItem('showModal');
+            if (modalName) {
+                const modalElement = $('#' + modalName);
+                const bsModal = new bootstrap.Modal(modalElement[0]);
+                bsModal.show();
+                localStorage.removeItem('showModal');
+            }
         });
     </script>
 </th:block>
