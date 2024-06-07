@@ -57,4 +57,7 @@ public interface UTripPlanMapper {
 
 	// 여행 계획 목록 조회
 	List<UTripOption> selectTempPlanListBySessionId(String sessionId);
+
+	// Tour API에서 DB에 저장한 여행 상세 정보 목록 조
+	List<Map<String, Object>> getTourDataList();
 }

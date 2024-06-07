@@ -23,6 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import jakarta.servlet.http.HttpSession;
+import ksmart.ks50team01.platform.trip.service.PTripPlanService;
 import ksmart.ks50team01.user.member.login.dto.Login;
 import ksmart.ks50team01.user.trip.dto.UDayInfo;
 import ksmart.ks50team01.user.trip.dto.UTripOption;
@@ -39,6 +40,7 @@ public class UTripPlanController {
 
     private final UTripPlanService uTripPlanService;
     private final UTourDataService uTourDataService;
+    private final PTripPlanService pTripPlanService;
 
     @Value("${tour.api.key}")
     private String apiKey;
@@ -204,5 +206,58 @@ public class UTripPlanController {
         model.addAttribute("title", "여행 스케줄");
 
         return "user/trip/planSchedule";
+    }
+
+    /**
+     * 여행지 정보 조회 페이지(클라이언트 사이드 페이지네이션)
+     * @param model
+     * @return
+     */
+    @GetMapping("/tourInfo")
+    public String tourInfoPage(Model model){
+        List<?> areaCodeList = pTripPlanService.getAreaCodeList();
+        model.addAttribute("title", "관광지 조회");
+        model.addAttribute("areaCodeList", areaCodeList);
+
+        return "/user/trip/tourInfo";
+    }
+
+    /**
+     * 여행지 상세 정보 전달 API
+     * @return
+     */
+    @GetMapping("/tourInfo/tourData")
+    @ResponseBody
+    public ResponseEntity<List<Map<String, Object>>> getTourData() {
+        List<Map<String, Object>> tourDataList = uTripPlanService.getTourDataList();
+        log.info("tourDataList: {}", tourDataList);
+        if (tourDataList.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(tourDataList);
+    }
+
+    /**
+     * 클라이언트 사이드 페이지네이션 구현 레퍼런스
+     * @return
+     */
+    @GetMapping("/paginationRefer")
+    public String planReferPage(){
+        return "user/trip/referPagination";
+    }
+
+    /**
+     * 클라이언트 사이드 페이지네이션 구현 레퍼런스 Ajax
+     * @return
+     */
+    @GetMapping("/pagination/refer/mockData")
+    @ResponseBody
+    public ResponseEntity<List<Map<String, Object>>> getPaginationRefer(){
+        List<Map<String, Object>> mockData = uTripPlanService.readMockData();
+
+        if (mockData.isEmpty()) {
+            return ResponseEntity.noContent().build(); // 204 에러 반환(no content)
+        }
+        return ResponseEntity.ok(mockData);
     }
 }
