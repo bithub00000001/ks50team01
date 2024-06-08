@@ -47,8 +47,9 @@ public interface UCommunityMapper {
 	// 게시글 수정 
 	void postModify(UCommunity uCommunity);
 
-	// 게시글 삭제
+	// 게시글 삭제 시 해당 게시글의 댓글 삭제
 	void postRemove(String postNum);
+	void postCommentRemove(String postNum);
 
 	// 게시글 파일 리스트 조회
 	List<UPostFile> getFileList();
@@ -81,6 +82,8 @@ public interface UCommunityMapper {
 	int getPostListRowCnt();
 
 	UComment getCommentById(String commentNum);
+
+
 	
 
 
