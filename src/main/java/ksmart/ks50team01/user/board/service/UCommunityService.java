@@ -127,9 +127,22 @@ public class UCommunityService {
 	 * 게시글 삭제
 	 */
 	public void postRemove(String postNum) {
+
 		uCommunityMapper.postRemove(postNum);
 		
 	}
+	
+	
+	/**
+	 * 게시글 삭제 시 해당 게시글의 댓글 삭제
+	 */
+	public void postCommentRemove(String postNum) {
+		
+		uCommunityMapper.postCommentRemove(postNum);
+		
+	}
+
+
 
 
 	/**
@@ -151,6 +164,10 @@ public class UCommunityService {
 		uCommunityMapper.commentSave(uComment);
 	}
 
+	
+	public UComment getCommentById(String commentNum) {
+		return uCommunityMapper.getCommentById(commentNum);
+	}
 	
 	
 	// 댓글 삭제
@@ -238,6 +255,13 @@ public class UCommunityService {
 
 	    return resultMap;
 	}
+
+
+
+
+
+
+
 
 }
 	
