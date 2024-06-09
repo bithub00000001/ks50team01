@@ -259,7 +259,7 @@ public class UTripPlanController {
         model.addAttribute("title", "관광지 조회");
         model.addAttribute("areaCodeList", areaCodeList);
 
-        return "/user/trip/tourInfo";
+        return "user/trip/tourInfo";
     }
 
     /**
