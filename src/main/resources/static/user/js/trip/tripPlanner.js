@@ -48,7 +48,6 @@ $(document).ready(function() {
 
         addToPlan(name, category, schedule, additional, id, contentId);
     });
-
 });
 
 // 탭 패널 ID에 따라 숙박, 식당, 관광지 중 하나를 반환

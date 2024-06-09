@@ -1,16 +1,24 @@
 package ksmart.ks50team01.user.trip.service;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
+import org.apache.coyote.BadRequestException;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
@@ -19,12 +27,15 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import ksmart.ks50team01.platform.trip.dto.PTourDetail;
 import ksmart.ks50team01.user.member.login.dto.Login;
 import ksmart.ks50team01.user.trip.dto.TMapApiResponse;
 import ksmart.ks50team01.user.trip.dto.UDayDistanceResult;
 import ksmart.ks50team01.user.trip.dto.UDayInfo;
 import ksmart.ks50team01.user.trip.dto.ULocationDistanceInfo;
+import ksmart.ks50team01.user.trip.dto.UTripDetailOption;
 import ksmart.ks50team01.user.trip.dto.UTripOption;
+import ksmart.ks50team01.user.trip.dto.UTripPlanItem;
 import ksmart.ks50team01.user.trip.enums.UTripContent;
 import ksmart.ks50team01.user.trip.mapper.UTripPlanMapper;
 import lombok.RequiredArgsConstructor;
@@ -221,18 +232,150 @@ public class UTripPlanServiceImpl implements UTripPlanService {
 			plan.setDescription(plan.getDescription());
 			calculateTripDuration(plan);
 			calculateAndSetDayDiff(plan);
-
 		});
 
 		return plans;
 	}
 
+	/**
+	 * 클라이언트 페이지네이션 구현을 위한 데이터 가공
+	 * @return
+	 */
+	@Override
+	public List<Map<String, Object>> readMockData() {
+		try {
+			ObjectMapper objectMapper = new ObjectMapper();
+			ClassPathResource classPathResource = new ClassPathResource("static/user/data/MOCK_DATA.json");
+			InputStream inputStream = classPathResource.getInputStream();
+			return objectMapper.readValue(inputStream,new TypeReference<List<Map<String, Object>>>(){});
+		}catch (IOException exception) {
+			log.error("MOCK_DATA.json 를 읽는데 실패했습니다.", exception);
+			return new ArrayList<>();
+		}
+	}
+
+	/**
+	 * Tour API에서 DB에 저장한 여행지 상세 정보 목록을 조회하는 메서드
+	 * @return
+	 */
+	@Override
+	public List<Map<String, Object>> getTourDataList() {
+		return uTripPlanMapper.getTourDataList();
+	}
+
+	/**
+	 * 여행 계획 상세 정보 저장 메서드
+	 * @param uTripDetailOption 여행 계획 상세 정보 DTO
+	 */
+	@Override
+	public int saveTripDetailInfo(UTripDetailOption uTripDetailOption) throws BadRequestException {
+		String planUUID = uTripDetailOption.getPlanUUID();
+		List<UDayInfo> dayInfos = uTripDetailOption.getDays();
+
+		// 처리된 쿼리 확인
+		int totalRowsAffected = 0;
+
+		// 예외 처리 예시: 잘못된 요청 시 BadRequestException 던지기
+		if (planUUID == null || planUUID.isEmpty()) {
+			throw new BadRequestException("planUUID는 필수입니다.");
+		}
+
+		// planUUID가 존재하는지 확인
+		if (uTripPlanMapper.existsByPlanUUID(planUUID)) {
+			// 기존 데이터 삭제
+			totalRowsAffected += uTripPlanMapper.deleteDetailInfo(planUUID);
+		}
+
+		// 새로운 데이터 저장
+		for (UDayInfo dayInfo : dayInfos) {
+			int dayNumber = dayInfo.getDay();
+			List<ULocationDistanceInfo> locations = dayInfo.getLocations();
+
+			for (ULocationDistanceInfo location : locations) {
+				String contentId = location.getContentId();
+				int order = location.getOrder();
+
+				totalRowsAffected += uTripPlanMapper.insertDetailInfo(planUUID, dayNumber, contentId, order);
+			}
+		}
+		return totalRowsAffected;
+	}
+
+	/**
+	 * UUID와 일치하는 여행 계획 상세 정보 조회 메서드
+	 * @param planUUID 여행 계획 UUID
+	 * @return
+	 */
+	@Override
+	public UTripOption getTripOptionByUUID(String planUUID) {
+		UTripOption tripOption = uTripPlanMapper.getTripPlanByUUID(planUUID);
+		if (tripOption != null) {
+			// TRIP_PLAN_ITEMS_NEW 테이블에서 일정 항목 조회
+			List<UTripPlanItem> tripItems = uTripPlanMapper.getTripItemsByUUID(planUUID);
+			log.info("tripItems: {}", tripItems);
+
+			// TOUR_DETAIL_FROM_API 테이블에서 관련 정보 조회
+			List<String> contentIds = tripItems.stream()
+				.map(UTripPlanItem::getContentId)
+				.toList();
+			List<PTourDetail> tourDetails = uTripPlanMapper.getPTourDetailByContentId(contentIds);
+
+			// contentId를 키로 하는 Map 생성
+			Map<String, PTourDetail> tourDetailMap = tourDetails.stream()
+				.collect(Collectors.toMap(PTourDetail::getContentId, Function.identity()));
+
+			addTripItemsForDates(tripOption, tripItems, tourDetailMap);
+			tripOption.setTourDetails(tourDetails);
+
+			return tripOption;
+		}
+		return null;
+	}
+
+
+	private void addTripItemsForDates(UTripOption tripOption, List<UTripPlanItem> tripItems, Map<String, PTourDetail> tourDetailMap) {
+		if (tripOption.getStartDate() == null || tripItems == null || tripItems.isEmpty()) {
+			throw new IllegalArgumentException("Start date and trip items must be provided.");
+		}
+
+		tripOption.getDayPlans().clear();
+
+		// 각 날짜별 DayPlan 생성
+		for (UTripPlanItem item : tripItems) {
+			int dayNumber = Integer.parseInt(item.getDayNumber());
+			UTripOption.DayPlan dayPlan = tripOption.getDayPlans().stream()
+				.filter(plan -> plan.getDayNumber() == dayNumber)
+				.findFirst()
+				.orElseGet(() -> {
+					UTripOption.DayPlan newDayPlan = new UTripOption.DayPlan();
+					newDayPlan.setStartDateAndDayNumber(tripOption.getStartDate(), dayNumber);
+					tripOption.getDayPlans().add(newDayPlan);
+					return newDayPlan;
+				});
+
+			// tourDetails 매핑
+			PTourDetail detail = tourDetailMap.get(item.getContentId());
+			if (detail != null) {
+				item.setTourDetail(detail);
+			}
+			dayPlan.getItems().add(item);
+		}
+
+		// dayPlans를 dayNumber 기준으로 정렬
+		tripOption.getDayPlans().sort(Comparator.comparingInt(UTripOption.DayPlan::getDayNumber));
+	}
+
+	/**
+	 * 가상 회원의 존재 유무를 판단해서 가상회원 테이블, 여행 계획에 참여한 가상 회원 테이블에 추가하는 메서드
+	 * @param tripUuid 여행 계획 UUID
+	 * @param virtualMemberNames 가상 회원 이름 배열
+	 */
 	private void saveVirtualMembers(String tripUuid, List<String> virtualMemberNames) {
 		for (String name : virtualMemberNames) {
 			// 가상 멤버가 존재하는지 확인
 			Integer virtualMemberId = uTripPlanMapper.selectVirtualMemberIdByName(name);
 			if (virtualMemberId == null) {
-				// 존재하지 않으면 삽입
+				// 존재하지 않으면 가상 회원 테이블에 삽입
 				uTripPlanMapper.insertVirtualMember(name);
 				virtualMemberId = uTripPlanMapper.selectVirtualMemberIdByName(name);
 			}
@@ -275,17 +418,20 @@ public class UTripPlanServiceImpl implements UTripPlanService {
 		long hours = duration.toHours();
 		long minutes = duration.toMinutes();
 
+		String dayDiffWord;
+
 		if (years > 0) {
-			return years + "년 전";
+			dayDiffWord = years + "년 전";
 		} else if (months > 0) {
-			return months + "달 전";
+			dayDiffWord = months + "달 전";
 		} else if (days > 0) {
-			return days + "일 전";
+			dayDiffWord = days + "일 전";
 		} else if (hours > 0) {
-			return hours + "시간 전";
+			dayDiffWord = hours + "시간 전";
 		} else {
-			return minutes + "분 전";
+			dayDiffWord = minutes + "분 전";
 		}
+		return dayDiffWord;
 	}
 
 	private void saveRealMembers(String tripUuid, List<String> realMemberIds) {

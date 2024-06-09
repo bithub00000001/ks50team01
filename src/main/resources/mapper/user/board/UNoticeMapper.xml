@@ -30,6 +30,46 @@
 	</resultMap>
 
 
+	<select id="getNoticeListRowCnt" resultType="int">
+		/* 공지사항 행의 갯수 */
+	    SELECT
+	        COUNT(1)
+	    FROM
+	        NOTICE
+	</select>
+	
+	
+	
+	<select id="getNoticeListByPage" parameterType="map" resultMap="noticeResultMap">
+		/* 공지사항 게시글 리스트 조회*/
+		<![CDATA[
+		SELECT
+			ROW_NUMBER() OVER (ORDER BY CAST(SUBSTRING_INDEX(N.NTC_NO, 'NTC_', -1) AS UNSIGNED)) AS ROW_NUM,
+            N.NTC_NO,
+            N.REG_PF_ID,
+            C.NTC_CTGRY_TYPE,
+            N.NTC_TTL,
+            N.NTC_CN,
+            N.NTC_INQ_CNT,
+            N.MDFCN_PF_ID,
+            N.ACT_YN, 
+            N.REG_YMD,
+            N.MDFCN_YMD,
+            CASE WHEN DATEDIFF(NOW(), N.REG_YMD) < 30 THEN TRUE ELSE FALSE END AS NOTICE_NEW
+		FROM 
+			NOTICE AS N
+			INNER JOIN
+			NOTICE_CATEGORY AS C
+			ON
+			N.NTC_CTGRY_NO = C.NTC_CTGRY_NO
+	   GROUP BY N.NTC_NO
+       ORDER BY N.REG_YMD DESC
+        LIMIT #{startRow}, #{rowPerPage};
+        ]]>
+	</select>
+
+
+
 	<select id="getNoticeList" resultMap="noticeResultMap">
 		<![CDATA[
 		 	/* 공지사항 조회 */

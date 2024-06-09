@@ -8,7 +8,6 @@ import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import ksmart.ks50team01.user.board.dto.UCategory;
 import ksmart.ks50team01.user.board.dto.UComment;
 import ksmart.ks50team01.user.board.dto.UCommunity;
@@ -38,13 +38,29 @@ public class UCommunityController {
 	
 	// 게시글 목록 조회
 	@GetMapping({"/",""})
-	public String postList(Model model) {
-		List<UCommunity> postList = uCommunityService.getPostList();
-
-		model.addAttribute("postList", postList); // postList를 모델에 추가
+	public String postList(@RequestParam(value="currentPage", required = false, defaultValue = "1") int currentPage,
+			Model model) {
+		//List<UCommunity> postList = uCommunityService.getPostList();
+		
+		Map<String, Object> resultMap = uCommunityService.getPostList(currentPage);
+		
+		@SuppressWarnings("unchecked")
+		List<Map<String, Object>> postList = (List<Map<String, Object>>) resultMap.get("postList");
+		int lastPage = (int) resultMap.get("lastPage");
+		int startPageNum = (int) resultMap.get("startPageNum");
+		int lastPageNum = (int) resultMap.get("lastPageNum");
+				
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("lastPage", lastPage);
+		model.addAttribute("startPageNum", startPageNum);
+		model.addAttribute("lastPageNum", lastPageNum);
+		
+		model.addAttribute("postList", postList);
 		model.addAttribute("title", "커뮤니티");
+		
 		return "user/board/postList";
 	}
+	
 	
 	
 	// 검색 목록 조회
@@ -66,7 +82,13 @@ public class UCommunityController {
 	
 	// 게시글 상세 조회
 	@GetMapping("/postDetail")
-	public String postDetail(@RequestParam(name = "postNum", required = false) String postNum, Model model) {
+    public String postDetail(@RequestParam(name = "postNum", required = false) String postNum,
+            Model model, HttpSession session) {
+		
+		// 세션에서 로그인한 사용자 아이디 가져오기
+		String loginId = (String) session.getAttribute("loginId");
+		model.addAttribute("loginId", loginId);
+
 		
 		// 상세 페이지에 접속할 때마다 조회수 증가
 		uCommunityService.increaseViewCount(postNum);
@@ -179,6 +201,7 @@ public class UCommunityController {
 	public String postRemove(@RequestParam (value = "postNum") String postNum, Model model) {
 		
 		uCommunityService.postRemove(postNum);
+		uCommunityService.postCommentRemove(postNum);
 		
 		model.addAttribute("postNum", postNum);
 		model.addAttribute("title", "게시글 삭제");
@@ -211,7 +234,7 @@ public class UCommunityController {
 									,@RequestParam(value="commentRegId", required = false) String commentRegId
 									,@RequestParam(value="postNum", required = false) String postNum
 									,@RequestParam(value="commentContent", required = false) String commentContent) {
-		// 댓글 저장
+		
 		uCommunityService.commentSave(commentRegId, postNum, commentContent);
 		
 		// 댓글 저장 후 해당 게시글의 모든 댓글을 가져옴
@@ -226,6 +249,50 @@ public class UCommunityController {
 		return postCommentList;
 	} 
 	
+	
+
+    // 댓글 수정
+    @PostMapping("/commentModify")
+    @ResponseBody
+    public Map<String, Object> commentModify(@RequestBody UComment uComment) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            uCommunityService.commentModify(uComment);
+            response.put("status", "success");
+        } catch (Exception e) {
+            response.put("status", "error");
+            response.put("message", e.getMessage());
+        }
+        return response;
+    }
+    
+	
+    
+    // 댓글 삭제
+    @PostMapping("/commentRemove")
+    @ResponseBody
+    public Map<String, Object> commentRemove(@RequestBody Map<String, String> request) {
+        Map<String, Object> response = new HashMap<>();
+        
+        String commentNum = request.get("commentNum");
+        String postNum = request.get("postNum");
+
+        try {
+            uCommunityService.commentRemove(commentNum);
+
+            // 댓글 삭제 후 해당 게시글의 모든 댓글을 가져옴
+            List<UComment> postCommentList = uCommunityService.getPostCommentList(postNum);
+
+            response.put("status", "success");
+            response.put("postCommentList", postCommentList);
+        } catch (Exception e) {
+            response.put("status", "error");
+            response.put("message", e.getMessage());
+        }
+
+        return response;
+    }
+    
 	
     // 답글 작성
     @PostMapping("/replySave")
@@ -256,62 +323,24 @@ public class UCommunityController {
     @PostMapping("/like")
     @ResponseBody
     public String like(@RequestParam String postNum, Model model) {
-        // 해당 게시물의 좋아요 총 개수를 증가시킴
         uCommunityService.increaseLikeCount(postNum);
-        // 증가된 좋아요 총 개수를 반환
-        UCommunity post = uCommunityService.getPostByNum(postNum);
-        return Integer.toString(post.getTotalLikes());
+
+        UCommunity uCommunity = uCommunityService.getPostByNum(postNum);
+        return Integer.toString(uCommunity.getTotalLikes());
     }
+    
     
     // 싫어요 버튼 클릭 시 처리
     @PostMapping("/dislike")
     @ResponseBody
     public String dislike(@RequestParam String postNum, Model model) {
-        // 해당 게시물의 싫어요 총 개수를 증가시킴
         uCommunityService.increaseDislikeCount(postNum);
-        // 증가된 싫어요 총 개수를 반환
-        UCommunity post = uCommunityService.getPostByNum(postNum);
-        return Integer.toString(post.getTotalDislikes());
-    }
-    
-    
-	
-	// 댓글 수정
-    @PostMapping("/commentModify")
-    public String commentModify(UComment uComment, Model model) {
-        uCommunityService.commentModify(uComment); 
         
-        log.info("댓글 수정", uComment);
-        
-        return "redirect:/community/postDetail?postNum=" + uComment.getPostNum();
-
+        UCommunity uCommunity = uCommunityService.getPostByNum(postNum);
+        return Integer.toString(uCommunity.getTotalDislikes());
     }
     
-    
-    // 댓글 삭제
-    @PostMapping("/commentRemove")
-    @ResponseBody
-    public Map<String, Object> commentRemove(@RequestParam("commentNum") String commentNum) {
-        log.info("삭제할 댓글 번호: {}", commentNum);
 
-        Map<String, Object> response = new HashMap<>();
-        try {
-        	uCommunityService.commentRemove(commentNum);
 
-            response.put("success", true);
-            response.put("message", "댓글이 삭제되었습니다.");
-        } catch (Exception e) {
-            response.put("success", false);
-            response.put("message", "댓글 삭제에 실패했습니다.");
-        }
-
-        return response;
-    }
-    
-    
-
-    
-    
-    
 
 }

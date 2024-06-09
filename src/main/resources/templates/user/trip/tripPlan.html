@@ -24,10 +24,11 @@
                 <div class="accordion-body">
                     <!-- 첫 번째 페이지 내용 -->
                     <form th:action="@{/trip/details}" method="post" th:object="${uTripOption}" id="tripPlanForm">
-                        <input type="text" hidden="hidden" name="sessionId" id="sessionId" th:value="${session.loginId}">
+                        <input type="hidden" id="sessionId" name="sessionId" th:value="${session.loginId}">
+                        <input type="hidden" id="planUUID" name="planUUID" value="">
                         <div class="d-flex justify-content-end">
                             <button class="btn btn-primary btn-sm me-2" type="button" id="tmpSave" onclick="firstStepSubmit()">임시 저장</button>
-                            <button class="btn btn-secondary btn-sm" type="button">목록으로</button>
+                            <button class="btn btn-secondary btn-sm" id="backToListButton" type="button">목록으로</button>
                         </div>
                         <div class="mb-3">
                             <label for="tripTitle" class="form-label">여행 제목:</label>
@@ -121,7 +122,7 @@
                     <!-- 두 번째 페이지 내용 -->
                     <div class="row justify-content-between">
                         <div class="d-flex justify-content-end">
-                            <button class="btn btn-primary btn-sm me-2" type="button">저장</button>
+                            <button class="btn btn-primary btn-sm me-2 saveDetailInfoBtn" id="saveDetailInfoBtn" type="button">저장</button>
                             <button class="btn btn-secondary btn-sm" type="button" onclick="backToFirstStepStage()">이전으로</button>
                         </div>
                         <!-- 지역 선택 -->
@@ -445,6 +446,9 @@
 
     <!--2024.06.04-->
     <script th:src="@{/user/js/trip/tripPlanLoad.js}"></script>
+
+    <!--2024.06.09-->
+    <script th:src="@{/user/js/trip/backToPlanList.js}"></script>
 </th:block>
 
 <th:block layout:fragment="customJs"></th:block>

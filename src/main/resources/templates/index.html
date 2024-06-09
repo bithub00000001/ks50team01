@@ -173,10 +173,13 @@
                                 <a href="/trip/list" target="_blank">내 여행 계획 목록 조회</a>
                             </li>
                             <li>
-                                <a href="/trip/schedule" target="_blank">내 여행 계획 조회</a>
+                                <a href="/trip/schedule?planUUID=23dca803-0364-4939-a3c5-573bb1751386" target="_blank">내 여행 계획 상세 조회</a>
                             </li>
                             <li>
                                 <a href="/trip/board" target="_blank">여행 계획 공유 게시판</a>
+                            </li>
+                            <li>
+                                <a href="/trip/tourInfo" target="_blank">여행지 조회 페이지</a>
                             </li>
                         </ul>
                     </li>
@@ -271,9 +274,11 @@
                                 <a href="/platform/destination/restaurantMenuManage" target="_blank">음식점 상세정보 관리</a>
                             </li>
                         </ul>
-                        <br>
+                    </li>
+                    <li class="title-li">
+                        <a class="menu-title" href="/trip" target="_blank">사용자 메인화면</a>
                         <h5>여행지 정보 관리</h5>
-                        <p>사용자들이 신청한 여행 계획 관리 화면</p>
+                        <p>OOO 사이트 여행 관리 페이지</p>
                         <ul class="sub-list">
                             <li>
                                 <a href="/user/destination/tourCheck" target="_blank">관광지 목록</a>
@@ -321,7 +326,7 @@
                     <li class="title-li">
                         <a class="menu-title" href="/trip" target="_blank">사용자 메인화면</a>
                         <h5>고객센터</h5>
-                        <p>사용자들이 신청한 여행 계획 관리 화면</p>
+                        <p>OOO 사이트 여행 관리 페이지</p>
                         <ul class="sub-list">
                             <li>
                                 <a href="/community" target="_blank">게시판 신고내역 관리</a>
@@ -346,30 +351,45 @@
             </td>
             <td colspan="2">
                 <ul style="padding-left:15px;">
-                    <li class="title-li"><a class="menu-title" href="#" target="_blank ">메인화면 (index)</a></li>
+                    <li class="title-li"><a class="menu-title" href="/trip" target="_blank ">메인화면 (index)</a></li>
                     <li class="title-li">
-                        <a class="menu-title" href="#" target="_blank">관리자 어드민 메인화면</a>
-                        <h5>여행 관리</h5>
-                        <p>OOO 사이트 여행 관리 페이지</p>
+                        <a class="menu-title" href="/platform" target="_blank">관리자 어드민 메인화면</a>
+                        <h5>회원 정보 관리</h5>
                         <ul class="sub-list">
                             <li>
-                                <a href="#" target="_blank">! 관리자 ??? 기능</a>
+                                <a href="/platform/member/memberManagement" target="_blank">회원 정보 및 등급 변경</a>
                             </li>
                             <li>
-                                <a href="#" target="_blank">! 관리자 ??? 기능</a>
-                            </li>
-                            <li>
-                                <a href="#" target="_blank">! 관리자 ??? 기능</a>
+                                <a href="/platform/member/memberManageChange" target="_blank">회원 정보 수정 및 탈퇴</a>
                             </li>
                         </ul>
                         <br>
                     </li>
                     <li class="title-li">
                         <a class="menu-title" href="/trip" target="_blank">사용자 메인화면</a>
-                        <h5>여행 계획 관리</h5>
-                        <p>사용자들이 신청한 여행 계획 관리 화면</p>
+                        <h5>회원 정보</h5>
+                        <p>일반 회원의 회원 정보 관련 기능</p>
                         <ul class="sub-list">
-                            <li>여행 계획 현황</li>
+                            <li>
+                                <a href="/trip" class="modal-link" data-modal="login" target="_blank">로그인 모달</a>
+                            </li>
+                            <li>
+                                <a href="/trip" class="modal-link" data-modal="joinSelect" target="_blank">회원 가입 모달</a>
+                            </li>
+                            <li>
+                                <a href="/trip" class="modal-link" data-modal="mypageModal" target="_blank">마이 페이지
+                                    모달</a>
+                            </li>
+                            <li>
+                                <a href="/trip" class="modal-link" data-modal="findId" target="_blank">아이디 찾기 모달</a>
+                            </li>
+                            <li>
+                                <a href="/trip" class="modal-link" data-modal="findPw" target="_blank">비밀번호 찾기 모달</a>
+                            </li>
+                            <li>
+                                <a href="/trip" class="modal-link" data-modal="modifyModal" target="_blank">회원 정보 수정
+                                    모달</a>
+                            </li>
                         </ul>
                     </li>
                 </ul>
@@ -378,5 +398,18 @@
         </tbody>
     </table>
 </div>
+<script type="text/javascript">
+
+    // 240607: 링크 클릭 시 페이지 이동 후 모달을 열기 위해 작성
+    const $modalLinks = document.querySelectorAll('.modal-link');
+    // 240607: 각 a 태그에 해당하는 data-modal을 로컬스토리지에 추가
+    $modalLinks.forEach(function (link) {
+        link.addEventListener('click', function () {
+            const modalName = this.getAttribute('data-modal');
+            // console.log(modalName);
+            localStorage.setItem('showModal', modalName);
+        });
+    });
+</script>
 </body>
 </html>

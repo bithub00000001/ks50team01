@@ -72,6 +72,51 @@
 		<result 	property="postCategoryRegDate" 		column="REG_YMD"/>
 		<result 	property="postCategoryMdfDate" 		column="MDFCN_YMD"/>
 	</resultMap>
+	
+	
+	<select id="getPostListRowCnt" resultType="int">
+		/* 게시글 행의 갯수 */
+	    SELECT
+	        COUNT(1)
+	    FROM
+	        POST
+	</select>
+	
+	
+	
+	<select id="getPostListByPage" parameterType="map" resultMap="postResultMap">
+		/* 페이지네이션 게시글 리스트 조회*/
+		<![CDATA[
+		SELECT
+            ROW_NUMBER() OVER(ORDER BY CAST(SUBSTRING_INDEX(P.PST_NO, 'PST_', -1) AS UNSIGNED)) AS ROW_NUM,
+            P.PST_NO, 
+            P.REG_MBR_ID,
+            C.PST_CTGRY_NO, 
+            C.PST_CTGRY_NM,
+            P.PST_TTL, 
+            P.PST_CN, 
+            P.PST_INQ_CNT, 
+            P.PST_LIKE_TOTAL, 
+            P.PST_DISLIKE_TOTAL, 
+            P.PST_REPT_TOTAL, 
+            P.ACT_YN, 
+            P.REG_YMD, 
+            P.MDFCN_YMD, 
+            P.DEL_YMD,
+            COUNT(PC.PST_CMNT_NO) AS PST_CMNT_TOTAL,
+            IF(DATEDIFF(NOW(), P.REG_YMD) < 7, TRUE, FALSE) AS POST_NEW
+        FROM 
+            POST AS P
+            INNER JOIN POST_CATEGORY AS C ON P.PST_CTGRY_NO = C.PST_CTGRY_NO
+            LEFT JOIN POST_COMMENT AS PC ON P.PST_NO = PC.PST_NO
+        GROUP BY P.PST_NO
+        ORDER BY P.REG_YMD DESC
+        LIMIT #{startRow}, #{rowPerPage};
+        ]]>
+	</select>
+	
+	
+	
 
 	<select id="getSearchList" parameterType="String" resultMap="postResultMap">
 		<![CDATA[
@@ -112,7 +157,6 @@
 			</if>
 		</where>
 	</select>
-	
 	
 	
 	<select id="getPostList" resultMap="postResultMap">
@@ -331,7 +375,6 @@
 	</update>
 	
 	
-	
 	<delete id="postRemove" parameterType="UCommunity">
 		/* 게시글 삭제 */
 	    DELETE FROM 
@@ -341,6 +384,15 @@
 	</delete>
 	
 	
+	<delete id="postCommentRemove" parameterType="UComment">
+		/* 게시글 삭제 시 해당 게시글의 댓글 삭제 */
+		DELETE FROM 
+			POST_COMMENT 
+		WHERE 
+			PST_NO = #{postNum};
+	</delete>
+	
+
 	
 	<!-- 댓글 등록 -->
 	<insert id="commentSave" parameterType="UComment">
@@ -412,6 +464,26 @@
 			PST_CMNT_NO = #{commentNum};
 	</update>
 	
+	
+	<select id="getCommentById" resultMap="CommentResultMap">
+	    SELECT
+	    	PST_CMNT_NO,
+            REG_MBR_ID,
+            PST_NO,
+            PST_CMNT_CN,
+            PST_CMNT_LIKE_TOTAL,
+            PST_CMNT_DISLIKE_TOTAL,
+            PST_CMNT_REPT_TOTAL,
+            ACT_YN,
+            REG_YMD,
+            MDFCN_YMD,
+            DEL_YMD 
+	    FROM 
+	    	POST_COMMENT 
+	    WHERE 
+	    	PST_CMNT_NO = #{commentNum};
+	</select>
+		
 
     
     <!-- 댓글 삭제 -->

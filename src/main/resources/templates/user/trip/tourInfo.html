@@ -1,0 +1,336 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{user/layout/default}">
+<th:block layout:fragment="customCss">
+    <link rel="stylesheet" th:href="@{/user/css/daterangepicker.css}">
+    <link rel="stylesheet" th:href="@{/common/css/font/font.css}">
+</th:block>
+
+<th:block layout:fragment="customPageSection">
+    <section class="bg-smoke py-5">
+        <div class="container">
+            <div class="row">
+                <div class="d-flex mb-5">
+                    <div class="col-md-3 col-sm-3 col-xs-4">
+                        <label for="contentTypeId" class="form-label">여행지 분류:</label>
+                        <select id="contentTypeId" name="contentTypeId" class="text-center form-select form-select-lg w-100" required>
+                            <option value="">=== 여행지 ===</option>
+                            <option value="12">관광지</option>
+                            <option value="32">숙박</option>
+                            <option value="39">음식점</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-4">
+                        <label for="areaCode" class="form-label">지역 코드:</label>
+                        <select id="areaCode" name="areaCode" class="text-center form-select form-select-lg w-100" required>
+                            <option value="">=== 지역 코드 ===</option>
+                            <th:block th:each="list : ${areaCodeList}">
+                                <option th:value="${list.areaCode}" th:text="${list.areaName}"></option>
+                            </th:block>
+                        </select>
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-4">
+                        <label for="sigunguCode" class="form-label">시군 코드:</label>
+                        <select id="sigunguCode" name="sigunguCode" class="text-center form-select form-select-lg w-100" required>
+                            <option value="">=== 시군 코드 ===</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-4">
+                        <label for="contentAmount" class="form-label">목록 표시:</label>
+                        <select id="contentAmount" class="text-center form-select form-select-lg w-100">
+                            <option value="12">4 줄</option>
+                            <option value="21">7 줄</option>
+                            <option value="30">10 줄</option>
+                            <option value="51">17 줄</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-xl-12">
+                    <div class="row" id="tourList">
+                        <!-- 투어 리스트 아이템이 동적으로 삽입될 곳 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="pt-5 pt-md-7">
+            <div class="container">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center align-items-center" id="tourPagination">
+                        <!-- 페이지네이션 요소가 동적으로 삽입될 곳 -->
+                    </ul>
+                </nav>
+            </div>
+        </section>
+    </section>
+</th:block>
+
+<th:block layout:fragment="customJsFile">
+    <script th:src="@{/user/js/owl.carousel.min.js}"></script>
+    <script th:src="@{/user/js/aos.js}"></script>
+    <script th:src="@{/user/js/jquery.waypoints.min.js}"></script>
+    <script th:src="@{/user/js/moment.min.js}"></script>
+    <script th:src="@{/user/js/daterangepicker.js}"></script>
+    <script th:src="@{/user/js/custom.js}"></script>
+</th:block>
+
+<th:block layout:fragment="customJs">
+    <script th:inline="javascript">
+        const request = {
+            get(url) {
+                return fetch(url);
+            },
+            post(url, payload) {
+                return fetch(url, {
+                    method: 'POST',
+                    headers: {'content-Type': 'application/json'},
+                    body: JSON.stringify(payload)
+                });
+            }
+        };
+
+        let currentPageNum = 1;
+
+        function createTourCard(tourData) {
+            const colDiv = document.createElement('div');
+            colDiv.className = 'col-md-6 col-xl-4 mb-5';
+
+            const cardDiv = document.createElement('div');
+            cardDiv.className = 'card card-hover';
+
+            const link = document.createElement('a');
+            link.href = `/user/destination/tourCheckDetails?contentId=${tourData.contentId}`;
+            link.className = 'position-relative';
+
+            const img = document.createElement('img');
+            img.className = 'card-img-top lazyestload';
+            img.dataset.src = tourData.contentFirstImage !== '' ?  tourData.contentFirstImage : '/user/img/blog/blog-01.jpg';
+            img.src = tourData.contentFirstImage !== '' ?  tourData.contentFirstImage : '/user/img/blog/blog-01.jpg';
+            img.alt = 'Card image cap';
+
+            link.appendChild(img);
+            cardDiv.appendChild(link);
+
+            const cardBodyDiv = document.createElement('div');
+            cardBodyDiv.className = 'card-body px-4';
+
+            const h5 = document.createElement('h5');
+
+            const titleLink = document.createElement('a');
+            titleLink.href = `/user/destination/tourCheckDetails?contentId=${tourData.contentId}`;
+            titleLink.className = 'card-title';
+            titleLink.textContent = tourData.contentTitle;
+
+            h5.appendChild(titleLink);
+            cardBodyDiv.appendChild(h5);
+
+            const p = document.createElement('p');
+            p.className = 'mb-3';
+            p.style.display = '-webkit-box';
+            p.style.WebkitLineClamp = '4';
+            p.style.WebkitBoxOrient = 'vertical';
+            p.style.overflow = 'hidden';
+            p.style.textOverflow = 'ellipsis';
+            p.style.lineHeight = '1.5em';
+            p.style.maxHeight = '6em';  // 4 lines * 1.5em line-height
+            p.textContent = tourData.contentOverview;
+
+            cardBodyDiv.appendChild(p);
+            cardDiv.appendChild(cardBodyDiv);
+            colDiv.appendChild(cardDiv);
+
+            return colDiv;
+        }
+
+        function renderTourList(tourDataList) {
+            const tourListContainer = document.getElementById('tourList');
+            tourListContainer.replaceChildren(...tourDataList.map(createTourCard));
+        }
+
+        function action(data, pageNum, amount, areaCode, sigunguCode, contentTypeId) {
+            const tourListContainer = document.getElementById('tourList');
+            const paginationContainer = document.getElementById('tourPagination');
+
+            pageNum = currentPageNum;
+
+            if (areaCode && sigunguCode && contentTypeId) {
+                data = data.filter(item => item.areaCode === areaCode && item.sigunguCode === sigunguCode && item.contentTypeId === contentTypeId);
+            }
+
+            let lastPage = Math.ceil(data.length / Number(amount));
+            let startIndex = (pageNum - 1) * Number(amount);
+            let endIndex = startIndex + Number(amount);
+            let startNum = 1;
+            let lastNum = 10;
+
+            if (pageNum > 6 && lastPage > 9) {
+                startNum = Number(pageNum) - 5;
+                lastNum = Number(pageNum) + 4;
+                if (lastNum >= lastPage) {
+                    startNum = lastPage - 9;
+                    lastNum = lastPage;
+                }
+            }
+
+            tourListContainer.replaceChildren();
+            paginationContainer.replaceChildren();
+
+            const firstPageLink = document.createElement('li');
+            firstPageLink.className = 'page-item';
+            const firstPageA = document.createElement('a');
+            firstPageA.className = 'page-link me-2';
+            firstPageA.href = 'javascript:void(0);';
+            firstPageA.textContent = '처음으로';
+            firstPageA.dataset.pageNum = '1';
+            firstPageLink.appendChild(firstPageA);
+
+            const prevPageLink = document.createElement('li');
+            prevPageLink.className = 'page-item';
+            const prevPageA = document.createElement('a');
+            prevPageA.className = 'page-link me-2';
+            prevPageA.href = 'javascript:void(0);';
+            prevPageA.textContent = '이전';
+            prevPageA.dataset.pageNum = (Number(pageNum) - 1).toString();
+            prevPageLink.appendChild(prevPageA);
+
+            const nextPageLink = document.createElement('li');
+            nextPageLink.className = 'page-item';
+            const nextPageA = document.createElement('a');
+            nextPageA.className = 'page-link ms-2 me-2';
+            nextPageA.href = 'javascript:void(0);';
+            nextPageA.textContent = '다음';
+            nextPageA.dataset.pageNum = (Number(pageNum) + 1).toString();
+            nextPageLink.appendChild(nextPageA);
+
+            const lastPageLink = document.createElement('li');
+            lastPageLink.className = 'page-item';
+            const lastPageA = document.createElement('a');
+            lastPageA.className = 'page-link me-2';
+            lastPageA.href = 'javascript:void(0);';
+            lastPageA.textContent = '마지막으로';
+            lastPageA.dataset.pageNum = lastPage.toString();
+            lastPageLink.appendChild(lastPageA);
+
+            paginationContainer.appendChild(firstPageLink);
+            paginationContainer.appendChild(prevPageLink);
+
+            const tourList = data.slice(startIndex, endIndex);
+            renderTourList(tourList);
+
+            if (data.length > 0) {
+                let pageCount = lastPage < 10 ? lastPage : 10;
+                [...Array(pageCount).keys()].map(key => key + Number(startNum)).forEach(item => {
+                    const pageNumLink = document.createElement('li');
+                    pageNumLink.className = 'page-item';
+                    const pageNumA = document.createElement('a');
+                    pageNumA.className = 'page-link';
+                    pageNumA.textContent = `[${item}]`;
+                    pageNumA.dataset.pageNum = item.toString();
+
+                    const firstPage = 1;
+
+                    if (item === currentPageNum) {
+                        pageNumA.removeAttribute('href');
+                        pageNumA.classList.remove('page-link')
+                    } else {
+                        pageNumA.href = 'javascript:void(0);';
+                    }
+
+                    pageNumLink.appendChild(pageNumA);
+                    paginationContainer.appendChild(pageNumLink);
+
+                    // 첫 페이지와 마지막 페이지에 따른 이전/다음 버튼 비활성화
+                    if (pageNum === firstPage) {
+                        prevPageA.removeAttribute('href');
+                        prevPageA.classList.remove('page-link');
+                    }
+                    if (pageNum === lastPage) {
+                        nextPageA.removeAttribute('href');
+                        nextPageA.classList.remove('page-link');
+                    }
+                });
+            }
+
+            paginationContainer.appendChild(nextPageLink);
+            paginationContainer.appendChild(lastPageLink);
+        }
+
+        document.getElementById('sigunguCode').addEventListener('change', function() {
+            const amount = document.getElementById('contentAmount').value;
+            const areaCode = document.getElementById('areaCode').value;
+            const sigunguCode = this.value;
+            const contentTypeId = document.getElementById('contentTypeId').value;
+
+            request.get('/trip/tourInfo/tourData')
+                .then(response => response.json())
+                .then(tourDataList => {
+                    const filteredList = tourDataList.filter(item =>
+                        item.areaCode === areaCode && item.sigunguCode === sigunguCode && item.contentTypeId === contentTypeId
+                    );
+                    renderTourList(filteredList);
+                    action(filteredList, currentPageNum, amount, areaCode, sigunguCode, contentTypeId);
+                })
+                .catch(err => console.error(err));
+        });
+
+        document.getElementById('tourPagination').addEventListener('click', function(event) {
+            const amount = document.getElementById('contentAmount').value;
+            const areaCode = document.getElementById('areaCode').value;
+            const sigunguCode = document.getElementById('sigunguCode').value;
+            const hasHref = event.target.getAttribute('href');
+            const contentTypeId = document.getElementById('contentTypeId').value;
+
+            if (hasHref != null) {
+                currentPageNum = parseInt(event.target.dataset.pageNum);
+                request.get('/trip/tourInfo/tourData')
+                    .then(response => response.json())
+                    .then(tourDataList => {
+                        let filteredList = tourDataList.filter(item =>
+                            item.areaCode === areaCode && item.sigunguCode === sigunguCode && item.contentTypeId === contentTypeId
+                        );
+                        action(filteredList, currentPageNum, amount, areaCode, sigunguCode, contentTypeId);
+                    })
+                    .catch(err => console.error(err));
+            }
+        });
+
+        document.getElementById('contentAmount').addEventListener('change', function() {
+            const amount = this.value;
+            const areaCode = document.getElementById('areaCode').value;
+            const sigunguCode = document.getElementById('sigunguCode').value;
+            const contentTypeId = document.getElementById('contentTypeId').value;
+
+            request.get('/trip/tourInfo/tourData')
+                .then(response => response.json())
+                .then(tourDataList => {
+                    let filteredList = tourDataList.filter(item =>
+                        item.areaCode === areaCode && item.sigunguCode === sigunguCode && item.contentTypeId === contentTypeId
+                    );
+                    action(filteredList, currentPageNum, amount, areaCode, sigunguCode, contentTypeId);
+                })
+                .catch(err => console.error(err));
+        });
+    </script>
+    <script th:inline="javascript">
+        $('#areaCode').change(function() {
+            const $areaCode = $(this).val();
+            $.ajax({
+                url: '/user/sigungu-codes',
+                type: 'GET',
+                data: { areaCode: $areaCode },
+                success: function(data) {
+                    $('#sigunguCode').empty();
+                    $('#sigunguCode').append('<option value="">=== 시군 코드 ===</option>');
+                    $.each(data, function(index, item) {
+                        $('#sigunguCode').append('<option value="' + item.sigunguCode + '">' + item.sigunguName + '</option>');
+                    });
+                },
+                error: function(xhr) {
+                    console.error('Error fetching sigungu codes:', xhr);
+                }
+            });
+        });
+    </script>
+</th:block>
+</html>

@@ -22,16 +22,19 @@
                         <a href="#">여행 계획</a>
                         <ul class="dropdown drop-up" id="plan">
                             <li class="">
-                                <a th:href="@{/trip/list}">? 내 여행 계획 목록</a>
+                                <a th:href="@{/trip/list}">내 여행 계획 목록</a>
                             </li>
                             <li class="">
-                                <a th:href="@{/trip/detail}">? 내 여행 계획 작성</a>
+                                <a th:href="@{/trip/detail}">내 여행 계획 작성</a>
                             </li>
                             <li class="">
-                                <a th:href="@{/trip/schedule}">? 여행 스케줄</a>
+                                <a th:href="@{/trip/schedule?planUUID=23dca803-0364-4939-a3c5-573bb1751386}">여행 스케줄</a>
                             </li>
                             <li class="">
-                                <a th:href="@{/trip/board}">? 여행 계획 공유 게시판</a>
+                                <a th:href="@{/trip/board}">여행 계획 공유 게시판</a>
+                            </li>
+                            <li class="">
+                                <a th:href="@{/trip/tourInfo}">여행지 조회</a>
                             </li>
                         </ul>
                     </li>
@@ -39,16 +42,16 @@
                         <a href="#">여행 추천</a>
                         <ul class="dropdown drop-up" id="recommendations">
                             <li class="">
-                                <a th:href="@{/allRanking}">? 통합 여행 추천</a>
+                                <a th:href="@{/allRanking}">통합 여행 추천</a>
                             </li>
                             <li class="">
-                                <a th:href="@{/allRanking/rankingList}">? 플랫폼 추천</a>
+                                <a th:href="@{/allRanking/rankingList}">플랫폼 추천</a>
                             </li>
                             <li class="">
-                                <a th:href="@{/allRanking/userRankingList}">? 회원 추천</a>
+                                <a th:href="@{/allRanking/userRankingList}">회원 추천</a>
                             </li>
                             <li class="">
-                                <a th:href="@{/allRanking/planRankingList}">? 여행계획 추천</a>
+                                <a th:href="@{/allRanking/planRankingList}">여행계획 추천</a>
                             </li>
                         </ul>
                     </li>
@@ -79,22 +82,22 @@
                         <a href="#">회원 정보</a>
                         <ul class="dropdown drop-up" id="userInfo">
                             <li class="">
-                                <a data-bs-target="#login" data-bs-toggle="modal" th:href="@{#}"> 로그인 모달</a>
+                                <a data-bs-target="#login" data-bs-toggle="modal" th:href="@{#}">로그인 모달</a>
                             </li>
                             <li class="">
-                                <a data-bs-target="#joinSelect" data-bs-toggle="modal" th:href="@{#}"> 회원 가입 모달</a>
+                                <a data-bs-target="#joinSelect" data-bs-toggle="modal" th:href="@{#}">회원 가입 모달</a>
                             </li>
                             <li class="">
-                                <a data-bs-target="#mypageModal" data-bs-toggle="modal" th:href="@{#}"> 마이페이지 모달</a>
+                                <a data-bs-target="#mypageModal" data-bs-toggle="modal" th:href="@{#}">마이페이지 모달</a>
                             </li>
                             <li class="">
-                                <a data-bs-target="#findId" data-bs-toggle="modal" th:href="@{#}"> 아이디찾기 모달</a>
+                                <a data-bs-target="#findId" data-bs-toggle="modal" th:href="@{#}">아이디찾기 모달</a>
                             </li>
                             <li class="">
-                                <a data-bs-target="#findPw" data-bs-toggle="modal" th:href="@{#}"> 비밀번호찾기 모달</a>
+                                <a data-bs-target="#findPw" data-bs-toggle="modal" th:href="@{#}">비밀번호찾기 모달</a>
                             </li>
                             <li class="">
-                                <a data-bs-toggle="modal" data-bs-target="#modifyModal"	onclick="getMemberInfo()"> 회원정보 수정 모달</a>
+                                <a data-bs-toggle="modal" data-bs-target="#modifyModal"	onclick="getMemberInfo()">회원정보 수정 모달</a>
                             </li>
                         </ul>
                     </li>

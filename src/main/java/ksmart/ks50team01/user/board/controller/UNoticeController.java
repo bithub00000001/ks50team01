@@ -2,6 +2,7 @@ package ksmart.ks50team01.user.board.controller;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,14 +25,25 @@ public class UNoticeController {
 	
 	// 공지사항 목록 조회
 	@GetMapping({"/",""})
-	public String noticeList(Model model) {
-	    List<UNotice> noticeList = uNoticeService.getNoticeList();
-	    noticeList.sort((p1, p2) -> p2.getNoticeRegDate().compareTo(p1.getNoticeRegDate())); // 최신순으로 정렬
+	public String noticeList(@RequestParam(value="currentPage", required = false, defaultValue = "1") int currentPage
+							,Model model) {
+		//List<UNotice> noticeList = uNoticeService.getNoticeList();
+		
+		Map<String, Object> resultMap = uNoticeService.getNoticeList(currentPage);
+		
+		@SuppressWarnings("unchecked")
+		List<Map<String, Object>> noticeList = (List<Map<String, Object>>) resultMap.get("noticeList");
+		int lastPage = (int) resultMap.get("lastPage");
+		int startPageNum = (int) resultMap.get("startPageNum");
+		int lastPageNum = (int) resultMap.get("lastPageNum");
+		
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("lastPage", lastPage);
+		model.addAttribute("startPageNum", startPageNum);
+		model.addAttribute("lastPageNum", lastPageNum);
 	    
-	    log.info("noticeList: {}", noticeList);
-	    
-	    model.addAttribute("noticeList", noticeList);
 	    model.addAttribute("currentDate", LocalDate.now()); // 현재 날짜 추가
+	    model.addAttribute("noticeList", noticeList);
 		model.addAttribute("title", "공지사항");
 		
 		return "user/board/noticeList";

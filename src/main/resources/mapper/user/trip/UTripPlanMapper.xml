@@ -7,10 +7,10 @@
         <result column="MBR_GRD_NO"   property="level"/>
         <result column="MBR_NM"       property="name"/>
         <result column="MBR_NICKNAME" property="nickname"/>
-
     </resultMap>
 
     <resultMap id="tripPlanMap" type="uTripOption">
+        <!-- INDIVIDUAL_TRIP_PLAN_NEW 테이블 resultMap-->
         <id     column="TRIP_PLAN_ID"        property="tripId"/>
         <result column="PLAN_UUID"           property="planUUID"/>
         <result column="SESSION_ID"          property="sessionId"/>
@@ -25,6 +25,39 @@
         <result column="REG_YMD"             property="regDate"/>
         <result column="MDFCN_YMD"           property="modDate"/>
         <result column="IN_PRGRS"            property="inProgress"/>
+    </resultMap>
+
+    <resultMap id="tripPlanItemsMap" type="UTripPlanItem">
+        <!-- TRIP_PLAN_ITEMS_NEW 테이블 resultMap-->
+        <id     column="ITEM_ID"      property="itemId"/>
+        <result column="PLAN_UUID"    property="planUUID"/>
+        <result column="DAY_NUMBER"   property="dayNumber"/>
+        <result column="CONTENT_ID"   property="contentId"/>
+        <result column="ORDER_NUMBER" property="orderNumber"/>
+        <result column="REG_YMD"      property="regDate"/>
+    </resultMap>
+
+    <resultMap id="tourDetailInfoMap" type="pTourDetail">
+        <!-- TOUR_DETAIL_FROM_API 테이블 resultMap -->
+        <id     column="tour_detail_content_id"      property="contentId"/>
+        <result column="tour_detail_content_type_id" property="contentTypeId"/>
+        <result column="tour_detail_title"           property="title"/>
+        <result column="tour_detail_homepage"        property="homepage"/>
+        <result column="tour_detail_first_image"     property="firstImage"/>
+        <result column="tour_detail_second_image"    property="secondImage"/>
+        <result column="area_code"                   property="areaCode"/>
+        <result column="sigungu_code"                property="sigunguCode"/>
+        <result column="tour_detail_first_addr"      property="mainAddr"/>
+        <result column="tour_detail_second_addr"     property="detailAddr"/>
+        <result column="tour_detail_zipcode"         property="zipcode"/>
+        <result column="tour_detail_tel_num"         property="tel"/>
+        <result column="tour_detail_tel_name"        property="telName"/>
+        <result column="tour_detail_longitude"       property="longitude"/>
+        <result column="tour_detail_latitude"        property="latitude"/>
+        <result column="tour_detail_mlevel"          property="mapLevel"/>
+        <result column="tour_detail_overview"        property="overview"/>
+        <result column="REG_YMD"                     property="regDate"/>
+        <result column="MDFCN_YMD"                   property="modDate"/>
     </resultMap>
 
     <insert id="addTempPlanInfo">
@@ -201,6 +234,29 @@
         WHERE
             SESSION_ID = #{sessionId}
     </select>
+    <select id="getTourDataList" resultType="java.util.Map">
+        /* 컨텐츠 아이디, 컨텐츠 타입과 일치하는 여행지 상세 정보 조회 */
+        SELECT
+            tour_detail_content_id      as contentId,
+            tour_detail_content_type_id as contentTypeId,
+            tour_detail_title           as contentTitle,
+            tour_detail_homepage        as contentHomepage,
+            tour_detail_first_image     as contentFirstImage,
+            tour_detail_second_image    as contentSecondImage,
+            area_code                   as areaCode,
+            sigungu_code                as sigunguCode,
+            tour_detail_first_addr      as contentFirstAddr,
+            tour_detail_second_addr     as contentSecondAddr,
+            tour_detail_zipcode         as contentZipcode,
+            tour_detail_tel_num         as contentTelNum,
+            tour_detail_tel_name        as contentTelName,
+            tour_detail_longitude       as contentLongitude,
+            tour_detail_latitude        as contentLatitude,
+            tour_detail_mlevel          as contentMapLevel,
+            tour_detail_overview        as contentOverview
+        FROM
+            TOUR_DETAIL_FROM_API
+    </select>
 
     <delete id="deleteTripVirtualMembers">
         /* 여행 계획에 관련된 모든 가상 회원 삭제 */
@@ -258,4 +314,106 @@
                 #{tripUuid},
                 #{realMemberId})
     </insert>
+
+    <select id="existsByPlanUUID" resultType="java.lang.Boolean">
+        /* 여행 계획 상세 정보가 존재하는지 확인 */
+        SELECT
+            COUNT(*) > 0
+        FROM
+            TRIP_PLAN_ITEMS_NEW
+        WHERE
+            PLAN_UUID = #{planUUID}
+    </select>
+
+    <delete id="deleteDetailInfo">
+        /* 여행 계획이 존재한다면 삭제 처리 */
+        DELETE
+        FROM
+            TRIP_PLAN_ITEMS_NEW
+        WHERE
+            plan_uuid = #{planUUID}
+    </delete>
+
+    <insert id="insertDetailInfo">
+        /* 여행 계획 상세 정보 저장 */
+        INSERT INTO
+            TRIP_PLAN_ITEMS_NEW (
+                                 PLAN_UUID,
+                                 DAY_NUMBER,
+                                 CONTENT_ID,
+                                 ORDER_NUMBER,
+                                 REG_YMD
+        )
+        VALUES (
+                #{planUUID},
+                #{dayNumber},
+                #{contentId},
+                #{order},
+                now()
+               )
+    </insert>
+
+    <select id="getTripPlanByUUID" resultMap="tripPlanMap">
+        /* INDIVIDUAL_TRIP_PLAN_NEW 테이블 조회 쿼리 */
+        SELECT
+            TRIP_PLAN_ID,
+            PLAN_UUID,
+            SESSION_ID,
+            TRIP_TITLE,
+            START_DATE,
+            END_DATE,
+            NUM_PEOPLE,
+            NUM_VIRTUAL_MEMBERS,
+            NUM_REAL_MEMBERS,
+            NUM_DATE,
+            TRIP_DURATION,
+            REG_YMD,
+            MDFCN_YMD,
+            IN_PRGRS
+        FROM
+            INDIVIDUAL_TRIP_PLAN_NEW
+        WHERE
+            PLAN_UUID = #{planUUID}
+    </select>
+
+    <select id="getTripItemsByUUID" resultMap="tripPlanItemsMap">
+        /* TRIP_PLAN_ITEMS_NEW 테이블 조회 쿼리 */
+        SELECT
+            ITEM_ID,
+            PLAN_UUID,
+            DAY_NUMBER,
+            CONTENT_ID,
+            ORDER_NUMBER,
+            REG_YMD
+        FROM
+            TRIP_PLAN_ITEMS_NEW
+        WHERE
+            PLAN_UUID = #{planUUID}
+    </select>
+
+    <select id="getPTourDetailByContentId" resultMap="tourDetailInfoMap">
+        /* TOUR_DETAIL_FROM_API 테이블 조회 쿼리 */
+        SELECT
+        tour_detail_content_id,
+        tour_detail_content_type_id,
+        tour_detail_title,
+        tour_detail_homepage,
+        tour_detail_first_image,
+        tour_detail_second_image,
+        area_code,
+        sigungu_code,
+        tour_detail_first_addr,
+        tour_detail_second_addr,
+        tour_detail_zipcode,
+        tour_detail_tel_num,
+        tour_detail_tel_name
+        FROM
+        TOUR_DETAIL_FROM_API
+        WHERE
+        tour_detail_content_id IN
+        <foreach item="item" collection="contentIds" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
 </mapper>

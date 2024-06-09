@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,8 +24,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import jakarta.servlet.http.HttpSession;
+import ksmart.ks50team01.platform.trip.service.PTripPlanService;
 import ksmart.ks50team01.user.member.login.dto.Login;
 import ksmart.ks50team01.user.trip.dto.UDayInfo;
+import ksmart.ks50team01.user.trip.dto.UDistanceRequest;
+import ksmart.ks50team01.user.trip.dto.UTripDetailOption;
 import ksmart.ks50team01.user.trip.dto.UTripOption;
 import ksmart.ks50team01.user.trip.service.UTourDataService;
 import ksmart.ks50team01.user.trip.service.UTripPlanService;
@@ -39,6 +43,7 @@ public class UTripPlanController {
 
     private final UTripPlanService uTripPlanService;
     private final UTourDataService uTourDataService;
+    private final PTripPlanService pTripPlanService;
 
     @Value("${tour.api.key}")
     private String apiKey;
@@ -174,15 +179,40 @@ public class UTripPlanController {
     }
 
     /**
+     * 여행 계획 상세 정보 저장 요청 처리
+     * @param uTripDetailOption 여행지 상세 정보 DTO
+     * @return
+     */
+    @PostMapping("/save-trip-detail-info")
+    public ResponseEntity<String> saveTripDetailInfo(@RequestBody UTripDetailOption uTripDetailOption) {
+        log.info("uTripDetailOption: {}", uTripDetailOption);
+        try {
+            int rowsAffected = uTripPlanService.saveTripDetailInfo(uTripDetailOption);
+            if (rowsAffected > 0) {
+                return ResponseEntity.ok("success");
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("fail");
+            }
+        } catch (BadRequestException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body("잘못된 요청입니다: " + e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("오류 발생");
+        }
+    }
+
+    /**
      * 자신이 작성한 여행 계획 목록을 조회하는 페이지
      * @param model
      * @return
      */
     @GetMapping("/list")
-    public String planListPage(HttpSession session, Model model){
-
+    public String planListPage(HttpSession session, RedirectAttributes redirectAttributes, Model model){
         String sessionId = (String) session.getAttribute("loginId");
         if (sessionId == null) {
+            redirectAttributes.addFlashAttribute("message", "로그인이 필요합니다.");
             return "redirect:/trip"; // 로그인 페이지로 리디렉션
         }
         // uTourDataService.upsertSigunguData(apiKey);
@@ -198,11 +228,76 @@ public class UTripPlanController {
      * @return
      */
     @GetMapping("/schedule")
-    public String planSchedulePage(Model model){
+    public String planSchedulePage(@RequestParam(name = "planUUID", required = false)String planUUID, Model model){
 
         // uTourDataService.upsertAreaData(apiKey);
-        model.addAttribute("title", "여행 스케줄");
+        try {
+            UTripOption tripOption = uTripPlanService.getTripOptionByUUID(planUUID);
+            log.info("tripOption: {}", tripOption);
+            if (tripOption != null) {
+                model.addAttribute("tripOption", tripOption);
+                model.addAttribute("title", "여행 스케줄");
+                return "user/trip/planSchedule"; // 스케줄 페이지로 이동
+            } else {
+                log.error("여행 계획을 찾을 수 없습니다. planUUID: {}", planUUID);
+                return "user/error/error"; // 에러 페이지로 이동 혹은 다른 처리
+            }
+        } catch (Exception e) {
+            log.error("여행 계획 조회 중 오류 발생", e);
+            return "user/error/error"; // 에러 페이지로 이동 혹은 다른 처리
+        }
+    }
 
-        return "user/trip/planSchedule";
+    /**
+     * 여행지 정보 조회 페이지(클라이언트 사이드 페이지네이션)
+     * @param model
+     * @return
+     */
+    @GetMapping("/tourInfo")
+    public String tourInfoPage(Model model){
+        List<?> areaCodeList = pTripPlanService.getAreaCodeList();
+        model.addAttribute("title", "관광지 조회");
+        model.addAttribute("areaCodeList", areaCodeList);
+
+        return "/user/trip/tourInfo";
+    }
+
+    /**
+     * 여행지 상세 정보 전달 API
+     * @return
+     */
+    @GetMapping("/tourInfo/tourData")
+    @ResponseBody
+    public ResponseEntity<List<Map<String, Object>>> getTourData() {
+        List<Map<String, Object>> tourDataList = uTripPlanService.getTourDataList();
+        log.info("tourDataList: {}", tourDataList);
+        if (tourDataList.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(tourDataList);
+    }
+
+    /**
+     * 클라이언트 사이드 페이지네이션 구현 레퍼런스
+     * @return
+     */
+    @GetMapping("/paginationRefer")
+    public String planReferPage(){
+        return "user/trip/referPagination";
+    }
+
+    /**
+     * 클라이언트 사이드 페이지네이션 구현 레퍼런스 Ajax
+     * @return
+     */
+    @GetMapping("/pagination/refer/mockData")
+    @ResponseBody
+    public ResponseEntity<List<Map<String, Object>>> getPaginationRefer(){
+        List<Map<String, Object>> mockData = uTripPlanService.readMockData();
+
+        if (mockData.isEmpty()) {
+            return ResponseEntity.noContent().build(); // 204 에러 반환(no content)
+        }
+        return ResponseEntity.ok(mockData);
     }
 }
