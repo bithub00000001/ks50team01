@@ -34,7 +34,9 @@ public interface PTripPlanService {
 	// 컨텐츠 아이디와 일치하는 여행지 세부 정보 조회
 	PTourDetail getPTourDetailByContentId(String contentId, String contentTypeId);
 
-	//
+	// 외부 이미지 링크를 서버에 저장하고 링크 주소를 DB에 저장하는 메서드
+	void downloadAndSaveImages(List<PTourDetail> tourDetailList);
 
 	// 여행지 세부 정보 조회
+	List<PTourDetail> getTourDetailList();
 }

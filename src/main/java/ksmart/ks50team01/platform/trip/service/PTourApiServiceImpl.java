@@ -485,5 +485,4 @@ public class PTourApiServiceImpl implements PTourApiService {
 			.filter(Objects::nonNull)
 			.toList();
 	}
-
 }
