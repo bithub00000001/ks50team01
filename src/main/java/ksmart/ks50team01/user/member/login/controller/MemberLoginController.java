@@ -89,7 +89,7 @@ public class MemberLoginController {
 	public String logout(HttpSession session) {
         session.invalidate(); // 세션 무효화
         
-	    return "redirect:/";
+	    return "redirect:/trip";
     }
 	
 	@PostMapping("/login")
