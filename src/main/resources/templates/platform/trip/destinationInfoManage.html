@@ -266,12 +266,11 @@
                 dataType: 'text',
                 success: function (response) {
                     // 성공적으로 응답을 받았을 때 실행할 코드
-                    console.log('결과: ', response);
                     alert(response);
                 },
                 error: function (xhr, status, error) {
                     // 오류 발생 시 실행할 코드
-                    console.error('Error:', error);
+                    alert(xhr.responseText);
                 }
             });
         });
@@ -289,7 +288,7 @@
                 },
                 error: function (xhr, status, error) {
                     // 오류 발생 시 실행할 코드
-                    console.error('Error:', error);
+                    alert(xhr.responseText);
                 }
             });
         });
