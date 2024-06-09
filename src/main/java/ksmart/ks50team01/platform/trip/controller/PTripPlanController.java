@@ -249,6 +249,23 @@ public class PTripPlanController {
 		}
 	}
 
+	// 이미지 업데이트 버튼을 누르면 APi의 외부 이미지 링크를 서버에 저장하고 DB에 링크 주소를 저장하는 메서드
+	@PostMapping(value = "/destination/image-update")
+	@ResponseBody
+	public ResponseEntity<String> upsertAllImage() {
+		try {
+			List<PTourDetail> tourDetailList = pTripPlanService.getTourDetailList();
+			if (tourDetailList.isEmpty()) {
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("데이터 받아오기 실패");
+			}
+			pTripPlanService.downloadAndSaveImages(tourDetailList);
+			return ResponseEntity.ok("데이터 업데이트 성공");
+		} catch (Exception ex) {
+			log.error("Error occurred while updating tour detail list", ex);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("에러: " + ex.getMessage());
+		}
+	}
+
 	// 여행지 1개의 정보를 api에서 업데이트 처리
 	@PostMapping("/update/tourInfo")
 	public ResponseEntity<String> updateTourInfo(@RequestBody Map<String, Object> requestData) {

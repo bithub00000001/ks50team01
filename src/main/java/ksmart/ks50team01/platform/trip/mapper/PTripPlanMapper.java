@@ -41,9 +41,10 @@ public interface PTripPlanMapper {
 	PTourApi getSigunguNameBySigunCode(String areaCode, String sigunguCode);
 
 	// 여행지 세부 정보 조회 메서드
+	List<PTourDetail> getTourDetailList();
 
-
-	//
+	// 이미지 링크 저장 메서드
+	void updateImagePath(String contentId, String imagePath);
 	/*
 	* 여행 계획 업데이트
 1) 지역 코드, 시군코드 셀렉트/옵션으로 밸류 전달
