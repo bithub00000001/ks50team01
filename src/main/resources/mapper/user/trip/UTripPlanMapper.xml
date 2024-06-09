@@ -237,23 +237,25 @@
     <select id="getTourDataList" resultType="java.util.Map">
         /* 컨텐츠 아이디, 컨텐츠 타입과 일치하는 여행지 상세 정보 조회 */
         SELECT
-            tour_detail_content_id      as contentId,
-            tour_detail_content_type_id as contentTypeId,
-            tour_detail_title           as contentTitle,
-            tour_detail_homepage        as contentHomepage,
-            tour_detail_first_image     as contentFirstImage,
-            tour_detail_second_image    as contentSecondImage,
-            area_code                   as areaCode,
-            sigungu_code                as sigunguCode,
-            tour_detail_first_addr      as contentFirstAddr,
-            tour_detail_second_addr     as contentSecondAddr,
-            tour_detail_zipcode         as contentZipcode,
-            tour_detail_tel_num         as contentTelNum,
-            tour_detail_tel_name        as contentTelName,
-            tour_detail_longitude       as contentLongitude,
-            tour_detail_latitude        as contentLatitude,
-            tour_detail_mlevel          as contentMapLevel,
-            tour_detail_overview        as contentOverview
+            tour_detail_content_id       as contentId,
+            tour_detail_content_type_id  as contentTypeId,
+            tour_detail_title            as contentTitle,
+            tour_detail_homepage         as contentHomepage,
+            tour_detail_first_image      as contentFirstImage,
+            tour_detail_first_image_path as contentFirstImagePath,
+            tour_detail_second_image     as contentSecondImage,
+            area_code                    as areaCode,
+            sigungu_code                 as sigunguCode,
+            tour_detail_first_addr       as contentFirstAddr,
+            tour_detail_second_addr      as contentSecondAddr,
+            tour_detail_zipcode          as contentZipcode,
+            tour_detail_tel_num          as contentTelNum,
+            tour_detail_tel_name         as contentTelName,
+            tour_detail_longitude        as contentLongitude,
+            tour_detail_latitude         as contentLatitude,
+            tour_detail_mlevel           as contentMapLevel,
+            tour_detail_overview         as contentOverview
+
         FROM
             TOUR_DETAIL_FROM_API
     </select>
