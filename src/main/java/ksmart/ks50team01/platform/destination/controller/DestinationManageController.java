@@ -261,11 +261,11 @@ public class DestinationManageController {
 	 * @param model
 	 * @return
 	 */
-	/*@PostMapping("/destination/addLodgingGoods")
+	@PostMapping("/destination/addLodgingGoods")
 	public String addLodgingGoods(Destination destination) {
 		destinationService.addLodgingGoods(destination);
 		return "redirect:/platform/destination/lodgingGoodsManage";
-	}*/
+	}
 	@GetMapping("/destination/addLodgingGoods")
 	public String addLodgingGoods(Model model) {
 		List<Destination> addLodgingGoodsList = destinationService.getLodgingGoodsList();

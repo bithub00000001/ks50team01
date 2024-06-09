@@ -70,14 +70,12 @@
 			NOW());
 
 	</insert>
-
-
 	<insert id="addTourGoods" parameterType="Destination">
 		/* 관광지 세부 등록 */
 			INSERT INTO
 				TOUR_GOODS
 				(TOUR_GDS_CD,
-				PRTNR_BPLC_CD,
+				 PRTNR_BPLC_CD,
 				 REG_PF_BIZ_ID,
 				 TOUR_INFO_CD,
 				 RGN_SCTGRY_NM,
@@ -96,7 +94,6 @@
 				 now()
 				 );
 	</insert>
-
 	<insert id="addTourGoodsOp" parameterType="Destination">
 		/* 관광지 세부사항 옵션 등록 */
 			INSERT INTO TOUR_GOODSOPTION
@@ -122,17 +119,53 @@
 			 #{tourOptionRemarks},
 			 NOW());
 	</insert>
-
+	<insert id="addLodgingGoods" parameterType="Destination">
+		/* 숙소 상세정보 등록 처리 */
+			INSERT INTO LODGING_MENU
+			(LODGING_MENU_TYPE,
+			 LODGING_MENU_CD,
+			 REG_PF_BIZ_ID,
+			 LODGING_MENU_MINCPCT,
+			 LODGING_MENU_MAXCPCT,
+			 LODGING_MENU_PRC,
+			 LODGING_MENU_ADDPRC,
+			 LODGING_MENU_SMOKE_YN,
+			 LODGING_MENU_BK_YN,
+			 REG_YMD)
+			VALUES
+			(#{lodgingMenuType},
+			 #{lodgingMenuCode},
+			 #{lodgingAuthorityId},
+			 #{lodgingMenuMinPct},
+			 #{lodgingMenuMaxPct},
+			 #{lodgingMenuPrc},
+			 #{lodgingMenuAddprc},
+			 #{lodgingMenuSmokeYn},
+			 #{lodgingMenuBkYn},
+			 NOW());
+			 
+	</insert>
 	<select id="searchTourName" resultType="Destination">
 		/* 관광지 이름 검색 */
-		SELECT
-			TOUR_NAME as tourName,
-			TOUR_INFO_CD as tourInfoCode
-		FROM
-			TOUR_INFO
-		WHERE
-			TOUR_NAME LIKE CONCAT('%', #{tourName}, '%')
+			SELECT
+				TOUR_NAME as tourName,
+				TOUR_INFO_CD as tourInfoCode
+			FROM
+				TOUR_INFO
+			WHERE
+				TOUR_NAME LIKE CONCAT('%', #{tourName}, '%')
 
+	</select>
+	
+	<select id="searchLodgingName" resultType="Destination">
+		/* 숙소 이름 검색 */
+			SELECT
+				LODGING_NAME as lodgingName,
+				LODGING_INFO_CD as lodgingInfoCode
+			FROM
+				LODGING_INFO
+			WHERE
+				LODGING_NAME LIKE CONCAT('%', #{lodgingName}, '%')
 	</select>
 
 
@@ -429,12 +462,7 @@
 				 NOW());
 	</insert>
 
-	<insert id="addLodingGoods" parameterType="Destination">
-		/* 숙소 상세정보 등록 처리 */
 
-
-
-	</insert>
 
 
 	<delete id="removeLodgingGoods" parameterType="String">

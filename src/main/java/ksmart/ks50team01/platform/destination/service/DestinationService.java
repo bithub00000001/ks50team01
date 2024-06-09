@@ -161,10 +161,10 @@ public class DestinationService {
 	 * @param destination
 	 * @return
 	 */
-	/*public int addLodgingGoods(Destination destination) {
+	public int addLodgingGoods(Destination destination) {
 		return destinationMapper.addLodgingGoods(destination);
 		
-	}*/
+	}
 
 	
 	/**

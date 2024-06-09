@@ -18,6 +18,10 @@ public interface DestinationMapper {
 	//관광지 세부옵션 등록
 	int addTourGoodsOp(Destination destination);
 	
+	//숙소 상세정보 등록
+	int addLodgingGoods(Destination destination);
+		
+		
 	//관광상품 중복체크
 	boolean addTourGoodsCheckList(String tourGoodsOptionCd);
 	
@@ -53,8 +57,7 @@ public interface DestinationMapper {
 	//숙소 등록
 	int addLodging(Destination destination);
 	
-	//숙소 상세정보 등록
-	// int addLodgingGoods(Destination destination);
+	
 	
 	//숙소 중복체크
 	boolean addLodgingCheckList(String lodgingName);
