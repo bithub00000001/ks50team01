@@ -9,6 +9,7 @@
         <div th:each="plan, iterStat : ${plans}"
              th:id="${'plan-'+iterStat.count}"
              class="list-group-item list-group-item-action flex-column align-items-start">
+            <input type="hidden" th:value="${plan.planUUID}">
             <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1">
                     <small th:text="${iterStat.count}">1</small>
@@ -18,7 +19,7 @@
             </div>
             <div class="d-flex w-100 justify-content-between">
                 <p class="mb-1" th:text="${plan.description}">여행 계획에 대한 간단한 설명이나 세부사항</p>
-                <button class="btn btn-primary share-btn" th:data-plan-id="${plan.tripId}">공유하기</button>
+                <button class="btn btn-primary btn-xs share-btn" th:data-plan-id="${plan.tripId}">공유하기</button>
             </div>
             <div class="d-flex w-25 justify-content-between">
                 <small>인원: <span th:text="${plan.numPeople}">4</span></small>
@@ -29,9 +30,9 @@
         </div>
     </div>
 
-        <!-- 여행 계획 데이터 정적 표시 -->
-    <div class="list-group">
-        <!-- 제주도 여행 계획 -->
+        <!-- 여행 계획 데이터 예시 -->
+    <!--/*<div class="list-group">
+        &lt;!&ndash; 제주도 여행 계획 &ndash;&gt;
         <div class="list-group-item list-group-item-action flex-column align-items-start" id="plan-1">
             <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1">
@@ -52,7 +53,7 @@
                 <small>기간: <span>3박 4일</span></small>
             </div>
         </div>
-        <!-- 경주 역사 여행 계획 -->
+        &lt;!&ndash; 경주 역사 여행 계획 &ndash;&gt;
         <div class="list-group-item list-group-item-action flex-column align-items-start" id="plan-2">
             <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1">
@@ -73,7 +74,7 @@
                 <small>기간: <span>2박 3일</span></small>
             </div>
         </div>
-    </div>
+    </div>*/-->
 
 
 
@@ -86,7 +87,9 @@
         $(document).ready(function() {
             $(".list-group-item").click(function(e) {
                 const planId = $(this).attr('id').split('-')[1];
-                window.location.href = "/plan/detail/" + planId;
+                const planUUID = $(this).find('input').val();
+                console.log(planUUID)
+                window.location.href = "/trip/schedule?planUUID=" + planUUID;
             });
 
             $(".share-btn").click(function(e) {

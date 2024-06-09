@@ -46,6 +46,8 @@ function moveToNextAccordion() {
     }, 0);
 }
 
+
+
 // 첫번째 아코디언으로 되돌아가는 함수
 function backToFirstStepStage() {
     // 사용자에게 확인 메시지를 보여주고, 확인 시에만 계속 진행

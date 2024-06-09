@@ -488,3 +488,64 @@ $('#distanceCalBTN').click(function() {
         }
     });
 });
+
+// 저장 버튼 클릭 이벤트 핸들러
+$('#saveDetailInfoBtn').click(function() {
+    // saveTripInfo 함수 내부에서 UUID 값 설정
+    $('#planUUID').val(uuid);
+
+    // 저장할 데이터 객체 생성
+    const data = {
+        planUUID: uuid, // UUID를 기본 키(PK)로 사용
+        days: []
+    };
+
+    // 각 일자별 데이터 수집
+    $('#myDayTabContent > .tab-pane').each(function() {
+        const dayNumber = $(this).attr('id').replace('day', '');
+        const planDayId = `planDay${dayNumber}`;
+        const $planDay = $(`#${planDayId}`);
+
+        const day = {
+            day: dayNumber,
+            locations: []
+        };
+
+        $planDay.find('li').each(function(idx, element) {
+            const contentId = $(element).find('h4')[0].dataset.contentId;
+            const order = $(element).find('span.number').text();
+
+            day.locations.push({
+                contentId,
+                order
+            });
+        });
+
+        data.days.push(day);
+    });
+
+    // AJAX POST 요청 보내기
+    $.ajax({
+        url: '/trip/save-trip-detail-info', // 서버 엔드포인트 URL
+        type: 'POST',
+        data: JSON.stringify(data), // 데이터를 JSON 문자열로 변환
+        contentType: 'application/json', // 전송 데이터 타입 설정
+        dataType: 'text', // 응답 데이터 타입 설정
+        success: function(response) {
+            // 서버에서 반환한 문자열을 출력
+            console.log('Response:', response);
+            // 반환된 문자열에 따라 성공 또는 실패 메시지 출력
+            if (response === "success") {
+                alert('일정 정보가 성공적으로 저장되었습니다.');
+                window.location.href = '/trip/list';
+            } else {
+                alert('일정 정보 저장 하는데 실패했습니다.');
+            }
+        },
+        error: function(xhr, status, error) {
+            // 오류 시 처리 로직
+            console.error('Error:', error);
+            alert('일정 정보 저장 중 오류가 발생했습니다.');
+        }
+    });
+});

@@ -99,7 +99,6 @@
         UPDATE
             INDIVIDUAL_TRIP_PLAN
         SET
-            RGN_SCTGRY_CD       = #{planRegionSmallCate},
             TRIP_PLN_BGNG_YMD   = #{startDate},
             TRIP_PLN_END_YMD    = #{endDate},
             TRIP_PLN_DAY        = #{planDays},
@@ -303,6 +302,7 @@
             AND
             tour_detail_content_type_id = #{contentTypeId}
     </select>
+
     <select id="getSigunguNameBySigunCode" resultMap="sigunMap">
         /* 시군 코드와 일치하는 지역 코드 이름, 시군 코드 이름 조회 */
         SELECT
