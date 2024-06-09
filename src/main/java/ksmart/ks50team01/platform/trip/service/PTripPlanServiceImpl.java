@@ -154,13 +154,20 @@ public class PTripPlanServiceImpl implements PTripPlanService {
 		return tourDetail;
 	}
 
+	/**
+	 * tour API 의 외부 링크를 가져와 파일 서버에 다운로드 하고 그 링크를 DB에 추가하는 메서드
+	 * @param tourDetailList 여행지 상세 정보 링크
+	 */
 	@Override
 	public void downloadAndSaveImages(List<PTourDetail> tourDetailList) {
 		try (SqlSession session = sqlSessionFactory.openSession(true)) {
 			for (PTourDetail tourDetail : tourDetailList) {
 				if (isValidUrl(tourDetail.getFirstImage())) {
+					// /home/teamproject/resources/tourapi/ 형식으로 저장 됨
 					String imagePath = saveImageToServer(tourDetail.getContentId(), tourDetail.getFirstImage());
-					pTripPlanMapper.updateImagePath(tourDetail.getContentId(), imagePath);
+					// /tourapi/로 대체해서 DB에 저장
+					String replacePath = imagePath.replace("/home/teamproject/resources/tourapi/", "/tourapi/");
+					pTripPlanMapper.updateImagePath(tourDetail.getContentId(), replacePath);
 				}
 			}
 		} catch (Exception e) {
@@ -168,11 +175,24 @@ public class PTripPlanServiceImpl implements PTripPlanService {
 			throw new RuntimeException("Error downloading and saving images", e);
 		}
 	}
+
+	/**
+	 * url 유효성 검사 로직
+	 * @param url url 주소
+	 * @return
+	 */
 	private boolean isValidUrl(String url) {
 		// URL 유효성 검사 로직
 		return url != null && !url.isEmpty() && (url.startsWith("http://") || url.startsWith("https://"));
 	}
 
+	/**
+	 * 서버에 이미지를 저장하는 메서드
+	 * @param contentId 컨텐트 ID
+	 * @param imageUrl 이미지 주소
+	 * @return
+	 * @throws IOException
+	 */
 	private String saveImageToServer(String contentId, String imageUrl) throws IOException {
 		String imageDirPath = "/home/teamproject/resources/tourapi/";
 		String imageFileName = contentId + "_tour_detail_first_image.jpg";
