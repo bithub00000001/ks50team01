@@ -34,13 +34,17 @@ public class WebConfig implements WebMvcConfigurer {
 
 		// 로그인 상태일때만 여행 계획 메뉴 접근이 가능하도록 조정
 		registry.addInterceptor(authenticationInterceptor)
-			.addPathPatterns("/trip/**")
+			.addPathPatterns(
+				"/trip/detail/**",
+				"/trip/list/**",
+				"/trip/schedule/**"
+			)
 			.excludePathPatterns(
 				"/trip/login",
 				"/trip/register",
 				"/trip/logout",
 				"/trip", "/trip/",
-				"/trip/tourInfo",
+				"/trip/tourInfo/**",
 				"/trip/board"
 			);
 	}
