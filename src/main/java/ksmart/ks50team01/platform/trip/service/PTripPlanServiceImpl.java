@@ -1,8 +1,16 @@
 package ksmart.ks50team01.platform.trip.service;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Objects;
 
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +30,8 @@ import lombok.extern.slf4j.Slf4j;
 public class PTripPlanServiceImpl implements PTripPlanService {
 
 	private final PTripPlanMapper pTripPlanMapper;
+
+	private final SqlSessionFactory sqlSessionFactory;
 
 	/**
 	 * 여행 계획 목록 조회 메서드
@@ -142,6 +152,77 @@ public class PTripPlanServiceImpl implements PTripPlanService {
 		tourDetail.setSigunguName(tourInfo.getSigunguName());
 		tourDetail.setContentTypeName(contentTypeName);
 		return tourDetail;
+	}
+
+	/**
+	 * tour API 의 외부 링크를 가져와 파일 서버에 다운로드 하고 그 링크를 DB에 추가하는 메서드
+	 * @param tourDetailList 여행지 상세 정보 링크
+	 */
+	@Override
+	public void downloadAndSaveImages(List<PTourDetail> tourDetailList) {
+		try (SqlSession session = sqlSessionFactory.openSession(true)) {
+			for (PTourDetail tourDetail : tourDetailList) {
+				if (isValidUrl(tourDetail.getFirstImage())) {
+					// /home/teamproject/resources/tourapi/ 형식으로 저장 됨
+					String imagePath = saveImageToServer(tourDetail.getContentId(), tourDetail.getFirstImage());
+					// /tourapi/로 대체해서 DB에 저장
+					String replacePath = imagePath.replace("/home/teamproject/resources/tourapi/", "/tourapi/");
+					pTripPlanMapper.updateImagePath(tourDetail.getContentId(), replacePath);
+				}
+			}
+		} catch (Exception e) {
+			log.error("Error occurred while downloading and saving images", e);
+			throw new RuntimeException("Error downloading and saving images", e);
+		}
+	}
+
+	/**
+	 * url 유효성 검사 로직
+	 * @param url url 주소
+	 * @return
+	 */
+	private boolean isValidUrl(String url) {
+		// URL 유효성 검사 로직
+		return url != null && !url.isEmpty() && (url.startsWith("http://") || url.startsWith("https://"));
+	}
+
+	/**
+	 * 서버에 이미지를 저장하는 메서드
+	 * @param contentId 컨텐트 ID
+	 * @param imageUrl 이미지 주소
+	 * @return
+	 * @throws IOException
+	 */
+	private String saveImageToServer(String contentId, String imageUrl) throws IOException {
+		String imageDirPath = "/home/teamproject/resources/tourapi/";
+		String imageFileName = contentId + "_tour_detail_first_image.jpg";
+		String imagePath = imageDirPath + imageFileName;
+
+		// 디렉터리 생성
+		File imageDir = new File(imageDirPath);
+		if (!imageDir.exists()) {
+			imageDir.mkdirs();
+		}
+
+		File imageFile = new File(imagePath);
+
+		// 이미지 다운로드
+		URL url = new URL(imageUrl);
+		try (InputStream inputStream = url.openStream()) {
+			// 서버에 이미지 저장
+			Files.copy(inputStream, imageFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+		}
+
+		return imagePath;
+	}
+
+	/**
+	 * 여행지 상세 정보 목록 조
+	 * @return
+	 */
+	@Override
+	public List<PTourDetail> getTourDetailList() {
+		return pTripPlanMapper.getTourDetailList();
 	}
 
 }

@@ -217,6 +217,8 @@ public class UTripPlanController {
         }
         // uTourDataService.upsertSigunguData(apiKey);
         List<UTripOption> tripPlanList = uTripPlanService.getTempPlanList(sessionId);
+        log.info("tripPlanList: {}", tripPlanList);
+
         model.addAttribute("title", "내 여행 계획 목록");
         model.addAttribute("plans", tripPlanList);
         return "user/trip/planList";
@@ -259,7 +261,7 @@ public class UTripPlanController {
         model.addAttribute("title", "관광지 조회");
         model.addAttribute("areaCodeList", areaCodeList);
 
-        return "/user/trip/tourInfo";
+        return "user/trip/tourInfo";
     }
 
     /**
@@ -270,7 +272,7 @@ public class UTripPlanController {
     @ResponseBody
     public ResponseEntity<List<Map<String, Object>>> getTourData() {
         List<Map<String, Object>> tourDataList = uTripPlanService.getTourDataList();
-        log.info("tourDataList: {}", tourDataList);
+        // log.info("tourDataList: {}", tourDataList);
         if (tourDataList.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
