@@ -8,10 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import ksmart.ks50team01.user.board.dto.UFaq;
 import ksmart.ks50team01.user.board.service.UFaqService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -19,7 +17,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 @RequestMapping(value = "/faq")
 @RequiredArgsConstructor
-@Slf4j
 public class UFaqController {
 	
 	private final UFaqService uFaqService;

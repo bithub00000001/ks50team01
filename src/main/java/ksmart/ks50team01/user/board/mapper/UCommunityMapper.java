@@ -6,7 +6,6 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.web.multipart.MultipartFile;
 
-import ksmart.ks50team01.platform.trip.dto.PTourDetail;
 import ksmart.ks50team01.user.board.dto.UCategory;
 import ksmart.ks50team01.user.board.dto.UComment;
 import ksmart.ks50team01.user.board.dto.UCommunity;
@@ -48,8 +47,9 @@ public interface UCommunityMapper {
 	// 게시글 수정 
 	void postModify(UCommunity uCommunity);
 
-	// 게시글 삭제
+	// 게시글 삭제 시 해당 게시글의 댓글 삭제
 	void postRemove(String postNum);
+	void postCommentRemove(String postNum);
 
 	// 게시글 파일 리스트 조회
 	List<UPostFile> getFileList();
@@ -80,6 +80,10 @@ public interface UCommunityMapper {
 	List<Map<String, Object>> getPostListByPage(Map<String, Object> paramMap);
 
 	int getPostListRowCnt();
+
+	UComment getCommentById(String commentNum);
+
+
 	
 
 

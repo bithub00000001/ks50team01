@@ -375,7 +375,6 @@
 	</update>
 	
 	
-	
 	<delete id="postRemove" parameterType="UCommunity">
 		/* 게시글 삭제 */
 	    DELETE FROM 
@@ -385,6 +384,15 @@
 	</delete>
 	
 	
+	<delete id="postCommentRemove" parameterType="UComment">
+		/* 게시글 삭제 시 해당 게시글의 댓글 삭제 */
+		DELETE FROM 
+			POST_COMMENT 
+		WHERE 
+			PST_NO = #{postNum};
+	</delete>
+	
+
 	
 	<!-- 댓글 등록 -->
 	<insert id="commentSave" parameterType="UComment">
@@ -456,6 +464,26 @@
 			PST_CMNT_NO = #{commentNum};
 	</update>
 	
+	
+	<select id="getCommentById" resultMap="CommentResultMap">
+	    SELECT
+	    	PST_CMNT_NO,
+            REG_MBR_ID,
+            PST_NO,
+            PST_CMNT_CN,
+            PST_CMNT_LIKE_TOTAL,
+            PST_CMNT_DISLIKE_TOTAL,
+            PST_CMNT_REPT_TOTAL,
+            ACT_YN,
+            REG_YMD,
+            MDFCN_YMD,
+            DEL_YMD 
+	    FROM 
+	    	POST_COMMENT 
+	    WHERE 
+	    	PST_CMNT_NO = #{commentNum};
+	</select>
+		
 
     
     <!-- 댓글 삭제 -->
