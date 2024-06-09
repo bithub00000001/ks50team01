@@ -2,10 +2,13 @@ package ksmart.ks50team01.user.trip.dto;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import ksmart.ks50team01.platform.trip.dto.PTourDetail;
 import lombok.Data;
 
 @Data
@@ -45,6 +48,12 @@ public class UTripOption {
 
     private String tripDuration;
 
+    // TRIP_PLAN_ITEMS_NEW 테이블 정보
+    private List<UTripPlanItem> tripItems;
+
+    // TOUR_DETAIL_FROM_API 테이블 정보
+    private List<PTourDetail> tourDetails;
+
     // description 필드를 구성하는 메서드 추가
     public String getDescription() {
         return String.format("출발 날짜: %s, 도착 날짜: %s, 상태: %s",
@@ -52,4 +61,19 @@ public class UTripOption {
             endDate != null ? endDate.toString() : "미정",
             inProgress != null ? inProgress : "작성중");
     }
+
+    private List<DayPlan> dayPlans = new ArrayList<>();
+
+    @Data
+    public static class DayPlan {
+        private Integer dayNumber;
+        private LocalDate date;
+        private List<UTripPlanItem> items = new ArrayList<>();
+
+        public void setStartDateAndDayNumber(LocalDate startDate, Integer dayNumber) {
+            this.dayNumber = dayNumber;
+            this.date = startDate.plusDays(dayNumber - 1);
+        }
+    }
+
 }

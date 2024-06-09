@@ -3,10 +3,14 @@ package ksmart.ks50team01.user.trip.service;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.coyote.BadRequestException;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import ksmart.ks50team01.user.member.login.dto.Login;
 import ksmart.ks50team01.user.trip.dto.UDayInfo;
+import ksmart.ks50team01.user.trip.dto.UDistanceRequest;
+import ksmart.ks50team01.user.trip.dto.UTripDetailOption;
 import ksmart.ks50team01.user.trip.dto.UTripOption;
 
 public interface UTripPlanService {
@@ -45,4 +49,10 @@ public interface UTripPlanService {
 
 	// Tour API에서 DB로 저장한 상세 정보 목록 조회
 	List<Map<String, Object>> getTourDataList();
+
+	// 여행 계획 상세 정보 저장
+	int saveTripDetailInfo(UTripDetailOption uTripDetailOption) throws BadRequestException;
+
+	// UUID와 일치하는 여행 상세 정보 조회
+	UTripOption getTripOptionByUUID(String planUUID);
 }

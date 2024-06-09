@@ -4,9 +4,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
+import ksmart.ks50team01.platform.trip.dto.PTourDetail;
 import ksmart.ks50team01.user.member.login.dto.Login;
 import ksmart.ks50team01.user.trip.dto.UTripOption;
+import ksmart.ks50team01.user.trip.dto.UTripPlanItem;
 
 @Mapper
 public interface UTripPlanMapper {
@@ -60,4 +63,19 @@ public interface UTripPlanMapper {
 
 	// Tour API에서 DB에 저장한 여행 상세 정보 목록 조
 	List<Map<String, Object>> getTourDataList();
+
+	boolean existsByPlanUUID(String planUUID);
+
+	int deleteDetailInfo(String planUUID);
+
+	int insertDetailInfo(@Param("planUUID") String planUUID,
+		@Param("dayNumber") int dayNumber,
+		@Param("contentId") String contentId,
+		@Param("order") int order);
+
+	UTripOption getTripPlanByUUID(String planUUID);
+
+	List<UTripPlanItem> getTripItemsByUUID(String planUUID);
+
+	List<PTourDetail> getPTourDetailByContentId(List<String> contentIds);
 }
