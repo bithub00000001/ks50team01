@@ -106,8 +106,8 @@
 
             const img = document.createElement('img');
             img.className = 'card-img-top lazyestload';
-            img.dataset.src = tourData.contentFirstImage !== '' ?  tourData.contentFirstImage : '/user/img/blog/blog-01.jpg';
-            img.src = tourData.contentFirstImage !== '' ?  tourData.contentFirstImage : '/user/img/blog/blog-01.jpg';
+            img.dataset.src = tourData.contentFirstImage !== '' ?  tourData.contentFirstImagePath : '/user/img/blog/blog-01.jpg';
+            img.src = tourData.contentFirstImage !== '' ?  tourData.contentFirstImagePath : '/user/img/blog/blog-01.jpg';
             img.alt = 'Card image cap';
 
             link.appendChild(img);
