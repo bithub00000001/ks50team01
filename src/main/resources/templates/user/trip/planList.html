@@ -6,28 +6,33 @@
 
 <th:block layout:fragment="customPageSection">
     <div class="list-group">
-        <div th:each="plan, iterStat : ${plans}"
-             th:id="${'plan-'+iterStat.count}"
-             class="list-group-item list-group-item-action flex-column align-items-start">
-            <input type="hidden" th:value="${plan.planUUID}">
-            <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">
-                    <small th:text="${iterStat.count}">1</small>
-                    <span th:text="${plan.tripTitle}">여행 계획 제목</span>
-                </h5>
-                <small th:text="${plan.dayDiff}">3일 전</small>
+        <th:block th:if="${plans != null}">
+            <div th:each="plan, iterStat : ${plans}"
+                 th:id="${'plan-'+iterStat.count}"
+                 class="list-group-item list-group-item-action flex-column align-items-start">
+                <input type="hidden" th:value="${plan.planUUID}">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">
+                        <small th:text="${iterStat.count}">1</small>
+                        <span th:text="${plan.tripTitle}">여행 계획 제목</span>
+                    </h5>
+                    <small th:text="${plan.dayDiff}">3일 전</small>
+                </div>
+                <div class="d-flex w-100 justify-content-between">
+                    <p class="mb-1" th:text="${plan.description}">여행 계획에 대한 간단한 설명이나 세부사항</p>
+                    <button class="btn btn-primary btn-xs share-btn" th:data-plan-id="${plan.tripId}">공유하기</button>
+                </div>
+                <div class="d-flex w-25 justify-content-between">
+                    <small>인원: <span th:text="${plan.numPeople}">4</span></small>
+                </div>
+                <div class="d-flex w-25 justify-content-between">
+                    <small>기간: <span th:text="${plan.tripDuration}">3박 4일</span></small>
+                </div>
             </div>
-            <div class="d-flex w-100 justify-content-between">
-                <p class="mb-1" th:text="${plan.description}">여행 계획에 대한 간단한 설명이나 세부사항</p>
-                <button class="btn btn-primary btn-xs share-btn" th:data-plan-id="${plan.tripId}">공유하기</button>
-            </div>
-            <div class="d-flex w-25 justify-content-between">
-                <small>인원: <span th:text="${plan.numPeople}">4</span></small>
-            </div>
-            <div class="d-flex w-25 justify-content-between">
-                <small>기간: <span th:text="${plan.tripDuration}">3박 4일</span></small>
-            </div>
-        </div>
+        </th:block>
+        <th:block th:if="${plans.isEmpty()}">
+            <p class="text-center fs-4">작성된 계획이 없어요! 작성하러 가보세요!</p>
+        </th:block>
     </div>
 
         <!-- 여행 계획 데이터 예시 -->

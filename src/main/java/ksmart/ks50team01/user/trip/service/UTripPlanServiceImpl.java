@@ -227,6 +227,9 @@ public class UTripPlanServiceImpl implements UTripPlanService {
 	public List<UTripOption> getTempPlanList(String sessionId) {
 		List<UTripOption> plans = uTripPlanMapper.selectTempPlanListBySessionId(sessionId);
 		log.info("plans: {}", plans);
+
+		if (plans.isEmpty()) return List.of();
+
 		// 각 계획의 description 필드를 설정
 		plans.forEach(plan -> {
 			plan.setDescription(plan.getDescription());

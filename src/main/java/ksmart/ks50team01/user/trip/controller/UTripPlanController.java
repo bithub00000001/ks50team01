@@ -217,6 +217,8 @@ public class UTripPlanController {
         }
         // uTourDataService.upsertSigunguData(apiKey);
         List<UTripOption> tripPlanList = uTripPlanService.getTempPlanList(sessionId);
+        log.info("tripPlanList: {}", tripPlanList);
+
         model.addAttribute("title", "내 여행 계획 목록");
         model.addAttribute("plans", tripPlanList);
         return "user/trip/planList";
