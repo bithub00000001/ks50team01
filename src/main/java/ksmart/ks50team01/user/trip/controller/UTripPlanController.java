@@ -270,7 +270,7 @@ public class UTripPlanController {
     @ResponseBody
     public ResponseEntity<List<Map<String, Object>>> getTourData() {
         List<Map<String, Object>> tourDataList = uTripPlanService.getTourDataList();
-        log.info("tourDataList: {}", tourDataList);
+        // log.info("tourDataList: {}", tourDataList);
         if (tourDataList.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
