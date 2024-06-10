@@ -77,7 +77,14 @@ public class DestinationService {
 	public int addTour(Destination destination) {
 		return destinationMapper.addTour(destination);
 	}
-	
+	/**
+	 * 음식점 등록
+	 * @param destination
+	 * @return
+	 */
+	public int addRestaurant(Destination destination) {
+		return destinationMapper.addRestaurant(destination);
+	}
 	
 	/**
 	 *  관광지 세부사항 등록

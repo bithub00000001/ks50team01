@@ -205,7 +205,7 @@ public class DestinationManageController {
 		model.addAttribute("tourInfo", tourInfo);
 		model.addAttribute("title", "관광지 수정");
 		
-		return "/platform/destination/tourModify";
+		return "platform/destination/tourModify";
 	}
 	
 	/**
@@ -220,7 +220,7 @@ public class DestinationManageController {
 		model.addAttribute("title","관광지 관리");
 		model.addAttribute("tourInfoList", tourInfoList);
 		
-		return "/platform/destination/tourManage";
+		return "platform/destination/tourManage";
 	}
 	/**
 	 * 관광지 상세목록 관리
@@ -234,7 +234,7 @@ public class DestinationManageController {
 		model.addAttribute("tourGoodsList", tourGoodsList);
 		model.addAttribute("title", "관광상품 관리");
 		
-		return "/platform/destination/tourGoodsManage";
+		return "platform/destination/tourGoodsManage";
 	}
 	
 	/**
@@ -256,6 +256,24 @@ public class DestinationManageController {
 		
 		return "platform/destination/addLodging";
 	}
+	
+	@PostMapping("/destination/addRestaurant")
+	public String addRestaurant(Destination destination) {
+		destinationService.addRestaurant(destination);
+		
+		return "redirect:/platform/destination/restaurantManage";
+	}
+	@GetMapping("/destination/addRestaurant")
+	public String addRestaurant(Model model) {
+		List<Destination> addRestaurantList = destinationService.getRestaurantInfoList();
+		
+		model.addAttribute("title", "음식점 등록");
+		model.addAttribute("addRestaurantList", addRestaurantList);
+		
+		return "platform/destination/addRestaurant";
+	}
+	
+	
 	/**
 	 * 숙소 상세정보 등록 240606: 메서드 사용 안함 처리
 	 * @param model
@@ -377,7 +395,7 @@ public class DestinationManageController {
 		model.addAttribute("lodgingInfo", lodgingInfo);
 		model.addAttribute("title", "숙소 수정");
 		
-		return "/platform/destination/lodgingModify";
+		return "platform/destination/lodgingModify";
 	}
 	/**
 	 * 숙소상품 수정
@@ -400,7 +418,7 @@ public class DestinationManageController {
 		model.addAttribute("lodgingGoodsList", lodgingGoodsList);
 		model.addAttribute("title", "숙소 상세정보 수정");
 	
-		return "/platform/destination/lodgingGoodsModify";
+		return "platform/destination/lodgingGoodsModify";
 	}
 	/**
 	 * 숙소 관리
@@ -414,7 +432,7 @@ public class DestinationManageController {
 		model.addAttribute("lodgingInfoList", lodgingInfoList);
 		model.addAttribute("title", "숙소 관리");
 		
-		return "/platform/destination/lodgingManage";
+		return "platform/destination/lodgingManage";
 	
 	}
 	/**
@@ -429,7 +447,7 @@ public class DestinationManageController {
 		model.addAttribute("lodgingGoodsList", lodgingGoodsList);
 		model.addAttribute("title", "숙소옵션 관리");
 		
-		return "/platform/destination/lodgingGoodsManage";
+		return "platform/destination/lodgingGoodsManage";
 	}
 	/**
 	 * 음식점 수정 240606: 메서드 인수 변경 처리
@@ -453,7 +471,7 @@ public class DestinationManageController {
 		model.addAttribute("restaurantList", restaurantList);
 		model.addAttribute("title", "음식점 수정");
 		
-		return "/platform/destination/restaurantModify";
+		return "platform/destination/restaurantModify";
 	}
 	/**
 	 * 음식점 상세정보 수정
@@ -476,7 +494,7 @@ public class DestinationManageController {
 		model.addAttribute("restaurantMenuInfo", restaurantMenuInfo);
 		model.addAttribute("title", "음식점 상세정보 수정");
 		
-		return "/platform/destination/restaurantMenuModify";
+		return "platform/destination/restaurantMenuModify";
 	}
 	
 	
@@ -493,7 +511,7 @@ public class DestinationManageController {
 		model.addAttribute("restaurantInfoList", restaurantInfoList);
 		model.addAttribute("title", "음식점 관리");
 		
-		return "/platform/destination/restaurantManage";
+		return "platform/destination/restaurantManage";
 	}
 	/**
 	 * 음식점 상세정보 관리
@@ -508,7 +526,7 @@ public class DestinationManageController {
 		model.addAttribute("restaurantMenuList", restaurantMenuList);
 		model.addAttribute("title", "음식점메뉴 관리");
 		
-		return "/platform/destination/restaurantMenuManage";
+		return "platform/destination/restaurantMenuManage";
 	}
 	
 	/*

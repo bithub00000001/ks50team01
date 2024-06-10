@@ -104,6 +104,7 @@
 									<th>음식점 연락처</th>
 									<th>음식점 기타정보</th>
 									<th>등록일자</th>
+									<th>수정일자</th>
 									<th>수정</th>
 									<th>삭제</th>
 								</tr>
@@ -121,6 +122,7 @@
 									<td th:text="${l.restaurantContactNum}"></td>
 									<td th:text="${l.restaurantOthers}"></td>
 									<td th:text="${l.restaurantRegDate}"></td>
+									<td th:text="${l.restaurantFormDate}"></td>
 									<td>
 									    <a th:href="@{/platform/destination/restaurantModify(restaurantInfoCode=${l.restaurantInfoCode})}">수정</a>
 									</td>

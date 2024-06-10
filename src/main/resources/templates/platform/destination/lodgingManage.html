@@ -101,6 +101,9 @@
 									<th>숙소 사이트</th>
 									<th>숙소 연락처</th>
 									<th>숙소 연락처2</th>
+									<th>숙소 기타정보</th>
+									<th>등록일자</th>
+									<th>수정일자</th>
 									<th>수정</th>
 									<th>삭제</th>
 								</tr>
@@ -115,6 +118,9 @@
 									<td th:text="${l.lodgingSite}"></td>
 									<td th:text="${l.lodgingContactNum}"></td>
 									<td th:text="${l.lodgingContactNum2}"></td>
+									<td th:text="${l.lodgingOthers}"></td>
+									<td th:text="${l.lodgingRegDate}"></td>
+									<td th:text="${l.lodgingFormDate}"></td>
 									<td>
 									    <a th:href="@{/platform/destination/lodgingModify(lodgingInfoCode=${l.lodgingInfoCode})}">수정</a>
 									</td>

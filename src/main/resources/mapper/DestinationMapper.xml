@@ -36,7 +36,36 @@
 
 
 	</select>
-
+	
+	<insert id="addRestaurant" parameterType="Destination">
+		/* 음식점 등록 처리 */
+			INSERT INTO
+				RESTAURANT_INFO
+				(RSTRN_NAME,
+				 RSTRN_INFO_CD,
+				 TRIP_SCTGRY_CD,
+				 PRTNR_BPLC_CD,
+				 REG_PF_BIZ_ID,
+				 RSTRN_ADDR,
+				 RSTRN_DADDR,
+				 RSTRN_CONTACT,
+				 RSTRN_SITE,
+				 RSTRN_OTHERS,
+				 REG_YMD)
+			VALUES
+				(#{restaurantName},
+				 #{restaurantInfoCode},
+				 #{tripSCateCode},
+				 #{partnerBPlaceCode},
+				 #{restaurantAuthorityId},
+				 #{restaurantAddr},
+				 #{restaurantDaddr},
+				 #{restaurantContactNum},
+				 #{restaurantSite},
+				 #{restaurantOthers},
+				 NOW());	 
+	</insert>
+	
 	<insert id="addTour" parameterType="Destination">
 		/* 관광지 등록 처리 */
 		INSERT INTO
@@ -66,8 +95,8 @@
 		 	 #{tourSite},
 			 #{tourContactNum},
 		 	 #{tourContactNum2},
-			#{tourOthers},
-			NOW());
+			 #{tourOthers},
+			 NOW());
 
 	</insert>
 	<insert id="addTourGoods" parameterType="Destination">
@@ -500,6 +529,7 @@
 				LODGING_CONTACT1 	AS 	lodgingContactNum,
 				LODGING_CONTACT2 	AS 	lodgingContactNum2,
 				LODGING_SITE 		AS 	lodgingSite,
+				LODGING_ETC			AS 	lodgingOthers,
 				REG_YMD 			AS 	lodgingRegDate,
 				MDFCN_YMD 			AS 	lodgingFormDate
 			FROM
@@ -542,6 +572,7 @@
 				LODGING_CONTACT1 	AS lodgingContactNum,
 				LODGING_CONTACT2 	AS lodgingContactNum2,
 				LODGING_SITE 		AS lodgingSite,
+				LODGING_ETC 		AS lodgingOthers,
 				REG_YMD 			AS lodgingRegDate,
 				MDFCN_YMD 			AS lodgingFormDate
 			FROM
@@ -569,13 +600,12 @@
 
 	</update>
 
-	<select id="getLodgingGoodsInfoById" resultType="Destination">
+	<select id="getLodgingGoodsInfoById" resultType="destination">
 		/* 숙소 상세정보 수정 화면 */
 			SELECT
 				li.LODGING_NAME 			AS lodgingName,
 				lm.LODGING_MENU_CD			AS lodgingMenuCode,
 				lm.LODGING_MENU_TYPE 		AS lodgingMenuType,
-				lm.REG_PF_BIZ_ID 		AS lodgingAuthorityId,
 				lm.LODGING_MENU_MINCPCT 	AS lodgingMenuMinPct,
 				lm.LODGING_MENU_MAXCPCT 	AS lodgingMenuMaxPct,
 				lm.LODGING_MENU_PRC 		AS lodgingMenuPrc,
@@ -584,7 +614,7 @@
 				lm.LODGING_MENU_BK_YN 		AS lodgingMenuBkYn,
 				li.REG_YMD 					AS lodgingRegDate,
 				li.MDFCN_YMD 				AS lodgingFormDate
-
+	
 			FROM
 				LODGING_INFO AS li
 				INNER JOIN
@@ -592,13 +622,13 @@
 				ON
 				li.LODGING_INFO_CD = lm.LODGING_INFO_CD
 			WHERE
-				lm.LODGING_MENU_CD = #{lodgingMenuCode};
-
+				lm.LODGING_MENU_CD = #{lodgingMenuCode};	
+			
 	</select>
 
-	<update id="lodgingGoodsModify" parameterType="Destination">
+	<update id="lodgingGoodsModify" parameterType="destination">
 		/* 숙소 상세정보 수정 후 업데이트 */
-			UPDATE
+			UPDATE 
 				LODGING_INFO AS li,
 				LODGING_MENU AS lm
 			<set>
@@ -610,9 +640,6 @@
 				</if>
 				<if test="lodgingInfoCode != null and lodgingInfoCode != ''">
 					li.LODGING_INFO_CD			= #{lodgingInfoCode} ,
-				</if>
-				<if test="lodgingAuthorityId != null and lodgingAuthorityId != ''">
-					lm.REG_PF_BIZ_ID			= #{lodgingAuthorityId} ,
 				</if>
 				<if test="lodgingMenuMinPct != null and lodgingMenuMinPct != ''">
 					lm.LODGING_MENU_MINCPCT		= #{lodgingMenuMinPct},
@@ -642,21 +669,22 @@
 	</update>
 
 
+
 	<select id="getRestaurantInfoById" resultType="Destination">
 		/* 식당 수정 전 정보 */
-
-
 			SELECT
-				RSTRN_INFO_CD 	AS restaurantInfoCode,
-				REG_PF_BIZ_ID 	AS restaurantAuthorityId,
-				RSTRN_NAME 		AS restaurantName,
-				RSTRN_ADDR 		AS restaurantAddr,
-				RSTRN_DADDR	 	AS restaurantDaddr,
-				RSTRN_CONTACT 	AS restaurantContactNum,
-				RSTRN_SITE 		AS restaurantSite,
-				RSTRN_OTHERS	AS restaurantOthers,
-				REG_YMD 		AS restaurantRegDate,
-				MDFCN_YMD 		AS restaurantFormDate
+				RSTRN_INFO_CD 	AS 	restaurantInfoCode,
+				REG_PF_BIZ_ID 	AS 	restaurantAuthorityId,
+				RSTRN_NAME 		AS 	restaurantName,
+				RGN_SCTGRY_NM	AS 	tripSCateCode,
+				PRTNR_BPLC_CD	AS 	partnerBPlaceCode,
+				RSTRN_ADDR 		AS 	restaurantAddr,
+				RSTRN_DADDR	 	AS 	restaurantDaddr,
+				RSTRN_CONTACT 	AS 	restaurantContactNum,
+				RSTRN_SITE 		AS 	restaurantSite,
+				RSTRN_OTHERS	AS 	restaurantOthers,
+				REG_YMD 		AS 	restaurantRegDate,
+				MDFCN_YMD 		AS 	restaurantFormDate
 			FROM
 				RESTAURANT_INFO
 			WHERE
@@ -668,19 +696,20 @@
 		/* 식당 수정 */
 			UPDATE RESTAURANT_INFO
 			SET
-				RSTRN_NAME		= #{restaurantName},
-				RSTRN_ADDR		= #{restaurantAddr},
-				RSTRN_DADDR		= #{restaurantDaddr},
-				RSTRN_CONTACT	= #{restaurantContactNum},
-				RSTRN_SITE		= #{restaurantSite},
-				RSTRN_OTHERS	= #{restaurantOthers},
-				MDFCN_YMD		= NOW()
+				RSTRN_NAME		= 	#{restaurantName},
+				REG_PF_BIZ_ID 	= 	#{restaurantAuthorityId},
+				RGN_SCTGRY_NM	= 	#{tripSCateCode},
+				PRTNR_BPLC_CD	= 	#{partnerBPlaceCode},
+				RSTRN_ADDR		= 	#{restaurantAddr},
+				RSTRN_DADDR		= 	#{restaurantDaddr},
+				RSTRN_CONTACT	= 	#{restaurantContactNum},
+				RSTRN_SITE		= 	#{restaurantSite},
+				RSTRN_OTHERS	= 	#{restaurantOthers},
+				MDFCN_YMD			= 	NOW()
 			WHERE
-				RSTRN_INFO_CD = #{restaurantInfoCode}
+				RSTRN_INFO_CD 	= 	#{restaurantInfoCode}
 
 	</update>
-
-
 
 	<select id="getRestaurantInfoList" resultType="Destination">
 		/* 식당 정보 목록 */

@@ -11,7 +11,10 @@ public interface DestinationMapper {
 	
 	//관광지 등록
 	int addTour(Destination destination);
-
+	
+	//음식점 등록
+	int addRestaurant(Destination destination);
+	
 	//관광지 세부등록
 	int addTourGoods(Destination destination);
 	
