@@ -190,8 +190,7 @@ public class PTripPlanServiceImpl implements PTripPlanService {
 	 * 서버에 이미지를 저장하는 메서드
 	 * @param contentId 컨텐트 ID
 	 * @param imageUrl 이미지 주소
-	 * @return
-	 * @throws IOException
+	 * @return DB에 저장된 이미지 파일 경로
 	 */
 	private String saveImageToServer(String contentId, String imageUrl) throws IOException {
 		String imageDirPath = "/home/teamproject/resources/tourapi/";
@@ -211,13 +210,15 @@ public class PTripPlanServiceImpl implements PTripPlanService {
 		try (InputStream inputStream = url.openStream()) {
 			// 서버에 이미지 저장
 			Files.copy(inputStream, imageFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+		}catch(Exception e) {
+			log.error("이미지 저장하는 과정에서 문제가 발생했습니다", e);
 		}
 
 		return imagePath;
 	}
 
 	/**
-	 * 여행지 상세 정보 목록 조
+	 * 여행지 상세 정보 목록 조회
 	 * @return
 	 */
 	@Override
