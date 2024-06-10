@@ -12,6 +12,7 @@ public class UComment {
 	private int commentlikeTotal;
 	private int commentDislikeTotal;
 	private int commentReportTotal;
+	private String commentMdfId;
 	private String commentAct;
 	private String commentRegDate;
 	private String commentMdfDate;
