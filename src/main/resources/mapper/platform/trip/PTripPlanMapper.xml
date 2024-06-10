@@ -353,8 +353,11 @@
 
     <update id="updateImagePath" parameterType="map">
         /* 여행지 상세 정보에 이미지 링크 추가*/
-        UPDATE TOUR_DETAIL_FROM_API
-        SET tour_detail_first_image_path = #{imagePath}
-        WHERE tour_detail_content_id = #{contentId}
+        UPDATE
+            TOUR_DETAIL_FROM_API
+        SET
+            tour_detail_first_image_path = #{imagePath}
+        WHERE
+            tour_detail_content_id = #{contentId}
     </update>
 </mapper>

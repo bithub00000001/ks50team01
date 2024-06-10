@@ -10,14 +10,29 @@
         <button class="btn btn-primary btn-sm me-2" type="button" id="modifyPlan">수정(구현 안됨)</button>
         <button class="btn btn-secondary btn-sm" id="backToListButton" type="button">목록으로</button>
     </div>
-    <h2 class="text-uppercase text-letter-spacing-xs my-0 text-primary font-weight-bold"
+    <h2 class="text-uppercase text-letter-spacing-xs my-0 text-primary font-weight-bold mb-3"
         th:if="${tripOption != null}" th:text="${tripOption.tripTitle}">Schedule</h2>
-    <h2 class="text-uppercase text-letter-spacing-xs my-0 text-primary font-weight-bold"
+    <h2 class="text-uppercase text-letter-spacing-xs my-0 text-primary font-weight-bold mb-3"
         th:unless="${tripOption != null}">Schedule</h2>
     <p>
         출발 날짜: <span th:text="${tripOption.startDate}">출발 날짜</span>,
         도착 날짜: <span th:text="${tripOption.endDate}">도착 날짜</span>
     </p>
+    <div>
+        <h5>실제 회원:</h5>
+        <ul th:if="${not #lists.isEmpty(tripOption.invitedMembers)}">
+            <li th:each="member : ${tripOption.invitedMembers}" th:text="${member}"></li>
+        </ul>
+        <p th:if="${#lists.isEmpty(tripOption.invitedMembers)}">없음</p>
+    </div>
+
+    <div>
+        <h5>가상 회원:</h5>
+        <ul th:if="${not #lists.isEmpty(tripOption.virtualMembers)}">
+            <li th:each="member : ${tripOption.virtualMembers}" th:text="${member}"></li>
+        </ul>
+        <p th:if="${#lists.isEmpty(tripOption.virtualMembers)}">없음</p>
+    </div>
     <!-- Days -->
     <div class="row mt-7">
         <div th:if="${tripOption != null}" th:each="dayPlan, dayStat : ${tripOption.dayPlans}" class="col-lg-6 mb-3" th:id="'day-' + ${dayStat.index}">

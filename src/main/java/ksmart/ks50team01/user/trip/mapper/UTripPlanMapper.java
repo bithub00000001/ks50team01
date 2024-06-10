@@ -61,21 +61,34 @@ public interface UTripPlanMapper {
 	// 여행 계획 목록 조회
 	List<UTripOption> selectTempPlanListBySessionId(String sessionId);
 
-	// Tour API에서 DB에 저장한 여행 상세 정보 목록 조
+	// Tour API에서 DB에 저장한 여행 상세 정보 목록 조회
 	List<Map<String, Object>> getTourDataList();
 
+	// UUID와 일치하는 여행 계획이 존재하는지 조회
 	boolean existsByPlanUUID(String planUUID);
 
+	// UUID와 일치하는 여행 계획을 삭제
 	int deleteDetailInfo(String planUUID);
 
-	int insertDetailInfo(@Param("planUUID") String planUUID,
+	// UUID와 여행 계획을 저장
+	int insertDetailInfo(
+		@Param("planUUID") String planUUID,
 		@Param("dayNumber") int dayNumber,
 		@Param("contentId") String contentId,
 		@Param("order") int order);
 
+	// UUID와 일치하는 여행 계획을 조회
 	UTripOption getTripPlanByUUID(String planUUID);
 
+	// UUID와 일치하는 여행 계획 세부 아이템 조회
 	List<UTripPlanItem> getTripItemsByUUID(String planUUID);
 
+	// 컨텐트 ID와 일치하는 여행 상세 정보 조회
 	List<PTourDetail> getPTourDetailByContentId(List<String> contentIds);
+
+	// UUID와 일치하는 여행에 초대받은 실제 회원 조회
+	List<String> getRealMembersByPlanUUID(String planUUID);
+
+	// UUID와 일치하는 여행에 초대받은 가상 회원 조회
+	List<String> getVirtualMembersByPlanUUID(String planUUID);
 }
