@@ -45,7 +45,8 @@ public class WebConfig implements WebMvcConfigurer {
 				"/trip/logout",
 				"/trip", "/trip/",
 				"/trip/tourInfo/**",
-				"/trip/board"
+				"/trip/board",
+				"/tourapi/**"
 			);
 	}
 }

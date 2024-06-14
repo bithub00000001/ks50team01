@@ -155,9 +155,11 @@ public class UTripPlanServiceImpl implements UTripPlanService {
 				ULocationDistanceInfo startPoint = uDayInfo.getLocations().get(i);
 				ULocationDistanceInfo endPoint = uDayInfo.getLocations().get(i + 1);
 
+				// 각 지점의 위도와 경도를 데이터베이스에서 조회
 				Map<String, Object> startXY = uTripPlanMapper.getMapXY(startPoint.getContentId());
 				Map<String, Object> endXY = uTripPlanMapper.getMapXY(endPoint.getContentId());
 
+				// 시작점과 끝점의 위도, 경도 설정
 				startPoint.setStartMapX((Double)startXY.get("longitude"));
 				startPoint.setStartMapY((Double)startXY.get("latitude"));
 				endPoint.setEndMapX((Double)endXY.get("longitude"));
@@ -168,6 +170,7 @@ public class UTripPlanServiceImpl implements UTripPlanService {
 				TMapApiResponse apiResponse;
 				try {
 					// 오류가 발생하지 않았을 경우
+					// T map API를 호출하여 두 지점 사이의 거리와 소요 시간 계산
 					apiResponse = uTmapApiService.fetchFromApi(
 						startPoint.getContentId(), endPoint.getContentId(),
 						startPoint.getStartMapX(), startPoint.getStartMapY(),
@@ -227,6 +230,9 @@ public class UTripPlanServiceImpl implements UTripPlanService {
 	public List<UTripOption> getTempPlanList(String sessionId) {
 		List<UTripOption> plans = uTripPlanMapper.selectTempPlanListBySessionId(sessionId);
 		log.info("plans: {}", plans);
+
+		if (plans.isEmpty()) return List.of();
+
 		// 각 계획의 description 필드를 설정
 		plans.forEach(plan -> {
 			plan.setDescription(plan.getDescription());
@@ -310,6 +316,12 @@ public class UTripPlanServiceImpl implements UTripPlanService {
 	public UTripOption getTripOptionByUUID(String planUUID) {
 		UTripOption tripOption = uTripPlanMapper.getTripPlanByUUID(planUUID);
 		if (tripOption != null) {
+			// 실제 회원과 가상 회원 목록 조회
+			List<String> realMembers = uTripPlanMapper.getRealMembersByPlanUUID(planUUID);
+			List<String> virtualMembers = uTripPlanMapper.getVirtualMembersByPlanUUID(planUUID);
+			tripOption.setInvitedMembers(realMembers);
+			tripOption.setVirtualMembers(virtualMembers);
+
 			// TRIP_PLAN_ITEMS_NEW 테이블에서 일정 항목 조회
 			List<UTripPlanItem> tripItems = uTripPlanMapper.getTripItemsByUUID(planUUID);
 			log.info("tripItems: {}", tripItems);
@@ -332,7 +344,12 @@ public class UTripPlanServiceImpl implements UTripPlanService {
 		return null;
 	}
 
-
+	/**
+	 * 각 일자별로 여행 계획 아이템을 설정하는 메서드
+	 * @param tripOption 여행 계획
+	 * @param tripItems 여행 계획 세부 아이템
+	 * @param tourDetailMap 여행지 세부 정보
+	 */
 	private void addTripItemsForDates(UTripOption tripOption, List<UTripPlanItem> tripItems, Map<String, PTourDetail> tourDetailMap) {
 		if (tripOption.getStartDate() == null || tripItems == null || tripItems.isEmpty()) {
 			throw new IllegalArgumentException("Start date and trip items must be provided.");
@@ -384,6 +401,10 @@ public class UTripPlanServiceImpl implements UTripPlanService {
 		}
 	}
 
+	/**
+	 * 수정 날짜와 현재 시간을 duration으로 변환하는 메서드
+	 * @param uTripOption 여행 계획 DTO
+	 */
 	private void calculateAndSetDayDiff(UTripOption uTripOption) {
 		LocalDateTime currentDateTime = LocalDateTime.now();
 
@@ -403,6 +424,11 @@ public class UTripPlanServiceImpl implements UTripPlanService {
 		}
 	}
 
+	/**
+	 * 입력된 dateString을 포맷에 맞게 설정하는 메서드
+	 * @param dateString 일자 형식으로 작성된 String
+	 * @return String을 LocalDateTime으로 변경
+	 */
 	private LocalDateTime parseDateStringToLocalDateTime(String dateString) {
 		// 입력된 dateString의 포맷에 맞게 DateTimeFormatter 생성
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -411,6 +437,11 @@ public class UTripPlanServiceImpl implements UTripPlanService {
 		return LocalDateTime.parse(dateString, formatter);
 	}
 
+	/**
+	 * 작성된 시간과 현재를 비교해서 년,달,일,시간,분 전으로 표기하는 메서드
+	 * @param duration 과거 날짜와 현재 날짜의 차이
+	 * @return 년,달,일,시간,분 전 으로 표기
+	 */
 	private String calculateDayDiffWord(Duration duration) {
 		long years = duration.toDays() / 365;
 		long months = duration.toDays() / 30;
@@ -434,6 +465,11 @@ public class UTripPlanServiceImpl implements UTripPlanService {
 		return dayDiffWord;
 	}
 
+	/**
+	 * 여행 계획에 참여하는 실제 회원을 조회하고 없다면 삽입하는 메서드
+	 * @param tripUuid 여행 계획 UUID
+	 * @param realMemberIds 실제 회원 아이디 목록
+	 */
 	private void saveRealMembers(String tripUuid, List<String> realMemberIds) {
 		for (String memberId : realMemberIds) {
 			// 실제 멤버가 존재하는지 확인
@@ -448,10 +484,18 @@ public class UTripPlanServiceImpl implements UTripPlanService {
 		}
 	}
 
+	/**
+	 * 여행에 참여하는 가상 회원을 삭제하는 메서드
+	 * @param tripUuid 여행 계획 UUID
+	 */
 	private void deleteVirtualMembers(String tripUuid) {
 		uTripPlanMapper.deleteTripVirtualMembers(tripUuid);
 	}
 
+	/**
+	 * 여행에 참여하는 실제 회원을 삭제하는 메서드
+	 * @param tripUuid 여행 계획 UUID
+	 */
 	private void deleteRealMembers(String tripUuid) {
 		uTripPlanMapper.deleteTripRealMembers(tripUuid);
 	}

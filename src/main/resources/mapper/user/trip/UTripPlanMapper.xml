@@ -418,4 +418,34 @@
         </foreach>
     </select>
 
+    <select id="getRealMembersByPlanUUID" resultType="string">
+        SELECT
+            m.MBR_ID
+        FROM
+            real_member r
+        JOIN
+            trip_real_member trm
+        ON
+            r.id = trm.real_member_id
+        JOIN
+            MEMBER_MANAGE m
+        ON
+            r.member_id = m.MBR_ID
+        WHERE
+            trm.trip_uuid = #{planUUID}
+    </select>
+
+    <select id="getVirtualMembersByPlanUUID" resultType="string">
+        SELECT
+            v.name
+        FROM
+            virtual_member v
+        JOIN
+            trip_virtual_member tvm
+        ON
+            v.id = tvm.virtual_member_id
+        WHERE
+            tvm.trip_uuid = #{planUUID}
+    </select>
+
 </mapper>

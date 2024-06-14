@@ -17,7 +17,39 @@
             height: 40px;
             padding: 5px;
         }
+        /* 240610 로딩 이미지 추가 */
+        #loading_spinner{
+            display: none;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            z-index: 99;
+        }
+        .cv_spinner{
+            height: 100%;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            align-content: stretch;
+            justify-content: center;
+            align-items: baseline;
+            position: relative;
+        }
+        .spinner-load {
+            width: 100px;
+            height: 100px;
+            border: 15px #ddd solid;
+            border-top: 15px #2e93e6 solid;
+            border-radius: 50%;
+            animation: sp-anime 0.8s infinite linear;
+        }
+        @keyframes sp-anime {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
     </style>
+
 </th:block>
 
 <th:block layout:fragment="customContent">
@@ -102,7 +134,11 @@
             </div>
         </div>
     </div>
-
+    <div id="loading_spinner">
+        <div class="cv_spinner">
+            <span class="spinner-load"></span>
+        </div>
+    </div>
 </th:block>
 
 <th:block layout:fragment="customJsFile">
@@ -277,38 +313,49 @@
     </script>
     <script th:inline="javascript">
         $(document).on('click', '.data-list-update', function () {
-            const request = $.ajax({
-                url: '/platform/plan/destination/list-update',
-                method: 'POST',
-                dataType: 'text',
-                success: function (response) {
-                    // 성공적으로 응답을 받았을 때 실행할 코드
-                    console.log('결과: ', response);
-                    alert(response);
-                },
-                error: function (xhr, status, error) {
-                    // 오류 발생 시 실행할 코드
-                    alert(xhr.responseText);
-                }
-            });
+            if (confirm("현재 572개의 데이터 전체가 업데이트 되며, 약 5분 정도 소요가 예상됩니다. 진행하시겠습니까?")) {
+                const request = $.ajax({
+                    url: '/platform/plan/destination/list-update',
+                    method: 'POST',
+                    dataType: 'text',
+                    success: function (response) {
+                        // 성공적으로 응답을 받았을 때 실행할 코드
+                        console.log('결과: ', response);
+                        alert(response);
+                    },
+                    error: function (xhr, status, error) {
+                        // 오류 발생 시 실행할 코드
+                        alert(xhr.responseText);
+                    }
+                });
+            }
+
         });
     </script>
     <script th:inline="javascript">
         $(document).on('click', '.image-update', function () {
-            const request = $.ajax({
-                url: '/platform/plan/destination/image-update',
-                method: 'POST',
-                dataType: 'text',
-                success: function (response) {
-                    // 성공적으로 응답을 받았을 때 실행할 코드
-                    console.log('결과: ', response);
-                    alert(response);
-                },
-                error: function (xhr, status, error) {
-                    // 오류 발생 시 실행할 코드
-                    alert(xhr.responseText);
-                }
-            });
+            if (confirm("현재 394개의 데이터 전체가 업데이트 되며, 약 7분 정도 소요가 예상됩니다. 진행하시겠습니까?")) {
+                const request = $.ajax({
+                    url: '/platform/plan/destination/image-update',
+                    method: 'POST',
+                    dataType: 'text',
+                    success: function (response) {
+                        // 성공적으로 응답을 받았을 때 실행할 코드
+                        console.log('결과: ', response);
+                        alert(response);
+                    },
+                    beforeSend: function () {
+                        $('#loading_spinner').show();
+                    },
+                    complete: function () {
+                        $('#loading_spinner').hide();
+                    },
+                    error: function (xhr, status, error) {
+                        // 오류 발생 시 실행할 코드
+                        alert(xhr.responseText);
+                    }
+                });
+            }
         });
     </script>
 </th:block>
