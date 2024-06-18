@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-@ControllerAdvice(basePackages = "ksmart.ks50team01.user.trip")
+@ControllerAdvice(basePackages = {"ksmart.ks50team01.user.trip", "ksmart.ks50team01.user"})
 public class UserExceptionController {
 
 	@ExceptionHandler(Exception.class)
