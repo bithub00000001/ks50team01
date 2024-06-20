@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
      			xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      			layout:decorate="~{/platform/layout/default}">
+      			layout:decorate="~{platform/layout/default}">
       
 	<head>
 		<!-- Datatables -->
@@ -57,24 +57,10 @@
 							</div>
 
 							<div class="form-group">
-								<div class="col-md-2 col-sm-2 col-xs-0"></div>
-								<label class="control-label col-md-2 col-sm-2 col-xs-12">구분</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<select id="contentTypeId" name="contentTypeId" class="form-control text-center data-select" required>
-										<option value="">====선택하세요====</option>
-										<option value="post">게시글</option>
-										<option value="comment">댓글</option>
-									</select>
-								</div>
-								<div class="col-md-2 col-sm-2 col-xs-0"></div>
-							</div>
-
-							<div class="form-group">
 	                            <div class="col-md-2 col-sm-2 col-xs-0"></div>
 	                            <label class="control-label col-md-2 col-sm-2 col-xs-12">카테고리 유형</label>
 	                            <div class="col-md-6 col-sm-6 col-xs-12">
 	                                <select class="form-control text-center searchCate">
-	                                    <option value="">====선택하세요====</option>
 	                                    <option value="여행 정보" th:selected="${selectedCategory == '여행 정보'}">여행 정보</option>
 	                                    <option value="여행 후기" th:selected="${selectedCategory == '여행 후기'}">여행 후기</option>
 	                                    <option value="여행 친구 찾기" th:selected="${selectedCategory == '여행 친구 찾기'}">여행 친구 찾기</option>
