@@ -57,6 +57,7 @@
 			<result 	property="commentlikeTotal" 	column="PST_CMNT_LIKE_TOTAL"/>
 			<result 	property="commentDislikeTotal" 	column="PST_CMNT_DISLIKE_TOTAL"/>
 			<result 	property="commentReportTotal" 	column="PST_CMNT_REPT_TOTAL"/>
+			<result 	property="commentMdfId" 		column="MDFCN_MBR_ID"/>
 			<result 	property="commentAct" 			column="ACT_YN"/>
 			<result 	property="commentRegDate" 		column="REG_YMD"/>
 			<result 	property="commentMdfDate" 		column="MDFCN_YMD"/>
@@ -459,6 +460,7 @@
 			POST_COMMENT
 		SET
 			PST_CMNT_CN = #{commentContent},
+			MDFCN_MBR_ID = #{commentMdfId},
 			MDFCN_YMD = NOW()
 		WHERE
 			PST_CMNT_NO = #{commentNum};
