@@ -120,7 +120,6 @@
 	                                <td th:text="${q.qnaMdfDate}"></td>
 	                                <td th:text="${q.ansRegId}"></td>
 	                                
-	                                
 	                                <th:block th:if="${not #lists.isEmpty(q.answerList)}">
 	                                	<td>
 	                                	<!--/*/ <th:block th:each="l, status : ${q.answerList}"> /*/-->
@@ -154,7 +153,7 @@
 
 	                                <td>
 	                                    <!-- 버튼 클릭 시 모달 창 열기 -->
-	                                    <button type="button" class="btn btn-primary btn-xs answerBtn" data-toggle="modal"  th:data-qna-num="${q.qnaNum}" th:data-qna-title="${q.qnaTitle}" th:data-qna-content="${q.qnaContent}">
+	                                    <button type="button" class="btn btn-primary btn-xs answerBtn" data-toggle="modal" data-target="#answerModal" th:data-qna-num="${q.qnaNum}" th:data-qna-title="${q.qnaTitle}" th:data-qna-content="${q.qnaContent}">
 	                                        답변 입력
 	                                    </button>
 	                                </td>
@@ -168,31 +167,33 @@
 	                            <div class="modal-content">
 	                                <div class="modal-header">
 	                                    <h5 class="modal-title" id="answerModalLabel">답변 입력하기</h5>
-	                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	                                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
 	                                        <span aria-hidden="true">&times;</span>
 	                                    </button>
 	                                </div>
 	                                <div class="modal-body">
 	                                    <!-- 문의 제목과 내용 표시 -->
-	                                    <div class="form-group">
-	                                        <label for="qnaTitle">문의 제목</label>
-	                                        <input type="text" class="form-control" id="qnaTitle" readonly="readonly">
-	                                    </div>
-	                                    <div class="form-group">
-	                                        <label for="qnaContent">문의 내용</label>
-	                                        <textarea class="form-control" id="qnaContent" rows="5" readonly="readonly"></textarea>
-	                                    </div>
-	                                    <!-- 답변 내용 입력 -->
-	                                    <div class="form-group">
-	                                        <label for="answerContent">답변 내용</label>
-	                                        <textarea class="form-control" id="ansContent" rows="5" th:utext="${ansContent}" required="required"></textarea>
-	                                    	<input type="hidden" id="qnaNum"/>
-	                                    	<input type="hidden" id="ansRegId" th:value="${session.loginId}"/>
-	                                    </div>
+	                                    <form id="commentMdfForm">
+		                                    <div class="form-group">
+		                                        <label for="qnaTitle">문의 제목</label>
+		                                        <input type="text" class="form-control" id="qnaTitle" readonly="readonly">
+		                                    </div>
+		                                    <div class="form-group">
+		                                        <label for="qnaContent">문의 내용</label>
+		                                        <textarea class="form-control" id="qnaContent" rows="5" readonly="readonly"></textarea>
+		                                    </div>
+		                                    <!-- 답변 내용 입력 -->
+		                                    <div class="form-group">
+		                                        <label for="ansContent">답변 내용</label>
+		                                        <textarea class="form-control" id="ansContent" rows="5" th:utext="${ansContent}" required="required"></textarea>
+		                                    	<input type="hidden" id="qnaNum"/>
+		                                    	<input type="hidden" id="ansRegId" th:value="${session.loginId}"/>
+		                                    </div>
+	                                    </form>
 	                                </div>
 	                                <div class="modal-footer">
 	                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-	                                    <button type="button" class="btn btn-primary" id="answerSave">답변 저장</button>
+	                                    <button type="button" class="btn btn-primary" id="answerSave" onclick="answerSave()">답변 저장</button>
 	                                </div>
 	                            </div>
 	                        </div>
@@ -228,12 +229,16 @@
 	<th:block layout:fragment="customJs">
 	    <script>
 	    $('.answerBtn').click(function(event){
-	        var button = $(event.relatedTarget);
+	        // 버튼 선택 확인
+	        console.log("Button clicked");
+	        var button = $(this);  // 이 부분 확인 필요
 	        var qnaNum = button.data('qna-num');
 	        var qnaTitle = button.data('qna-title');
 	        var qnaContent = button.data('qna-content');
+	        
+	        console.log(qnaNum, qnaTitle, qnaContent); // 값 확인
 
-	        var modal = $(this).closest('.modal');
+	        var modal = $('#answerModal'); // 모달 선택
 	        modal.find('.modal-title').text('문의 번호 ' + qnaNum + '에 대한 답변');
 	        modal.find('#qnaNum').val(qnaNum);
 	        modal.find('#qnaTitle').val(qnaTitle);
@@ -245,9 +250,9 @@
 	    });
 
 	    $('#answerSave').click(function() {
-	        var qnaNum = $('#qnaNum').val();
-	        var ansContent = $('#ansContent').val();
-	        var ansRegId = $('#ansRegId').val();
+	    	var qnaNum = $('#qnaNum').val();
+	    	var ansContent = $('#ansContent').val();
+	    	var ansRegId = $('#ansRegId').val();
 
 	        $.ajax({
 	            url: '/platform/board/answerSave',
@@ -261,7 +266,6 @@
 	            success: function(response) {
 	                if (response.success) {
 	                    alert('답변이 저장되었습니다.');
-	                    $('#answerModal').modal('hide');
 	                    location.reload(); // 변경사항을 반영하기 위해 페이지 새로고침
 	                } else {
 	                    alert('답변 저장에 실패했습니다.');
