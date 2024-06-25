@@ -257,11 +257,5 @@ public class UCommunityService {
 	}
 
 
-
-
-
-
-
-
 }
 	
