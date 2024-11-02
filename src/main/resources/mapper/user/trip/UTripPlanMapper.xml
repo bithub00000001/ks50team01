@@ -242,7 +242,6 @@
             tour_detail_title            as contentTitle,
             tour_detail_homepage         as contentHomepage,
             tour_detail_first_image      as contentFirstImage,
-            tour_detail_first_image_path as contentFirstImagePath,
             tour_detail_second_image     as contentSecondImage,
             area_code                    as areaCode,
             sigungu_code                 as sigunguCode,

@@ -24,7 +24,7 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class UTourApiServiceImpl implements UTourApiService{
 
-	private final WebClient webClient;
+	private final WebClient tourWebClient;
 
 
 	// JSON 파싱을 위한 ObjectMapper 인스턴스 생성
@@ -38,7 +38,7 @@ public class UTourApiServiceImpl implements UTourApiService{
 	 */
 	@Override
 	public Mono<List<UArea>> getRegionData(String apiKey, Optional<String> optionalAreaCode){
-		return webClient.get()
+		return tourWebClient.get()
 			.uri(uriBuilder -> {
 				UriBuilder builder =  uriBuilder
 					.path("/areaCode1")

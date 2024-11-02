@@ -3,6 +3,7 @@ package ksmart.ks50team01.user.trip.mapper;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -23,6 +24,7 @@ public interface UTripPlanMapper {
 	List<Login> searchUserMembers(String nickname);
 
 	// 컨텐트 ID와 일치하는 위,경도 조회
+	@MapKey("key")
 	Map<String, Object> getMapXY(String contentId);
 
 	// 임시 상태로 여행 계획을 저장
@@ -62,6 +64,7 @@ public interface UTripPlanMapper {
 	List<UTripOption> selectTempPlanListBySessionId(String sessionId);
 
 	// Tour API에서 DB에 저장한 여행 상세 정보 목록 조회
+	@MapKey("key")
 	List<Map<String, Object>> getTourDataList();
 
 	// UUID와 일치하는 여행 계획이 존재하는지 조회
