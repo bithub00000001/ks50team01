@@ -1,13 +1,14 @@
 package ksmart.ks50team01.chimney.cleansys.service;
 
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import jakarta.annotation.PostConstruct;
@@ -48,32 +49,53 @@ public class MeasurementServiceImpl implements MeasurementService {
 	}
 
 	/**
-	 * 5분마다 API 데이터를 fetch하여 DB에 저장
+	 * 매시 12분, 42분에 실행 (데이터 갱신 시점 10분, 40분 이후 2분 대기)
 	 */
 	@Override
-	@Scheduled(fixedRate = 300000) // 5분
+	@Scheduled(cron = "0 8,12,38,42 * * * *")  // 8,12분과 38,42분에 실행
 	public void fetchAndStoreMeasurementData() {
-		log.info("데이터 fetch 및 저장 작업 시작");
+		LocalDateTime now = LocalDateTime.now();
+		LocalDateTime targetTime = calculateTargetTime(now);
+
+		log.info("데이터 수집 시작 - 현재시각: {}, 목표 측정시각: {}",
+			now.format(FORMATTER), targetTime.format(FORMATTER));
+
 		Flux.fromIterable(TARGET_AREAS)
-			.doOnNext(area -> log.info("지역명: {}", area)) // 각 지역명을 로그로 출력
+			.doOnNext(area -> log.info("지역 데이터 수집 시작 - 지역: {}, 측정시간: {}",
+				area, targetTime.format(FORMATTER)))
 			.parallel()
 			.runOn(reactor.core.scheduler.Schedulers.boundedElastic())
-			.flatMap(this::fetchDataForArea)
+			.flatMap(area -> fetchDataForArea(area)
+				.doOnError(error -> log.error("지역 {} 데이터 수집 실패: {}", area, error.getMessage()))
+				// 1분 간격으로 2회 재시도
+				.retryWhen(Retry.backoff(2, Duration.ofMinutes(1))
+					.doBeforeRetry(signal -> log.warn("지역 {} 데이터 수집 재시도 #{}",
+						area, signal.totalRetries() + 1))))
 			.sequential()
 			.subscribe(
 				this::saveMeasurementResult,
-				error -> log.error("데이터 fetch 중 오류 발생: {}", error.getMessage())
+				error -> log.error("데이터 수집 중 오류 발생: {}", error.getMessage()),
+				() -> log.info("전체 지역 데이터 수집 완료 - 측정시각: {}", targetTime.format(FORMATTER))
 			);
 	}
 
 	/**
-	 * 특정 지역에 대한 데이터를 API에서 가져오는 메서드
-	 *
-	 * @param area 지역명
-	 * @return MeasurementResultDTO 객체의 Flux
+	 * 현재 시간에 따른 목표 측정 시간 계산
+	 * 8분, 12분 실행 -> 이전 시간의 정각 데이터
+	 * 38분, 42분 실행 -> 현재 시간의 30분 데이터
 	 */
+	private LocalDateTime calculateTargetTime(LocalDateTime now) {
+		int minute = now.getMinute();
+		if (minute >= 38) {
+			return now.withMinute(0);  // 같은 시간의 00분 데이터
+		} else if (minute >= 8) {
+			return now.minusHours(1).withMinute(30);  // 이전 시간의 30분 데이터
+		} else {
+			return now.minusHours(1).withMinute(0);  // 이전 시간의 00분 데이터
+		}
+	}
+
 	private Flux<MeasurementResultDTO> fetchDataForArea(String area) {
-		log.info("API 호출 - 지역명: {}", area); // 지역명 출력
 		return cleanWebClient.get()
 			.uri(uriBuilder -> uriBuilder
 				.scheme("http")
@@ -85,21 +107,8 @@ public class MeasurementServiceImpl implements MeasurementService {
 				.build())
 			.retrieve()
 			.bodyToMono(MeasurementResponseDTO.class)
-			.retryWhen(Retry.backoff(3, Duration.ofSeconds(2))
-				.filter(throwable -> {
-					log.warn("재시도 조건에 맞는 에러 발생: {}", throwable.getMessage());
-					return true; // 모든 예외에 대해 재시도 수행하도록 설정 가능 (필요 시 조건 추가)
-				}))
-			.flatMapMany(response -> {
-				if (response != null && response.getResponse() != null &&
-					response.getResponse().getBody() != null &&
-					response.getResponse().getBody().getItems() != null) {
-					return Flux.fromIterable(response.getResponse().getBody().getItems());
-				} else {
-					log.warn("API 응답에 데이터가 없습니다.");
-					return Flux.empty();
-				}
-			})
+			.timeout(Duration.ofSeconds(30))  // 타임아웃 30초 설정
+			.flatMapMany(response -> validateAndExtractData(response, area))
 			.onErrorResume(e -> {
 				log.error("지역 {} 데이터 fetch 실패: {}", area, e.getMessage());
 				return Flux.empty();
@@ -107,21 +116,42 @@ public class MeasurementServiceImpl implements MeasurementService {
 	}
 
 	/**
-	 * 측정 결과를 데이터베이스에 저장하는 메서드
-	 *
-	 * @param result 측정 결과 DTO
+	 * API 응답 데이터 검증 및 추출
 	 */
-	private void saveMeasurementResult(MeasurementResultDTO result) {
-		if (result != null) {
-			try {
-				// LocalDateTime으로 변환된 mesureDt가 이미 존재하므로 변환 불필요 (Jackson이 자동 변환)
-				measurementResultMapper.insertMeasurementResult(result);
-			} catch (Exception e) {
-				log.error("데이터 저장 중 오류 발생: {}", e.getMessage());
+	private Flux<MeasurementResultDTO> validateAndExtractData(MeasurementResponseDTO response, String area) {
+		if (response != null && response.getResponse() != null &&
+			response.getResponse().getBody() != null &&
+			response.getResponse().getBody().getItems() != null) {
+
+			List<MeasurementResultDTO> items = response.getResponse().getBody().getItems();
+			if (items.isEmpty()) {
+				log.warn("지역 {} 데이터 없음", area);
+				return Flux.empty();
 			}
+			return Flux.fromIterable(items);
 		} else {
-			log.warn("필수 값 누락: areaNm={}, factManageNm={}, stackCode={}", result.getAreaNm(), result.getFactManageNm(), result.getStackCode());
+			log.warn("지역 {} API 응답 데이터 형식 오류", area);
+			return Flux.empty();
 		}
+	}
+
+	private void saveMeasurementResult(MeasurementResultDTO result) {
+		Optional.ofNullable(result)
+			.filter(r -> r.getAreaNm() != null)
+			.filter(r -> r.getFactManageNm() != null)
+			.filter(r -> r.getStackCode() != null)
+			.ifPresentOrElse(
+				r -> {
+					try {
+						measurementResultMapper.insertMeasurementResult(r);
+						log.debug("데이터 저장 성공: 지역={}, 시설={}, 배출구={}",
+							r.getAreaNm(), r.getFactManageNm(), r.getStackCode());
+					} catch (Exception e) {
+						log.error("데이터 저장 실패: {}", e.getMessage());
+					}
+				},
+				() -> log.warn("필수 값이 누락되었습니다.")
+			);
 	}
 }
 
