@@ -439,10 +439,13 @@ $(document).ready(function() {
             xaxis: {
                 title: "측정 시간",
                 type: "date",
-                tickformat: "%Y.%m.%d %H:%M",  // '-' 를 '.' 으로 변경
+                // 241104 일자별로 그룹화 추가
+                tickformat: "%Y.%m.%d", // '-' 를 '.' 으로 변경
                 tickangle: -45,
                 automargin: true,
-                hoverformat: "%Y.%m.%d %H:%M", // hover 형식도 변경
+                hoverformat: "%Y.%m.%d %H:%M", // hover 형식도 '.' 으로 변경
+                nticks: 7,  // 표시할 눈금 개수 제한
+                tickmode: 'auto',  // 자동으로 눈금 간격 조정
                 tickvals: tspTrace.x,
                 ticktext: tspTrace.x.map(x => moment(x).format("YYYY.MM.DD HH:mm")) // moment 형식도 변경
             },
