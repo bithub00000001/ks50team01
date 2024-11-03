@@ -93,6 +93,16 @@ $(document).ready(function() {
         },
 
         /**
+         * @function formatDate
+         * @param {string} dateStr - 날짜 문자열
+         * @returns {string} - 포맷된 날짜 문자열
+         */
+        formatDate(dateStr) {
+            return moment(dateStr).format("YYYY.MM.DD HH:mm");
+        },
+
+
+        /**
          * @function normalizeChartValue
          * @param {*} value - 정규화할 차트 데이터 값
          * @returns {number} - 정규화된 숫자 값
@@ -276,8 +286,16 @@ $(document).ready(function() {
             // 각 셀에 데이터 매핑
             cells.forEach(cell => {
                 const field = cell.dataset.field;
-                // null 값 처리를 포함한 데이터 정규화
-                const value = DataUtils.normalizeValue(item[field]);
+
+                let value;
+
+                // 측정시간 필드인 경우 날짜 포맷 적용
+                if (field === 'mesure_dt') {
+                    value = DataUtils.formatDate(item[field]);
+                } else {
+                    // null 값 처리를 포함한 데이터 정규화
+                    value = DataUtils.normalizeValue(item[field]);
+                }
                 cell.textContent = value;
             });
 
@@ -360,7 +378,7 @@ $(document).ready(function() {
                     const cellAddress = XLSX.utils.encode_cell({r: R, c: 0}); // 첫 번째 열(측정시간)
                     const cell = ws[cellAddress];
                     if (cell && cell.v) {
-                        cell.z = 'yyyy-mm-dd h:mm';  // 날짜 표시 형식만 설정
+                        cell.z = 'yyyy.mm.dd h:mm';  // 날짜 표시 형식만 설정
                     }
                 }
 
@@ -421,12 +439,12 @@ $(document).ready(function() {
             xaxis: {
                 title: "측정 시간",
                 type: "date",
-                tickformat: "%Y-%m-%d %H:%M",
+                tickformat: "%Y.%m.%d %H:%M",  // '-' 를 '.' 으로 변경
                 tickangle: -45,
                 automargin: true,
-                hoverformat: "%Y-%m-%d %H:%M",
+                hoverformat: "%Y.%m.%d %H:%M", // hover 형식도 변경
                 tickvals: tspTrace.x,
-                ticktext: tspTrace.x.map(x => moment(x).format("YYYY-MM-DD HH:mm"))
+                ticktext: tspTrace.x.map(x => moment(x).format("YYYY.MM.DD HH:mm")) // moment 형식도 변경
             },
             yaxis: {
                 title: "측정값",
