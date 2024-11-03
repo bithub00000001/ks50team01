@@ -81,8 +81,8 @@ public class MeasurementServiceImpl implements MeasurementService {
 
 	/**
 	 * 현재 시간에 따른 목표 측정 시간 계산
-	 * 8분, 12분 실행 -> 이전 시간의 정각 데이터
-	 * 38분, 42분 실행 -> 현재 시간의 30분 데이터
+	 * 8분, 12분 실행 -> 이전 1시간 반 이전의 데이터
+	 * 38분, 42분 실행 -> 이전 1시간 이전의 정각 데이터
 	 */
 	private LocalDateTime calculateTargetTime(LocalDateTime now) {
 		int minute = now.getMinute();
@@ -135,6 +135,10 @@ public class MeasurementServiceImpl implements MeasurementService {
 		}
 	}
 
+	/**
+	 * DB에 API 응답 데이터 저장
+	 * @param result 응답 받은 데이터 dto
+	 */
 	private void saveMeasurementResult(MeasurementResultDTO result) {
 		Optional.ofNullable(result)
 			.filter(r -> r.getAreaNm() != null)
@@ -152,6 +156,15 @@ public class MeasurementServiceImpl implements MeasurementService {
 				},
 				() -> log.warn("필수 값이 누락되었습니다.")
 			);
+	}
+
+	/**
+	 * 매주 일요일 자정에 db의 데이터 삭제
+	 */
+	@Scheduled(cron = "0 0 0 * * SUN") // 매주 일요일 자정 (토요일에서 일요일 넘어가는 시간)
+	public void deleteAllMeasurementResults() {
+		measurementResultMapper.deleteAllMeasurementResults();
+		log.info("모든 측정 결과가 삭제되었습니다.");
 	}
 }
 

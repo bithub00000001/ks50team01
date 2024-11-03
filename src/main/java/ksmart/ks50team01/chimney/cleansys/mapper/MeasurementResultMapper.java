@@ -16,4 +16,9 @@ public interface MeasurementResultMapper {
 	 * @param measurementResult 삽입 또는 업데이트할 측정 결과 DTO
 	 */
 	void insertMeasurementResult(MeasurementResultDTO measurementResult);
+
+	/**
+	 * db의 모든 값을 삭제하는 메서드
+	 */
+	void deleteAllMeasurementResults();
 }
