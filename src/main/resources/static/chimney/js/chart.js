@@ -591,6 +591,8 @@ $(document).ready(function() {
         if (autoRefreshInterval) {
             clearInterval(autoRefreshInterval);
         }
+        // 새로운 인터벌 시작 시에 초기화
+        retryCount = 0;
 
         autoRefreshInterval = setInterval(async () => {
             try {
@@ -609,6 +611,8 @@ $(document).ready(function() {
                     method: 'GET',
                     timeout: 10000 // 10초 타임아웃 설정
                 });
+                // API 호출 성공 시 즉시 retryCount 초기화
+                retryCount = 0;
 
                 // 새로운 데이터가 있는지 확인
                 if (data && data.length > 0) {
@@ -621,7 +625,6 @@ $(document).ready(function() {
                         console.log('새로운 데이터가 있어 화면을 갱신합니다.');
                         lastData = data;
                         await processAndDisplayData(data);
-                        retryCount = 0; // 성공 시 재시도 카운트 초기화
                     } else {
                         console.log('새로운 데이터가 없습니다.');
                     }
