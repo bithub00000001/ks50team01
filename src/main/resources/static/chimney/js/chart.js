@@ -58,6 +58,8 @@ $(document).ready(function() {
     let autoRefreshInterval;
     const REFRESH_INTERVAL = 5 * 60 * 1000; // 5분
     let lastData = null; // 마지막으로 받은 데이터 저장
+    let retryCount = 0;
+    const MAX_RETRY = 3;
 
     /**
      * @function createTrace 트레이스 객체 생성 함수
@@ -560,7 +562,8 @@ $(document).ready(function() {
                     business: selectedBusiness,
                     stackCode: selectedStack
                 },
-                method: 'GET'
+                method: 'GET',
+                timeout: 10000
             });
 
             if (!data || data.length === 0) {
@@ -570,6 +573,7 @@ $(document).ready(function() {
 
             lastData = data; // 데이터 저장
             await processAndDisplayData(data);
+            retryCount = 0;
             startAutoRefresh(selectedBusiness, selectedStack); // 자동 새로고침 시작
         } catch (error) {
             console.error("데이터 조회 실패:", error);
@@ -590,13 +594,20 @@ $(document).ready(function() {
 
         autoRefreshInterval = setInterval(async () => {
             try {
+                // 서버 연결 상태 확인
+                if (!navigator.onLine) {
+                    console.log('인터넷 연결이 없습니다. 자동 새로고침을 일시 중지합니다.');
+                    return;
+                }
+
                 const data = await $.ajax({
                     url: '/api/measurements',
                     data: {
                         business: business,
                         stackCode: stack
                     },
-                    method: 'GET'
+                    method: 'GET',
+                    timeout: 10000 // 10초 타임아웃 설정
                 });
 
                 // 새로운 데이터가 있는지 확인
@@ -610,17 +621,39 @@ $(document).ready(function() {
                         console.log('새로운 데이터가 있어 화면을 갱신합니다.');
                         lastData = data;
                         await processAndDisplayData(data);
+                        retryCount = 0; // 성공 시 재시도 카운트 초기화
                     } else {
                         console.log('새로운 데이터가 없습니다.');
                     }
                 }
             } catch (error) {
                 console.error("자동 새로고침 실패:", error);
+                retryCount++;
+
+                if (retryCount >= MAX_RETRY) {
+                    console.log(`${MAX_RETRY}회 재시도 실패로 자동 새로고침을 중지합니다.`);
+                    clearInterval(autoRefreshInterval);
+                    alert('서버 연결이 원활하지 않아 자동 새로고침이 중지되었습니다.\n페이지를 새로고침하여 다시 시도해주세요.');
+                } else {
+                    console.log(`재시도 ${retryCount}/${MAX_RETRY}`);
+                }
             }
         }, REFRESH_INTERVAL);
     }
+    // 브라우저 온라인/오프라인 상태 모니터링
+    window.addEventListener('online', () => {
+        console.log('인터넷 연결이 복구되었습니다.');
+        startAutoRefresh(business, stack); // 연결 복구 시 재시작
+    });
 
-// 페이지 이탈 시 자동 새로고침 중지
+    window.addEventListener('offline', () => {
+        console.log('인터넷 연결이 끊겼습니다.');
+        if (autoRefreshInterval) {
+            clearInterval(autoRefreshInterval);
+        }
+    });
+
+    // 페이지 이탈 시 자동 새로고침 중지
     window.addEventListener('beforeunload', () => {
         if (autoRefreshInterval) {
             clearInterval(autoRefreshInterval);
