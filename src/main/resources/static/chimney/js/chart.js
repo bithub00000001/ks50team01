@@ -54,6 +54,11 @@ $(document).ready(function() {
      */
     let layout = {};
 
+    // 자동 새로고침 관련 변수
+    let autoRefreshInterval;
+    const REFRESH_INTERVAL = 5 * 60 * 1000; // 5분
+    let lastData = null; // 마지막으로 받은 데이터 저장
+
     /**
      * @function createTrace 트레이스 객체 생성 함수
      * @description 오염물질별 트레이스 객체 생성
@@ -563,12 +568,62 @@ $(document).ready(function() {
                 return;
             }
 
+            lastData = data; // 데이터 저장
             await processAndDisplayData(data);
+            startAutoRefresh(selectedBusiness, selectedStack); // 자동 새로고침 시작
         } catch (error) {
             console.error("데이터 조회 실패:", error);
             alert(CONFIG.ERROR_MESSAGES.FETCH_DATA);
         } finally {
             $('#loadingSpinner').hide();
+        }
+    });
+
+    /**
+     * @function startAutoRefresh
+     * @description 자동 새로고침 시작
+     */
+    function startAutoRefresh(business, stack) {
+        if (autoRefreshInterval) {
+            clearInterval(autoRefreshInterval);
+        }
+
+        autoRefreshInterval = setInterval(async () => {
+            try {
+                const data = await $.ajax({
+                    url: '/api/measurements',
+                    data: {
+                        business: business,
+                        stackCode: stack
+                    },
+                    method: 'GET'
+                });
+
+                // 새로운 데이터가 있는지 확인
+                if (data && data.length > 0) {
+                    const lastTimestamp = lastData[lastData.length - 1].mesure_dt;
+                    const hasNewData = data.some(item =>
+                        moment(item.mesure_dt).isAfter(moment(lastTimestamp))
+                    );
+
+                    if (hasNewData) {
+                        console.log('새로운 데이터가 있어 화면을 갱신합니다.');
+                        lastData = data;
+                        await processAndDisplayData(data);
+                    } else {
+                        console.log('새로운 데이터가 없습니다.');
+                    }
+                }
+            } catch (error) {
+                console.error("자동 새로고침 실패:", error);
+            }
+        }, REFRESH_INTERVAL);
+    }
+
+// 페이지 이탈 시 자동 새로고침 중지
+    window.addEventListener('beforeunload', () => {
+        if (autoRefreshInterval) {
+            clearInterval(autoRefreshInterval);
         }
     });
 });
