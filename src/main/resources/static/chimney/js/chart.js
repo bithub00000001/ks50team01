@@ -609,7 +609,7 @@ $(document).ready(function() {
                         stackCode: stack
                     },
                     method: 'GET',
-                    timeout: 10000 // 10초 타임아웃 설정
+                    timeout: 30000 // 10초 타임아웃 설정
                 });
                 // API 호출 성공 시 즉시 retryCount 초기화
                 retryCount = 0;
