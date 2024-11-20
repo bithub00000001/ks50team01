@@ -77,7 +77,10 @@ const DocumentManager = (function() {
                 success: (response) => {
                     if (response.status === 'success') {
                         this.showAlert('success', response.message);
-                        setTimeout(() => location.reload(), 1500);
+                        // 새로운 문서가 업데이트된 경우에만 페이지 새로고침
+                        if (response.message.includes('새로운 문서')) {
+                            setTimeout(() => location.reload(), 1500);
+                        }
                     } else {
                         this.showAlert('danger', response.message);
                     }
