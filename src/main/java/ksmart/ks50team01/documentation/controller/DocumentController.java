@@ -1,6 +1,5 @@
 package ksmart.ks50team01.documentation.controller;
 
-import java.io.File;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -32,7 +31,7 @@ import lombok.extern.slf4j.Slf4j;
  * @since 2024-11-20
  */
 @Controller
-@RequestMapping({"/documentation/documents", "/documents"})
+@RequestMapping("/documentation/documents")
 @RequiredArgsConstructor
 @Slf4j
 public class DocumentController {
