@@ -32,7 +32,7 @@ import lombok.extern.slf4j.Slf4j;
  * @since 2024-11-20
  */
 @Controller
-@RequestMapping({"/documentation/documents", "/documents"})
+@RequestMapping("/documentation/documents")
 @RequiredArgsConstructor
 @Slf4j
 public class DocumentController {
