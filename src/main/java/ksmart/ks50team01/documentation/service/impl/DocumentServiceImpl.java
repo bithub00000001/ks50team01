@@ -104,7 +104,7 @@ public class DocumentServiceImpl implements DocumentService {
 		if (existingDocument == null) {
 			// 새로운 문서인 경우 저장
 			saveNewDocument(processResult);
-			return DocumentApiResponse.success("문서가 성공적으로 업데이트되었습니다.");
+			return DocumentApiResponse.success("새로운 문서가 감지되어 업데이트를 진행했습니다.");
 		} else {
 			// 이미 존재하는 문서인 경우
 			log.info("동일한 해시값의 문서가 이미 존재합니다: {}", processResult.getFileHash());
