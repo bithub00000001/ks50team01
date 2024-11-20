@@ -1,0 +1,70 @@
+/* 트리 스타일 */
+#documentTree {
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.jstree-default .jstree-wholerow-clicked {
+    background: rgba(0,0,0,.05);
+}
+
+.jstree-default .jstree-clicked {
+    background: transparent;
+}
+
+/* 검색 입력 스타일 */
+#searchInput {
+    max-width: 300px;
+}
+
+/* 카드 스타일 */
+.card {
+    box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.075);
+}
+
+.card-header {
+    background-color: #f8f9fa;
+}
+
+/* 로딩 스피너 스타일 */
+#loadingSpinner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    background: rgba(255,255,255,0.8);
+    padding: 2rem;
+    border-radius: 0.5rem;
+}
+
+/* 알림 메시지 스타일 */
+#alertContainer {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1050;
+    min-width: 300px;
+}
+
+.alert {
+    margin-bottom: 1rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.075);
+}
+
+/* 반응형 스타일 */
+@media (max-width: 768px) {
+    .card-header {
+        flex-direction: column;
+        align-items: stretch !important;
+    }
+
+    .card-header button {
+        margin-top: 1rem;
+        width: 100%;
+    }
+
+    #searchInput {
+        max-width: 100%;
+    }
+}
