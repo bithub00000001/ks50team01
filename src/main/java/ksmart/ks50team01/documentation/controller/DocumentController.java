@@ -85,8 +85,9 @@ public class DocumentController {
 	@ResponseBody
 	public ResponseEntity<DocumentApiResponse> updateDocuments() {
 		try {
-			documentService.processDocumentUpdate();
-			return ResponseEntity.ok(DocumentApiResponse.success("문서가 성공적으로 업데이트되었습니다."));
+			// 서비스의 처리 결과를 받아서 그대로 반환
+			DocumentApiResponse response = documentService.processDocumentUpdate();
+			return ResponseEntity.ok(response);
 		} catch (Exception e) {
 			log.error("문서 업데이트 중 오류 발생", e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
