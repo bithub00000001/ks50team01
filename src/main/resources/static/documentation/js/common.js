@@ -131,8 +131,11 @@ const DocumentManager = (function() {
                     }
                 },
                 'search': {
+                    'case_insensitive': true,       // 대소문자 구분 없이 검색 가능
                     'show_only_matches': true,
-                    'show_only_matches_children': true
+                    'show_only_matches_children': true,
+                    'close_opened_onclear': false, // 검색 종료 시 열린 노드 유지
+                    'search_leaves_only': false    // 모든 노드 검색 허용
                 }
             }).on('select_node.jstree', (e, data) => {
                 // 파일 노드 선택 시 다운로드 URL로 이동
@@ -143,6 +146,18 @@ const DocumentManager = (function() {
                 } else if (node.original.type === 'file' && node.original.downloadUrl) {
                     window.location.href = node.original.downloadUrl;
                 }
+            });
+
+            // 검색 시작 시 이벤트
+            $documentTree.on('search.jstree', function(e, data) {
+                if (data.nodes.length) {
+                    $(this).jstree('open_all');
+                }
+            });
+
+            // 검색 종료 시 이벤트
+            $documentTree.on('clear_search.jstree', function(e, data) {
+                $(this).jstree(true).show_all();
             });
 
             // PDF 파일 타입 설정
