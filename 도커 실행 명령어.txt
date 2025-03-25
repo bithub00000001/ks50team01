@@ -1,0 +1,28 @@
+### 8. 실행 단계
+
+1. 스프링부트 애플리케이션 빌드:
+```bash
+./mvnw clean package -DskipTests
+```
+
+2. 초기 SSL 인증서 설정:
+```bash
+chmod +x init-letsencrypt.sh
+./init-letsencrypt.sh
+```
+
+3. 도커 컴포즈로 전체 인프라 시작:
+```bash
+docker-compose up -d
+```
+
+### 9. Jenkins 설정
+
+1. Jenkins 접속: http://서버IP:8081
+2. 초기 비밀번호 확인: `docker-compose exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword`
+3. 권장 플러그인 설치
+4. 관리자 계정 생성
+5. Maven, GitHub 플러그인 설치
+6. 빌드 파이프라인 설정
+
+서버 재설정이 필요한 경우에 `docker-compose up -d` 명령어로 전체 인프라를 복구할 수 있다
